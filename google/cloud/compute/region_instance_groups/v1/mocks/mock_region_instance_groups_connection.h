@@ -67,21 +67,42 @@ class MockRegionInstanceGroupsConnection
            ListInstancesRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, SetNamedPorts)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, SetNamedPorts(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// SetNamedPorts(Matcher<google::cloud::cpp::compute::region_instance_groups::v1::SetNamedPortsRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetNamedPorts,
               (google::cloud::cpp::compute::region_instance_groups::v1::
                    SetNamedPortsRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, SetNamedPorts(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               SetNamedPorts,
               (NoAwaitTag, google::cloud::cpp::compute::region_instance_groups::
                                v1::SetNamedPortsRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// SetNamedPorts(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetNamedPorts,
               (google::cloud::cpp::compute::v1::Operation const& operation),

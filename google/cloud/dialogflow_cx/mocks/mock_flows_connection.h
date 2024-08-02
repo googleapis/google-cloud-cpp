@@ -70,20 +70,40 @@ class MockFlowsConnection : public dialogflow_cx::FlowsConnection {
       (google::cloud::dialogflow::cx::v3::UpdateFlowRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, TrainFlow)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, TrainFlow(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// TrainFlow(Matcher<google::cloud::dialogflow::cx::v3::TrainFlowRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::protobuf::Struct>>, TrainFlow,
       (google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, TrainFlow(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, TrainFlow,
       (NoAwaitTag,
        google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, TrainFlow(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, TrainFlow,
               (google::longrunning::Operation const& operation), (override));
 
@@ -100,41 +120,81 @@ class MockFlowsConnection : public dialogflow_cx::FlowsConnection {
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ImportFlow)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ImportFlow(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ImportFlow(Matcher<google::cloud::dialogflow::cx::v3::ImportFlowRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::cx::v3::ImportFlowResponse>>,
       ImportFlow,
       (google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ImportFlow(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ImportFlow,
       (NoAwaitTag,
        google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, ImportFlow(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::cx::v3::ImportFlowResponse>>,
       ImportFlow, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ExportFlow)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ExportFlow(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ExportFlow(Matcher<google::cloud::dialogflow::cx::v3::ExportFlowRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>,
       ExportFlow,
       (google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ExportFlow(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ExportFlow,
       (NoAwaitTag,
        google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, ExportFlow(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>,
       ExportFlow, (google::longrunning::Operation const& operation),

@@ -46,9 +46,15 @@ class MockEnvironmentsConnection : public composer_v1::EnvironmentsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateEnvironment)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateEnvironment(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateEnvironment(Matcher<google::cloud::orchestration::airflow::service::v1::CreateEnvironmentRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::orchestration::airflow::service::v1::Environment>>,
@@ -57,11 +63,25 @@ class MockEnvironmentsConnection : public composer_v1::EnvironmentsConnection {
            CreateEnvironmentRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateEnvironment(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateEnvironment,
               (NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
                                CreateEnvironmentRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateEnvironment(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::orchestration::airflow::service::v1::Environment>>,
@@ -83,9 +103,15 @@ class MockEnvironmentsConnection : public composer_v1::EnvironmentsConnection {
            ListEnvironmentsRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateEnvironment)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateEnvironment(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateEnvironment(Matcher<google::cloud::orchestration::airflow::service::v1::UpdateEnvironmentRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::orchestration::airflow::service::v1::Environment>>,
@@ -94,20 +120,40 @@ class MockEnvironmentsConnection : public composer_v1::EnvironmentsConnection {
            UpdateEnvironmentRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateEnvironment(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateEnvironment,
               (NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
                                UpdateEnvironmentRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateEnvironment(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::orchestration::airflow::service::v1::Environment>>,
       UpdateEnvironment, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteEnvironment)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteEnvironment(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteEnvironment(Matcher<google::cloud::orchestration::airflow::service::v1::DeleteEnvironmentRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::orchestration::airflow::service::
                                   v1::OperationMetadata>>,
               DeleteEnvironment,
@@ -115,11 +161,25 @@ class MockEnvironmentsConnection : public composer_v1::EnvironmentsConnection {
                    DeleteEnvironmentRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteEnvironment(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteEnvironment,
               (NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
                                DeleteEnvironmentRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteEnvironment(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::orchestration::airflow::service::
                                   v1::OperationMetadata>>,
               DeleteEnvironment,
@@ -220,9 +280,15 @@ class MockEnvironmentsConnection : public composer_v1::EnvironmentsConnection {
                    DeleteUserWorkloadsConfigMapRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, SaveSnapshot)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, SaveSnapshot(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// SaveSnapshot(Matcher<google::cloud::orchestration::airflow::service::v1::SaveSnapshotRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::orchestration::airflow::service::
                                   v1::SaveSnapshotResponse>>,
               SaveSnapshot,
@@ -230,19 +296,39 @@ class MockEnvironmentsConnection : public composer_v1::EnvironmentsConnection {
                    SaveSnapshotRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, SaveSnapshot(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, SaveSnapshot,
               (NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
                                SaveSnapshotRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, SaveSnapshot(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::orchestration::airflow::service::
                                   v1::SaveSnapshotResponse>>,
               SaveSnapshot, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, LoadSnapshot)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, LoadSnapshot(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// LoadSnapshot(Matcher<google::cloud::orchestration::airflow::service::v1::LoadSnapshotRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::orchestration::airflow::service::
                                   v1::LoadSnapshotResponse>>,
               LoadSnapshot,
@@ -250,19 +336,39 @@ class MockEnvironmentsConnection : public composer_v1::EnvironmentsConnection {
                    LoadSnapshotRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, LoadSnapshot(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, LoadSnapshot,
               (NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
                                LoadSnapshotRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, LoadSnapshot(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::orchestration::airflow::service::
                                   v1::LoadSnapshotResponse>>,
               LoadSnapshot, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DatabaseFailover)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DatabaseFailover(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DatabaseFailover(Matcher<google::cloud::orchestration::airflow::service::v1::DatabaseFailoverRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::orchestration::airflow::service::
                                   v1::DatabaseFailoverResponse>>,
               DatabaseFailover,
@@ -270,11 +376,25 @@ class MockEnvironmentsConnection : public composer_v1::EnvironmentsConnection {
                    DatabaseFailoverRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DatabaseFailover(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DatabaseFailover,
               (NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
                                DatabaseFailoverRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DatabaseFailover(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::orchestration::airflow::service::
                                   v1::DatabaseFailoverResponse>>,
               DatabaseFailover,

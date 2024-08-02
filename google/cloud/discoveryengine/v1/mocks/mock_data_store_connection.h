@@ -47,21 +47,41 @@ class MockDataStoreServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateDataStore)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateDataStore(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateDataStore(Matcher<google::cloud::discoveryengine::v1::CreateDataStoreRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::DataStore>>,
               CreateDataStore,
               (google::cloud::discoveryengine::v1::CreateDataStoreRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateDataStore(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateDataStore,
               (NoAwaitTag,
                google::cloud::discoveryengine::v1::CreateDataStoreRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateDataStore(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::DataStore>>,
               CreateDataStore,
               (google::longrunning::Operation const& operation), (override));
@@ -77,9 +97,15 @@ class MockDataStoreServiceConnection
       (google::cloud::discoveryengine::v1::ListDataStoresRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteDataStore)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteDataStore(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteDataStore(Matcher<google::cloud::discoveryengine::v1::DeleteDataStoreRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<
                   google::cloud::discoveryengine::v1::DeleteDataStoreMetadata>>,
               DeleteDataStore,
@@ -87,12 +113,26 @@ class MockDataStoreServiceConnection
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteDataStore(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteDataStore,
               (NoAwaitTag,
                google::cloud::discoveryengine::v1::DeleteDataStoreRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteDataStore(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<
                   google::cloud::discoveryengine::v1::DeleteDataStoreMetadata>>,
               DeleteDataStore,

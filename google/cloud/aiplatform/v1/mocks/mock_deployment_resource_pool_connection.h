@@ -47,9 +47,15 @@ class MockDeploymentResourcePoolServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateDeploymentResourcePool)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateDeploymentResourcePool(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateDeploymentResourcePool(Matcher<google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>,
       CreateDeploymentResourcePool,
@@ -57,6 +63,12 @@ class MockDeploymentResourcePoolServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateDeploymentResourcePool(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateDeploymentResourcePool,
       (NoAwaitTag,
@@ -64,6 +76,15 @@ class MockDeploymentResourcePoolServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateDeploymentResourcePool(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>,
       CreateDeploymentResourcePool,
@@ -83,9 +104,15 @@ class MockDeploymentResourcePoolServiceConnection
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateDeploymentResourcePool)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateDeploymentResourcePool(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateDeploymentResourcePool(Matcher<google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>,
       UpdateDeploymentResourcePool,
@@ -93,6 +120,12 @@ class MockDeploymentResourcePoolServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateDeploymentResourcePool(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateDeploymentResourcePool,
       (NoAwaitTag,
@@ -100,14 +133,29 @@ class MockDeploymentResourcePoolServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateDeploymentResourcePool(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>,
       UpdateDeploymentResourcePool,
       (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteDeploymentResourcePool)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteDeploymentResourcePool(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteDeploymentResourcePool(Matcher<google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteDeploymentResourcePool,
@@ -115,6 +163,12 @@ class MockDeploymentResourcePoolServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteDeploymentResourcePool(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteDeploymentResourcePool,
       (NoAwaitTag,
@@ -122,6 +176,15 @@ class MockDeploymentResourcePoolServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteDeploymentResourcePool(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteDeploymentResourcePool,

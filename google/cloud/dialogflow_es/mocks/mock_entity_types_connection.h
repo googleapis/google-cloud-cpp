@@ -71,9 +71,15 @@ class MockEntityTypesConnection : public dialogflow_es::EntityTypesConnection {
       (google::cloud::dialogflow::v2::DeleteEntityTypeRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, BatchUpdateEntityTypes)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, BatchUpdateEntityTypes(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchUpdateEntityTypes(Matcher<google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::dialogflow::v2::BatchUpdateEntityTypesResponse>>,
@@ -82,6 +88,12 @@ class MockEntityTypesConnection : public dialogflow_es::EntityTypesConnection {
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, BatchUpdateEntityTypes(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, BatchUpdateEntityTypes,
       (NoAwaitTag,
@@ -89,21 +101,41 @@ class MockEntityTypesConnection : public dialogflow_es::EntityTypesConnection {
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchUpdateEntityTypes(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::dialogflow::v2::BatchUpdateEntityTypesResponse>>,
       BatchUpdateEntityTypes, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, BatchDeleteEntityTypes)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, BatchDeleteEntityTypes(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchDeleteEntityTypes(Matcher<google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::protobuf::Struct>>, BatchDeleteEntityTypes,
       (google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, BatchDeleteEntityTypes(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, BatchDeleteEntityTypes,
       (NoAwaitTag,
@@ -111,58 +143,126 @@ class MockEntityTypesConnection : public dialogflow_es::EntityTypesConnection {
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchDeleteEntityTypes(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>,
               BatchDeleteEntityTypes,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, BatchCreateEntities)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, BatchCreateEntities(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchCreateEntities(Matcher<google::cloud::dialogflow::v2::BatchCreateEntitiesRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, BatchCreateEntities,
               (google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, BatchCreateEntities(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, BatchCreateEntities,
               (NoAwaitTag,
                google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchCreateEntities(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, BatchCreateEntities,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, BatchUpdateEntities)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, BatchUpdateEntities(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchUpdateEntities(Matcher<google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, BatchUpdateEntities,
               (google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, BatchUpdateEntities(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, BatchUpdateEntities,
               (NoAwaitTag,
                google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchUpdateEntities(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, BatchUpdateEntities,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, BatchDeleteEntities)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, BatchDeleteEntities(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchDeleteEntities(Matcher<google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, BatchDeleteEntities,
               (google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, BatchDeleteEntities(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, BatchDeleteEntities,
               (NoAwaitTag,
                google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchDeleteEntities(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, BatchDeleteEntities,
               (google::longrunning::Operation const& operation), (override));
 };

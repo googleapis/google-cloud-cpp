@@ -47,9 +47,15 @@ class MockProjectServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ProvisionProject)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ProvisionProject(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ProvisionProject(Matcher<google::cloud::discoveryengine::v1::ProvisionProjectRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::discoveryengine::v1::Project>>,
       ProvisionProject,
@@ -57,6 +63,12 @@ class MockProjectServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ProvisionProject(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ProvisionProject,
       (NoAwaitTag,
@@ -64,6 +76,14 @@ class MockProjectServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, ProvisionProject(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::Project>>,
               ProvisionProject,
               (google::longrunning::Operation const& operation), (override));

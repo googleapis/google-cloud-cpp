@@ -54,9 +54,15 @@ class MockSecurityCenterConnection
                    BatchCreateResourceValueConfigsRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, BulkMuteFindings)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, BulkMuteFindings(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BulkMuteFindings(Matcher<google::cloud::securitycenter::v2::BulkMuteFindingsRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<
                   google::cloud::securitycenter::v2::BulkMuteFindingsResponse>>,
               BulkMuteFindings,
@@ -64,12 +70,26 @@ class MockSecurityCenterConnection
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, BulkMuteFindings(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, BulkMuteFindings,
               (NoAwaitTag,
                google::cloud::securitycenter::v2::BulkMuteFindingsRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, BulkMuteFindings(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<
                   google::cloud::securitycenter::v2::BulkMuteFindingsResponse>>,
               BulkMuteFindings,

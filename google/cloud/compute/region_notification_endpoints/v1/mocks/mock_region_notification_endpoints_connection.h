@@ -49,15 +49,27 @@ class MockRegionNotificationEndpointsConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteNotificationEndpoint)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteNotificationEndpoint(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteNotificationEndpoint(Matcher<google::cloud::cpp::compute::region_notification_endpoints::v1::DeleteNotificationEndpointRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteNotificationEndpoint,
               (google::cloud::cpp::compute::region_notification_endpoints::v1::
                    DeleteNotificationEndpointRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteNotificationEndpoint(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               DeleteNotificationEndpoint,
               (NoAwaitTag,
@@ -65,6 +77,15 @@ class MockRegionNotificationEndpointsConnection
                    DeleteNotificationEndpointRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteNotificationEndpoint(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteNotificationEndpoint,
               (google::cloud::cpp::compute::v1::Operation const& operation),
@@ -76,15 +97,27 @@ class MockRegionNotificationEndpointsConnection
                    GetNotificationEndpointRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, InsertNotificationEndpoint)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, InsertNotificationEndpoint(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InsertNotificationEndpoint(Matcher<google::cloud::cpp::compute::region_notification_endpoints::v1::InsertNotificationEndpointRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertNotificationEndpoint,
               (google::cloud::cpp::compute::region_notification_endpoints::v1::
                    InsertNotificationEndpointRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, InsertNotificationEndpoint(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               InsertNotificationEndpoint,
               (NoAwaitTag,
@@ -92,6 +125,15 @@ class MockRegionNotificationEndpointsConnection
                    InsertNotificationEndpointRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InsertNotificationEndpoint(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertNotificationEndpoint,
               (google::cloud::cpp::compute::v1::Operation const& operation),

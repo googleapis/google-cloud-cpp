@@ -47,20 +47,40 @@ class MockCloudChannelReportsServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, RunReportJob)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, RunReportJob(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RunReportJob(Matcher<google::cloud::channel::v1::RunReportJobRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::channel::v1::RunReportJobResponse>>,
       RunReportJob,
       (google::cloud::channel::v1::RunReportJobRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, RunReportJob(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, RunReportJob,
               (NoAwaitTag,
                google::cloud::channel::v1::RunReportJobRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, RunReportJob(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::channel::v1::RunReportJobResponse>>,
       RunReportJob, (google::longrunning::Operation const& operation),

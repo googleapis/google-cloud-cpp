@@ -48,9 +48,15 @@ class MockRapidMigrationAssessmentConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateCollector)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateCollector(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateCollector(Matcher<google::cloud::rapidmigrationassessment::v1::CreateCollectorRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>,
       CreateCollector,
@@ -58,19 +64,39 @@ class MockRapidMigrationAssessmentConnection
            CreateCollectorRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateCollector(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateCollector,
               (NoAwaitTag, google::cloud::rapidmigrationassessment::v1::
                                CreateCollectorRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateCollector(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>,
       CreateCollector, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateAnnotation)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateAnnotation(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateAnnotation(Matcher<google::cloud::rapidmigrationassessment::v1::CreateAnnotationRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>>,
       CreateAnnotation,
@@ -78,11 +104,25 @@ class MockRapidMigrationAssessmentConnection
            CreateAnnotationRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateAnnotation(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateAnnotation,
               (NoAwaitTag, google::cloud::rapidmigrationassessment::v1::
                                CreateAnnotationRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateAnnotation(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>>,
       CreateAnnotation, (google::longrunning::Operation const& operation),
@@ -109,9 +149,15 @@ class MockRapidMigrationAssessmentConnection
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateCollector)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateCollector(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateCollector(Matcher<google::cloud::rapidmigrationassessment::v1::UpdateCollectorRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>,
       UpdateCollector,
@@ -119,19 +165,39 @@ class MockRapidMigrationAssessmentConnection
            UpdateCollectorRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateCollector(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateCollector,
               (NoAwaitTag, google::cloud::rapidmigrationassessment::v1::
                                UpdateCollectorRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateCollector(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>,
       UpdateCollector, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteCollector)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteCollector(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteCollector(Matcher<google::cloud::rapidmigrationassessment::v1::DeleteCollectorRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>,
       DeleteCollector,
@@ -139,19 +205,39 @@ class MockRapidMigrationAssessmentConnection
            DeleteCollectorRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteCollector(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteCollector,
               (NoAwaitTag, google::cloud::rapidmigrationassessment::v1::
                                DeleteCollectorRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteCollector(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>,
       DeleteCollector, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ResumeCollector)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ResumeCollector(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ResumeCollector(Matcher<google::cloud::rapidmigrationassessment::v1::ResumeCollectorRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>,
       ResumeCollector,
@@ -159,19 +245,39 @@ class MockRapidMigrationAssessmentConnection
            ResumeCollectorRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ResumeCollector(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, ResumeCollector,
               (NoAwaitTag, google::cloud::rapidmigrationassessment::v1::
                                ResumeCollectorRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, ResumeCollector(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>,
       ResumeCollector, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, RegisterCollector)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, RegisterCollector(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RegisterCollector(Matcher<google::cloud::rapidmigrationassessment::v1::RegisterCollectorRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>,
       RegisterCollector,
@@ -179,19 +285,39 @@ class MockRapidMigrationAssessmentConnection
            RegisterCollectorRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, RegisterCollector(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, RegisterCollector,
               (NoAwaitTag, google::cloud::rapidmigrationassessment::v1::
                                RegisterCollectorRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RegisterCollector(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>,
       RegisterCollector, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, PauseCollector)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, PauseCollector(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PauseCollector(Matcher<google::cloud::rapidmigrationassessment::v1::PauseCollectorRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>,
       PauseCollector,
@@ -199,6 +325,12 @@ class MockRapidMigrationAssessmentConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, PauseCollector(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, PauseCollector,
       (NoAwaitTag,
@@ -206,6 +338,14 @@ class MockRapidMigrationAssessmentConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, PauseCollector(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>,
       PauseCollector, (google::longrunning::Operation const& operation),

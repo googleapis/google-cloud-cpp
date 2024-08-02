@@ -127,40 +127,80 @@ class MockProductSearchConnection : public vision_v1::ProductSearchConnection {
       (google::cloud::vision::v1::ListProductsInProductSetRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ImportProductSets)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ImportProductSets(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ImportProductSets(Matcher<google::cloud::vision::v1::ImportProductSetsRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>,
       ImportProductSets,
       (google::cloud::vision::v1::ImportProductSetsRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ImportProductSets(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ImportProductSets,
       (NoAwaitTag,
        google::cloud::vision::v1::ImportProductSetsRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ImportProductSets(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>,
       ImportProductSets, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, PurgeProducts)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, PurgeProducts(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PurgeProducts(Matcher<google::cloud::vision::v1::PurgeProductsRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>,
       PurgeProducts,
       (google::cloud::vision::v1::PurgeProductsRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, PurgeProducts(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, PurgeProducts,
               (NoAwaitTag,
                google::cloud::vision::v1::PurgeProductsRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, PurgeProducts(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>,
       PurgeProducts, (google::longrunning::Operation const& operation),

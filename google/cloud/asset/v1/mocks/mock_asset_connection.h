@@ -46,19 +46,39 @@ class MockAssetServiceConnection : public asset_v1::AssetServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ExportAssets)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ExportAssets(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ExportAssets(Matcher<google::cloud::asset::v1::ExportAssetsRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>>,
               ExportAssets,
               (google::cloud::asset::v1::ExportAssetsRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ExportAssets(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, ExportAssets,
               (NoAwaitTag,
                google::cloud::asset::v1::ExportAssetsRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, ExportAssets(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>>,
               ExportAssets, (google::longrunning::Operation const& operation),
               (override));
@@ -109,9 +129,15 @@ class MockAssetServiceConnection : public asset_v1::AssetServiceConnection {
       (google::cloud::asset::v1::AnalyzeIamPolicyRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, AnalyzeIamPolicyLongrunning)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, AnalyzeIamPolicyLongrunning(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// AnalyzeIamPolicyLongrunning(Matcher<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>,
@@ -120,6 +146,12 @@ class MockAssetServiceConnection : public asset_v1::AssetServiceConnection {
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, AnalyzeIamPolicyLongrunning(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, AnalyzeIamPolicyLongrunning,
       (NoAwaitTag,
@@ -127,6 +159,15 @@ class MockAssetServiceConnection : public asset_v1::AssetServiceConnection {
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// AnalyzeIamPolicyLongrunning(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>,

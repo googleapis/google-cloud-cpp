@@ -59,9 +59,15 @@ class MockImageAnnotatorConnection
       (google::cloud::vision::v1::BatchAnnotateFilesRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, AsyncBatchAnnotateImages)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, AsyncBatchAnnotateImages(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// AsyncBatchAnnotateImages(Matcher<google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<
                   google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>,
               AsyncBatchAnnotateImages,
@@ -69,6 +75,12 @@ class MockImageAnnotatorConnection
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, AsyncBatchAnnotateImages(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               AsyncBatchAnnotateImages,
               (NoAwaitTag,
@@ -76,14 +88,29 @@ class MockImageAnnotatorConnection
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// AsyncBatchAnnotateImages(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<
                   google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>,
               AsyncBatchAnnotateImages,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, AsyncBatchAnnotateFiles)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, AsyncBatchAnnotateFiles(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// AsyncBatchAnnotateFiles(Matcher<google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>,
@@ -92,12 +119,27 @@ class MockImageAnnotatorConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, AsyncBatchAnnotateFiles(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, AsyncBatchAnnotateFiles,
               (NoAwaitTag,
                google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// AsyncBatchAnnotateFiles(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>,

@@ -47,21 +47,41 @@ class MockRepositoryManagerConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateConnection)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateConnection(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateConnection(Matcher<google::devtools::cloudbuild::v2::CreateConnectionRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v2::Connection>>,
               CreateConnection,
               (google::devtools::cloudbuild::v2::CreateConnectionRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateConnection(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateConnection,
               (NoAwaitTag,
                google::devtools::cloudbuild::v2::CreateConnectionRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateConnection(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v2::Connection>>,
               CreateConnection,
               (google::longrunning::Operation const& operation), (override));
@@ -77,28 +97,54 @@ class MockRepositoryManagerConnection
       (google::devtools::cloudbuild::v2::ListConnectionsRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateConnection)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateConnection(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateConnection(Matcher<google::devtools::cloudbuild::v2::UpdateConnectionRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v2::Connection>>,
               UpdateConnection,
               (google::devtools::cloudbuild::v2::UpdateConnectionRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateConnection(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateConnection,
               (NoAwaitTag,
                google::devtools::cloudbuild::v2::UpdateConnectionRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateConnection(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v2::Connection>>,
               UpdateConnection,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteConnection)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteConnection(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteConnection(Matcher<google::devtools::cloudbuild::v2::DeleteConnectionRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>,
       DeleteConnection,
@@ -106,39 +152,79 @@ class MockRepositoryManagerConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteConnection(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteConnection,
               (NoAwaitTag,
                google::devtools::cloudbuild::v2::DeleteConnectionRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteConnection(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>,
       DeleteConnection, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateRepository)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateRepository(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateRepository(Matcher<google::devtools::cloudbuild::v2::CreateRepositoryRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v2::Repository>>,
               CreateRepository,
               (google::devtools::cloudbuild::v2::CreateRepositoryRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateRepository(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateRepository,
               (NoAwaitTag,
                google::devtools::cloudbuild::v2::CreateRepositoryRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateRepository(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v2::Repository>>,
               CreateRepository,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, BatchCreateRepositories)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, BatchCreateRepositories(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchCreateRepositories(Matcher<google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>,
@@ -147,6 +233,12 @@ class MockRepositoryManagerConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, BatchCreateRepositories(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, BatchCreateRepositories,
       (NoAwaitTag,
@@ -154,6 +246,15 @@ class MockRepositoryManagerConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchCreateRepositories(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>,
@@ -171,9 +272,15 @@ class MockRepositoryManagerConnection
       (google::devtools::cloudbuild::v2::ListRepositoriesRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteRepository)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteRepository(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteRepository(Matcher<google::devtools::cloudbuild::v2::DeleteRepositoryRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>,
       DeleteRepository,
@@ -181,12 +288,26 @@ class MockRepositoryManagerConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteRepository(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteRepository,
               (NoAwaitTag,
                google::devtools::cloudbuild::v2::DeleteRepositoryRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteRepository(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>,
       DeleteRepository, (google::longrunning::Operation const& operation),

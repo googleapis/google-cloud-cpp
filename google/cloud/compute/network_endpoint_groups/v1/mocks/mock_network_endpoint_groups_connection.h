@@ -58,15 +58,27 @@ class MockNetworkEndpointGroupsConnection
            AggregatedListNetworkEndpointGroupsRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, AttachNetworkEndpoints)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, AttachNetworkEndpoints(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// AttachNetworkEndpoints(Matcher<google::cloud::cpp::compute::network_endpoint_groups::v1::AttachNetworkEndpointsRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               AttachNetworkEndpoints,
               (google::cloud::cpp::compute::network_endpoint_groups::v1::
                    AttachNetworkEndpointsRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, AttachNetworkEndpoints(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               AttachNetworkEndpoints,
               (NoAwaitTag,
@@ -74,20 +86,41 @@ class MockNetworkEndpointGroupsConnection
                    AttachNetworkEndpointsRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// AttachNetworkEndpoints(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               AttachNetworkEndpoints,
               (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteNetworkEndpointGroup)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteNetworkEndpointGroup(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteNetworkEndpointGroup(Matcher<google::cloud::cpp::compute::network_endpoint_groups::v1::DeleteNetworkEndpointGroupRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteNetworkEndpointGroup,
               (google::cloud::cpp::compute::network_endpoint_groups::v1::
                    DeleteNetworkEndpointGroupRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteNetworkEndpointGroup(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               DeleteNetworkEndpointGroup,
               (NoAwaitTag,
@@ -95,20 +128,41 @@ class MockNetworkEndpointGroupsConnection
                    DeleteNetworkEndpointGroupRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteNetworkEndpointGroup(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteNetworkEndpointGroup,
               (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DetachNetworkEndpoints)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DetachNetworkEndpoints(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DetachNetworkEndpoints(Matcher<google::cloud::cpp::compute::network_endpoint_groups::v1::DetachNetworkEndpointsRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DetachNetworkEndpoints,
               (google::cloud::cpp::compute::network_endpoint_groups::v1::
                    DetachNetworkEndpointsRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DetachNetworkEndpoints(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               DetachNetworkEndpoints,
               (NoAwaitTag,
@@ -116,6 +170,15 @@ class MockNetworkEndpointGroupsConnection
                    DetachNetworkEndpointsRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DetachNetworkEndpoints(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DetachNetworkEndpoints,
               (google::cloud::cpp::compute::v1::Operation const& operation),
@@ -127,15 +190,27 @@ class MockNetworkEndpointGroupsConnection
                    GetNetworkEndpointGroupRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, InsertNetworkEndpointGroup)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, InsertNetworkEndpointGroup(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InsertNetworkEndpointGroup(Matcher<google::cloud::cpp::compute::network_endpoint_groups::v1::InsertNetworkEndpointGroupRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertNetworkEndpointGroup,
               (google::cloud::cpp::compute::network_endpoint_groups::v1::
                    InsertNetworkEndpointGroupRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, InsertNetworkEndpointGroup(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               InsertNetworkEndpointGroup,
               (NoAwaitTag,
@@ -143,6 +218,15 @@ class MockNetworkEndpointGroupsConnection
                    InsertNetworkEndpointGroupRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InsertNetworkEndpointGroup(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertNetworkEndpointGroup,
               (google::cloud::cpp::compute::v1::Operation const& operation),

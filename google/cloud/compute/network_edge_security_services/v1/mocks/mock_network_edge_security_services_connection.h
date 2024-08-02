@@ -58,16 +58,27 @@ class MockNetworkEdgeSecurityServicesConnection
            AggregatedListNetworkEdgeSecurityServicesRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteNetworkEdgeSecurityService)` is now ambiguous.
-  /// Use `EXPECT_CALL(*mock, DeleteNetworkEdgeSecurityService(::testing::_))`
-  /// instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteNetworkEdgeSecurityService(Matcher<google::cloud::cpp::compute::network_edge_security_services::v1::DeleteNetworkEdgeSecurityServiceRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteNetworkEdgeSecurityService,
               (google::cloud::cpp::compute::network_edge_security_services::v1::
                    DeleteNetworkEdgeSecurityServiceRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteNetworkEdgeSecurityService(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               DeleteNetworkEdgeSecurityService,
               (NoAwaitTag,
@@ -75,6 +86,15 @@ class MockNetworkEdgeSecurityServicesConnection
                    DeleteNetworkEdgeSecurityServiceRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteNetworkEdgeSecurityService(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteNetworkEdgeSecurityService,
               (google::cloud::cpp::compute::v1::Operation const& operation),
@@ -87,16 +107,27 @@ class MockNetworkEdgeSecurityServicesConnection
            GetNetworkEdgeSecurityServiceRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, InsertNetworkEdgeSecurityService)` is now ambiguous.
-  /// Use `EXPECT_CALL(*mock, InsertNetworkEdgeSecurityService(::testing::_))`
-  /// instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InsertNetworkEdgeSecurityService(Matcher<google::cloud::cpp::compute::network_edge_security_services::v1::InsertNetworkEdgeSecurityServiceRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertNetworkEdgeSecurityService,
               (google::cloud::cpp::compute::network_edge_security_services::v1::
                    InsertNetworkEdgeSecurityServiceRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, InsertNetworkEdgeSecurityService(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               InsertNetworkEdgeSecurityService,
               (NoAwaitTag,
@@ -104,21 +135,41 @@ class MockNetworkEdgeSecurityServicesConnection
                    InsertNetworkEdgeSecurityServiceRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InsertNetworkEdgeSecurityService(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertNetworkEdgeSecurityService,
               (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, PatchNetworkEdgeSecurityService)` is now ambiguous.
-  /// Use `EXPECT_CALL(*mock, PatchNetworkEdgeSecurityService(::testing::_))`
-  /// instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PatchNetworkEdgeSecurityService(Matcher<google::cloud::cpp::compute::network_edge_security_services::v1::PatchNetworkEdgeSecurityServiceRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchNetworkEdgeSecurityService,
               (google::cloud::cpp::compute::network_edge_security_services::v1::
                    PatchNetworkEdgeSecurityServiceRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, PatchNetworkEdgeSecurityService(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               PatchNetworkEdgeSecurityService,
               (NoAwaitTag,
@@ -126,6 +177,15 @@ class MockNetworkEdgeSecurityServicesConnection
                    PatchNetworkEdgeSecurityServiceRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PatchNetworkEdgeSecurityService(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchNetworkEdgeSecurityService,
               (google::cloud::cpp::compute::v1::Operation const& operation),

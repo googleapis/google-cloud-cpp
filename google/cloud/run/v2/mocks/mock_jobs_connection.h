@@ -46,18 +46,37 @@ class MockJobsConnection : public run_v2::JobsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateJob)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateJob(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateJob(Matcher<google::cloud::run::v2::CreateJobRequest const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Job>>, CreateJob,
               (google::cloud::run::v2::CreateJobRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateJob(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateJob,
               (NoAwaitTag,
                google::cloud::run::v2::CreateJobRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateJob(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Job>>, CreateJob,
               (google::longrunning::Operation const& operation), (override));
 
@@ -68,48 +87,105 @@ class MockJobsConnection : public run_v2::JobsConnection {
   MOCK_METHOD((StreamRange<google::cloud::run::v2::Job>), ListJobs,
               (google::cloud::run::v2::ListJobsRequest request), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateJob)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateJob(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateJob(Matcher<google::cloud::run::v2::UpdateJobRequest const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Job>>, UpdateJob,
               (google::cloud::run::v2::UpdateJobRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateJob(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateJob,
               (NoAwaitTag,
                google::cloud::run::v2::UpdateJobRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateJob(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Job>>, UpdateJob,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteJob)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteJob(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteJob(Matcher<google::cloud::run::v2::DeleteJobRequest const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Job>>, DeleteJob,
               (google::cloud::run::v2::DeleteJobRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteJob(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteJob,
               (NoAwaitTag,
                google::cloud::run::v2::DeleteJobRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteJob(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Job>>, DeleteJob,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, RunJob)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, RunJob(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, RunJob(Matcher<google::cloud::run::v2::RunJobRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Execution>>, RunJob,
               (google::cloud::run::v2::RunJobRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, RunJob(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, RunJob,
               (NoAwaitTag,
                google::cloud::run::v2::RunJobRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, RunJob(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Execution>>, RunJob,
               (google::longrunning::Operation const& operation), (override));
 

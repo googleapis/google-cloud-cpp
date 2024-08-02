@@ -61,9 +61,15 @@ class MockPolicyBasedRoutingServiceConnection
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreatePolicyBasedRoute)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreatePolicyBasedRoute(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreatePolicyBasedRoute(Matcher<google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>,
@@ -72,20 +78,40 @@ class MockPolicyBasedRoutingServiceConnection
            CreatePolicyBasedRouteRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreatePolicyBasedRoute(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreatePolicyBasedRoute,
               (NoAwaitTag, google::cloud::networkconnectivity::v1::
                                CreatePolicyBasedRouteRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreatePolicyBasedRoute(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>,
       CreatePolicyBasedRoute, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeletePolicyBasedRoute)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeletePolicyBasedRoute(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeletePolicyBasedRoute(Matcher<google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>,
@@ -94,11 +120,25 @@ class MockPolicyBasedRoutingServiceConnection
            DeletePolicyBasedRouteRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeletePolicyBasedRoute(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeletePolicyBasedRoute,
               (NoAwaitTag, google::cloud::networkconnectivity::v1::
                                DeletePolicyBasedRouteRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeletePolicyBasedRoute(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>,

@@ -55,21 +55,42 @@ class MockResourcePoliciesConnection
            AggregatedListResourcePoliciesRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteResourcePolicy)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteResourcePolicy(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteResourcePolicy(Matcher<google::cloud::cpp::compute::resource_policies::v1::DeleteResourcePolicyRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteResourcePolicy,
               (google::cloud::cpp::compute::resource_policies::v1::
                    DeleteResourcePolicyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteResourcePolicy(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               DeleteResourcePolicy,
               (NoAwaitTag, google::cloud::cpp::compute::resource_policies::v1::
                                DeleteResourcePolicyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteResourcePolicy(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteResourcePolicy,
               (google::cloud::cpp::compute::v1::Operation const& operation),
@@ -86,21 +107,42 @@ class MockResourcePoliciesConnection
                    GetIamPolicyRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, InsertResourcePolicy)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, InsertResourcePolicy(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InsertResourcePolicy(Matcher<google::cloud::cpp::compute::resource_policies::v1::InsertResourcePolicyRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertResourcePolicy,
               (google::cloud::cpp::compute::resource_policies::v1::
                    InsertResourcePolicyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, InsertResourcePolicy(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               InsertResourcePolicy,
               (NoAwaitTag, google::cloud::cpp::compute::resource_policies::v1::
                                InsertResourcePolicyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InsertResourcePolicy(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertResourcePolicy,
               (google::cloud::cpp::compute::v1::Operation const& operation),
@@ -112,21 +154,42 @@ class MockResourcePoliciesConnection
                    ListResourcePoliciesRequest request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, PatchResourcePolicy)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, PatchResourcePolicy(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PatchResourcePolicy(Matcher<google::cloud::cpp::compute::resource_policies::v1::PatchResourcePolicyRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchResourcePolicy,
               (google::cloud::cpp::compute::resource_policies::v1::
                    PatchResourcePolicyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, PatchResourcePolicy(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               PatchResourcePolicy,
               (NoAwaitTag, google::cloud::cpp::compute::resource_policies::v1::
                                PatchResourcePolicyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PatchResourcePolicy(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchResourcePolicy,
               (google::cloud::cpp::compute::v1::Operation const& operation),

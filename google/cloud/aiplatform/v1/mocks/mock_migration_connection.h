@@ -53,9 +53,15 @@ class MockMigrationServiceConnection
       (google::cloud::aiplatform::v1::SearchMigratableResourcesRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, BatchMigrateResources)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, BatchMigrateResources(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchMigrateResources(Matcher<google::cloud::aiplatform::v1::BatchMigrateResourcesRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>,
@@ -64,6 +70,12 @@ class MockMigrationServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, BatchMigrateResources(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, BatchMigrateResources,
       (NoAwaitTag,
@@ -71,6 +83,14 @@ class MockMigrationServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchMigrateResources(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>,

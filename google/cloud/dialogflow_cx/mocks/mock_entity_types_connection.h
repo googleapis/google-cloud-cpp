@@ -74,9 +74,15 @@ class MockEntityTypesConnection : public dialogflow_cx::EntityTypesConnection {
       (google::cloud::dialogflow::cx::v3::ListEntityTypesRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ExportEntityTypes)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ExportEntityTypes(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ExportEntityTypes(Matcher<google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::dialogflow::cx::v3::ExportEntityTypesResponse>>,
@@ -85,6 +91,12 @@ class MockEntityTypesConnection : public dialogflow_cx::EntityTypesConnection {
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ExportEntityTypes(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ExportEntityTypes,
       (NoAwaitTag,
@@ -92,15 +104,29 @@ class MockEntityTypesConnection : public dialogflow_cx::EntityTypesConnection {
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ExportEntityTypes(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::dialogflow::cx::v3::ExportEntityTypesResponse>>,
       ExportEntityTypes, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ImportEntityTypes)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ImportEntityTypes(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ImportEntityTypes(Matcher<google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>,
@@ -109,6 +135,12 @@ class MockEntityTypesConnection : public dialogflow_cx::EntityTypesConnection {
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ImportEntityTypes(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ImportEntityTypes,
       (NoAwaitTag,
@@ -116,6 +148,14 @@ class MockEntityTypesConnection : public dialogflow_cx::EntityTypesConnection {
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ImportEntityTypes(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>,
