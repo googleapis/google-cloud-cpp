@@ -47,21 +47,42 @@ class MockMachineImagesConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteMachineImage)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteMachineImage(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteMachineImage(Matcher<google::cloud::cpp::compute::machine_images::v1::DeleteMachineImageRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteMachineImage,
               (google::cloud::cpp::compute::machine_images::v1::
                    DeleteMachineImageRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteMachineImage(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               DeleteMachineImage,
               (NoAwaitTag, google::cloud::cpp::compute::machine_images::v1::
                                DeleteMachineImageRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteMachineImage(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteMachineImage,
               (google::cloud::cpp::compute::v1::Operation const& operation),
@@ -78,21 +99,42 @@ class MockMachineImagesConnection
                    GetIamPolicyRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, InsertMachineImage)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, InsertMachineImage(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InsertMachineImage(Matcher<google::cloud::cpp::compute::machine_images::v1::InsertMachineImageRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertMachineImage,
               (google::cloud::cpp::compute::machine_images::v1::
                    InsertMachineImageRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, InsertMachineImage(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               InsertMachineImage,
               (NoAwaitTag, google::cloud::cpp::compute::machine_images::v1::
                                InsertMachineImageRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InsertMachineImage(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertMachineImage,
               (google::cloud::cpp::compute::v1::Operation const& operation),

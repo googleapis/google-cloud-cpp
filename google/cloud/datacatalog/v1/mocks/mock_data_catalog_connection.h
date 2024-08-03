@@ -186,21 +186,41 @@ class MockDataCatalogConnection : public datacatalog_v1::DataCatalogConnection {
               (google::cloud::datacatalog::v1::ListTagsRequest request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ReconcileTags)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ReconcileTags(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ReconcileTags(Matcher<google::cloud::datacatalog::v1::ReconcileTagsRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>,
       ReconcileTags,
       (google::cloud::datacatalog::v1::ReconcileTagsRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ReconcileTags(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ReconcileTags,
       (NoAwaitTag,
        google::cloud::datacatalog::v1::ReconcileTagsRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, ReconcileTags(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>,
       ReconcileTags, (google::longrunning::Operation const& operation),
@@ -230,21 +250,41 @@ class MockDataCatalogConnection : public datacatalog_v1::DataCatalogConnection {
               (google::iam::v1::TestIamPermissionsRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ImportEntries)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ImportEntries(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ImportEntries(Matcher<google::cloud::datacatalog::v1::ImportEntriesRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>,
       ImportEntries,
       (google::cloud::datacatalog::v1::ImportEntriesRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ImportEntries(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ImportEntries,
       (NoAwaitTag,
        google::cloud::datacatalog::v1::ImportEntriesRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, ImportEntries(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>,
       ImportEntries, (google::longrunning::Operation const& operation),

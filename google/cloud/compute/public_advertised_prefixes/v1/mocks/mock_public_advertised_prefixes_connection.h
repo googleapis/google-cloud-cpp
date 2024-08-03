@@ -49,35 +49,67 @@ class MockPublicAdvertisedPrefixesConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, Announce)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, Announce(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// Announce(Matcher<google::cloud::cpp::compute::public_advertised_prefixes::v1::AnnounceRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               Announce,
               (google::cloud::cpp::compute::public_advertised_prefixes::v1::
                    AnnounceRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, Announce(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, Announce,
               (NoAwaitTag,
                google::cloud::cpp::compute::public_advertised_prefixes::v1::
                    AnnounceRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// Announce(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               Announce,
               (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeletePublicAdvertisedPrefix)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeletePublicAdvertisedPrefix(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeletePublicAdvertisedPrefix(Matcher<google::cloud::cpp::compute::public_advertised_prefixes::v1::DeletePublicAdvertisedPrefixRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeletePublicAdvertisedPrefix,
               (google::cloud::cpp::compute::public_advertised_prefixes::v1::
                    DeletePublicAdvertisedPrefixRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeletePublicAdvertisedPrefix(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               DeletePublicAdvertisedPrefix,
               (NoAwaitTag,
@@ -85,6 +117,15 @@ class MockPublicAdvertisedPrefixesConnection
                    DeletePublicAdvertisedPrefixRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeletePublicAdvertisedPrefix(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeletePublicAdvertisedPrefix,
               (google::cloud::cpp::compute::v1::Operation const& operation),
@@ -96,15 +137,27 @@ class MockPublicAdvertisedPrefixesConnection
                    GetPublicAdvertisedPrefixRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, InsertPublicAdvertisedPrefix)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, InsertPublicAdvertisedPrefix(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InsertPublicAdvertisedPrefix(Matcher<google::cloud::cpp::compute::public_advertised_prefixes::v1::InsertPublicAdvertisedPrefixRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertPublicAdvertisedPrefix,
               (google::cloud::cpp::compute::public_advertised_prefixes::v1::
                    InsertPublicAdvertisedPrefixRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, InsertPublicAdvertisedPrefix(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               InsertPublicAdvertisedPrefix,
               (NoAwaitTag,
@@ -112,6 +165,15 @@ class MockPublicAdvertisedPrefixesConnection
                    InsertPublicAdvertisedPrefixRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InsertPublicAdvertisedPrefix(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertPublicAdvertisedPrefix,
               (google::cloud::cpp::compute::v1::Operation const& operation),
@@ -124,15 +186,27 @@ class MockPublicAdvertisedPrefixesConnection
            ListPublicAdvertisedPrefixesRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, PatchPublicAdvertisedPrefix)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, PatchPublicAdvertisedPrefix(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PatchPublicAdvertisedPrefix(Matcher<google::cloud::cpp::compute::public_advertised_prefixes::v1::PatchPublicAdvertisedPrefixRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchPublicAdvertisedPrefix,
               (google::cloud::cpp::compute::public_advertised_prefixes::v1::
                    PatchPublicAdvertisedPrefixRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, PatchPublicAdvertisedPrefix(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               PatchPublicAdvertisedPrefix,
               (NoAwaitTag,
@@ -140,26 +214,55 @@ class MockPublicAdvertisedPrefixesConnection
                    PatchPublicAdvertisedPrefixRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PatchPublicAdvertisedPrefix(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchPublicAdvertisedPrefix,
               (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, Withdraw)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, Withdraw(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// Withdraw(Matcher<google::cloud::cpp::compute::public_advertised_prefixes::v1::WithdrawRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               Withdraw,
               (google::cloud::cpp::compute::public_advertised_prefixes::v1::
                    WithdrawRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, Withdraw(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, Withdraw,
               (NoAwaitTag,
                google::cloud::cpp::compute::public_advertised_prefixes::v1::
                    WithdrawRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// Withdraw(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               Withdraw,
               (google::cloud::cpp::compute::v1::Operation const& operation),

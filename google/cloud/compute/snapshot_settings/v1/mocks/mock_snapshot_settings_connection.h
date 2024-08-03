@@ -53,21 +53,42 @@ class MockSnapshotSettingsConnection
                    GetSnapshotSettingsRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, PatchSnapshotSettings)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, PatchSnapshotSettings(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PatchSnapshotSettings(Matcher<google::cloud::cpp::compute::snapshot_settings::v1::PatchSnapshotSettingsRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchSnapshotSettings,
               (google::cloud::cpp::compute::snapshot_settings::v1::
                    PatchSnapshotSettingsRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, PatchSnapshotSettings(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               PatchSnapshotSettings,
               (NoAwaitTag, google::cloud::cpp::compute::snapshot_settings::v1::
                                PatchSnapshotSettingsRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PatchSnapshotSettings(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchSnapshotSettings,
               (google::cloud::cpp::compute::v1::Operation const& operation),

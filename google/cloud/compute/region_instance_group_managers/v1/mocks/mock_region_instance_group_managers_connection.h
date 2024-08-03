@@ -49,15 +49,27 @@ class MockRegionInstanceGroupManagersConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, AbandonInstances)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, AbandonInstances(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// AbandonInstances(Matcher<google::cloud::cpp::compute::region_instance_group_managers::v1::AbandonInstancesRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               AbandonInstances,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
                    AbandonInstancesRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, AbandonInstances(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               AbandonInstances,
               (NoAwaitTag,
@@ -65,20 +77,41 @@ class MockRegionInstanceGroupManagersConnection
                    AbandonInstancesRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// AbandonInstances(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               AbandonInstances,
               (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ApplyUpdatesToInstances)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ApplyUpdatesToInstances(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ApplyUpdatesToInstances(Matcher<google::cloud::cpp::compute::region_instance_group_managers::v1::ApplyUpdatesToInstancesRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               ApplyUpdatesToInstances,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
                    ApplyUpdatesToInstancesRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ApplyUpdatesToInstances(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               ApplyUpdatesToInstances,
               (NoAwaitTag,
@@ -86,20 +119,41 @@ class MockRegionInstanceGroupManagersConnection
                    ApplyUpdatesToInstancesRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ApplyUpdatesToInstances(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               ApplyUpdatesToInstances,
               (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateInstances)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateInstances(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateInstances(Matcher<google::cloud::cpp::compute::region_instance_group_managers::v1::CreateInstancesRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               CreateInstances,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
                    CreateInstancesRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateInstances(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               CreateInstances,
               (NoAwaitTag,
@@ -107,20 +161,41 @@ class MockRegionInstanceGroupManagersConnection
                    CreateInstancesRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateInstances(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               CreateInstances,
               (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteInstanceGroupManager)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteInstanceGroupManager(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteInstanceGroupManager(Matcher<google::cloud::cpp::compute::region_instance_group_managers::v1::DeleteInstanceGroupManagerRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteInstanceGroupManager,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
                    DeleteInstanceGroupManagerRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteInstanceGroupManager(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               DeleteInstanceGroupManager,
               (NoAwaitTag,
@@ -128,20 +203,41 @@ class MockRegionInstanceGroupManagersConnection
                    DeleteInstanceGroupManagerRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteInstanceGroupManager(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteInstanceGroupManager,
               (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteInstances)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteInstances(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteInstances(Matcher<google::cloud::cpp::compute::region_instance_group_managers::v1::DeleteInstancesRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteInstances,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
                    DeleteInstancesRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteInstances(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               DeleteInstances,
               (NoAwaitTag,
@@ -149,20 +245,41 @@ class MockRegionInstanceGroupManagersConnection
                    DeleteInstancesRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteInstances(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteInstances,
               (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeletePerInstanceConfigs)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeletePerInstanceConfigs(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeletePerInstanceConfigs(Matcher<google::cloud::cpp::compute::region_instance_group_managers::v1::DeletePerInstanceConfigsRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeletePerInstanceConfigs,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
                    DeletePerInstanceConfigsRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeletePerInstanceConfigs(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               DeletePerInstanceConfigs,
               (NoAwaitTag,
@@ -170,6 +287,15 @@ class MockRegionInstanceGroupManagersConnection
                    DeletePerInstanceConfigsRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeletePerInstanceConfigs(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeletePerInstanceConfigs,
               (google::cloud::cpp::compute::v1::Operation const& operation),
@@ -181,15 +307,27 @@ class MockRegionInstanceGroupManagersConnection
                    GetInstanceGroupManagerRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, InsertInstanceGroupManager)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, InsertInstanceGroupManager(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InsertInstanceGroupManager(Matcher<google::cloud::cpp::compute::region_instance_group_managers::v1::InsertInstanceGroupManagerRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertInstanceGroupManager,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
                    InsertInstanceGroupManagerRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, InsertInstanceGroupManager(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               InsertInstanceGroupManager,
               (NoAwaitTag,
@@ -197,6 +335,15 @@ class MockRegionInstanceGroupManagersConnection
                    InsertInstanceGroupManagerRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InsertInstanceGroupManager(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertInstanceGroupManager,
               (google::cloud::cpp::compute::v1::Operation const& operation),
@@ -229,15 +376,27 @@ class MockRegionInstanceGroupManagersConnection
                    ListPerInstanceConfigsRequest request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, PatchInstanceGroupManager)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, PatchInstanceGroupManager(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PatchInstanceGroupManager(Matcher<google::cloud::cpp::compute::region_instance_group_managers::v1::PatchInstanceGroupManagerRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchInstanceGroupManager,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
                    PatchInstanceGroupManagerRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, PatchInstanceGroupManager(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               PatchInstanceGroupManager,
               (NoAwaitTag,
@@ -245,20 +404,41 @@ class MockRegionInstanceGroupManagersConnection
                    PatchInstanceGroupManagerRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PatchInstanceGroupManager(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchInstanceGroupManager,
               (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, PatchPerInstanceConfigs)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, PatchPerInstanceConfigs(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PatchPerInstanceConfigs(Matcher<google::cloud::cpp::compute::region_instance_group_managers::v1::PatchPerInstanceConfigsRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchPerInstanceConfigs,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
                    PatchPerInstanceConfigsRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, PatchPerInstanceConfigs(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               PatchPerInstanceConfigs,
               (NoAwaitTag,
@@ -266,20 +446,41 @@ class MockRegionInstanceGroupManagersConnection
                    PatchPerInstanceConfigsRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PatchPerInstanceConfigs(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchPerInstanceConfigs,
               (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, RecreateInstances)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, RecreateInstances(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RecreateInstances(Matcher<google::cloud::cpp::compute::region_instance_group_managers::v1::RecreateInstancesRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               RecreateInstances,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
                    RecreateInstancesRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, RecreateInstances(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               RecreateInstances,
               (NoAwaitTag,
@@ -287,40 +488,81 @@ class MockRegionInstanceGroupManagersConnection
                    RecreateInstancesRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RecreateInstances(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               RecreateInstances,
               (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, Resize)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, Resize(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// Resize(Matcher<google::cloud::cpp::compute::region_instance_group_managers::v1::ResizeRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               Resize,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
                    ResizeRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, Resize(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, Resize,
               (NoAwaitTag,
                google::cloud::cpp::compute::region_instance_group_managers::v1::
                    ResizeRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// Resize(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               Resize,
               (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, SetInstanceTemplate)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, SetInstanceTemplate(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// SetInstanceTemplate(Matcher<google::cloud::cpp::compute::region_instance_group_managers::v1::SetInstanceTemplateRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetInstanceTemplate,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
                    SetInstanceTemplateRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, SetInstanceTemplate(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               SetInstanceTemplate,
               (NoAwaitTag,
@@ -328,20 +570,41 @@ class MockRegionInstanceGroupManagersConnection
                    SetInstanceTemplateRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// SetInstanceTemplate(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetInstanceTemplate,
               (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, SetTargetPools)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, SetTargetPools(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// SetTargetPools(Matcher<google::cloud::cpp::compute::region_instance_group_managers::v1::SetTargetPoolsRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetTargetPools,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
                    SetTargetPoolsRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, SetTargetPools(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               SetTargetPools,
               (NoAwaitTag,
@@ -349,20 +612,41 @@ class MockRegionInstanceGroupManagersConnection
                    SetTargetPoolsRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// SetTargetPools(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetTargetPools,
               (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdatePerInstanceConfigs)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdatePerInstanceConfigs(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdatePerInstanceConfigs(Matcher<google::cloud::cpp::compute::region_instance_group_managers::v1::UpdatePerInstanceConfigsRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               UpdatePerInstanceConfigs,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
                    UpdatePerInstanceConfigsRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdatePerInstanceConfigs(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               UpdatePerInstanceConfigs,
               (NoAwaitTag,
@@ -370,6 +654,15 @@ class MockRegionInstanceGroupManagersConnection
                    UpdatePerInstanceConfigsRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdatePerInstanceConfigs(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               UpdatePerInstanceConfigs,
               (google::cloud::cpp::compute::v1::Operation const& operation),

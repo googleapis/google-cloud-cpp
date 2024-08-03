@@ -81,9 +81,15 @@ class MockCertificateAuthorityServiceConnection
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ActivateCertificateAuthority)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ActivateCertificateAuthority(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ActivateCertificateAuthority(Matcher<google::cloud::security::privateca::v1::ActivateCertificateAuthorityRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::security::privateca::v1::CertificateAuthority>>,
@@ -92,6 +98,12 @@ class MockCertificateAuthorityServiceConnection
            ActivateCertificateAuthorityRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ActivateCertificateAuthority(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               ActivateCertificateAuthority,
               (NoAwaitTag,
@@ -99,15 +111,30 @@ class MockCertificateAuthorityServiceConnection
                    ActivateCertificateAuthorityRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ActivateCertificateAuthority(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::security::privateca::v1::CertificateAuthority>>,
       ActivateCertificateAuthority,
       (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateCertificateAuthority)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateCertificateAuthority(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateCertificateAuthority(Matcher<google::cloud::security::privateca::v1::CreateCertificateAuthorityRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::security::privateca::v1::CertificateAuthority>>,
@@ -116,6 +143,12 @@ class MockCertificateAuthorityServiceConnection
            CreateCertificateAuthorityRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateCertificateAuthority(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               CreateCertificateAuthority,
               (NoAwaitTag,
@@ -123,15 +156,30 @@ class MockCertificateAuthorityServiceConnection
                    CreateCertificateAuthorityRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateCertificateAuthority(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::security::privateca::v1::CertificateAuthority>>,
       CreateCertificateAuthority,
       (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DisableCertificateAuthority)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DisableCertificateAuthority(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DisableCertificateAuthority(Matcher<google::cloud::security::privateca::v1::DisableCertificateAuthorityRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::security::privateca::v1::CertificateAuthority>>,
@@ -140,6 +188,12 @@ class MockCertificateAuthorityServiceConnection
            DisableCertificateAuthorityRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DisableCertificateAuthority(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               DisableCertificateAuthority,
               (NoAwaitTag,
@@ -147,15 +201,30 @@ class MockCertificateAuthorityServiceConnection
                    DisableCertificateAuthorityRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DisableCertificateAuthority(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::security::privateca::v1::CertificateAuthority>>,
       DisableCertificateAuthority,
       (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, EnableCertificateAuthority)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, EnableCertificateAuthority(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// EnableCertificateAuthority(Matcher<google::cloud::security::privateca::v1::EnableCertificateAuthorityRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::security::privateca::v1::CertificateAuthority>>,
@@ -164,6 +233,12 @@ class MockCertificateAuthorityServiceConnection
            EnableCertificateAuthorityRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, EnableCertificateAuthority(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               EnableCertificateAuthority,
               (NoAwaitTag,
@@ -171,6 +246,15 @@ class MockCertificateAuthorityServiceConnection
                    EnableCertificateAuthorityRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// EnableCertificateAuthority(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::security::privateca::v1::CertificateAuthority>>,
@@ -199,9 +283,15 @@ class MockCertificateAuthorityServiceConnection
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UndeleteCertificateAuthority)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UndeleteCertificateAuthority(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UndeleteCertificateAuthority(Matcher<google::cloud::security::privateca::v1::UndeleteCertificateAuthorityRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::security::privateca::v1::CertificateAuthority>>,
@@ -210,6 +300,12 @@ class MockCertificateAuthorityServiceConnection
            UndeleteCertificateAuthorityRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UndeleteCertificateAuthority(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               UndeleteCertificateAuthority,
               (NoAwaitTag,
@@ -217,15 +313,30 @@ class MockCertificateAuthorityServiceConnection
                    UndeleteCertificateAuthorityRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UndeleteCertificateAuthority(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::security::privateca::v1::CertificateAuthority>>,
       UndeleteCertificateAuthority,
       (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteCertificateAuthority)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteCertificateAuthority(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteCertificateAuthority(Matcher<google::cloud::security::privateca::v1::DeleteCertificateAuthorityRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::security::privateca::v1::CertificateAuthority>>,
@@ -234,6 +345,12 @@ class MockCertificateAuthorityServiceConnection
            DeleteCertificateAuthorityRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteCertificateAuthority(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               DeleteCertificateAuthority,
               (NoAwaitTag,
@@ -241,15 +358,30 @@ class MockCertificateAuthorityServiceConnection
                    DeleteCertificateAuthorityRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteCertificateAuthority(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::security::privateca::v1::CertificateAuthority>>,
       DeleteCertificateAuthority,
       (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateCertificateAuthority)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateCertificateAuthority(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateCertificateAuthority(Matcher<google::cloud::security::privateca::v1::UpdateCertificateAuthorityRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::security::privateca::v1::CertificateAuthority>>,
@@ -258,6 +390,12 @@ class MockCertificateAuthorityServiceConnection
            UpdateCertificateAuthorityRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateCertificateAuthority(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               UpdateCertificateAuthority,
               (NoAwaitTag,
@@ -265,15 +403,30 @@ class MockCertificateAuthorityServiceConnection
                    UpdateCertificateAuthorityRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateCertificateAuthority(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::security::privateca::v1::CertificateAuthority>>,
       UpdateCertificateAuthority,
       (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateCaPool)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateCaPool(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateCaPool(Matcher<google::cloud::security::privateca::v1::CreateCaPoolRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::security::privateca::v1::CaPool>>,
       CreateCaPool,
@@ -281,6 +434,12 @@ class MockCertificateAuthorityServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateCaPool(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateCaPool,
       (NoAwaitTag,
@@ -288,13 +447,27 @@ class MockCertificateAuthorityServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateCaPool(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::security::privateca::v1::CaPool>>,
               CreateCaPool, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateCaPool)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateCaPool(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateCaPool(Matcher<google::cloud::security::privateca::v1::UpdateCaPoolRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::security::privateca::v1::CaPool>>,
       UpdateCaPool,
@@ -302,6 +475,12 @@ class MockCertificateAuthorityServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateCaPool(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateCaPool,
       (NoAwaitTag,
@@ -309,6 +488,14 @@ class MockCertificateAuthorityServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateCaPool(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::security::privateca::v1::CaPool>>,
               UpdateCaPool, (google::longrunning::Operation const& operation),
               (override));
@@ -324,9 +511,15 @@ class MockCertificateAuthorityServiceConnection
       (google::cloud::security::privateca::v1::ListCaPoolsRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteCaPool)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteCaPool(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteCaPool(Matcher<google::cloud::security::privateca::v1::DeleteCaPoolRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>,
@@ -335,6 +528,12 @@ class MockCertificateAuthorityServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteCaPool(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteCaPool,
       (NoAwaitTag,
@@ -342,6 +541,14 @@ class MockCertificateAuthorityServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteCaPool(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>,
@@ -371,10 +578,15 @@ class MockCertificateAuthorityServiceConnection
            ListCertificateRevocationListsRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateCertificateRevocationList)` is now ambiguous.
-  /// Use `EXPECT_CALL(*mock, UpdateCertificateRevocationList(::testing::_))`
-  /// instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateCertificateRevocationList(Matcher<google::cloud::security::privateca::v1::UpdateCertificateRevocationListRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::security::privateca::v1::CertificateRevocationList>>,
@@ -383,6 +595,12 @@ class MockCertificateAuthorityServiceConnection
            UpdateCertificateRevocationListRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateCertificateRevocationList(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               UpdateCertificateRevocationList,
               (NoAwaitTag,
@@ -390,15 +608,30 @@ class MockCertificateAuthorityServiceConnection
                    UpdateCertificateRevocationListRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateCertificateRevocationList(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::security::privateca::v1::CertificateRevocationList>>,
       UpdateCertificateRevocationList,
       (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateCertificateTemplate)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateCertificateTemplate(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateCertificateTemplate(Matcher<google::cloud::security::privateca::v1::CreateCertificateTemplateRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<
                   google::cloud::security::privateca::v1::CertificateTemplate>>,
               CreateCertificateTemplate,
@@ -406,20 +639,41 @@ class MockCertificateAuthorityServiceConnection
                    CreateCertificateTemplateRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateCertificateTemplate(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               CreateCertificateTemplate,
               (NoAwaitTag, google::cloud::security::privateca::v1::
                                CreateCertificateTemplateRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateCertificateTemplate(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<
                   google::cloud::security::privateca::v1::CertificateTemplate>>,
               CreateCertificateTemplate,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteCertificateTemplate)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteCertificateTemplate(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteCertificateTemplate(Matcher<google::cloud::security::privateca::v1::DeleteCertificateTemplateRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>,
@@ -428,12 +682,27 @@ class MockCertificateAuthorityServiceConnection
            DeleteCertificateTemplateRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteCertificateTemplate(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               DeleteCertificateTemplate,
               (NoAwaitTag, google::cloud::security::privateca::v1::
                                DeleteCertificateTemplateRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteCertificateTemplate(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>,
@@ -455,9 +724,15 @@ class MockCertificateAuthorityServiceConnection
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateCertificateTemplate)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateCertificateTemplate(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateCertificateTemplate(Matcher<google::cloud::security::privateca::v1::UpdateCertificateTemplateRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<
                   google::cloud::security::privateca::v1::CertificateTemplate>>,
               UpdateCertificateTemplate,
@@ -465,12 +740,27 @@ class MockCertificateAuthorityServiceConnection
                    UpdateCertificateTemplateRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateCertificateTemplate(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               UpdateCertificateTemplate,
               (NoAwaitTag, google::cloud::security::privateca::v1::
                                UpdateCertificateTemplateRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateCertificateTemplate(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<
                   google::cloud::security::privateca::v1::CertificateTemplate>>,
               UpdateCertificateTemplate,

@@ -62,97 +62,197 @@ class MockProjectsConnection : public resourcemanager_v3::ProjectsConnection {
       (google::cloud::resourcemanager::v3::SearchProjectsRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateProject)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateProject(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateProject(Matcher<google::cloud::resourcemanager::v3::CreateProjectRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::resourcemanager::v3::Project>>,
       CreateProject,
       (google::cloud::resourcemanager::v3::CreateProjectRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateProject(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateProject,
       (NoAwaitTag,
        google::cloud::resourcemanager::v3::CreateProjectRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateProject(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::Project>>,
               CreateProject, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateProject)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateProject(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateProject(Matcher<google::cloud::resourcemanager::v3::UpdateProjectRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::resourcemanager::v3::Project>>,
       UpdateProject,
       (google::cloud::resourcemanager::v3::UpdateProjectRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateProject(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateProject,
       (NoAwaitTag,
        google::cloud::resourcemanager::v3::UpdateProjectRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateProject(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::Project>>,
               UpdateProject, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, MoveProject)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, MoveProject(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// MoveProject(Matcher<google::cloud::resourcemanager::v3::MoveProjectRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::resourcemanager::v3::Project>>,
       MoveProject,
       (google::cloud::resourcemanager::v3::MoveProjectRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, MoveProject(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, MoveProject,
       (NoAwaitTag,
        google::cloud::resourcemanager::v3::MoveProjectRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, MoveProject(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::Project>>,
               MoveProject, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteProject)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteProject(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteProject(Matcher<google::cloud::resourcemanager::v3::DeleteProjectRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::resourcemanager::v3::Project>>,
       DeleteProject,
       (google::cloud::resourcemanager::v3::DeleteProjectRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteProject(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteProject,
       (NoAwaitTag,
        google::cloud::resourcemanager::v3::DeleteProjectRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteProject(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::Project>>,
               DeleteProject, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UndeleteProject)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UndeleteProject(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UndeleteProject(Matcher<google::cloud::resourcemanager::v3::UndeleteProjectRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::Project>>,
               UndeleteProject,
               (google::cloud::resourcemanager::v3::UndeleteProjectRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UndeleteProject(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UndeleteProject,
               (NoAwaitTag,
                google::cloud::resourcemanager::v3::UndeleteProjectRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UndeleteProject(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::Project>>,
               UndeleteProject,
               (google::longrunning::Operation const& operation), (override));

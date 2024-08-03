@@ -56,21 +56,41 @@ class MockVersionsConnection : public dialogflow_cx::VersionsConnection {
       (google::cloud::dialogflow::cx::v3::GetVersionRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateVersion)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateVersion(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateVersion(Matcher<google::cloud::dialogflow::cx::v3::CreateVersionRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::cx::v3::Version>>,
       CreateVersion,
       (google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateVersion(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateVersion,
       (NoAwaitTag,
        google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateVersion(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::cx::v3::Version>>,
               CreateVersion, (google::longrunning::Operation const& operation),
               (override));
@@ -85,20 +105,40 @@ class MockVersionsConnection : public dialogflow_cx::VersionsConnection {
       (google::cloud::dialogflow::cx::v3::DeleteVersionRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, LoadVersion)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, LoadVersion(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// LoadVersion(Matcher<google::cloud::dialogflow::cx::v3::LoadVersionRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::protobuf::Struct>>, LoadVersion,
       (google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, LoadVersion(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, LoadVersion,
       (NoAwaitTag,
        google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, LoadVersion(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, LoadVersion,
               (google::longrunning::Operation const& operation), (override));
 

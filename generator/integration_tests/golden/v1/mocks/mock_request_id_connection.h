@@ -50,17 +50,36 @@ class MockRequestIdServiceConnection : public golden_v1::RequestIdServiceConnect
   CreateFoo,
   (google::test::requestid::v1::CreateFooRequest const& request), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, RenameFoo)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, RenameFoo(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, RenameFoo(Matcher<google::test::requestid::v1::RenameFooRequest const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::test::requestid::v1::Foo>>,
   RenameFoo,
   (google::test::requestid::v1::RenameFooRequest const& request), (override));
 
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, RenameFoo(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
   RenameFoo, (NoAwaitTag,
     google::test::requestid::v1::RenameFooRequest const& request), (override));
 
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, RenameFoo(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::test::requestid::v1::Foo>>,
   RenameFoo, (
     google::longrunning::Operation const& operation), (override));

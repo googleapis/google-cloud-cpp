@@ -59,9 +59,15 @@ class MockUserEventServiceConnection
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ImportUserEvents)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ImportUserEvents(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ImportUserEvents(Matcher<google::cloud::discoveryengine::v1::ImportUserEventsRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::discoveryengine::v1::ImportUserEventsResponse>>,
@@ -70,6 +76,12 @@ class MockUserEventServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ImportUserEvents(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ImportUserEvents,
       (NoAwaitTag,
@@ -77,6 +89,14 @@ class MockUserEventServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, ImportUserEvents(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::discoveryengine::v1::ImportUserEventsResponse>>,

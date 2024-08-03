@@ -125,9 +125,15 @@ class MockAnalyticsHubServiceConnection
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, SubscribeDataExchange)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, SubscribeDataExchange(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// SubscribeDataExchange(Matcher<google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::bigquery::analyticshub::v1::
                                   SubscribeDataExchangeResponse>>,
               SubscribeDataExchange,
@@ -135,19 +141,39 @@ class MockAnalyticsHubServiceConnection
                    SubscribeDataExchangeRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, SubscribeDataExchange(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, SubscribeDataExchange,
               (NoAwaitTag, google::cloud::bigquery::analyticshub::v1::
                                SubscribeDataExchangeRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// SubscribeDataExchange(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::bigquery::analyticshub::v1::
                                   SubscribeDataExchangeResponse>>,
               SubscribeDataExchange,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, RefreshSubscription)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, RefreshSubscription(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RefreshSubscription(Matcher<google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::bigquery::analyticshub::v1::
                                   RefreshSubscriptionResponse>>,
               RefreshSubscription,
@@ -155,11 +181,25 @@ class MockAnalyticsHubServiceConnection
                    RefreshSubscriptionRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, RefreshSubscription(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, RefreshSubscription,
               (NoAwaitTag, google::cloud::bigquery::analyticshub::v1::
                                RefreshSubscriptionRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RefreshSubscription(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::bigquery::analyticshub::v1::
                                   RefreshSubscriptionResponse>>,
               RefreshSubscription,
@@ -193,9 +233,15 @@ class MockAnalyticsHubServiceConnection
                    RevokeSubscriptionRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteSubscription)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteSubscription(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteSubscription(Matcher<google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::bigquery::analyticshub::v1::OperationMetadata>>,
@@ -204,11 +250,25 @@ class MockAnalyticsHubServiceConnection
            DeleteSubscriptionRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteSubscription(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteSubscription,
               (NoAwaitTag, google::cloud::bigquery::analyticshub::v1::
                                DeleteSubscriptionRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteSubscription(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::bigquery::analyticshub::v1::OperationMetadata>>,

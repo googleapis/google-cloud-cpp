@@ -54,36 +54,76 @@ class MockIDSConnection : public ids_v1::IDSConnection {
               (google::cloud::ids::v1::GetEndpointRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateEndpoint)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateEndpoint(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateEndpoint(Matcher<google::cloud::ids::v1::CreateEndpointRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::ids::v1::Endpoint>>,
               CreateEndpoint,
               (google::cloud::ids::v1::CreateEndpointRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateEndpoint(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateEndpoint,
               (NoAwaitTag,
                google::cloud::ids::v1::CreateEndpointRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateEndpoint(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::ids::v1::Endpoint>>,
               CreateEndpoint, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteEndpoint)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteEndpoint(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteEndpoint(Matcher<google::cloud::ids::v1::DeleteEndpointRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::ids::v1::OperationMetadata>>,
               DeleteEndpoint,
               (google::cloud::ids::v1::DeleteEndpointRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteEndpoint(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteEndpoint,
               (NoAwaitTag,
                google::cloud::ids::v1::DeleteEndpointRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteEndpoint(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::ids::v1::OperationMetadata>>,
               DeleteEndpoint, (google::longrunning::Operation const& operation),
               (override));

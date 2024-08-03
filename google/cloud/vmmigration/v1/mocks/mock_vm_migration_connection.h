@@ -55,57 +55,117 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
               (google::cloud::vmmigration::v1::GetSourceRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateSource)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateSource(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateSource(Matcher<google::cloud::vmmigration::v1::CreateSourceRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::Source>>, CreateSource,
       (google::cloud::vmmigration::v1::CreateSourceRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateSource(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateSource,
       (NoAwaitTag,
        google::cloud::vmmigration::v1::CreateSourceRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateSource(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::vmmigration::v1::Source>>,
               CreateSource, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateSource)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateSource(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateSource(Matcher<google::cloud::vmmigration::v1::UpdateSourceRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::Source>>, UpdateSource,
       (google::cloud::vmmigration::v1::UpdateSourceRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateSource(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateSource,
       (NoAwaitTag,
        google::cloud::vmmigration::v1::UpdateSourceRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateSource(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::vmmigration::v1::Source>>,
               UpdateSource, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteSource)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteSource(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteSource(Matcher<google::cloud::vmmigration::v1::DeleteSourceRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>,
       DeleteSource,
       (google::cloud::vmmigration::v1::DeleteSourceRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteSource(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteSource,
       (NoAwaitTag,
        google::cloud::vmmigration::v1::DeleteSourceRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteSource(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>,
       DeleteSource, (google::longrunning::Operation const& operation),
@@ -130,9 +190,15 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateUtilizationReport)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateUtilizationReport(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateUtilizationReport(Matcher<google::cloud::vmmigration::v1::CreateUtilizationReportRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::UtilizationReport>>,
       CreateUtilizationReport,
@@ -140,6 +206,12 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateUtilizationReport(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateUtilizationReport,
       (NoAwaitTag,
@@ -147,14 +219,29 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateUtilizationReport(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::UtilizationReport>>,
       CreateUtilizationReport,
       (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteUtilizationReport)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteUtilizationReport(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteUtilizationReport(Matcher<google::cloud::vmmigration::v1::DeleteUtilizationReportRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>,
       DeleteUtilizationReport,
@@ -162,6 +249,12 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteUtilizationReport(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteUtilizationReport,
       (NoAwaitTag,
@@ -169,6 +262,15 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteUtilizationReport(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>,
       DeleteUtilizationReport,
@@ -187,9 +289,15 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateDatacenterConnector)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateDatacenterConnector(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateDatacenterConnector(Matcher<google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>>,
       CreateDatacenterConnector,
@@ -197,6 +305,12 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateDatacenterConnector(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateDatacenterConnector,
       (NoAwaitTag,
@@ -204,14 +318,29 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateDatacenterConnector(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>>,
       CreateDatacenterConnector,
       (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteDatacenterConnector)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteDatacenterConnector(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteDatacenterConnector(Matcher<google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>,
       DeleteDatacenterConnector,
@@ -219,6 +348,12 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteDatacenterConnector(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteDatacenterConnector,
       (NoAwaitTag,
@@ -226,14 +361,29 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteDatacenterConnector(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>,
       DeleteDatacenterConnector,
       (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpgradeAppliance)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpgradeAppliance(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpgradeAppliance(Matcher<google::cloud::vmmigration::v1::UpgradeApplianceRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::vmmigration::v1::UpgradeApplianceResponse>>,
@@ -241,33 +391,67 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
       (google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpgradeAppliance(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpgradeAppliance,
       (NoAwaitTag,
        google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpgradeAppliance(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::vmmigration::v1::UpgradeApplianceResponse>>,
       UpgradeAppliance, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateMigratingVm)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateMigratingVm(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateMigratingVm(Matcher<google::cloud::vmmigration::v1::CreateMigratingVmRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>,
       CreateMigratingVm,
       (google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateMigratingVm(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateMigratingVm,
       (NoAwaitTag,
        google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateMigratingVm(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>,
               CreateMigratingVm,
               (google::longrunning::Operation const& operation), (override));
@@ -282,108 +466,214 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
       (google::cloud::vmmigration::v1::GetMigratingVmRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateMigratingVm)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateMigratingVm(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateMigratingVm(Matcher<google::cloud::vmmigration::v1::UpdateMigratingVmRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>,
       UpdateMigratingVm,
       (google::cloud::vmmigration::v1::UpdateMigratingVmRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateMigratingVm(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateMigratingVm,
       (NoAwaitTag,
        google::cloud::vmmigration::v1::UpdateMigratingVmRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateMigratingVm(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>,
               UpdateMigratingVm,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteMigratingVm)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteMigratingVm(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteMigratingVm(Matcher<google::cloud::vmmigration::v1::DeleteMigratingVmRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>,
       DeleteMigratingVm,
       (google::cloud::vmmigration::v1::DeleteMigratingVmRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteMigratingVm(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteMigratingVm,
       (NoAwaitTag,
        google::cloud::vmmigration::v1::DeleteMigratingVmRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteMigratingVm(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>,
       DeleteMigratingVm, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, StartMigration)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, StartMigration(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// StartMigration(Matcher<google::cloud::vmmigration::v1::StartMigrationRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::StartMigrationResponse>>,
       StartMigration,
       (google::cloud::vmmigration::v1::StartMigrationRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, StartMigration(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, StartMigration,
       (NoAwaitTag,
        google::cloud::vmmigration::v1::StartMigrationRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, StartMigration(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::StartMigrationResponse>>,
       StartMigration, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ResumeMigration)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ResumeMigration(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ResumeMigration(Matcher<google::cloud::vmmigration::v1::ResumeMigrationRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::ResumeMigrationResponse>>,
       ResumeMigration,
       (google::cloud::vmmigration::v1::ResumeMigrationRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ResumeMigration(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ResumeMigration,
       (NoAwaitTag,
        google::cloud::vmmigration::v1::ResumeMigrationRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, ResumeMigration(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::ResumeMigrationResponse>>,
       ResumeMigration, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, PauseMigration)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, PauseMigration(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PauseMigration(Matcher<google::cloud::vmmigration::v1::PauseMigrationRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::PauseMigrationResponse>>,
       PauseMigration,
       (google::cloud::vmmigration::v1::PauseMigrationRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, PauseMigration(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, PauseMigration,
       (NoAwaitTag,
        google::cloud::vmmigration::v1::PauseMigrationRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, PauseMigration(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::PauseMigrationResponse>>,
       PauseMigration, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, FinalizeMigration)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, FinalizeMigration(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// FinalizeMigration(Matcher<google::cloud::vmmigration::v1::FinalizeMigrationRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::vmmigration::v1::FinalizeMigrationResponse>>,
@@ -391,52 +681,106 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
       (google::cloud::vmmigration::v1::FinalizeMigrationRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, FinalizeMigration(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, FinalizeMigration,
       (NoAwaitTag,
        google::cloud::vmmigration::v1::FinalizeMigrationRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// FinalizeMigration(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::vmmigration::v1::FinalizeMigrationResponse>>,
       FinalizeMigration, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateCloneJob)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateCloneJob(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateCloneJob(Matcher<google::cloud::vmmigration::v1::CreateCloneJobRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::CloneJob>>,
       CreateCloneJob,
       (google::cloud::vmmigration::v1::CreateCloneJobRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateCloneJob(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateCloneJob,
       (NoAwaitTag,
        google::cloud::vmmigration::v1::CreateCloneJobRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateCloneJob(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::vmmigration::v1::CloneJob>>,
               CreateCloneJob, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CancelCloneJob)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CancelCloneJob(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CancelCloneJob(Matcher<google::cloud::vmmigration::v1::CancelCloneJobRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::CancelCloneJobResponse>>,
       CancelCloneJob,
       (google::cloud::vmmigration::v1::CancelCloneJobRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CancelCloneJob(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CancelCloneJob,
       (NoAwaitTag,
        google::cloud::vmmigration::v1::CancelCloneJobRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CancelCloneJob(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::CancelCloneJobResponse>>,
       CancelCloneJob, (google::longrunning::Operation const& operation),
@@ -452,28 +796,54 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
       (google::cloud::vmmigration::v1::GetCloneJobRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateCutoverJob)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateCutoverJob(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateCutoverJob(Matcher<google::cloud::vmmigration::v1::CreateCutoverJobRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::CutoverJob>>,
       CreateCutoverJob,
       (google::cloud::vmmigration::v1::CreateCutoverJobRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateCutoverJob(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateCutoverJob,
       (NoAwaitTag,
        google::cloud::vmmigration::v1::CreateCutoverJobRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateCutoverJob(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::vmmigration::v1::CutoverJob>>,
               CreateCutoverJob,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CancelCutoverJob)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CancelCutoverJob(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CancelCutoverJob(Matcher<google::cloud::vmmigration::v1::CancelCutoverJobRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::vmmigration::v1::CancelCutoverJobResponse>>,
@@ -481,12 +851,26 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
       (google::cloud::vmmigration::v1::CancelCutoverJobRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CancelCutoverJob(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CancelCutoverJob,
       (NoAwaitTag,
        google::cloud::vmmigration::v1::CancelCutoverJobRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CancelCutoverJob(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::vmmigration::v1::CancelCutoverJobResponse>>,
@@ -511,65 +895,131 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
               (google::cloud::vmmigration::v1::GetGroupRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateGroup)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateGroup(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateGroup(Matcher<google::cloud::vmmigration::v1::CreateGroupRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::Group>>, CreateGroup,
       (google::cloud::vmmigration::v1::CreateGroupRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateGroup(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateGroup,
       (NoAwaitTag,
        google::cloud::vmmigration::v1::CreateGroupRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateGroup(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::vmmigration::v1::Group>>,
               CreateGroup, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateGroup)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateGroup(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateGroup(Matcher<google::cloud::vmmigration::v1::UpdateGroupRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::Group>>, UpdateGroup,
       (google::cloud::vmmigration::v1::UpdateGroupRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateGroup(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateGroup,
       (NoAwaitTag,
        google::cloud::vmmigration::v1::UpdateGroupRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateGroup(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::vmmigration::v1::Group>>,
               UpdateGroup, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteGroup)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteGroup(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteGroup(Matcher<google::cloud::vmmigration::v1::DeleteGroupRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>,
       DeleteGroup,
       (google::cloud::vmmigration::v1::DeleteGroupRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteGroup(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteGroup,
       (NoAwaitTag,
        google::cloud::vmmigration::v1::DeleteGroupRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteGroup(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>,
       DeleteGroup, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, AddGroupMigration)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, AddGroupMigration(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// AddGroupMigration(Matcher<google::cloud::vmmigration::v1::AddGroupMigrationRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::vmmigration::v1::AddGroupMigrationResponse>>,
@@ -577,21 +1027,41 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
       (google::cloud::vmmigration::v1::AddGroupMigrationRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, AddGroupMigration(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, AddGroupMigration,
       (NoAwaitTag,
        google::cloud::vmmigration::v1::AddGroupMigrationRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// AddGroupMigration(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::vmmigration::v1::AddGroupMigrationResponse>>,
       AddGroupMigration, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, RemoveGroupMigration)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, RemoveGroupMigration(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RemoveGroupMigration(Matcher<google::cloud::vmmigration::v1::RemoveGroupMigrationRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::vmmigration::v1::RemoveGroupMigrationResponse>>,
@@ -600,6 +1070,12 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, RemoveGroupMigration(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RemoveGroupMigration,
       (NoAwaitTag,
@@ -607,6 +1083,14 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RemoveGroupMigration(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::vmmigration::v1::RemoveGroupMigrationResponse>>,
@@ -624,47 +1108,93 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
       (google::cloud::vmmigration::v1::GetTargetProjectRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateTargetProject)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateTargetProject(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateTargetProject(Matcher<google::cloud::vmmigration::v1::CreateTargetProjectRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>,
               CreateTargetProject,
               (google::cloud::vmmigration::v1::CreateTargetProjectRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateTargetProject(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateTargetProject,
               (NoAwaitTag,
                google::cloud::vmmigration::v1::CreateTargetProjectRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateTargetProject(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>,
               CreateTargetProject,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateTargetProject)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateTargetProject(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateTargetProject(Matcher<google::cloud::vmmigration::v1::UpdateTargetProjectRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>,
               UpdateTargetProject,
               (google::cloud::vmmigration::v1::UpdateTargetProjectRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateTargetProject(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateTargetProject,
               (NoAwaitTag,
                google::cloud::vmmigration::v1::UpdateTargetProjectRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateTargetProject(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>,
               UpdateTargetProject,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteTargetProject)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteTargetProject(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteTargetProject(Matcher<google::cloud::vmmigration::v1::DeleteTargetProjectRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>,
       DeleteTargetProject,
@@ -672,12 +1202,26 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteTargetProject(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteTargetProject,
               (NoAwaitTag,
                google::cloud::vmmigration::v1::DeleteTargetProjectRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteTargetProject(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>,
       DeleteTargetProject, (google::longrunning::Operation const& operation),

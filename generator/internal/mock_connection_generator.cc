@@ -103,11 +103,16 @@ class $mock_connection_class_name$ : public $product_namespace$::$connection_cla
                  Not(IsPaginated))),
          MethodPattern(
              {
-                 {// clang-format off
-    "\n  /// Due to additional overloads for this method\n"
-    "  /// `EXPECT_CALL(*mock, $method_name$)` is now ambiguous. Use\n"
-    "  /// `EXPECT_CALL(*mock, $method_name$(::testing::_))` instead.\n"},
-                 // clang-format on
+                 {
+                     R"""(
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, $method_name$(Matcher<$request_type$ const&>(_)))
+  /// @endcode
+)"""},
                  {IsResponseTypeEmpty,
                   // clang-format off
     "  MOCK_METHOD(future<Status>,\n",
@@ -115,6 +120,14 @@ class $mock_connection_class_name$ : public $product_namespace$::$connection_cla
    {"  $method_name$,\n"
     "  ($request_type$ const& request), (override));\n\n",},
                  // clang-format on
+                 {R"""(
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, $method_name$(_, _))
+  /// @endcode
+)"""},
                  {IsResponseTypeEmpty,
                   // clang-format off
     "  MOCK_METHOD(Status,\n",
@@ -122,6 +135,15 @@ class $mock_connection_class_name$ : public $product_namespace$::$connection_cla
    {"  $method_name$, (NoAwaitTag,\n"
     "    $request_type$ const& request), (override));\n\n"},
                  // clang-format on
+                 {R"""(
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, $method_name$(Matcher<$longrunning_operation_type$ const&>(_)))
+  /// @endcode
+)"""},
                  {IsResponseTypeEmpty,
                   // clang-format off
     "  MOCK_METHOD(future<Status>,\n",

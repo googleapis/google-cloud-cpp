@@ -63,108 +63,228 @@ class MockGkeHubConnection : public gkehub_v1::GkeHubConnection {
               (google::cloud::gkehub::v1::GetFeatureRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateMembership)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateMembership(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateMembership(Matcher<google::cloud::gkehub::v1::CreateMembershipRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkehub::v1::Membership>>, CreateMembership,
       (google::cloud::gkehub::v1::CreateMembershipRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateMembership(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateMembership,
       (NoAwaitTag,
        google::cloud::gkehub::v1::CreateMembershipRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateMembership(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::Membership>>,
               CreateMembership,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateFeature)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateFeature(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateFeature(Matcher<google::cloud::gkehub::v1::CreateFeatureRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::Feature>>,
               CreateFeature,
               (google::cloud::gkehub::v1::CreateFeatureRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateFeature(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateFeature,
               (NoAwaitTag,
                google::cloud::gkehub::v1::CreateFeatureRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateFeature(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::Feature>>,
               CreateFeature, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteMembership)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteMembership(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteMembership(Matcher<google::cloud::gkehub::v1::DeleteMembershipRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>,
       DeleteMembership,
       (google::cloud::gkehub::v1::DeleteMembershipRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteMembership(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteMembership,
       (NoAwaitTag,
        google::cloud::gkehub::v1::DeleteMembershipRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteMembership(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>,
               DeleteMembership,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteFeature)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteFeature(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteFeature(Matcher<google::cloud::gkehub::v1::DeleteFeatureRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>,
               DeleteFeature,
               (google::cloud::gkehub::v1::DeleteFeatureRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteFeature(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteFeature,
               (NoAwaitTag,
                google::cloud::gkehub::v1::DeleteFeatureRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteFeature(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>,
               DeleteFeature, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateMembership)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateMembership(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateMembership(Matcher<google::cloud::gkehub::v1::UpdateMembershipRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkehub::v1::Membership>>, UpdateMembership,
       (google::cloud::gkehub::v1::UpdateMembershipRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateMembership(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateMembership,
       (NoAwaitTag,
        google::cloud::gkehub::v1::UpdateMembershipRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateMembership(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::Membership>>,
               UpdateMembership,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateFeature)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateFeature(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateFeature(Matcher<google::cloud::gkehub::v1::UpdateFeatureRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::Feature>>,
               UpdateFeature,
               (google::cloud::gkehub::v1::UpdateFeatureRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateFeature(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateFeature,
               (NoAwaitTag,
                google::cloud::gkehub::v1::UpdateFeatureRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateFeature(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::Feature>>,
               UpdateFeature, (google::longrunning::Operation const& operation),
               (override));

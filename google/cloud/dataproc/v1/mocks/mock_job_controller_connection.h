@@ -51,19 +51,39 @@ class MockJobControllerConnection
               (google::cloud::dataproc::v1::SubmitJobRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, SubmitJobAsOperation)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, SubmitJobAsOperation(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// SubmitJobAsOperation(Matcher<google::cloud::dataproc::v1::SubmitJobRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Job>>,
               SubmitJobAsOperation,
               (google::cloud::dataproc::v1::SubmitJobRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, SubmitJobAsOperation(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, SubmitJobAsOperation,
               (NoAwaitTag,
                google::cloud::dataproc::v1::SubmitJobRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// SubmitJobAsOperation(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Job>>,
               SubmitJobAsOperation,
               (google::longrunning::Operation const& operation), (override));

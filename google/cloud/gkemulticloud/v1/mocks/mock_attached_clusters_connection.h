@@ -47,9 +47,15 @@ class MockAttachedClustersConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateAttachedCluster)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateAttachedCluster(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateAttachedCluster(Matcher<google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>,
       CreateAttachedCluster,
@@ -57,6 +63,12 @@ class MockAttachedClustersConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateAttachedCluster(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateAttachedCluster,
       (NoAwaitTag,
@@ -64,14 +76,28 @@ class MockAttachedClustersConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateAttachedCluster(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>,
       CreateAttachedCluster, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateAttachedCluster)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateAttachedCluster(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateAttachedCluster(Matcher<google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>,
       UpdateAttachedCluster,
@@ -79,6 +105,12 @@ class MockAttachedClustersConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateAttachedCluster(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateAttachedCluster,
       (NoAwaitTag,
@@ -86,14 +118,28 @@ class MockAttachedClustersConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateAttachedCluster(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>,
       UpdateAttachedCluster, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ImportAttachedCluster)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ImportAttachedCluster(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ImportAttachedCluster(Matcher<google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>,
       ImportAttachedCluster,
@@ -101,6 +147,12 @@ class MockAttachedClustersConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ImportAttachedCluster(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ImportAttachedCluster,
       (NoAwaitTag,
@@ -108,6 +160,14 @@ class MockAttachedClustersConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ImportAttachedCluster(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>,
       ImportAttachedCluster, (google::longrunning::Operation const& operation),
@@ -126,9 +186,15 @@ class MockAttachedClustersConnection
       (google::cloud::gkemulticloud::v1::ListAttachedClustersRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteAttachedCluster)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteAttachedCluster(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteAttachedCluster(Matcher<google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>,
       DeleteAttachedCluster,
@@ -136,6 +202,12 @@ class MockAttachedClustersConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteAttachedCluster(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteAttachedCluster,
       (NoAwaitTag,
@@ -143,6 +215,14 @@ class MockAttachedClustersConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteAttachedCluster(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>,
       DeleteAttachedCluster, (google::longrunning::Operation const& operation),

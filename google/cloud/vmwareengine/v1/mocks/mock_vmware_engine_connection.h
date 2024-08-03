@@ -58,66 +58,132 @@ class MockVmwareEngineConnection
       (google::cloud::vmwareengine::v1::GetPrivateCloudRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreatePrivateCloud)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreatePrivateCloud(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreatePrivateCloud(Matcher<google::cloud::vmwareengine::v1::CreatePrivateCloudRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>,
               CreatePrivateCloud,
               (google::cloud::vmwareengine::v1::CreatePrivateCloudRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreatePrivateCloud(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreatePrivateCloud,
               (NoAwaitTag,
                google::cloud::vmwareengine::v1::CreatePrivateCloudRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreatePrivateCloud(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>,
               CreatePrivateCloud,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdatePrivateCloud)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdatePrivateCloud(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdatePrivateCloud(Matcher<google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>,
               UpdatePrivateCloud,
               (google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdatePrivateCloud(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdatePrivateCloud,
               (NoAwaitTag,
                google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdatePrivateCloud(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>,
               UpdatePrivateCloud,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeletePrivateCloud)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeletePrivateCloud(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeletePrivateCloud(Matcher<google::cloud::vmwareengine::v1::DeletePrivateCloudRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>,
               DeletePrivateCloud,
               (google::cloud::vmwareengine::v1::DeletePrivateCloudRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeletePrivateCloud(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeletePrivateCloud,
               (NoAwaitTag,
                google::cloud::vmwareengine::v1::DeletePrivateCloudRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeletePrivateCloud(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>,
               DeletePrivateCloud,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UndeletePrivateCloud)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UndeletePrivateCloud(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UndeletePrivateCloud(Matcher<google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>,
       UndeletePrivateCloud,
@@ -125,6 +191,12 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UndeletePrivateCloud(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UndeletePrivateCloud,
       (NoAwaitTag,
@@ -132,6 +204,14 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UndeletePrivateCloud(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>,
               UndeletePrivateCloud,
               (google::longrunning::Operation const& operation), (override));
@@ -146,57 +226,117 @@ class MockVmwareEngineConnection
       (google::cloud::vmwareengine::v1::GetClusterRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateCluster)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateCluster(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateCluster(Matcher<google::cloud::vmwareengine::v1::CreateClusterRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::Cluster>>, CreateCluster,
       (google::cloud::vmwareengine::v1::CreateClusterRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateCluster(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateCluster,
       (NoAwaitTag,
        google::cloud::vmwareengine::v1::CreateClusterRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateCluster(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::vmwareengine::v1::Cluster>>,
               CreateCluster, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateCluster)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateCluster(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateCluster(Matcher<google::cloud::vmwareengine::v1::UpdateClusterRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::Cluster>>, UpdateCluster,
       (google::cloud::vmwareengine::v1::UpdateClusterRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateCluster(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateCluster,
       (NoAwaitTag,
        google::cloud::vmwareengine::v1::UpdateClusterRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateCluster(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::vmwareengine::v1::Cluster>>,
               UpdateCluster, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteCluster)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteCluster(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteCluster(Matcher<google::cloud::vmwareengine::v1::DeleteClusterRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
       DeleteCluster,
       (google::cloud::vmwareengine::v1::DeleteClusterRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteCluster(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteCluster,
       (NoAwaitTag,
        google::cloud::vmwareengine::v1::DeleteClusterRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteCluster(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
       DeleteCluster, (google::longrunning::Operation const& operation),
@@ -228,9 +368,15 @@ class MockVmwareEngineConnection
                    request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateExternalAddress)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateExternalAddress(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateExternalAddress(Matcher<google::cloud::vmwareengine::v1::CreateExternalAddressRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>,
       CreateExternalAddress,
@@ -238,6 +384,12 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateExternalAddress(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateExternalAddress,
       (NoAwaitTag,
@@ -245,14 +397,28 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateExternalAddress(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>,
       CreateExternalAddress, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateExternalAddress)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateExternalAddress(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateExternalAddress(Matcher<google::cloud::vmwareengine::v1::UpdateExternalAddressRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>,
       UpdateExternalAddress,
@@ -260,6 +426,12 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateExternalAddress(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateExternalAddress,
       (NoAwaitTag,
@@ -267,14 +439,28 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateExternalAddress(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>,
       UpdateExternalAddress, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteExternalAddress)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteExternalAddress(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteExternalAddress(Matcher<google::cloud::vmwareengine::v1::DeleteExternalAddressRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
       DeleteExternalAddress,
@@ -282,6 +468,12 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteExternalAddress(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteExternalAddress,
       (NoAwaitTag,
@@ -289,6 +481,14 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteExternalAddress(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
       DeleteExternalAddress, (google::longrunning::Operation const& operation),
@@ -304,20 +504,40 @@ class MockVmwareEngineConnection
       (google::cloud::vmwareengine::v1::GetSubnetRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateSubnet)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateSubnet(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateSubnet(Matcher<google::cloud::vmwareengine::v1::UpdateSubnetRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::Subnet>>, UpdateSubnet,
       (google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateSubnet(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateSubnet,
       (NoAwaitTag,
        google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateSubnet(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::vmwareengine::v1::Subnet>>,
               UpdateSubnet, (google::longrunning::Operation const& operation),
               (override));
@@ -335,9 +555,15 @@ class MockVmwareEngineConnection
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateExternalAccessRule)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateExternalAccessRule(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateExternalAccessRule(Matcher<google::cloud::vmwareengine::v1::CreateExternalAccessRuleRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>,
       CreateExternalAccessRule,
@@ -345,6 +571,12 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateExternalAccessRule(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateExternalAccessRule,
       (NoAwaitTag,
@@ -352,14 +584,29 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateExternalAccessRule(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>,
       CreateExternalAccessRule,
       (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateExternalAccessRule)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateExternalAccessRule(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateExternalAccessRule(Matcher<google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>,
       UpdateExternalAccessRule,
@@ -367,6 +614,12 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateExternalAccessRule(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateExternalAccessRule,
       (NoAwaitTag,
@@ -374,14 +627,29 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateExternalAccessRule(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>,
       UpdateExternalAccessRule,
       (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteExternalAccessRule)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteExternalAccessRule(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteExternalAccessRule(Matcher<google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
       DeleteExternalAccessRule,
@@ -389,6 +657,12 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteExternalAccessRule(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteExternalAccessRule,
       (NoAwaitTag,
@@ -396,6 +670,15 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteExternalAccessRule(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
       DeleteExternalAccessRule,
@@ -413,9 +696,15 @@ class MockVmwareEngineConnection
       (google::cloud::vmwareengine::v1::GetLoggingServerRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateLoggingServer)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateLoggingServer(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateLoggingServer(Matcher<google::cloud::vmwareengine::v1::CreateLoggingServerRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>,
       CreateLoggingServer,
@@ -423,6 +712,12 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateLoggingServer(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateLoggingServer,
       (NoAwaitTag,
@@ -430,13 +725,27 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateLoggingServer(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>,
               CreateLoggingServer,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateLoggingServer)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateLoggingServer(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateLoggingServer(Matcher<google::cloud::vmwareengine::v1::UpdateLoggingServerRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>,
       UpdateLoggingServer,
@@ -444,6 +753,12 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateLoggingServer(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateLoggingServer,
       (NoAwaitTag,
@@ -451,13 +766,27 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateLoggingServer(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>,
               UpdateLoggingServer,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteLoggingServer)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteLoggingServer(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteLoggingServer(Matcher<google::cloud::vmwareengine::v1::DeleteLoggingServerRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
       DeleteLoggingServer,
@@ -465,6 +794,12 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteLoggingServer(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteLoggingServer,
       (NoAwaitTag,
@@ -472,6 +807,14 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteLoggingServer(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
       DeleteLoggingServer, (google::longrunning::Operation const& operation),
@@ -500,9 +843,15 @@ class MockVmwareEngineConnection
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ResetNsxCredentials)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ResetNsxCredentials(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ResetNsxCredentials(Matcher<google::cloud::vmwareengine::v1::ResetNsxCredentialsRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>,
       ResetNsxCredentials,
@@ -510,6 +859,12 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ResetNsxCredentials(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ResetNsxCredentials,
       (NoAwaitTag,
@@ -517,13 +872,27 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ResetNsxCredentials(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>,
               ResetNsxCredentials,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ResetVcenterCredentials)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ResetVcenterCredentials(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ResetVcenterCredentials(Matcher<google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>,
       ResetVcenterCredentials,
@@ -531,6 +900,12 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ResetVcenterCredentials(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ResetVcenterCredentials,
       (NoAwaitTag,
@@ -538,6 +913,15 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ResetVcenterCredentials(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>,
               ResetVcenterCredentials,
               (google::longrunning::Operation const& operation), (override));
@@ -548,9 +932,15 @@ class MockVmwareEngineConnection
       (google::cloud::vmwareengine::v1::GetDnsForwardingRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateDnsForwarding)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateDnsForwarding(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateDnsForwarding(Matcher<google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>>,
       UpdateDnsForwarding,
@@ -558,6 +948,12 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateDnsForwarding(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateDnsForwarding,
       (NoAwaitTag,
@@ -565,6 +961,14 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateDnsForwarding(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>>,
               UpdateDnsForwarding,
               (google::longrunning::Operation const& operation), (override));
@@ -581,9 +985,15 @@ class MockVmwareEngineConnection
       (google::cloud::vmwareengine::v1::ListNetworkPeeringsRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateNetworkPeering)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateNetworkPeering(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateNetworkPeering(Matcher<google::cloud::vmwareengine::v1::CreateNetworkPeeringRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>,
       CreateNetworkPeering,
@@ -591,6 +1001,12 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateNetworkPeering(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateNetworkPeering,
       (NoAwaitTag,
@@ -598,13 +1014,27 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateNetworkPeering(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>,
               CreateNetworkPeering,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteNetworkPeering)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteNetworkPeering(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteNetworkPeering(Matcher<google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
       DeleteNetworkPeering,
@@ -612,6 +1042,12 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteNetworkPeering(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteNetworkPeering,
       (NoAwaitTag,
@@ -619,14 +1055,28 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteNetworkPeering(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
       DeleteNetworkPeering, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateNetworkPeering)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateNetworkPeering(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateNetworkPeering(Matcher<google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>,
       UpdateNetworkPeering,
@@ -634,6 +1084,12 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateNetworkPeering(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateNetworkPeering,
       (NoAwaitTag,
@@ -641,6 +1097,14 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateNetworkPeering(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>,
               UpdateNetworkPeering,
               (google::longrunning::Operation const& operation), (override));
@@ -651,9 +1115,15 @@ class MockVmwareEngineConnection
       (google::cloud::vmwareengine::v1::ListPeeringRoutesRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateHcxActivationKey)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateHcxActivationKey(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateHcxActivationKey(Matcher<google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>>,
       CreateHcxActivationKey,
@@ -661,6 +1131,12 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateHcxActivationKey(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateHcxActivationKey,
       (NoAwaitTag,
@@ -668,6 +1144,14 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateHcxActivationKey(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>>,
       CreateHcxActivationKey, (google::longrunning::Operation const& operation),
@@ -698,9 +1182,15 @@ class MockVmwareEngineConnection
       (google::cloud::vmwareengine::v1::ListNetworkPoliciesRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateNetworkPolicy)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateNetworkPolicy(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateNetworkPolicy(Matcher<google::cloud::vmwareengine::v1::CreateNetworkPolicyRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>,
       CreateNetworkPolicy,
@@ -708,6 +1198,12 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateNetworkPolicy(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateNetworkPolicy,
       (NoAwaitTag,
@@ -715,13 +1211,27 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateNetworkPolicy(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>,
               CreateNetworkPolicy,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateNetworkPolicy)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateNetworkPolicy(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateNetworkPolicy(Matcher<google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>,
       UpdateNetworkPolicy,
@@ -729,6 +1239,12 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateNetworkPolicy(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateNetworkPolicy,
       (NoAwaitTag,
@@ -736,13 +1252,27 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateNetworkPolicy(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>,
               UpdateNetworkPolicy,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteNetworkPolicy)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteNetworkPolicy(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteNetworkPolicy(Matcher<google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
       DeleteNetworkPolicy,
@@ -750,6 +1280,12 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteNetworkPolicy(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteNetworkPolicy,
       (NoAwaitTag,
@@ -757,6 +1293,14 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteNetworkPolicy(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
       DeleteNetworkPolicy, (google::longrunning::Operation const& operation),
@@ -776,10 +1320,15 @@ class MockVmwareEngineConnection
            GetManagementDnsZoneBindingRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateManagementDnsZoneBinding)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateManagementDnsZoneBinding(::testing::_))`
-  /// instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateManagementDnsZoneBinding(Matcher<google::cloud::vmwareengine::v1::CreateManagementDnsZoneBindingRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>,
@@ -788,6 +1337,12 @@ class MockVmwareEngineConnection
            CreateManagementDnsZoneBindingRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateManagementDnsZoneBinding(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               CreateManagementDnsZoneBinding,
               (NoAwaitTag,
@@ -795,16 +1350,30 @@ class MockVmwareEngineConnection
                    CreateManagementDnsZoneBindingRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateManagementDnsZoneBinding(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>,
       CreateManagementDnsZoneBinding,
       (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateManagementDnsZoneBinding)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateManagementDnsZoneBinding(::testing::_))`
-  /// instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateManagementDnsZoneBinding(Matcher<google::cloud::vmwareengine::v1::UpdateManagementDnsZoneBindingRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>,
@@ -813,6 +1382,12 @@ class MockVmwareEngineConnection
            UpdateManagementDnsZoneBindingRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateManagementDnsZoneBinding(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               UpdateManagementDnsZoneBinding,
               (NoAwaitTag,
@@ -820,16 +1395,30 @@ class MockVmwareEngineConnection
                    UpdateManagementDnsZoneBindingRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateManagementDnsZoneBinding(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>,
       UpdateManagementDnsZoneBinding,
       (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteManagementDnsZoneBinding)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteManagementDnsZoneBinding(::testing::_))`
-  /// instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteManagementDnsZoneBinding(Matcher<google::cloud::vmwareengine::v1::DeleteManagementDnsZoneBindingRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
       DeleteManagementDnsZoneBinding,
@@ -837,6 +1426,12 @@ class MockVmwareEngineConnection
            DeleteManagementDnsZoneBindingRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteManagementDnsZoneBinding(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               DeleteManagementDnsZoneBinding,
               (NoAwaitTag,
@@ -844,15 +1439,29 @@ class MockVmwareEngineConnection
                    DeleteManagementDnsZoneBindingRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteManagementDnsZoneBinding(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
       DeleteManagementDnsZoneBinding,
       (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, RepairManagementDnsZoneBinding)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, RepairManagementDnsZoneBinding(::testing::_))`
-  /// instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RepairManagementDnsZoneBinding(Matcher<google::cloud::vmwareengine::v1::RepairManagementDnsZoneBindingRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>,
@@ -861,6 +1470,12 @@ class MockVmwareEngineConnection
            RepairManagementDnsZoneBindingRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, RepairManagementDnsZoneBinding(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               RepairManagementDnsZoneBinding,
               (NoAwaitTag,
@@ -868,15 +1483,30 @@ class MockVmwareEngineConnection
                    RepairManagementDnsZoneBindingRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RepairManagementDnsZoneBinding(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>,
       RepairManagementDnsZoneBinding,
       (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateVmwareEngineNetwork)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateVmwareEngineNetwork(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateVmwareEngineNetwork(Matcher<google::cloud::vmwareengine::v1::CreateVmwareEngineNetworkRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>,
       CreateVmwareEngineNetwork,
@@ -884,6 +1514,12 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateVmwareEngineNetwork(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateVmwareEngineNetwork,
       (NoAwaitTag,
@@ -891,14 +1527,29 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateVmwareEngineNetwork(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>,
       CreateVmwareEngineNetwork,
       (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateVmwareEngineNetwork)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateVmwareEngineNetwork(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateVmwareEngineNetwork(Matcher<google::cloud::vmwareengine::v1::UpdateVmwareEngineNetworkRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>,
       UpdateVmwareEngineNetwork,
@@ -906,6 +1557,12 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateVmwareEngineNetwork(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateVmwareEngineNetwork,
       (NoAwaitTag,
@@ -913,14 +1570,29 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateVmwareEngineNetwork(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>,
       UpdateVmwareEngineNetwork,
       (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteVmwareEngineNetwork)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteVmwareEngineNetwork(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteVmwareEngineNetwork(Matcher<google::cloud::vmwareengine::v1::DeleteVmwareEngineNetworkRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
       DeleteVmwareEngineNetwork,
@@ -928,6 +1600,12 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteVmwareEngineNetwork(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteVmwareEngineNetwork,
       (NoAwaitTag,
@@ -935,6 +1613,15 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteVmwareEngineNetwork(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
       DeleteVmwareEngineNetwork,
@@ -954,9 +1641,15 @@ class MockVmwareEngineConnection
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreatePrivateConnection)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreatePrivateConnection(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreatePrivateConnection(Matcher<google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>,
       CreatePrivateConnection,
@@ -964,6 +1657,12 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreatePrivateConnection(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreatePrivateConnection,
       (NoAwaitTag,
@@ -971,6 +1670,15 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreatePrivateConnection(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>,
       CreatePrivateConnection,
@@ -989,9 +1697,15 @@ class MockVmwareEngineConnection
       (google::cloud::vmwareengine::v1::ListPrivateConnectionsRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdatePrivateConnection)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdatePrivateConnection(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdatePrivateConnection(Matcher<google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>,
       UpdatePrivateConnection,
@@ -999,6 +1713,12 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdatePrivateConnection(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdatePrivateConnection,
       (NoAwaitTag,
@@ -1006,14 +1726,29 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdatePrivateConnection(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>,
       UpdatePrivateConnection,
       (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeletePrivateConnection)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeletePrivateConnection(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeletePrivateConnection(Matcher<google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
       DeletePrivateConnection,
@@ -1021,6 +1756,12 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeletePrivateConnection(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeletePrivateConnection,
       (NoAwaitTag,
@@ -1028,6 +1769,15 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeletePrivateConnection(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
       DeletePrivateConnection,
@@ -1039,9 +1789,15 @@ class MockVmwareEngineConnection
                    ListPrivateConnectionPeeringRoutesRequest request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, GrantDnsBindPermission)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, GrantDnsBindPermission(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// GrantDnsBindPermission(Matcher<google::cloud::vmwareengine::v1::GrantDnsBindPermissionRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>,
       GrantDnsBindPermission,
@@ -1049,6 +1805,12 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, GrantDnsBindPermission(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, GrantDnsBindPermission,
       (NoAwaitTag,
@@ -1056,6 +1818,14 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// GrantDnsBindPermission(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>,
       GrantDnsBindPermission, (google::longrunning::Operation const& operation),
@@ -1068,9 +1838,15 @@ class MockVmwareEngineConnection
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, RevokeDnsBindPermission)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, RevokeDnsBindPermission(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RevokeDnsBindPermission(Matcher<google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>,
       RevokeDnsBindPermission,
@@ -1078,6 +1854,12 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, RevokeDnsBindPermission(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RevokeDnsBindPermission,
       (NoAwaitTag,
@@ -1085,6 +1867,15 @@ class MockVmwareEngineConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RevokeDnsBindPermission(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>,
       RevokeDnsBindPermission,

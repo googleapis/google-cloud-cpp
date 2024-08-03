@@ -70,21 +70,41 @@ class MockVizierServiceConnection
       (google::cloud::aiplatform::v1::LookupStudyRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, SuggestTrials)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, SuggestTrials(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// SuggestTrials(Matcher<google::cloud::aiplatform::v1::SuggestTrialsRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>,
       SuggestTrials,
       (google::cloud::aiplatform::v1::SuggestTrialsRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, SuggestTrials(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, SuggestTrials,
       (NoAwaitTag,
        google::cloud::aiplatform::v1::SuggestTrialsRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, SuggestTrials(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>,
       SuggestTrials, (google::longrunning::Operation const& operation),
@@ -119,9 +139,15 @@ class MockVizierServiceConnection
       (google::cloud::aiplatform::v1::DeleteTrialRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CheckTrialEarlyStoppingState)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CheckTrialEarlyStoppingState(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CheckTrialEarlyStoppingState(Matcher<google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>,
@@ -130,6 +156,12 @@ class MockVizierServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CheckTrialEarlyStoppingState(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CheckTrialEarlyStoppingState,
       (NoAwaitTag,
@@ -137,6 +169,15 @@ class MockVizierServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CheckTrialEarlyStoppingState(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>,

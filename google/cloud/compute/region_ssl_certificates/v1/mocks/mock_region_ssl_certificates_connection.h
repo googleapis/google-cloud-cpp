@@ -49,15 +49,27 @@ class MockRegionSslCertificatesConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteSslCertificate)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteSslCertificate(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteSslCertificate(Matcher<google::cloud::cpp::compute::region_ssl_certificates::v1::DeleteSslCertificateRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteSslCertificate,
               (google::cloud::cpp::compute::region_ssl_certificates::v1::
                    DeleteSslCertificateRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteSslCertificate(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               DeleteSslCertificate,
               (NoAwaitTag,
@@ -65,6 +77,15 @@ class MockRegionSslCertificatesConnection
                    DeleteSslCertificateRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteSslCertificate(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteSslCertificate,
               (google::cloud::cpp::compute::v1::Operation const& operation),
@@ -76,15 +97,27 @@ class MockRegionSslCertificatesConnection
                    GetSslCertificateRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, InsertSslCertificate)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, InsertSslCertificate(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InsertSslCertificate(Matcher<google::cloud::cpp::compute::region_ssl_certificates::v1::InsertSslCertificateRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertSslCertificate,
               (google::cloud::cpp::compute::region_ssl_certificates::v1::
                    InsertSslCertificateRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, InsertSslCertificate(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               InsertSslCertificate,
               (NoAwaitTag,
@@ -92,6 +125,15 @@ class MockRegionSslCertificatesConnection
                    InsertSslCertificateRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InsertSslCertificate(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertSslCertificate,
               (google::cloud::cpp::compute::v1::Operation const& operation),

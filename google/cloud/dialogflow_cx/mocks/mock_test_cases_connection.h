@@ -72,29 +72,55 @@ class MockTestCasesConnection : public dialogflow_cx::TestCasesConnection {
       (google::cloud::dialogflow::cx::v3::UpdateTestCaseRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, RunTestCase)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, RunTestCase(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RunTestCase(Matcher<google::cloud::dialogflow::cx::v3::RunTestCaseRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>,
       RunTestCase,
       (google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, RunTestCase(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RunTestCase,
       (NoAwaitTag,
        google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, RunTestCase(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>,
       RunTestCase, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, BatchRunTestCases)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, BatchRunTestCases(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchRunTestCases(Matcher<google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>,
@@ -103,6 +129,12 @@ class MockTestCasesConnection : public dialogflow_cx::TestCasesConnection {
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, BatchRunTestCases(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, BatchRunTestCases,
       (NoAwaitTag,
@@ -110,6 +142,14 @@ class MockTestCasesConnection : public dialogflow_cx::TestCasesConnection {
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchRunTestCases(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>,
@@ -123,9 +163,15 @@ class MockTestCasesConnection : public dialogflow_cx::TestCasesConnection {
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ImportTestCases)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ImportTestCases(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ImportTestCases(Matcher<google::cloud::dialogflow::cx::v3::ImportTestCasesRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>,
@@ -134,21 +180,41 @@ class MockTestCasesConnection : public dialogflow_cx::TestCasesConnection {
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ImportTestCases(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, ImportTestCases,
               (NoAwaitTag,
                google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, ImportTestCases(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>,
       ImportTestCases, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ExportTestCases)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ExportTestCases(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ExportTestCases(Matcher<google::cloud::dialogflow::cx::v3::ExportTestCasesRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>,
@@ -157,12 +223,26 @@ class MockTestCasesConnection : public dialogflow_cx::TestCasesConnection {
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ExportTestCases(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, ExportTestCases,
               (NoAwaitTag,
                google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, ExportTestCases(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>,

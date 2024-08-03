@@ -59,9 +59,15 @@ class MockWorkflowTemplateServiceConnection
       (google::cloud::dataproc::v1::GetWorkflowTemplateRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, InstantiateWorkflowTemplate)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, InstantiateWorkflowTemplate(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InstantiateWorkflowTemplate(Matcher<google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>,
       InstantiateWorkflowTemplate,
@@ -69,6 +75,12 @@ class MockWorkflowTemplateServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, InstantiateWorkflowTemplate(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, InstantiateWorkflowTemplate,
       (NoAwaitTag,
@@ -76,20 +88,40 @@ class MockWorkflowTemplateServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InstantiateWorkflowTemplate(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>,
               InstantiateWorkflowTemplate,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, InstantiateInlineWorkflowTemplate)` is now ambiguous.
-  /// Use `EXPECT_CALL(*mock, InstantiateInlineWorkflowTemplate(::testing::_))`
-  /// instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InstantiateInlineWorkflowTemplate(Matcher<google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>,
               InstantiateInlineWorkflowTemplate,
               (google::cloud::dataproc::v1::
                    InstantiateInlineWorkflowTemplateRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, InstantiateInlineWorkflowTemplate(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               InstantiateInlineWorkflowTemplate,
               (NoAwaitTag,
@@ -97,6 +129,15 @@ class MockWorkflowTemplateServiceConnection
                    InstantiateInlineWorkflowTemplateRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InstantiateInlineWorkflowTemplate(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>,
               InstantiateInlineWorkflowTemplate,
               (google::longrunning::Operation const& operation), (override));

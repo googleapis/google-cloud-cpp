@@ -47,9 +47,15 @@ class MockOsConfigZonalServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateOSPolicyAssignment)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateOSPolicyAssignment(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateOSPolicyAssignment(Matcher<google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>,
       CreateOSPolicyAssignment,
@@ -57,6 +63,12 @@ class MockOsConfigZonalServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateOSPolicyAssignment(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateOSPolicyAssignment,
       (NoAwaitTag,
@@ -64,13 +76,28 @@ class MockOsConfigZonalServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateOSPolicyAssignment(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>,
               CreateOSPolicyAssignment,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateOSPolicyAssignment)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateOSPolicyAssignment(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateOSPolicyAssignment(Matcher<google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>,
       UpdateOSPolicyAssignment,
@@ -78,6 +105,12 @@ class MockOsConfigZonalServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateOSPolicyAssignment(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateOSPolicyAssignment,
       (NoAwaitTag,
@@ -85,6 +118,15 @@ class MockOsConfigZonalServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateOSPolicyAssignment(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>,
               UpdateOSPolicyAssignment,
               (google::longrunning::Operation const& operation), (override));
@@ -108,9 +150,15 @@ class MockOsConfigZonalServiceConnection
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteOSPolicyAssignment)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteOSPolicyAssignment(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteOSPolicyAssignment(Matcher<google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>,
@@ -119,6 +167,12 @@ class MockOsConfigZonalServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteOSPolicyAssignment(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteOSPolicyAssignment,
       (NoAwaitTag,
@@ -126,6 +180,15 @@ class MockOsConfigZonalServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteOSPolicyAssignment(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>,

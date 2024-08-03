@@ -75,9 +75,15 @@ class MockDocumentServiceConnection
                    request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ImportDocuments)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ImportDocuments(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ImportDocuments(Matcher<google::cloud::discoveryengine::v1::ImportDocumentsRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<
                   google::cloud::discoveryengine::v1::ImportDocumentsResponse>>,
               ImportDocuments,
@@ -85,20 +91,40 @@ class MockDocumentServiceConnection
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ImportDocuments(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, ImportDocuments,
               (NoAwaitTag,
                google::cloud::discoveryengine::v1::ImportDocumentsRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, ImportDocuments(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<
                   google::cloud::discoveryengine::v1::ImportDocumentsResponse>>,
               ImportDocuments,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, PurgeDocuments)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, PurgeDocuments(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PurgeDocuments(Matcher<google::cloud::discoveryengine::v1::PurgeDocumentsRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>,
@@ -107,12 +133,26 @@ class MockDocumentServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, PurgeDocuments(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, PurgeDocuments,
               (NoAwaitTag,
                google::cloud::discoveryengine::v1::PurgeDocumentsRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, PurgeDocuments(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>,

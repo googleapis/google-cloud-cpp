@@ -47,38 +47,78 @@ class MockNodeGroupControllerConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateNodeGroup)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateNodeGroup(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateNodeGroup(Matcher<google::cloud::dataproc::v1::CreateNodeGroupRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>, CreateNodeGroup,
       (google::cloud::dataproc::v1::CreateNodeGroupRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateNodeGroup(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateNodeGroup,
       (NoAwaitTag,
        google::cloud::dataproc::v1::CreateNodeGroupRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateNodeGroup(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>,
               CreateNodeGroup,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ResizeNodeGroup)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ResizeNodeGroup(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ResizeNodeGroup(Matcher<google::cloud::dataproc::v1::ResizeNodeGroupRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>, ResizeNodeGroup,
       (google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ResizeNodeGroup(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ResizeNodeGroup,
       (NoAwaitTag,
        google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, ResizeNodeGroup(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>,
               ResizeNodeGroup,
               (google::longrunning::Operation const& operation), (override));

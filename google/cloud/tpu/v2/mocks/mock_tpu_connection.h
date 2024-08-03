@@ -53,80 +53,175 @@ class MockTpuConnection : public tpu_v2::TpuConnection {
               (google::cloud::tpu::v2::GetNodeRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateNode)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateNode(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateNode(Matcher<google::cloud::tpu::v2::CreateNodeRequest const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::tpu::v2::Node>>, CreateNode,
               (google::cloud::tpu::v2::CreateNodeRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateNode(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateNode,
               (NoAwaitTag,
                google::cloud::tpu::v2::CreateNodeRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateNode(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::tpu::v2::Node>>, CreateNode,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteNode)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteNode(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteNode(Matcher<google::cloud::tpu::v2::DeleteNodeRequest const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>,
               DeleteNode,
               (google::cloud::tpu::v2::DeleteNodeRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteNode(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteNode,
               (NoAwaitTag,
                google::cloud::tpu::v2::DeleteNodeRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteNode(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>,
               DeleteNode, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, StopNode)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, StopNode(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// StopNode(Matcher<google::cloud::tpu::v2::StopNodeRequest const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::tpu::v2::Node>>, StopNode,
               (google::cloud::tpu::v2::StopNodeRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, StopNode(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, StopNode,
               (NoAwaitTag,
                google::cloud::tpu::v2::StopNodeRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, StopNode(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::tpu::v2::Node>>, StopNode,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, StartNode)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, StartNode(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// StartNode(Matcher<google::cloud::tpu::v2::StartNodeRequest const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::tpu::v2::Node>>, StartNode,
               (google::cloud::tpu::v2::StartNodeRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, StartNode(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartNode,
               (NoAwaitTag,
                google::cloud::tpu::v2::StartNodeRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, StartNode(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::tpu::v2::Node>>, StartNode,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateNode)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateNode(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateNode(Matcher<google::cloud::tpu::v2::UpdateNodeRequest const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::tpu::v2::Node>>, UpdateNode,
               (google::cloud::tpu::v2::UpdateNodeRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateNode(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateNode,
               (NoAwaitTag,
                google::cloud::tpu::v2::UpdateNodeRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateNode(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::tpu::v2::Node>>, UpdateNode,
               (google::longrunning::Operation const& operation), (override));
 

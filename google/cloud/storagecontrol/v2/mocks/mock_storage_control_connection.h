@@ -65,20 +65,40 @@ class MockStorageControlConnection
               (google::storage::control::v2::ListFoldersRequest request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, RenameFolder)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, RenameFolder(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RenameFolder(Matcher<google::storage::control::v2::RenameFolderRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::storage::control::v2::Folder>>, RenameFolder,
       (google::storage::control::v2::RenameFolderRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, RenameFolder(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RenameFolder,
       (NoAwaitTag,
        google::storage::control::v2::RenameFolderRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, RenameFolder(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::storage::control::v2::Folder>>,
               RenameFolder, (google::longrunning::Operation const& operation),
               (override));

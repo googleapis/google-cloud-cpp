@@ -47,41 +47,81 @@ class MockServiceUsageConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, EnableService)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, EnableService(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// EnableService(Matcher<google::api::serviceusage::v1::EnableServiceRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>,
       EnableService,
       (google::api::serviceusage::v1::EnableServiceRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, EnableService(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, EnableService,
       (NoAwaitTag,
        google::api::serviceusage::v1::EnableServiceRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, EnableService(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>,
       EnableService, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DisableService)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DisableService(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DisableService(Matcher<google::api::serviceusage::v1::DisableServiceRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>,
       DisableService,
       (google::api::serviceusage::v1::DisableServiceRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DisableService(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DisableService,
       (NoAwaitTag,
        google::api::serviceusage::v1::DisableServiceRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DisableService(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>,
       DisableService, (google::longrunning::Operation const& operation),
@@ -96,9 +136,15 @@ class MockServiceUsageConnection
               (google::api::serviceusage::v1::ListServicesRequest request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, BatchEnableServices)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, BatchEnableServices(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchEnableServices(Matcher<google::api::serviceusage::v1::BatchEnableServicesRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>,
@@ -107,12 +153,26 @@ class MockServiceUsageConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, BatchEnableServices(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, BatchEnableServices,
               (NoAwaitTag,
                google::api::serviceusage::v1::BatchEnableServicesRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchEnableServices(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>,

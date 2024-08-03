@@ -63,72 +63,152 @@ class MockAgentsConnection : public dialogflow_es::AgentsConnection {
               (google::cloud::dialogflow::v2::SearchAgentsRequest request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, TrainAgent)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, TrainAgent(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// TrainAgent(Matcher<google::cloud::dialogflow::v2::TrainAgentRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, TrainAgent,
               (google::cloud::dialogflow::v2::TrainAgentRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, TrainAgent(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, TrainAgent,
               (NoAwaitTag,
                google::cloud::dialogflow::v2::TrainAgentRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, TrainAgent(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, TrainAgent,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ExportAgent)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ExportAgent(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ExportAgent(Matcher<google::cloud::dialogflow::v2::ExportAgentRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::ExportAgentResponse>>,
       ExportAgent,
       (google::cloud::dialogflow::v2::ExportAgentRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ExportAgent(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ExportAgent,
       (NoAwaitTag,
        google::cloud::dialogflow::v2::ExportAgentRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, ExportAgent(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::ExportAgentResponse>>,
       ExportAgent, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ImportAgent)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ImportAgent(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ImportAgent(Matcher<google::cloud::dialogflow::v2::ImportAgentRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::protobuf::Struct>>, ImportAgent,
       (google::cloud::dialogflow::v2::ImportAgentRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ImportAgent(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ImportAgent,
       (NoAwaitTag,
        google::cloud::dialogflow::v2::ImportAgentRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, ImportAgent(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, ImportAgent,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, RestoreAgent)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, RestoreAgent(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RestoreAgent(Matcher<google::cloud::dialogflow::v2::RestoreAgentRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::protobuf::Struct>>, RestoreAgent,
       (google::cloud::dialogflow::v2::RestoreAgentRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, RestoreAgent(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RestoreAgent,
       (NoAwaitTag,
        google::cloud::dialogflow::v2::RestoreAgentRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, RestoreAgent(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, RestoreAgent,
               (google::longrunning::Operation const& operation), (override));
 

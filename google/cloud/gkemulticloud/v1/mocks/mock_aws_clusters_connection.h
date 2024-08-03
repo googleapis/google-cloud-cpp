@@ -47,40 +47,80 @@ class MockAwsClustersConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateAwsCluster)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateAwsCluster(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateAwsCluster(Matcher<google::cloud::gkemulticloud::v1::CreateAwsClusterRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>,
               CreateAwsCluster,
               (google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateAwsCluster(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateAwsCluster,
               (NoAwaitTag,
                google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateAwsCluster(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>,
               CreateAwsCluster,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateAwsCluster)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateAwsCluster(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateAwsCluster(Matcher<google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>,
               UpdateAwsCluster,
               (google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateAwsCluster(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateAwsCluster,
               (NoAwaitTag,
                google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateAwsCluster(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>,
               UpdateAwsCluster,
               (google::longrunning::Operation const& operation), (override));
@@ -96,9 +136,15 @@ class MockAwsClustersConnection
       (google::cloud::gkemulticloud::v1::ListAwsClustersRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteAwsCluster)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteAwsCluster(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteAwsCluster(Matcher<google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>,
       DeleteAwsCluster,
@@ -106,12 +152,26 @@ class MockAwsClustersConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteAwsCluster(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteAwsCluster,
               (NoAwaitTag,
                google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteAwsCluster(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>,
       DeleteAwsCluster, (google::longrunning::Operation const& operation),
@@ -132,47 +192,93 @@ class MockAwsClustersConnection
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateAwsNodePool)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateAwsNodePool(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateAwsNodePool(Matcher<google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>,
               CreateAwsNodePool,
               (google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateAwsNodePool(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateAwsNodePool,
               (NoAwaitTag,
                google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateAwsNodePool(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>,
               CreateAwsNodePool,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateAwsNodePool)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateAwsNodePool(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateAwsNodePool(Matcher<google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>,
               UpdateAwsNodePool,
               (google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateAwsNodePool(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateAwsNodePool,
               (NoAwaitTag,
                google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateAwsNodePool(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>,
               UpdateAwsNodePool,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, RollbackAwsNodePoolUpdate)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, RollbackAwsNodePoolUpdate(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RollbackAwsNodePoolUpdate(Matcher<google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>,
       RollbackAwsNodePoolUpdate,
@@ -180,6 +286,12 @@ class MockAwsClustersConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, RollbackAwsNodePoolUpdate(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RollbackAwsNodePoolUpdate,
       (NoAwaitTag,
@@ -187,6 +299,15 @@ class MockAwsClustersConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RollbackAwsNodePoolUpdate(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>,
               RollbackAwsNodePoolUpdate,
               (google::longrunning::Operation const& operation), (override));
@@ -202,9 +323,15 @@ class MockAwsClustersConnection
       (google::cloud::gkemulticloud::v1::ListAwsNodePoolsRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteAwsNodePool)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteAwsNodePool(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteAwsNodePool(Matcher<google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>,
       DeleteAwsNodePool,
@@ -212,12 +339,26 @@ class MockAwsClustersConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteAwsNodePool(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteAwsNodePool,
               (NoAwaitTag,
                google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteAwsNodePool(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>,
       DeleteAwsNodePool, (google::longrunning::Operation const& operation),

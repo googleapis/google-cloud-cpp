@@ -47,9 +47,15 @@ class MockFirewallsConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteFirewall)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteFirewall(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteFirewall(Matcher<google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       DeleteFirewall,
@@ -57,6 +63,12 @@ class MockFirewallsConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteFirewall(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>, DeleteFirewall,
       (NoAwaitTag,
@@ -64,6 +76,15 @@ class MockFirewallsConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteFirewall(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteFirewall,
               (google::cloud::cpp::compute::v1::Operation const& operation),
@@ -75,9 +96,15 @@ class MockFirewallsConnection
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, InsertFirewall)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, InsertFirewall(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InsertFirewall(Matcher<google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       InsertFirewall,
@@ -85,6 +112,12 @@ class MockFirewallsConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, InsertFirewall(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>, InsertFirewall,
       (NoAwaitTag,
@@ -92,6 +125,15 @@ class MockFirewallsConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InsertFirewall(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertFirewall,
               (google::cloud::cpp::compute::v1::Operation const& operation),
@@ -103,9 +145,15 @@ class MockFirewallsConnection
                    request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, PatchFirewall)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, PatchFirewall(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PatchFirewall(Matcher<google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       PatchFirewall,
@@ -113,6 +161,12 @@ class MockFirewallsConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, PatchFirewall(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>, PatchFirewall,
       (NoAwaitTag,
@@ -120,14 +174,29 @@ class MockFirewallsConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PatchFirewall(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchFirewall,
               (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateFirewall)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateFirewall(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateFirewall(Matcher<google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       UpdateFirewall,
@@ -135,6 +204,12 @@ class MockFirewallsConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateFirewall(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>, UpdateFirewall,
       (NoAwaitTag,
@@ -142,6 +217,15 @@ class MockFirewallsConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateFirewall(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               UpdateFirewall,
               (google::cloud::cpp::compute::v1::Operation const& operation),

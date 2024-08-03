@@ -47,21 +47,42 @@ class MockRegionSslPoliciesConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteSslPolicy)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteSslPolicy(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteSslPolicy(Matcher<google::cloud::cpp::compute::region_ssl_policies::v1::DeleteSslPolicyRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteSslPolicy,
               (google::cloud::cpp::compute::region_ssl_policies::v1::
                    DeleteSslPolicyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteSslPolicy(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               DeleteSslPolicy,
               (NoAwaitTag, google::cloud::cpp::compute::region_ssl_policies::
                                v1::DeleteSslPolicyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteSslPolicy(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteSslPolicy,
               (google::cloud::cpp::compute::v1::Operation const& operation),
@@ -73,21 +94,42 @@ class MockRegionSslPoliciesConnection
                    GetSslPolicyRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, InsertSslPolicy)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, InsertSslPolicy(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InsertSslPolicy(Matcher<google::cloud::cpp::compute::region_ssl_policies::v1::InsertSslPolicyRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertSslPolicy,
               (google::cloud::cpp::compute::region_ssl_policies::v1::
                    InsertSslPolicyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, InsertSslPolicy(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               InsertSslPolicy,
               (NoAwaitTag, google::cloud::cpp::compute::region_ssl_policies::
                                v1::InsertSslPolicyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InsertSslPolicy(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertSslPolicy,
               (google::cloud::cpp::compute::v1::Operation const& operation),
@@ -106,21 +148,42 @@ class MockRegionSslPoliciesConnection
                    ListAvailableFeaturesRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, PatchSslPolicy)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, PatchSslPolicy(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PatchSslPolicy(Matcher<google::cloud::cpp::compute::region_ssl_policies::v1::PatchSslPolicyRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchSslPolicy,
               (google::cloud::cpp::compute::region_ssl_policies::v1::
                    PatchSslPolicyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, PatchSslPolicy(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               PatchSslPolicy,
               (NoAwaitTag, google::cloud::cpp::compute::region_ssl_policies::
                                v1::PatchSslPolicyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PatchSslPolicy(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchSslPolicy,
               (google::cloud::cpp::compute::v1::Operation const& operation),

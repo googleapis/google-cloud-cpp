@@ -46,19 +46,39 @@ class MockAutoMlConnection : public automl_v1::AutoMlConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateDataset)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateDataset(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateDataset(Matcher<google::cloud::automl::v1::CreateDatasetRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::Dataset>>,
               CreateDataset,
               (google::cloud::automl::v1::CreateDatasetRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateDataset(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateDataset,
               (NoAwaitTag,
                google::cloud::automl::v1::CreateDatasetRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateDataset(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::Dataset>>,
               CreateDataset, (google::longrunning::Operation const& operation),
               (override));
@@ -75,53 +95,113 @@ class MockAutoMlConnection : public automl_v1::AutoMlConnection {
               (google::cloud::automl::v1::UpdateDatasetRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteDataset)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteDataset(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteDataset(Matcher<google::cloud::automl::v1::DeleteDatasetRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::OperationMetadata>>,
               DeleteDataset,
               (google::cloud::automl::v1::DeleteDatasetRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteDataset(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteDataset,
               (NoAwaitTag,
                google::cloud::automl::v1::DeleteDatasetRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteDataset(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::OperationMetadata>>,
               DeleteDataset, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ImportData)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ImportData(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ImportData(Matcher<google::cloud::automl::v1::ImportDataRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::OperationMetadata>>,
               ImportData,
               (google::cloud::automl::v1::ImportDataRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ImportData(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, ImportData,
               (NoAwaitTag,
                google::cloud::automl::v1::ImportDataRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, ImportData(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::OperationMetadata>>,
               ImportData, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ExportData)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ExportData(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ExportData(Matcher<google::cloud::automl::v1::ExportDataRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::OperationMetadata>>,
               ExportData,
               (google::cloud::automl::v1::ExportDataRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ExportData(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, ExportData,
               (NoAwaitTag,
                google::cloud::automl::v1::ExportDataRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, ExportData(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::OperationMetadata>>,
               ExportData, (google::longrunning::Operation const& operation),
               (override));
@@ -131,18 +211,38 @@ class MockAutoMlConnection : public automl_v1::AutoMlConnection {
       (google::cloud::automl::v1::GetAnnotationSpecRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateModel)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateModel(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateModel(Matcher<google::cloud::automl::v1::CreateModelRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::Model>>, CreateModel,
               (google::cloud::automl::v1::CreateModelRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateModel(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateModel,
               (NoAwaitTag,
                google::cloud::automl::v1::CreateModelRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateModel(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::Model>>, CreateModel,
               (google::longrunning::Operation const& operation), (override));
 
@@ -154,19 +254,39 @@ class MockAutoMlConnection : public automl_v1::AutoMlConnection {
               (google::cloud::automl::v1::ListModelsRequest request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteModel)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteModel(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteModel(Matcher<google::cloud::automl::v1::DeleteModelRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::OperationMetadata>>,
               DeleteModel,
               (google::cloud::automl::v1::DeleteModelRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteModel(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteModel,
               (NoAwaitTag,
                google::cloud::automl::v1::DeleteModelRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteModel(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::OperationMetadata>>,
               DeleteModel, (google::longrunning::Operation const& operation),
               (override));
@@ -175,53 +295,113 @@ class MockAutoMlConnection : public automl_v1::AutoMlConnection {
               (google::cloud::automl::v1::UpdateModelRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeployModel)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeployModel(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeployModel(Matcher<google::cloud::automl::v1::DeployModelRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::OperationMetadata>>,
               DeployModel,
               (google::cloud::automl::v1::DeployModelRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeployModel(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeployModel,
               (NoAwaitTag,
                google::cloud::automl::v1::DeployModelRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeployModel(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::OperationMetadata>>,
               DeployModel, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UndeployModel)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UndeployModel(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UndeployModel(Matcher<google::cloud::automl::v1::UndeployModelRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::OperationMetadata>>,
               UndeployModel,
               (google::cloud::automl::v1::UndeployModelRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UndeployModel(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UndeployModel,
               (NoAwaitTag,
                google::cloud::automl::v1::UndeployModelRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UndeployModel(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::OperationMetadata>>,
               UndeployModel, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ExportModel)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ExportModel(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ExportModel(Matcher<google::cloud::automl::v1::ExportModelRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::OperationMetadata>>,
               ExportModel,
               (google::cloud::automl::v1::ExportModelRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ExportModel(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, ExportModel,
               (NoAwaitTag,
                google::cloud::automl::v1::ExportModelRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, ExportModel(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::OperationMetadata>>,
               ExportModel, (google::longrunning::Operation const& operation),
               (override));

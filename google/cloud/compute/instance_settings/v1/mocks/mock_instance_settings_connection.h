@@ -53,21 +53,42 @@ class MockInstanceSettingsConnection
                    GetInstanceSettingsRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, PatchInstanceSettings)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, PatchInstanceSettings(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PatchInstanceSettings(Matcher<google::cloud::cpp::compute::instance_settings::v1::PatchInstanceSettingsRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchInstanceSettings,
               (google::cloud::cpp::compute::instance_settings::v1::
                    PatchInstanceSettingsRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, PatchInstanceSettings(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               PatchInstanceSettings,
               (NoAwaitTag, google::cloud::cpp::compute::instance_settings::v1::
                                PatchInstanceSettingsRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PatchInstanceSettings(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchInstanceSettings,
               (google::cloud::cpp::compute::v1::Operation const& operation),

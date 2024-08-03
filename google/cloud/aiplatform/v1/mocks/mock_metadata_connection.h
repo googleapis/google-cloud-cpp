@@ -47,21 +47,41 @@ class MockMetadataServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateMetadataStore)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateMetadataStore(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateMetadataStore(Matcher<google::cloud::aiplatform::v1::CreateMetadataStoreRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::MetadataStore>>,
               CreateMetadataStore,
               (google::cloud::aiplatform::v1::CreateMetadataStoreRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateMetadataStore(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateMetadataStore,
               (NoAwaitTag,
                google::cloud::aiplatform::v1::CreateMetadataStoreRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateMetadataStore(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::MetadataStore>>,
               CreateMetadataStore,
               (google::longrunning::Operation const& operation), (override));
@@ -77,9 +97,15 @@ class MockMetadataServiceConnection
       (google::cloud::aiplatform::v1::ListMetadataStoresRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteMetadataStore)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteMetadataStore(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteMetadataStore(Matcher<google::cloud::aiplatform::v1::DeleteMetadataStoreRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>,
@@ -88,12 +114,26 @@ class MockMetadataServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteMetadataStore(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteMetadataStore,
               (NoAwaitTag,
                google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteMetadataStore(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>,
@@ -120,41 +160,81 @@ class MockMetadataServiceConnection
       (google::cloud::aiplatform::v1::UpdateArtifactRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteArtifact)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteArtifact(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteArtifact(Matcher<google::cloud::aiplatform::v1::DeleteArtifactRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteArtifact,
       (google::cloud::aiplatform::v1::DeleteArtifactRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteArtifact(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteArtifact,
       (NoAwaitTag,
        google::cloud::aiplatform::v1::DeleteArtifactRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteArtifact(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteArtifact, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, PurgeArtifacts)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, PurgeArtifacts(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PurgeArtifacts(Matcher<google::cloud::aiplatform::v1::PurgeArtifactsRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>,
       PurgeArtifacts,
       (google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, PurgeArtifacts(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, PurgeArtifacts,
       (NoAwaitTag,
        google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, PurgeArtifacts(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>,
       PurgeArtifacts, (google::longrunning::Operation const& operation),
@@ -179,41 +259,81 @@ class MockMetadataServiceConnection
       (google::cloud::aiplatform::v1::UpdateContextRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteContext)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteContext(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteContext(Matcher<google::cloud::aiplatform::v1::DeleteContextRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteContext,
       (google::cloud::aiplatform::v1::DeleteContextRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteContext(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteContext,
       (NoAwaitTag,
        google::cloud::aiplatform::v1::DeleteContextRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteContext(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteContext, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, PurgeContexts)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, PurgeContexts(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PurgeContexts(Matcher<google::cloud::aiplatform::v1::PurgeContextsRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::PurgeContextsResponse>>,
       PurgeContexts,
       (google::cloud::aiplatform::v1::PurgeContextsRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, PurgeContexts(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, PurgeContexts,
       (NoAwaitTag,
        google::cloud::aiplatform::v1::PurgeContextsRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, PurgeContexts(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::PurgeContextsResponse>>,
       PurgeContexts, (google::longrunning::Operation const& operation),
@@ -266,41 +386,81 @@ class MockMetadataServiceConnection
       (google::cloud::aiplatform::v1::UpdateExecutionRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteExecution)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteExecution(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteExecution(Matcher<google::cloud::aiplatform::v1::DeleteExecutionRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteExecution,
       (google::cloud::aiplatform::v1::DeleteExecutionRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteExecution(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteExecution,
       (NoAwaitTag,
        google::cloud::aiplatform::v1::DeleteExecutionRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteExecution(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteExecution, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, PurgeExecutions)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, PurgeExecutions(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PurgeExecutions(Matcher<google::cloud::aiplatform::v1::PurgeExecutionsRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>,
       PurgeExecutions,
       (google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, PurgeExecutions(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, PurgeExecutions,
       (NoAwaitTag,
        google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, PurgeExecutions(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>,
       PurgeExecutions, (google::longrunning::Operation const& operation),

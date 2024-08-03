@@ -52,21 +52,41 @@ class MockCompletionServiceConnection
               (google::cloud::retail::v2::CompleteQueryRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ImportCompletionData)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ImportCompletionData(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ImportCompletionData(Matcher<google::cloud::retail::v2::ImportCompletionDataRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>,
       ImportCompletionData,
       (google::cloud::retail::v2::ImportCompletionDataRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ImportCompletionData(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ImportCompletionData,
       (NoAwaitTag,
        google::cloud::retail::v2::ImportCompletionDataRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ImportCompletionData(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>,
       ImportCompletionData, (google::longrunning::Operation const& operation),

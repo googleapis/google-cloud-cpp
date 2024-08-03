@@ -72,9 +72,15 @@ class MockTranslationServiceConnection
       (google::cloud::translation::v3::TranslateDocumentRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, BatchTranslateText)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, BatchTranslateText(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchTranslateText(Matcher<google::cloud::translation::v3::BatchTranslateTextRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>,
       BatchTranslateText,
@@ -82,20 +88,40 @@ class MockTranslationServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, BatchTranslateText(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, BatchTranslateText,
               (NoAwaitTag,
                google::cloud::translation::v3::BatchTranslateTextRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchTranslateText(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>,
       BatchTranslateText, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, BatchTranslateDocument)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, BatchTranslateDocument(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchTranslateDocument(Matcher<google::cloud::translation::v3::BatchTranslateDocumentRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::translation::v3::BatchTranslateDocumentResponse>>,
@@ -104,6 +130,12 @@ class MockTranslationServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, BatchTranslateDocument(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, BatchTranslateDocument,
       (NoAwaitTag,
@@ -111,27 +143,55 @@ class MockTranslationServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchTranslateDocument(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::translation::v3::BatchTranslateDocumentResponse>>,
       BatchTranslateDocument, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateGlossary)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateGlossary(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateGlossary(Matcher<google::cloud::translation::v3::CreateGlossaryRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::translation::v3::Glossary>>,
       CreateGlossary,
       (google::cloud::translation::v3::CreateGlossaryRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateGlossary(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateGlossary,
       (NoAwaitTag,
        google::cloud::translation::v3::CreateGlossaryRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateGlossary(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::translation::v3::Glossary>>,
               CreateGlossary, (google::longrunning::Operation const& operation),
               (override));
@@ -146,21 +206,41 @@ class MockTranslationServiceConnection
       (google::cloud::translation::v3::GetGlossaryRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteGlossary)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteGlossary(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteGlossary(Matcher<google::cloud::translation::v3::DeleteGlossaryRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>,
       DeleteGlossary,
       (google::cloud::translation::v3::DeleteGlossaryRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteGlossary(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteGlossary,
       (NoAwaitTag,
        google::cloud::translation::v3::DeleteGlossaryRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteGlossary(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>,
       DeleteGlossary, (google::longrunning::Operation const& operation),

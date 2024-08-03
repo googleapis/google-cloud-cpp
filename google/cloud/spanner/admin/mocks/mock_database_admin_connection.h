@@ -53,9 +53,15 @@ class MockDatabaseAdminConnection
       (google::spanner::admin::database::v1::ListDatabasesRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateDatabase)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateDatabase(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateDatabase(Matcher<google::spanner::admin::database::v1::CreateDatabaseRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::spanner::admin::database::v1::Database>>,
       CreateDatabase,
@@ -63,6 +69,12 @@ class MockDatabaseAdminConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateDatabase(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateDatabase,
       (NoAwaitTag,
@@ -70,6 +82,14 @@ class MockDatabaseAdminConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateDatabase(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::spanner::admin::database::v1::Database>>,
               CreateDatabase, (google::longrunning::Operation const& operation),
               (override));
@@ -79,9 +99,15 @@ class MockDatabaseAdminConnection
       (google::spanner::admin::database::v1::GetDatabaseRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateDatabase)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateDatabase(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateDatabase(Matcher<google::spanner::admin::database::v1::UpdateDatabaseRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::spanner::admin::database::v1::Database>>,
       UpdateDatabase,
@@ -89,6 +115,12 @@ class MockDatabaseAdminConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateDatabase(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateDatabase,
       (NoAwaitTag,
@@ -96,13 +128,27 @@ class MockDatabaseAdminConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateDatabase(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::spanner::admin::database::v1::Database>>,
               UpdateDatabase, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateDatabaseDdl)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateDatabaseDdl(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateDatabaseDdl(Matcher<google::spanner::admin::database::v1::UpdateDatabaseDdlRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>,
@@ -111,6 +157,12 @@ class MockDatabaseAdminConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateDatabaseDdl(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateDatabaseDdl,
       (NoAwaitTag,
@@ -118,6 +170,14 @@ class MockDatabaseAdminConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateDatabaseDdl(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>,
@@ -149,40 +209,80 @@ class MockDatabaseAdminConnection
               (google::iam::v1::TestIamPermissionsRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateBackup)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateBackup(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateBackup(Matcher<google::spanner::admin::database::v1::CreateBackupRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::spanner::admin::database::v1::Backup>>,
               CreateBackup,
               (google::spanner::admin::database::v1::CreateBackupRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateBackup(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateBackup,
               (NoAwaitTag,
                google::spanner::admin::database::v1::CreateBackupRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateBackup(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::spanner::admin::database::v1::Backup>>,
               CreateBackup, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CopyBackup)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CopyBackup(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CopyBackup(Matcher<google::spanner::admin::database::v1::CopyBackupRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::spanner::admin::database::v1::Backup>>,
       CopyBackup,
       (google::spanner::admin::database::v1::CopyBackupRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CopyBackup(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CopyBackup,
       (NoAwaitTag,
        google::spanner::admin::database::v1::CopyBackupRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CopyBackup(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::spanner::admin::database::v1::Backup>>,
               CopyBackup, (google::longrunning::Operation const& operation),
               (override));
@@ -208,9 +308,15 @@ class MockDatabaseAdminConnection
       (google::spanner::admin::database::v1::ListBackupsRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, RestoreDatabase)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, RestoreDatabase(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RestoreDatabase(Matcher<google::spanner::admin::database::v1::RestoreDatabaseRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::spanner::admin::database::v1::Database>>,
       RestoreDatabase,
@@ -218,6 +324,12 @@ class MockDatabaseAdminConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, RestoreDatabase(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RestoreDatabase,
       (NoAwaitTag,
@@ -225,6 +337,14 @@ class MockDatabaseAdminConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, RestoreDatabase(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::spanner::admin::database::v1::Database>>,
               RestoreDatabase,
               (google::longrunning::Operation const& operation), (override));

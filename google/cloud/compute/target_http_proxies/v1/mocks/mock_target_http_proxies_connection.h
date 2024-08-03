@@ -55,21 +55,42 @@ class MockTargetHttpProxiesConnection
            AggregatedListTargetHttpProxiesRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteTargetHttpProxy)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteTargetHttpProxy(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteTargetHttpProxy(Matcher<google::cloud::cpp::compute::target_http_proxies::v1::DeleteTargetHttpProxyRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteTargetHttpProxy,
               (google::cloud::cpp::compute::target_http_proxies::v1::
                    DeleteTargetHttpProxyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteTargetHttpProxy(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               DeleteTargetHttpProxy,
               (NoAwaitTag, google::cloud::cpp::compute::target_http_proxies::
                                v1::DeleteTargetHttpProxyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteTargetHttpProxy(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteTargetHttpProxy,
               (google::cloud::cpp::compute::v1::Operation const& operation),
@@ -81,21 +102,42 @@ class MockTargetHttpProxiesConnection
                    GetTargetHttpProxyRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, InsertTargetHttpProxy)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, InsertTargetHttpProxy(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InsertTargetHttpProxy(Matcher<google::cloud::cpp::compute::target_http_proxies::v1::InsertTargetHttpProxyRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertTargetHttpProxy,
               (google::cloud::cpp::compute::target_http_proxies::v1::
                    InsertTargetHttpProxyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, InsertTargetHttpProxy(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               InsertTargetHttpProxy,
               (NoAwaitTag, google::cloud::cpp::compute::target_http_proxies::
                                v1::InsertTargetHttpProxyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InsertTargetHttpProxy(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertTargetHttpProxy,
               (google::cloud::cpp::compute::v1::Operation const& operation),
@@ -107,40 +149,81 @@ class MockTargetHttpProxiesConnection
                    ListTargetHttpProxiesRequest request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, PatchTargetHttpProxy)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, PatchTargetHttpProxy(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PatchTargetHttpProxy(Matcher<google::cloud::cpp::compute::target_http_proxies::v1::PatchTargetHttpProxyRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchTargetHttpProxy,
               (google::cloud::cpp::compute::target_http_proxies::v1::
                    PatchTargetHttpProxyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, PatchTargetHttpProxy(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               PatchTargetHttpProxy,
               (NoAwaitTag, google::cloud::cpp::compute::target_http_proxies::
                                v1::PatchTargetHttpProxyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PatchTargetHttpProxy(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchTargetHttpProxy,
               (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, SetUrlMap)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, SetUrlMap(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// SetUrlMap(Matcher<google::cloud::cpp::compute::target_http_proxies::v1::SetUrlMapRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetUrlMap,
               (google::cloud::cpp::compute::target_http_proxies::v1::
                    SetUrlMapRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, SetUrlMap(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, SetUrlMap,
               (NoAwaitTag, google::cloud::cpp::compute::target_http_proxies::
                                v1::SetUrlMapRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// SetUrlMap(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetUrlMap,
               (google::cloud::cpp::compute::v1::Operation const& operation),

@@ -57,78 +57,158 @@ class MockEdgeContainerConnection
       (google::cloud::edgecontainer::v1::GetClusterRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateCluster)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateCluster(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateCluster(Matcher<google::cloud::edgecontainer::v1::CreateClusterRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>,
       CreateCluster,
       (google::cloud::edgecontainer::v1::CreateClusterRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateCluster(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateCluster,
       (NoAwaitTag,
        google::cloud::edgecontainer::v1::CreateClusterRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateCluster(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>,
               CreateCluster, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateCluster)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateCluster(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateCluster(Matcher<google::cloud::edgecontainer::v1::UpdateClusterRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>,
       UpdateCluster,
       (google::cloud::edgecontainer::v1::UpdateClusterRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateCluster(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateCluster,
       (NoAwaitTag,
        google::cloud::edgecontainer::v1::UpdateClusterRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateCluster(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>,
               UpdateCluster, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpgradeCluster)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpgradeCluster(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpgradeCluster(Matcher<google::cloud::edgecontainer::v1::UpgradeClusterRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>,
       UpgradeCluster,
       (google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpgradeCluster(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpgradeCluster,
       (NoAwaitTag,
        google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpgradeCluster(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>,
               UpgradeCluster, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteCluster)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteCluster(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteCluster(Matcher<google::cloud::edgecontainer::v1::DeleteClusterRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>,
       DeleteCluster,
       (google::cloud::edgecontainer::v1::DeleteClusterRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteCluster(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteCluster,
       (NoAwaitTag,
        google::cloud::edgecontainer::v1::DeleteClusterRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteCluster(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>,
       DeleteCluster, (google::longrunning::Operation const& operation),
@@ -159,59 +239,119 @@ class MockEdgeContainerConnection
       (google::cloud::edgecontainer::v1::GetNodePoolRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateNodePool)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateNodePool(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateNodePool(Matcher<google::cloud::edgecontainer::v1::CreateNodePoolRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>,
       CreateNodePool,
       (google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateNodePool(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateNodePool,
       (NoAwaitTag,
        google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateNodePool(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>,
               CreateNodePool, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateNodePool)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateNodePool(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateNodePool(Matcher<google::cloud::edgecontainer::v1::UpdateNodePoolRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>,
       UpdateNodePool,
       (google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateNodePool(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateNodePool,
       (NoAwaitTag,
        google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateNodePool(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>,
               UpdateNodePool, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteNodePool)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteNodePool(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteNodePool(Matcher<google::cloud::edgecontainer::v1::DeleteNodePoolRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>,
       DeleteNodePool,
       (google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteNodePool(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteNodePool,
       (NoAwaitTag,
        google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteNodePool(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>,
       DeleteNodePool, (google::longrunning::Operation const& operation),
@@ -239,9 +379,15 @@ class MockEdgeContainerConnection
                    request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateVpnConnection)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateVpnConnection(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateVpnConnection(Matcher<google::cloud::edgecontainer::v1::CreateVpnConnectionRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::edgecontainer::v1::VpnConnection>>,
       CreateVpnConnection,
@@ -249,6 +395,12 @@ class MockEdgeContainerConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateVpnConnection(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateVpnConnection,
       (NoAwaitTag,
@@ -256,13 +408,27 @@ class MockEdgeContainerConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateVpnConnection(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::edgecontainer::v1::VpnConnection>>,
               CreateVpnConnection,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteVpnConnection)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteVpnConnection(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteVpnConnection(Matcher<google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>,
       DeleteVpnConnection,
@@ -270,6 +436,12 @@ class MockEdgeContainerConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteVpnConnection(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteVpnConnection,
       (NoAwaitTag,
@@ -277,6 +449,14 @@ class MockEdgeContainerConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteVpnConnection(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>,
       DeleteVpnConnection, (google::longrunning::Operation const& operation),

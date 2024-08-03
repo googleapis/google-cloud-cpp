@@ -46,9 +46,15 @@ class MockDisksConnection : public compute_disks_v1::DisksConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, AddResourcePolicies)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, AddResourcePolicies(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// AddResourcePolicies(Matcher<google::cloud::cpp::compute::disks::v1::AddResourcePoliciesRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       AddResourcePolicies,
@@ -56,6 +62,12 @@ class MockDisksConnection : public compute_disks_v1::DisksConnection {
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, AddResourcePolicies(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>, AddResourcePolicies,
       (NoAwaitTag,
@@ -63,6 +75,15 @@ class MockDisksConnection : public compute_disks_v1::DisksConnection {
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// AddResourcePolicies(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               AddResourcePolicies,
               (google::cloud::cpp::compute::v1::Operation const& operation),
@@ -76,29 +97,55 @@ class MockDisksConnection : public compute_disks_v1::DisksConnection {
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, BulkInsert)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, BulkInsert(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BulkInsert(Matcher<google::cloud::cpp::compute::disks::v1::BulkInsertRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               BulkInsert,
               (google::cloud::cpp::compute::disks::v1::BulkInsertRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, BulkInsert(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, BulkInsert,
               (NoAwaitTag,
                google::cloud::cpp::compute::disks::v1::BulkInsertRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BulkInsert(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               BulkInsert,
               (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateSnapshot)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateSnapshot(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateSnapshot(Matcher<google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       CreateSnapshot,
@@ -106,6 +153,12 @@ class MockDisksConnection : public compute_disks_v1::DisksConnection {
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateSnapshot(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>, CreateSnapshot,
       (NoAwaitTag,
@@ -113,26 +166,55 @@ class MockDisksConnection : public compute_disks_v1::DisksConnection {
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateSnapshot(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               CreateSnapshot,
               (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteDisk)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteDisk(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteDisk(Matcher<google::cloud::cpp::compute::disks::v1::DeleteDiskRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteDisk,
               (google::cloud::cpp::compute::disks::v1::DeleteDiskRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteDisk(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, DeleteDisk,
               (NoAwaitTag,
                google::cloud::cpp::compute::disks::v1::DeleteDiskRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteDisk(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteDisk,
               (google::cloud::cpp::compute::v1::Operation const& operation),
@@ -149,21 +231,41 @@ class MockDisksConnection : public compute_disks_v1::DisksConnection {
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, InsertDisk)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, InsertDisk(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InsertDisk(Matcher<google::cloud::cpp::compute::disks::v1::InsertDiskRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertDisk,
               (google::cloud::cpp::compute::disks::v1::InsertDiskRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, InsertDisk(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, InsertDisk,
               (NoAwaitTag,
                google::cloud::cpp::compute::disks::v1::InsertDiskRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InsertDisk(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertDisk,
               (google::cloud::cpp::compute::v1::Operation const& operation),
@@ -174,40 +276,81 @@ class MockDisksConnection : public compute_disks_v1::DisksConnection {
       (google::cloud::cpp::compute::disks::v1::ListDisksRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, RemoveResourcePolicies)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, RemoveResourcePolicies(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RemoveResourcePolicies(Matcher<google::cloud::cpp::compute::disks::v1::RemoveResourcePoliciesRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               RemoveResourcePolicies,
               (google::cloud::cpp::compute::disks::v1::
                    RemoveResourcePoliciesRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, RemoveResourcePolicies(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               RemoveResourcePolicies,
               (NoAwaitTag, google::cloud::cpp::compute::disks::v1::
                                RemoveResourcePoliciesRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RemoveResourcePolicies(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               RemoveResourcePolicies,
               (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, Resize)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, Resize(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// Resize(Matcher<google::cloud::cpp::compute::disks::v1::ResizeRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, Resize,
       (google::cloud::cpp::compute::disks::v1::ResizeRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, Resize(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>, Resize,
       (NoAwaitTag,
        google::cloud::cpp::compute::disks::v1::ResizeRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// Resize(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               Resize,
               (google::cloud::cpp::compute::v1::Operation const& operation),
@@ -219,80 +362,163 @@ class MockDisksConnection : public compute_disks_v1::DisksConnection {
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, SetLabels)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, SetLabels(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// SetLabels(Matcher<google::cloud::cpp::compute::disks::v1::SetLabelsRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, SetLabels,
       (google::cloud::cpp::compute::disks::v1::SetLabelsRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, SetLabels(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>, SetLabels,
       (NoAwaitTag,
        google::cloud::cpp::compute::disks::v1::SetLabelsRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// SetLabels(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetLabels,
               (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, StartAsyncReplication)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, StartAsyncReplication(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// StartAsyncReplication(Matcher<google::cloud::cpp::compute::disks::v1::StartAsyncReplicationRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               StartAsyncReplication,
               (google::cloud::cpp::compute::disks::v1::
                    StartAsyncReplicationRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, StartAsyncReplication(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               StartAsyncReplication,
               (NoAwaitTag, google::cloud::cpp::compute::disks::v1::
                                StartAsyncReplicationRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// StartAsyncReplication(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               StartAsyncReplication,
               (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, StopAsyncReplication)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, StopAsyncReplication(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// StopAsyncReplication(Matcher<google::cloud::cpp::compute::disks::v1::StopAsyncReplicationRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               StopAsyncReplication,
               (google::cloud::cpp::compute::disks::v1::
                    StopAsyncReplicationRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, StopAsyncReplication(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               StopAsyncReplication,
               (NoAwaitTag, google::cloud::cpp::compute::disks::v1::
                                StopAsyncReplicationRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// StopAsyncReplication(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               StopAsyncReplication,
               (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, StopGroupAsyncReplication)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, StopGroupAsyncReplication(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// StopGroupAsyncReplication(Matcher<google::cloud::cpp::compute::disks::v1::StopGroupAsyncReplicationRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               StopGroupAsyncReplication,
               (google::cloud::cpp::compute::disks::v1::
                    StopGroupAsyncReplicationRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, StopGroupAsyncReplication(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               StopGroupAsyncReplication,
               (NoAwaitTag, google::cloud::cpp::compute::disks::v1::
                                StopGroupAsyncReplicationRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// StopGroupAsyncReplication(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               StopGroupAsyncReplication,
               (google::cloud::cpp::compute::v1::Operation const& operation),
@@ -305,21 +531,41 @@ class MockDisksConnection : public compute_disks_v1::DisksConnection {
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateDisk)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateDisk(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateDisk(Matcher<google::cloud::cpp::compute::disks::v1::UpdateDiskRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               UpdateDisk,
               (google::cloud::cpp::compute::disks::v1::UpdateDiskRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateDisk(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, UpdateDisk,
               (NoAwaitTag,
                google::cloud::cpp::compute::disks::v1::UpdateDiskRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateDisk(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               UpdateDisk,
               (google::cloud::cpp::compute::v1::Operation const& operation),

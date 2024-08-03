@@ -46,18 +46,38 @@ class MockModelServiceConnection : public retail_v2::ModelServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateModel)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateModel(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateModel(Matcher<google::cloud::retail::v2::CreateModelRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::retail::v2::Model>>, CreateModel,
               (google::cloud::retail::v2::CreateModelRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateModel(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateModel,
               (NoAwaitTag,
                google::cloud::retail::v2::CreateModelRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateModel(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::retail::v2::Model>>, CreateModel,
               (google::longrunning::Operation const& operation), (override));
 
@@ -85,19 +105,38 @@ class MockModelServiceConnection : public retail_v2::ModelServiceConnection {
               (google::cloud::retail::v2::UpdateModelRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, TuneModel)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, TuneModel(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// TuneModel(Matcher<google::cloud::retail::v2::TuneModelRequest const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::retail::v2::TuneModelResponse>>,
               TuneModel,
               (google::cloud::retail::v2::TuneModelRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, TuneModel(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, TuneModel,
               (NoAwaitTag,
                google::cloud::retail::v2::TuneModelRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, TuneModel(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::retail::v2::TuneModelResponse>>,
               TuneModel, (google::longrunning::Operation const& operation),
               (override));

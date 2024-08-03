@@ -47,21 +47,41 @@ class MockAzureClustersConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateAzureClient)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateAzureClient(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateAzureClient(Matcher<google::cloud::gkemulticloud::v1::CreateAzureClientRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AzureClient>>,
               CreateAzureClient,
               (google::cloud::gkemulticloud::v1::CreateAzureClientRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateAzureClient(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateAzureClient,
               (NoAwaitTag,
                google::cloud::gkemulticloud::v1::CreateAzureClientRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateAzureClient(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AzureClient>>,
               CreateAzureClient,
               (google::longrunning::Operation const& operation), (override));
@@ -77,9 +97,15 @@ class MockAzureClustersConnection
       (google::cloud::gkemulticloud::v1::ListAzureClientsRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteAzureClient)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteAzureClient(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteAzureClient(Matcher<google::cloud::gkemulticloud::v1::DeleteAzureClientRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>,
       DeleteAzureClient,
@@ -87,20 +113,40 @@ class MockAzureClustersConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteAzureClient(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteAzureClient,
               (NoAwaitTag,
                google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteAzureClient(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>,
       DeleteAzureClient, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateAzureCluster)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateAzureCluster(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateAzureCluster(Matcher<google::cloud::gkemulticloud::v1::CreateAzureClusterRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>,
       CreateAzureCluster,
@@ -108,6 +154,12 @@ class MockAzureClustersConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateAzureCluster(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateAzureCluster,
       (NoAwaitTag,
@@ -115,13 +167,27 @@ class MockAzureClustersConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateAzureCluster(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>,
               CreateAzureCluster,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateAzureCluster)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateAzureCluster(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateAzureCluster(Matcher<google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>,
       UpdateAzureCluster,
@@ -129,6 +195,12 @@ class MockAzureClustersConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateAzureCluster(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateAzureCluster,
       (NoAwaitTag,
@@ -136,6 +208,14 @@ class MockAzureClustersConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateAzureCluster(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>,
               UpdateAzureCluster,
               (google::longrunning::Operation const& operation), (override));
@@ -151,9 +231,15 @@ class MockAzureClustersConnection
       (google::cloud::gkemulticloud::v1::ListAzureClustersRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteAzureCluster)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteAzureCluster(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteAzureCluster(Matcher<google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>,
       DeleteAzureCluster,
@@ -161,6 +247,12 @@ class MockAzureClustersConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteAzureCluster(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteAzureCluster,
       (NoAwaitTag,
@@ -168,6 +260,14 @@ class MockAzureClustersConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteAzureCluster(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>,
       DeleteAzureCluster, (google::longrunning::Operation const& operation),
@@ -188,9 +288,15 @@ class MockAzureClustersConnection
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateAzureNodePool)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateAzureNodePool(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateAzureNodePool(Matcher<google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>,
       CreateAzureNodePool,
@@ -198,6 +304,12 @@ class MockAzureClustersConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateAzureNodePool(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateAzureNodePool,
       (NoAwaitTag,
@@ -205,13 +317,27 @@ class MockAzureClustersConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateAzureNodePool(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>,
               CreateAzureNodePool,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateAzureNodePool)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateAzureNodePool(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateAzureNodePool(Matcher<google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>,
       UpdateAzureNodePool,
@@ -219,6 +345,12 @@ class MockAzureClustersConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateAzureNodePool(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateAzureNodePool,
       (NoAwaitTag,
@@ -226,6 +358,14 @@ class MockAzureClustersConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateAzureNodePool(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>,
               UpdateAzureNodePool,
               (google::longrunning::Operation const& operation), (override));
@@ -242,9 +382,15 @@ class MockAzureClustersConnection
       (google::cloud::gkemulticloud::v1::ListAzureNodePoolsRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteAzureNodePool)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteAzureNodePool(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteAzureNodePool(Matcher<google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>,
       DeleteAzureNodePool,
@@ -252,6 +398,12 @@ class MockAzureClustersConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteAzureNodePool(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteAzureNodePool,
       (NoAwaitTag,
@@ -259,6 +411,14 @@ class MockAzureClustersConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteAzureNodePool(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>,
       DeleteAzureNodePool, (google::longrunning::Operation const& operation),

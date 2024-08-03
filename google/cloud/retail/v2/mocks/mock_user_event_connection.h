@@ -56,61 +56,121 @@ class MockUserEventServiceConnection
       (google::cloud::retail::v2::CollectUserEventRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, PurgeUserEvents)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, PurgeUserEvents(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PurgeUserEvents(Matcher<google::cloud::retail::v2::PurgeUserEventsRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>,
       PurgeUserEvents,
       (google::cloud::retail::v2::PurgeUserEventsRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, PurgeUserEvents(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, PurgeUserEvents,
       (NoAwaitTag,
        google::cloud::retail::v2::PurgeUserEventsRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, PurgeUserEvents(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>,
       PurgeUserEvents, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ImportUserEvents)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ImportUserEvents(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ImportUserEvents(Matcher<google::cloud::retail::v2::ImportUserEventsRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>,
       ImportUserEvents,
       (google::cloud::retail::v2::ImportUserEventsRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ImportUserEvents(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ImportUserEvents,
       (NoAwaitTag,
        google::cloud::retail::v2::ImportUserEventsRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, ImportUserEvents(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>,
       ImportUserEvents, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, RejoinUserEvents)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, RejoinUserEvents(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RejoinUserEvents(Matcher<google::cloud::retail::v2::RejoinUserEventsRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>,
       RejoinUserEvents,
       (google::cloud::retail::v2::RejoinUserEventsRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, RejoinUserEvents(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RejoinUserEvents,
       (NoAwaitTag,
        google::cloud::retail::v2::RejoinUserEventsRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, RejoinUserEvents(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>,
       RejoinUserEvents, (google::longrunning::Operation const& operation),

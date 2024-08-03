@@ -75,9 +75,15 @@ class MockPrivilegedAccessManagerConnection
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateEntitlement)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateEntitlement(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateEntitlement(Matcher<google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>,
       CreateEntitlement,
@@ -85,19 +91,39 @@ class MockPrivilegedAccessManagerConnection
            CreateEntitlementRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateEntitlement(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateEntitlement,
               (NoAwaitTag, google::cloud::privilegedaccessmanager::v1::
                                CreateEntitlementRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateEntitlement(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>,
       CreateEntitlement, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteEntitlement)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteEntitlement(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteEntitlement(Matcher<google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>,
       DeleteEntitlement,
@@ -105,19 +131,39 @@ class MockPrivilegedAccessManagerConnection
            DeleteEntitlementRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteEntitlement(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteEntitlement,
               (NoAwaitTag, google::cloud::privilegedaccessmanager::v1::
                                DeleteEntitlementRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteEntitlement(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>,
       DeleteEntitlement, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateEntitlement)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateEntitlement(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateEntitlement(Matcher<google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>,
       UpdateEntitlement,
@@ -125,11 +171,25 @@ class MockPrivilegedAccessManagerConnection
            UpdateEntitlementRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateEntitlement(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateEntitlement,
               (NoAwaitTag, google::cloud::privilegedaccessmanager::v1::
                                UpdateEntitlementRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateEntitlement(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>,
       UpdateEntitlement, (google::longrunning::Operation const& operation),
@@ -171,9 +231,15 @@ class MockPrivilegedAccessManagerConnection
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, RevokeGrant)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, RevokeGrant(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RevokeGrant(Matcher<google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>>,
       RevokeGrant,
@@ -181,6 +247,12 @@ class MockPrivilegedAccessManagerConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, RevokeGrant(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RevokeGrant,
       (NoAwaitTag,
@@ -188,6 +260,14 @@ class MockPrivilegedAccessManagerConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, RevokeGrant(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>>,
       RevokeGrant, (google::longrunning::Operation const& operation),

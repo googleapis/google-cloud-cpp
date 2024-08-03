@@ -62,77 +62,157 @@ class MockDataFusionConnection : public datafusion_v1::DataFusionConnection {
       (google::cloud::datafusion::v1::GetInstanceRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateInstance)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateInstance(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateInstance(Matcher<google::cloud::datafusion::v1::CreateInstanceRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::datafusion::v1::Instance>>, CreateInstance,
       (google::cloud::datafusion::v1::CreateInstanceRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateInstance(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateInstance,
       (NoAwaitTag,
        google::cloud::datafusion::v1::CreateInstanceRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateInstance(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::datafusion::v1::Instance>>,
               CreateInstance, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteInstance)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteInstance(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteInstance(Matcher<google::cloud::datafusion::v1::DeleteInstanceRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::datafusion::v1::OperationMetadata>>,
       DeleteInstance,
       (google::cloud::datafusion::v1::DeleteInstanceRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteInstance(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteInstance,
       (NoAwaitTag,
        google::cloud::datafusion::v1::DeleteInstanceRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteInstance(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::datafusion::v1::OperationMetadata>>,
       DeleteInstance, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateInstance)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateInstance(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateInstance(Matcher<google::cloud::datafusion::v1::UpdateInstanceRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::datafusion::v1::Instance>>, UpdateInstance,
       (google::cloud::datafusion::v1::UpdateInstanceRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateInstance(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateInstance,
       (NoAwaitTag,
        google::cloud::datafusion::v1::UpdateInstanceRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateInstance(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::datafusion::v1::Instance>>,
               UpdateInstance, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, RestartInstance)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, RestartInstance(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RestartInstance(Matcher<google::cloud::datafusion::v1::RestartInstanceRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::datafusion::v1::Instance>>,
       RestartInstance,
       (google::cloud::datafusion::v1::RestartInstanceRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, RestartInstance(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RestartInstance,
       (NoAwaitTag,
        google::cloud::datafusion::v1::RestartInstanceRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, RestartInstance(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::datafusion::v1::Instance>>,
               RestartInstance,
               (google::longrunning::Operation const& operation), (override));

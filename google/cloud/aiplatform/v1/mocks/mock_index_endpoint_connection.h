@@ -47,21 +47,41 @@ class MockIndexEndpointServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateIndexEndpoint)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateIndexEndpoint(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateIndexEndpoint(Matcher<google::cloud::aiplatform::v1::CreateIndexEndpointRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>>,
               CreateIndexEndpoint,
               (google::cloud::aiplatform::v1::CreateIndexEndpointRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateIndexEndpoint(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateIndexEndpoint,
               (NoAwaitTag,
                google::cloud::aiplatform::v1::CreateIndexEndpointRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateIndexEndpoint(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>>,
               CreateIndexEndpoint,
               (google::longrunning::Operation const& operation), (override));
@@ -83,9 +103,15 @@ class MockIndexEndpointServiceConnection
                    request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteIndexEndpoint)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteIndexEndpoint(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteIndexEndpoint(Matcher<google::cloud::aiplatform::v1::DeleteIndexEndpointRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteIndexEndpoint,
@@ -93,60 +119,120 @@ class MockIndexEndpointServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteIndexEndpoint(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteIndexEndpoint,
               (NoAwaitTag,
                google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteIndexEndpoint(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteIndexEndpoint, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeployIndex)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeployIndex(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeployIndex(Matcher<google::cloud::aiplatform::v1::DeployIndexRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeployIndexResponse>>,
       DeployIndex,
       (google::cloud::aiplatform::v1::DeployIndexRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeployIndex(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeployIndex,
       (NoAwaitTag,
        google::cloud::aiplatform::v1::DeployIndexRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeployIndex(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeployIndexResponse>>,
       DeployIndex, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UndeployIndex)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UndeployIndex(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UndeployIndex(Matcher<google::cloud::aiplatform::v1::UndeployIndexRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::UndeployIndexResponse>>,
       UndeployIndex,
       (google::cloud::aiplatform::v1::UndeployIndexRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UndeployIndex(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UndeployIndex,
       (NoAwaitTag,
        google::cloud::aiplatform::v1::UndeployIndexRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UndeployIndex(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::UndeployIndexResponse>>,
       UndeployIndex, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, MutateDeployedIndex)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, MutateDeployedIndex(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// MutateDeployedIndex(Matcher<google::cloud::aiplatform::v1::MutateDeployedIndexRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::aiplatform::v1::MutateDeployedIndexResponse>>,
@@ -155,12 +241,26 @@ class MockIndexEndpointServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, MutateDeployedIndex(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, MutateDeployedIndex,
               (NoAwaitTag,
                google::cloud::aiplatform::v1::MutateDeployedIndexRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// MutateDeployedIndex(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::aiplatform::v1::MutateDeployedIndexResponse>>,

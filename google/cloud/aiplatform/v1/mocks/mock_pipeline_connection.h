@@ -66,9 +66,15 @@ class MockPipelineServiceConnection
       (google::cloud::aiplatform::v1::ListTrainingPipelinesRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteTrainingPipeline)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteTrainingPipeline(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteTrainingPipeline(Matcher<google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteTrainingPipeline,
@@ -76,6 +82,12 @@ class MockPipelineServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteTrainingPipeline(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteTrainingPipeline,
       (NoAwaitTag,
@@ -83,6 +95,14 @@ class MockPipelineServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteTrainingPipeline(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteTrainingPipeline, (google::longrunning::Operation const& operation),
@@ -109,29 +129,55 @@ class MockPipelineServiceConnection
               (google::cloud::aiplatform::v1::ListPipelineJobsRequest request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeletePipelineJob)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeletePipelineJob(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeletePipelineJob(Matcher<google::cloud::aiplatform::v1::DeletePipelineJobRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeletePipelineJob,
       (google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeletePipelineJob(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeletePipelineJob,
       (NoAwaitTag,
        google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeletePipelineJob(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeletePipelineJob, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, BatchDeletePipelineJobs)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, BatchDeletePipelineJobs(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchDeletePipelineJobs(Matcher<google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>,
@@ -140,6 +186,12 @@ class MockPipelineServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, BatchDeletePipelineJobs(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, BatchDeletePipelineJobs,
       (NoAwaitTag,
@@ -147,6 +199,15 @@ class MockPipelineServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchDeletePipelineJobs(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>,
@@ -158,9 +219,15 @@ class MockPipelineServiceConnection
       (google::cloud::aiplatform::v1::CancelPipelineJobRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, BatchCancelPipelineJobs)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, BatchCancelPipelineJobs(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchCancelPipelineJobs(Matcher<google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>,
@@ -169,6 +236,12 @@ class MockPipelineServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, BatchCancelPipelineJobs(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, BatchCancelPipelineJobs,
       (NoAwaitTag,
@@ -176,6 +249,15 @@ class MockPipelineServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchCancelPipelineJobs(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>,

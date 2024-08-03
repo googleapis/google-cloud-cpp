@@ -61,9 +61,15 @@ class MockTelcoAutomationConnection
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateOrchestrationCluster)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateOrchestrationCluster(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateOrchestrationCluster(Matcher<google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>,
@@ -72,6 +78,12 @@ class MockTelcoAutomationConnection
            CreateOrchestrationClusterRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateOrchestrationCluster(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               CreateOrchestrationCluster,
               (NoAwaitTag,
@@ -79,15 +91,30 @@ class MockTelcoAutomationConnection
                    CreateOrchestrationClusterRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateOrchestrationCluster(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>,
       CreateOrchestrationCluster,
       (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteOrchestrationCluster)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteOrchestrationCluster(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteOrchestrationCluster(Matcher<google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>,
       DeleteOrchestrationCluster,
@@ -95,6 +122,12 @@ class MockTelcoAutomationConnection
            DeleteOrchestrationClusterRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteOrchestrationCluster(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               DeleteOrchestrationCluster,
               (NoAwaitTag,
@@ -102,6 +135,15 @@ class MockTelcoAutomationConnection
                    DeleteOrchestrationClusterRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteOrchestrationCluster(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>,
       DeleteOrchestrationCluster,
@@ -117,40 +159,80 @@ class MockTelcoAutomationConnection
       (google::cloud::telcoautomation::v1::GetEdgeSlmRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateEdgeSlm)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateEdgeSlm(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateEdgeSlm(Matcher<google::cloud::telcoautomation::v1::CreateEdgeSlmRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>>,
       CreateEdgeSlm,
       (google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateEdgeSlm(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateEdgeSlm,
       (NoAwaitTag,
        google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateEdgeSlm(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>>,
               CreateEdgeSlm, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteEdgeSlm)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteEdgeSlm(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteEdgeSlm(Matcher<google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>,
       DeleteEdgeSlm,
       (google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteEdgeSlm(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteEdgeSlm,
       (NoAwaitTag,
        google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteEdgeSlm(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>,
       DeleteEdgeSlm, (google::longrunning::Operation const& operation),
