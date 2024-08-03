@@ -760,6 +760,249 @@ NotebookServiceConnectionImpl::StartNotebookRuntime(
       polling_policy(*current), __func__);
 }
 
+future<StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>>
+NotebookServiceConnectionImpl::CreateNotebookExecutionJob(
+    google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateNotebookExecutionJob(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::aiplatform::v1::NotebookExecutionJob>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::aiplatform::v1::
+                         CreateNotebookExecutionJobRequest const& request) {
+        return stub->AsyncCreateNotebookExecutionJob(
+            cq, std::move(context), std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::aiplatform::v1::NotebookExecutionJob>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+NotebookServiceConnectionImpl::CreateNotebookExecutionJob(
+    NoAwaitTag,
+    google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateNotebookExecutionJob(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::
+                 CreateNotebookExecutionJobRequest const& request) {
+        return stub_->CreateNotebookExecutionJob(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>>
+NotebookServiceConnectionImpl::CreateNotebookExecutionJob(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::aiplatform::v1::
+                   CreateNotebookExecutionJobOperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateNotebookExecutionJob",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::aiplatform::v1::NotebookExecutionJob>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::aiplatform::v1::NotebookExecutionJob>,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>
+NotebookServiceConnectionImpl::GetNotebookExecutionJob(
+    google::cloud::aiplatform::v1::GetNotebookExecutionJobRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetNotebookExecutionJob(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::GetNotebookExecutionJobRequest const&
+              request) {
+        return stub_->GetNotebookExecutionJob(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StreamRange<google::cloud::aiplatform::v1::NotebookExecutionJob>
+NotebookServiceConnectionImpl::ListNotebookExecutionJobs(
+    google::cloud::aiplatform::v1::ListNotebookExecutionJobsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListNotebookExecutionJobs(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::aiplatform::v1::NotebookExecutionJob>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<aiplatform_v1::NotebookServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::aiplatform::v1::ListNotebookExecutionJobsRequest const&
+              r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::aiplatform::v1::
+                       ListNotebookExecutionJobsRequest const& request) {
+              return stub->ListNotebookExecutionJobs(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::aiplatform::v1::ListNotebookExecutionJobsResponse r) {
+        std::vector<google::cloud::aiplatform::v1::NotebookExecutionJob> result(
+            r.notebook_execution_jobs().size());
+        auto& messages = *r.mutable_notebook_execution_jobs();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+NotebookServiceConnectionImpl::DeleteNotebookExecutionJob(
+    google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteNotebookExecutionJob(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::aiplatform::v1::DeleteOperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::aiplatform::v1::
+                         DeleteNotebookExecutionJobRequest const& request) {
+        return stub->AsyncDeleteNotebookExecutionJob(
+            cq, std::move(context), std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::aiplatform::v1::DeleteOperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+NotebookServiceConnectionImpl::DeleteNotebookExecutionJob(
+    NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteNotebookExecutionJob(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::
+                 DeleteNotebookExecutionJobRequest const& request) {
+        return stub_->DeleteNotebookExecutionJob(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+NotebookServiceConnectionImpl::DeleteNotebookExecutionJob(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::aiplatform::v1::
+                   DeleteOperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteNotebookExecutionJob",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::aiplatform::v1::DeleteOperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::aiplatform::v1::DeleteOperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1_internal
 }  // namespace cloud

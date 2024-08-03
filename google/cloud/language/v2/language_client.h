@@ -105,8 +105,8 @@ class LanguageServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.language.v2.AnalyzeSentimentRequest]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L346}
-  /// [google.cloud.language.v2.AnalyzeSentimentResponse]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L355}
+  /// [google.cloud.language.v2.AnalyzeSentimentRequest]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L349}
+  /// [google.cloud.language.v2.AnalyzeSentimentResponse]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L358}
   ///
   // clang-format on
   StatusOr<google::cloud::language::v2::AnalyzeSentimentResponse>
@@ -132,8 +132,8 @@ class LanguageServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.language.v2.AnalyzeSentimentRequest]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L346}
-  /// [google.cloud.language.v2.AnalyzeSentimentResponse]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L355}
+  /// [google.cloud.language.v2.AnalyzeSentimentRequest]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L349}
+  /// [google.cloud.language.v2.AnalyzeSentimentResponse]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L358}
   ///
   // clang-format on
   StatusOr<google::cloud::language::v2::AnalyzeSentimentResponse>
@@ -163,8 +163,8 @@ class LanguageServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.language.v2.AnalyzeSentimentRequest]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L346}
-  /// [google.cloud.language.v2.AnalyzeSentimentResponse]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L355}
+  /// [google.cloud.language.v2.AnalyzeSentimentRequest]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L349}
+  /// [google.cloud.language.v2.AnalyzeSentimentResponse]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L358}
   ///
   // clang-format on
   StatusOr<google::cloud::language::v2::AnalyzeSentimentResponse>
@@ -193,8 +193,8 @@ class LanguageServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.language.v2.AnalyzeEntitiesRequest]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L374}
-  /// [google.cloud.language.v2.AnalyzeEntitiesResponse]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L383}
+  /// [google.cloud.language.v2.AnalyzeEntitiesRequest]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L377}
+  /// [google.cloud.language.v2.AnalyzeEntitiesResponse]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L386}
   ///
   // clang-format on
   StatusOr<google::cloud::language::v2::AnalyzeEntitiesResponse>
@@ -222,8 +222,8 @@ class LanguageServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.language.v2.AnalyzeEntitiesRequest]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L374}
-  /// [google.cloud.language.v2.AnalyzeEntitiesResponse]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L383}
+  /// [google.cloud.language.v2.AnalyzeEntitiesRequest]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L377}
+  /// [google.cloud.language.v2.AnalyzeEntitiesResponse]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L386}
   ///
   // clang-format on
   StatusOr<google::cloud::language::v2::AnalyzeEntitiesResponse>
@@ -255,8 +255,8 @@ class LanguageServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.language.v2.AnalyzeEntitiesRequest]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L374}
-  /// [google.cloud.language.v2.AnalyzeEntitiesResponse]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L383}
+  /// [google.cloud.language.v2.AnalyzeEntitiesRequest]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L377}
+  /// [google.cloud.language.v2.AnalyzeEntitiesResponse]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L386}
   ///
   // clang-format on
   StatusOr<google::cloud::language::v2::AnalyzeEntitiesResponse>
@@ -282,8 +282,8 @@ class LanguageServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.language.v2.ClassifyTextRequest]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L399}
-  /// [google.cloud.language.v2.ClassifyTextResponse]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L405}
+  /// [google.cloud.language.v2.ClassifyTextRequest]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L402}
+  /// [google.cloud.language.v2.ClassifyTextResponse]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L408}
   ///
   // clang-format on
   StatusOr<google::cloud::language::v2::ClassifyTextResponse> ClassifyText(
@@ -312,8 +312,8 @@ class LanguageServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.language.v2.ClassifyTextRequest]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L399}
-  /// [google.cloud.language.v2.ClassifyTextResponse]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L405}
+  /// [google.cloud.language.v2.ClassifyTextRequest]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L402}
+  /// [google.cloud.language.v2.ClassifyTextResponse]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L408}
   ///
   // clang-format on
   StatusOr<google::cloud::language::v2::ClassifyTextResponse> ClassifyText(
@@ -338,8 +338,8 @@ class LanguageServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.language.v2.ModerateTextRequest]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L421}
-  /// [google.cloud.language.v2.ModerateTextResponse]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L427}
+  /// [google.cloud.language.v2.ModerateTextRequest]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L424}
+  /// [google.cloud.language.v2.ModerateTextResponse]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L449}
   ///
   // clang-format on
   StatusOr<google::cloud::language::v2::ModerateTextResponse> ModerateText(
@@ -368,8 +368,8 @@ class LanguageServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.language.v2.ModerateTextRequest]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L421}
-  /// [google.cloud.language.v2.ModerateTextResponse]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L427}
+  /// [google.cloud.language.v2.ModerateTextRequest]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L424}
+  /// [google.cloud.language.v2.ModerateTextResponse]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L449}
   ///
   // clang-format on
   StatusOr<google::cloud::language::v2::ModerateTextResponse> ModerateText(
@@ -396,8 +396,8 @@ class LanguageServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.language.v2.AnnotateTextRequest]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L444}
-  /// [google.cloud.language.v2.AnnotateTextResponse]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L473}
+  /// [google.cloud.language.v2.AnnotateTextRequest]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L466}
+  /// [google.cloud.language.v2.AnnotateTextResponse]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L495}
   ///
   // clang-format on
   StatusOr<google::cloud::language::v2::AnnotateTextResponse> AnnotateText(
@@ -426,8 +426,8 @@ class LanguageServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.language.v2.AnnotateTextRequest]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L444}
-  /// [google.cloud.language.v2.AnnotateTextResponse]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L473}
+  /// [google.cloud.language.v2.AnnotateTextRequest]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L466}
+  /// [google.cloud.language.v2.AnnotateTextResponse]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L495}
   ///
   // clang-format on
   StatusOr<google::cloud::language::v2::AnnotateTextResponse> AnnotateText(
@@ -459,8 +459,8 @@ class LanguageServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.language.v2.AnnotateTextRequest]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L444}
-  /// [google.cloud.language.v2.AnnotateTextResponse]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L473}
+  /// [google.cloud.language.v2.AnnotateTextRequest]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L466}
+  /// [google.cloud.language.v2.AnnotateTextResponse]: @googleapis_reference_link{google/cloud/language/v2/language_service.proto#L495}
   ///
   // clang-format on
   StatusOr<google::cloud::language::v2::AnnotateTextResponse> AnnotateText(

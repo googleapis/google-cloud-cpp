@@ -402,6 +402,140 @@ NotebookServiceClient::StartNotebookRuntime(
   return connection_->StartNotebookRuntime(operation);
 }
 
+future<StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>>
+NotebookServiceClient::CreateNotebookExecutionJob(
+    std::string const& parent,
+    google::cloud::aiplatform::v1::NotebookExecutionJob const&
+        notebook_execution_job,
+    std::string const& notebook_execution_job_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest request;
+  request.set_parent(parent);
+  *request.mutable_notebook_execution_job() = notebook_execution_job;
+  request.set_notebook_execution_job_id(notebook_execution_job_id);
+  return connection_->CreateNotebookExecutionJob(request);
+}
+
+StatusOr<google::longrunning::Operation>
+NotebookServiceClient::CreateNotebookExecutionJob(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::aiplatform::v1::NotebookExecutionJob const&
+        notebook_execution_job,
+    std::string const& notebook_execution_job_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest request;
+  request.set_parent(parent);
+  *request.mutable_notebook_execution_job() = notebook_execution_job;
+  request.set_notebook_execution_job_id(notebook_execution_job_id);
+  return connection_->CreateNotebookExecutionJob(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>>
+NotebookServiceClient::CreateNotebookExecutionJob(
+    google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateNotebookExecutionJob(request);
+}
+
+StatusOr<google::longrunning::Operation>
+NotebookServiceClient::CreateNotebookExecutionJob(
+    NoAwaitTag,
+    google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateNotebookExecutionJob(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>>
+NotebookServiceClient::CreateNotebookExecutionJob(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateNotebookExecutionJob(operation);
+}
+
+StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>
+NotebookServiceClient::GetNotebookExecutionJob(std::string const& name,
+                                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::GetNotebookExecutionJobRequest request;
+  request.set_name(name);
+  return connection_->GetNotebookExecutionJob(request);
+}
+
+StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>
+NotebookServiceClient::GetNotebookExecutionJob(
+    google::cloud::aiplatform::v1::GetNotebookExecutionJobRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetNotebookExecutionJob(request);
+}
+
+StreamRange<google::cloud::aiplatform::v1::NotebookExecutionJob>
+NotebookServiceClient::ListNotebookExecutionJobs(std::string const& parent,
+                                                 Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::ListNotebookExecutionJobsRequest request;
+  request.set_parent(parent);
+  return connection_->ListNotebookExecutionJobs(request);
+}
+
+StreamRange<google::cloud::aiplatform::v1::NotebookExecutionJob>
+NotebookServiceClient::ListNotebookExecutionJobs(
+    google::cloud::aiplatform::v1::ListNotebookExecutionJobsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListNotebookExecutionJobs(std::move(request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+NotebookServiceClient::DeleteNotebookExecutionJob(std::string const& name,
+                                                  Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest request;
+  request.set_name(name);
+  return connection_->DeleteNotebookExecutionJob(request);
+}
+
+StatusOr<google::longrunning::Operation>
+NotebookServiceClient::DeleteNotebookExecutionJob(NoAwaitTag,
+                                                  std::string const& name,
+                                                  Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest request;
+  request.set_name(name);
+  return connection_->DeleteNotebookExecutionJob(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+NotebookServiceClient::DeleteNotebookExecutionJob(
+    google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteNotebookExecutionJob(request);
+}
+
+StatusOr<google::longrunning::Operation>
+NotebookServiceClient::DeleteNotebookExecutionJob(
+    NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteNotebookExecutionJob(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+NotebookServiceClient::DeleteNotebookExecutionJob(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteNotebookExecutionJob(operation);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1
 }  // namespace cloud

@@ -120,7 +120,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.ListPrivateCloudsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1021}
-  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L117}
+  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L119}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::PrivateCloud> ListPrivateClouds(
@@ -159,7 +159,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.ListPrivateCloudsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1021}
-  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L117}
+  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L119}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::PrivateCloud> ListPrivateClouds(
@@ -189,7 +189,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.GetPrivateCloudRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1100}
-  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L117}
+  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L119}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::PrivateCloud> GetPrivateCloud(
@@ -219,7 +219,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.GetPrivateCloudRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1100}
-  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L117}
+  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L119}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::PrivateCloud> GetPrivateCloud(
@@ -274,7 +274,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.CreatePrivateCloudRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1116}
-  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L117}
+  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L119}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
@@ -336,7 +336,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.CreatePrivateCloudRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1116}
-  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L117}
+  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L119}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
@@ -410,7 +410,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L117}
+  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L119}
   /// [google.cloud.vmwareengine.v1.UpdatePrivateCloudRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1156}
   ///
   // clang-format on
@@ -472,7 +472,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L117}
+  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L119}
   /// [google.cloud.vmwareengine.v1.UpdatePrivateCloudRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1156}
   ///
   // clang-format on
@@ -554,7 +554,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.DeletePrivateCloudRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1175}
-  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L117}
+  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L119}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
@@ -619,7 +619,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.DeletePrivateCloudRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1175}
-  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L117}
+  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L119}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
@@ -688,7 +688,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L117}
+  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L119}
   /// [google.cloud.vmwareengine.v1.UndeletePrivateCloudRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1212}
   ///
   // clang-format on
@@ -742,7 +742,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L117}
+  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L119}
   /// [google.cloud.vmwareengine.v1.UndeletePrivateCloudRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1212}
   ///
   // clang-format on
@@ -813,7 +813,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.Cluster]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L250}
+  /// [google.cloud.vmwareengine.v1.Cluster]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L252}
   /// [google.cloud.vmwareengine.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1232}
   ///
   // clang-format on
@@ -852,7 +852,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.Cluster]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L250}
+  /// [google.cloud.vmwareengine.v1.Cluster]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L252}
   /// [google.cloud.vmwareengine.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1232}
   ///
   // clang-format on
@@ -882,7 +882,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.Cluster]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L250}
+  /// [google.cloud.vmwareengine.v1.Cluster]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L252}
   /// [google.cloud.vmwareengine.v1.GetClusterRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1299}
   ///
   // clang-format on
@@ -912,7 +912,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.Cluster]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L250}
+  /// [google.cloud.vmwareengine.v1.Cluster]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L252}
   /// [google.cloud.vmwareengine.v1.GetClusterRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1299}
   ///
   // clang-format on
@@ -964,7 +964,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.Cluster]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L250}
+  /// [google.cloud.vmwareengine.v1.Cluster]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L252}
   /// [google.cloud.vmwareengine.v1.CreateClusterRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1315}
   ///
   // clang-format on
@@ -1022,7 +1022,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.Cluster]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L250}
+  /// [google.cloud.vmwareengine.v1.Cluster]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L252}
   /// [google.cloud.vmwareengine.v1.CreateClusterRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1315}
   ///
   // clang-format on
@@ -1094,7 +1094,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.Cluster]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L250}
+  /// [google.cloud.vmwareengine.v1.Cluster]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L252}
   /// [google.cloud.vmwareengine.v1.UpdateClusterRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1355}
   ///
   // clang-format on
@@ -1153,7 +1153,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.Cluster]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L250}
+  /// [google.cloud.vmwareengine.v1.Cluster]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L252}
   /// [google.cloud.vmwareengine.v1.UpdateClusterRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1355}
   ///
   // clang-format on
@@ -1345,7 +1345,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.ListNodesRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1398}
-  /// [google.cloud.vmwareengine.v1.Node]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L317}
+  /// [google.cloud.vmwareengine.v1.Node]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L323}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::Node> ListNodes(
@@ -1384,7 +1384,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.ListNodesRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1398}
-  /// [google.cloud.vmwareengine.v1.Node]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L317}
+  /// [google.cloud.vmwareengine.v1.Node]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L323}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::Node> ListNodes(
@@ -1412,7 +1412,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.GetNodeRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1439}
-  /// [google.cloud.vmwareengine.v1.Node]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L317}
+  /// [google.cloud.vmwareengine.v1.Node]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L323}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::Node> GetNode(
@@ -1442,7 +1442,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.GetNodeRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1439}
-  /// [google.cloud.vmwareengine.v1.Node]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L317}
+  /// [google.cloud.vmwareengine.v1.Node]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L323}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::Node> GetNode(
@@ -1482,7 +1482,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.ExternalAddress]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L372}
+  /// [google.cloud.vmwareengine.v1.ExternalAddress]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L378}
   /// [google.cloud.vmwareengine.v1.ListExternalAddressesRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1453}
   ///
   // clang-format on
@@ -1522,7 +1522,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.ExternalAddress]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L372}
+  /// [google.cloud.vmwareengine.v1.ExternalAddress]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L378}
   /// [google.cloud.vmwareengine.v1.ListExternalAddressesRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1453}
   ///
   // clang-format on
@@ -1563,7 +1563,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.ExternalAddress]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L372}
+  /// [google.cloud.vmwareengine.v1.ExternalAddress]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L378}
   /// [google.cloud.vmwareengine.v1.FetchNetworkPolicyExternalAddressesRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1532}
   ///
   // clang-format on
@@ -1604,7 +1604,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.ExternalAddress]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L372}
+  /// [google.cloud.vmwareengine.v1.ExternalAddress]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L378}
   /// [google.cloud.vmwareengine.v1.FetchNetworkPolicyExternalAddressesRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1532}
   ///
   // clang-format on
@@ -1636,7 +1636,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.ExternalAddress]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L372}
+  /// [google.cloud.vmwareengine.v1.ExternalAddress]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L378}
   /// [google.cloud.vmwareengine.v1.GetExternalAddressRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1575}
   ///
   // clang-format on
@@ -1666,7 +1666,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.ExternalAddress]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L372}
+  /// [google.cloud.vmwareengine.v1.ExternalAddress]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L378}
   /// [google.cloud.vmwareengine.v1.GetExternalAddressRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1575}
   ///
   // clang-format on
@@ -1719,7 +1719,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.CreateExternalAddressRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1591}
-  /// [google.cloud.vmwareengine.v1.ExternalAddress]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L372}
+  /// [google.cloud.vmwareengine.v1.ExternalAddress]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L378}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
@@ -1777,7 +1777,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.CreateExternalAddressRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1591}
-  /// [google.cloud.vmwareengine.v1.ExternalAddress]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L372}
+  /// [google.cloud.vmwareengine.v1.ExternalAddress]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L378}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
@@ -1852,7 +1852,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.ExternalAddress]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L372}
+  /// [google.cloud.vmwareengine.v1.ExternalAddress]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L378}
   /// [google.cloud.vmwareengine.v1.UpdateExternalAddressRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1640}
   ///
   // clang-format on
@@ -1913,7 +1913,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.ExternalAddress]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L372}
+  /// [google.cloud.vmwareengine.v1.ExternalAddress]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L378}
   /// [google.cloud.vmwareengine.v1.UpdateExternalAddressRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1640}
   ///
   // clang-format on
@@ -2110,7 +2110,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.ListSubnetsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1703}
-  /// [google.cloud.vmwareengine.v1.Subnet]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L429}
+  /// [google.cloud.vmwareengine.v1.Subnet]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L435}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::Subnet> ListSubnets(
@@ -2149,7 +2149,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.ListSubnetsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1703}
-  /// [google.cloud.vmwareengine.v1.Subnet]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L429}
+  /// [google.cloud.vmwareengine.v1.Subnet]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L435}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::Subnet> ListSubnets(
@@ -2179,7 +2179,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.GetSubnetRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1748}
-  /// [google.cloud.vmwareengine.v1.Subnet]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L429}
+  /// [google.cloud.vmwareengine.v1.Subnet]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L435}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::Subnet> GetSubnet(
@@ -2209,7 +2209,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.GetSubnetRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1748}
-  /// [google.cloud.vmwareengine.v1.Subnet]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L429}
+  /// [google.cloud.vmwareengine.v1.Subnet]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L435}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::Subnet> GetSubnet(
@@ -2251,7 +2251,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.Subnet]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L429}
+  /// [google.cloud.vmwareengine.v1.Subnet]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L435}
   /// [google.cloud.vmwareengine.v1.UpdateSubnetRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1764}
   ///
   // clang-format on
@@ -2309,7 +2309,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.Subnet]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L429}
+  /// [google.cloud.vmwareengine.v1.Subnet]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L435}
   /// [google.cloud.vmwareengine.v1.UpdateSubnetRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1764}
   ///
   // clang-format on
@@ -2376,7 +2376,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.ExternalAccessRule]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L487}
+  /// [google.cloud.vmwareengine.v1.ExternalAccessRule]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L493}
   /// [google.cloud.vmwareengine.v1.ListExternalAccessRulesRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1779}
   ///
   // clang-format on
@@ -2415,7 +2415,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.ExternalAccessRule]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L487}
+  /// [google.cloud.vmwareengine.v1.ExternalAccessRule]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L493}
   /// [google.cloud.vmwareengine.v1.ListExternalAccessRulesRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1779}
   ///
   // clang-format on
@@ -2446,7 +2446,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.ExternalAccessRule]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L487}
+  /// [google.cloud.vmwareengine.v1.ExternalAccessRule]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L493}
   /// [google.cloud.vmwareengine.v1.GetExternalAccessRuleRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1858}
   ///
   // clang-format on
@@ -2476,7 +2476,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.ExternalAccessRule]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L487}
+  /// [google.cloud.vmwareengine.v1.ExternalAccessRule]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L493}
   /// [google.cloud.vmwareengine.v1.GetExternalAccessRuleRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1858}
   ///
   // clang-format on
@@ -2529,7 +2529,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.CreateExternalAccessRuleRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1874}
-  /// [google.cloud.vmwareengine.v1.ExternalAccessRule]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L487}
+  /// [google.cloud.vmwareengine.v1.ExternalAccessRule]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L493}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
@@ -2587,7 +2587,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.CreateExternalAccessRuleRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1874}
-  /// [google.cloud.vmwareengine.v1.ExternalAccessRule]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L487}
+  /// [google.cloud.vmwareengine.v1.ExternalAccessRule]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L493}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
@@ -2657,7 +2657,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.ExternalAccessRule]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L487}
+  /// [google.cloud.vmwareengine.v1.ExternalAccessRule]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L493}
   /// [google.cloud.vmwareengine.v1.UpdateExternalAccessRuleRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1924}
   ///
   // clang-format on
@@ -2715,7 +2715,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.ExternalAccessRule]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L487}
+  /// [google.cloud.vmwareengine.v1.ExternalAccessRule]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L493}
   /// [google.cloud.vmwareengine.v1.UpdateExternalAccessRuleRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1924}
   ///
   // clang-format on
@@ -2909,7 +2909,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.ListLoggingServersRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1988}
-  /// [google.cloud.vmwareengine.v1.LoggingServer]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L619}
+  /// [google.cloud.vmwareengine.v1.LoggingServer]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L625}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::LoggingServer>
@@ -2949,7 +2949,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.ListLoggingServersRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1988}
-  /// [google.cloud.vmwareengine.v1.LoggingServer]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L619}
+  /// [google.cloud.vmwareengine.v1.LoggingServer]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L625}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::LoggingServer>
@@ -2980,7 +2980,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.GetLoggingServerRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2068}
-  /// [google.cloud.vmwareengine.v1.LoggingServer]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L619}
+  /// [google.cloud.vmwareengine.v1.LoggingServer]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L625}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::LoggingServer> GetLoggingServer(
@@ -3010,7 +3010,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.GetLoggingServerRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2068}
-  /// [google.cloud.vmwareengine.v1.LoggingServer]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L619}
+  /// [google.cloud.vmwareengine.v1.LoggingServer]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L625}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::LoggingServer> GetLoggingServer(
@@ -3060,7 +3060,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.CreateLoggingServerRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2084}
-  /// [google.cloud.vmwareengine.v1.LoggingServer]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L619}
+  /// [google.cloud.vmwareengine.v1.LoggingServer]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L625}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
@@ -3116,7 +3116,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.CreateLoggingServerRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2084}
-  /// [google.cloud.vmwareengine.v1.LoggingServer]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L619}
+  /// [google.cloud.vmwareengine.v1.LoggingServer]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L625}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
@@ -3186,7 +3186,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.LoggingServer]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L619}
+  /// [google.cloud.vmwareengine.v1.LoggingServer]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L625}
   /// [google.cloud.vmwareengine.v1.UpdateLoggingServerRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2133}
   ///
   // clang-format on
@@ -3242,7 +3242,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.LoggingServer]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L619}
+  /// [google.cloud.vmwareengine.v1.LoggingServer]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L625}
   /// [google.cloud.vmwareengine.v1.UpdateLoggingServerRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2133}
   ///
   // clang-format on
@@ -3434,7 +3434,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.ListNodeTypesRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2227}
-  /// [google.cloud.vmwareengine.v1.NodeType]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L684}
+  /// [google.cloud.vmwareengine.v1.NodeType]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L699}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::NodeType> ListNodeTypes(
@@ -3473,7 +3473,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.ListNodeTypesRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2227}
-  /// [google.cloud.vmwareengine.v1.NodeType]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L684}
+  /// [google.cloud.vmwareengine.v1.NodeType]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L699}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::NodeType> ListNodeTypes(
@@ -3503,7 +3503,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.GetNodeTypeRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2298}
-  /// [google.cloud.vmwareengine.v1.NodeType]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L684}
+  /// [google.cloud.vmwareengine.v1.NodeType]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L699}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::NodeType> GetNodeType(
@@ -3533,7 +3533,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.GetNodeTypeRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2298}
-  /// [google.cloud.vmwareengine.v1.NodeType]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L684}
+  /// [google.cloud.vmwareengine.v1.NodeType]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L699}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::NodeType> GetNodeType(
@@ -3563,7 +3563,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.Credentials]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L757}
+  /// [google.cloud.vmwareengine.v1.Credentials]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L772}
   /// [google.cloud.vmwareengine.v1.ShowNsxCredentialsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2314}
   ///
   // clang-format on
@@ -3593,7 +3593,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.Credentials]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L757}
+  /// [google.cloud.vmwareengine.v1.Credentials]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L772}
   /// [google.cloud.vmwareengine.v1.ShowNsxCredentialsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2314}
   ///
   // clang-format on
@@ -3624,7 +3624,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.Credentials]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L757}
+  /// [google.cloud.vmwareengine.v1.Credentials]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L772}
   /// [google.cloud.vmwareengine.v1.ShowVcenterCredentialsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2331}
   ///
   // clang-format on
@@ -3654,7 +3654,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.Credentials]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L757}
+  /// [google.cloud.vmwareengine.v1.Credentials]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L772}
   /// [google.cloud.vmwareengine.v1.ShowVcenterCredentialsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2331}
   ///
   // clang-format on
@@ -3693,7 +3693,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L117}
+  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L119}
   /// [google.cloud.vmwareengine.v1.ResetNsxCredentialsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2360}
   ///
   // clang-format on
@@ -3744,7 +3744,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L117}
+  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L119}
   /// [google.cloud.vmwareengine.v1.ResetNsxCredentialsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2360}
   ///
   // clang-format on
@@ -3814,7 +3814,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L117}
+  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L119}
   /// [google.cloud.vmwareengine.v1.ResetVcenterCredentialsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2393}
   ///
   // clang-format on
@@ -3865,7 +3865,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L117}
+  /// [google.cloud.vmwareengine.v1.PrivateCloud]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L119}
   /// [google.cloud.vmwareengine.v1.ResetVcenterCredentialsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2393}
   ///
   // clang-format on
@@ -3927,7 +3927,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.DnsForwarding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L899}
+  /// [google.cloud.vmwareengine.v1.DnsForwarding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L995}
   /// [google.cloud.vmwareengine.v1.GetDnsForwardingRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2548}
   ///
   // clang-format on
@@ -3957,7 +3957,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.DnsForwarding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L899}
+  /// [google.cloud.vmwareengine.v1.DnsForwarding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L995}
   /// [google.cloud.vmwareengine.v1.GetDnsForwardingRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2548}
   ///
   // clang-format on
@@ -3996,7 +3996,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.DnsForwarding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L899}
+  /// [google.cloud.vmwareengine.v1.DnsForwarding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L995}
   /// [google.cloud.vmwareengine.v1.UpdateDnsForwardingRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2564}
   ///
   // clang-format on
@@ -4052,7 +4052,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.DnsForwarding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L899}
+  /// [google.cloud.vmwareengine.v1.DnsForwarding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L995}
   /// [google.cloud.vmwareengine.v1.UpdateDnsForwardingRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2564}
   ///
   // clang-format on
@@ -4118,7 +4118,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.GetNetworkPeeringRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2675}
-  /// [google.cloud.vmwareengine.v1.NetworkPeering]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L938}
+  /// [google.cloud.vmwareengine.v1.NetworkPeering]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1034}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::NetworkPeering> GetNetworkPeering(
@@ -4151,7 +4151,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.GetNetworkPeeringRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2675}
-  /// [google.cloud.vmwareengine.v1.NetworkPeering]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L938}
+  /// [google.cloud.vmwareengine.v1.NetworkPeering]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1034}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::NetworkPeering> GetNetworkPeering(
@@ -4190,7 +4190,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.ListNetworkPeeringsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2691}
-  /// [google.cloud.vmwareengine.v1.NetworkPeering]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L938}
+  /// [google.cloud.vmwareengine.v1.NetworkPeering]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1034}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::NetworkPeering>
@@ -4230,7 +4230,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.ListNetworkPeeringsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2691}
-  /// [google.cloud.vmwareengine.v1.NetworkPeering]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L938}
+  /// [google.cloud.vmwareengine.v1.NetworkPeering]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1034}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::NetworkPeering>
@@ -4282,7 +4282,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.CreateNetworkPeeringRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2595}
-  /// [google.cloud.vmwareengine.v1.NetworkPeering]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L938}
+  /// [google.cloud.vmwareengine.v1.NetworkPeering]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1034}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
@@ -4340,7 +4340,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.CreateNetworkPeeringRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2595}
-  /// [google.cloud.vmwareengine.v1.NetworkPeering]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L938}
+  /// [google.cloud.vmwareengine.v1.NetworkPeering]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1034}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
@@ -4537,7 +4537,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.NetworkPeering]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L938}
+  /// [google.cloud.vmwareengine.v1.NetworkPeering]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1034}
   /// [google.cloud.vmwareengine.v1.UpdateNetworkPeeringRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2753}
   ///
   // clang-format on
@@ -4594,7 +4594,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.NetworkPeering]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L938}
+  /// [google.cloud.vmwareengine.v1.NetworkPeering]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1034}
   /// [google.cloud.vmwareengine.v1.UpdateNetworkPeeringRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2753}
   ///
   // clang-format on
@@ -4666,7 +4666,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.ListPeeringRoutesRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2798}
-  /// [google.cloud.vmwareengine.v1.PeeringRoute]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1086}
+  /// [google.cloud.vmwareengine.v1.PeeringRoute]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1185}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::PeeringRoute> ListPeeringRoutes(
@@ -4706,7 +4706,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.ListPeeringRoutesRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2798}
-  /// [google.cloud.vmwareengine.v1.PeeringRoute]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1086}
+  /// [google.cloud.vmwareengine.v1.PeeringRoute]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1185}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::PeeringRoute> ListPeeringRoutes(
@@ -4756,7 +4756,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.CreateHcxActivationKeyRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2498}
-  /// [google.cloud.vmwareengine.v1.HcxActivationKey]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L773}
+  /// [google.cloud.vmwareengine.v1.HcxActivationKey]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L788}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>>
@@ -4814,7 +4814,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.CreateHcxActivationKeyRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2498}
-  /// [google.cloud.vmwareengine.v1.HcxActivationKey]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L773}
+  /// [google.cloud.vmwareengine.v1.HcxActivationKey]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L788}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>>
@@ -4885,7 +4885,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.HcxActivationKey]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L773}
+  /// [google.cloud.vmwareengine.v1.HcxActivationKey]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L788}
   /// [google.cloud.vmwareengine.v1.ListHcxActivationKeysRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2452}
   ///
   // clang-format on
@@ -4924,7 +4924,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.HcxActivationKey]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L773}
+  /// [google.cloud.vmwareengine.v1.HcxActivationKey]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L788}
   /// [google.cloud.vmwareengine.v1.ListHcxActivationKeysRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2452}
   ///
   // clang-format on
@@ -4956,7 +4956,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.GetHcxActivationKeyRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2482}
-  /// [google.cloud.vmwareengine.v1.HcxActivationKey]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L773}
+  /// [google.cloud.vmwareengine.v1.HcxActivationKey]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L788}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>
@@ -4986,7 +4986,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.GetHcxActivationKeyRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2482}
-  /// [google.cloud.vmwareengine.v1.HcxActivationKey]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L773}
+  /// [google.cloud.vmwareengine.v1.HcxActivationKey]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L788}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>
@@ -5018,7 +5018,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.GetNetworkPolicyRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2921}
-  /// [google.cloud.vmwareengine.v1.NetworkPolicy]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1150}
+  /// [google.cloud.vmwareengine.v1.NetworkPolicy]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1249}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy> GetNetworkPolicy(
@@ -5048,7 +5048,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.GetNetworkPolicyRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2921}
-  /// [google.cloud.vmwareengine.v1.NetworkPolicy]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1150}
+  /// [google.cloud.vmwareengine.v1.NetworkPolicy]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1249}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy> GetNetworkPolicy(
@@ -5086,7 +5086,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.ListNetworkPoliciesRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2843}
-  /// [google.cloud.vmwareengine.v1.NetworkPolicy]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1150}
+  /// [google.cloud.vmwareengine.v1.NetworkPolicy]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1249}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::NetworkPolicy>
@@ -5125,7 +5125,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.ListNetworkPoliciesRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2843}
-  /// [google.cloud.vmwareengine.v1.NetworkPolicy]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1150}
+  /// [google.cloud.vmwareengine.v1.NetworkPolicy]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1249}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::NetworkPolicy>
@@ -5179,7 +5179,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.CreateNetworkPolicyRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2968}
-  /// [google.cloud.vmwareengine.v1.NetworkPolicy]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1150}
+  /// [google.cloud.vmwareengine.v1.NetworkPolicy]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1249}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
@@ -5237,7 +5237,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.CreateNetworkPolicyRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2968}
-  /// [google.cloud.vmwareengine.v1.NetworkPolicy]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1150}
+  /// [google.cloud.vmwareengine.v1.NetworkPolicy]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1249}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
@@ -5317,7 +5317,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.NetworkPolicy]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1150}
+  /// [google.cloud.vmwareengine.v1.NetworkPolicy]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1249}
   /// [google.cloud.vmwareengine.v1.UpdateNetworkPolicyRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2937}
   ///
   // clang-format on
@@ -5383,7 +5383,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.NetworkPolicy]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1150}
+  /// [google.cloud.vmwareengine.v1.NetworkPolicy]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1249}
   /// [google.cloud.vmwareengine.v1.UpdateNetworkPolicyRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2937}
   ///
   // clang-format on
@@ -5580,7 +5580,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.ListManagementDnsZoneBindingsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3050}
-  /// [google.cloud.vmwareengine.v1.ManagementDnsZoneBinding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1247}
+  /// [google.cloud.vmwareengine.v1.ManagementDnsZoneBinding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1346}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>
@@ -5619,7 +5619,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.ListManagementDnsZoneBindingsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3050}
-  /// [google.cloud.vmwareengine.v1.ManagementDnsZoneBinding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1247}
+  /// [google.cloud.vmwareengine.v1.ManagementDnsZoneBinding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1346}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>
@@ -5651,7 +5651,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.GetManagementDnsZoneBindingRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3130}
-  /// [google.cloud.vmwareengine.v1.ManagementDnsZoneBinding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1247}
+  /// [google.cloud.vmwareengine.v1.ManagementDnsZoneBinding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1346}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>
@@ -5681,7 +5681,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.GetManagementDnsZoneBindingRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3130}
-  /// [google.cloud.vmwareengine.v1.ManagementDnsZoneBinding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1247}
+  /// [google.cloud.vmwareengine.v1.ManagementDnsZoneBinding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1346}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>
@@ -5740,7 +5740,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.CreateManagementDnsZoneBindingRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3145}
-  /// [google.cloud.vmwareengine.v1.ManagementDnsZoneBinding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1247}
+  /// [google.cloud.vmwareengine.v1.ManagementDnsZoneBinding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1346}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
@@ -5804,7 +5804,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.CreateManagementDnsZoneBindingRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3145}
-  /// [google.cloud.vmwareengine.v1.ManagementDnsZoneBinding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1247}
+  /// [google.cloud.vmwareengine.v1.ManagementDnsZoneBinding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1346}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
@@ -5874,7 +5874,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.ManagementDnsZoneBinding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1247}
+  /// [google.cloud.vmwareengine.v1.ManagementDnsZoneBinding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1346}
   /// [google.cloud.vmwareengine.v1.UpdateManagementDnsZoneBindingRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3197}
   ///
   // clang-format on
@@ -5932,7 +5932,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.ManagementDnsZoneBinding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1247}
+  /// [google.cloud.vmwareengine.v1.ManagementDnsZoneBinding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1346}
   /// [google.cloud.vmwareengine.v1.UpdateManagementDnsZoneBindingRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3197}
   ///
   // clang-format on
@@ -6126,7 +6126,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.ManagementDnsZoneBinding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1247}
+  /// [google.cloud.vmwareengine.v1.ManagementDnsZoneBinding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1346}
   /// [google.cloud.vmwareengine.v1.RepairManagementDnsZoneBindingRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3260}
   ///
   // clang-format on
@@ -6178,7 +6178,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.ManagementDnsZoneBinding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1247}
+  /// [google.cloud.vmwareengine.v1.ManagementDnsZoneBinding]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1346}
   /// [google.cloud.vmwareengine.v1.RepairManagementDnsZoneBindingRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3260}
   ///
   // clang-format on
@@ -6265,7 +6265,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.CreateVmwareEngineNetworkRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3292}
-  /// [google.cloud.vmwareengine.v1.VmwareEngineNetwork]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1323}
+  /// [google.cloud.vmwareengine.v1.VmwareEngineNetwork]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1422}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
@@ -6323,7 +6323,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.CreateVmwareEngineNetworkRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3292}
-  /// [google.cloud.vmwareengine.v1.VmwareEngineNetwork]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1323}
+  /// [google.cloud.vmwareengine.v1.VmwareEngineNetwork]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1422}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
@@ -6396,7 +6396,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.UpdateVmwareEngineNetworkRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3346}
-  /// [google.cloud.vmwareengine.v1.VmwareEngineNetwork]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1323}
+  /// [google.cloud.vmwareengine.v1.VmwareEngineNetwork]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1422}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
@@ -6455,7 +6455,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.UpdateVmwareEngineNetworkRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3346}
-  /// [google.cloud.vmwareengine.v1.VmwareEngineNetwork]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1323}
+  /// [google.cloud.vmwareengine.v1.VmwareEngineNetwork]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1422}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
@@ -6646,7 +6646,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.GetVmwareEngineNetworkRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3417}
-  /// [google.cloud.vmwareengine.v1.VmwareEngineNetwork]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1323}
+  /// [google.cloud.vmwareengine.v1.VmwareEngineNetwork]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1422}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>
@@ -6679,7 +6679,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.GetVmwareEngineNetworkRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3417}
-  /// [google.cloud.vmwareengine.v1.VmwareEngineNetwork]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1323}
+  /// [google.cloud.vmwareengine.v1.VmwareEngineNetwork]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1422}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>
@@ -6719,7 +6719,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.ListVmwareEngineNetworksRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3433}
-  /// [google.cloud.vmwareengine.v1.VmwareEngineNetwork]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1323}
+  /// [google.cloud.vmwareengine.v1.VmwareEngineNetwork]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1422}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::VmwareEngineNetwork>
@@ -6758,7 +6758,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.ListVmwareEngineNetworksRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3433}
-  /// [google.cloud.vmwareengine.v1.VmwareEngineNetwork]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1323}
+  /// [google.cloud.vmwareengine.v1.VmwareEngineNetwork]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1422}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::VmwareEngineNetwork>
@@ -6809,7 +6809,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.CreatePrivateConnectionRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3509}
-  /// [google.cloud.vmwareengine.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1441}
+  /// [google.cloud.vmwareengine.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1540}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
@@ -6868,7 +6868,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.CreatePrivateConnectionRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3509}
-  /// [google.cloud.vmwareengine.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1441}
+  /// [google.cloud.vmwareengine.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1540}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
@@ -6932,7 +6932,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.GetPrivateConnectionRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3558}
-  /// [google.cloud.vmwareengine.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1441}
+  /// [google.cloud.vmwareengine.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1540}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>
@@ -6964,7 +6964,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.GetPrivateConnectionRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3558}
-  /// [google.cloud.vmwareengine.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1441}
+  /// [google.cloud.vmwareengine.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1540}
   ///
   // clang-format on
   StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>
@@ -7004,7 +7004,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.ListPrivateConnectionsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3574}
-  /// [google.cloud.vmwareengine.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1441}
+  /// [google.cloud.vmwareengine.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1540}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::PrivateConnection>
@@ -7043,7 +7043,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.ListPrivateConnectionsRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3574}
-  /// [google.cloud.vmwareengine.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1441}
+  /// [google.cloud.vmwareengine.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1540}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::PrivateConnection>
@@ -7083,7 +7083,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1441}
+  /// [google.cloud.vmwareengine.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1540}
   /// [google.cloud.vmwareengine.v1.UpdatePrivateConnectionRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3650}
   ///
   // clang-format on
@@ -7142,7 +7142,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1441}
+  /// [google.cloud.vmwareengine.v1.PrivateConnection]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1540}
   /// [google.cloud.vmwareengine.v1.UpdatePrivateConnectionRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3650}
   ///
   // clang-format on
@@ -7337,7 +7337,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.ListPrivateConnectionPeeringRoutesRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3714}
-  /// [google.cloud.vmwareengine.v1.PeeringRoute]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1086}
+  /// [google.cloud.vmwareengine.v1.PeeringRoute]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1185}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>
@@ -7377,7 +7377,7 @@ class VmwareEngineClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vmwareengine.v1.ListPrivateConnectionPeeringRoutesRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3714}
-  /// [google.cloud.vmwareengine.v1.PeeringRoute]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1086}
+  /// [google.cloud.vmwareengine.v1.PeeringRoute]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1185}
   ///
   // clang-format on
   StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>
@@ -7422,7 +7422,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.DnsBindPermission]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1620}
+  /// [google.cloud.vmwareengine.v1.DnsBindPermission]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1719}
   /// [google.cloud.vmwareengine.v1.GrantDnsBindPermissionRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3752}
   ///
   // clang-format on
@@ -7481,7 +7481,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.DnsBindPermission]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1620}
+  /// [google.cloud.vmwareengine.v1.DnsBindPermission]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1719}
   /// [google.cloud.vmwareengine.v1.GrantDnsBindPermissionRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3752}
   ///
   // clang-format on
@@ -7546,7 +7546,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.DnsBindPermission]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1620}
+  /// [google.cloud.vmwareengine.v1.DnsBindPermission]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1719}
   /// [google.cloud.vmwareengine.v1.GetDnsBindPermissionRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3828}
   ///
   // clang-format on
@@ -7578,7 +7578,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.DnsBindPermission]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1620}
+  /// [google.cloud.vmwareengine.v1.DnsBindPermission]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1719}
   /// [google.cloud.vmwareengine.v1.GetDnsBindPermissionRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3828}
   ///
   // clang-format on
@@ -7623,7 +7623,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.DnsBindPermission]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1620}
+  /// [google.cloud.vmwareengine.v1.DnsBindPermission]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1719}
   /// [google.cloud.vmwareengine.v1.RevokeDnsBindPermissionRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3790}
   ///
   // clang-format on
@@ -7681,7 +7681,7 @@ class VmwareEngineClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.vmwareengine.v1.DnsBindPermission]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1620}
+  /// [google.cloud.vmwareengine.v1.DnsBindPermission]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine_resources.proto#L1719}
   /// [google.cloud.vmwareengine.v1.RevokeDnsBindPermissionRequest]: @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L3790}
   ///
   // clang-format on

@@ -371,6 +371,9 @@ class FeatureRegistryServiceClient {
   ///  Updatable fields:
   ///  @n
   ///    * `labels`
+  ///    * `description`
+  ///    * `big_query`
+  ///    * `big_query.entity_id_columns`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -514,7 +517,7 @@ class FeatureRegistryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteFeatureGroupRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_registry_service.proto#L294}
+  /// [google.cloud.aiplatform.v1.DeleteFeatureGroupRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_registry_service.proto#L297}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
@@ -565,7 +568,7 @@ class FeatureRegistryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteFeatureGroupRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_registry_service.proto#L294}
+  /// [google.cloud.aiplatform.v1.DeleteFeatureGroupRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_registry_service.proto#L297}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
@@ -890,7 +893,8 @@ class FeatureRegistryServiceClient {
   ///  @n
   ///    * `description`
   ///    * `labels`
-  ///    * `disable_monitoring` (Not supported for FeatureRegistry Feature)
+  ///    * `disable_monitoring` (Not supported for FeatureRegistryService Feature)
+  ///    * `point_of_contact` (Not supported for FeaturestoreService FeatureStore)
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -1028,7 +1032,7 @@ class FeatureRegistryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1268}
+  /// [google.cloud.aiplatform.v1.DeleteFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1269}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
@@ -1079,7 +1083,7 @@ class FeatureRegistryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1268}
+  /// [google.cloud.aiplatform.v1.DeleteFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1269}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on

@@ -1143,8 +1143,8 @@ class DatabaseAdminClient {
   /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
   /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
   /// [google.spanner.admin.database.v1.Backup]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L35}
-  /// [google.spanner.admin.database.v1.CreateBackupMetadata]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L208}
-  /// [google.spanner.admin.database.v1.CreateBackupRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L175}
+  /// [google.spanner.admin.database.v1.CreateBackupMetadata]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L243}
+  /// [google.spanner.admin.database.v1.CreateBackupRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L210}
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::database::v1::Backup>> CreateBackup(
@@ -1213,8 +1213,8 @@ class DatabaseAdminClient {
   /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
   /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
   /// [google.spanner.admin.database.v1.Backup]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L35}
-  /// [google.spanner.admin.database.v1.CreateBackupMetadata]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L208}
-  /// [google.spanner.admin.database.v1.CreateBackupRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L175}
+  /// [google.spanner.admin.database.v1.CreateBackupMetadata]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L243}
+  /// [google.spanner.admin.database.v1.CreateBackupRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L210}
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::database::v1::Backup>> CreateBackup(
@@ -1305,8 +1305,8 @@ class DatabaseAdminClient {
   /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
   /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
   /// [google.spanner.admin.database.v1.Backup]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L35}
-  /// [google.spanner.admin.database.v1.CopyBackupMetadata]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L286}
-  /// [google.spanner.admin.database.v1.CopyBackupRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L241}
+  /// [google.spanner.admin.database.v1.CopyBackupMetadata]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L321}
+  /// [google.spanner.admin.database.v1.CopyBackupRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L276}
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::database::v1::Backup>> CopyBackup(
@@ -1376,8 +1376,8 @@ class DatabaseAdminClient {
   /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
   /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
   /// [google.spanner.admin.database.v1.Backup]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L35}
-  /// [google.spanner.admin.database.v1.CopyBackupMetadata]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L286}
-  /// [google.spanner.admin.database.v1.CopyBackupRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L241}
+  /// [google.spanner.admin.database.v1.CopyBackupMetadata]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L321}
+  /// [google.spanner.admin.database.v1.CopyBackupRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L276}
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::database::v1::Backup>> CopyBackup(
@@ -1434,7 +1434,7 @@ class DatabaseAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.spanner.admin.database.v1.Backup]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L35}
-  /// [google.spanner.admin.database.v1.GetBackupRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L341}
+  /// [google.spanner.admin.database.v1.GetBackupRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L376}
   ///
   // clang-format on
   StatusOr<google::spanner::admin::database::v1::Backup> GetBackup(
@@ -1465,7 +1465,7 @@ class DatabaseAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.spanner.admin.database.v1.Backup]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L35}
-  /// [google.spanner.admin.database.v1.GetBackupRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L341}
+  /// [google.spanner.admin.database.v1.GetBackupRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L376}
   ///
   // clang-format on
   StatusOr<google::spanner::admin::database::v1::Backup> GetBackup(
@@ -1500,7 +1500,7 @@ class DatabaseAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.spanner.admin.database.v1.Backup]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L35}
-  /// [google.spanner.admin.database.v1.UpdateBackupRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L323}
+  /// [google.spanner.admin.database.v1.UpdateBackupRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L358}
   ///
   // clang-format on
   StatusOr<google::spanner::admin::database::v1::Backup> UpdateBackup(
@@ -1532,7 +1532,7 @@ class DatabaseAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.spanner.admin.database.v1.Backup]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L35}
-  /// [google.spanner.admin.database.v1.UpdateBackupRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L323}
+  /// [google.spanner.admin.database.v1.UpdateBackupRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L358}
   ///
   // clang-format on
   StatusOr<google::spanner::admin::database::v1::Backup> UpdateBackup(
@@ -1559,7 +1559,7 @@ class DatabaseAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.spanner.admin.database.v1.Backup]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L35}
-  /// [google.spanner.admin.database.v1.DeleteBackupRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L353}
+  /// [google.spanner.admin.database.v1.DeleteBackupRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L388}
   ///
   // clang-format on
   Status DeleteBackup(std::string const& name, Options opts = {});
@@ -1587,7 +1587,7 @@ class DatabaseAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.spanner.admin.database.v1.Backup]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L35}
-  /// [google.spanner.admin.database.v1.DeleteBackupRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L353}
+  /// [google.spanner.admin.database.v1.DeleteBackupRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L388}
   ///
   // clang-format on
   Status DeleteBackup(
@@ -1625,7 +1625,7 @@ class DatabaseAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.spanner.admin.database.v1.Backup]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L35}
-  /// [google.spanner.admin.database.v1.ListBackupsRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L365}
+  /// [google.spanner.admin.database.v1.ListBackupsRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L400}
   ///
   // clang-format on
   StreamRange<google::spanner::admin::database::v1::Backup> ListBackups(
@@ -1666,7 +1666,7 @@ class DatabaseAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.spanner.admin.database.v1.Backup]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L35}
-  /// [google.spanner.admin.database.v1.ListBackupsRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L365}
+  /// [google.spanner.admin.database.v1.ListBackupsRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L400}
   ///
   // clang-format on
   StreamRange<google::spanner::admin::database::v1::Backup> ListBackups(
@@ -1972,7 +1972,7 @@ class DatabaseAdminClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
-  /// [google.spanner.admin.database.v1.ListBackupOperationsRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L441}
+  /// [google.spanner.admin.database.v1.ListBackupOperationsRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L476}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListBackupOperations(
@@ -2021,7 +2021,7 @@ class DatabaseAdminClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
-  /// [google.spanner.admin.database.v1.ListBackupOperationsRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L441}
+  /// [google.spanner.admin.database.v1.ListBackupOperationsRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L476}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListBackupOperations(
@@ -2128,7 +2128,7 @@ class DatabaseAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.spanner.admin.database.v1.BackupSchedule]: @googleapis_reference_link{google/spanner/admin/database/v1/backup_schedule.proto#L46}
-  /// [google.spanner.admin.database.v1.CreateBackupScheduleRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup_schedule.proto#L129}
+  /// [google.spanner.admin.database.v1.CreateBackupScheduleRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup_schedule.proto#L132}
   ///
   // clang-format on
   StatusOr<google::spanner::admin::database::v1::BackupSchedule>
@@ -2162,7 +2162,7 @@ class DatabaseAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.spanner.admin.database.v1.BackupSchedule]: @googleapis_reference_link{google/spanner/admin/database/v1/backup_schedule.proto#L46}
-  /// [google.spanner.admin.database.v1.CreateBackupScheduleRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup_schedule.proto#L129}
+  /// [google.spanner.admin.database.v1.CreateBackupScheduleRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup_schedule.proto#L132}
   ///
   // clang-format on
   StatusOr<google::spanner::admin::database::v1::BackupSchedule>
@@ -2192,7 +2192,7 @@ class DatabaseAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.spanner.admin.database.v1.BackupSchedule]: @googleapis_reference_link{google/spanner/admin/database/v1/backup_schedule.proto#L46}
-  /// [google.spanner.admin.database.v1.GetBackupScheduleRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup_schedule.proto#L149}
+  /// [google.spanner.admin.database.v1.GetBackupScheduleRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup_schedule.proto#L152}
   ///
   // clang-format on
   StatusOr<google::spanner::admin::database::v1::BackupSchedule>
@@ -2222,7 +2222,7 @@ class DatabaseAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.spanner.admin.database.v1.BackupSchedule]: @googleapis_reference_link{google/spanner/admin/database/v1/backup_schedule.proto#L46}
-  /// [google.spanner.admin.database.v1.GetBackupScheduleRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup_schedule.proto#L149}
+  /// [google.spanner.admin.database.v1.GetBackupScheduleRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup_schedule.proto#L152}
   ///
   // clang-format on
   StatusOr<google::spanner::admin::database::v1::BackupSchedule>
@@ -2257,7 +2257,7 @@ class DatabaseAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.spanner.admin.database.v1.BackupSchedule]: @googleapis_reference_link{google/spanner/admin/database/v1/backup_schedule.proto#L46}
-  /// [google.spanner.admin.database.v1.UpdateBackupScheduleRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup_schedule.proto#L214}
+  /// [google.spanner.admin.database.v1.UpdateBackupScheduleRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup_schedule.proto#L217}
   ///
   // clang-format on
   StatusOr<google::spanner::admin::database::v1::BackupSchedule>
@@ -2290,7 +2290,7 @@ class DatabaseAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.spanner.admin.database.v1.BackupSchedule]: @googleapis_reference_link{google/spanner/admin/database/v1/backup_schedule.proto#L46}
-  /// [google.spanner.admin.database.v1.UpdateBackupScheduleRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup_schedule.proto#L214}
+  /// [google.spanner.admin.database.v1.UpdateBackupScheduleRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup_schedule.proto#L217}
   ///
   // clang-format on
   StatusOr<google::spanner::admin::database::v1::BackupSchedule>
@@ -2317,7 +2317,7 @@ class DatabaseAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.database.v1.DeleteBackupScheduleRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup_schedule.proto#L163}
+  /// [google.spanner.admin.database.v1.DeleteBackupScheduleRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup_schedule.proto#L166}
   ///
   // clang-format on
   Status DeleteBackupSchedule(std::string const& name, Options opts = {});
@@ -2343,7 +2343,7 @@ class DatabaseAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.database.v1.DeleteBackupScheduleRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup_schedule.proto#L163}
+  /// [google.spanner.admin.database.v1.DeleteBackupScheduleRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup_schedule.proto#L166}
   ///
   // clang-format on
   Status DeleteBackupSchedule(
@@ -2381,7 +2381,7 @@ class DatabaseAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.spanner.admin.database.v1.BackupSchedule]: @googleapis_reference_link{google/spanner/admin/database/v1/backup_schedule.proto#L46}
-  /// [google.spanner.admin.database.v1.ListBackupSchedulesRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup_schedule.proto#L177}
+  /// [google.spanner.admin.database.v1.ListBackupSchedulesRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup_schedule.proto#L180}
   ///
   // clang-format on
   StreamRange<google::spanner::admin::database::v1::BackupSchedule>
@@ -2420,7 +2420,7 @@ class DatabaseAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.spanner.admin.database.v1.BackupSchedule]: @googleapis_reference_link{google/spanner/admin/database/v1/backup_schedule.proto#L46}
-  /// [google.spanner.admin.database.v1.ListBackupSchedulesRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup_schedule.proto#L177}
+  /// [google.spanner.admin.database.v1.ListBackupSchedulesRequest]: @googleapis_reference_link{google/spanner/admin/database/v1/backup_schedule.proto#L180}
   ///
   // clang-format on
   StreamRange<google::spanner::admin::database::v1::BackupSchedule>

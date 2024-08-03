@@ -142,6 +142,44 @@ class NotebookServiceAuth : public NotebookServiceStub {
       google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateNotebookExecutionJob(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateNotebookExecutionJob(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const&
+          request) override;
+
+  StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>
+  GetNotebookExecutionJob(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::GetNotebookExecutionJobRequest const&
+          request) override;
+
+  StatusOr<google::cloud::aiplatform::v1::ListNotebookExecutionJobsResponse>
+  ListNotebookExecutionJobs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::ListNotebookExecutionJobsRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteNotebookExecutionJob(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteNotebookExecutionJob(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

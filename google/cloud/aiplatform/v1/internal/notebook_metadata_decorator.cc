@@ -231,6 +231,72 @@ NotebookServiceMetadata::StartNotebookRuntime(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+NotebookServiceMetadata::AsyncCreateNotebookExecutionJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateNotebookExecutionJob(cq, std::move(context),
+                                                 std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+NotebookServiceMetadata::CreateNotebookExecutionJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateNotebookExecutionJob(context, options, request);
+}
+
+StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>
+NotebookServiceMetadata::GetNotebookExecutionJob(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::GetNotebookExecutionJobRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetNotebookExecutionJob(context, options, request);
+}
+
+StatusOr<google::cloud::aiplatform::v1::ListNotebookExecutionJobsResponse>
+NotebookServiceMetadata::ListNotebookExecutionJobs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::ListNotebookExecutionJobsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListNotebookExecutionJobs(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NotebookServiceMetadata::AsyncDeleteNotebookExecutionJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteNotebookExecutionJob(cq, std::move(context),
+                                                 std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+NotebookServiceMetadata::DeleteNotebookExecutionJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteNotebookExecutionJob(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 NotebookServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
