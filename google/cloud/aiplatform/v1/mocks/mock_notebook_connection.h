@@ -333,9 +333,15 @@ class MockNotebookServiceConnection
               StartNotebookRuntime,
               (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateNotebookExecutionJob)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateNotebookExecutionJob(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateNotebookExecutionJob(Matcher<google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>>,
       CreateNotebookExecutionJob,
@@ -343,6 +349,12 @@ class MockNotebookServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateNotebookExecutionJob(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateNotebookExecutionJob,
       (NoAwaitTag,
@@ -350,6 +362,15 @@ class MockNotebookServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateNotebookExecutionJob(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>>,
       CreateNotebookExecutionJob,
@@ -368,9 +389,15 @@ class MockNotebookServiceConnection
       (google::cloud::aiplatform::v1::ListNotebookExecutionJobsRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteNotebookExecutionJob)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteNotebookExecutionJob(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteNotebookExecutionJob(Matcher<google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteNotebookExecutionJob,
@@ -378,6 +405,12 @@ class MockNotebookServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteNotebookExecutionJob(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteNotebookExecutionJob,
       (NoAwaitTag,
@@ -385,6 +418,15 @@ class MockNotebookServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteNotebookExecutionJob(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteNotebookExecutionJob,
