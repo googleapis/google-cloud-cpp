@@ -14,7 +14,10 @@
 
 #include "google/cloud/opentelemetry/trace_exporter.h"
 #include "google/cloud/trace/v2/mocks/mock_trace_connection.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/version.h"
@@ -30,12 +33,14 @@ namespace otel {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::ScopedLog;
 using ::google::devtools::cloudtrace::v2::BatchWriteSpansRequest;
 using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
 using ::testing::Return;
 
 std::vector<std::string> SpanNames(BatchWriteSpansRequest const& request) {
@@ -111,6 +116,26 @@ TEST(TraceExporter, LogsOnError) {
       log.ExtractLines(),
       Contains(AllOf(HasSubstr("Cloud Trace Export"), HasSubstr("1 span(s)"),
                      HasSubstr("UNAVAILABLE"), HasSubstr("try again later"))));
+}
+
+TEST(TraceExporter, NoInfiniteExportLoop14611) {
+  auto span_catcher = InstallSpanCatcher();
+
+  ScopedEnvironment env{"GOOGLE_CLOUD_CPP_OPENTELEMETRY_TRACING", "ON"};
+
+  auto project = Project("test-project");
+  auto options = Options{}
+                     .set<EndpointOption>("localhost:1")
+                     .set<UnifiedCredentialsOption>(MakeInsecureCredentials());
+  auto exporter = MakeTraceExporter(project, options);
+
+  // Simulate an export which should not create any additional spans.
+  auto recordable = exporter->MakeRecordable();
+  recordable->SetName("span");
+  (void)exporter->Export({&recordable, 1});
+
+  // Verify that no spans were created.
+  EXPECT_THAT(span_catcher->GetSpans(), IsEmpty());
 }
 
 }  // namespace

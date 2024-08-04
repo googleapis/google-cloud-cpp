@@ -21,6 +21,7 @@
 #include "google/cloud/trace/v2/trace_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
+#include "google/cloud/opentelemetry_options.h"
 #include <memory>
 #include <utility>
 
@@ -54,6 +55,10 @@ Options TraceServiceDefaultOptions(Options options) {
     options.set<trace_v2::TraceServiceConnectionIdempotencyPolicyOption>(
         trace_v2::MakeDefaultTraceServiceConnectionIdempotencyPolicy());
   }
+  // Explicitly disable tracing for the Cloud Trace client which implements the
+  // Cloud Trace Exporter. Otherwise, we can end up with an infinite loop where
+  // the export creates spans, which requires another export.
+  options.set<OpenTelemetryTracingOption>(false);
 
   return options;
 }
