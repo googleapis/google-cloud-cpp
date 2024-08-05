@@ -114,6 +114,12 @@ static std::size_t ReadFunction(  // NOLINT(misc-use-anonymous-namespace)
   return writev->MoveTo(absl::MakeSpan(buffer, size * nitems));
 }
 
+// Instead of trying to send any more bytes from userdata, aborts.
+static std::size_t ReadFunctionAbort(  // NOLINT(misc-use-anonymous-namespace)
+    char*, std::size_t, std::size_t, void*) {
+  return CURL_READFUNC_ABORT;
+}
+
 static int SeekFunction(  // NOLINT(misc-use-anonymous-namespace)
     void* userdata, curl_off_t offset, int origin) {
   auto* const writev = reinterpret_cast<WriteVector*>(userdata);
@@ -518,7 +524,18 @@ Status CurlImpl::MakeRequestImpl(RestContext& context) {
   // thus make available the status_code and headers. Any response data
   // should be put into the spill buffer, which makes them available for
   // subsequent calls to Read() after the headers have been extracted.
-  return ReadImpl(context, {}).status();
+  auto read_status = ReadImpl(context, {}).status();
+
+  // All data in the WriteVector should have been written by now, unless an
+  // error, typically a timeout, has occurred. Instruct curl to not attempt to
+  // send anymore data on this handle. If curl_closed_ is true, then the handle
+  // has already been recycled and attempting to set an option on it will error.
+  if (!curl_closed_) {
+    status = handle_.SetOption(CURLOPT_READFUNCTION, &ReadFunctionAbort);
+    if (!status.ok()) return OnTransferError(context, std::move(status));
+  }
+
+  return read_status;
 }
 
 StatusOr<std::size_t> CurlImpl::ReadImpl(RestContext& context,
