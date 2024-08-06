@@ -33,12 +33,6 @@ namespace cloud {
 namespace generator_internal {
 
 /**
- * Create a formatted doxygen link referencing the @p message_type.
- */
-// TODO(#11545): relocate this function to a separate header.
-std::string FormatDoxygenLink(google::protobuf::Descriptor const& message_type);
-
-/**
  * Extracts service wide substitution data required by all class generators from
  * the provided descriptor.
  */
