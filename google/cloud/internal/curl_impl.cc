@@ -487,6 +487,22 @@ std::size_t CurlImpl::HeaderCallback(absl::Span<char> response) {
                               response.size());
 }
 
+class CurlImpl::ReadFunctionAbortGuard {
+ public:
+  explicit ReadFunctionAbortGuard(CurlImpl& impl) : impl_(impl) {}
+  ~ReadFunctionAbortGuard() {
+    // If curl_closed_ is true, then the handle has already been recycled and
+    // attempting to set an option on it will error.
+    if (impl_.curl_closed_) {
+      impl_.handle_.SetOptionUnchecked(CURLOPT_READFUNCTION,
+                                       &ReadFunctionAbort);
+    }
+  }
+
+ private:
+  CurlImpl& impl_;
+};
+
 Status CurlImpl::MakeRequestImpl(RestContext& context) {
   TRACE_STATE() << ", url_=" << url_;
 
@@ -509,33 +525,29 @@ Status CurlImpl::MakeRequestImpl(RestContext& context) {
   handle_.SetOptionUnchecked(CURLOPT_HTTP_VERSION,
                              VersionToCurlCode(http_version_));
 
-  auto error = curl_multi_add_handle(multi_.get(), handle_.handle_.get());
+  // All data in the WriteVector should be written after ReadImpl returns unless
+  // an error, typically a timeout, has occurred. Use ReadFunctionAbortGuard to
+  // instruct curl to not attempt to send anymore data on this handle regardless
+  // if an error or exception is encountered.
+  {
+    ReadFunctionAbortGuard guard(*this);
+    auto error = curl_multi_add_handle(multi_.get(), handle_.handle_.get());
 
-  // This indicates that we are using the API incorrectly. The application
-  // can not recover from these problems, so terminating is the right thing
-  // to do.
-  if (error != CURLM_OK) {
-    GCP_LOG(FATAL) << ", status=" << AsStatus(error, __func__);
+    // This indicates that we are using the API incorrectly. The application
+    // can not recover from these problems, so terminating is the right thing
+    // to do.
+    if (error != CURLM_OK) {
+      GCP_LOG(FATAL) << ", status=" << AsStatus(error, __func__);
+    }
+
+    in_multi_ = true;
+
+    // This call to Read() should send the request, get the response, and
+    // thus make available the status_code and headers. Any response data
+    // should be put into the spill buffer, which makes them available for
+    // subsequent calls to Read() after the headers have been extracted.
+    return ReadImpl(context, {}).status();
   }
-
-  in_multi_ = true;
-
-  // This call to Read() should send the request, get the response, and
-  // thus make available the status_code and headers. Any response data
-  // should be put into the spill buffer, which makes them available for
-  // subsequent calls to Read() after the headers have been extracted.
-  auto read_status = ReadImpl(context, {}).status();
-
-  // All data in the WriteVector should have been written by now, unless an
-  // error, typically a timeout, has occurred. Instruct curl to not attempt to
-  // send anymore data on this handle. If curl_closed_ is true, then the handle
-  // has already been recycled and attempting to set an option on it will error.
-  if (!curl_closed_) {
-    status = handle_.SetOption(CURLOPT_READFUNCTION, &ReadFunctionAbort);
-    if (!status.ok()) return OnTransferError(context, std::move(status));
-  }
-
-  return read_status;
 }
 
 StatusOr<std::size_t> CurlImpl::ReadImpl(RestContext& context,
