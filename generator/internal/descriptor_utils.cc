@@ -815,8 +815,6 @@ std::map<std::string, VarsDictionary> CreateMethodVars(
   for (int i = 0; i < service.method_count(); i++) {
     auto const& method = *service.method(i);
     VarsDictionary method_vars;
-    method_vars["method_return_doxygen_link"] =
-        FormatDoxygenLink(*method.output_type());
     method_vars["idempotency"] = DefaultIdempotencyFromHttpOperation(method);
     if (!idempotency_overrides.empty()) {
       auto iter = idempotency_overrides.find(

@@ -1258,10 +1258,6 @@ INSTANTIATE_TEST_SUITE_P(
                              "google::protobuf::Empty"),
         MethodVarsTestValues("my.service.v1.Service.Method0", "idempotency",
                              "kNonIdempotent"),
-        MethodVarsTestValues("my.service.v1.Service.Method0",
-                             "method_return_doxygen_link",
-                             "@googleapis_link{google::protobuf::Empty,google/"
-                             "protobuf/well_known.proto#L5}"),
         // Method1
         MethodVarsTestValues("my.service.v1.Service.Method1", "method_name",
                              "Method1"),
@@ -1271,10 +1267,6 @@ INSTANTIATE_TEST_SUITE_P(
                              "my::service::v1::Bar"),
         MethodVarsTestValues("my.service.v1.Service.Method1", "response_type",
                              "my::service::v1::Bar"),
-        MethodVarsTestValues("my.service.v1.Service.Method1",
-                             "method_return_doxygen_link",
-                             "@googleapis_link{my::service::v1::Bar,google/"
-                             "foo/v1/service.proto#L19}"),
         // Method2
         MethodVarsTestValues("my.service.v1.Service.Method2",
                              "longrunning_metadata_type",
