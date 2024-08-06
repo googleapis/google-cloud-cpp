@@ -101,6 +101,10 @@ Status OptionDefaultsGenerator::GenerateCc() {
     default:
       break;
   }
+  if (vars("product_namespace") == "trace_v2" &&
+      vars("service_name") == "TraceService") {
+    CcLocalIncludes({"google/cloud/opentelemetry_options.h"});
+  }
   CcSystemIncludes({"memory", "utility"});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
@@ -167,7 +171,16 @@ auto constexpr kBackoffScaling = 2.0;
   if (!options.has<$product_namespace$::$idempotency_class_name$Option>()) {
     options.set<$product_namespace$::$idempotency_class_name$Option>(
         $product_namespace$::MakeDefault$idempotency_class_name$());
+  })""");
+  if (vars("product_namespace") == "trace_v2" &&
+      vars("service_name") == "TraceService") {
+    CcPrint(R"""(
+  // Explicitly disable tracing for the Cloud Trace client which implements the
+  // Cloud Trace Exporter. Otherwise, we can end up with an infinite loop where
+  // the export creates spans, which requires another export.
+  options.set<OpenTelemetryTracingOption>(false);)""");
   }
+  CcPrint(R"""(
 
   return options;
 }
