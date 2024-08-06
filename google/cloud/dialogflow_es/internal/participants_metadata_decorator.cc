@@ -130,6 +130,16 @@ ParticipantsMetadata::SuggestSmartReplies(
   return child_->SuggestSmartReplies(context, options, request);
 }
 
+StatusOr<google::cloud::dialogflow::v2::SuggestKnowledgeAssistResponse>
+ParticipantsMetadata::SuggestKnowledgeAssist(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::v2::SuggestKnowledgeAssistRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->SuggestKnowledgeAssist(context, options, request);
+}
+
 void ParticipantsMetadata::SetMetadata(grpc::ClientContext& context,
                                        Options const& options,
                                        std::string const& request_params) {

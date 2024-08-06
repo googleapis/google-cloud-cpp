@@ -74,6 +74,11 @@ Idempotency ParticipantsConnectionIdempotencyPolicy::SuggestSmartReplies(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency ParticipantsConnectionIdempotencyPolicy::SuggestKnowledgeAssist(
+    google::cloud::dialogflow::v2::SuggestKnowledgeAssistRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<ParticipantsConnectionIdempotencyPolicy>
 MakeDefaultParticipantsConnectionIdempotencyPolicy() {
   return std::make_unique<ParticipantsConnectionIdempotencyPolicy>();

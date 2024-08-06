@@ -39,6 +39,11 @@ Idempotency TranslationServiceConnectionIdempotencyPolicy::TranslateText(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency TranslationServiceConnectionIdempotencyPolicy::RomanizeText(
+    google::cloud::translation::v3::RomanizeTextRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency TranslationServiceConnectionIdempotencyPolicy::DetectLanguage(
     google::cloud::translation::v3::DetectLanguageRequest const&) {
   return Idempotency::kNonIdempotent;
@@ -71,6 +76,11 @@ Idempotency TranslationServiceConnectionIdempotencyPolicy::CreateGlossary(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency TranslationServiceConnectionIdempotencyPolicy::UpdateGlossary(
+    google::cloud::translation::v3::UpdateGlossaryRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency TranslationServiceConnectionIdempotencyPolicy::ListGlossaries(
     google::cloud::translation::v3::ListGlossariesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
@@ -83,6 +93,51 @@ Idempotency TranslationServiceConnectionIdempotencyPolicy::GetGlossary(
 
 Idempotency TranslationServiceConnectionIdempotencyPolicy::DeleteGlossary(
     google::cloud::translation::v3::DeleteGlossaryRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency TranslationServiceConnectionIdempotencyPolicy::GetGlossaryEntry(
+    google::cloud::translation::v3::GetGlossaryEntryRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency TranslationServiceConnectionIdempotencyPolicy::ListGlossaryEntries(
+    google::cloud::translation::v3::ListGlossaryEntriesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency TranslationServiceConnectionIdempotencyPolicy::CreateGlossaryEntry(
+    google::cloud::translation::v3::CreateGlossaryEntryRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency TranslationServiceConnectionIdempotencyPolicy::UpdateGlossaryEntry(
+    google::cloud::translation::v3::UpdateGlossaryEntryRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency TranslationServiceConnectionIdempotencyPolicy::DeleteGlossaryEntry(
+    google::cloud::translation::v3::DeleteGlossaryEntryRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency TranslationServiceConnectionIdempotencyPolicy::CreateDataset(
+    google::cloud::translation::v3::CreateDatasetRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency TranslationServiceConnectionIdempotencyPolicy::GetDataset(
+    google::cloud::translation::v3::GetDatasetRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency TranslationServiceConnectionIdempotencyPolicy::ListDatasets(
+    google::cloud::translation::v3::ListDatasetsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency TranslationServiceConnectionIdempotencyPolicy::DeleteDataset(
+    google::cloud::translation::v3::DeleteDatasetRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -138,6 +193,41 @@ Idempotency
 TranslationServiceConnectionIdempotencyPolicy::ListAdaptiveMtSentences(
     google::cloud::translation::v3::ListAdaptiveMtSentencesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
+}
+
+Idempotency TranslationServiceConnectionIdempotencyPolicy::ImportData(
+    google::cloud::translation::v3::ImportDataRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency TranslationServiceConnectionIdempotencyPolicy::ExportData(
+    google::cloud::translation::v3::ExportDataRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency TranslationServiceConnectionIdempotencyPolicy::ListExamples(
+    google::cloud::translation::v3::ListExamplesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency TranslationServiceConnectionIdempotencyPolicy::CreateModel(
+    google::cloud::translation::v3::CreateModelRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency TranslationServiceConnectionIdempotencyPolicy::ListModels(
+    google::cloud::translation::v3::ListModelsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency TranslationServiceConnectionIdempotencyPolicy::GetModel(
+    google::cloud::translation::v3::GetModelRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency TranslationServiceConnectionIdempotencyPolicy::DeleteModel(
+    google::cloud::translation::v3::DeleteModelRequest const&) {
+  return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<TranslationServiceConnectionIdempotencyPolicy>

@@ -76,6 +76,12 @@ class ConversationsTracingStub : public ConversationsStub {
       google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
           request) override;
 
+  StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSuggestionResponse>
+  GenerateStatelessSuggestion(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::GenerateStatelessSuggestionRequest const&
+          request) override;
+
   StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>
   SearchKnowledge(grpc::ClientContext& context, Options const& options,
                   google::cloud::dialogflow::v2::SearchKnowledgeRequest const&

@@ -219,6 +219,12 @@ class ParticipantsConnection {
   virtual StatusOr<google::cloud::dialogflow::v2::SuggestSmartRepliesResponse>
   SuggestSmartReplies(
       google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const& request);
+
+  virtual StatusOr<
+      google::cloud::dialogflow::v2::SuggestKnowledgeAssistResponse>
+  SuggestKnowledgeAssist(
+      google::cloud::dialogflow::v2::SuggestKnowledgeAssistRequest const&
+          request);
 };
 
 /**

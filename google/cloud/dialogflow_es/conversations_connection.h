@@ -214,6 +214,12 @@ class ConversationsConnection {
       google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
           request);
 
+  virtual StatusOr<
+      google::cloud::dialogflow::v2::GenerateStatelessSuggestionResponse>
+  GenerateStatelessSuggestion(
+      google::cloud::dialogflow::v2::GenerateStatelessSuggestionRequest const&
+          request);
+
   virtual StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>
   SearchKnowledge(
       google::cloud::dialogflow::v2::SearchKnowledgeRequest const& request);

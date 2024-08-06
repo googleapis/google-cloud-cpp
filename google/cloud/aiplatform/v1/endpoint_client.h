@@ -900,9 +900,9 @@ class EndpointServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.AutomaticResources]: @googleapis_reference_link{google/cloud/aiplatform/v1/machine_resources.proto#L129}
-  /// [google.cloud.aiplatform.v1.DedicatedResources]: @googleapis_reference_link{google/cloud/aiplatform/v1/machine_resources.proto#L63}
-  /// [google.cloud.aiplatform.v1.DedicatedResources.autoscaling_metric_specs]: @googleapis_reference_link{google/cloud/aiplatform/v1/machine_resources.proto#L122}
+  /// [google.cloud.aiplatform.v1.AutomaticResources]: @googleapis_reference_link{google/cloud/aiplatform/v1/machine_resources.proto#L141}
+  /// [google.cloud.aiplatform.v1.DedicatedResources]: @googleapis_reference_link{google/cloud/aiplatform/v1/machine_resources.proto#L71}
+  /// [google.cloud.aiplatform.v1.DedicatedResources.autoscaling_metric_specs]: @googleapis_reference_link{google/cloud/aiplatform/v1/machine_resources.proto#L130}
   /// [google.cloud.aiplatform.v1.MutateDeployedModelRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L386}
   /// [google.cloud.aiplatform.v1.MutateDeployedModelResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/endpoint_service.proto#L419}
   /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L242}

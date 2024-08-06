@@ -88,6 +88,12 @@ class ParticipantsMetadata : public ParticipantsStub {
       google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const& request)
       override;
 
+  StatusOr<google::cloud::dialogflow::v2::SuggestKnowledgeAssistResponse>
+  SuggestKnowledgeAssist(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::SuggestKnowledgeAssistRequest const&
+          request) override;
+
  private:
   void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);

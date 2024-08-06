@@ -87,6 +87,13 @@ class ParticipantsStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const&
           request) = 0;
+
+  virtual StatusOr<
+      google::cloud::dialogflow::v2::SuggestKnowledgeAssistResponse>
+  SuggestKnowledgeAssist(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::SuggestKnowledgeAssistRequest const&
+          request) = 0;
 };
 
 class DefaultParticipantsStub : public ParticipantsStub {
@@ -146,6 +153,12 @@ class DefaultParticipantsStub : public ParticipantsStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const& request)
       override;
+
+  StatusOr<google::cloud::dialogflow::v2::SuggestKnowledgeAssistResponse>
+  SuggestKnowledgeAssist(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::SuggestKnowledgeAssistRequest const&
+          request) override;
 
  private:
   std::unique_ptr<google::cloud::dialogflow::v2::Participants::StubInterface>

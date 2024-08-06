@@ -126,8 +126,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.TranslateTextRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L297}
-  /// [google.cloud.translation.v3.TranslateTextResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L375}
+  /// [google.cloud.translation.v3.TranslateTextRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L483}
+  /// [google.cloud.translation.v3.TranslateTextResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L567}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::TranslateTextResponse> TranslateText(
@@ -162,6 +162,9 @@ class TranslationServiceClient {
   ///  - General (built-in) models:
   ///    `projects/{project-number-or-id}/locations/{location-id}/models/general/nmt`,
   ///  @n
+  ///  - Translation LLM models:
+  ///    `projects/{project-number-or-id}/locations/{location-id}/models/general/translation-llm`,
+  ///  @n
   ///  For global (non-regionalized) requests, use `location-id` `global`.
   ///  For example,
   ///  `projects/{project-number-or-id}/locations/global/models/general/nmt`.
@@ -192,8 +195,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.TranslateTextRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L297}
-  /// [google.cloud.translation.v3.TranslateTextResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L375}
+  /// [google.cloud.translation.v3.TranslateTextRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L483}
+  /// [google.cloud.translation.v3.TranslateTextResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L567}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::TranslateTextResponse> TranslateText(
@@ -225,12 +228,77 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.TranslateTextRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L297}
-  /// [google.cloud.translation.v3.TranslateTextResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L375}
+  /// [google.cloud.translation.v3.TranslateTextRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L483}
+  /// [google.cloud.translation.v3.TranslateTextResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L567}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::TranslateTextResponse> TranslateText(
       google::cloud::translation::v3::TranslateTextRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Romanize input text written in non-Latin scripts to Latin text.
+  ///
+  /// @param parent  Required. Project or location to make a call. Must refer to a caller's
+  ///  project.
+  ///  @n
+  ///  Format: `projects/{project-number-or-id}/locations/{location-id}` or
+  ///  `projects/{project-number-or-id}`.
+  ///  @n
+  ///  For global calls, use `projects/{project-number-or-id}/locations/global` or
+  ///  `projects/{project-number-or-id}`.
+  /// @param contents  Required. The content of the input in string format.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.translation.v3.RomanizeTextResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.RomanizeTextRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L609}
+  /// [google.cloud.translation.v3.RomanizeTextResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L650}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::translation::v3::RomanizeTextResponse> RomanizeText(
+      std::string const& parent, std::vector<std::string> const& contents,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Romanize input text written in non-Latin scripts to Latin text.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.translation.v3.RomanizeTextRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.translation.v3.RomanizeTextResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.RomanizeTextRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L609}
+  /// [google.cloud.translation.v3.RomanizeTextResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L650}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::translation::v3::RomanizeTextResponse> RomanizeText(
+      google::cloud::translation::v3::RomanizeTextRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -273,8 +341,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.DetectLanguageRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L417}
-  /// [google.cloud.translation.v3.DetectLanguageResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L480}
+  /// [google.cloud.translation.v3.DetectLanguageRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L658}
+  /// [google.cloud.translation.v3.DetectLanguageResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L721}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::DetectLanguageResponse>
@@ -305,8 +373,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.DetectLanguageRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L417}
-  /// [google.cloud.translation.v3.DetectLanguageResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L480}
+  /// [google.cloud.translation.v3.DetectLanguageRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L658}
+  /// [google.cloud.translation.v3.DetectLanguageResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L721}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::DetectLanguageResponse>
@@ -359,8 +427,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.GetSupportedLanguagesRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L487}
-  /// [google.cloud.translation.v3.SupportedLanguages]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L530}
+  /// [google.cloud.translation.v3.GetSupportedLanguagesRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L728}
+  /// [google.cloud.translation.v3.SupportedLanguages]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L771}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::SupportedLanguages>
@@ -391,8 +459,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.GetSupportedLanguagesRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L487}
-  /// [google.cloud.translation.v3.SupportedLanguages]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L530}
+  /// [google.cloud.translation.v3.GetSupportedLanguagesRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L728}
+  /// [google.cloud.translation.v3.SupportedLanguages]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L771}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::SupportedLanguages>
@@ -424,8 +492,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.TranslateDocumentRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L782}
-  /// [google.cloud.translation.v3.TranslateDocumentResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L895}
+  /// [google.cloud.translation.v3.TranslateDocumentRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1023}
+  /// [google.cloud.translation.v3.TranslateDocumentResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1136}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::TranslateDocumentResponse>
@@ -469,8 +537,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.BatchTranslateResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1039}
-  /// [google.cloud.translation.v3.BatchTranslateTextRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L919}
+  /// [google.cloud.translation.v3.BatchTranslateResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1280}
+  /// [google.cloud.translation.v3.BatchTranslateTextRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1160}
   ///
   // clang-format on
   future<StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>
@@ -558,8 +626,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.BatchTranslateDocumentRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1320}
-  /// [google.cloud.translation.v3.BatchTranslateDocumentResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1496}
+  /// [google.cloud.translation.v3.BatchTranslateDocumentRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1683}
+  /// [google.cloud.translation.v3.BatchTranslateDocumentResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1859}
   ///
   // clang-format on
   future<
@@ -632,8 +700,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.BatchTranslateDocumentRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1320}
-  /// [google.cloud.translation.v3.BatchTranslateDocumentResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1496}
+  /// [google.cloud.translation.v3.BatchTranslateDocumentRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1683}
+  /// [google.cloud.translation.v3.BatchTranslateDocumentResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1859}
   ///
   // clang-format on
   future<
@@ -701,8 +769,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.CreateGlossaryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1146}
-  /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1088}
+  /// [google.cloud.translation.v3.CreateGlossaryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1387}
+  /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1329}
   ///
   // clang-format on
   future<StatusOr<google::cloud::translation::v3::Glossary>> CreateGlossary(
@@ -757,8 +825,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.CreateGlossaryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1146}
-  /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1088}
+  /// [google.cloud.translation.v3.CreateGlossaryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1387}
+  /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1329}
   ///
   // clang-format on
   future<StatusOr<google::cloud::translation::v3::Glossary>> CreateGlossary(
@@ -795,6 +863,124 @@ class TranslationServiceClient {
 
   // clang-format off
   ///
+  /// Updates a glossary. A LRO is used since the update can be async if the
+  /// glossary's entry file is updated.
+  ///
+  /// @param glossary  Required. The glossary entry to update.
+  /// @param update_mask  The list of fields to be updated. Currently only `display_name` and
+  ///  'input_config'
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.translation.v3.Glossary] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1329}
+  /// [google.cloud.translation.v3.UpdateGlossaryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1401}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::translation::v3::Glossary>> UpdateGlossary(
+      google::cloud::translation::v3::Glossary const& glossary,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateGlossary
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateGlossary(
+      NoAwaitTag, google::cloud::translation::v3::Glossary const& glossary,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a glossary. A LRO is used since the update can be async if the
+  /// glossary's entry file is updated.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.translation.v3.UpdateGlossaryRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.translation.v3.Glossary] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1329}
+  /// [google.cloud.translation.v3.UpdateGlossaryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1401}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::translation::v3::Glossary>> UpdateGlossary(
+      google::cloud::translation::v3::UpdateGlossaryRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateGlossary
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateGlossary(
+      NoAwaitTag,
+      google::cloud::translation::v3::UpdateGlossaryRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateGlossary
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::translation::v3::Glossary>> UpdateGlossary(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
   /// Lists glossaries in a project. Returns NOT_FOUND, if the project doesn't
   /// exist.
   ///
@@ -821,8 +1007,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1088}
-  /// [google.cloud.translation.v3.ListGlossariesRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1182}
+  /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1329}
+  /// [google.cloud.translation.v3.ListGlossariesRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1433}
   ///
   // clang-format on
   StreamRange<google::cloud::translation::v3::Glossary> ListGlossaries(
@@ -861,8 +1047,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1088}
-  /// [google.cloud.translation.v3.ListGlossariesRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1182}
+  /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1329}
+  /// [google.cloud.translation.v3.ListGlossariesRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1433}
   ///
   // clang-format on
   StreamRange<google::cloud::translation::v3::Glossary> ListGlossaries(
@@ -888,8 +1074,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.GetGlossaryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1160}
-  /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1088}
+  /// [google.cloud.translation.v3.GetGlossaryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1411}
+  /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1329}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::Glossary> GetGlossary(
@@ -919,8 +1105,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.GetGlossaryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1160}
-  /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1088}
+  /// [google.cloud.translation.v3.GetGlossaryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1411}
+  /// [google.cloud.translation.v3.Glossary]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1329}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::Glossary> GetGlossary(
@@ -954,8 +1140,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.DeleteGlossaryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1171}
-  /// [google.cloud.translation.v3.DeleteGlossaryResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1306}
+  /// [google.cloud.translation.v3.DeleteGlossaryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1422}
+  /// [google.cloud.translation.v3.DeleteGlossaryResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1669}
   ///
   // clang-format on
   future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
@@ -1007,8 +1193,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.DeleteGlossaryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1171}
-  /// [google.cloud.translation.v3.DeleteGlossaryResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1306}
+  /// [google.cloud.translation.v3.DeleteGlossaryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1422}
+  /// [google.cloud.translation.v3.DeleteGlossaryResponse]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1669}
   ///
   // clang-format on
   future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
@@ -1044,6 +1230,665 @@ class TranslationServiceClient {
   future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
   DeleteGlossary(google::longrunning::Operation const& operation,
                  Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a single glossary entry by the given id.
+  ///
+  /// @param name  Required. The resource name of the glossary entry to get
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.translation.v3.GlossaryEntry])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.GetGlossaryEntryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1483}
+  /// [google.cloud.translation.v3.GlossaryEntry]: @googleapis_reference_link{google/cloud/translate/v3/common.proto#L80}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::translation::v3::GlossaryEntry> GetGlossaryEntry(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a single glossary entry by the given id.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.translation.v3.GetGlossaryEntryRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.translation.v3.GlossaryEntry])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.GetGlossaryEntryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1483}
+  /// [google.cloud.translation.v3.GlossaryEntry]: @googleapis_reference_link{google/cloud/translate/v3/common.proto#L80}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::translation::v3::GlossaryEntry> GetGlossaryEntry(
+      google::cloud::translation::v3::GetGlossaryEntryRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// List the entries for the glossary.
+  ///
+  /// @param parent  Required. The parent glossary resource name for listing the glossary's
+  ///  entries.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.translation.v3.GlossaryEntry], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.GlossaryEntry]: @googleapis_reference_link{google/cloud/translate/v3/common.proto#L80}
+  /// [google.cloud.translation.v3.ListGlossaryEntriesRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1505}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::translation::v3::GlossaryEntry>
+  ListGlossaryEntries(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// List the entries for the glossary.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.translation.v3.ListGlossaryEntriesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.translation.v3.GlossaryEntry], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.GlossaryEntry]: @googleapis_reference_link{google/cloud/translate/v3/common.proto#L80}
+  /// [google.cloud.translation.v3.ListGlossaryEntriesRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1505}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::translation::v3::GlossaryEntry>
+  ListGlossaryEntries(
+      google::cloud::translation::v3::ListGlossaryEntriesRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a glossary entry.
+  ///
+  /// @param parent  Required. The resource name of the glossary to create the entry under.
+  /// @param glossary_entry  Required. The glossary entry to create
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.translation.v3.GlossaryEntry])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.CreateGlossaryEntryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1538}
+  /// [google.cloud.translation.v3.GlossaryEntry]: @googleapis_reference_link{google/cloud/translate/v3/common.proto#L80}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::translation::v3::GlossaryEntry> CreateGlossaryEntry(
+      std::string const& parent,
+      google::cloud::translation::v3::GlossaryEntry const& glossary_entry,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a glossary entry.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.translation.v3.CreateGlossaryEntryRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.translation.v3.GlossaryEntry])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.CreateGlossaryEntryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1538}
+  /// [google.cloud.translation.v3.GlossaryEntry]: @googleapis_reference_link{google/cloud/translate/v3/common.proto#L80}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::translation::v3::GlossaryEntry> CreateGlossaryEntry(
+      google::cloud::translation::v3::CreateGlossaryEntryRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a glossary entry.
+  ///
+  /// @param glossary_entry  Required. The glossary entry to update.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.translation.v3.GlossaryEntry])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.GlossaryEntry]: @googleapis_reference_link{google/cloud/translate/v3/common.proto#L80}
+  /// [google.cloud.translation.v3.UpdateGlossaryEntryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1552}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::translation::v3::GlossaryEntry> UpdateGlossaryEntry(
+      google::cloud::translation::v3::GlossaryEntry const& glossary_entry,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a glossary entry.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.translation.v3.UpdateGlossaryEntryRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.translation.v3.GlossaryEntry])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.GlossaryEntry]: @googleapis_reference_link{google/cloud/translate/v3/common.proto#L80}
+  /// [google.cloud.translation.v3.UpdateGlossaryEntryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1552}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::translation::v3::GlossaryEntry> UpdateGlossaryEntry(
+      google::cloud::translation::v3::UpdateGlossaryEntryRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single entry from the glossary
+  ///
+  /// @param name  Required. The resource name of the glossary entry to delete
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.DeleteGlossaryEntryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1494}
+  ///
+  // clang-format on
+  Status DeleteGlossaryEntry(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a single entry from the glossary
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.translation.v3.DeleteGlossaryEntryRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.DeleteGlossaryEntryRequest]: @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1494}
+  ///
+  // clang-format on
+  Status DeleteGlossaryEntry(
+      google::cloud::translation::v3::DeleteGlossaryEntryRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a Dataset.
+  ///
+  /// @param parent  Required. The project name.
+  /// @param dataset  Required. The Dataset to create.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.translation.v3.Dataset] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.CreateDatasetRequest]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L185}
+  /// [google.cloud.translation.v3.Dataset]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L292}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::translation::v3::Dataset>> CreateDataset(
+      std::string const& parent,
+      google::cloud::translation::v3::Dataset const& dataset,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateDataset
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateDataset(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::translation::v3::Dataset const& dataset,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a Dataset.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.translation.v3.CreateDatasetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.translation.v3.Dataset] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.CreateDatasetRequest]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L185}
+  /// [google.cloud.translation.v3.Dataset]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L292}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::translation::v3::Dataset>> CreateDataset(
+      google::cloud::translation::v3::CreateDatasetRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateDataset
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateDataset(
+      NoAwaitTag,
+      google::cloud::translation::v3::CreateDatasetRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateDataset
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::translation::v3::Dataset>> CreateDataset(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a Dataset.
+  ///
+  /// @param name  Required. The resource name of the dataset to retrieve.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.translation.v3.Dataset])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.Dataset]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L292}
+  /// [google.cloud.translation.v3.GetDatasetRequest]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L142}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::translation::v3::Dataset> GetDataset(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a Dataset.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.translation.v3.GetDatasetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.translation.v3.Dataset])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.Dataset]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L292}
+  /// [google.cloud.translation.v3.GetDatasetRequest]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L142}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::translation::v3::Dataset> GetDataset(
+      google::cloud::translation::v3::GetDatasetRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists datasets.
+  ///
+  /// @param parent  Required. Name of the parent project. In form of
+  ///  `projects/{project-number-or-id}/locations/{location-id}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.translation.v3.Dataset], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.Dataset]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L292}
+  /// [google.cloud.translation.v3.ListDatasetsRequest]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L153}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::translation::v3::Dataset> ListDatasets(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists datasets.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.translation.v3.ListDatasetsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.translation.v3.Dataset], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.Dataset]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L292}
+  /// [google.cloud.translation.v3.ListDatasetsRequest]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L153}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::translation::v3::Dataset> ListDatasets(
+      google::cloud::translation::v3::ListDatasetsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a dataset and all of its contents.
+  ///
+  /// @param name  Required. The name of the dataset to delete.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.translation.v3.DeleteDatasetMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.DeleteDatasetMetadata]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L127}
+  /// [google.cloud.translation.v3.DeleteDatasetRequest]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L116}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::translation::v3::DeleteDatasetMetadata>>
+  DeleteDataset(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteDataset
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteDataset(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a dataset and all of its contents.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.translation.v3.DeleteDatasetRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.translation.v3.DeleteDatasetMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.DeleteDatasetMetadata]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L127}
+  /// [google.cloud.translation.v3.DeleteDatasetRequest]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L116}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::translation::v3::DeleteDatasetMetadata>>
+  DeleteDataset(
+      google::cloud::translation::v3::DeleteDatasetRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteDataset
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteDataset(
+      NoAwaitTag,
+      google::cloud::translation::v3::DeleteDatasetRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteDataset
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::translation::v3::DeleteDatasetMetadata>>
+  DeleteDataset(google::longrunning::Operation const& operation,
+                Options opts = {});
 
   // clang-format off
   ///
@@ -1305,7 +2150,6 @@ class TranslationServiceClient {
   ///  @n
   ///  Format: `projects/{project-number-or-id}/locations/{location-id}`.
   /// @param content  Required. The content of the input in string format.
-  ///  For now only one sentence per request is supported.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -1320,7 +2164,7 @@ class TranslationServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.translation.v3.AdaptiveMtTranslateRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L153}
-  /// [google.cloud.translation.v3.AdaptiveMtTranslateResponse]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L185}
+  /// [google.cloud.translation.v3.AdaptiveMtTranslateResponse]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L245}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::AdaptiveMtTranslateResponse>
@@ -1352,7 +2196,7 @@ class TranslationServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.translation.v3.AdaptiveMtTranslateRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L153}
-  /// [google.cloud.translation.v3.AdaptiveMtTranslateResponse]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L185}
+  /// [google.cloud.translation.v3.AdaptiveMtTranslateResponse]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L245}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::AdaptiveMtTranslateResponse>
@@ -1379,8 +2223,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.AdaptiveMtFile]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L195}
-  /// [google.cloud.translation.v3.GetAdaptiveMtFileRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L226}
+  /// [google.cloud.translation.v3.AdaptiveMtFile]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L259}
+  /// [google.cloud.translation.v3.GetAdaptiveMtFileRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L292}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::AdaptiveMtFile> GetAdaptiveMtFile(
@@ -1409,8 +2253,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.AdaptiveMtFile]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L195}
-  /// [google.cloud.translation.v3.GetAdaptiveMtFileRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L226}
+  /// [google.cloud.translation.v3.AdaptiveMtFile]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L259}
+  /// [google.cloud.translation.v3.GetAdaptiveMtFileRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L292}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::AdaptiveMtFile> GetAdaptiveMtFile(
@@ -1434,7 +2278,7 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.DeleteAdaptiveMtFileRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L238}
+  /// [google.cloud.translation.v3.DeleteAdaptiveMtFileRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L304}
   ///
   // clang-format on
   Status DeleteAdaptiveMtFile(std::string const& name, Options opts = {});
@@ -1460,7 +2304,7 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.DeleteAdaptiveMtFileRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L238}
+  /// [google.cloud.translation.v3.DeleteAdaptiveMtFileRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L304}
   ///
   // clang-format on
   Status DeleteAdaptiveMtFile(
@@ -1488,8 +2332,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.ImportAdaptiveMtFileRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L250}
-  /// [google.cloud.translation.v3.ImportAdaptiveMtFileResponse]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L271}
+  /// [google.cloud.translation.v3.ImportAdaptiveMtFileRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L316}
+  /// [google.cloud.translation.v3.ImportAdaptiveMtFileResponse]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L337}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::ImportAdaptiveMtFileResponse>
@@ -1519,8 +2363,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.ImportAdaptiveMtFileRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L250}
-  /// [google.cloud.translation.v3.ImportAdaptiveMtFileResponse]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L271}
+  /// [google.cloud.translation.v3.ImportAdaptiveMtFileRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L316}
+  /// [google.cloud.translation.v3.ImportAdaptiveMtFileResponse]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L337}
   ///
   // clang-format on
   StatusOr<google::cloud::translation::v3::ImportAdaptiveMtFileResponse>
@@ -1558,8 +2402,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.AdaptiveMtFile]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L195}
-  /// [google.cloud.translation.v3.ListAdaptiveMtFilesRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L278}
+  /// [google.cloud.translation.v3.AdaptiveMtFile]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L259}
+  /// [google.cloud.translation.v3.ListAdaptiveMtFilesRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L344}
   ///
   // clang-format on
   StreamRange<google::cloud::translation::v3::AdaptiveMtFile>
@@ -1597,8 +2441,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.AdaptiveMtFile]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L195}
-  /// [google.cloud.translation.v3.ListAdaptiveMtFilesRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L278}
+  /// [google.cloud.translation.v3.AdaptiveMtFile]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L259}
+  /// [google.cloud.translation.v3.ListAdaptiveMtFilesRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L344}
   ///
   // clang-format on
   StreamRange<google::cloud::translation::v3::AdaptiveMtFile>
@@ -1637,8 +2481,8 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.AdaptiveMtSentence]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L313}
-  /// [google.cloud.translation.v3.ListAdaptiveMtSentencesRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L344}
+  /// [google.cloud.translation.v3.AdaptiveMtSentence]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L379}
+  /// [google.cloud.translation.v3.ListAdaptiveMtSentencesRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L412}
   ///
   // clang-format on
   StreamRange<google::cloud::translation::v3::AdaptiveMtSentence>
@@ -1676,14 +2520,690 @@ class TranslationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.translation.v3.AdaptiveMtSentence]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L313}
-  /// [google.cloud.translation.v3.ListAdaptiveMtSentencesRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L344}
+  /// [google.cloud.translation.v3.AdaptiveMtSentence]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L379}
+  /// [google.cloud.translation.v3.ListAdaptiveMtSentencesRequest]: @googleapis_reference_link{google/cloud/translate/v3/adaptive_mt.proto#L412}
   ///
   // clang-format on
   StreamRange<google::cloud::translation::v3::AdaptiveMtSentence>
   ListAdaptiveMtSentences(
       google::cloud::translation::v3::ListAdaptiveMtSentencesRequest request,
       Options opts = {});
+
+  // clang-format off
+  ///
+  /// Import sentence pairs into translation Dataset.
+  ///
+  /// @param dataset  Required. Name of the dataset. In form of
+  ///  `projects/{project-number-or-id}/locations/{location-id}/datasets/{dataset-id}`
+  /// @param input_config  Required. The config for the input content.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.translation.v3.ImportDataMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.ImportDataMetadata]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L66}
+  /// [google.cloud.translation.v3.ImportDataRequest]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L35}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::translation::v3::ImportDataMetadata>>
+  ImportData(
+      std::string const& dataset,
+      google::cloud::translation::v3::DatasetInputConfig const& input_config,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief ImportData
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> ImportData(
+      NoAwaitTag, std::string const& dataset,
+      google::cloud::translation::v3::DatasetInputConfig const& input_config,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Import sentence pairs into translation Dataset.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.translation.v3.ImportDataRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.translation.v3.ImportDataMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.ImportDataMetadata]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L66}
+  /// [google.cloud.translation.v3.ImportDataRequest]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L35}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::translation::v3::ImportDataMetadata>>
+  ImportData(google::cloud::translation::v3::ImportDataRequest const& request,
+             Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief ImportData
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> ImportData(
+      NoAwaitTag,
+      google::cloud::translation::v3::ImportDataRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief ImportData
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::translation::v3::ImportDataMetadata>>
+  ImportData(google::longrunning::Operation const& operation,
+             Options opts = {});
+
+  // clang-format off
+  ///
+  /// Exports dataset's data to the provided output location.
+  ///
+  /// @param dataset  Required. Name of the dataset. In form of
+  ///  `projects/{project-number-or-id}/locations/{location-id}/datasets/{dataset-id}`
+  /// @param output_config  Required. The config for the output content.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.translation.v3.ExportDataMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.ExportDataMetadata]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L101}
+  /// [google.cloud.translation.v3.ExportDataRequest]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L81}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::translation::v3::ExportDataMetadata>>
+  ExportData(
+      std::string const& dataset,
+      google::cloud::translation::v3::DatasetOutputConfig const& output_config,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief ExportData
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> ExportData(
+      NoAwaitTag, std::string const& dataset,
+      google::cloud::translation::v3::DatasetOutputConfig const& output_config,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Exports dataset's data to the provided output location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.translation.v3.ExportDataRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.translation.v3.ExportDataMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.ExportDataMetadata]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L101}
+  /// [google.cloud.translation.v3.ExportDataRequest]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L81}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::translation::v3::ExportDataMetadata>>
+  ExportData(google::cloud::translation::v3::ExportDataRequest const& request,
+             Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief ExportData
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> ExportData(
+      NoAwaitTag,
+      google::cloud::translation::v3::ExportDataRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief ExportData
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::translation::v3::ExportDataMetadata>>
+  ExportData(google::longrunning::Operation const& operation,
+             Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists sentence pairs in the dataset.
+  ///
+  /// @param parent  Required. Name of the parent dataset. In form of
+  ///  `projects/{project-number-or-id}/locations/{location-id}/datasets/{dataset-id}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.translation.v3.Example], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.Example]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L251}
+  /// [google.cloud.translation.v3.ListExamplesRequest]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L214}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::translation::v3::Example> ListExamples(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists sentence pairs in the dataset.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.translation.v3.ListExamplesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.translation.v3.Example], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.Example]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L251}
+  /// [google.cloud.translation.v3.ListExamplesRequest]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L214}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::translation::v3::Example> ListExamples(
+      google::cloud::translation::v3::ListExamplesRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a Model.
+  ///
+  /// @param parent  Required. The project name, in form of
+  ///  `projects/{project}/locations/{location}`
+  /// @param model  Required. The Model to create.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.translation.v3.Model] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.CreateModelRequest]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L335}
+  /// [google.cloud.translation.v3.Model]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L435}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::translation::v3::Model>> CreateModel(
+      std::string const& parent,
+      google::cloud::translation::v3::Model const& model, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateModel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateModel(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::translation::v3::Model const& model, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a Model.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.translation.v3.CreateModelRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.translation.v3.Model] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.CreateModelRequest]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L335}
+  /// [google.cloud.translation.v3.Model]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L435}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::translation::v3::Model>> CreateModel(
+      google::cloud::translation::v3::CreateModelRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateModel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateModel(
+      NoAwaitTag,
+      google::cloud::translation::v3::CreateModelRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateModel
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::translation::v3::Model>> CreateModel(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists models.
+  ///
+  /// @param parent  Required. Name of the parent project. In form of
+  ///  `projects/{project-number-or-id}/locations/{location-id}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.translation.v3.Model], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.ListModelsRequest]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L365}
+  /// [google.cloud.translation.v3.Model]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L435}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::translation::v3::Model> ListModels(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists models.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.translation.v3.ListModelsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.translation.v3.Model], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.ListModelsRequest]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L365}
+  /// [google.cloud.translation.v3.Model]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L435}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::translation::v3::Model> ListModels(
+      google::cloud::translation::v3::ListModelsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a model.
+  ///
+  /// @param name  Required. The resource name of the model to retrieve.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.translation.v3.Model])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.GetModelRequest]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L402}
+  /// [google.cloud.translation.v3.Model]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L435}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::translation::v3::Model> GetModel(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a model.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.translation.v3.GetModelRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.translation.v3.Model])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.GetModelRequest]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L402}
+  /// [google.cloud.translation.v3.Model]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L435}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::translation::v3::Model> GetModel(
+      google::cloud::translation::v3::GetModelRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a model.
+  ///
+  /// @param name  Required. The name of the model to delete.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.translation.v3.DeleteModelMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.DeleteModelMetadata]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L420}
+  /// [google.cloud.translation.v3.DeleteModelRequest]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L411}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::translation::v3::DeleteModelMetadata>>
+  DeleteModel(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteModel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteModel(NoAwaitTag,
+                                                       std::string const& name,
+                                                       Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a model.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.translation.v3.DeleteModelRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.translation.v3.DeleteModelMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.translation.v3.DeleteModelMetadata]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L420}
+  /// [google.cloud.translation.v3.DeleteModelRequest]: @googleapis_reference_link{google/cloud/translate/v3/automl_translation.proto#L411}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::translation::v3::DeleteModelMetadata>>
+  DeleteModel(google::cloud::translation::v3::DeleteModelRequest const& request,
+              Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteModel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteModel(
+      NoAwaitTag,
+      google::cloud::translation::v3::DeleteModelRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteModel
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::translation::v3::DeleteModelMetadata>>
+  DeleteModel(google::longrunning::Operation const& operation,
+              Options opts = {});
 
  private:
   std::shared_ptr<TranslationServiceConnection> connection_;

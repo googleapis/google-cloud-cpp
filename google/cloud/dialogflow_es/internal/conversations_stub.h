@@ -76,6 +76,13 @@ class ConversationsStub {
       google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
           request) = 0;
 
+  virtual StatusOr<
+      google::cloud::dialogflow::v2::GenerateStatelessSuggestionResponse>
+  GenerateStatelessSuggestion(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::GenerateStatelessSuggestionRequest const&
+          request) = 0;
+
   virtual StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>
   SearchKnowledge(
       grpc::ClientContext& context, Options const& options,
@@ -126,6 +133,12 @@ class DefaultConversationsStub : public ConversationsStub {
   GenerateStatelessSummary(
       grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
+          request) override;
+
+  StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSuggestionResponse>
+  GenerateStatelessSuggestion(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::GenerateStatelessSuggestionRequest const&
           request) override;
 
   StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>

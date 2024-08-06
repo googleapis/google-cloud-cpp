@@ -120,6 +120,20 @@ ConversationsTracingStub::GenerateStatelessSummary(
       child_->GenerateStatelessSummary(context, options, request));
 }
 
+StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSuggestionResponse>
+ConversationsTracingStub::GenerateStatelessSuggestion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::v2::GenerateStatelessSuggestionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Conversations",
+                                     "GenerateStatelessSuggestion");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->GenerateStatelessSuggestion(context, options, request));
+}
+
 StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>
 ConversationsTracingStub::SearchKnowledge(
     grpc::ClientContext& context, Options const& options,

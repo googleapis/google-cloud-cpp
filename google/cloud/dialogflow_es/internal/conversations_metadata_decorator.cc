@@ -112,6 +112,16 @@ ConversationsMetadata::GenerateStatelessSummary(
   return child_->GenerateStatelessSummary(context, options, request);
 }
 
+StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSuggestionResponse>
+ConversationsMetadata::GenerateStatelessSuggestion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::v2::GenerateStatelessSuggestionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->GenerateStatelessSuggestion(context, options, request);
+}
+
 StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>
 ConversationsMetadata::SearchKnowledge(
     grpc::ClientContext& context, Options const& options,

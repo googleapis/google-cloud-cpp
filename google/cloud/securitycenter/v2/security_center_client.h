@@ -197,7 +197,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v2.BulkMuteFindingsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L931}
-  /// [google.cloud.securitycenter.v2.BulkMuteFindingsResponse]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L971}
+  /// [google.cloud.securitycenter.v2.BulkMuteFindingsResponse]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L988}
   ///
   // clang-format on
   future<StatusOr<google::cloud::securitycenter::v2::BulkMuteFindingsResponse>>
@@ -251,7 +251,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v2.BulkMuteFindingsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L931}
-  /// [google.cloud.securitycenter.v2.BulkMuteFindingsResponse]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L971}
+  /// [google.cloud.securitycenter.v2.BulkMuteFindingsResponse]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L988}
   ///
   // clang-format on
   future<StatusOr<google::cloud::securitycenter::v2::BulkMuteFindingsResponse>>
@@ -293,9 +293,9 @@ class SecurityCenterClient {
   /// Creates a BigQuery export.
   ///
   /// @param parent  Required. The name of the parent resource of the new BigQuery export. Its
-  ///  format is "organizations/[organization_id]/locations/[location_id]",
-  ///  "folders/[folder_id]/locations/[location_id]", or
-  ///  "projects/[project_id]/locations/[location_id]".
+  ///  format is `organizations/[organization_id]/locations/[location_id]`,
+  ///  `folders/[folder_id]/locations/[location_id]`, or
+  ///  `projects/[project_id]/locations/[location_id]`.
   /// @param big_query_export  Required. The BigQuery export being created.
   /// @param big_query_export_id  Required. Unique identifier provided by the client within the parent scope.
   ///  It must consist of only lowercase letters, numbers, and hyphens, must start
@@ -315,7 +315,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v2.BigQueryExport]: @googleapis_reference_link{google/cloud/securitycenter/v2/bigquery_export.proto#L32}
-  /// [google.cloud.securitycenter.v2.CreateBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L974}
+  /// [google.cloud.securitycenter.v2.CreateBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L991}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v2::BigQueryExport>
@@ -348,7 +348,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v2.BigQueryExport]: @googleapis_reference_link{google/cloud/securitycenter/v2/bigquery_export.proto#L32}
-  /// [google.cloud.securitycenter.v2.CreateBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L974}
+  /// [google.cloud.securitycenter.v2.CreateBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L991}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v2::BigQueryExport>
@@ -386,7 +386,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.CreateFindingRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L997}
+  /// [google.cloud.securitycenter.v2.CreateFindingRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1014}
   /// [google.cloud.securitycenter.v2.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v2/finding.proto#L69}
   ///
   // clang-format on
@@ -419,7 +419,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.CreateFindingRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L997}
+  /// [google.cloud.securitycenter.v2.CreateFindingRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1014}
   /// [google.cloud.securitycenter.v2.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v2/finding.proto#L69}
   ///
   // clang-format on
@@ -432,9 +432,9 @@ class SecurityCenterClient {
   /// Creates a mute config.
   ///
   /// @param parent  Required. Resource name of the new mute configs's parent. Its format is
-  ///  "organizations/[organization_id]/locations/[location_id]",
-  ///  "folders/[folder_id]/locations/[location_id]", or
-  ///  "projects/[project_id]/locations/[location_id]".
+  ///  `organizations/[organization_id]/locations/[location_id]`,
+  ///  `folders/[folder_id]/locations/[location_id]`, or
+  ///  `projects/[project_id]/locations/[location_id]`.
   /// @param mute_config  Required. The mute config being created.
   /// @param mute_config_id  Required. Unique identifier provided by the client within the parent scope.
   ///  It must consist of only lowercase letters, numbers, and hyphens, must start
@@ -453,7 +453,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.CreateMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1022}
+  /// [google.cloud.securitycenter.v2.CreateMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1039}
   /// [google.cloud.securitycenter.v2.MuteConfig]: @googleapis_reference_link{google/cloud/securitycenter/v2/mute_config.proto#L33}
   ///
   // clang-format on
@@ -485,7 +485,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.CreateMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1022}
+  /// [google.cloud.securitycenter.v2.CreateMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1039}
   /// [google.cloud.securitycenter.v2.MuteConfig]: @googleapis_reference_link{google/cloud/securitycenter/v2/mute_config.proto#L33}
   ///
   // clang-format on
@@ -498,9 +498,9 @@ class SecurityCenterClient {
   /// Creates a notification config.
   ///
   /// @param parent  Required. Resource name of the new notification config's parent. Its format
-  ///  is "organizations/[organization_id]/locations/[location_id]",
-  ///  "folders/[folder_id]/locations/[location_id]", or
-  ///  "projects/[project_id]/locations/[location_id]".
+  ///  is `organizations/[organization_id]/locations/[location_id]`,
+  ///  `folders/[folder_id]/locations/[location_id]`, or
+  ///  `projects/[project_id]/locations/[location_id]`.
   /// @param notification_config  Required. The notification config being created. The name and the service
   ///  account will be ignored as they are both output only fields on this
   ///  resource.
@@ -521,7 +521,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.CreateNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1045}
+  /// [google.cloud.securitycenter.v2.CreateNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1062}
   /// [google.cloud.securitycenter.v2.NotificationConfig]: @googleapis_reference_link{google/cloud/securitycenter/v2/notification_config.proto#L38}
   ///
   // clang-format on
@@ -555,7 +555,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.CreateNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1045}
+  /// [google.cloud.securitycenter.v2.CreateNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1062}
   /// [google.cloud.securitycenter.v2.NotificationConfig]: @googleapis_reference_link{google/cloud/securitycenter/v2/notification_config.proto#L38}
   ///
   // clang-format on
@@ -570,7 +570,7 @@ class SecurityCenterClient {
   /// Creates a source.
   ///
   /// @param parent  Required. Resource name of the new source's parent. Its format should be
-  ///  "organizations/[organization_id]".
+  ///  `organizations/[organization_id]`.
   /// @param source  Required. The Source being created, only the display_name and description
   ///  will be used. All other fields will be ignored.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -586,7 +586,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.CreateSourceRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1086}
+  /// [google.cloud.securitycenter.v2.CreateSourceRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1103}
   /// [google.cloud.securitycenter.v2.Source]: @googleapis_reference_link{google/cloud/securitycenter/v2/source.proto#L33}
   ///
   // clang-format on
@@ -618,7 +618,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.CreateSourceRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1086}
+  /// [google.cloud.securitycenter.v2.CreateSourceRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1103}
   /// [google.cloud.securitycenter.v2.Source]: @googleapis_reference_link{google/cloud/securitycenter/v2/source.proto#L33}
   ///
   // clang-format on
@@ -648,7 +648,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.DeleteBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1102}
+  /// [google.cloud.securitycenter.v2.DeleteBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1119}
   ///
   // clang-format on
   Status DeleteBigQueryExport(std::string const& name, Options opts = {});
@@ -674,7 +674,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.DeleteBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1102}
+  /// [google.cloud.securitycenter.v2.DeleteBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1119}
   ///
   // clang-format on
   Status DeleteBigQueryExport(
@@ -708,7 +708,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.DeleteMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1120}
+  /// [google.cloud.securitycenter.v2.DeleteMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1137}
   ///
   // clang-format on
   Status DeleteMuteConfig(std::string const& name, Options opts = {});
@@ -735,7 +735,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.DeleteMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1120}
+  /// [google.cloud.securitycenter.v2.DeleteMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1137}
   ///
   // clang-format on
   Status DeleteMuteConfig(
@@ -766,7 +766,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.DeleteNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1140}
+  /// [google.cloud.securitycenter.v2.DeleteNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1157}
   ///
   // clang-format on
   Status DeleteNotificationConfig(std::string const& name, Options opts = {});
@@ -792,7 +792,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.DeleteNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1140}
+  /// [google.cloud.securitycenter.v2.DeleteNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1157}
   ///
   // clang-format on
   Status DeleteNotificationConfig(
@@ -816,7 +816,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.DeleteResourceValueConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1159}
+  /// [google.cloud.securitycenter.v2.DeleteResourceValueConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1176}
   ///
   // clang-format on
   Status DeleteResourceValueConfig(std::string const& name, Options opts = {});
@@ -842,7 +842,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.DeleteResourceValueConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1159}
+  /// [google.cloud.securitycenter.v2.DeleteResourceValueConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1176}
   ///
   // clang-format on
   Status DeleteResourceValueConfig(
@@ -875,7 +875,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v2.BigQueryExport]: @googleapis_reference_link{google/cloud/securitycenter/v2/bigquery_export.proto#L32}
-  /// [google.cloud.securitycenter.v2.GetBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1170}
+  /// [google.cloud.securitycenter.v2.GetBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1187}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v2::BigQueryExport> GetBigQueryExport(
@@ -905,7 +905,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v2.BigQueryExport]: @googleapis_reference_link{google/cloud/securitycenter/v2/bigquery_export.proto#L32}
-  /// [google.cloud.securitycenter.v2.GetBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1170}
+  /// [google.cloud.securitycenter.v2.GetBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1187}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v2::BigQueryExport> GetBigQueryExport(
@@ -921,8 +921,8 @@ class SecurityCenterClient {
   /// @param name  Required. The organization name or simulation name of this simulation
   ///  @n
   ///  Valid format:
-  ///  "organizations/{organization}/simulations/latest"
-  ///  "organizations/{organization}/simulations/{simulation}"
+  ///  `organizations/{organization}/simulations/latest`
+  ///  `organizations/{organization}/simulations/{simulation}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -936,7 +936,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.GetSimulationRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1415}
+  /// [google.cloud.securitycenter.v2.GetSimulationRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1432}
   /// [google.cloud.securitycenter.v2.Simulation]: @googleapis_reference_link{google/cloud/securitycenter/v2/simulation.proto#L34}
   ///
   // clang-format on
@@ -967,7 +967,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.GetSimulationRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1415}
+  /// [google.cloud.securitycenter.v2.GetSimulationRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1432}
   /// [google.cloud.securitycenter.v2.Simulation]: @googleapis_reference_link{google/cloud/securitycenter/v2/simulation.proto#L34}
   ///
   // clang-format on
@@ -982,7 +982,7 @@ class SecurityCenterClient {
   /// @param name  Required. The name of this valued resource
   ///  @n
   ///  Valid format:
-  ///  "organizations/{organization}/simulations/{simulation}/valuedResources/{valued_resource}"
+  ///  `organizations/{organization}/simulations/{simulation}/valuedResources/{valued_resource}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -996,7 +996,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.GetValuedResourceRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1430}
+  /// [google.cloud.securitycenter.v2.GetValuedResourceRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1447}
   /// [google.cloud.securitycenter.v2.ValuedResource]: @googleapis_reference_link{google/cloud/securitycenter/v2/valued_resource.proto#L30}
   ///
   // clang-format on
@@ -1026,7 +1026,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.GetValuedResourceRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1430}
+  /// [google.cloud.securitycenter.v2.GetValuedResourceRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1447}
   /// [google.cloud.securitycenter.v2.ValuedResource]: @googleapis_reference_link{google/cloud/securitycenter/v2/valued_resource.proto#L30}
   ///
   // clang-format on
@@ -1119,7 +1119,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.GetMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1188}
+  /// [google.cloud.securitycenter.v2.GetMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1205}
   /// [google.cloud.securitycenter.v2.MuteConfig]: @googleapis_reference_link{google/cloud/securitycenter/v2/mute_config.proto#L33}
   ///
   // clang-format on
@@ -1150,7 +1150,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.GetMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1188}
+  /// [google.cloud.securitycenter.v2.GetMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1205}
   /// [google.cloud.securitycenter.v2.MuteConfig]: @googleapis_reference_link{google/cloud/securitycenter/v2/mute_config.proto#L33}
   ///
   // clang-format on
@@ -1184,7 +1184,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.GetNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1208}
+  /// [google.cloud.securitycenter.v2.GetNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1225}
   /// [google.cloud.securitycenter.v2.NotificationConfig]: @googleapis_reference_link{google/cloud/securitycenter/v2/notification_config.proto#L38}
   ///
   // clang-format on
@@ -1214,7 +1214,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.GetNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1208}
+  /// [google.cloud.securitycenter.v2.GetNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1225}
   /// [google.cloud.securitycenter.v2.NotificationConfig]: @googleapis_reference_link{google/cloud/securitycenter/v2/notification_config.proto#L38}
   ///
   // clang-format on
@@ -1243,7 +1243,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.GetResourceValueConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1227}
+  /// [google.cloud.securitycenter.v2.GetResourceValueConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1244}
   /// [google.cloud.securitycenter.v2.ResourceValueConfig]: @googleapis_reference_link{google/cloud/securitycenter/v2/resource_value_config.proto#L34}
   ///
   // clang-format on
@@ -1273,7 +1273,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.GetResourceValueConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1227}
+  /// [google.cloud.securitycenter.v2.GetResourceValueConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1244}
   /// [google.cloud.securitycenter.v2.ResourceValueConfig]: @googleapis_reference_link{google/cloud/securitycenter/v2/resource_value_config.proto#L34}
   ///
   // clang-format on
@@ -1288,7 +1288,7 @@ class SecurityCenterClient {
   /// Gets a source.
   ///
   /// @param name  Required. Relative resource name of the source. Its format is
-  ///  "organizations/[organization_id]/source/[source_id]".
+  ///  `organizations/[organization_id]/source/[source_id]`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -1302,7 +1302,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.GetSourceRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1239}
+  /// [google.cloud.securitycenter.v2.GetSourceRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1256}
   /// [google.cloud.securitycenter.v2.Source]: @googleapis_reference_link{google/cloud/securitycenter/v2/source.proto#L33}
   ///
   // clang-format on
@@ -1332,7 +1332,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.GetSourceRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1239}
+  /// [google.cloud.securitycenter.v2.GetSourceRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1256}
   /// [google.cloud.securitycenter.v2.Source]: @googleapis_reference_link{google/cloud/securitycenter/v2/source.proto#L33}
   ///
   // clang-format on
@@ -1403,8 +1403,8 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.GroupFindingsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1251}
-  /// [google.cloud.securitycenter.v2.GroupResult]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1360}
+  /// [google.cloud.securitycenter.v2.GroupFindingsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1268}
+  /// [google.cloud.securitycenter.v2.GroupResult]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1377}
   ///
   // clang-format on
   StreamRange<google::cloud::securitycenter::v2::GroupResult> GroupFindings(
@@ -1456,8 +1456,8 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.GroupFindingsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1251}
-  /// [google.cloud.securitycenter.v2.GroupResult]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1360}
+  /// [google.cloud.securitycenter.v2.GroupFindingsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1268}
+  /// [google.cloud.securitycenter.v2.GroupResult]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1377}
   ///
   // clang-format on
   StreamRange<google::cloud::securitycenter::v2::GroupResult> GroupFindings(
@@ -1472,10 +1472,10 @@ class SecurityCenterClient {
   /// @param parent  Required. Name of parent to list attack paths.
   ///  @n
   ///  Valid formats:
-  ///  "organizations/{organization}",
-  ///  "organizations/{organization}/simulations/{simulation}"
-  ///  "organizations/{organization}/simulations/{simulation}/attackExposureResults/{attack_exposure_result_v2}"
-  ///  "organizations/{organization}/simulations/{simulation}/valuedResources/{valued_resource}"
+  ///  `organizations/{organization}`,
+  ///  `organizations/{organization}/simulations/{simulation}`
+  ///  `organizations/{organization}/simulations/{simulation}/attackExposureResults/{attack_exposure_result_v2}`
+  ///  `organizations/{organization}/simulations/{simulation}/valuedResources/{valued_resource}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -1499,7 +1499,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v2.AttackPath]: @googleapis_reference_link{google/cloud/securitycenter/v2/attack_path.proto#L30}
-  /// [google.cloud.securitycenter.v2.ListAttackPathsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1370}
+  /// [google.cloud.securitycenter.v2.ListAttackPathsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1387}
   ///
   // clang-format on
   StreamRange<google::cloud::securitycenter::v2::AttackPath> ListAttackPaths(
@@ -1539,7 +1539,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v2.AttackPath]: @googleapis_reference_link{google/cloud/securitycenter/v2/attack_path.proto#L30}
-  /// [google.cloud.securitycenter.v2.ListAttackPathsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1370}
+  /// [google.cloud.securitycenter.v2.ListAttackPathsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1387}
   ///
   // clang-format on
   StreamRange<google::cloud::securitycenter::v2::AttackPath> ListAttackPaths(
@@ -1555,9 +1555,9 @@ class SecurityCenterClient {
   /// within the folder are returned.
   ///
   /// @param parent  Required. The parent, which owns the collection of BigQuery exports. Its
-  ///  format is "organizations/[organization_id]/locations/[location_id]",
-  ///  "folders/[folder_id]/locations/[location_id]", or
-  ///  "projects/[project_id]/locations/[location_id]".
+  ///  format is `organizations/[organization_id]/locations/[location_id]`,
+  ///  `folders/[folder_id]/locations/[location_id]`, or
+  ///  `projects/[project_id]/locations/[location_id]`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -1581,7 +1581,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v2.BigQueryExport]: @googleapis_reference_link{google/cloud/securitycenter/v2/bigquery_export.proto#L32}
-  /// [google.cloud.securitycenter.v2.ListBigQueryExportsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1445}
+  /// [google.cloud.securitycenter.v2.ListBigQueryExportsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1462}
   ///
   // clang-format on
   StreamRange<google::cloud::securitycenter::v2::BigQueryExport>
@@ -1624,7 +1624,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v2.BigQueryExport]: @googleapis_reference_link{google/cloud/securitycenter/v2/bigquery_export.proto#L32}
-  /// [google.cloud.securitycenter.v2.ListBigQueryExportsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1445}
+  /// [google.cloud.securitycenter.v2.ListBigQueryExportsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1462}
   ///
   // clang-format on
   StreamRange<google::cloud::securitycenter::v2::BigQueryExport>
@@ -1686,8 +1686,8 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.ListFindingsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1481}
-  /// [google.cloud.securitycenter.v2.ListFindingsResponse.ListFindingsResult]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1596}
+  /// [google.cloud.securitycenter.v2.ListFindingsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1498}
+  /// [google.cloud.securitycenter.v2.ListFindingsResponse.ListFindingsResult]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1613}
   ///
   // clang-format on
   StreamRange<google::cloud::securitycenter::v2::ListFindingsResponse::
@@ -1734,8 +1734,8 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.ListFindingsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1481}
-  /// [google.cloud.securitycenter.v2.ListFindingsResponse.ListFindingsResult]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1596}
+  /// [google.cloud.securitycenter.v2.ListFindingsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1498}
+  /// [google.cloud.securitycenter.v2.ListFindingsResponse.ListFindingsResult]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1613}
   ///
   // clang-format on
   StreamRange<google::cloud::securitycenter::v2::ListFindingsResponse::
@@ -1749,11 +1749,11 @@ class SecurityCenterClient {
   /// global.
   ///
   /// @param parent  Required. The parent, which owns the collection of mute configs. Its format
-  ///  is "organizations/[organization_id]", "folders/[folder_id]",
-  ///  "projects/[project_id]",
-  ///  "organizations/[organization_id]/locations/[location_id]",
-  ///  "folders/[folder_id]/locations/[location_id]",
-  ///  "projects/[project_id]/locations/[location_id]".
+  ///  is `organizations/[organization_id]", "folders/[folder_id]`,
+  ///  `projects/[project_id]`,
+  ///  `organizations/[organization_id]/locations/[location_id]`,
+  ///  `folders/[folder_id]/locations/[location_id]`,
+  ///  `projects/[project_id]/locations/[location_id]`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -1776,7 +1776,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.ListMuteConfigsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1667}
+  /// [google.cloud.securitycenter.v2.ListMuteConfigsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1684}
   /// [google.cloud.securitycenter.v2.MuteConfig]: @googleapis_reference_link{google/cloud/securitycenter/v2/mute_config.proto#L33}
   ///
   // clang-format on
@@ -1816,7 +1816,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.ListMuteConfigsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1667}
+  /// [google.cloud.securitycenter.v2.ListMuteConfigsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1684}
   /// [google.cloud.securitycenter.v2.MuteConfig]: @googleapis_reference_link{google/cloud/securitycenter/v2/mute_config.proto#L33}
   ///
   // clang-format on
@@ -1855,7 +1855,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.ListNotificationConfigsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1706}
+  /// [google.cloud.securitycenter.v2.ListNotificationConfigsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1723}
   /// [google.cloud.securitycenter.v2.NotificationConfig]: @googleapis_reference_link{google/cloud/securitycenter/v2/notification_config.proto#L38}
   ///
   // clang-format on
@@ -1894,7 +1894,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.ListNotificationConfigsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1706}
+  /// [google.cloud.securitycenter.v2.ListNotificationConfigsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1723}
   /// [google.cloud.securitycenter.v2.NotificationConfig]: @googleapis_reference_link{google/cloud/securitycenter/v2/notification_config.proto#L38}
   ///
   // clang-format on
@@ -1909,7 +1909,7 @@ class SecurityCenterClient {
   ///
   /// @param parent  Required. The parent, which owns the collection of resource value configs.
   ///  Its format is
-  ///  "organizations/[organization_id]"
+  ///  `organizations/[organization_id]`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -1932,7 +1932,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.ListResourceValueConfigsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1740}
+  /// [google.cloud.securitycenter.v2.ListResourceValueConfigsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1757}
   /// [google.cloud.securitycenter.v2.ResourceValueConfig]: @googleapis_reference_link{google/cloud/securitycenter/v2/resource_value_config.proto#L34}
   ///
   // clang-format on
@@ -1971,7 +1971,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.ListResourceValueConfigsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1740}
+  /// [google.cloud.securitycenter.v2.ListResourceValueConfigsRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1757}
   /// [google.cloud.securitycenter.v2.ResourceValueConfig]: @googleapis_reference_link{google/cloud/securitycenter/v2/resource_value_config.proto#L34}
   ///
   // clang-format on
@@ -1986,8 +1986,8 @@ class SecurityCenterClient {
   /// Lists all sources belonging to an organization.
   ///
   /// @param parent  Required. Resource name of the parent of sources to list. Its format should
-  ///  be "organizations/[organization_id]", "folders/[folder_id]", or
-  ///  "projects/[project_id]".
+  ///  be `organizations/[organization_id]`, `folders/[folder_id]`, or
+  ///  `projects/[project_id]`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -2010,7 +2010,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.ListSourcesRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1779}
+  /// [google.cloud.securitycenter.v2.ListSourcesRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1796}
   /// [google.cloud.securitycenter.v2.Source]: @googleapis_reference_link{google/cloud/securitycenter/v2/source.proto#L33}
   ///
   // clang-format on
@@ -2049,7 +2049,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.ListSourcesRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1779}
+  /// [google.cloud.securitycenter.v2.ListSourcesRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1796}
   /// [google.cloud.securitycenter.v2.Source]: @googleapis_reference_link{google/cloud/securitycenter/v2/source.proto#L33}
   ///
   // clang-format on
@@ -2064,9 +2064,9 @@ class SecurityCenterClient {
   /// @param parent  Required. Name of parent to list exposed resources.
   ///  @n
   ///  Valid formats:
-  ///  "organizations/{organization}",
-  ///  "organizations/{organization}/simulations/{simulation}"
-  ///  "organizations/{organization}/simulations/{simulation}/attackExposureResults/{attack_exposure_result_v2}"
+  ///  `organizations/{organization}`,
+  ///  `organizations/{organization}/simulations/{simulation}`
+  ///  `organizations/{organization}/simulations/{simulation}/attackExposureResults/{attack_exposure_result_v2}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -2089,7 +2089,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.ListValuedResourcesRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1811}
+  /// [google.cloud.securitycenter.v2.ListValuedResourcesRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1828}
   /// [google.cloud.securitycenter.v2.ValuedResource]: @googleapis_reference_link{google/cloud/securitycenter/v2/valued_resource.proto#L30}
   ///
   // clang-format on
@@ -2128,7 +2128,7 @@ class SecurityCenterClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycenter.v2.ListValuedResourcesRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1811}
+  /// [google.cloud.securitycenter.v2.ListValuedResourcesRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1828}
   /// [google.cloud.securitycenter.v2.ValuedResource]: @googleapis_reference_link{google/cloud/securitycenter/v2/valued_resource.proto#L30}
   ///
   // clang-format on
@@ -2172,7 +2172,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v2.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v2/finding.proto#L69}
-  /// [google.cloud.securitycenter.v2.SetFindingStateRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1874}
+  /// [google.cloud.securitycenter.v2.SetFindingStateRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1891}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v2::Finding> SetFindingState(
@@ -2205,7 +2205,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v2.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v2/finding.proto#L69}
-  /// [google.cloud.securitycenter.v2.SetFindingStateRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1874}
+  /// [google.cloud.securitycenter.v2.SetFindingStateRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1891}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v2::Finding> SetFindingState(
@@ -2332,7 +2332,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v2.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v2/finding.proto#L69}
-  /// [google.cloud.securitycenter.v2.SetMuteRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1902}
+  /// [google.cloud.securitycenter.v2.SetMuteRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1919}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v2::Finding> SetMute(
@@ -2364,7 +2364,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v2.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v2/finding.proto#L69}
-  /// [google.cloud.securitycenter.v2.SetMuteRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1902}
+  /// [google.cloud.securitycenter.v2.SetMuteRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1919}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v2::Finding> SetMute(
@@ -2454,7 +2454,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v2.BigQueryExport]: @googleapis_reference_link{google/cloud/securitycenter/v2/bigquery_export.proto#L32}
-  /// [google.cloud.securitycenter.v2.UpdateBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1930}
+  /// [google.cloud.securitycenter.v2.UpdateBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1947}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v2::BigQueryExport>
@@ -2486,7 +2486,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v2.BigQueryExport]: @googleapis_reference_link{google/cloud/securitycenter/v2/bigquery_export.proto#L32}
-  /// [google.cloud.securitycenter.v2.UpdateBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1930}
+  /// [google.cloud.securitycenter.v2.UpdateBigQueryExportRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1947}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v2::BigQueryExport>
@@ -2518,7 +2518,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v2.ExternalSystem]: @googleapis_reference_link{google/cloud/securitycenter/v2/external_system.proto#L31}
-  /// [google.cloud.securitycenter.v2.UpdateExternalSystemRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1940}
+  /// [google.cloud.securitycenter.v2.UpdateExternalSystemRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1957}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v2::ExternalSystem>
@@ -2551,7 +2551,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v2.ExternalSystem]: @googleapis_reference_link{google/cloud/securitycenter/v2/external_system.proto#L31}
-  /// [google.cloud.securitycenter.v2.UpdateExternalSystemRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1940}
+  /// [google.cloud.securitycenter.v2.UpdateExternalSystemRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1957}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v2::ExternalSystem>
@@ -2593,7 +2593,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v2.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v2/finding.proto#L69}
-  /// [google.cloud.securitycenter.v2.UpdateFindingRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1951}
+  /// [google.cloud.securitycenter.v2.UpdateFindingRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1968}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v2::Finding> UpdateFinding(
@@ -2626,7 +2626,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v2.Finding]: @googleapis_reference_link{google/cloud/securitycenter/v2/finding.proto#L69}
-  /// [google.cloud.securitycenter.v2.UpdateFindingRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1951}
+  /// [google.cloud.securitycenter.v2.UpdateFindingRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1968}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v2::Finding> UpdateFinding(
@@ -2655,7 +2655,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v2.MuteConfig]: @googleapis_reference_link{google/cloud/securitycenter/v2/mute_config.proto#L33}
-  /// [google.cloud.securitycenter.v2.UpdateMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1971}
+  /// [google.cloud.securitycenter.v2.UpdateMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1988}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v2::MuteConfig> UpdateMuteConfig(
@@ -2687,7 +2687,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v2.MuteConfig]: @googleapis_reference_link{google/cloud/securitycenter/v2/mute_config.proto#L33}
-  /// [google.cloud.securitycenter.v2.UpdateMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1971}
+  /// [google.cloud.securitycenter.v2.UpdateMuteConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1988}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v2::MuteConfig> UpdateMuteConfig(
@@ -2717,7 +2717,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v2.NotificationConfig]: @googleapis_reference_link{google/cloud/securitycenter/v2/notification_config.proto#L38}
-  /// [google.cloud.securitycenter.v2.UpdateNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1981}
+  /// [google.cloud.securitycenter.v2.UpdateNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1998}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v2::NotificationConfig>
@@ -2751,7 +2751,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v2.NotificationConfig]: @googleapis_reference_link{google/cloud/securitycenter/v2/notification_config.proto#L38}
-  /// [google.cloud.securitycenter.v2.UpdateNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1981}
+  /// [google.cloud.securitycenter.v2.UpdateNotificationConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1998}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v2::NotificationConfig>
@@ -2785,7 +2785,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v2.ResourceValueConfig]: @googleapis_reference_link{google/cloud/securitycenter/v2/resource_value_config.proto#L34}
-  /// [google.cloud.securitycenter.v2.UpdateResourceValueConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1993}
+  /// [google.cloud.securitycenter.v2.UpdateResourceValueConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L2010}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v2::ResourceValueConfig>
@@ -2818,7 +2818,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v2.ResourceValueConfig]: @googleapis_reference_link{google/cloud/securitycenter/v2/resource_value_config.proto#L34}
-  /// [google.cloud.securitycenter.v2.UpdateResourceValueConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L1993}
+  /// [google.cloud.securitycenter.v2.UpdateResourceValueConfigRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L2010}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v2::ResourceValueConfig>
@@ -2853,7 +2853,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v2.SecurityMarks]: @googleapis_reference_link{google/cloud/securitycenter/v2/security_marks.proto#L33}
-  /// [google.cloud.securitycenter.v2.UpdateSecurityMarksRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L2008}
+  /// [google.cloud.securitycenter.v2.UpdateSecurityMarksRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L2025}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v2::SecurityMarks>
@@ -2887,7 +2887,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v2.SecurityMarks]: @googleapis_reference_link{google/cloud/securitycenter/v2/security_marks.proto#L33}
-  /// [google.cloud.securitycenter.v2.UpdateSecurityMarksRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L2008}
+  /// [google.cloud.securitycenter.v2.UpdateSecurityMarksRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L2025}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v2::SecurityMarks>
@@ -2918,7 +2918,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v2.Source]: @googleapis_reference_link{google/cloud/securitycenter/v2/source.proto#L33}
-  /// [google.cloud.securitycenter.v2.UpdateSourceRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L2021}
+  /// [google.cloud.securitycenter.v2.UpdateSourceRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L2038}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v2::Source> UpdateSource(
@@ -2949,7 +2949,7 @@ class SecurityCenterClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycenter.v2.Source]: @googleapis_reference_link{google/cloud/securitycenter/v2/source.proto#L33}
-  /// [google.cloud.securitycenter.v2.UpdateSourceRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L2021}
+  /// [google.cloud.securitycenter.v2.UpdateSourceRequest]: @googleapis_reference_link{google/cloud/securitycenter/v2/securitycenter_service.proto#L2038}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycenter::v2::Source> UpdateSource(
