@@ -10,6 +10,19 @@ project that need to create a new release. We expect the reader to be familiar
 the project itself, [git][git-docs], [GitHub][github-guides], and
 [semantic versioning](https://semver.org).
 
+## 0. Update googleapis SHA and generate libraries
+
+Ensure that our released version includes an up-to-date SHA of the service proto
+definitions.
+
+### a. Execute the renovate script
+
+`external/googleapis/renovate.sh`
+
+### b. Submit and merge a PR containing the changes.
+
+### c. Allow for overnight CI builds to execute before proceeding.
+
 ## 1. Preparing for a release
 
 To create a new release you need to perform some maintenance tasks, these are
