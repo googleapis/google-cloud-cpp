@@ -121,6 +121,7 @@
 @com_google_googleapis//google/cloud/aiplatform/v1:pipeline_state.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:prediction_service.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:publisher_model.proto
+@com_google_googleapis//google/cloud/aiplatform/v1:reservation_affinity.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:saved_query.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:schedule.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:schedule_service.proto
