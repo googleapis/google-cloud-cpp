@@ -3,8 +3,6 @@
 This directory contains an idiomatic C++ client library for the
 [API hub API][cloud-service-docs].
 
-\<UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>
-
 While this library is **GA**, please note that the Google Cloud C++ client
 libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
@@ -18,7 +16,7 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/apihub/v1/ EDIT HERE _client.h"
+#include "google/cloud/apihub/v1/api_hub_client.h"
 #include "google/cloud/location.h"
 #include <iostream>
 
@@ -31,10 +29,9 @@ int main(int argc, char* argv[]) try {
   auto const location = google::cloud::Location(argv[1], argv[2]);
 
   namespace apihub = ::google::cloud::apihub_v1;
-  auto client =
-      apihub::ServiceClient(apihub::MakeServiceConnection());  // EDIT HERE
+  auto client = apihub::ApiHubClient(apihub::MakeApiHubConnection());
 
-  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
+  for (auto r : client.ListApis(location.FullName())) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
