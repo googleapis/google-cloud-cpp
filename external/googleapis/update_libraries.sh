@@ -35,6 +35,7 @@ declare -A -r LIBRARIES=(
   ["alloydb"]="@com_google_googleapis//google/cloud/alloydb/v1:alloydb_cc_grpc"
   ["apigateway"]="@com_google_googleapis//google/cloud/apigateway/v1:apigateway_cc_grpc"
   ["apigeeconnect"]="@com_google_googleapis//google/cloud/apigeeconnect/v1:apigeeconnect_cc_grpc"
+  ["apihub"]="@com_google_googleapis//google/cloud/apihub/v1:apihub_cc_grpc"
   ["apikeys"]="@com_google_googleapis//google/api/apikeys/v2:apikeys_cc_grpc"
   ["appengine"]="$(
     printf ",%s" \
