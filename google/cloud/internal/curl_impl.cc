@@ -527,27 +527,25 @@ Status CurlImpl::MakeRequestImpl(RestContext& context) {
 
   // All data in the WriteVector should be written after ReadImpl returns unless
   // an error, typically a timeout, has occurred. Use ReadFunctionAbortGuard to
-  // instruct curl to not attempt to send anymore data on this handle regardless
-  // if an error or exception is encountered.
-  {
-    ReadFunctionAbortGuard guard(*this);
-    auto error = curl_multi_add_handle(multi_.get(), handle_.handle_.get());
+  // leverage RAII to instruct curl to not attempt to send anymore data on this
+  // handle regardless if an error or exception is encountered.
+  ReadFunctionAbortGuard guard(*this);
+  auto error = curl_multi_add_handle(multi_.get(), handle_.handle_.get());
 
-    // This indicates that we are using the API incorrectly. The application
-    // can not recover from these problems, so terminating is the right thing
-    // to do.
-    if (error != CURLM_OK) {
-      GCP_LOG(FATAL) << ", status=" << AsStatus(error, __func__);
-    }
-
-    in_multi_ = true;
-
-    // This call to Read() should send the request, get the response, and
-    // thus make available the status_code and headers. Any response data
-    // should be put into the spill buffer, which makes them available for
-    // subsequent calls to Read() after the headers have been extracted.
-    return ReadImpl(context, {}).status();
+  // This indicates that we are using the API incorrectly. The application
+  // can not recover from these problems, so terminating is the right thing
+  // to do.
+  if (error != CURLM_OK) {
+    GCP_LOG(FATAL) << ", status=" << AsStatus(error, __func__);
   }
+
+  in_multi_ = true;
+
+  // This call to Read() should send the request, get the response, and
+  // thus make available the status_code and headers. Any response data
+  // should be put into the spill buffer, which makes them available for
+  // subsequent calls to Read() after the headers have been extracted.
+  return ReadImpl(context, {}).status();
 }
 
 StatusOr<std::size_t> CurlImpl::ReadImpl(RestContext& context,
