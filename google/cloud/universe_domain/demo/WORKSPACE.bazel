@@ -19,9 +19,6 @@ workspace(name = "demo")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 # Fetch the Google Cloud C++ libraries.
-# NOTE: Update this version and SHA256 as needed.
-# TODO(#13494): update the version to a commit SHA that contains the necessary
-# changes.
 http_archive(
     name = "google_cloud_cpp",
     sha256 = "333fe00210ce1a6f0c1b51c232438a316eaf2c7a1724f75d0b2c64f8fc456aa7",
