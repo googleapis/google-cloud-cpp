@@ -40,6 +40,15 @@ TranslationServiceAuth::TranslateText(
   return child_->TranslateText(context, options, request);
 }
 
+StatusOr<google::cloud::translation::v3::RomanizeTextResponse>
+TranslationServiceAuth::RomanizeText(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::translation::v3::RomanizeTextRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RomanizeText(context, options, request);
+}
+
 StatusOr<google::cloud::translation::v3::DetectLanguageResponse>
 TranslationServiceAuth::DetectLanguage(
     grpc::ClientContext& context, Options const& options,
@@ -156,6 +165,34 @@ StatusOr<google::longrunning::Operation> TranslationServiceAuth::CreateGlossary(
   return child_->CreateGlossary(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+TranslationServiceAuth::AsyncUpdateGlossary(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::translation::v3::UpdateGlossaryRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateGlossary(cq, *std::move(context),
+                                          std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> TranslationServiceAuth::UpdateGlossary(
+    grpc::ClientContext& context, Options options,
+    google::cloud::translation::v3::UpdateGlossaryRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateGlossary(context, options, request);
+}
+
 StatusOr<google::cloud::translation::v3::ListGlossariesResponse>
 TranslationServiceAuth::ListGlossaries(
     grpc::ClientContext& context, Options const& options,
@@ -200,6 +237,124 @@ StatusOr<google::longrunning::Operation> TranslationServiceAuth::DeleteGlossary(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteGlossary(context, options, request);
+}
+
+StatusOr<google::cloud::translation::v3::GlossaryEntry>
+TranslationServiceAuth::GetGlossaryEntry(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::translation::v3::GetGlossaryEntryRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetGlossaryEntry(context, options, request);
+}
+
+StatusOr<google::cloud::translation::v3::ListGlossaryEntriesResponse>
+TranslationServiceAuth::ListGlossaryEntries(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::translation::v3::ListGlossaryEntriesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListGlossaryEntries(context, options, request);
+}
+
+StatusOr<google::cloud::translation::v3::GlossaryEntry>
+TranslationServiceAuth::CreateGlossaryEntry(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::translation::v3::CreateGlossaryEntryRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateGlossaryEntry(context, options, request);
+}
+
+StatusOr<google::cloud::translation::v3::GlossaryEntry>
+TranslationServiceAuth::UpdateGlossaryEntry(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::translation::v3::UpdateGlossaryEntryRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateGlossaryEntry(context, options, request);
+}
+
+Status TranslationServiceAuth::DeleteGlossaryEntry(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::translation::v3::DeleteGlossaryEntryRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteGlossaryEntry(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+TranslationServiceAuth::AsyncCreateDataset(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::translation::v3::CreateDatasetRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateDataset(cq, *std::move(context),
+                                         std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> TranslationServiceAuth::CreateDataset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::translation::v3::CreateDatasetRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateDataset(context, options, request);
+}
+
+StatusOr<google::cloud::translation::v3::Dataset>
+TranslationServiceAuth::GetDataset(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::translation::v3::GetDatasetRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetDataset(context, options, request);
+}
+
+StatusOr<google::cloud::translation::v3::ListDatasetsResponse>
+TranslationServiceAuth::ListDatasets(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::translation::v3::ListDatasetsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListDatasets(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+TranslationServiceAuth::AsyncDeleteDataset(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::translation::v3::DeleteDatasetRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteDataset(cq, *std::move(context),
+                                         std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> TranslationServiceAuth::DeleteDataset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::translation::v3::DeleteDatasetRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteDataset(context, options, request);
 }
 
 StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
@@ -295,6 +450,145 @@ TranslationServiceAuth::ListAdaptiveMtSentences(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListAdaptiveMtSentences(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+TranslationServiceAuth::AsyncImportData(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::translation::v3::ImportDataRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncImportData(cq, *std::move(context),
+                                      std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> TranslationServiceAuth::ImportData(
+    grpc::ClientContext& context, Options options,
+    google::cloud::translation::v3::ImportDataRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ImportData(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+TranslationServiceAuth::AsyncExportData(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::translation::v3::ExportDataRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncExportData(cq, *std::move(context),
+                                      std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> TranslationServiceAuth::ExportData(
+    grpc::ClientContext& context, Options options,
+    google::cloud::translation::v3::ExportDataRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ExportData(context, options, request);
+}
+
+StatusOr<google::cloud::translation::v3::ListExamplesResponse>
+TranslationServiceAuth::ListExamples(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::translation::v3::ListExamplesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListExamples(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+TranslationServiceAuth::AsyncCreateModel(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::translation::v3::CreateModelRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateModel(cq, *std::move(context),
+                                       std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> TranslationServiceAuth::CreateModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::translation::v3::CreateModelRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateModel(context, options, request);
+}
+
+StatusOr<google::cloud::translation::v3::ListModelsResponse>
+TranslationServiceAuth::ListModels(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::translation::v3::ListModelsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListModels(context, options, request);
+}
+
+StatusOr<google::cloud::translation::v3::Model>
+TranslationServiceAuth::GetModel(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::translation::v3::GetModelRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetModel(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+TranslationServiceAuth::AsyncDeleteModel(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::translation::v3::DeleteModelRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteModel(cq, *std::move(context),
+                                       std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> TranslationServiceAuth::DeleteModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::translation::v3::DeleteModelRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteModel(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

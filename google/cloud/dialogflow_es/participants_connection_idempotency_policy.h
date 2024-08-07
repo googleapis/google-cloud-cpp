@@ -60,6 +60,10 @@ class ParticipantsConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency SuggestSmartReplies(
       google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const& request);
+
+  virtual google::cloud::Idempotency SuggestKnowledgeAssist(
+      google::cloud::dialogflow::v2::SuggestKnowledgeAssistRequest const&
+          request);
 };
 
 std::unique_ptr<ParticipantsConnectionIdempotencyPolicy>

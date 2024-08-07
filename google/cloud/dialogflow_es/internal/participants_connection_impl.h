@@ -88,6 +88,11 @@ class ParticipantsConnectionImpl
       google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const& request)
       override;
 
+  StatusOr<google::cloud::dialogflow::v2::SuggestKnowledgeAssistResponse>
+  SuggestKnowledgeAssist(
+      google::cloud::dialogflow::v2::SuggestKnowledgeAssistRequest const&
+          request) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<dialogflow_es_internal::ParticipantsStub> stub_;

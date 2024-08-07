@@ -144,6 +144,15 @@ ConversationsClient::GenerateStatelessSummary(
   return connection_->GenerateStatelessSummary(request);
 }
 
+StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSuggestionResponse>
+ConversationsClient::GenerateStatelessSuggestion(
+    google::cloud::dialogflow::v2::GenerateStatelessSuggestionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GenerateStatelessSuggestion(request);
+}
+
 StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>
 ConversationsClient::SearchKnowledge(
     google::cloud::dialogflow::v2::SearchKnowledgeRequest const& request,

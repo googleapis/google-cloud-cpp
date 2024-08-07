@@ -84,6 +84,12 @@ ConversationsConnection::GenerateStatelessSummary(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSuggestionResponse>
+ConversationsConnection::GenerateStatelessSuggestion(
+    google::cloud::dialogflow::v2::GenerateStatelessSuggestionRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>
 ConversationsConnection::SearchKnowledge(
     google::cloud::dialogflow::v2::SearchKnowledgeRequest const&) {

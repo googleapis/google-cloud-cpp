@@ -40,6 +40,9 @@ class TranslationServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency TranslateText(
       google::cloud::translation::v3::TranslateTextRequest const& request);
 
+  virtual google::cloud::Idempotency RomanizeText(
+      google::cloud::translation::v3::RomanizeTextRequest const& request);
+
   virtual google::cloud::Idempotency DetectLanguage(
       google::cloud::translation::v3::DetectLanguageRequest const& request);
 
@@ -60,6 +63,9 @@ class TranslationServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency CreateGlossary(
       google::cloud::translation::v3::CreateGlossaryRequest const& request);
 
+  virtual google::cloud::Idempotency UpdateGlossary(
+      google::cloud::translation::v3::UpdateGlossaryRequest const& request);
+
   virtual google::cloud::Idempotency ListGlossaries(
       google::cloud::translation::v3::ListGlossariesRequest request);
 
@@ -68,6 +74,36 @@ class TranslationServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency DeleteGlossary(
       google::cloud::translation::v3::DeleteGlossaryRequest const& request);
+
+  virtual google::cloud::Idempotency GetGlossaryEntry(
+      google::cloud::translation::v3::GetGlossaryEntryRequest const& request);
+
+  virtual google::cloud::Idempotency ListGlossaryEntries(
+      google::cloud::translation::v3::ListGlossaryEntriesRequest request);
+
+  virtual google::cloud::Idempotency CreateGlossaryEntry(
+      google::cloud::translation::v3::CreateGlossaryEntryRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateGlossaryEntry(
+      google::cloud::translation::v3::UpdateGlossaryEntryRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteGlossaryEntry(
+      google::cloud::translation::v3::DeleteGlossaryEntryRequest const&
+          request);
+
+  virtual google::cloud::Idempotency CreateDataset(
+      google::cloud::translation::v3::CreateDatasetRequest const& request);
+
+  virtual google::cloud::Idempotency GetDataset(
+      google::cloud::translation::v3::GetDatasetRequest const& request);
+
+  virtual google::cloud::Idempotency ListDatasets(
+      google::cloud::translation::v3::ListDatasetsRequest request);
+
+  virtual google::cloud::Idempotency DeleteDataset(
+      google::cloud::translation::v3::DeleteDatasetRequest const& request);
 
   virtual google::cloud::Idempotency CreateAdaptiveMtDataset(
       google::cloud::translation::v3::CreateAdaptiveMtDatasetRequest const&
@@ -104,6 +140,27 @@ class TranslationServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency ListAdaptiveMtSentences(
       google::cloud::translation::v3::ListAdaptiveMtSentencesRequest request);
+
+  virtual google::cloud::Idempotency ImportData(
+      google::cloud::translation::v3::ImportDataRequest const& request);
+
+  virtual google::cloud::Idempotency ExportData(
+      google::cloud::translation::v3::ExportDataRequest const& request);
+
+  virtual google::cloud::Idempotency ListExamples(
+      google::cloud::translation::v3::ListExamplesRequest request);
+
+  virtual google::cloud::Idempotency CreateModel(
+      google::cloud::translation::v3::CreateModelRequest const& request);
+
+  virtual google::cloud::Idempotency ListModels(
+      google::cloud::translation::v3::ListModelsRequest request);
+
+  virtual google::cloud::Idempotency GetModel(
+      google::cloud::translation::v3::GetModelRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteModel(
+      google::cloud::translation::v3::DeleteModelRequest const& request);
 };
 
 std::unique_ptr<TranslationServiceConnectionIdempotencyPolicy>

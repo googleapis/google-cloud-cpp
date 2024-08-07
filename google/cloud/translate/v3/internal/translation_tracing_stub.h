@@ -44,6 +44,11 @@ class TranslationServiceTracingStub : public TranslationServiceStub {
       google::cloud::translation::v3::TranslateTextRequest const& request)
       override;
 
+  StatusOr<google::cloud::translation::v3::RomanizeTextResponse> RomanizeText(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::translation::v3::RomanizeTextRequest const& request)
+      override;
+
   StatusOr<google::cloud::translation::v3::DetectLanguageResponse>
   DetectLanguage(grpc::ClientContext& context, Options const& options,
                  google::cloud::translation::v3::DetectLanguageRequest const&
@@ -97,6 +102,18 @@ class TranslationServiceTracingStub : public TranslationServiceStub {
       google::cloud::translation::v3::CreateGlossaryRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateGlossary(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::translation::v3::UpdateGlossaryRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateGlossary(
+      grpc::ClientContext& context, Options options,
+      google::cloud::translation::v3::UpdateGlossaryRequest const& request)
+      override;
+
   StatusOr<google::cloud::translation::v3::ListGlossariesResponse>
   ListGlossaries(grpc::ClientContext& context, Options const& options,
                  google::cloud::translation::v3::ListGlossariesRequest const&
@@ -117,6 +134,66 @@ class TranslationServiceTracingStub : public TranslationServiceStub {
   StatusOr<google::longrunning::Operation> DeleteGlossary(
       grpc::ClientContext& context, Options options,
       google::cloud::translation::v3::DeleteGlossaryRequest const& request)
+      override;
+
+  StatusOr<google::cloud::translation::v3::GlossaryEntry> GetGlossaryEntry(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::translation::v3::GetGlossaryEntryRequest const& request)
+      override;
+
+  StatusOr<google::cloud::translation::v3::ListGlossaryEntriesResponse>
+  ListGlossaryEntries(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::translation::v3::ListGlossaryEntriesRequest const& request)
+      override;
+
+  StatusOr<google::cloud::translation::v3::GlossaryEntry> CreateGlossaryEntry(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::translation::v3::CreateGlossaryEntryRequest const& request)
+      override;
+
+  StatusOr<google::cloud::translation::v3::GlossaryEntry> UpdateGlossaryEntry(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::translation::v3::UpdateGlossaryEntryRequest const& request)
+      override;
+
+  Status DeleteGlossaryEntry(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::translation::v3::DeleteGlossaryEntryRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateDataset(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::translation::v3::CreateDatasetRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateDataset(
+      grpc::ClientContext& context, Options options,
+      google::cloud::translation::v3::CreateDatasetRequest const& request)
+      override;
+
+  StatusOr<google::cloud::translation::v3::Dataset> GetDataset(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::translation::v3::GetDatasetRequest const& request)
+      override;
+
+  StatusOr<google::cloud::translation::v3::ListDatasetsResponse> ListDatasets(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::translation::v3::ListDatasetsRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteDataset(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::translation::v3::DeleteDatasetRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteDataset(
+      grpc::ClientContext& context, Options options,
+      google::cloud::translation::v3::DeleteDatasetRequest const& request)
       override;
 
   StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
@@ -175,6 +252,68 @@ class TranslationServiceTracingStub : public TranslationServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::translation::v3::ListAdaptiveMtSentencesRequest const&
           request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncImportData(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::translation::v3::ImportDataRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> ImportData(
+      grpc::ClientContext& context, Options options,
+      google::cloud::translation::v3::ImportDataRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncExportData(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::translation::v3::ExportDataRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> ExportData(
+      grpc::ClientContext& context, Options options,
+      google::cloud::translation::v3::ExportDataRequest const& request)
+      override;
+
+  StatusOr<google::cloud::translation::v3::ListExamplesResponse> ListExamples(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::translation::v3::ListExamplesRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateModel(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::translation::v3::CreateModelRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateModel(
+      grpc::ClientContext& context, Options options,
+      google::cloud::translation::v3::CreateModelRequest const& request)
+      override;
+
+  StatusOr<google::cloud::translation::v3::ListModelsResponse> ListModels(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::translation::v3::ListModelsRequest const& request)
+      override;
+
+  StatusOr<google::cloud::translation::v3::Model> GetModel(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::translation::v3::GetModelRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteModel(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::translation::v3::DeleteModelRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteModel(
+      grpc::ClientContext& context, Options options,
+      google::cloud::translation::v3::DeleteModelRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

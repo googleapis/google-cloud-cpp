@@ -143,6 +143,20 @@ DefaultParticipantsStub::SuggestSmartReplies(
   return response;
 }
 
+StatusOr<google::cloud::dialogflow::v2::SuggestKnowledgeAssistResponse>
+DefaultParticipantsStub::SuggestKnowledgeAssist(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dialogflow::v2::SuggestKnowledgeAssistRequest const&
+        request) {
+  google::cloud::dialogflow::v2::SuggestKnowledgeAssistResponse response;
+  auto status =
+      grpc_stub_->SuggestKnowledgeAssist(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal
 }  // namespace cloud
