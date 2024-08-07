@@ -493,7 +493,7 @@ class CurlImpl::ReadFunctionAbortGuard {
   ~ReadFunctionAbortGuard() {
     // If curl_closed_ is true, then the handle has already been recycled and
     // attempting to set an option on it will error.
-    if (impl_.curl_closed_) {
+    if (!impl_.curl_closed_) {
       impl_.handle_.SetOptionUnchecked(CURLOPT_READFUNCTION,
                                        &ReadFunctionAbort);
     }
