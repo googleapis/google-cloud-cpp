@@ -107,6 +107,7 @@ class CurlImpl {
   std::size_t HeaderCallback(absl::Span<char> response);
 
  private:
+  class ReadFunctionAbortGuard;
   Status MakeRequestImpl(RestContext& context);
   StatusOr<std::size_t> ReadImpl(RestContext& context, absl::Span<char> output);
 
