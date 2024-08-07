@@ -1,0 +1,81 @@
+/*!
+@page apihub-override-authentication How to Override the Authentication Credentials
+
+Unless otherwise configured, the client libraries use
+[Application Default Credentials] to authenticate with Google Cloud Services.
+While this works for most applications, in some cases you may need to override
+this default. You can do so by providing the
+[UnifiedCredentialsOption](@ref google::cloud::UnifiedCredentialsOption)
+The following example shows how to explicitly load a service account key file:
+
+<!-- inject-service-account-snippet-start -->
+@snippet api_hub_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c apihub_v1::ApiHubClient](@ref apihub_v1::ApiHubClient-service-account-snippet)
+- [\c apihub_v1::ApiHubDependenciesClient](@ref apihub_v1::ApiHubDependenciesClient-service-account-snippet)
+- [\c apihub_v1::ApiHubPluginClient](@ref apihub_v1::ApiHubPluginClient-service-account-snippet)
+- [\c apihub_v1::HostProjectRegistrationServiceClient](@ref apihub_v1::HostProjectRegistrationServiceClient-service-account-snippet)
+- [\c apihub_v1::LintingServiceClient](@ref apihub_v1::LintingServiceClient-service-account-snippet)
+- [\c apihub_v1::ProvisioningClient](@ref apihub_v1::ProvisioningClient-service-account-snippet)
+- [\c apihub_v1::RuntimeProjectAttachmentServiceClient](@ref apihub_v1::RuntimeProjectAttachmentServiceClient-service-account-snippet)
+
+<!-- inject-service-account-snippet-end -->
+
+Keep in mind that we chose this as an example because it is relatively easy to
+understand. Consult the [Best practices for managing service account keys]
+guide for more details.
+
+@see @ref guac - for more information on the factory functions to create
+`google::cloud::Credentials` objects.
+
+[Best practices for managing service account keys]: https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys
+[Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
+
+*/
+
+// <!-- inject-authentication-pages-start -->
+
+/*! @page apihub_v1::ApiHubClient-service-account-snippet Override apihub_v1::ApiHubClient Authentication Defaults
+
+@snippet google/cloud/apihub/v1/samples/api_hub_client_samples.cc with-service-account
+
+*/
+
+/*! @page apihub_v1::ApiHubDependenciesClient-service-account-snippet Override apihub_v1::ApiHubDependenciesClient Authentication Defaults
+
+@snippet google/cloud/apihub/v1/samples/api_hub_dependencies_client_samples.cc with-service-account
+
+*/
+
+/*! @page apihub_v1::ApiHubPluginClient-service-account-snippet Override apihub_v1::ApiHubPluginClient Authentication Defaults
+
+@snippet google/cloud/apihub/v1/samples/api_hub_plugin_client_samples.cc with-service-account
+
+*/
+
+/*! @page apihub_v1::HostProjectRegistrationServiceClient-service-account-snippet Override apihub_v1::HostProjectRegistrationServiceClient Authentication Defaults
+
+@snippet google/cloud/apihub/v1/samples/host_project_registration_client_samples.cc with-service-account
+
+*/
+
+/*! @page apihub_v1::LintingServiceClient-service-account-snippet Override apihub_v1::LintingServiceClient Authentication Defaults
+
+@snippet google/cloud/apihub/v1/samples/linting_client_samples.cc with-service-account
+
+*/
+
+/*! @page apihub_v1::ProvisioningClient-service-account-snippet Override apihub_v1::ProvisioningClient Authentication Defaults
+
+@snippet google/cloud/apihub/v1/samples/provisioning_client_samples.cc with-service-account
+
+*/
+
+/*! @page apihub_v1::RuntimeProjectAttachmentServiceClient-service-account-snippet Override apihub_v1::RuntimeProjectAttachmentServiceClient Authentication Defaults
+
+@snippet google/cloud/apihub/v1/samples/runtime_project_attachment_client_samples.cc with-service-account
+
+*/
+// <!-- inject-authentication-pages-end -->

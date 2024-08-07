@@ -1,0 +1,71 @@
+/*!
+@page apihub-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[EndpointOption](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `apihub_v1::ApiHubClient`:
+
+@snippet api_hub_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c apihub_v1::ApiHubClient](@ref apihub_v1::ApiHubClient-endpoint-snippet)
+- [\c apihub_v1::ApiHubDependenciesClient](@ref apihub_v1::ApiHubDependenciesClient-endpoint-snippet)
+- [\c apihub_v1::ApiHubPluginClient](@ref apihub_v1::ApiHubPluginClient-endpoint-snippet)
+- [\c apihub_v1::HostProjectRegistrationServiceClient](@ref apihub_v1::HostProjectRegistrationServiceClient-endpoint-snippet)
+- [\c apihub_v1::LintingServiceClient](@ref apihub_v1::LintingServiceClient-endpoint-snippet)
+- [\c apihub_v1::ProvisioningClient](@ref apihub_v1::ProvisioningClient-endpoint-snippet)
+- [\c apihub_v1::RuntimeProjectAttachmentServiceClient](@ref apihub_v1::RuntimeProjectAttachmentServiceClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page apihub_v1::ApiHubClient-endpoint-snippet Override apihub_v1::ApiHubClient Endpoint Configuration
+
+@snippet google/cloud/apihub/v1/samples/api_hub_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page apihub_v1::ApiHubDependenciesClient-endpoint-snippet Override apihub_v1::ApiHubDependenciesClient Endpoint Configuration
+
+@snippet google/cloud/apihub/v1/samples/api_hub_dependencies_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page apihub_v1::ApiHubPluginClient-endpoint-snippet Override apihub_v1::ApiHubPluginClient Endpoint Configuration
+
+@snippet google/cloud/apihub/v1/samples/api_hub_plugin_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page apihub_v1::HostProjectRegistrationServiceClient-endpoint-snippet Override apihub_v1::HostProjectRegistrationServiceClient Endpoint Configuration
+
+@snippet google/cloud/apihub/v1/samples/host_project_registration_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page apihub_v1::LintingServiceClient-endpoint-snippet Override apihub_v1::LintingServiceClient Endpoint Configuration
+
+@snippet google/cloud/apihub/v1/samples/linting_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page apihub_v1::ProvisioningClient-endpoint-snippet Override apihub_v1::ProvisioningClient Endpoint Configuration
+
+@snippet google/cloud/apihub/v1/samples/provisioning_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page apihub_v1::RuntimeProjectAttachmentServiceClient-endpoint-snippet Override apihub_v1::RuntimeProjectAttachmentServiceClient Endpoint Configuration
+
+@snippet google/cloud/apihub/v1/samples/runtime_project_attachment_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

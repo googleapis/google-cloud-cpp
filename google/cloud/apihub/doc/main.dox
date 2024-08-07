@@ -1,0 +1,58 @@
+/*!
+
+@mainpage API hub API C++ Client Library
+
+An idiomatic C++ client library for the [API hub API][cloud-service-docs].
+
+<UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>
+
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
+[Semantic Versioning](https://semver.org/).
+
+@tableofcontents{HTML:2}
+
+## Quickstart
+
+The following shows the code that you'll run in the
+`google/cloud/apihub/quickstart/` directory,
+which should give you a taste of the API hub API C++ client library API.
+
+@snippet quickstart.cc all
+
+## Main classes
+
+<!-- inject-client-list-start -->
+This library offers multiple `*Client` classes, which are listed below. Each one
+of these classes exposes all the RPCs for a service as member functions of the
+class. This library groups multiple services because they are part of the same
+product or are often used together. A typical example may be the administrative
+and data plane operations for a single product.
+
+The library also has other classes that provide helpers, configuration
+parameters, and infrastructure to mock the `*Client` classes when testing your
+application.
+
+- [\c apihub_v1::ApiHubClient](@ref google::cloud::apihub_v1::ApiHubClient)
+- [\c apihub_v1::ApiHubDependenciesClient](@ref google::cloud::apihub_v1::ApiHubDependenciesClient)
+- [\c apihub_v1::ApiHubPluginClient](@ref google::cloud::apihub_v1::ApiHubPluginClient)
+- [\c apihub_v1::HostProjectRegistrationServiceClient](@ref google::cloud::apihub_v1::HostProjectRegistrationServiceClient)
+- [\c apihub_v1::LintingServiceClient](@ref google::cloud::apihub_v1::LintingServiceClient)
+- [\c apihub_v1::ProvisioningClient](@ref google::cloud::apihub_v1::ProvisioningClient)
+- [\c apihub_v1::RuntimeProjectAttachmentServiceClient](@ref google::cloud::apihub_v1::RuntimeProjectAttachmentServiceClient)
+<!-- inject-client-list-end -->
+
+## More Information
+
+- @ref common-error-handling - describes how the library reports errors.
+- @ref apihub-override-endpoint - describes how to override the default
+  endpoint.
+- @ref apihub-override-authentication - describes how to change the
+  authentication credentials used by the library.
+- @ref apihub-override-retry - describes how to change the default retry
+  policies.
+- @ref apihub-env - describes environment variables that can configure the
+  behavior of the library.
+
+[cloud-service-docs]: https://cloud.google.com/apigee/docs/apihub/what-is-api-hub
+
+*/
