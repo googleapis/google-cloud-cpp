@@ -16,7 +16,9 @@
 #include "google/cloud/storage/async/reader_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/version.h"
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <opentelemetry/trace/semantic_conventions.h>
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <memory>
 
 namespace google {
@@ -71,15 +73,6 @@ MakeTracingObjectDescriptorConnection(
     std::shared_ptr<storage_experimental::ObjectDescriptorConnection> impl) {
   return std::make_unique<AsyncObjectDescriptorConnectionTracing>(
       std::move(span), std::move(impl));
-}
-
-#else
-
-std::shared_ptr<storage_experimental::ObjectDescriptorConnection>
-MakeTracingObjectDescriptorConnection(
-    opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span,
-    std::shared_ptr<storage_experimental::ObjectDescriptorConnection> impl) {
-  return impl;
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
