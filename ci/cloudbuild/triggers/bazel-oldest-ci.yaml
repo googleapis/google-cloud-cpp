@@ -18,10 +18,10 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
+    branch: v2.25.x
 id: 3a7690ee-a385-4e86-835e-990a64eb71d7
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: bazel-oldest-ci
+name: v2-25-x-bazel-oldest-ci
 resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/3a7690ee-a385-4e86-835e-990a64eb71d7
 substitutions:
   _BUILD_NAME: bazel-oldest

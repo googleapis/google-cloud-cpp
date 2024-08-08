@@ -18,11 +18,11 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: v2.25.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
 id: 45fd50c2-04f1-4674-b533-0db1346c8b7e
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: asan-pr
+name: v2-25-x-asan-pr
 resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/45fd50c2-04f1-4674-b533-0db1346c8b7e
 substitutions:
   _BUILD_NAME: asan

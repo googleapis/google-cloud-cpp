@@ -18,11 +18,11 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: v2.25.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
 id: 95e11a96-2138-4d65-8598-25308f1cf5f8
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: bazel-targets-pr
+name: v2-25-x-bazel-targets-pr
 resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/95e11a96-2138-4d65-8598-25308f1cf5f8
 substitutions:
   _BUILD_NAME: bazel-targets

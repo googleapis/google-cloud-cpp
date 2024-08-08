@@ -18,10 +18,10 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
+    branch: v2.25.x
 id: efe44360-59b3-4784-96f6-ebe03ecdd2f7
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: demo-fedora-ci
+name: v2-25-x-demo-fedora-ci
 substitutions:
   _BUILD_NAME: demo-install
   _DISTRO: demo-fedora

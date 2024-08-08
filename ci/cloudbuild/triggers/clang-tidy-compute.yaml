@@ -20,7 +20,7 @@ gitFileSource:
   revision: refs/heads/main
   uri: https://github.com/googleapis/google-cloud-cpp
 id: 6d247368-98d8-4b06-9179-afeedd054f50
-name: clang-tidy-compute
+name: v2-25-x-clang-tidy-compute
 resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/6d247368-98d8-4b06-9179-afeedd054f50
 sourceToBuild:
   ref: refs/heads/main

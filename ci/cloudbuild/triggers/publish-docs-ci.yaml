@@ -18,10 +18,10 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
+    branch: v2.25.x
 id: ee436bb0-22ab-407d-ab69-2a73aec2566d
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: publish-docs-ci
+name: v2-25-x-publish-docs-ci
 resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/ee436bb0-22ab-407d-ab69-2a73aec2566d
 substitutions:
   _BUILD_NAME: publish-docs
