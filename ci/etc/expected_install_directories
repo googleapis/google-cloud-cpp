@@ -52,6 +52,10 @@
 ./include/google/cloud/apigeeconnect/v1
 ./include/google/cloud/apigeeconnect/v1/internal
 ./include/google/cloud/apigeeconnect/v1/mocks
+./include/google/cloud/apihub
+./include/google/cloud/apihub/v1
+./include/google/cloud/apihub/v1/internal
+./include/google/cloud/apihub/v1/mocks
 ./include/google/cloud/apikeys
 ./include/google/cloud/apikeys/mocks
 ./include/google/cloud/apikeys/v2
@@ -1261,6 +1265,8 @@
 ./lib64/cmake/google_cloud_cpp_apigateway_mocks
 ./lib64/cmake/google_cloud_cpp_apigeeconnect
 ./lib64/cmake/google_cloud_cpp_apigeeconnect_mocks
+./lib64/cmake/google_cloud_cpp_apihub
+./lib64/cmake/google_cloud_cpp_apihub_mocks
 ./lib64/cmake/google_cloud_cpp_apikeys
 ./lib64/cmake/google_cloud_cpp_apikeys_mocks
 ./lib64/cmake/google_cloud_cpp_appengine
