@@ -387,8 +387,15 @@ ______________________________________________________________________
   ```
 - Create or cherry-pick commits with the desired changes.
 - Update `CHANGELOG.md` to reflect the changes made.
-- After merging the PR(s) with all the above changes, use the Release UI on
-  GitHub to create a pre-release along with a new tag for the release.
+- After merging the PR(s) with all the above changes, create the tag:
+  ```shell
+  git fetch upstream ${BRANCH}
+  git checkout upstream/${BRANCH}
+  git tag ${PATCH}
+  git push upstream ${PATCH}
+  ```
+- Use the Release UI on GitHub to create a pre-release from the new tag. Uncheck
+  the "Set as the latest release" box if this is not the latest release.
 - After review, publish the release.
 - Update our [vcpkg port].
 
