@@ -18,11 +18,11 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: v2.25.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
 id: 6dc01f3c-7ccc-422f-8adb-2de0478853b3
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: generate-libraries-pr
+name: v2-25-x-generate-libraries-pr
 substitutions:
   _BUILD_NAME: generate-libraries
   _DISTRO: checkers

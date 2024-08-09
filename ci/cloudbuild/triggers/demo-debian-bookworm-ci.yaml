@@ -18,10 +18,10 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
+    branch: v2.25.x
 id: 6e1b6108-8b51-4751-ba8c-59dd82c062dc
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: demo-debian-bookworm-ci
+name: v2-25-x-demo-debian-bookworm-ci
 resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/6e1b6108-8b51-4751-ba8c-59dd82c062dc
 substitutions:
   _BUILD_NAME: demo-install

@@ -18,11 +18,11 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: v2.25.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
 id: 914bc7a4-afa2-4faf-8a0e-571218e8fd83
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: bazel-oldest-pr
+name: v2-25-x-bazel-oldest-pr
 resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/914bc7a4-afa2-4faf-8a0e-571218e8fd83
 substitutions:
   _BUILD_NAME: bazel-oldest

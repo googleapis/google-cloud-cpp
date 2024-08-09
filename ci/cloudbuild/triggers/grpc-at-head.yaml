@@ -20,7 +20,7 @@ gitFileSource:
   revision: refs/heads/main
   uri: https://github.com/googleapis/google-cloud-cpp
 id: e21f4d09-213f-41ef-9be5-62309adf4287
-name: grpc-at-head
+name: v2-25-x-grpc-at-head
 resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/e21f4d09-213f-41ef-9be5-62309adf4287
 sourceToBuild:
   ref: refs/heads/main

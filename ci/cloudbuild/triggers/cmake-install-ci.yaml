@@ -18,10 +18,10 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
+    branch: v2.25.x
 id: 49d3dff1-bee0-4a2b-9bd1-a696d54e48c9
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: cmake-install-ci
+name: v2-25-x-cmake-install-ci
 resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/49d3dff1-bee0-4a2b-9bd1-a696d54e48c9
 substitutions:
   _BUILD_NAME: cmake-install

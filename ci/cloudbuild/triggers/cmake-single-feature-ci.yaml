@@ -18,10 +18,10 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
+    branch: v2.25.x
 id: 09d4a76e-0a9f-4ef1-ab7e-de78684c23cc
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: cmake-single-feature-ci
+name: v2-25-x-cmake-single-feature-ci
 resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/09d4a76e-0a9f-4ef1-ab7e-de78684c23cc
 substitutions:
   _BUILD_NAME: cmake-single-feature

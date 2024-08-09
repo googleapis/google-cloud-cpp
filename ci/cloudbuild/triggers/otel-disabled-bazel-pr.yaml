@@ -18,11 +18,11 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: v2.25.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
 id: e645a8df-6b2c-4911-a192-e36e6d8935b6
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: otel-disabled-bazel-pr
+name: v2-25-x-otel-disabled-bazel-pr
 resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/e645a8df-6b2c-4911-a192-e36e6d8935b6
 substitutions:
   _BUILD_NAME: otel-disabled-bazel

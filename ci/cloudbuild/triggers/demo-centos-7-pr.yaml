@@ -18,11 +18,11 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: v2.25.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
 id: 58d1b46a-b2dc-42e4-a436-1e7f21717f2b
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: demo-centos-7-pr
+name: v2-25-x-demo-centos-7-pr
 substitutions:
   _BUILD_NAME: demo-install
   _DISTRO: demo-centos-7

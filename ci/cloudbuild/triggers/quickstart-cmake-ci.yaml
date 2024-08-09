@@ -18,10 +18,10 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
+    branch: v2.25.x
 id: ff22d673-dc4c-4330-922e-d43be27ef2b4
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: quickstart-cmake-ci
+name: v2-25-x-quickstart-cmake-ci
 substitutions:
   _BUILD_NAME: quickstart-cmake
   _DISTRO: ubuntu-focal
