@@ -4,7 +4,19 @@
 breaking changes in the upcoming 3.x release. This release is scheduled for
 2024-12 or 2025-01.
 
-## v2.28.0 - TBD
+## v2.28.0 - 2024-08
+
+### [OpenTelemetry](/google/cloud/opentelemetry/README.md)
+
+- fix(otel): avoid infinite trace export loop ([#14612](https://github.com/googleapis/google-cloud-cpp/pull/14612))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- fix(rest): prevent libcurl callback from reading bad address ([#14615](https://github.com/googleapis/google-cloud-cpp/pull/14615))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- docs: update mock LRO tips ([#14609](https://github.com/googleapis/google-cloud-cpp/pull/14609))
 
 ## v2.27.0 - 2024-08
 
