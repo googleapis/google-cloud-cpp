@@ -349,7 +349,7 @@ In your development fork:
   triggers.
   - Update the Google Cloud Build trigger definitions to compile this branch:
     ```shell
-    ci/cloudbuild/convert-to-branch-triggers.sh
+    ci/cloudbuild/convert-to-branch-triggers.sh --branch "${BRANCH}"
     ```
   - Actually create the triggers in GCB:
     ```shell
@@ -359,7 +359,7 @@ In your development fork:
     ```
   - Remove any old triggers for the same major version, e.g.:
     ```shell
-    cloud builds triggers list \
+    gcloud builds triggers list \
         --project=cloud-cpp-testing-resources \
         --filter=name:v2-10-x --format='value(id)' | \
         xargs -n 1 gcloud builds triggers delete \

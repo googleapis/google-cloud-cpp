@@ -41,7 +41,10 @@ function convert_triggers() {
   for file in "$@"; do
     sed -i \
       -e "s/^name: /name: ${name_prefix}-/" \
-      -e "s/branch: .*/branch: ${branch}/" "${file}"
+      -e "s/branch: .*/branch: ${branch}/" "${file}" \
+      -e "/^createTime: /d" \
+      -e "/^id: /d" \
+      -e "/^resourceName: /d"
   done
 }
 export -f convert_triggers
@@ -98,5 +101,7 @@ if [[ -z "${BRANCH}" ]]; then
   BRANCH="$(parent)"
 fi
 
+# We want to pass the string as-is, not expand the variables therein.
+# shellcheck disable=SC2016
 git ls-files -z -- ci/cloudbuild/triggers/*.yaml |
-  xargs -P "$(nproc)" -n 10 -0 bash -c "convert_triggers \"${BRANCH}\" \"\$@\""
+  xargs -P "$(nproc)" -n 10 -0 bash -c 'convert_triggers "${BRANCH}" "$@"' _
