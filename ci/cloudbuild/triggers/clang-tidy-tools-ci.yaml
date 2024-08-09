@@ -18,10 +18,10 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
+    branch: v2.25.x
 id: 8be80238-a508-43c4-a1c3-8ce285cbb571
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: clang-tidy-tools-ci
+name: v2-25-x-clang-tidy-tools-ci
 resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/8be80238-a508-43c4-a1c3-8ce285cbb571
 substitutions:
   _BUILD_NAME: clang-tidy

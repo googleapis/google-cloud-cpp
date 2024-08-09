@@ -18,11 +18,11 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: v2.25.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
 id: 182e01a3-0956-47bc-9a8a-023318168962
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: demo-fedora-pr
+name: v2-25-x-demo-fedora-pr
 substitutions:
   _BUILD_NAME: demo-install
   _DISTRO: demo-fedora

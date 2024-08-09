@@ -18,10 +18,10 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
+    branch: v2.25.x
 id: de7c77d3-385d-48b6-a6e8-9dda0c171716
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: tsan-ci
+name: v2-25-x-tsan-ci
 resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/de7c77d3-385d-48b6-a6e8-9dda0c171716
 substitutions:
   _BUILD_NAME: tsan

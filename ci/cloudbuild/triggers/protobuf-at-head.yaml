@@ -20,7 +20,7 @@ gitFileSource:
   revision: refs/heads/main
   uri: https://github.com/googleapis/google-cloud-cpp
 id: 7dc9cea4-9d0b-4d0f-9947-5b79bfee5c12
-name: protobuf-at-head
+name: v2-25-x-protobuf-at-head
 resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/7dc9cea4-9d0b-4d0f-9947-5b79bfee5c12
 sourceToBuild:
   ref: refs/heads/main

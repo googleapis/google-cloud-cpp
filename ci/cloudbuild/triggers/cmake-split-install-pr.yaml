@@ -18,11 +18,11 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: v2.25.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
 id: a6f49616-83ce-4471-b517-f86c44e09ce5
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: cmake-split-install-pr
+name: v2-25-x-cmake-split-install-pr
 resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/a6f49616-83ce-4471-b517-f86c44e09ce5
 substitutions:
   _BUILD_NAME: cmake-split-install

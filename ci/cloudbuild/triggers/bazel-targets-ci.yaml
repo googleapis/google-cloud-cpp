@@ -18,10 +18,10 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
+    branch: v2.25.x
 id: 1f63c286-589b-41cf-aee0-dd0e3cb6861c
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: bazel-targets-ci
+name: v2-25-x-bazel-targets-ci
 resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/1f63c286-589b-41cf-aee0-dd0e3cb6861c
 substitutions:
   _BUILD_NAME: bazel-targets

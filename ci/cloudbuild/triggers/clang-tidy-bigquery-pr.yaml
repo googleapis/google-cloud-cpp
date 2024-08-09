@@ -18,11 +18,11 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: v2.25.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
 id: 94fbc973-ea4b-49e9-a1ce-db3994993675
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: clang-tidy-bigquery-pr
+name: v2-25-x-clang-tidy-bigquery-pr
 resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/94fbc973-ea4b-49e9-a1ce-db3994993675
 substitutions:
   _BUILD_NAME: clang-tidy

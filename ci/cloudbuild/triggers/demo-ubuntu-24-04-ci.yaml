@@ -18,10 +18,10 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
+    branch: v2.25.x
 id: 93fdf9e2-71b2-44a1-911e-13dca09cbd7c
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: demo-ubuntu-24-04-ci
+name: v2-25-x-demo-ubuntu-24-04-ci
 resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/93fdf9e2-71b2-44a1-911e-13dca09cbd7c
 substitutions:
   _BUILD_NAME: demo-install

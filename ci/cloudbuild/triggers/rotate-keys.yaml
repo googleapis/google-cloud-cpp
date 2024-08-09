@@ -20,7 +20,7 @@ gitFileSource:
   revision: refs/heads/main
   uri: https://github.com/googleapis/google-cloud-cpp
 id: 3fca51de-ec4c-453f-9693-5ccec556a379
-name: rotate-keys
+name: v2-25-x-rotate-keys
 resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/3fca51de-ec4c-453f-9693-5ccec556a379
 sourceToBuild:
   ref: refs/heads/main

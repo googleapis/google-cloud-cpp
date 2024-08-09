@@ -18,11 +18,11 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: v2.25.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
 id: d9988eca-23ae-4b44-ad1f-ae38b12d5987
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: msan-pr
+name: v2-25-x-msan-pr
 substitutions:
   _BUILD_NAME: msan
   _DISTRO: fedora-msan

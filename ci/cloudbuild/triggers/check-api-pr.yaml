@@ -18,11 +18,11 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: v2.25.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
 id: 9d4afe6c-48fc-4bc4-8b40-68312b2c0fec
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: check-api-pr
+name: v2-25-x-check-api-pr
 resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/9d4afe6c-48fc-4bc4-8b40-68312b2c0fec
 substitutions:
   _BUILD_NAME: check-api

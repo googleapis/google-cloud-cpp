@@ -18,10 +18,10 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
+    branch: v2.25.x
 id: f65e90ce-2bea-4833-8dce-5349df077427
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: demo-debian-buster-ci
+name: v2-25-x-demo-debian-buster-ci
 substitutions:
   _BUILD_NAME: demo-install
   _DISTRO: demo-debian-buster

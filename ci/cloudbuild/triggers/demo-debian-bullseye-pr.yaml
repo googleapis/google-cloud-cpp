@@ -18,11 +18,11 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: v2.25.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
 id: 3cc016a1-2a35-467a-94af-4eab3822cbfd
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: demo-debian-bullseye-pr
+name: v2-25-x-demo-debian-bullseye-pr
 resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/3cc016a1-2a35-467a-94af-4eab3822cbfd
 substitutions:
   _BUILD_NAME: demo-install

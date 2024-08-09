@@ -18,10 +18,10 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
+    branch: v2.25.x
 id: 0294a1e2-044b-45d5-8ba0-6806c93b3a72
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: demo-ubuntu-focal-ci
+name: v2-25-x-demo-ubuntu-focal-ci
 substitutions:
   _BUILD_NAME: demo-install
   _DISTRO: demo-ubuntu-focal

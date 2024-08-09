@@ -18,11 +18,11 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: v2.25.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
 id: 3e376bfc-ab89-4c29-a640-f7f88f756c8c
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: cmake-single-feature-pr
+name: v2-25-x-cmake-single-feature-pr
 resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/3e376bfc-ab89-4c29-a640-f7f88f756c8c
 substitutions:
   _BUILD_NAME: cmake-single-feature
