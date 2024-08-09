@@ -135,6 +135,7 @@ void EnableGrpcMetricsImpl(ExporterConfig config) {
       grpc::OpenTelemetryPluginBuilder()
           .SetMeterProvider(provider)
           .EnableMetrics(metrics)
+          .AddOptionalLabel(absl::string_view("grpc.lb.locality"))
           .SetGenericMethodAttributeFilter([](absl::string_view target) {
             return absl::StartsWith(target, "google.storage.v2");
           })
