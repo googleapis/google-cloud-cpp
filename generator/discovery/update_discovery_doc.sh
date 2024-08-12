@@ -25,7 +25,7 @@ function print_service_textproto() {
   initial_copyright_year=$(date +"%Y")
 
   (
-    sed '/# Begin update_discovery_doc.sh additions/q' "${PROJECT_ROOT}/${GENERATOR_CONFIG_RELATIVE_PATH}"
+    sed -n '/# update_discovery_doc.sh additions/q;p' "${PROJECT_ROOT}/${GENERATOR_CONFIG_RELATIVE_PATH}"
     cat <<_EOF_
   rest_services {
     service_proto_path: "${service_proto_path}"
@@ -37,7 +37,7 @@ function print_service_textproto() {
   }
 
 _EOF_
-    sed -n '/# End update_discovery_doc.sh additions/,$p' "${PROJECT_ROOT}/${GENERATOR_CONFIG_RELATIVE_PATH}"
+    sed -n '/# update_discovery_doc.sh additions/,$p' "${PROJECT_ROOT}/${GENERATOR_CONFIG_RELATIVE_PATH}"
   ) | sponge "${PROJECT_ROOT}/${GENERATOR_CONFIG_RELATIVE_PATH}"
 }
 
@@ -84,19 +84,41 @@ git commit -m"chore(compute): update discovery doc circa ${REVISION}" \
 io::log_h2 "Running generate-libraries with UPDATED_DISCOVERY_DOCUMENT=compute"
 UPDATED_DISCOVERY_DOCUMENT=compute ci/cloudbuild/build.sh -t generate-libraries-pr
 
+io::log_h2 "Adding new compute internal protos"
+git add "${PROJECT_ROOT}/protos/google/cloud/compute/v1/internal"
+
 NEW_FILES=$(git ls-files --others --exclude-standard protos/)
 if [[ -n "${NEW_FILES}" ]]; then
+  git add protos/google/cloud/compute
+
+  io::log_h2 "Formatting generated protos"
+  git ls-files -z -- '*.proto' |
+    xargs -P "$(nproc)" -n 50 -0 clang-format -i
+  git ls-files -z -- '*.proto' |
+    xargs -r -P "$(nproc)" -n 50 -0 sed -i 's/[[:blank:]]\+$//'
+
   io::log_red "New resources defined in Discovery Document created new protos:"
   echo "${NEW_FILES}"
   mapfile -t proto_array < <(echo "${NEW_FILES}")
   io::log_red "Adding rest_services definitions to the generator_config.textproto."
   for i in "${proto_array[@]}"; do
+    echo "${i}"
     print_service_textproto "${i}"
   done
-  git add protos
+fi
 
-  io::log_h2 "Running generate-libraries again with updated generator_config.textproto"
-  UPDATED_DISCOVERY_DOCUMENT=compute ci/cloudbuild/build.sh -t generate-libraries-pr
+io::log_h2 "Running generate-libraries with updated generator_config.textproto"
+ci/cloudbuild/build.sh -t generate-libraries-pr || true
+
+if [[ -n "${NEW_FILES}" ]]; then
+  io::log_h2 "Adding new compute generated service code"
+  git add google/cloud/compute
+
+  io::log_h2 "Formatting generated code"
+  git ls-files -z -- '*.h' '*.cc' |
+    xargs -P "$(nproc)" -n 50 -0 clang-format -i
+  git ls-files -z -- '*.h' '*.cc' |
+    xargs -r -P "$(nproc)" -n 50 -0 sed -i 's/[[:blank:]]\+$//'
 
   io::log_yellow "Adding new directories to ${COMPUTE_SERVICE_DIRS_CMAKE_RELATIVE_PATH}"
   for i in "${proto_array[@]}"; do

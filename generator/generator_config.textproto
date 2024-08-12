@@ -1629,9 +1629,7 @@ discovery_products {
     generate_grpc_transport: false
   }
 
-  # Begin update_discovery_doc.sh additions
-
-  # End update_discovery_doc.sh additions
+  # update_discovery_doc.sh additions
 }
 
 # Confidential Computing
