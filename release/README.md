@@ -252,13 +252,12 @@ In `ports/google-cloud-cpp/vcpkg.json`
 ./vcpkg format-manifest ports/google-cloud-cpp/vcpkg.json
 ```
 
-#### Update the [SHA512]. To compute it, run:
+#### Update the [SHA512]
 
 ```shell
-curl -fSsL https://github.com/googleapis/google-cloud-cpp/archive/${VERSION}.tar.gz | sha512sum
+SHA512=($(curl -fSsL https://github.com/googleapis/google-cloud-cpp/archive/${VERSION}.tar.gz | sha512sum))
+sed -i "s/SHA512 .*/SHA512 ${SHA512[0]}/" ports/google-cloud-cpp/portfile.cmake
 ```
-
-In `ports/google-cloud-cpp/portfile.cmake`, use the generated SHA.
 
 #### Commit the changes
 
