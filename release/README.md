@@ -348,7 +348,7 @@ In your development fork:
   triggers.
   - Update the Google Cloud Build trigger definitions to compile this branch:
     ```shell
-    ci/cloudbuild/convert-to-branch-triggers.sh
+    ci/cloudbuild/convert-to-branch-triggers.sh --branch "${BRANCH}"
     ```
   - Actually create the triggers in GCB:
     ```shell
@@ -358,7 +358,7 @@ In your development fork:
     ```
   - Remove any old triggers for the same major version, e.g.:
     ```shell
-    cloud builds triggers list \
+    gcloud builds triggers list \
         --project=cloud-cpp-testing-resources \
         --filter=name:v2-10-x --format='value(id)' | \
         xargs -n 1 gcloud builds triggers delete \
@@ -386,8 +386,15 @@ ______________________________________________________________________
   ```
 - Create or cherry-pick commits with the desired changes.
 - Update `CHANGELOG.md` to reflect the changes made.
-- After merging the PR(s) with all the above changes, use the Release UI on
-  GitHub to create a pre-release along with a new tag for the release.
+- After merging the PR(s) with all the above changes, create the tag:
+  ```shell
+  git fetch upstream ${BRANCH}
+  git checkout upstream/${BRANCH}
+  git tag ${PATCH}
+  git push upstream ${PATCH}
+  ```
+- Use the Release UI on GitHub to create a pre-release from the new tag. Uncheck
+  the "Set as the latest release" box if this is not the latest release.
 - After review, publish the release.
 - Update our [vcpkg port].
 
