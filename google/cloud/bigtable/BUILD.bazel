@@ -15,7 +15,7 @@
 load(":bigtable_client_testing.bzl", "bigtable_client_testing_hdrs", "bigtable_client_testing_srcs")
 load(":bigtable_client_unit_tests.bzl", "bigtable_client_unit_tests")
 load(":google_cloud_cpp_bigtable.bzl", "google_cloud_cpp_bigtable_hdrs", "google_cloud_cpp_bigtable_srcs")
-load(":google_cloud_cpp_bigtable_mocks.bzl", "google_cloud_cpp_bigtable_mocks_hdrs")
+load(":google_cloud_cpp_bigtable_mocks.bzl", "google_cloud_cpp_bigtable_mocks_hdrs", "google_cloud_cpp_bigtable_mocks_srcs")
 
 package(default_visibility = ["//visibility:private"])
 
@@ -57,7 +57,7 @@ filegroup(
 cc_library(
     name = "google_cloud_cpp_bigtable_mocks",
     testonly = True,
-    srcs = [],
+    srcs = google_cloud_cpp_bigtable_mocks_srcs,
     hdrs = google_cloud_cpp_bigtable_mocks_hdrs,
     visibility = [
         ":__subpackages__",
