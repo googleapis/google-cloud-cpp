@@ -119,7 +119,7 @@ class TargetInstancesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.target_instances.v1.AggregatedListTargetInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L115}
-  /// [google.cloud.cpp.compute.v1.TargetInstancesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_130.proto#L300}
+  /// [google.cloud.cpp.compute.v1.TargetInstancesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_132.proto#L300}
   ///
   // clang-format on
   StreamRange<std::pair<
@@ -162,7 +162,7 @@ class TargetInstancesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.target_instances.v1.AggregatedListTargetInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L115}
-  /// [google.cloud.cpp.compute.v1.TargetInstancesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_130.proto#L300}
+  /// [google.cloud.cpp.compute.v1.TargetInstancesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_132.proto#L300}
   ///
   // clang-format on
   StreamRange<std::pair<
@@ -314,7 +314,7 @@ class TargetInstancesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.target_instances.v1.GetTargetInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L230}
-  /// [google.cloud.cpp.compute.v1.TargetInstance]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_130.proto#L28}
+  /// [google.cloud.cpp.compute.v1.TargetInstance]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_132.proto#L28}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TargetInstance> GetTargetInstance(
@@ -346,7 +346,7 @@ class TargetInstancesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.target_instances.v1.GetTargetInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L230}
-  /// [google.cloud.cpp.compute.v1.TargetInstance]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_130.proto#L28}
+  /// [google.cloud.cpp.compute.v1.TargetInstance]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_132.proto#L28}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TargetInstance> GetTargetInstance(
@@ -511,7 +511,7 @@ class TargetInstancesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.target_instances.v1.ListTargetInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L277}
-  /// [google.cloud.cpp.compute.v1.TargetInstance]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_130.proto#L28}
+  /// [google.cloud.cpp.compute.v1.TargetInstance]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_132.proto#L28}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::TargetInstance>
@@ -553,7 +553,7 @@ class TargetInstancesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.target_instances.v1.ListTargetInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/target_instances/v1/target_instances.proto#L277}
-  /// [google.cloud.cpp.compute.v1.TargetInstance]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_130.proto#L28}
+  /// [google.cloud.cpp.compute.v1.TargetInstance]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_132.proto#L28}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::TargetInstance>

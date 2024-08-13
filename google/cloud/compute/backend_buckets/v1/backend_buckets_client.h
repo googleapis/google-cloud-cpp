@@ -477,7 +477,7 @@ class BackendBucketsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.backend_buckets.v1.GetBackendBucketRequest]: @cloud_cpp_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L285}
-  /// [google.cloud.cpp.compute.v1.BackendBucket]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_010.proto#L27}
+  /// [google.cloud.cpp.compute.v1.BackendBucket]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_011.proto#L27}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::BackendBucket> GetBackendBucket(
@@ -509,7 +509,7 @@ class BackendBucketsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.backend_buckets.v1.GetBackendBucketRequest]: @cloud_cpp_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L285}
-  /// [google.cloud.cpp.compute.v1.BackendBucket]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_010.proto#L27}
+  /// [google.cloud.cpp.compute.v1.BackendBucket]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_011.proto#L27}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::BackendBucket> GetBackendBucket(
@@ -539,7 +539,7 @@ class BackendBucketsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.backend_buckets.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L296}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L276}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_008.proto#L276}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -572,7 +572,7 @@ class BackendBucketsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.backend_buckets.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L296}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L276}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_008.proto#L276}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -735,7 +735,7 @@ class BackendBucketsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.backend_buckets.v1.ListBackendBucketsRequest]: @cloud_cpp_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L337}
-  /// [google.cloud.cpp.compute.v1.BackendBucket]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_010.proto#L27}
+  /// [google.cloud.cpp.compute.v1.BackendBucket]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_011.proto#L27}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::BackendBucket>
@@ -776,7 +776,7 @@ class BackendBucketsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.backend_buckets.v1.ListBackendBucketsRequest]: @cloud_cpp_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L337}
-  /// [google.cloud.cpp.compute.v1.BackendBucket]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_010.proto#L27}
+  /// [google.cloud.cpp.compute.v1.BackendBucket]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_011.proto#L27}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::BackendBucket>
@@ -1062,7 +1062,7 @@ class BackendBucketsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.backend_buckets.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L467}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L276}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_008.proto#L276}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -1097,7 +1097,7 @@ class BackendBucketsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.backend_buckets.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L467}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L276}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_008.proto#L276}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -1127,7 +1127,7 @@ class BackendBucketsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.backend_buckets.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L483}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_137.proto#L30}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_139.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -1162,7 +1162,7 @@ class BackendBucketsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.backend_buckets.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/backend_buckets/v1/backend_buckets.proto#L483}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_137.proto#L30}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_139.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

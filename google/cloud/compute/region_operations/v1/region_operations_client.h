@@ -94,7 +94,8 @@ class RegionOperationsClient {
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
-  /// @param operation  Name of the Operations resource to delete.
+  /// @param operation  Name of the Operations resource to delete, or its unique numeric
+  ///  identifier.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [`Status`] object. If the request failed, the
@@ -148,7 +149,8 @@ class RegionOperationsClient {
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
-  /// @param operation  Name of the Operations resource to return.
+  /// @param operation  Name of the Operations resource to return, or its unique numeric
+  ///  identifier.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -162,8 +164,8 @@ class RegionOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_operations.v1.GetOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L108}
-  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
+  /// [google.cloud.cpp.compute.region_operations.v1.GetOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L109}
+  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_017.proto#L131}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> GetOperation(
@@ -194,8 +196,8 @@ class RegionOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_operations.v1.GetOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L108}
-  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
+  /// [google.cloud.cpp.compute.region_operations.v1.GetOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L109}
+  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_017.proto#L131}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> GetOperation(
@@ -233,8 +235,8 @@ class RegionOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_operations.v1.ListRegionOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L129}
-  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
+  /// [google.cloud.cpp.compute.region_operations.v1.ListRegionOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L131}
+  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_017.proto#L131}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Operation> ListRegionOperations(
@@ -274,8 +276,8 @@ class RegionOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_operations.v1.ListRegionOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L129}
-  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
+  /// [google.cloud.cpp.compute.region_operations.v1.ListRegionOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L131}
+  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_017.proto#L131}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Operation> ListRegionOperations(
@@ -300,7 +302,8 @@ class RegionOperationsClient {
   ///
   /// @param project  Project ID for this request.
   /// @param region  Name of the region for this request.
-  /// @param operation  Name of the Operations resource to return.
+  /// @param operation  Name of the Operations resource to return, or its unique numeric
+  ///  identifier.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -314,8 +317,8 @@ class RegionOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_operations.v1.WaitRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L201}
-  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
+  /// [google.cloud.cpp.compute.region_operations.v1.WaitRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L203}
+  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_017.proto#L131}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(
@@ -356,8 +359,8 @@ class RegionOperationsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.region_operations.v1.WaitRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L201}
-  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
+  /// [google.cloud.cpp.compute.region_operations.v1.WaitRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L203}
+  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_017.proto#L131}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(
