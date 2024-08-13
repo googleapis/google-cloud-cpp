@@ -16,7 +16,6 @@
 
 set(service_dirs
     # cmake-format: sort
-    "future_reservations/v1/"
     "accelerator_types/v1/"
     "addresses/v1/"
     "autoscalers/v1/"
@@ -28,6 +27,7 @@ set(service_dirs
     "firewall_policies/v1/"
     "firewalls/v1/"
     "forwarding_rules/v1/"
+    "future_reservations/v1/"
     "global_addresses/v1/"
     "global_forwarding_rules/v1/"
     "global_network_endpoint_groups/v1/"
