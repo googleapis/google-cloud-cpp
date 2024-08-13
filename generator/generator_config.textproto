@@ -1628,6 +1628,8 @@ discovery_products {
     generate_rest_transport: true
     generate_grpc_transport: false
   }
+
+  # update_discovery_doc.sh additions
 }
 
 # Confidential Computing
