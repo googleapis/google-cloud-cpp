@@ -117,7 +117,7 @@ class MachineTypesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.machine_types.v1.AggregatedListMachineTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L71}
-  /// [google.cloud.cpp.compute.v1.MachineTypesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_075.proto#L321}
+  /// [google.cloud.cpp.compute.v1.MachineTypesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_077.proto#L327}
   ///
   // clang-format on
   StreamRange<std::pair<
@@ -159,7 +159,7 @@ class MachineTypesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.machine_types.v1.AggregatedListMachineTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L71}
-  /// [google.cloud.cpp.compute.v1.MachineTypesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_075.proto#L321}
+  /// [google.cloud.cpp.compute.v1.MachineTypesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_077.proto#L327}
   ///
   // clang-format on
   StreamRange<std::pair<
@@ -190,7 +190,7 @@ class MachineTypesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.machine_types.v1.GetMachineTypeRequest]: @cloud_cpp_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L153}
-  /// [google.cloud.cpp.compute.v1.MachineType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_075.proto#L29}
+  /// [google.cloud.cpp.compute.v1.MachineType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_077.proto#L29}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::MachineType> GetMachineType(
@@ -222,7 +222,7 @@ class MachineTypesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.machine_types.v1.GetMachineTypeRequest]: @cloud_cpp_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L153}
-  /// [google.cloud.cpp.compute.v1.MachineType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_075.proto#L29}
+  /// [google.cloud.cpp.compute.v1.MachineType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_077.proto#L29}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::MachineType> GetMachineType(
@@ -260,7 +260,7 @@ class MachineTypesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.machine_types.v1.ListMachineTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L167}
-  /// [google.cloud.cpp.compute.v1.MachineType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_075.proto#L29}
+  /// [google.cloud.cpp.compute.v1.MachineType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_077.proto#L29}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::MachineType> ListMachineTypes(
@@ -300,7 +300,7 @@ class MachineTypesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.machine_types.v1.ListMachineTypesRequest]: @cloud_cpp_reference_link{google/cloud/compute/machine_types/v1/machine_types.proto#L167}
-  /// [google.cloud.cpp.compute.v1.MachineType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_075.proto#L29}
+  /// [google.cloud.cpp.compute.v1.MachineType]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_077.proto#L29}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::MachineType> ListMachineTypes(
