@@ -30,6 +30,8 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
             cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
             $<TARGET_FILE:policysimulator_quickstart> GOOGLE_CLOUD_PROJECT
             GOOGLE_CLOUD_CPP_POLICYSIMULATOR_RESOURCE)
-    set_tests_properties(policysimulator_quickstart
-                         PROPERTIES LABELS "integration-test;quickstart")
+    set_tests_properties(
+        policysimulator_quickstart
+        PROPERTIES LABELS "integration-test;quickstart" SKIP_REGULAR_EXPRESSION
+                   "RESOURCE_EXHAUSTED")
 endif ()
