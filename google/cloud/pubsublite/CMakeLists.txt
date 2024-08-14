@@ -267,8 +267,8 @@ if (GOOGLE_CLOUD_CPP_WITH_MOCKS)
     target_sources(google_cloud_cpp_pubsublite_mocks INTERFACE ${mock_files})
     target_link_libraries(
         google_cloud_cpp_pubsublite_mocks
-        INTERFACE google-cloud-cpp::experimental-pubsublite GTest::gmock_main
-                  GTest::gmock GTest::gtest)
+        INTERFACE google-cloud-cpp::experimental-pubsublite GTest::gmock
+                  GTest::gtest)
     set_target_properties(
         google_cloud_cpp_pubsublite_mocks
         PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-pubsublite_mocks)

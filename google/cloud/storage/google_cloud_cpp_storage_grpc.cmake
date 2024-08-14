@@ -355,7 +355,7 @@ if (GOOGLE_CLOUD_CPP_WITH_MOCKS)
     google_cloud_cpp_add_pkgconfig(
         storage_grpc_mocks "Google Cloud Storage (gRPC) Mocks"
         "Mocks for the Google Cloud Storage (gRPC) C++ Client Library"
-        "google_cloud_cpp_storage" " gmock_main")
+        "google_cloud_cpp_storage" " gmock")
 
     # Create and install the CMake configuration files.
     configure_file("mocks-config.cmake.in"
