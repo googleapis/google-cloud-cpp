@@ -121,9 +121,7 @@ StatusOr<UniqueCertStore> OpenP12File(std::string const& source) {
 StatusOr<UniqueCertContext> GetCertificate(HCERTSTORE certstore,
                                            std::string const& source) {
   // Get the certificate from the store.
-  PCCERT_CONTEXT cert_raw = CertFindCertificateInStore(
-      certstore, X509_ASN_ENCODING | PKCS_7_ASN_ENCODING, 0, CERT_FIND_ANY,
-      nullptr, nullptr);
+  PCCERT_CONTEXT cert_raw = CertEnumCertificatesInStore(certstore, nullptr);
   if (cert_raw == nullptr) {
     return InvalidArgumentError(
         absl::StrCat("No certificate found in PKCS#12 file (", source, ")"),
