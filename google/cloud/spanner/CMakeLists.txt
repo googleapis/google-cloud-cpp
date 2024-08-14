@@ -372,9 +372,8 @@ if (GOOGLE_CLOUD_CPP_WITH_MOCKS)
     endforeach ()
     target_sources(google_cloud_cpp_spanner_mocks INTERFACE ${mock_files})
     target_link_libraries(
-        google_cloud_cpp_spanner_mocks
-        INTERFACE google-cloud-cpp::spanner GTest::gmock_main GTest::gmock
-                  GTest::gtest)
+        google_cloud_cpp_spanner_mocks INTERFACE google-cloud-cpp::spanner
+                                                 GTest::gmock GTest::gtest)
     set_target_properties(
         google_cloud_cpp_spanner_mocks
         PROPERTIES EXPORT_NAME google-cloud-cpp::spanner_mocks)

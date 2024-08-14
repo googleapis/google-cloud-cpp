@@ -392,9 +392,8 @@ if (GOOGLE_CLOUD_CPP_WITH_MOCKS)
     target_sources(google_cloud_cpp_pubsub_mocks
                    INTERFACE ${cmake_google_cloud_cpp_pubsub_mocks_hdrs})
     target_link_libraries(
-        google_cloud_cpp_pubsub_mocks
-        INTERFACE google-cloud-cpp::pubsub GTest::gmock_main GTest::gmock
-                  GTest::gtest)
+        google_cloud_cpp_pubsub_mocks INTERFACE google-cloud-cpp::pubsub
+                                                GTest::gmock GTest::gtest)
     set_target_properties(google_cloud_cpp_pubsub_mocks
                           PROPERTIES EXPORT_NAME google-cloud-cpp::pubsub_mocks)
     target_include_directories(

@@ -292,9 +292,8 @@ if (GOOGLE_CLOUD_CPP_WITH_MOCKS)
     export_list_to_bazel("google_cloud_cpp_mocks.bzl"
                          "google_cloud_cpp_mocks_hdrs" YEAR "2022")
     target_link_libraries(
-        google_cloud_cpp_mocks
-        INTERFACE google-cloud-cpp::common GTest::gmock_main GTest::gmock
-                  GTest::gtest)
+        google_cloud_cpp_mocks INTERFACE google-cloud-cpp::common GTest::gmock
+                                         GTest::gtest)
     set_target_properties(google_cloud_cpp_mocks
                           PROPERTIES EXPORT_NAME google-cloud-cpp::mocks)
     target_include_directories(
@@ -325,7 +324,7 @@ if (GOOGLE_CLOUD_CPP_WITH_MOCKS)
     google_cloud_cpp_add_pkgconfig(
         "mocks" "Google Cloud C++ Testing Library"
         "Helpers for testing the Google Cloud C++ Client Libraries"
-        "google_cloud_cpp_common" "gmock_main")
+        "google_cloud_cpp_common" "gmock")
 
     # Create and install the CMake configuration files.
     configure_file("mocks-config.cmake.in"

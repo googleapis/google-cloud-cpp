@@ -157,9 +157,8 @@ if (GOOGLE_CLOUD_CPP_WITH_MOCKS)
     add_library(google_cloud_cpp_sql_mocks INTERFACE)
     target_sources(google_cloud_cpp_sql_mocks INTERFACE ${mock_files})
     target_link_libraries(
-        google_cloud_cpp_sql_mocks
-        INTERFACE google-cloud-cpp::sql GTest::gmock_main GTest::gmock
-                  GTest::gtest)
+        google_cloud_cpp_sql_mocks INTERFACE google-cloud-cpp::sql GTest::gmock
+                                             GTest::gtest)
     set_target_properties(google_cloud_cpp_sql_mocks
                           PROPERTIES EXPORT_NAME google-cloud-cpp::sql_mocks)
     target_include_directories(

@@ -348,8 +348,8 @@ function (google_cloud_cpp_add_gapic_library library display_name)
         add_library(${mocks_target} INTERFACE)
         target_sources(${mocks_target} INTERFACE ${mock_files})
         target_link_libraries(
-            ${mocks_target} INTERFACE ${library_alias} GTest::gmock_main
-                                      GTest::gmock GTest::gtest)
+            ${mocks_target} INTERFACE ${library_alias} GTest::gmock
+                                      GTest::gtest)
         set_target_properties(${mocks_target} PROPERTIES EXPORT_NAME
                                                          ${library_alias}_mocks)
         target_include_directories(
