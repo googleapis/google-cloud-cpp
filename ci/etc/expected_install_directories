@@ -328,6 +328,10 @@
 ./include/google/cloud/compute/instances/v1
 ./include/google/cloud/compute/instances/v1/internal
 ./include/google/cloud/compute/instances/v1/mocks
+./include/google/cloud/compute/instant_snapshots
+./include/google/cloud/compute/instant_snapshots/v1
+./include/google/cloud/compute/instant_snapshots/v1/internal
+./include/google/cloud/compute/instant_snapshots/v1/mocks
 ./include/google/cloud/compute/interconnect_attachments
 ./include/google/cloud/compute/interconnect_attachments/v1
 ./include/google/cloud/compute/interconnect_attachments/v1/internal
@@ -452,6 +456,10 @@
 ./include/google/cloud/compute/region_instances/v1
 ./include/google/cloud/compute/region_instances/v1/internal
 ./include/google/cloud/compute/region_instances/v1/mocks
+./include/google/cloud/compute/region_instant_snapshots
+./include/google/cloud/compute/region_instant_snapshots/v1
+./include/google/cloud/compute/region_instant_snapshots/v1/internal
+./include/google/cloud/compute/region_instant_snapshots/v1/mocks
 ./include/google/cloud/compute/region_network_endpoint_groups
 ./include/google/cloud/compute/region_network_endpoint_groups/v1
 ./include/google/cloud/compute/region_network_endpoint_groups/v1/internal

@@ -126,6 +126,10 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeInstanceTemplatesConnection()`.
 
+- `GOOGLE_CLOUD_CPP_INSTANT_SNAPSHOTS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeInstantSnapshotsConnection()`.
+
 - `GOOGLE_CLOUD_CPP_INTERCONNECTS_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeInterconnectsConnection()`.
@@ -253,6 +257,10 @@ environment variables are convenient when troubleshooting problems.
 - `GOOGLE_CLOUD_CPP_REGION_INSTANCE_TEMPLATES_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeRegionInstanceTemplatesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_REGION_INSTANT_SNAPSHOTS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeRegionInstantSnapshotsConnection()`.
 
 - `GOOGLE_CLOUD_CPP_REGION_NETWORK_ENDPOINT_GROUPS_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")

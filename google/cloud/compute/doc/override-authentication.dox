@@ -42,6 +42,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_instance_settings_v1::InstanceSettingsClient](@ref compute_instance_settings_v1::InstanceSettingsClient-service-account-snippet)
 - [\c compute_instance_templates_v1::InstanceTemplatesClient](@ref compute_instance_templates_v1::InstanceTemplatesClient-service-account-snippet)
 - [\c compute_instances_v1::InstancesClient](@ref compute_instances_v1::InstancesClient-service-account-snippet)
+- [\c compute_instant_snapshots_v1::InstantSnapshotsClient](@ref compute_instant_snapshots_v1::InstantSnapshotsClient-service-account-snippet)
 - [\c compute_interconnect_attachments_v1::InterconnectAttachmentsClient](@ref compute_interconnect_attachments_v1::InterconnectAttachmentsClient-service-account-snippet)
 - [\c compute_interconnect_locations_v1::InterconnectLocationsClient](@ref compute_interconnect_locations_v1::InterconnectLocationsClient-service-account-snippet)
 - [\c compute_interconnect_remote_locations_v1::InterconnectRemoteLocationsClient](@ref compute_interconnect_remote_locations_v1::InterconnectRemoteLocationsClient-service-account-snippet)
@@ -73,6 +74,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_region_instance_groups_v1::RegionInstanceGroupsClient](@ref compute_region_instance_groups_v1::RegionInstanceGroupsClient-service-account-snippet)
 - [\c compute_region_instance_templates_v1::RegionInstanceTemplatesClient](@ref compute_region_instance_templates_v1::RegionInstanceTemplatesClient-service-account-snippet)
 - [\c compute_region_instances_v1::RegionInstancesClient](@ref compute_region_instances_v1::RegionInstancesClient-service-account-snippet)
+- [\c compute_region_instant_snapshots_v1::RegionInstantSnapshotsClient](@ref compute_region_instant_snapshots_v1::RegionInstantSnapshotsClient-service-account-snippet)
 - [\c compute_region_network_endpoint_groups_v1::RegionNetworkEndpointGroupsClient](@ref compute_region_network_endpoint_groups_v1::RegionNetworkEndpointGroupsClient-service-account-snippet)
 - [\c compute_region_network_firewall_policies_v1::RegionNetworkFirewallPoliciesClient](@ref compute_region_network_firewall_policies_v1::RegionNetworkFirewallPoliciesClient-service-account-snippet)
 - [\c compute_region_notification_endpoints_v1::RegionNotificationEndpointsClient](@ref compute_region_notification_endpoints_v1::RegionNotificationEndpointsClient-service-account-snippet)
@@ -303,6 +305,12 @@ guide for more details.
 
 */
 
+/*! @page compute_instant_snapshots_v1::InstantSnapshotsClient-service-account-snippet Override compute_instant_snapshots_v1::InstantSnapshotsClient Authentication Defaults
+
+@snippet google/cloud/compute/instant_snapshots/v1/samples/instant_snapshots_client_samples.cc with-service-account
+
+*/
+
 /*! @page compute_interconnect_attachments_v1::InterconnectAttachmentsClient-service-account-snippet Override compute_interconnect_attachments_v1::InterconnectAttachmentsClient Authentication Defaults
 
 @snippet google/cloud/compute/interconnect_attachments/v1/samples/interconnect_attachments_client_samples.cc with-service-account
@@ -486,6 +494,12 @@ guide for more details.
 /*! @page compute_region_instances_v1::RegionInstancesClient-service-account-snippet Override compute_region_instances_v1::RegionInstancesClient Authentication Defaults
 
 @snippet google/cloud/compute/region_instances/v1/samples/region_instances_client_samples.cc with-service-account
+
+*/
+
+/*! @page compute_region_instant_snapshots_v1::RegionInstantSnapshotsClient-service-account-snippet Override compute_region_instant_snapshots_v1::RegionInstantSnapshotsClient Authentication Defaults
+
+@snippet google/cloud/compute/region_instant_snapshots/v1/samples/region_instant_snapshots_client_samples.cc with-service-account
 
 */
 
