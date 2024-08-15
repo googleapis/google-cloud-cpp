@@ -108,8 +108,8 @@ StatusOr<UniqueCertStore> OpenP12File(std::string const& source) {
   // get a truncated view of them, and fail to read them.
   CRYPT_DATA_BLOB dataBlob = {static_cast<DWORD>(data.size()), data.data()};
   // Import the PKCS#12 file into a certificate store.
-  HCERTSTORE certstore_raw =
-      PFXImportCertStore(&dataBlob, L"notasecret", CRYPT_EXPORTABLE);
+  HCERTSTORE certstore_raw = PFXImportCertStore(
+      &dataBlob, L"notasecret", CRYPT_EXPORTABLE | PKCS12_NO_PERSIST_KEY);
   if (certstore_raw == nullptr) {
     return InvalidArgumentError(
         FormatWin32Errors("Cannot parse PKCS#12 file (", source, "): "),
@@ -143,20 +143,24 @@ std::string GetCertificateCommonName(PCCERT_CONTEXT cert) {
 StatusOr<UniqueCryptProv> GetCertificatePrivateKey(PCCERT_CONTEXT cert,
                                                    DWORD& dwKeySpec,
                                                    std::string const& source) {
-  HCRYPTPROV prov_raw;
-  BOOL pfCallerFreeProvOrNCryptKey;
-  if (!CryptAcquireCertificatePrivateKey(cert, CRYPT_ACQUIRE_SILENT_FLAG,
-                                         nullptr, &prov_raw, &dwKeySpec,
-                                         &pfCallerFreeProvOrNCryptKey)) {
+  DWORD context_length;
+  if (!CertGetCertificateContextProperty(cert, CERT_KEY_CONTEXT_PROP_ID,
+                                         nullptr, &context_length)) {
     return InvalidArgumentError(
         FormatWin32Errors("No private key found in PKCS#12 file (", source,
                           "): "),
         GCP_ERROR_INFO());
   }
-  // According to documentation of CryptAcquireCertificatePrivateKey,
-  // pfCallerFreeProvOrNCryptKey will always be true in our case so
-  // we don't need to check it.
-  return UniqueCryptProv(prov_raw);
+  std::vector<BYTE> buffer(context_length);
+  CertGetCertificateContextProperty(cert, CERT_KEY_CONTEXT_PROP_ID,
+                                    buffer.data(), &context_length);
+  auto& context = *reinterpret_cast<CERT_KEY_CONTEXT*>(buffer.data());
+  dwKeySpec = context.dwKeySpec;
+  // Documentation says that if we use PKCS12_NO_PERSIST_KEY, the key will
+  // always be an NCRYPT_KEY_HANDLE. However it was observed that this is not
+  // the case (https://github.com/MicrosoftDocs/sdk-api/pull/1874).
+  assert(dwKeySpec != CERT_NCRYPT_KEY_SPEC);
+  return UniqueCryptProv(context.hCryptProv);
 }
 
 StatusOr<UniqueCryptKey> GetKeyFromProvider(HCRYPTPROV prov, DWORD dwKeySpec,
