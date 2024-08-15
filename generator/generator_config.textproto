@@ -1000,6 +1000,15 @@ discovery_products {
   }
 
   rest_services {
+    service_proto_path: "google/cloud/compute/instant_snapshots/v1/instant_snapshots.proto"
+    product_path: "google/cloud/compute/instant_snapshots/v1"
+    initial_copyright_year: "2024"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
     service_proto_path: "google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto"
     product_path: "google/cloud/compute/interconnect_attachments/v1"
     initial_copyright_year: "2023"
@@ -1273,6 +1282,15 @@ discovery_products {
     service_proto_path: "google/cloud/compute/region_instances/v1/region_instances.proto"
     product_path: "google/cloud/compute/region_instances/v1"
     initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto"
+    product_path: "google/cloud/compute/region_instant_snapshots/v1"
+    initial_copyright_year: "2024"
     retryable_status_codes: ["kUnavailable"]
     generate_rest_transport: true
     generate_grpc_transport: false
