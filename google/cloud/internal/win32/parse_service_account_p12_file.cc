@@ -67,20 +67,11 @@ class UniquePtrReinterpretProxy {
   std::unique_ptr<void, Deleter> ptr_;
 };
 
-struct HCryptProvDeleter {
-  void operator()(void* key) const {
-    CryptReleaseContext(reinterpret_cast<HCRYPTPROV>(key), 0);
-  }
-};
-
 struct HCryptKeyDeleter {
   void operator()(void* key) const {
     CryptDestroyKey(reinterpret_cast<HCRYPTKEY>(key));
   }
 };
-
-using UniqueCryptProv =
-    UniquePtrReinterpretProxy<HCRYPTPROV, HCryptProvDeleter>;
 
 using UniqueCryptKey = UniquePtrReinterpretProxy<HCRYPTKEY, HCryptKeyDeleter>;
 
@@ -140,9 +131,9 @@ std::string GetCertificateCommonName(PCCERT_CONTEXT cert) {
   return result;
 }
 
-StatusOr<UniqueCryptProv> GetCertificatePrivateKey(PCCERT_CONTEXT cert,
-                                                   DWORD& dwKeySpec,
-                                                   std::string const& source) {
+StatusOr<HCRYPTPROV> GetCertificatePrivateKey(PCCERT_CONTEXT cert,
+                                              DWORD& dwKeySpec,
+                                              std::string const& source) {
   DWORD context_length;
   if (!CertGetCertificateContextProperty(cert, CERT_KEY_CONTEXT_PROP_ID,
                                          nullptr, &context_length)) {
@@ -160,7 +151,9 @@ StatusOr<UniqueCryptProv> GetCertificatePrivateKey(PCCERT_CONTEXT cert,
   // always be an NCRYPT_KEY_HANDLE. However it was observed that this is not
   // the case (https://github.com/MicrosoftDocs/sdk-api/pull/1874).
   assert(dwKeySpec != CERT_NCRYPT_KEY_SPEC);
-  return UniqueCryptProv(context.hCryptProv);
+  // Don't free the provider, its lifetime is controlled by the certificate
+  // context (https://github.com/dotnet/corefx/pull/12010).
+  return context.hCryptProv;
 }
 
 StatusOr<UniqueCryptKey> GetKeyFromProvider(HCRYPTPROV prov, DWORD dwKeySpec,
@@ -291,7 +284,7 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
   if (!prov) return std::move(prov).status();
 
   // Get the private key from the provider.
-  auto pkey = GetKeyFromProvider(prov->get(), dwKeySpec, source);
+  auto pkey = GetKeyFromProvider(*prov, dwKeySpec, source);
   if (!pkey) return std::move(pkey).status();
 
   // Export the private key from the certificate to a blob.
