@@ -28,7 +28,9 @@ class DiscoveryProtoExportFile {
  public:
   DiscoveryProtoExportFile(std::string output_file_path,
                            std::string relative_file_path,
-                           std::set<std::string> proto_includes);
+                           std::set<std::string> proto_includes,
+                           std::string compatibility_output_file_path = {},
+                           std::string compatibility_relative_file_path = {});
 
   std::string const& output_file_path() const { return output_file_path_; }
   std::string const& relative_file_path() const { return relative_file_path_; }
@@ -39,6 +41,9 @@ class DiscoveryProtoExportFile {
   // Writes the file to output_stream.
   Status FormatFile(std::ostream& output_stream) const;
 
+  // Writes the file to output_stream.
+  Status FormatCompatibilityFile(std::ostream& output_stream) const;
+
   // Creates necessary directories and writes the file to disk.
   Status WriteFile() const;
 
@@ -46,6 +51,8 @@ class DiscoveryProtoExportFile {
   std::string output_file_path_;
   std::string relative_file_path_;
   std::set<std::string> proto_includes_;
+  std::string compatibility_output_file_path_;
+  std::string compatibility_relative_file_path_;
 };
 
 }  // namespace generator_internal

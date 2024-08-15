@@ -1922,8 +1922,9 @@ TEST_F(AssignResourcesAndTypesToFilesTest,
   EXPECT_THAT(result->first[1].types().front()->name(), Eq("Operation"));
 
   ASSERT_THAT(result->second, SizeIs(1));
-  EXPECT_THAT(result->second[0].relative_file_path(),
-              Eq("google/cloud/product_name/foos/version/foos_proto_export.h"));
+  EXPECT_THAT(
+      result->second[0].relative_file_path(),
+      Eq("protos/google/cloud/product_name/foos/version/foos_proto_export.h"));
   EXPECT_THAT(result->second[0].proto_includes(), IsEmpty());
 }
 
@@ -2669,13 +2670,12 @@ TEST_F(AssignResourcesAndTypesToFilesTest, ResourceAndCommonFilesWithImports) {
     return Property(&DiscoveryProtoExportFile::relative_file_path, Eq(path));
   };
 
-  EXPECT_THAT(
-      files->second,
-      UnorderedElementsAre(
-          relative_file_path(
-              "google/cloud/product_name/foos/version/foos_proto_export.h"),
-          relative_file_path(
-              "google/cloud/product_name/disks/version/disks_proto_export.h")));
+  EXPECT_THAT(files->second,
+              UnorderedElementsAre(
+                  relative_file_path("protos/google/cloud/product_name/foos/"
+                                     "version/foos_proto_export.h"),
+                  relative_file_path("protos/google/cloud/product_name/disks/"
+                                     "version/disks_proto_export.h")));
 
   auto type_named = [](std::string const& name) {
     return Pointee(Property(&DiscoveryTypeVertex::name, Eq(name)));
@@ -2757,7 +2757,8 @@ TEST_F(AssignResourcesAndTypesToFilesTest, ResourceAndCommonFilesWithImports) {
   auto disks_proto_export_file = std::find_if(
       files->second.begin(), files->second.end(), [](auto const& f) {
         return f.relative_file_path() ==
-               "google/cloud/product_name/disks/version/disks_proto_export.h";
+               "protos/google/cloud/product_name/disks/version/"
+               "disks_proto_export.h";
       });
   EXPECT_THAT(
       disks_proto_export_file->proto_includes(),
@@ -2787,7 +2788,8 @@ TEST_F(AssignResourcesAndTypesToFilesTest, ResourceAndCommonFilesWithImports) {
   auto foos_proto_export_file = std::find_if(
       files->second.begin(), files->second.end(), [](auto const& f) {
         return f.relative_file_path() ==
-               "google/cloud/product_name/foos/version/foos_proto_export.h";
+               "protos/google/cloud/product_name/foos/version/"
+               "foos_proto_export.h";
       });
   EXPECT_THAT(
       foos_proto_export_file->proto_includes(),

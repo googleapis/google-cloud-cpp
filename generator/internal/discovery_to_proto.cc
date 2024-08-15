@@ -528,6 +528,10 @@ AssignResourcesAndTypesToFiles(
   std::vector<DiscoveryProtoExportFile> export_files;
   for (auto const& r : resources) {
     auto proto_export_path = absl::StrFormat(
+        "protos/google/cloud/%s/%s/%s/%s_proto_export.h",
+        document_properties.product_name, CamelCaseToSnakeCase(r.first),
+        document_properties.version, CamelCaseToSnakeCase(r.first));
+    auto compatibility_proto_export_path = absl::StrFormat(
         "google/cloud/%s/%s/%s/%s_proto_export.h",
         document_properties.product_name, CamelCaseToSnakeCase(r.first),
         document_properties.version, CamelCaseToSnakeCase(r.first));
@@ -539,7 +543,9 @@ AssignResourcesAndTypesToFiles(
     }
     export_files.emplace_back(
         absl::StrCat(export_output_path, "/", proto_export_path),
-        proto_export_path, std::move(includes));
+        proto_export_path, std::move(includes),
+        absl::StrCat(export_output_path, "/", compatibility_proto_export_path),
+        compatibility_proto_export_path);
   }
 
   return std::make_pair(std::move(files), std::move(export_files));
