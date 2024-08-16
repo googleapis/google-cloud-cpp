@@ -14,8 +14,8 @@ the project itself, [git][git-docs], [GitHub][github-guides], and
 
 In order to ensure that our released version includes a SHA of the service proto
 definitions that is both current and stable ([googleapis-sha-update-policy]),
-make sure that the commit SHA was updated at least 5 days prior, but no more
-than 7 days prior (TODO(#13062): automate this update process).
+aim for a commit SHA from 5-7 days ago (TODO(#13062): automate this update
+process).
 
 ## 1. Preparing for a release
 
