@@ -144,6 +144,7 @@ expected_dirs+=(
   ./lib64/cmake/google_cloud_cpp_bigquery_rest
   ./lib64/cmake/google_cloud_cpp_common
   ./lib64/cmake/google_cloud_cpp_compute_protos
+  ./lib64/cmake/google_cloud_cpp_compute_protos_internal_export
   ./lib64/cmake/google_cloud_cpp_googleapis
   ./lib64/cmake/google_cloud_cpp_grafeas
   ./lib64/cmake/google_cloud_cpp_grpc_utils

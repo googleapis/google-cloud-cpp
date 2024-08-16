@@ -20,6 +20,7 @@ include(${PROJECT_SOURCE_DIR}/google/cloud/compute/service_dirs.cmake)
 
 include(GoogleapisConfig)
 include(CompileProtos)
+include(GoogleCloudCppCommon)
 google_cloud_cpp_find_proto_include_dir(PROTO_INCLUDE_DIR)
 google_cloud_cpp_load_protodeps(
     deps "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/compute.deps")
@@ -31,6 +32,7 @@ file(
     LIST_DIRECTORIES false
     RELATIVE_PATH "${CMAKE_CURRENT_SOURCE_DIR}" ${proto_globs})
 list(SORT proto_files)
+
 google_cloud_cpp_proto_library(
     compute_protos "${proto_files}" PROTO_PATH_DIRECTORIES
     "${EXTERNAL_GOOGLEAPIS_SOURCE}" "${PROTO_INCLUDE_DIR}"
@@ -44,6 +46,7 @@ set_target_properties(
                VERSION "${PROJECT_VERSION}"
                SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_link_libraries(compute_protos PUBLIC ${deps})
+
 # Some files are too big for the MSVC defaults.
 if (MSVC)
     target_compile_options(compute_protos PRIVATE "/bigobj")
@@ -101,6 +104,76 @@ google_cloud_cpp_add_pkgconfig(
     "The Cloud Compute API C++ Client Library"
     "Provides C++ APIs to use the Cloud Compute API."
     WITH_SHORT_TARGET
+    "google_cloud_cpp_cloud_extended_operations_protos"
+    "google_cloud_cpp_api_annotations_protos"
+    "google_cloud_cpp_api_client_protos"
+    "google_cloud_cpp_api_field_behavior_protos")
+
+set(protos_internal_export_globs "${service_dirs}" "${operation_service_dirs}")
+list(TRANSFORM protos_internal_export_globs APPEND "*_export.h")
+file(
+    GLOB relative_protos_internal_export_headers
+    RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
+    ${protos_internal_export_globs})
+list(SORT relative_protos_internal_export_headers)
+set(protos_internal_export_headers)
+foreach (file in LISTS relative_protos_internal_export_headers)
+    list(APPEND protos_internal_export_headers
+         "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${file}>")
+endforeach ()
+add_library(compute_protos_internal_export INTERFACE)
+target_sources(compute_protos_internal_export
+               INTERFACE ${protos_internal_export_headers})
+target_link_libraries(compute_protos_internal_export
+                      INTERFACE google-cloud-cpp::compute_protos)
+set_target_properties(
+    compute_protos_internal_export
+    PROPERTIES EXPORT_NAME google-cloud-cpp::compute_protos_internal_export)
+
+target_include_directories(
+    compute_protos_internal_export
+    INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+              $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+              $<INSTALL_INTERFACE:include>)
+target_compile_options(compute_protos_internal_export
+                       INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+google_cloud_cpp_install_headers(compute_protos_internal_export
+                                 include/google/cloud/compute)
+
+install(
+    EXPORT google_cloud_cpp_compute_protos_internal_export-targets
+    DESTINATION
+        "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_compute_protos_internal_export"
+    COMPONENT google_cloud_cpp_development)
+install(
+    TARGETS compute_protos_internal_export
+    EXPORT google_cloud_cpp_compute_protos_internal_export-targets
+    COMPONENT google_cloud_cpp_development)
+
+# Create and install the CMake configuration files.
+include(CMakePackageConfigHelpers)
+configure_file(
+    "${PROJECT_SOURCE_DIR}/cmake/templates/mocks-config.cmake.in"
+    "google_cloud_cpp_compute_protos_internal_export-config.cmake" @ONLY)
+write_basic_package_version_file(
+    "google_cloud_cpp_compute_protos_internal_export-config-version.cmake"
+    VERSION ${PROJECT_VERSION}
+    COMPATIBILITY ExactVersion)
+
+install(
+    FILES
+        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_compute_protos_internal_export-config.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_compute_protos_internal_export-config-version.cmake"
+    DESTINATION
+        "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_compute_protos_internal_export"
+    COMPONENT google_cloud_cpp_development)
+
+google_cloud_cpp_add_pkgconfig(
+    "compute_protos_internal_export"
+    "The Cloud Compute API C++ Client Library"
+    "Provides C++ header files for stable access to internal Compute protos."
+    WITH_SHORT_TARGET
+    "google_cloud_cpp_compute_protos"
     "google_cloud_cpp_cloud_extended_operations_protos"
     "google_cloud_cpp_api_annotations_protos"
     "google_cloud_cpp_api_client_protos"

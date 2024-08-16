@@ -79,5 +79,6 @@ def compute_library(service_dir, inner_deps = []):
             "//google/cloud:google_cloud_cpp_rest_protobuf_internal",
             "//protos:system_includes",
             "//protos/google/cloud/compute:cc_proto",
+            "//protos/google/cloud/compute:proto_export",
         ] + inner_deps,
     )

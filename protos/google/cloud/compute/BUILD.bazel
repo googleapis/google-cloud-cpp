@@ -37,6 +37,14 @@ filegroup(
     ),
 ] for service in service_dirs + operation_service_dirs]
 
+# Proto export files
+[[
+    filegroup(
+        name = service.replace("/v1/", "_proto_export"),
+        srcs = glob([service + "*_export.h"]),
+    ),
+] for service in service_dirs + operation_service_dirs]
+
 proto_library(
     name = "proto",
     srcs = [":internal_protos"] + [":" + service.replace("/v1/", "_proto_srcs") for service in service_dirs + operation_service_dirs],
@@ -65,4 +73,14 @@ cc_proto_library(
         "//google/cloud/compute:__pkg__",
     ],
     deps = [":proto"],
+)
+
+cc_library(
+    name = "proto_export",
+    hdrs = [":" + service.replace("/v1/", "_proto_export") for service in service_dirs + operation_service_dirs],
+    visibility = [
+        "//:__pkg__",
+        "//google/cloud/compute:__pkg__",
+    ],
+    deps = [":cc_proto"],
 )
