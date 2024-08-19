@@ -124,7 +124,19 @@ info, see [#7463] and [#5976].
 
 </details>
 
+<details>
+<summary>Compute: remove deprecated google/cloud/compute/service/service_proto_export.h files
+</summary>
+<br>
+
+These export files have already been relocated to
+protos/google/cloud/compute/service/service_proto_export.h such that they are
+nearer to the internal proto files that they provide access to [#14654].
+
+</details>
+
 [#12987]: https://github.com/googleapis/google-cloud-cpp/issues/12987
+[#14654]: https://github.com/googleapis/google-cloud-cpp/issues/14654
 [#5976]: https://github.com/googleapis/google-cloud-cpp/issues/5976
 [#7356]: https://github.com/googleapis/google-cloud-cpp/issues/7356
 [#7463]: https://github.com/googleapis/google-cloud-cpp/issues/7463
