@@ -69,7 +69,6 @@ void CreateDatabaseWithPropertyGraph(
     CREATE TABLE Person (
       id               INT64 NOT NULL,
       name             STRING(MAX),
-      gender           STRING(40),
       birthday         TIMESTAMP,
       country          STRING(MAX),
       city             STRING(MAX),
@@ -131,10 +130,10 @@ void InsertData(google::cloud::spanner::Client client) {
     .Build();
 
   auto insert_persons = spanner::InsertMutationBuilder(
-    "Person", {"id", "name", "gender", "birthday", "country", "city"})
-    .EmplaceRow(1, "Alex", "male", google::cloud::spanner::Value("1991-12-21T00:00:00.12Z"), "Australia"," Adelaide")
-    .EmplaceRow(2, "Dana", "female", google::cloud::spanner::Value("1980-10-31T00:00:00.12Z"),"Czech_Republic", "Moravia")
-    .EmplaceRow(3, "Lee", "male", google::cloud::spanner::Value("1986-12-07T00:00:00.12Z"), "India", "Kollam")
+    "Person", {"id", "name", "birthday", "country", "city"})
+    .EmplaceRow(1, "Alex", google::cloud::spanner::Value("1991-12-21T00:00:00.12Z"), "Australia"," Adelaide")
+    .EmplaceRow(2, "Dana", google::cloud::spanner::Value("1980-10-31T00:00:00.12Z"),"Czech_Republic", "Moravia")
+    .EmplaceRow(3, "Lee", google::cloud::spanner::Value("1986-12-07T00:00:00.12Z"), "India", "Kollam")
     .Build();
 
 
