@@ -41,7 +41,6 @@ INSTANTIATE_TEST_SUITE_P(DetectGcpPlatform, MultiInvalidValuesTest,
                          testing::Values("Loogle", "Test", "Google K8S Engine",
                                          "Compute Engine Google"));
 
-
 std::string const& parent_key = "SOFTWARE\\GoogleCloudCpp";
 std::string const& sub_key = "SOFTWARE\\GoogleCloudCpp\\Test";
 std::string const& value_key = "TestProductName";
@@ -70,8 +69,8 @@ void CleanupTestRegistryValue() {
 
 TEST(DetectGcpPlatform, RegistryValueDoesNotExist) {
   auto gcp_detector = ::google::cloud::internal::GcpDetectorWin32Impl();
-  auto is_google_bios = gcp_detector.IsGoogleCloudBios(HKEY_CURRENT_USER,
-                                                         sub_key, value_key);
+  auto is_google_bios =
+      gcp_detector.IsGoogleCloudBios(HKEY_CURRENT_USER, sub_key, value_key);
 
   EXPECT_FALSE(is_google_bios);
 }
@@ -81,8 +80,8 @@ TEST_P(MultiValidValuesTest, RegistryContainsGcpValue) {
   WriteTestRegistryValue(std::string{cur_param});
 
   auto gcp_detector = ::google::cloud::internal::GcpDetectorWin32Impl();
-  auto is_google_bios = gcp_detector.IsGoogleCloudBios(HKEY_CURRENT_USER,
-                                                         sub_key, value_key);
+  auto is_google_bios =
+      gcp_detector.IsGoogleCloudBios(HKEY_CURRENT_USER, sub_key, value_key);
   CleanupTestRegistryValue();
 
   EXPECT_TRUE(is_google_bios);
@@ -93,8 +92,8 @@ TEST_P(MultiInvalidValuesTest, RegistryDoesNotContainGcpValue) {
   WriteTestRegistryValue(std::string{cur_param});
 
   auto gcp_detector = ::google::cloud::internal::GcpDetectorWin32Impl();
-  auto is_google_bios = gcp_detector.IsGoogleCloudBios(HKEY_CURRENT_USER,
-                                                         sub_key, value_key);
+  auto is_google_bios =
+      gcp_detector.IsGoogleCloudBios(HKEY_CURRENT_USER, sub_key, value_key);
   CleanupTestRegistryValue();
 
   EXPECT_FALSE(is_google_bios);
