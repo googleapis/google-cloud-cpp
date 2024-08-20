@@ -61,7 +61,7 @@ bool GcpDetectorWin32Impl::IsGoogleCloudServerless(
   for (auto env_var : env_variables) {
     char* buf = nullptr;
     size_t size = 0;
-    // Use _dupenv_s here instead of getenv. 
+    // Use _dupenv_s here instead of getenv.
     // MSVC throws a security error on getenv
     auto result = _dupenv_s(&buf, &size, env_var.c_str());
     if (result == 0 && buf != nullptr) {
