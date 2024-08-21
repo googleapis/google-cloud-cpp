@@ -17,9 +17,9 @@
 #include "google/cloud/internal/random.h"
 #include "absl/strings/string_view.h"
 #include <gmock/gmock.h>
+#include <cstdlib>
 #include <fstream>
 #include <vector>
-#include <stdlib.h>
 #ifdef _WIN32
 #include <winreg.h>
 #include <wtypes.h>
@@ -183,7 +183,7 @@ TEST(DetectGcpPlatform, ContainsServerlessEnvVar) {
 #ifdef _WIN32
   _putenv_s(env_vars[0].c_str(), "VALUE");
 #else  // _WIN32
-  setenv(env_vars[0].c_str(), "VALUE", false);
+  setenv(env_vars[0].c_str(), "VALUE", 0);
 #endif
 
   auto gcp_detector =

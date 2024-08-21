@@ -16,6 +16,7 @@
 #include "google/cloud/internal/filesystem.h"
 #include "absl/strings/ascii.h"
 #include "absl/strings/string_view.h"
+#include <algorithm>
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
@@ -80,25 +81,26 @@ bool GcpDetectorImpl::IsGoogleCloudBios() {
 
 bool GcpDetectorImpl::IsGoogleCloudServerless() {
 #ifdef _WIN32
-  for (auto const& env_var : this->config_.env_variables) {
-    char* buf = nullptr;
-    size_t size = 0;
-    // Use _dupenv_s here instead of getenv.
-    // MSVC throws a security error on getenv.
-    auto result = _dupenv_s(&buf, &size, env_var.c_str());
-    if (result == 0 && buf != nullptr) {
-      free(buf);
-      return true;
-    }
-  }
-
-  return false;
+  return std::any_of(this->config_.env_variables.begin(),
+                     this->config_.env_variables.end(),
+                     [](std::string const& env_var) {
+                       char* buf = nullptr;
+                       size_t size = 0;
+                       // Use _dupenv_s here instead of getenv.
+                       // MSVC throws a security error on getenv.
+                       auto result = _dupenv_s(&buf, &size, env_var.c_str());
+                       if (result == 0 && buf != nullptr) {
+                         free(buf);
+                         return true;
+                       }
+                       return false;
+                     });
 #else  // _WIN32
-  for (auto const& env_var : this->config_.env_variables) {
-    if (std::getenv(env_var.c_str()) != nullptr) return true;
-  }
-
-  return false;
+  return std::any_of(this->config_.env_variables.begin(),
+                     this->config_.env_variables.end(),
+                     [](std::string const& env_var) {
+                       return std::getenv(env_var.c_str()) != nullptr;
+                     });
 #endif
 }
 
