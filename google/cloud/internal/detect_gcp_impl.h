@@ -17,6 +17,7 @@
 
 #include "google/cloud/internal/detect_gcp.h"
 #include "google/cloud/version.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -25,7 +26,8 @@ namespace internal {
 
 class GcpDetectorImpl : GcpDetector {
  public:
-  GcpDetectorImpl(GcpDetectorConfig const& config) : config_(config) {};
+  explicit GcpDetectorImpl(GcpDetectorConfig const& config)
+      : config_(std::move(config)) {};
   bool IsGoogleCloudBios() override;
   bool IsGoogleCloudServerless() override;
 
