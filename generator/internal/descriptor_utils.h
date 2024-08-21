@@ -93,6 +93,10 @@ bool CheckParameterCommentSubstitutions();
  */
 std::string CppTypeToString(google::protobuf::FieldDescriptor const* field);
 
+std::string FormatMethodReturnType(
+    google::protobuf::MethodDescriptor const& method, bool is_async,
+    bool is_longrunning, std::string const& prefix, std::string const& suffix);
+
 }  // namespace generator_internal
 }  // namespace cloud
 }  // namespace google

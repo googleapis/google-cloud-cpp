@@ -21,6 +21,7 @@
 #include "generator/internal/http_option_utils.h"
 #include "generator/internal/longrunning.h"
 #include "generator/internal/pagination.h"
+#include "generator/internal/predicate_utils.h"
 #include "generator/internal/request_id.h"
 #include "generator/internal/resolve_method_return.h"
 #include "generator/internal/routing.h"
@@ -872,6 +873,36 @@ Status PrintMethod(google::protobuf::MethodDescriptor const& method,
     printer.Print(line, file, vars, f(method));
   }
   return {};
+}
+
+std::string FormatMethodReturnType(
+    google::protobuf::MethodDescriptor const& method, bool is_async,
+    bool is_longrunning, std::string const& prefix, std::string const& suffix) {
+  bool is_response_type_empty = IsResponseTypeEmpty(method);
+  std::string return_type;
+
+  if (is_async) {
+    if (is_longrunning) {
+      return_type =
+          is_response_type_empty
+              ? "future<Status>"
+              : "future<StatusOr<$longrunning_deduced_response_type$>>";
+    } else {
+      return_type = is_response_type_empty
+                        ? "future<Status>"
+                        : "future<StatusOr<$response_type$>>";
+    }
+  } else {
+    if (is_longrunning) {
+      return_type = is_response_type_empty
+                        ? "Status"
+                        : "StatusOr<$longrunning_operation_type$>";
+    } else {
+      return_type =
+          is_response_type_empty ? "Status" : "StatusOr<$response_type$>";
+    }
+  }
+  return absl::StrCat(prefix, return_type, suffix);
 }
 
 }  // namespace generator_internal

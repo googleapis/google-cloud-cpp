@@ -40,6 +40,7 @@ using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::DescriptorPool;
 using ::google::protobuf::FileDescriptor;
 using ::google::protobuf::FileDescriptorProto;
+using ::google::protobuf::MethodDescriptor;
 using ::testing::_;
 using ::testing::AllOf;
 using ::testing::Contains;
@@ -1525,6 +1526,81 @@ TEST_F(PrintMethodTest, ExactlyOnePattern) {
   auto result = PrintMethod(*service_file_descriptor->service(0)->method(0),
                             printer, {}, patterns, "some_file", 42);
   EXPECT_THAT(result, IsOk());
+}
+
+class FormatMethodReturnTypeTest : public ::testing::Test {
+ protected:
+  void SetUp() override {
+    /// @cond
+    auto constexpr kServiceText = R"pb(
+      name: "google/foo/v1/service.proto"
+      package: "google.protobuf"
+      message_type { name: "Bar" }
+      message_type { name: "Empty" }
+      service {
+        name: "Service"
+        method {
+          name: "Empty"
+          input_type: "google.protobuf.Bar"
+          output_type: "google.protobuf.Empty"
+        }
+        method {
+          name: "NonEmpty"
+          input_type: "google.protobuf.Bar"
+          output_type: "google.protobuf.Bar"
+        }
+      }
+    )pb";
+    /// @endcond
+
+    ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
+                                                              &service_file_));
+  }
+
+  google::protobuf::FileDescriptorProto service_file_;
+};
+
+TEST_F(FormatMethodReturnTypeTest, EmptyReturnType) {
+    DescriptorPool pool;
+    FileDescriptor const* file = pool.BuildFile(service_file_);
+    MethodDescriptor const* empty_return_method = file->service(0)->method(0);
+
+    EXPECT_EQ(FormatMethodReturnType(*empty_return_method, false, false, "", ""),
+    R"""(Status)""");
+    EXPECT_EQ(FormatMethodReturnType(*empty_return_method, false, true, "", ""),
+    R"""(Status)""");
+    EXPECT_EQ(FormatMethodReturnType(*empty_return_method, true, false, "", ""),
+    R"""(future<Status>)""");
+    EXPECT_EQ(FormatMethodReturnType(*empty_return_method, true, true, "", ""),
+    R"""(future<Status>)""");
+}
+
+TEST_F(FormatMethodReturnTypeTest, NonEmptyReturnType) {
+    DescriptorPool pool;
+    FileDescriptor const* file = pool.BuildFile(service_file_);
+    MethodDescriptor const* empty_return_method = file->service(0)->method(1);
+
+    EXPECT_EQ(FormatMethodReturnType(*empty_return_method, false, false, "", ""),
+    R"""(StatusOr<$response_type$>)""");
+    EXPECT_EQ(FormatMethodReturnType(*empty_return_method, false, true, "", ""),
+    R"""(StatusOr<$longrunning_operation_type$>)""");
+    EXPECT_EQ(FormatMethodReturnType(*empty_return_method, true, false, "", ""),
+    R"""(future<StatusOr<$response_type$>>)""");
+    EXPECT_EQ(FormatMethodReturnType(*empty_return_method, true, true, "", ""),
+    R"""(future<StatusOr<$longrunning_deduced_response_type$>>)""");
+}
+
+TEST_F(FormatMethodReturnTypeTest, ReturnTypeWithPrefixAndSuffix) {
+    DescriptorPool pool;
+    FileDescriptor const* file = pool.BuildFile(service_file_);
+    MethodDescriptor const* empty_return_method = file->service(0)->method(0);
+
+    EXPECT_EQ(FormatMethodReturnType(*empty_return_method, false, false, "abc ", " xyz"),
+    R"""(abc Status xyz)""");
+    EXPECT_EQ(FormatMethodReturnType(*empty_return_method, false, false, "abc\n", "\nxyz"),
+    R"""(abc
+Status
+xyz)""");
 }
 
 }  // namespace
