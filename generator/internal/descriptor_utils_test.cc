@@ -1561,44 +1561,47 @@ class FormatMethodReturnTypeTest : public ::testing::Test {
 };
 
 TEST_F(FormatMethodReturnTypeTest, EmptyReturnType) {
-    DescriptorPool pool;
-    FileDescriptor const* file = pool.BuildFile(service_file_);
-    MethodDescriptor const* empty_return_method = file->service(0)->method(0);
+  DescriptorPool pool;
+  FileDescriptor const* file = pool.BuildFile(service_file_);
+  MethodDescriptor const* empty_return_method = file->service(0)->method(0);
 
-    EXPECT_EQ(FormatMethodReturnType(*empty_return_method, false, false, "", ""),
-    R"""(Status)""");
-    EXPECT_EQ(FormatMethodReturnType(*empty_return_method, false, true, "", ""),
-    R"""(Status)""");
-    EXPECT_EQ(FormatMethodReturnType(*empty_return_method, true, false, "", ""),
-    R"""(future<Status>)""");
-    EXPECT_EQ(FormatMethodReturnType(*empty_return_method, true, true, "", ""),
-    R"""(future<Status>)""");
+  EXPECT_EQ(FormatMethodReturnType(*empty_return_method, false, false, "", ""),
+            R"""(Status)""");
+  EXPECT_EQ(FormatMethodReturnType(*empty_return_method, false, true, "", ""),
+            R"""(Status)""");
+  EXPECT_EQ(FormatMethodReturnType(*empty_return_method, true, false, "", ""),
+            R"""(future<Status>)""");
+  EXPECT_EQ(FormatMethodReturnType(*empty_return_method, true, true, "", ""),
+            R"""(future<Status>)""");
 }
 
 TEST_F(FormatMethodReturnTypeTest, NonEmptyReturnType) {
-    DescriptorPool pool;
-    FileDescriptor const* file = pool.BuildFile(service_file_);
-    MethodDescriptor const* nonempty_return_method = file->service(0)->method(1);
+  DescriptorPool pool;
+  FileDescriptor const* file = pool.BuildFile(service_file_);
+  MethodDescriptor const* nonempty_return_method = file->service(0)->method(1);
 
-    EXPECT_EQ(FormatMethodReturnType(*nonempty_return_method, false, false, "", ""),
-    R"""(StatusOr<$response_type$>)""");
-    EXPECT_EQ(FormatMethodReturnType(*nonempty_return_method, false, true, "", ""),
-    R"""(StatusOr<$longrunning_operation_type$>)""");
-    EXPECT_EQ(FormatMethodReturnType(*nonempty_return_method, true, false, "", ""),
-    R"""(future<StatusOr<$response_type$>>)""");
-    EXPECT_EQ(FormatMethodReturnType(*nonempty_return_method, true, true, "", ""),
-    R"""(future<StatusOr<$longrunning_deduced_response_type$>>)""");
+  EXPECT_EQ(
+      FormatMethodReturnType(*nonempty_return_method, false, false, "", ""),
+      R"""(StatusOr<$response_type$>)""");
+  EXPECT_EQ(
+      FormatMethodReturnType(*nonempty_return_method, false, true, "", ""),
+      R"""(StatusOr<$longrunning_operation_type$>)""");
+  EXPECT_EQ(
+      FormatMethodReturnType(*nonempty_return_method, true, false, "", ""),
+      R"""(future<StatusOr<$response_type$>>)""");
+  EXPECT_EQ(FormatMethodReturnType(*nonempty_return_method, true, true, "", ""),
+            R"""(future<StatusOr<$longrunning_deduced_response_type$>>)""");
 }
 
 TEST_F(FormatMethodReturnTypeTest, ReturnTypeWithPrefixAndSuffix) {
-    DescriptorPool pool;
-    FileDescriptor const* file = pool.BuildFile(service_file_);
-    MethodDescriptor const* method = file->service(0)->method(0);
+  DescriptorPool pool;
+  FileDescriptor const* file = pool.BuildFile(service_file_);
+  MethodDescriptor const* method = file->service(0)->method(0);
 
-    EXPECT_EQ(FormatMethodReturnType(*method, false, false, "abc ", " xyz"),
-    R"""(abc Status xyz)""");
-    EXPECT_EQ(FormatMethodReturnType(*method, false, false, "abc\n", "\nxyz"),
-    R"""(abc
+  EXPECT_EQ(FormatMethodReturnType(*method, false, false, "abc ", " xyz"),
+            R"""(abc Status xyz)""");
+  EXPECT_EQ(FormatMethodReturnType(*method, false, false, "abc\n", "\nxyz"),
+            R"""(abc
 Status
 xyz)""");
 }
