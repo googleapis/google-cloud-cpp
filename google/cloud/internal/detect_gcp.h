@@ -19,7 +19,7 @@
 #include <string>
 #include <vector>
 #ifdef _WIN32
-#include <winreg.h>
+#include <wtypes.h>
 #endif
 
 namespace google {
