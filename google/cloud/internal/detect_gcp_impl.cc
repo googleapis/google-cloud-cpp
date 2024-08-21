@@ -35,17 +35,17 @@ namespace internal {
 std::string GcpDetectorImpl::GetBiosInformation() {
 #ifdef _WIN32
   DWORD size{};
-  LONG result = ::RegGetValueA(this->config_.key, this->config_.sub_key.c_str(),
-                               this->config_.value_key.c_str(), RRF_RT_REG_SZ,
-                               nullptr, nullptr, &size);
+  LONG result = RegGetValueA(this->config_.key, this->config_.sub_key.c_str(),
+                             this->config_.value_key.c_str(), RRF_RT_REG_SZ,
+                             nullptr, nullptr, &size);
 
   if (result != ERROR_SUCCESS) return "";
 
   std::string contents;
   contents.resize(size / sizeof(char));
-  result = ::RegGetValueA(this->config_.key, this->config_.sub_key.c_str(),
-                          this->config_.value_key.c_str(), RRF_RT_REG_SZ,
-                          nullptr, &contents[0], &size);
+  result = RegGetValueA(this->config_.key, this->config_.sub_key.c_str(),
+                        this->config_.value_key.c_str(), RRF_RT_REG_SZ, nullptr,
+                        &contents[0], &size);
 
   if (result != ERROR_SUCCESS) return "";
 
