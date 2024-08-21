@@ -15,10 +15,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_DETECT_GCP_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_DETECT_GCP_H
 
-#ifndef _WIN32
 #include "google/cloud/version.h"
 #include <string>
 #include <vector>
+#ifdef _WIN32
+#include <winreg.h>
+#endif
 
 namespace google {
 namespace cloud {
@@ -27,37 +29,39 @@ namespace internal {
 
 /**
  * Interface for attempting to detect if running in a Google Cloud Platform
- * (GCP).
+ * (GCP) environment.
  *
  * This code is split across WIN32 and other as the detection logic differs
  * slightly due to needing to make platform specific calls.
  */
 class GcpDetector {
  public:
-  virtual bool IsGoogleCloudBios(std::string const& path) = 0;
-  virtual bool IsGoogleCloudServerless(
-      std::vector<std::string> const& env_variables) = 0;
+#ifdef _WIN32
+  struct GcpDetectorConfig {
+    HKEY key = HKEY_LOCAL_MACHINE;
+    std::string sub_key = "SYSTEM\\HardwareConfig\\Current";
+    std::string value_key = "SystemProductName";
+    std::vector<std::string> env_variables = {"CLOUD_RUN_JOB", "FUNCTION_NAME",
+                                              "K_SERVICE"};
+  };
+#else  // _WIN32
+  struct GcpDetectorConfig {
+    std::string path = "/sys/class/dmi/id/product_name";
+    std::vector<std::string> env_variables = {"CLOUD_RUN_JOB", "FUNCTION_NAME",
+                                              "K_SERVICE"};
+  };
+#endif
+
+  virtual bool IsGoogleCloudBios() = 0;
+  virtual bool IsGoogleCloudServerless() = 0;
 
  private:
-  virtual std::string GetBiosInformation(std::string const& path) = 0;
-};
-
-class GcpDetectorImpl : GcpDetector {
- public:
-  bool IsGoogleCloudBios(
-      std::string const& path = "/sys/class/dmi/id/product_name") override;
-  bool IsGoogleCloudServerless(std::vector<std::string> const& env_variables = {
-                                   "CLOUD_RUN_JOB", "FUNCTION_NAME",
-                                   "K_SERVICE"}) override;
-
- private:
-  std::string GetBiosInformation(std::string const& path) override;
+  virtual std::string GetBiosInformation() = 0;
 };
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
-#endif  // _WIN32
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_DETECT_GCP_H
