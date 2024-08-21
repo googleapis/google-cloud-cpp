@@ -12,20 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef _WIN32
-#include "google/cloud/internal/detect_gcp_win32.h"
+#include "google/cloud/internal/detect_gcp_impl.h"
+#include "google/cloud/internal/filesystem.h"
 #include "absl/strings/ascii.h"
 #include "absl/strings/string_view.h"
+#include <cstdlib>
+#include <fstream>
+#include <iostream>
+#include <regex>
+#include <string>
+#include <vector>
+#ifdef _WIN32
 #include <Windows.h>
 #include <stdlib.h>
+#endif
 
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-std::string GcpDetectorWin32Impl::GetBiosInformation(
-    HKEY key, std::string const& sub_key, std::string const& value_key) {
+std::string GcpDetectorImpl::GetBiosInformation() {
+#ifdef _WIN32
   DWORD size{};
   LONG result = ::RegGetValueA(key, sub_key.c_str(), value_key.c_str(),
                                RRF_RT_REG_SZ, nullptr, nullptr, &size);
@@ -44,21 +52,33 @@ std::string GcpDetectorWin32Impl::GetBiosInformation(
   contents.resize(content_length);
 
   return contents;
+#else  // _WIN32
+  auto product_name_status =
+      google::cloud::internal::status(this->config_.path);
+  if (!google::cloud::internal::exists(product_name_status)) return "";
+
+  std::ifstream product_name_file(this->config_.path);
+  std::string contents;
+  if (!product_name_file.is_open()) return "";
+
+  std::getline(product_name_file, contents);
+  product_name_file.close();
+
+  return contents;
+#endif
 }
 
-bool GcpDetectorWin32Impl::IsGoogleCloudBios(HKEY key,
-                                             std::string const& sub_key,
-                                             std::string const& value_key) {
-  auto bios_information = this->GetBiosInformation(key, sub_key, value_key);
+bool GcpDetectorImpl::IsGoogleCloudBios() {
+  auto bios_information = this->GetBiosInformation();
   absl::StripAsciiWhitespace(&bios_information);
 
   return bios_information == "Google" ||
          bios_information == "Google Compute Engine";
 }
 
-bool GcpDetectorWin32Impl::IsGoogleCloudServerless(
-    std::vector<std::string> const& env_variables) {
-  for (auto env_var : env_variables) {
+bool GcpDetectorImpl::IsGoogleCloudServerless() {
+#ifdef _WIN32
+  for (auto const& env_var : env_variables) {
     char* buf = nullptr;
     size_t size = 0;
     // Use _dupenv_s here instead of getenv.
@@ -71,11 +91,16 @@ bool GcpDetectorWin32Impl::IsGoogleCloudServerless(
   }
 
   return false;
+#else  // _WIN32
+  for (auto const& env_var : this->config_.env_variables) {
+    if (std::getenv(env_var.c_str()) != nullptr) return true;
+  }
+
+  return false;
+#endif
 }
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
-
-#endif  // _WIN32
