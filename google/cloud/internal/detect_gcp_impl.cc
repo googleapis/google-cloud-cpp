@@ -23,8 +23,8 @@
 #include <string>
 #include <vector>
 #ifdef _WIN32
-#include <Windows.h>
 #include <stdlib.h>
+#include <winreg.h>
 #endif
 
 namespace google {
@@ -35,15 +35,17 @@ namespace internal {
 std::string GcpDetectorImpl::GetBiosInformation() {
 #ifdef _WIN32
   DWORD size{};
-  LONG result = ::RegGetValueA(key, sub_key.c_str(), value_key.c_str(),
-                               RRF_RT_REG_SZ, nullptr, nullptr, &size);
+  LONG result = ::RegGetValueA(this->config_.key, this->config_.sub_key.c_str(),
+                               this->config_.value_key.c_str(), RRF_RT_REG_SZ,
+                               nullptr, nullptr, &size);
 
   if (result != ERROR_SUCCESS) return "";
 
   std::string contents;
   contents.resize(size / sizeof(char));
-  result = ::RegGetValueA(key, sub_key.c_str(), value_key.c_str(),
-                          RRF_RT_REG_SZ, nullptr, &contents[0], &size);
+  result = ::RegGetValueA(this->config_.key, this->config_.sub_key.c_str(),
+                          this->config_.value_key.c_str(), RRF_RT_REG_SZ,
+                          nullptr, &contents[0], &size);
 
   if (result != ERROR_SUCCESS) return "";
 
@@ -78,11 +80,11 @@ bool GcpDetectorImpl::IsGoogleCloudBios() {
 
 bool GcpDetectorImpl::IsGoogleCloudServerless() {
 #ifdef _WIN32
-  for (auto const& env_var : env_variables) {
+  for (auto const& env_var : this->config_.env_variables) {
     char* buf = nullptr;
     size_t size = 0;
     // Use _dupenv_s here instead of getenv.
-    // MSVC throws a security error on getenv
+    // MSVC throws a security error on getenv.
     auto result = _dupenv_s(&buf, &size, env_var.c_str());
     if (result == 0 && buf != nullptr) {
       free(buf);

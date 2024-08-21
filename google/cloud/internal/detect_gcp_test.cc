@@ -21,7 +21,8 @@
 #include <vector>
 #include <stdlib.h>
 #ifdef _WIN32
-#include <Windows.h>
+#include <winreg.h>
+#include <wtypes.h>
 #endif
 
 namespace google {
@@ -85,9 +86,9 @@ TEST(DetectGcpPlatform, BiosValueDoesNotExist) {
       ::google::cloud::internal::GcpDetector::GcpDetectorConfig();
 
 #ifdef _WIN32
-  config.key = HKEY_CURRENT_USER;
-  config.sub_key = sub_key;
-  config.value_key = value_key;
+  detector_config.key = HKEY_CURRENT_USER;
+  detector_config.sub_key = sub_key;
+  detector_config.value_key = value_key;
 #else  // _WIN32
   auto const file_name = TempFileName();
   detector_config.path = file_name;
@@ -108,9 +109,9 @@ TEST_P(MultiValidValuesTest, ContainsGoogleBios) {
 #ifdef _WIN32
   WriteTestRegistryValue(std::string{cur_param});
 
-  config.key = HKEY_CURRENT_USER;
-  config.sub_key = sub_key;
-  config.value_key = value_key;
+  detector_config.key = HKEY_CURRENT_USER;
+  detector_config.sub_key = sub_key;
+  detector_config.value_key = value_key;
 #else  // _WIN32
   auto const file_name = TempFileName();
 
@@ -139,9 +140,9 @@ TEST_P(MultiInvalidValuesTest, DoesNotContainGoogleBios) {
 #ifdef _WIN32
   WriteTestRegistryValue(std::string{cur_param});
 
-  config.key = HKEY_CURRENT_USER;
-  config.sub_key = sub_key;
-  config.value_key = value_key;
+  detector_config.key = HKEY_CURRENT_USER;
+  detector_config.sub_key = sub_key;
+  detector_config.value_key = value_key;
 #else
   auto const file_name = TempFileName();
 
@@ -162,7 +163,7 @@ TEST_P(MultiInvalidValuesTest, DoesNotContainGoogleBios) {
   EXPECT_FALSE(is_cloud_bios);
 }
 
-TEST(DetectGcpPlatform, NoEnvVarSet) {
+TEST(DetectGcpPlatform, DoesNotContainServerlessEnvVar) {
   auto detector_config =
       ::google::cloud::internal::GcpDetector::GcpDetectorConfig();
   detector_config.env_variables = env_vars;
@@ -174,7 +175,7 @@ TEST(DetectGcpPlatform, NoEnvVarSet) {
   EXPECT_FALSE(is_cloud_serverless);
 }
 
-TEST(DetectGcpPlatform, EnvVarSet) {
+TEST(DetectGcpPlatform, ContainsServerlessEnvVar) {
   auto detector_config =
       ::google::cloud::internal::GcpDetector::GcpDetectorConfig();
   detector_config.env_variables = env_vars;
