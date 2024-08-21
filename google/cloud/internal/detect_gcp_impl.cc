@@ -24,7 +24,6 @@
 #include <string>
 #include <vector>
 #ifdef _WIN32
-#include <stdlib.h>
 #include <winreg.h>
 #endif
 
