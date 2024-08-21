@@ -51,31 +51,31 @@ std::string const& value_key = "TestProductName";
 void WriteTestRegistryValue(std::string value) {
   HKEY hKey;
 
-  LONG result = ::RegCreateKeyExA(HKEY_CURRENT_USER, sub_key.c_str(), 0,
-                                  nullptr, REG_OPTION_NON_VOLATILE,
-                                  KEY_ALL_ACCESS, nullptr, &hKey, nullptr);
+  LONG result = RegCreateKeyExA(HKEY_CURRENT_USER, sub_key.c_str(), 0, nullptr,
+                                REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS,
+                                nullptr, &hKey, nullptr);
   if (result != ERROR_SUCCESS) return;
   result =
-      ::RegSetValueExA(hKey, value_key.c_str(), 0, REG_SZ,
-                       (LPBYTE)value.c_str(), (DWORD)strlen(value.c_str()) + 1);
+      RegSetValueExA(hKey, value_key.c_str(), 0, REG_SZ, (LPBYTE)value.c_str(),
+                     (DWORD)strlen(value.c_str()) + 1);
   if (result != ERROR_SUCCESS) return;
-  ::RegCloseKey(hKey);
+  RegCloseKey(hKey);
 }
 
 void CleanupTestRegistryValue() {
   LONG result =
-      ::RegDeleteKeyExA(HKEY_CURRENT_USER, sub_key.c_str(), KEY_ALL_ACCESS, 0);
+      RegDeleteKeyExA(HKEY_CURRENT_USER, sub_key.c_str(), KEY_ALL_ACCESS, 0);
   if (result != ERROR_SUCCESS) return;
-  ::RegDeleteKeyExA(HKEY_CURRENT_USER, parent_key.c_str(), KEY_ALL_ACCESS, 0);
+  RegDeleteKeyExA(HKEY_CURRENT_USER, parent_key.c_str(), KEY_ALL_ACCESS, 0);
 }
 #else  // _WIN32
 std::string TempFileName() {
   static auto generator =
       google::cloud::internal::DefaultPRNG(std::random_device{}());
   return google::cloud::internal::PathAppend(
-      ::testing::TempDir(),
-      ::google::cloud::internal::Sample(
-          generator, 16, "abcdefghijlkmnopqrstuvwxyz0123456789"));
+      testing::TempDir(),
+      google::cloud::internal::Sample(generator, 16,
+                                      "abcdefghijlkmnopqrstuvwxyz0123456789"));
 }
 #endif
 
@@ -83,7 +83,7 @@ std::vector<std::string> env_vars = {"TEST_VAR_ONE"};
 
 TEST(DetectGcpPlatform, BiosValueDoesNotExist) {
   auto detector_config =
-      ::google::cloud::internal::GcpDetector::GcpDetectorConfig();
+      google::cloud::internal::GcpDetector::GcpDetectorConfig();
 
 #ifdef _WIN32
   detector_config.key = HKEY_CURRENT_USER;
@@ -94,8 +94,7 @@ TEST(DetectGcpPlatform, BiosValueDoesNotExist) {
   detector_config.path = file_name;
 #endif
 
-  auto gcp_detector =
-      ::google::cloud::internal::GcpDetectorImpl(detector_config);
+  auto gcp_detector = google::cloud::internal::GcpDetectorImpl(detector_config);
   auto is_cloud_bios = gcp_detector.IsGoogleCloudBios();
 
   EXPECT_FALSE(is_cloud_bios);
@@ -103,7 +102,7 @@ TEST(DetectGcpPlatform, BiosValueDoesNotExist) {
 
 TEST_P(MultiValidValuesTest, ContainsGoogleBios) {
   auto detector_config =
-      ::google::cloud::internal::GcpDetector::GcpDetectorConfig();
+      google::cloud::internal::GcpDetector::GcpDetectorConfig();
   auto cur_param = GetParam();
 
 #ifdef _WIN32
@@ -119,8 +118,7 @@ TEST_P(MultiValidValuesTest, ContainsGoogleBios) {
   detector_config.path = file_name;
 #endif
 
-  auto gcp_detector =
-      ::google::cloud::internal::GcpDetectorImpl(detector_config);
+  auto gcp_detector = google::cloud::internal::GcpDetectorImpl(detector_config);
   auto is_cloud_bios = gcp_detector.IsGoogleCloudBios();
 
 #ifdef _WIN32
@@ -134,7 +132,7 @@ TEST_P(MultiValidValuesTest, ContainsGoogleBios) {
 
 TEST_P(MultiInvalidValuesTest, DoesNotContainGoogleBios) {
   auto detector_config =
-      ::google::cloud::internal::GcpDetector::GcpDetectorConfig();
+      google::cloud::internal::GcpDetector::GcpDetectorConfig();
   auto cur_param = GetParam();
 
 #ifdef _WIN32
@@ -150,8 +148,7 @@ TEST_P(MultiInvalidValuesTest, DoesNotContainGoogleBios) {
   detector_config.path = file_name;
 #endif
 
-  auto gcp_detector =
-      ::google::cloud::internal::GcpDetectorImpl(detector_config);
+  auto gcp_detector = google::cloud::internal::GcpDetectorImpl(detector_config);
   auto is_cloud_bios = gcp_detector.IsGoogleCloudBios();
 
 #ifdef _WIN32
@@ -165,11 +162,10 @@ TEST_P(MultiInvalidValuesTest, DoesNotContainGoogleBios) {
 
 TEST(DetectGcpPlatform, DoesNotContainServerlessEnvVar) {
   auto detector_config =
-      ::google::cloud::internal::GcpDetector::GcpDetectorConfig();
+      google::cloud::internal::GcpDetector::GcpDetectorConfig();
   detector_config.env_variables = env_vars;
 
-  auto gcp_detector =
-      ::google::cloud::internal::GcpDetectorImpl(detector_config);
+  auto gcp_detector = google::cloud::internal::GcpDetectorImpl(detector_config);
   auto is_cloud_serverless = gcp_detector.IsGoogleCloudServerless();
 
   EXPECT_FALSE(is_cloud_serverless);
@@ -177,7 +173,7 @@ TEST(DetectGcpPlatform, DoesNotContainServerlessEnvVar) {
 
 TEST(DetectGcpPlatform, ContainsServerlessEnvVar) {
   auto detector_config =
-      ::google::cloud::internal::GcpDetector::GcpDetectorConfig();
+      google::cloud::internal::GcpDetector::GcpDetectorConfig();
   detector_config.env_variables = env_vars;
 
 #ifdef _WIN32
@@ -186,8 +182,7 @@ TEST(DetectGcpPlatform, ContainsServerlessEnvVar) {
   setenv(env_vars[0].c_str(), "VALUE", 0);
 #endif
 
-  auto gcp_detector =
-      ::google::cloud::internal::GcpDetectorImpl(detector_config);
+  auto gcp_detector = google::cloud::internal::GcpDetectorImpl(detector_config);
   auto is_cloud_serverless = gcp_detector.IsGoogleCloudServerless();
 
 #ifdef _WIN32
