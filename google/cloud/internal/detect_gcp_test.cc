@@ -18,6 +18,7 @@
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "absl/strings/string_view.h"
 #include <gmock/gmock.h>
+#include <cstdlib>
 #include <fstream>
 #include <vector>
 #ifdef _WIN32
