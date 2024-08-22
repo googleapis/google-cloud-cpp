@@ -12,27 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! [START spanner_quickstart]
 #include "google/cloud/spanner/client.h"
-//! [END spanner_quickstart]
 #include "google/cloud/spanner/admin/database_admin_client.h"
 #include "google/cloud/spanner/admin/database_admin_options.h"
 #include "google/cloud/spanner/row.h"
 #include "google/cloud/spanner/timestamp.h"
-#include "google/cloud/spanner/testing/debug_log.h"  // TODO(#4758): remove
-#include "google/cloud/spanner/testing/random_database_name.h"
-#include "google/cloud/internal/getenv.h"
-#include "google/cloud/internal/random.h"
 #include "google/cloud/log.h"
-#include "google/cloud/project.h"
-#include "absl/strings/match.h"
-#include "absl/strings/string_view.h"
-#include "absl/time/clock.h"
-#include "absl/time/time.h"
-#include "absl/types/optional.h"
-#include <chrono>
-#include <iomanip>
-#include <iterator>
 #include <string>
 #include <tuple>
 #include <utility>
@@ -94,8 +79,7 @@ void CreateDatabaseWithPropertyGraph(
       id               INT64 NOT NULL,
       to_id            INT64 NOT NULL,
       amount           FLOAT64,
-      create_time      TIMESTAMP NOT NULL OPTIONS
-        (allow_commit_timestamp=true),
+      create_time      TIMESTAMP NOT NULL,
       order_number     STRING(MAX),
       FOREIGN KEY (to_id) REFERENCES Account (id)
     ) PRIMARY KEY (id, to_id, create_time),
@@ -162,7 +146,6 @@ void InsertData(google::cloud::spanner::Client client) {
 
 //! [START spanner_insert_graph_data_with_dml]
 void InsertDataWithDml(google::cloud::spanner::Client client) {
-  //! [execute-dml]
   using ::google::cloud::StatusOr;
   namespace spanner = ::google::cloud::spanner;
   std::int64_t rows_inserted;
@@ -175,7 +158,7 @@ void InsertDataWithDml(google::cloud::spanner::Client client) {
                 "INSERT INTO Account (id, create_time, is_blocked) "
                 "  VALUES"
                 "    (1, CAST('2000-08-10 08:18:48.463959-07:52' AS TIMESTAMP), false),"
-                "    (2, CAST('2000-08-12 08:18:48.463959-07:52' AS TIMESTAMP), true)"));
+                "    (2, CAST('2000-08-12 07:13:16.463959-03:41' AS TIMESTAMP), true)"));
         if (!insert) return std::move(insert).status();
         rows_inserted = insert->RowsModified();
         return spanner::Mutations{};
@@ -191,8 +174,8 @@ void InsertDataWithDml(google::cloud::spanner::Client client) {
             spanner::SqlStatement(
                 "INSERT INTO AccountTransferAccount (id, to_id, create_time, amount) "
                 "  VALUES"
-                "    (1, 2, PENDING_COMMIT_TIMESTAMP(), 100),"
-                "    (1, 1, PENDING_COMMIT_TIMESTAMP(), 200) "));
+                "    (1, 2, CAST('2000-09-11 03:11:18.463959-06:36' AS TIMESTAMP), 100),"
+                "    (1, 1, CAST('2000-09-12 04:09:34.463959-05:12' AS TIMESTAMP), 200) "));
         if (!insert) return std::move(insert).status();
         rows_inserted = insert->RowsModified();
         return spanner::Mutations{};
@@ -200,7 +183,6 @@ void InsertDataWithDml(google::cloud::spanner::Client client) {
   if (!commit_result) throw std::move(commit_result).status();
   std::cout << "Rows inserted into AccountTransferAccount: " << rows_inserted;
  
-  //! [execute-dml]
   std::cout << "Insert was successful [spanner_insert_graph_data_with_dml]\n";
 }
 //! [END spanner_insert_graph_data_with_dml]
