@@ -59,6 +59,7 @@
 @com_google_googleapis//google/cloud/aiplatform/v1:entity_type.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:env_var.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:evaluated_annotation.proto
+@com_google_googleapis//google/cloud/aiplatform/v1:evaluation_service.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:event.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:execution.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:explanation.proto
