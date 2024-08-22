@@ -17,24 +17,43 @@
 
 #include "google/cloud/internal/detect_gcp.h"
 #include "google/cloud/version.h"
-#include <utility>
+#include <memory>
+#include <string>
+#include <vector>
+#ifdef _WIN32
+#include <wtypes.h>
+#endif
 
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-class GcpDetectorImpl : GcpDetector {
+class GcpDetectorImpl : public GcpDetector {
  public:
-  explicit GcpDetectorImpl(GcpDetectorConfig const& config)
-      : config_(std::move(config)) {};
+#ifdef _WIN32
+  struct GcpDetectorConfig {
+    HKEY key;
+    std::string sub_key;
+    std::string value_key;
+    std::vector<std::string> env_variables;
+  };
+#else  // _WIN32
+  struct GcpDetectorConfig {
+    std::string path;
+    std::vector<std::string> env_variables;
+  };
+#endif
+  explicit GcpDetectorImpl(GcpDetectorConfig const config) : config_(config) {};
   bool IsGoogleCloudBios() override;
   bool IsGoogleCloudServerless() override;
 
  private:
-  std::string GetBiosInformation() override;
+  std::string GetBiosInformation();
   GcpDetectorConfig config_;
 };
+
+std::shared_ptr<GcpDetector> MakeGcpDetector();
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

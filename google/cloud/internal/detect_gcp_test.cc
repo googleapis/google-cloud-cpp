@@ -15,9 +15,9 @@
 #include "google/cloud/internal/detect_gcp_impl.h"
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include "absl/strings/string_view.h"
 #include <gmock/gmock.h>
-#include <cstdlib>
 #include <fstream>
 #include <vector>
 #ifdef _WIN32
@@ -44,29 +44,27 @@ INSTANTIATE_TEST_SUITE_P(DetectGcpPlatform, MultiInvalidValuesTest,
                                          "Compute Engine Google"));
 
 #ifdef _WIN32
-std::string const& parent_key = "SOFTWARE\\GoogleCloudCpp";
-std::string const& sub_key = "SOFTWARE\\GoogleCloudCpp\\Test";
-std::string const& value_key = "TestProductName";
+auto constexpr parent_key = "SOFTWARE\\GoogleCloudCpp";
+auto constexpr sub_key = "SOFTWARE\\GoogleCloudCpp\\Test";
+auto constexpr value_key = "TestProductName";
 
 void WriteTestRegistryValue(std::string value) {
   HKEY hKey;
 
-  LONG result = RegCreateKeyExA(HKEY_CURRENT_USER, sub_key.c_str(), 0, nullptr,
+  LONG result = RegCreateKeyExA(HKEY_CURRENT_USER, sub_key, 0, nullptr,
                                 REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS,
                                 nullptr, &hKey, nullptr);
   if (result != ERROR_SUCCESS) return;
-  result =
-      RegSetValueExA(hKey, value_key.c_str(), 0, REG_SZ, (LPBYTE)value.c_str(),
-                     (DWORD)strlen(value.c_str()) + 1);
+  result = RegSetValueExA(hKey, value_key, 0, REG_SZ, (LPBYTE)value.c_str(),
+                          (DWORD)strlen(value.c_str()) + 1);
   if (result != ERROR_SUCCESS) return;
   RegCloseKey(hKey);
 }
 
 void CleanupTestRegistryValue() {
-  LONG result =
-      RegDeleteKeyExA(HKEY_CURRENT_USER, sub_key.c_str(), KEY_ALL_ACCESS, 0);
+  LONG result = RegDeleteKeyExA(HKEY_CURRENT_USER, sub_key, KEY_ALL_ACCESS, 0);
   if (result != ERROR_SUCCESS) return;
-  RegDeleteKeyExA(HKEY_CURRENT_USER, parent_key.c_str(), KEY_ALL_ACCESS, 0);
+  RegDeleteKeyExA(HKEY_CURRENT_USER, parent_key, KEY_ALL_ACCESS, 0);
 }
 #else  // _WIN32
 std::string TempFileName() {
@@ -83,7 +81,7 @@ std::vector<std::string> env_vars = {"TEST_VAR_ONE"};
 
 TEST(DetectGcpPlatform, BiosValueDoesNotExist) {
   auto detector_config =
-      google::cloud::internal::GcpDetector::GcpDetectorConfig();
+      google::cloud::internal::GcpDetectorImpl::GcpDetectorConfig();
 
 #ifdef _WIN32
   detector_config.key = HKEY_CURRENT_USER;
@@ -102,7 +100,7 @@ TEST(DetectGcpPlatform, BiosValueDoesNotExist) {
 
 TEST_P(MultiValidValuesTest, ContainsGoogleBios) {
   auto detector_config =
-      google::cloud::internal::GcpDetector::GcpDetectorConfig();
+      google::cloud::internal::GcpDetectorImpl::GcpDetectorConfig();
   auto cur_param = GetParam();
 
 #ifdef _WIN32
@@ -132,7 +130,7 @@ TEST_P(MultiValidValuesTest, ContainsGoogleBios) {
 
 TEST_P(MultiInvalidValuesTest, DoesNotContainGoogleBios) {
   auto detector_config =
-      google::cloud::internal::GcpDetector::GcpDetectorConfig();
+      google::cloud::internal::GcpDetectorImpl::GcpDetectorConfig();
   auto cur_param = GetParam();
 
 #ifdef _WIN32
@@ -162,7 +160,7 @@ TEST_P(MultiInvalidValuesTest, DoesNotContainGoogleBios) {
 
 TEST(DetectGcpPlatform, DoesNotContainServerlessEnvVar) {
   auto detector_config =
-      google::cloud::internal::GcpDetector::GcpDetectorConfig();
+      google::cloud::internal::GcpDetectorImpl::GcpDetectorConfig();
   detector_config.env_variables = env_vars;
 
   auto gcp_detector = google::cloud::internal::GcpDetectorImpl(detector_config);
@@ -173,23 +171,13 @@ TEST(DetectGcpPlatform, DoesNotContainServerlessEnvVar) {
 
 TEST(DetectGcpPlatform, ContainsServerlessEnvVar) {
   auto detector_config =
-      google::cloud::internal::GcpDetector::GcpDetectorConfig();
+      google::cloud::internal::GcpDetectorImpl::GcpDetectorConfig();
   detector_config.env_variables = env_vars;
 
-#ifdef _WIN32
-  _putenv_s(env_vars[0].c_str(), "VALUE");
-#else  // _WIN32
-  setenv(env_vars[0].c_str(), "VALUE", 0);
-#endif
-
+  auto scoped_env =
+      google::cloud::testing_util::ScopedEnvironment(env_vars[0], "TEST_VALUE");
   auto gcp_detector = google::cloud::internal::GcpDetectorImpl(detector_config);
   auto is_cloud_serverless = gcp_detector.IsGoogleCloudServerless();
-
-#ifdef _WIN32
-  _putenv_s(env_vars[0].c_str(), "");
-#else  // _WIN32
-  unsetenv(env_vars[0].c_str());
-#endif
 
   EXPECT_TRUE(is_cloud_serverless);
 }
