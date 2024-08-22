@@ -52,56 +52,104 @@ class MockPoliciesConnection : public iam_v2::PoliciesConnection {
   MOCK_METHOD(StatusOr<google::iam::v2::Policy>, GetPolicy,
               (google::iam::v2::GetPolicyRequest const& request), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreatePolicy)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreatePolicy(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreatePolicy(Matcher<google::iam::v2::CreatePolicyRequest const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::iam::v2::Policy>>, CreatePolicy,
               (google::iam::v2::CreatePolicyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreatePolicy(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreatePolicy,
-              (ExperimentalTag, NoAwaitTag,
-               google::iam::v2::CreatePolicyRequest const& request),
+              (NoAwaitTag, google::iam::v2::CreatePolicyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreatePolicy(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::iam::v2::Policy>>, CreatePolicy,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdatePolicy)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdatePolicy(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdatePolicy(Matcher<google::iam::v2::UpdatePolicyRequest const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::iam::v2::Policy>>, UpdatePolicy,
               (google::iam::v2::UpdatePolicyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdatePolicy(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdatePolicy,
-              (ExperimentalTag, NoAwaitTag,
-               google::iam::v2::UpdatePolicyRequest const& request),
+              (NoAwaitTag, google::iam::v2::UpdatePolicyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdatePolicy(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::iam::v2::Policy>>, UpdatePolicy,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeletePolicy)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeletePolicy(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeletePolicy(Matcher<google::iam::v2::DeletePolicyRequest const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::iam::v2::Policy>>, DeletePolicy,
               (google::iam::v2::DeletePolicyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeletePolicy(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeletePolicy,
-              (ExperimentalTag, NoAwaitTag,
-               google::iam::v2::DeletePolicyRequest const& request),
+              (NoAwaitTag, google::iam::v2::DeletePolicyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeletePolicy(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::iam::v2::Policy>>, DeletePolicy,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

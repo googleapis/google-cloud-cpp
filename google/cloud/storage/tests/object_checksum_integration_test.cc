@@ -18,6 +18,8 @@
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -34,8 +36,7 @@ using ::testing::Not;
 using ::testing::Pair;
 
 class ObjectChecksumIntegrationTest
-    : public google::cloud::storage::testing::StorageIntegrationTest,
-      public ::testing::WithParamInterface<std::string> {
+    : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:
   void SetUp() override {
     bucket_name_ = google::cloud::internal::GetEnv(
@@ -48,7 +49,7 @@ class ObjectChecksumIntegrationTest
 };
 
 /// @test Verify that CRC32C checksums are enabled by default.
-TEST_P(ObjectChecksumIntegrationTest, InsertObjectDefault) {
+TEST_F(ObjectChecksumIntegrationTest, InsertObjectDefault) {
   auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
   auto meta = client.InsertObject(bucket_name_, object_name, LoremIpsum(),
@@ -63,7 +64,7 @@ TEST_P(ObjectChecksumIntegrationTest, InsertObjectDefault) {
 }
 
 /// @test Verify that `DisableCrc32cChecksum(true)` works as expected.
-TEST_P(ObjectChecksumIntegrationTest, InsertObjectExplicitDisable) {
+TEST_F(ObjectChecksumIntegrationTest, InsertObjectExplicitDisable) {
   auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
   auto meta = client.InsertObject(bucket_name_, object_name, LoremIpsum(),
@@ -79,7 +80,7 @@ TEST_P(ObjectChecksumIntegrationTest, InsertObjectExplicitDisable) {
 }
 
 /// @test Verify that `DisableCrc32cChecksum(false)` works as expected.
-TEST_P(ObjectChecksumIntegrationTest, InsertObjectExplicitEnable) {
+TEST_F(ObjectChecksumIntegrationTest, InsertObjectExplicitEnable) {
   auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
@@ -95,7 +96,7 @@ TEST_P(ObjectChecksumIntegrationTest, InsertObjectExplicitEnable) {
   }
 }
 
-TEST_P(ObjectChecksumIntegrationTest, InsertObjectWithValueSuccess) {
+TEST_F(ObjectChecksumIntegrationTest, InsertObjectWithValueSuccess) {
   auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
@@ -112,7 +113,7 @@ TEST_P(ObjectChecksumIntegrationTest, InsertObjectWithValueSuccess) {
   }
 }
 
-TEST_P(ObjectChecksumIntegrationTest, InsertObjectWithValueFailure) {
+TEST_F(ObjectChecksumIntegrationTest, InsertObjectWithValueFailure) {
   // TODO(#14385) - the emulator does not support this feature for gRPC.
   if (UsingEmulator() && UsingGrpc()) GTEST_SKIP();
 
@@ -289,7 +290,7 @@ TEST_F(ObjectChecksumIntegrationTest, WriteObjectUploadBadChecksum) {
 }
 
 /// @test Verify that CRC32C checksums are computed by default on downloads.
-TEST_P(ObjectChecksumIntegrationTest, ReadObjectDefault) {
+TEST_F(ObjectChecksumIntegrationTest, ReadObjectDefault) {
   // TODO(#14385) - the emulator does not support this feature for gRPC.
   if (UsingEmulator() && UsingGrpc()) GTEST_SKIP();
 
@@ -311,7 +312,7 @@ TEST_P(ObjectChecksumIntegrationTest, ReadObjectDefault) {
 
 /// @test Verify that CRC32C checksum mismatches are reported by default on
 /// downloads.
-TEST_P(ObjectChecksumIntegrationTest, ReadObjectCorruptedByServerGetc) {
+TEST_F(ObjectChecksumIntegrationTest, ReadObjectCorruptedByServerGetc) {
   // This test is disabled when not using the emulator as it relies on the
   // emulator to inject faults. The emulator does not support this type of fault
   // injection for gRPC either.
@@ -350,7 +351,7 @@ TEST_P(ObjectChecksumIntegrationTest, ReadObjectCorruptedByServerGetc) {
 
 /// @test Verify that CRC32C checksum mismatches are reported by default on
 /// downloads.
-TEST_P(ObjectChecksumIntegrationTest, ReadObjectCorruptedByServerRead) {
+TEST_F(ObjectChecksumIntegrationTest, ReadObjectCorruptedByServerRead) {
   // This test is disabled when not using the emulator as it relies on the
   // emulator to inject faults. The emulator does not support this type of fault
   // injection for gRPC either.
@@ -378,10 +379,6 @@ TEST_P(ObjectChecksumIntegrationTest, ReadObjectCorruptedByServerRead) {
   EXPECT_NE(stream.received_hash(), stream.computed_hash());
   EXPECT_EQ(stream.received_hash(), meta->crc32c());
 }
-
-INSTANTIATE_TEST_SUITE_P(ObjectChecksumIntegrationTestJson,
-                         ObjectChecksumIntegrationTest,
-                         ::testing::Values("JSON"));
 
 }  // anonymous namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

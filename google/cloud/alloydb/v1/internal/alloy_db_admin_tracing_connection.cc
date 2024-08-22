@@ -64,23 +64,21 @@ AlloyDBAdminTracingConnection::CreateCluster(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminTracingConnection::CreateCluster(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::alloydb::v1::CreateClusterRequest const& request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::CreateCluster");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateCluster(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateCluster(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
 AlloyDBAdminTracingConnection::CreateCluster(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::CreateCluster");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateCluster(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateCluster(operation));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
@@ -94,23 +92,21 @@ AlloyDBAdminTracingConnection::UpdateCluster(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminTracingConnection::UpdateCluster(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::alloydb::v1::UpdateClusterRequest const& request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::UpdateCluster");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UpdateCluster(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateCluster(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
 AlloyDBAdminTracingConnection::UpdateCluster(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::UpdateCluster");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateCluster(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateCluster(operation));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
@@ -124,23 +120,21 @@ AlloyDBAdminTracingConnection::DeleteCluster(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminTracingConnection::DeleteCluster(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::alloydb::v1::DeleteClusterRequest const& request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::DeleteCluster");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteCluster(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteCluster(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
 AlloyDBAdminTracingConnection::DeleteCluster(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::DeleteCluster");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteCluster(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteCluster(operation));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
@@ -154,23 +148,22 @@ AlloyDBAdminTracingConnection::PromoteCluster(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminTracingConnection::PromoteCluster(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::alloydb::v1::PromoteClusterRequest const& request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::PromoteCluster");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->PromoteCluster(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->PromoteCluster(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
 AlloyDBAdminTracingConnection::PromoteCluster(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::PromoteCluster");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->PromoteCluster(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->PromoteCluster(operation));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
@@ -184,23 +177,22 @@ AlloyDBAdminTracingConnection::RestoreCluster(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminTracingConnection::RestoreCluster(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::alloydb::v1::RestoreClusterRequest const& request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::RestoreCluster");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->RestoreCluster(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->RestoreCluster(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
 AlloyDBAdminTracingConnection::RestoreCluster(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::RestoreCluster");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->RestoreCluster(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->RestoreCluster(operation));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
@@ -215,24 +207,23 @@ AlloyDBAdminTracingConnection::CreateSecondaryCluster(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminTracingConnection::CreateSecondaryCluster(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "alloydb_v1::AlloyDBAdminConnection::CreateSecondaryCluster");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span,
-      child_->CreateSecondaryCluster(ExperimentalTag{}, NoAwaitTag{}, request));
+      *span, child_->CreateSecondaryCluster(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
 AlloyDBAdminTracingConnection::CreateSecondaryCluster(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "alloydb_v1::AlloyDBAdminConnection::CreateSecondaryCluster");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateSecondaryCluster(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateSecondaryCluster(operation));
 }
 
 StreamRange<google::cloud::alloydb::v1::Instance>
@@ -266,23 +257,22 @@ AlloyDBAdminTracingConnection::CreateInstance(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminTracingConnection::CreateInstance(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::alloydb::v1::CreateInstanceRequest const& request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::CreateInstance");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateInstance(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateInstance(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
 AlloyDBAdminTracingConnection::CreateInstance(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::CreateInstance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->CreateInstance(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateInstance(operation));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
@@ -297,24 +287,23 @@ AlloyDBAdminTracingConnection::CreateSecondaryInstance(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminTracingConnection::CreateSecondaryInstance(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "alloydb_v1::AlloyDBAdminConnection::CreateSecondaryInstance");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->CreateSecondaryInstance(ExperimentalTag{}, NoAwaitTag{},
-                                             request));
+      *span, child_->CreateSecondaryInstance(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
 AlloyDBAdminTracingConnection::CreateSecondaryInstance(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "alloydb_v1::AlloyDBAdminConnection::CreateSecondaryInstance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateSecondaryInstance(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateSecondaryInstance(operation));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::BatchCreateInstancesResponse>>
@@ -329,24 +318,23 @@ AlloyDBAdminTracingConnection::BatchCreateInstances(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminTracingConnection::BatchCreateInstances(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::alloydb::v1::BatchCreateInstancesRequest const& request) {
   auto span = internal::MakeSpan(
       "alloydb_v1::AlloyDBAdminConnection::BatchCreateInstances");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->BatchCreateInstances(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->BatchCreateInstances(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::BatchCreateInstancesResponse>>
 AlloyDBAdminTracingConnection::BatchCreateInstances(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "alloydb_v1::AlloyDBAdminConnection::BatchCreateInstances");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->BatchCreateInstances(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->BatchCreateInstances(operation));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
@@ -360,23 +348,22 @@ AlloyDBAdminTracingConnection::UpdateInstance(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminTracingConnection::UpdateInstance(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::alloydb::v1::UpdateInstanceRequest const& request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::UpdateInstance");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UpdateInstance(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateInstance(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
 AlloyDBAdminTracingConnection::UpdateInstance(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::UpdateInstance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->UpdateInstance(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateInstance(operation));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
@@ -390,23 +377,22 @@ AlloyDBAdminTracingConnection::DeleteInstance(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminTracingConnection::DeleteInstance(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::alloydb::v1::DeleteInstanceRequest const& request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::DeleteInstance");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteInstance(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteInstance(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
 AlloyDBAdminTracingConnection::DeleteInstance(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::DeleteInstance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->DeleteInstance(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteInstance(operation));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
@@ -420,24 +406,23 @@ AlloyDBAdminTracingConnection::FailoverInstance(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminTracingConnection::FailoverInstance(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::alloydb::v1::FailoverInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "alloydb_v1::AlloyDBAdminConnection::FailoverInstance");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->FailoverInstance(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->FailoverInstance(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
 AlloyDBAdminTracingConnection::FailoverInstance(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "alloydb_v1::AlloyDBAdminConnection::FailoverInstance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->FailoverInstance(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->FailoverInstance(operation));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
@@ -451,23 +436,20 @@ AlloyDBAdminTracingConnection::InjectFault(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminTracingConnection::InjectFault(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::alloydb::v1::InjectFaultRequest const& request) {
+    NoAwaitTag, google::cloud::alloydb::v1::InjectFaultRequest const& request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::InjectFault");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->InjectFault(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->InjectFault(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
 AlloyDBAdminTracingConnection::InjectFault(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::InjectFault");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->InjectFault(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->InjectFault(operation));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
@@ -481,23 +463,22 @@ AlloyDBAdminTracingConnection::RestartInstance(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminTracingConnection::RestartInstance(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::alloydb::v1::RestartInstanceRequest const& request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::RestartInstance");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->RestartInstance(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->RestartInstance(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
 AlloyDBAdminTracingConnection::RestartInstance(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::RestartInstance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->RestartInstance(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->RestartInstance(operation));
 }
 
 StreamRange<google::cloud::alloydb::v1::Backup>
@@ -531,23 +512,21 @@ AlloyDBAdminTracingConnection::CreateBackup(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminTracingConnection::CreateBackup(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::alloydb::v1::CreateBackupRequest const& request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::CreateBackup");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateBackup(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateBackup(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Backup>>
 AlloyDBAdminTracingConnection::CreateBackup(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::CreateBackup");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateBackup(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateBackup(operation));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Backup>>
@@ -561,23 +540,21 @@ AlloyDBAdminTracingConnection::UpdateBackup(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminTracingConnection::UpdateBackup(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::alloydb::v1::UpdateBackupRequest const& request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::UpdateBackup");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UpdateBackup(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateBackup(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Backup>>
 AlloyDBAdminTracingConnection::UpdateBackup(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::UpdateBackup");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateBackup(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateBackup(operation));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
@@ -591,23 +568,21 @@ AlloyDBAdminTracingConnection::DeleteBackup(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminTracingConnection::DeleteBackup(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::alloydb::v1::DeleteBackupRequest const& request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::DeleteBackup");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteBackup(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteBackup(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
 AlloyDBAdminTracingConnection::DeleteBackup(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::DeleteBackup");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteBackup(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteBackup(operation));
 }
 
 StreamRange<google::cloud::alloydb::v1::SupportedDatabaseFlag>

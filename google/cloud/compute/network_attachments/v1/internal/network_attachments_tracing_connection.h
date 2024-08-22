@@ -55,13 +55,11 @@ class NetworkAttachmentsTracingConnection
           DeleteNetworkAttachmentRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNetworkAttachment(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::network_attachments::v1::
-          DeleteNetworkAttachmentRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::network_attachments::v1::
+                      DeleteNetworkAttachmentRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteNetworkAttachment(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NetworkAttachment>
@@ -78,13 +76,11 @@ class NetworkAttachmentsTracingConnection
           InsertNetworkAttachmentRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNetworkAttachment(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::network_attachments::v1::
-          InsertNetworkAttachmentRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::network_attachments::v1::
+                      InsertNetworkAttachmentRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertNetworkAttachment(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::NetworkAttachment>
@@ -97,13 +93,11 @@ class NetworkAttachmentsTracingConnection
           PatchNetworkAttachmentRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchNetworkAttachment(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::network_attachments::v1::
-          PatchNetworkAttachmentRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::network_attachments::v1::
+                      PatchNetworkAttachmentRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchNetworkAttachment(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(

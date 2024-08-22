@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TELCOAUTOMATION_V1_TELCO_AUTOMATION_CLIENT_H
 
 #include "google/cloud/telcoautomation/v1/telco_automation_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -279,7 +278,7 @@ class TelcoAutomationClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateOrchestrationCluster(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::telcoautomation::v1::OrchestrationCluster const&
           orchestration_cluster,
       std::string const& orchestration_cluster_id, Options opts = {});
@@ -336,7 +335,7 @@ class TelcoAutomationClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateOrchestrationCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::telcoautomation::v1::
           CreateOrchestrationClusterRequest const& request,
       Options opts = {});
@@ -351,8 +350,7 @@ class TelcoAutomationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>
-  CreateOrchestrationCluster(ExperimentalTag,
-                             google::longrunning::Operation const& operation,
+  CreateOrchestrationCluster(google::longrunning::Operation const& operation,
                              Options opts = {});
 
   // clang-format off
@@ -399,7 +397,7 @@ class TelcoAutomationClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteOrchestrationCluster(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -453,7 +451,7 @@ class TelcoAutomationClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteOrchestrationCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::telcoautomation::v1::
           DeleteOrchestrationClusterRequest const& request,
       Options opts = {});
@@ -468,8 +466,7 @@ class TelcoAutomationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
-  DeleteOrchestrationCluster(ExperimentalTag,
-                             google::longrunning::Operation const& operation,
+  DeleteOrchestrationCluster(google::longrunning::Operation const& operation,
                              Options opts = {});
 
   // clang-format off
@@ -652,7 +649,7 @@ class TelcoAutomationClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateEdgeSlm(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::telcoautomation::v1::EdgeSlm const& edge_slm,
       std::string const& edge_slm_id, Options opts = {});
 
@@ -706,7 +703,7 @@ class TelcoAutomationClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateEdgeSlm(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request,
       Options opts = {});
 
@@ -720,8 +717,7 @@ class TelcoAutomationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>> CreateEdgeSlm(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -767,7 +763,7 @@ class TelcoAutomationClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteEdgeSlm(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -820,7 +816,7 @@ class TelcoAutomationClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteEdgeSlm(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request,
       Options opts = {});
 
@@ -834,8 +830,7 @@ class TelcoAutomationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
-  DeleteEdgeSlm(ExperimentalTag,
-                google::longrunning::Operation const& operation,
+  DeleteEdgeSlm(google::longrunning::Operation const& operation,
                 Options opts = {});
 
   // clang-format off

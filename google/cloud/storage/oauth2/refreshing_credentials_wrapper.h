@@ -20,6 +20,7 @@
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include <chrono>
+#include <memory>
 #include <string>
 #include <utility>
 

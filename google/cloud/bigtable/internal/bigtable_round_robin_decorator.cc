@@ -17,6 +17,9 @@
 // source: google/bigtable/v2/bigtable.proto
 
 #include "google/cloud/bigtable/internal/bigtable_round_robin_decorator.h"
+#include <memory>
+#include <mutex>
+#include <vector>
 
 namespace google {
 namespace cloud {

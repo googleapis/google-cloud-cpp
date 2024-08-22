@@ -21,6 +21,8 @@
 #include "google/cloud/status_or.h"
 #include "absl/types/optional.h"
 #include <cstdint>
+#include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {

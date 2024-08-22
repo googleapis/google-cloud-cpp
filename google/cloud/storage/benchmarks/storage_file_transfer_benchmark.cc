@@ -20,11 +20,15 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/random.h"
+#include <algorithm>
 #include <fstream>
 #include <future>
 #include <iomanip>
+#include <iostream>
 #include <sstream>
+#include <string>
 #include <utility>
+#include <vector>
 
 namespace {
 namespace gcs = ::google::cloud::storage;

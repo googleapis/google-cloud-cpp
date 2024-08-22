@@ -47,9 +47,15 @@ class MockVideoIntelligenceServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, AnnotateVideo)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, AnnotateVideo(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// AnnotateVideo(Matcher<google::cloud::videointelligence::v1::AnnotateVideoRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<
                   google::cloud::videointelligence::v1::AnnotateVideoResponse>>,
               AnnotateVideo,
@@ -57,17 +63,29 @@ class MockVideoIntelligenceServiceConnection
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, AnnotateVideo(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, AnnotateVideo,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::videointelligence::v1::AnnotateVideoRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, AnnotateVideo(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<
                   google::cloud::videointelligence::v1::AnnotateVideoResponse>>,
-              AnnotateVideo,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              AnnotateVideo, (google::longrunning::Operation const& operation),
               (override));
 };
 

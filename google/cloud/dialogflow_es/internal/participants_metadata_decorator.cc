@@ -24,7 +24,9 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/v2/participant.grpc.pb.h>
 #include <memory>
+#include <string>
 #include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -126,6 +128,16 @@ ParticipantsMetadata::SuggestSmartReplies(
   SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->SuggestSmartReplies(context, options, request);
+}
+
+StatusOr<google::cloud::dialogflow::v2::SuggestKnowledgeAssistResponse>
+ParticipantsMetadata::SuggestKnowledgeAssist(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::v2::SuggestKnowledgeAssistRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->SuggestKnowledgeAssist(context, options, request);
 }
 
 void ParticipantsMetadata::SetMetadata(grpc::ClientContext& context,

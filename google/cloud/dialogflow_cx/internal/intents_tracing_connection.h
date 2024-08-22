@@ -63,26 +63,24 @@ class IntentsTracingConnection : public dialogflow_cx::IntentsConnection {
                     request) override;
 
   StatusOr<google::longrunning::Operation> ImportIntents(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::cx::v3::ImportIntentsRequest const& request)
       override;
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::ImportIntentsResponse>>
-  ImportIntents(ExperimentalTag,
-                google::longrunning::Operation const& operation) override;
+  ImportIntents(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportIntentsResponse>>
   ExportIntents(google::cloud::dialogflow::cx::v3::ExportIntentsRequest const&
                     request) override;
 
   StatusOr<google::longrunning::Operation> ExportIntents(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request)
       override;
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportIntentsResponse>>
-  ExportIntents(ExperimentalTag,
-                google::longrunning::Operation const& operation) override;
+  ExportIntents(google::longrunning::Operation const& operation) override;
 
  private:
   std::shared_ptr<dialogflow_cx::IntentsConnection> child_;

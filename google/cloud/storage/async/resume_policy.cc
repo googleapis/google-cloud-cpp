@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/async/resume_policy.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
@@ -42,13 +43,18 @@ class LimitedErrorCountResumePolicyImpl : public ResumePolicy {
   int maximum_resumes_;
 };
 
-class UnlimitedErrorCountResumePolicyImpl : public ResumePolicy {
+class StopOnConsecutiveErrorsResumePolicyImpl : public ResumePolicy {
  public:
-  UnlimitedErrorCountResumePolicyImpl() = default;
-  ~UnlimitedErrorCountResumePolicyImpl() override = default;
+  StopOnConsecutiveErrorsResumePolicyImpl() = default;
+  ~StopOnConsecutiveErrorsResumePolicyImpl() override = default;
 
-  void OnStartSuccess() override {}
-  Action OnFinish(Status const&) override { return kContinue; }
+  void OnStartSuccess() override { next_action_ = kContinue; }
+  Action OnFinish(Status const&) override {
+    return std::exchange(next_action_, kStop);
+  }
+
+ private:
+  Action next_action_ = kContinue;
 };
 
 }  // namespace
@@ -61,9 +67,9 @@ ResumePolicyFactory LimitedErrorCountResumePolicy(int maximum_resumes) {
   };
 }
 
-ResumePolicyFactory UnlimitedErrorCountResumePolicy() {
+ResumePolicyFactory StopOnConsecutiveErrorsResumePolicy() {
   return []() -> std::unique_ptr<ResumePolicy> {
-    return std::make_unique<UnlimitedErrorCountResumePolicyImpl>();
+    return std::make_unique<StopOnConsecutiveErrorsResumePolicyImpl>();
   };
 }
 

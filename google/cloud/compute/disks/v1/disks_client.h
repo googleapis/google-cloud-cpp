@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_DISKS_V1_DISKS_CLIENT_H
 
 #include "google/cloud/compute/disks/v1/disks_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -140,8 +139,8 @@ class DisksClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddResourcePolicies(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& zone, std::string const& disk,
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& disk,
       google::cloud::cpp::compute::v1::DisksAddResourcePoliciesRequest const&
           disks_add_resource_policies_request_resource,
       Options opts = {});
@@ -199,7 +198,7 @@ class DisksClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddResourcePolicies(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::disks::v1::AddResourcePoliciesRequest const&
           request,
       Options opts = {});
@@ -215,7 +214,6 @@ class DisksClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AddResourcePolicies(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -250,7 +248,7 @@ class DisksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.disks.v1.AggregatedListDisksRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L320}
-  /// [google.cloud.cpp.compute.v1.DisksScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_023.proto#L151}
+  /// [google.cloud.cpp.compute.v1.DisksScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_024.proto#L151}
   ///
   // clang-format on
   StreamRange<
@@ -293,7 +291,7 @@ class DisksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.disks.v1.AggregatedListDisksRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L320}
-  /// [google.cloud.cpp.compute.v1.DisksScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_023.proto#L151}
+  /// [google.cloud.cpp.compute.v1.DisksScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_024.proto#L151}
   ///
   // clang-format on
   StreamRange<
@@ -352,8 +350,7 @@ class DisksClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> BulkInsert(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& zone,
+      NoAwaitTag, std::string const& project, std::string const& zone,
       google::cloud::cpp::compute::v1::BulkInsertDiskResource const&
           bulk_insert_disk_resource,
       Options opts = {});
@@ -408,7 +405,7 @@ class DisksClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> BulkInsert(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::disks::v1::BulkInsertRequest const& request,
       Options opts = {});
 
@@ -422,7 +419,6 @@ class DisksClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkInsert(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -479,8 +475,8 @@ class DisksClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> CreateSnapshot(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& zone, std::string const& disk,
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& disk,
       google::cloud::cpp::compute::v1::Snapshot const& snapshot_resource,
       Options opts = {});
 
@@ -538,7 +534,7 @@ class DisksClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> CreateSnapshot(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const&
           request,
       Options opts = {});
@@ -553,7 +549,6 @@ class DisksClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CreateSnapshot(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -607,8 +602,8 @@ class DisksClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteDisk(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& zone, std::string const& disk, Options opts = {});
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& disk, Options opts = {});
 
   // clang-format off
   ///
@@ -663,7 +658,7 @@ class DisksClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteDisk(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::disks::v1::DeleteDiskRequest const& request,
       Options opts = {});
 
@@ -677,7 +672,6 @@ class DisksClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteDisk(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -703,7 +697,7 @@ class DisksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.disks.v1.GetDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L507}
-  /// [google.cloud.cpp.compute.v1.Disk]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_014.proto#L49}
+  /// [google.cloud.cpp.compute.v1.Disk]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_015.proto#L49}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Disk> GetDisk(
@@ -735,7 +729,7 @@ class DisksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.disks.v1.GetDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L507}
-  /// [google.cloud.cpp.compute.v1.Disk]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_014.proto#L49}
+  /// [google.cloud.cpp.compute.v1.Disk]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_015.proto#L49}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Disk> GetDisk(
@@ -765,7 +759,7 @@ class DisksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.disks.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L520}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L291}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_008.proto#L276}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -798,7 +792,7 @@ class DisksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.disks.v1.GetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L520}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L291}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_008.proto#L276}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
@@ -858,8 +852,7 @@ class DisksClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertDisk(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& zone,
+      NoAwaitTag, std::string const& project, std::string const& zone,
       google::cloud::cpp::compute::v1::Disk const& disk_resource,
       Options opts = {});
 
@@ -917,7 +910,7 @@ class DisksClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertDisk(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::disks::v1::InsertDiskRequest const& request,
       Options opts = {});
 
@@ -931,7 +924,6 @@ class DisksClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertDisk(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -965,7 +957,7 @@ class DisksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.disks.v1.ListDisksRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L574}
-  /// [google.cloud.cpp.compute.v1.Disk]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_014.proto#L49}
+  /// [google.cloud.cpp.compute.v1.Disk]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_015.proto#L49}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Disk> ListDisks(
@@ -1005,7 +997,7 @@ class DisksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.disks.v1.ListDisksRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L574}
-  /// [google.cloud.cpp.compute.v1.Disk]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_014.proto#L49}
+  /// [google.cloud.cpp.compute.v1.Disk]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_015.proto#L49}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Disk> ListDisks(
@@ -1064,8 +1056,8 @@ class DisksClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveResourcePolicies(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& zone, std::string const& disk,
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& disk,
       google::cloud::cpp::compute::v1::DisksRemoveResourcePoliciesRequest const&
           disks_remove_resource_policies_request_resource,
       Options opts = {});
@@ -1121,7 +1113,7 @@ class DisksClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveResourcePolicies(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::disks::v1::
           RemoveResourcePoliciesRequest const& request,
       Options opts = {});
@@ -1137,7 +1129,6 @@ class DisksClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   RemoveResourcePolicies(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -1193,8 +1184,8 @@ class DisksClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Resize(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& zone, std::string const& disk,
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& disk,
       google::cloud::cpp::compute::v1::DisksResizeRequest const&
           disks_resize_request_resource,
       Options opts = {});
@@ -1250,7 +1241,7 @@ class DisksClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Resize(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::disks::v1::ResizeRequest const& request,
       Options opts = {});
 
@@ -1264,7 +1255,6 @@ class DisksClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -1292,7 +1282,7 @@ class DisksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.disks.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L718}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L291}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_008.proto#L276}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -1328,7 +1318,7 @@ class DisksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.disks.v1.SetIamPolicyRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L718}
-  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L291}
+  /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_008.proto#L276}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -1388,8 +1378,8 @@ class DisksClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& zone, std::string const& resource,
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& resource,
       google::cloud::cpp::compute::v1::ZoneSetLabelsRequest const&
           zone_set_labels_request_resource,
       Options opts = {});
@@ -1445,7 +1435,7 @@ class DisksClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::disks::v1::SetLabelsRequest const& request,
       Options opts = {});
 
@@ -1459,7 +1449,6 @@ class DisksClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -1515,8 +1504,8 @@ class DisksClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> StartAsyncReplication(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& zone, std::string const& disk,
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& disk,
       google::cloud::cpp::compute::v1::DisksStartAsyncReplicationRequest const&
           disks_start_async_replication_request_resource,
       Options opts = {});
@@ -1572,7 +1561,7 @@ class DisksClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> StartAsyncReplication(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::disks::v1::
           StartAsyncReplicationRequest const& request,
       Options opts = {});
@@ -1588,7 +1577,6 @@ class DisksClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   StartAsyncReplication(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -1640,8 +1628,8 @@ class DisksClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> StopAsyncReplication(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& zone, std::string const& disk, Options opts = {});
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& disk, Options opts = {});
 
   // clang-format off
   ///
@@ -1696,7 +1684,7 @@ class DisksClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> StopAsyncReplication(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::disks::v1::StopAsyncReplicationRequest const&
           request,
       Options opts = {});
@@ -1712,7 +1700,6 @@ class DisksClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   StopAsyncReplication(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -1768,8 +1755,8 @@ class DisksClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
-  StopGroupAsyncReplication(ExperimentalTag, NoAwaitTag,
-                            std::string const& project, std::string const& zone,
+  StopGroupAsyncReplication(NoAwaitTag, std::string const& project,
+                            std::string const& zone,
                             google::cloud::cpp::compute::v1::
                                 DisksStopGroupAsyncReplicationResource const&
                                     disks_stop_group_async_replication_resource,
@@ -1827,7 +1814,7 @@ class DisksClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
-  StopGroupAsyncReplication(ExperimentalTag, NoAwaitTag,
+  StopGroupAsyncReplication(NoAwaitTag,
                             google::cloud::cpp::compute::disks::v1::
                                 StopGroupAsyncReplicationRequest const& request,
                             Options opts = {});
@@ -1843,7 +1830,6 @@ class DisksClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   StopGroupAsyncReplication(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -1870,7 +1856,7 @@ class DisksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.disks.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L877}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_137.proto#L30}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_139.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -1906,7 +1892,7 @@ class DisksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.disks.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L877}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_137.proto#L30}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_139.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -1968,9 +1954,8 @@ class DisksClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateDisk(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& zone, std::string const& disk,
-      std::string const& update_mask,
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& disk, std::string const& update_mask,
       google::cloud::cpp::compute::v1::Disk const& disk_resource,
       Options opts = {});
 
@@ -2026,7 +2011,7 @@ class DisksClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateDisk(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::disks::v1::UpdateDiskRequest const& request,
       Options opts = {});
 
@@ -2040,7 +2025,6 @@ class DisksClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateDisk(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 

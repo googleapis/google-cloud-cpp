@@ -18,6 +18,7 @@
 
 #include "google/cloud/policysimulator/v1/internal/simulator_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

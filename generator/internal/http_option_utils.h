@@ -17,20 +17,12 @@
 
 #include "generator/internal/http_annotation_parser.h"
 #include "generator/internal/printer.h"
-#include "absl/types/variant.h"
 #include <google/protobuf/descriptor.h>
 #include <string>
 
 namespace google {
 namespace cloud {
 namespace generator_internal {
-
-struct HttpSimpleInfo {
-  std::string http_verb;
-  std::string url_path;
-  std::string body;
-  std::string api_version;
-};
 
 struct HttpExtensionInfo {
   using RestPathPiece = std::function<std::string(
@@ -39,8 +31,6 @@ struct HttpExtensionInfo {
   std::string url_path;
   std::vector<std::pair<std::string, std::string>> field_substitutions;
   std::string body;
-  std::string path_prefix;
-  std::string path_suffix;
   std::vector<RestPathPiece> rest_path;
   std::string rest_path_verb;
 };
@@ -50,8 +40,8 @@ struct HttpExtensionInfo {
  * for the provided method per AIP-4222. Output is also used for gRPC/HTTP
  * transcoding and REST transport.
  */
-absl::variant<absl::monostate, HttpSimpleInfo, HttpExtensionInfo>
-ParseHttpExtension(google::protobuf::MethodDescriptor const& method);
+HttpExtensionInfo ParseHttpExtension(
+    google::protobuf::MethodDescriptor const& method);
 
 /**
  * Sets the following method_vars based on the provided parsed_http_info:
@@ -63,11 +53,9 @@ ParseHttpExtension(google::protobuf::MethodDescriptor const& method);
  *   method_http_verb
  *   method_rest_path
  */
-void SetHttpDerivedMethodVars(
-    absl::variant<absl::monostate, HttpSimpleInfo, HttpExtensionInfo>
-        parsed_http_info,
-    google::protobuf::MethodDescriptor const& method,
-    VarsDictionary& method_vars);
+void SetHttpDerivedMethodVars(HttpExtensionInfo const& info,
+                              google::protobuf::MethodDescriptor const& method,
+                              VarsDictionary& method_vars);
 
 struct QueryParameterInfo {
   protobuf::FieldDescriptor::CppType cpp_type;
@@ -91,11 +79,9 @@ absl::optional<QueryParameterInfo> DetermineQueryParameterInfo(
  * Sets the "method_http_query_parameters" value in method_vars based on the
  * parsed_http_info.
  */
-void SetHttpQueryParameters(
-    absl::variant<absl::monostate, HttpSimpleInfo, HttpExtensionInfo>
-        parsed_http_info,
-    google::protobuf::MethodDescriptor const& method,
-    VarsDictionary& method_vars);
+void SetHttpQueryParameters(HttpExtensionInfo const& info,
+                            google::protobuf::MethodDescriptor const& method,
+                            VarsDictionary& method_vars);
 
 /**
  * Determines if the method contains a routing header as specified in AIP-4222.
@@ -117,16 +103,20 @@ bool HasHttpAnnotation(google::protobuf::MethodDescriptor const& method);
  *  [json_name = __json_request_body] that field is returned. Otherwise, the
  *  entire request is used.
  */
-std::string FormatRequestResource(
-    google::protobuf::Descriptor const& request,
-    absl::variant<absl::monostate, HttpSimpleInfo, HttpExtensionInfo> const&
-        parsed_http_info);
+std::string FormatRequestResource(google::protobuf::Descriptor const& request,
+                                  HttpExtensionInfo const& info);
 
 /**
  * Parses the package name of the method and returns its API version.
  */
-StatusOr<std::string> FormatApiVersionFromPackageName(
+std::string FormatApiVersionFromPackageName(
     google::protobuf::MethodDescriptor const& method);
+
+/**
+ * Parses the url pattern of the method and returns its API version.
+ */
+std::string FormatApiVersionFromUrlPattern(std::string const& url_pattern,
+                                           std::string const& file_name);
 
 }  // namespace generator_internal
 }  // namespace cloud

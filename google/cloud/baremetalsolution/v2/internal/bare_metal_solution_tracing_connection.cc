@@ -66,24 +66,23 @@ BareMetalSolutionTracingConnection::UpdateInstance(
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionTracingConnection::UpdateInstance(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
         request) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::UpdateInstance");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UpdateInstance(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateInstance(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
 BareMetalSolutionTracingConnection::UpdateInstance(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::UpdateInstance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->UpdateInstance(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateInstance(operation));
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::Instance>
@@ -107,23 +106,21 @@ BareMetalSolutionTracingConnection::ResetInstance(
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionTracingConnection::ResetInstance(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::baremetalsolution::v2::ResetInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::ResetInstance");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->ResetInstance(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->ResetInstance(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::ResetInstanceResponse>>
 BareMetalSolutionTracingConnection::ResetInstance(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::ResetInstance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->ResetInstance(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->ResetInstance(operation));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::StartInstanceResponse>>
@@ -137,23 +134,21 @@ BareMetalSolutionTracingConnection::StartInstance(
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionTracingConnection::StartInstance(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::baremetalsolution::v2::StartInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::StartInstance");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->StartInstance(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->StartInstance(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::StartInstanceResponse>>
 BareMetalSolutionTracingConnection::StartInstance(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::StartInstance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->StartInstance(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->StartInstance(operation));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::StopInstanceResponse>>
@@ -167,23 +162,21 @@ BareMetalSolutionTracingConnection::StopInstance(
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionTracingConnection::StopInstance(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::baremetalsolution::v2::StopInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::StopInstance");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->StopInstance(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->StopInstance(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::StopInstanceResponse>>
 BareMetalSolutionTracingConnection::StopInstance(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::StopInstance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->StopInstance(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->StopInstance(operation));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::
@@ -201,29 +194,26 @@ BareMetalSolutionTracingConnection::EnableInteractiveSerialConsole(
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionTracingConnection::EnableInteractiveSerialConsole(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::baremetalsolution::v2::
-        EnableInteractiveSerialConsoleRequest const& request) {
+    NoAwaitTag, google::cloud::baremetalsolution::v2::
+                    EnableInteractiveSerialConsoleRequest const& request) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::"
       "EnableInteractiveSerialConsole");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->EnableInteractiveSerialConsole(ExperimentalTag{},
-                                                    NoAwaitTag{}, request));
+      *span, child_->EnableInteractiveSerialConsole(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::
                     EnableInteractiveSerialConsoleResponse>>
 BareMetalSolutionTracingConnection::EnableInteractiveSerialConsole(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::"
       "EnableInteractiveSerialConsole");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->EnableInteractiveSerialConsole(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->EnableInteractiveSerialConsole(operation));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::
@@ -241,29 +231,26 @@ BareMetalSolutionTracingConnection::DisableInteractiveSerialConsole(
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionTracingConnection::DisableInteractiveSerialConsole(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::baremetalsolution::v2::
-        DisableInteractiveSerialConsoleRequest const& request) {
+    NoAwaitTag, google::cloud::baremetalsolution::v2::
+                    DisableInteractiveSerialConsoleRequest const& request) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::"
       "DisableInteractiveSerialConsole");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DisableInteractiveSerialConsole(ExperimentalTag{},
-                                                     NoAwaitTag{}, request));
+      *span, child_->DisableInteractiveSerialConsole(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::
                     DisableInteractiveSerialConsoleResponse>>
 BareMetalSolutionTracingConnection::DisableInteractiveSerialConsole(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::"
       "DisableInteractiveSerialConsole");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->DisableInteractiveSerialConsole(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DisableInteractiveSerialConsole(operation));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
@@ -277,23 +264,21 @@ BareMetalSolutionTracingConnection::DetachLun(
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionTracingConnection::DetachLun(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::baremetalsolution::v2::DetachLunRequest const& request) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::DetachLun");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DetachLun(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DetachLun(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
 BareMetalSolutionTracingConnection::DetachLun(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::DetachLun");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DetachLun(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DetachLun(operation));
 }
 
 StreamRange<google::cloud::baremetalsolution::v2::SSHKey>
@@ -357,23 +342,21 @@ BareMetalSolutionTracingConnection::UpdateVolume(
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionTracingConnection::UpdateVolume(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::UpdateVolume");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UpdateVolume(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateVolume(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>
 BareMetalSolutionTracingConnection::UpdateVolume(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::UpdateVolume");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateVolume(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateVolume(operation));
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::Volume>
@@ -396,23 +379,21 @@ BareMetalSolutionTracingConnection::EvictVolume(
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionTracingConnection::EvictVolume(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::baremetalsolution::v2::EvictVolumeRequest const& request) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::EvictVolume");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->EvictVolume(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->EvictVolume(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
 BareMetalSolutionTracingConnection::EvictVolume(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::EvictVolume");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->EvictVolume(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->EvictVolume(operation));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>
@@ -426,23 +407,21 @@ BareMetalSolutionTracingConnection::ResizeVolume(
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionTracingConnection::ResizeVolume(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::ResizeVolume");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->ResizeVolume(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->ResizeVolume(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>
 BareMetalSolutionTracingConnection::ResizeVolume(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::ResizeVolume");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->ResizeVolume(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->ResizeVolume(operation));
 }
 
 StreamRange<google::cloud::baremetalsolution::v2::Network>
@@ -487,23 +466,21 @@ BareMetalSolutionTracingConnection::UpdateNetwork(
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionTracingConnection::UpdateNetwork(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::UpdateNetwork");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UpdateNetwork(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateNetwork(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::Network>>
 BareMetalSolutionTracingConnection::UpdateNetwork(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::UpdateNetwork");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateNetwork(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateNetwork(operation));
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
@@ -531,7 +508,7 @@ BareMetalSolutionTracingConnection::RestoreVolumeSnapshot(
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionTracingConnection::RestoreVolumeSnapshot(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&
         request) {
   auto span = internal::MakeSpan(
@@ -539,19 +516,18 @@ BareMetalSolutionTracingConnection::RestoreVolumeSnapshot(
       "RestoreVolumeSnapshot");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span,
-      child_->RestoreVolumeSnapshot(ExperimentalTag{}, NoAwaitTag{}, request));
+      *span, child_->RestoreVolumeSnapshot(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>>
 BareMetalSolutionTracingConnection::RestoreVolumeSnapshot(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::"
       "RestoreVolumeSnapshot");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->RestoreVolumeSnapshot(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->RestoreVolumeSnapshot(operation));
 }
 
 Status BareMetalSolutionTracingConnection::DeleteVolumeSnapshot(
@@ -618,23 +594,21 @@ BareMetalSolutionTracingConnection::EvictLun(
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionTracingConnection::EvictLun(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::baremetalsolution::v2::EvictLunRequest const& request) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::EvictLun");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->EvictLun(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->EvictLun(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
 BareMetalSolutionTracingConnection::EvictLun(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::EvictLun");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->EvictLun(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->EvictLun(operation));
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::NfsShare>
@@ -670,24 +644,23 @@ BareMetalSolutionTracingConnection::UpdateNfsShare(
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionTracingConnection::UpdateNfsShare(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
         request) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::UpdateNfsShare");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UpdateNfsShare(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateNfsShare(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
 BareMetalSolutionTracingConnection::UpdateNfsShare(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::UpdateNfsShare");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->UpdateNfsShare(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateNfsShare(operation));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
@@ -702,24 +675,23 @@ BareMetalSolutionTracingConnection::CreateNfsShare(
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionTracingConnection::CreateNfsShare(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&
         request) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::CreateNfsShare");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateNfsShare(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateNfsShare(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
 BareMetalSolutionTracingConnection::CreateNfsShare(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::CreateNfsShare");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->CreateNfsShare(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateNfsShare(operation));
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::NfsShare>
@@ -744,24 +716,23 @@ BareMetalSolutionTracingConnection::DeleteNfsShare(
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionTracingConnection::DeleteNfsShare(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const&
         request) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::DeleteNfsShare");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteNfsShare(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteNfsShare(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
 BareMetalSolutionTracingConnection::DeleteNfsShare(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "baremetalsolution_v2::BareMetalSolutionConnection::DeleteNfsShare");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->DeleteNfsShare(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteNfsShare(operation));
 }
 
 StreamRange<google::cloud::baremetalsolution::v2::ProvisioningQuota>

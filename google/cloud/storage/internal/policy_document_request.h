@@ -22,7 +22,9 @@
 #include "google/cloud/status_or.h"
 #include "absl/types/optional.h"
 #include <chrono>
+#include <map>
 #include <string>
+#include <utility>
 #include <vector>
 
 namespace google {

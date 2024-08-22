@@ -45,12 +45,11 @@ class DataScanServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> CreateDataScan(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataplex::v1::CreateDataScanRequest const& request)
       override;
 
   future<StatusOr<google::cloud::dataplex::v1::DataScan>> CreateDataScan(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dataplex::v1::DataScan>> UpdateDataScan(
@@ -58,12 +57,11 @@ class DataScanServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> UpdateDataScan(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataplex::v1::UpdateDataScanRequest const& request)
       override;
 
   future<StatusOr<google::cloud::dataplex::v1::DataScan>> UpdateDataScan(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
@@ -71,13 +69,12 @@ class DataScanServiceTracingConnection
                      request) override;
 
   StatusOr<google::longrunning::Operation> DeleteDataScan(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataplex::v1::DeleteDataScanRequest const& request)
       override;
 
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteDataScan(ExperimentalTag,
-                 google::longrunning::Operation const& operation) override;
+  DeleteDataScan(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::dataplex::v1::DataScan> GetDataScan(
       google::cloud::dataplex::v1::GetDataScanRequest const& request) override;

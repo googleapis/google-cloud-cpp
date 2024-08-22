@@ -16,6 +16,8 @@
 #include "google/cloud/storage/internal/hmac_key_metadata_parser.h"
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include <iostream>
+#include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {

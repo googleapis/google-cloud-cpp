@@ -22,7 +22,6 @@
 #include "google/cloud/bigtable/admin/bigtable_table_admin_connection_idempotency_policy.h"
 #include "google/cloud/bigtable/admin/internal/bigtable_table_admin_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -205,11 +204,11 @@ class BigtableTableAdminConnection {
       google::bigtable::admin::v2::UpdateTableRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateTable(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::bigtable::admin::v2::UpdateTableRequest const& request);
 
   virtual future<StatusOr<google::bigtable::admin::v2::Table>> UpdateTable(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual Status DeleteTable(
       google::bigtable::admin::v2::DeleteTableRequest const& request);
@@ -218,23 +217,22 @@ class BigtableTableAdminConnection {
       google::bigtable::admin::v2::UndeleteTableRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UndeleteTable(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::bigtable::admin::v2::UndeleteTableRequest const& request);
 
   virtual future<StatusOr<google::bigtable::admin::v2::Table>> UndeleteTable(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
   CreateAuthorizedView(
       google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateAuthorizedView(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request);
 
   virtual future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
-  CreateAuthorizedView(ExperimentalTag,
-                       google::longrunning::Operation const& operation);
+  CreateAuthorizedView(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::bigtable::admin::v2::AuthorizedView>
   ListAuthorizedViews(
@@ -249,12 +247,11 @@ class BigtableTableAdminConnection {
       google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateAuthorizedView(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request);
 
   virtual future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
-  UpdateAuthorizedView(ExperimentalTag,
-                       google::longrunning::Operation const& operation);
+  UpdateAuthorizedView(google::longrunning::Operation const& operation);
 
   virtual Status DeleteAuthorizedView(
       google::bigtable::admin::v2::DeleteAuthorizedViewRequest const& request);
@@ -279,11 +276,11 @@ class BigtableTableAdminConnection {
       google::bigtable::admin::v2::CreateBackupRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateBackup(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::bigtable::admin::v2::CreateBackupRequest const& request);
 
   virtual future<StatusOr<google::bigtable::admin::v2::Backup>> CreateBackup(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::bigtable::admin::v2::Backup> GetBackup(
       google::bigtable::admin::v2::GetBackupRequest const& request);
@@ -301,21 +298,21 @@ class BigtableTableAdminConnection {
       google::bigtable::admin::v2::RestoreTableRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> RestoreTable(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::bigtable::admin::v2::RestoreTableRequest const& request);
 
   virtual future<StatusOr<google::bigtable::admin::v2::Table>> RestoreTable(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::bigtable::admin::v2::Backup>> CopyBackup(
       google::bigtable::admin::v2::CopyBackupRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CopyBackup(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::bigtable::admin::v2::CopyBackupRequest const& request);
 
   virtual future<StatusOr<google::bigtable::admin::v2::Backup>> CopyBackup(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request);

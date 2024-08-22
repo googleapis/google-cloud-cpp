@@ -18,6 +18,7 @@
 
 #include "google/cloud/connectors/v1/internal/connectors_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

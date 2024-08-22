@@ -75,15 +75,17 @@ time {
   io::run ctest "${ctest_args[@]}" --test-dir "${CMAKE_OUT}" -LE integration-test
 }
 
-TIMEFORMAT="==> 🕑 Storage integration tests done in %R seconds"
-if [[ -n "${GHA_TEST_BUCKET:-}" ]]; then
-  time {
-    # gRPC requires a local roots.pem on Windows
-    #   https://github.com/grpc/grpc/issues/16571
-    curl -fsSL -o "${HOME}/roots.pem" https://pki.google.com/roots.pem
-    export GRPC_DEFAULT_SSL_ROOTS_FILE_PATH="${HOME}/roots.pem"
+if [[ "${EXECUTE_INTEGRATION_TESTS}" == "true" ]]; then
+  TIMEFORMAT="==> 🕑 Storage integration tests done in %R seconds"
+  if [[ -n "${GHA_TEST_BUCKET:-}" ]]; then
+    time {
+      # gRPC requires a local roots.pem on Windows
+      #   https://github.com/grpc/grpc/issues/16571
+      curl -fsSL -o "${HOME}/roots.pem" https://pki.google.com/roots.pem
+      export GRPC_DEFAULT_SSL_ROOTS_FILE_PATH="${HOME}/roots.pem"
 
-    export GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME="${GHA_TEST_BUCKET}"
-    io::run ctest "${ctest_args[@]}" --test-dir "${CMAKE_OUT}" -L integration-test-gha
-  }
+      export GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME="${GHA_TEST_BUCKET}"
+      io::run ctest "${ctest_args[@]}" --test-dir "${CMAKE_OUT}" -L integration-test-gha
+    }
+  fi
 fi

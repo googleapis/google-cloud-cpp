@@ -18,6 +18,7 @@
 
 #include "google/cloud/servicecontrol/v1/internal/service_controller_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

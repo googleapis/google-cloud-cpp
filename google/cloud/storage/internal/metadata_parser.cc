@@ -18,6 +18,8 @@
 #include "google/cloud/internal/throw_delegate.h"
 #include "absl/strings/numbers.h"
 #include <sstream>
+#include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_METASTORE_V1_DATAPROC_METASTORE_FEDERATION_CLIENT_H
 
 #include "google/cloud/metastore/v1/dataproc_metastore_federation_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -299,7 +298,7 @@ class DataprocMetastoreFederationClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateFederation(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::metastore::v1::Federation const& federation,
       std::string const& federation_id, Options opts = {});
 
@@ -353,7 +352,7 @@ class DataprocMetastoreFederationClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateFederation(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::metastore::v1::CreateFederationRequest const& request,
       Options opts = {});
 
@@ -367,8 +366,7 @@ class DataprocMetastoreFederationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::Federation>> CreateFederation(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -423,8 +421,7 @@ class DataprocMetastoreFederationClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateFederation(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::metastore::v1::Federation const& federation,
+      NoAwaitTag, google::cloud::metastore::v1::Federation const& federation,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -477,7 +474,7 @@ class DataprocMetastoreFederationClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateFederation(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::metastore::v1::UpdateFederationRequest const& request,
       Options opts = {});
 
@@ -491,8 +488,7 @@ class DataprocMetastoreFederationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::Federation>> UpdateFederation(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -541,7 +537,7 @@ class DataprocMetastoreFederationClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteFederation(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -594,7 +590,7 @@ class DataprocMetastoreFederationClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteFederation(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::metastore::v1::DeleteFederationRequest const& request,
       Options opts = {});
 
@@ -608,8 +604,7 @@ class DataprocMetastoreFederationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
-  DeleteFederation(ExperimentalTag,
-                   google::longrunning::Operation const& operation,
+  DeleteFederation(google::longrunning::Operation const& operation,
                    Options opts = {});
 
  private:

@@ -51,13 +51,12 @@ class MigrationServiceTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> BatchMigrateResources(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
           request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>
   BatchMigrateResources(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
  private:

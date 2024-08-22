@@ -21,7 +21,9 @@
 #include "google/cloud/status_or.h"
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
+#include <memory>
 #include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {

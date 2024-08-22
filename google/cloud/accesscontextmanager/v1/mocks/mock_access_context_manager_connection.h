@@ -61,9 +61,15 @@ class MockAccessContextManagerConnection
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateAccessPolicy)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateAccessPolicy(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateAccessPolicy(Matcher<google::identity::accesscontextmanager::v1::AccessPolicy
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>,
@@ -71,22 +77,41 @@ class MockAccessContextManagerConnection
       (google::identity::accesscontextmanager::v1::AccessPolicy const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateAccessPolicy(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateAccessPolicy,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::identity::accesscontextmanager::v1::AccessPolicy const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateAccessPolicy(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>,
-      CreateAccessPolicy,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      CreateAccessPolicy, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateAccessPolicy)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateAccessPolicy(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateAccessPolicy(Matcher<google::identity::accesscontextmanager::v1::UpdateAccessPolicyRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>,
@@ -95,22 +120,40 @@ class MockAccessContextManagerConnection
            UpdateAccessPolicyRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateAccessPolicy(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateAccessPolicy,
-              (ExperimentalTag, NoAwaitTag,
-               google::identity::accesscontextmanager::v1::
-                   UpdateAccessPolicyRequest const& request),
+              (NoAwaitTag, google::identity::accesscontextmanager::v1::
+                               UpdateAccessPolicyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateAccessPolicy(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>,
-      UpdateAccessPolicy,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      UpdateAccessPolicy, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteAccessPolicy)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteAccessPolicy(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteAccessPolicy(Matcher<google::identity::accesscontextmanager::v1::DeleteAccessPolicyRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::identity::accesscontextmanager::v1::
                                   AccessContextManagerOperationMetadata>>,
               DeleteAccessPolicy,
@@ -118,18 +161,29 @@ class MockAccessContextManagerConnection
                    DeleteAccessPolicyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteAccessPolicy(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteAccessPolicy,
-              (ExperimentalTag, NoAwaitTag,
-               google::identity::accesscontextmanager::v1::
-                   DeleteAccessPolicyRequest const& request),
+              (NoAwaitTag, google::identity::accesscontextmanager::v1::
+                               DeleteAccessPolicyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteAccessPolicy(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::identity::accesscontextmanager::v1::
                                   AccessContextManagerOperationMetadata>>,
               DeleteAccessPolicy,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       (StreamRange<google::identity::accesscontextmanager::v1::AccessLevel>),
@@ -145,9 +199,15 @@ class MockAccessContextManagerConnection
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateAccessLevel)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateAccessLevel(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateAccessLevel(Matcher<google::identity::accesscontextmanager::v1::CreateAccessLevelRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>,
       CreateAccessLevel,
@@ -155,21 +215,39 @@ class MockAccessContextManagerConnection
            CreateAccessLevelRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateAccessLevel(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateAccessLevel,
-              (ExperimentalTag, NoAwaitTag,
-               google::identity::accesscontextmanager::v1::
-                   CreateAccessLevelRequest const& request),
+              (NoAwaitTag, google::identity::accesscontextmanager::v1::
+                               CreateAccessLevelRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateAccessLevel(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>,
-      CreateAccessLevel,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      CreateAccessLevel, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateAccessLevel)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateAccessLevel(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateAccessLevel(Matcher<google::identity::accesscontextmanager::v1::UpdateAccessLevelRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>,
       UpdateAccessLevel,
@@ -177,21 +255,39 @@ class MockAccessContextManagerConnection
            UpdateAccessLevelRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateAccessLevel(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateAccessLevel,
-              (ExperimentalTag, NoAwaitTag,
-               google::identity::accesscontextmanager::v1::
-                   UpdateAccessLevelRequest const& request),
+              (NoAwaitTag, google::identity::accesscontextmanager::v1::
+                               UpdateAccessLevelRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateAccessLevel(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>,
-      UpdateAccessLevel,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      UpdateAccessLevel, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteAccessLevel)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteAccessLevel(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteAccessLevel(Matcher<google::identity::accesscontextmanager::v1::DeleteAccessLevelRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::identity::accesscontextmanager::v1::
                                   AccessContextManagerOperationMetadata>>,
               DeleteAccessLevel,
@@ -199,22 +295,39 @@ class MockAccessContextManagerConnection
                    DeleteAccessLevelRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteAccessLevel(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteAccessLevel,
-              (ExperimentalTag, NoAwaitTag,
-               google::identity::accesscontextmanager::v1::
-                   DeleteAccessLevelRequest const& request),
+              (NoAwaitTag, google::identity::accesscontextmanager::v1::
+                               DeleteAccessLevelRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteAccessLevel(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::identity::accesscontextmanager::v1::
                                   AccessContextManagerOperationMetadata>>,
               DeleteAccessLevel,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ReplaceAccessLevels)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ReplaceAccessLevels(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ReplaceAccessLevels(Matcher<google::identity::accesscontextmanager::v1::ReplaceAccessLevelsRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::identity::accesscontextmanager::v1::
                                   ReplaceAccessLevelsResponse>>,
               ReplaceAccessLevels,
@@ -222,18 +335,29 @@ class MockAccessContextManagerConnection
                    ReplaceAccessLevelsRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ReplaceAccessLevels(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, ReplaceAccessLevels,
-              (ExperimentalTag, NoAwaitTag,
-               google::identity::accesscontextmanager::v1::
-                   ReplaceAccessLevelsRequest const& request),
+              (NoAwaitTag, google::identity::accesscontextmanager::v1::
+                               ReplaceAccessLevelsRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ReplaceAccessLevels(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::identity::accesscontextmanager::v1::
                                   ReplaceAccessLevelsResponse>>,
               ReplaceAccessLevels,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       (StreamRange<
@@ -250,9 +374,15 @@ class MockAccessContextManagerConnection
            GetServicePerimeterRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateServicePerimeter)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateServicePerimeter(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateServicePerimeter(Matcher<google::identity::accesscontextmanager::v1::CreateServicePerimeterRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::identity::accesscontextmanager::v1::ServicePerimeter>>,
@@ -261,22 +391,40 @@ class MockAccessContextManagerConnection
            CreateServicePerimeterRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateServicePerimeter(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateServicePerimeter,
-              (ExperimentalTag, NoAwaitTag,
-               google::identity::accesscontextmanager::v1::
-                   CreateServicePerimeterRequest const& request),
+              (NoAwaitTag, google::identity::accesscontextmanager::v1::
+                               CreateServicePerimeterRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateServicePerimeter(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::identity::accesscontextmanager::v1::ServicePerimeter>>,
-      CreateServicePerimeter,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      CreateServicePerimeter, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateServicePerimeter)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateServicePerimeter(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateServicePerimeter(Matcher<google::identity::accesscontextmanager::v1::UpdateServicePerimeterRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::identity::accesscontextmanager::v1::ServicePerimeter>>,
@@ -285,22 +433,40 @@ class MockAccessContextManagerConnection
            UpdateServicePerimeterRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateServicePerimeter(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateServicePerimeter,
-              (ExperimentalTag, NoAwaitTag,
-               google::identity::accesscontextmanager::v1::
-                   UpdateServicePerimeterRequest const& request),
+              (NoAwaitTag, google::identity::accesscontextmanager::v1::
+                               UpdateServicePerimeterRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateServicePerimeter(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::identity::accesscontextmanager::v1::ServicePerimeter>>,
-      UpdateServicePerimeter,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      UpdateServicePerimeter, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteServicePerimeter)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteServicePerimeter(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteServicePerimeter(Matcher<google::identity::accesscontextmanager::v1::DeleteServicePerimeterRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::identity::accesscontextmanager::v1::
                                   AccessContextManagerOperationMetadata>>,
               DeleteServicePerimeter,
@@ -308,22 +474,39 @@ class MockAccessContextManagerConnection
                    DeleteServicePerimeterRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteServicePerimeter(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteServicePerimeter,
-              (ExperimentalTag, NoAwaitTag,
-               google::identity::accesscontextmanager::v1::
-                   DeleteServicePerimeterRequest const& request),
+              (NoAwaitTag, google::identity::accesscontextmanager::v1::
+                               DeleteServicePerimeterRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteServicePerimeter(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::identity::accesscontextmanager::v1::
                                   AccessContextManagerOperationMetadata>>,
               DeleteServicePerimeter,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ReplaceServicePerimeters)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ReplaceServicePerimeters(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ReplaceServicePerimeters(Matcher<google::identity::accesscontextmanager::v1::ReplaceServicePerimetersRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::identity::accesscontextmanager::v1::
                                   ReplaceServicePerimetersResponse>>,
               ReplaceServicePerimeters,
@@ -331,23 +514,41 @@ class MockAccessContextManagerConnection
                    ReplaceServicePerimetersRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ReplaceServicePerimeters(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               ReplaceServicePerimeters,
-              (ExperimentalTag, NoAwaitTag,
-               google::identity::accesscontextmanager::v1::
-                   ReplaceServicePerimetersRequest const& request),
+              (NoAwaitTag, google::identity::accesscontextmanager::v1::
+                               ReplaceServicePerimetersRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ReplaceServicePerimeters(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::identity::accesscontextmanager::v1::
                                   ReplaceServicePerimetersResponse>>,
               ReplaceServicePerimeters,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CommitServicePerimeters)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CommitServicePerimeters(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CommitServicePerimeters(Matcher<google::identity::accesscontextmanager::v1::CommitServicePerimetersRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::identity::accesscontextmanager::v1::
                                   CommitServicePerimetersResponse>>,
               CommitServicePerimeters,
@@ -355,18 +556,30 @@ class MockAccessContextManagerConnection
                    CommitServicePerimetersRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CommitServicePerimeters(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CommitServicePerimeters,
-              (ExperimentalTag, NoAwaitTag,
-               google::identity::accesscontextmanager::v1::
-                   CommitServicePerimetersRequest const& request),
+              (NoAwaitTag, google::identity::accesscontextmanager::v1::
+                               CommitServicePerimetersRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CommitServicePerimeters(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::identity::accesscontextmanager::v1::
                                   CommitServicePerimetersResponse>>,
               CommitServicePerimeters,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       (StreamRange<
@@ -384,9 +597,15 @@ class MockAccessContextManagerConnection
            GetGcpUserAccessBindingRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateGcpUserAccessBinding)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateGcpUserAccessBinding(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateGcpUserAccessBinding(Matcher<google::identity::accesscontextmanager::v1::CreateGcpUserAccessBindingRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>,
@@ -395,23 +614,43 @@ class MockAccessContextManagerConnection
            CreateGcpUserAccessBindingRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateGcpUserAccessBinding(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               CreateGcpUserAccessBinding,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::identity::accesscontextmanager::v1::
                    CreateGcpUserAccessBindingRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateGcpUserAccessBinding(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>,
       CreateGcpUserAccessBinding,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateGcpUserAccessBinding)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateGcpUserAccessBinding(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateGcpUserAccessBinding(Matcher<google::identity::accesscontextmanager::v1::UpdateGcpUserAccessBindingRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>,
@@ -420,23 +659,43 @@ class MockAccessContextManagerConnection
            UpdateGcpUserAccessBindingRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateGcpUserAccessBinding(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               UpdateGcpUserAccessBinding,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::identity::accesscontextmanager::v1::
                    UpdateGcpUserAccessBindingRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateGcpUserAccessBinding(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>,
       UpdateGcpUserAccessBinding,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteGcpUserAccessBinding)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteGcpUserAccessBinding(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteGcpUserAccessBinding(Matcher<google::identity::accesscontextmanager::v1::DeleteGcpUserAccessBindingRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::identity::accesscontextmanager::v1::
                                   GcpUserAccessBindingOperationMetadata>>,
               DeleteGcpUserAccessBinding,
@@ -444,19 +703,32 @@ class MockAccessContextManagerConnection
                    DeleteGcpUserAccessBindingRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteGcpUserAccessBinding(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               DeleteGcpUserAccessBinding,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::identity::accesscontextmanager::v1::
                    DeleteGcpUserAccessBindingRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteGcpUserAccessBinding(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::identity::accesscontextmanager::v1::
                                   GcpUserAccessBindingOperationMetadata>>,
               DeleteGcpUserAccessBinding,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
               (google::iam::v1::SetIamPolicyRequest const& request),

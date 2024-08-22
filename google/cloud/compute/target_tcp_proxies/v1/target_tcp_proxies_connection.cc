@@ -57,16 +57,15 @@ TargetTcpProxiesConnection::DeleteTargetTcpProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetTcpProxiesConnection::DeleteTargetTcpProxy(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::target_tcp_proxies::v1::
-        DeleteTargetTcpProxyRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::target_tcp_proxies::v1::
+                    DeleteTargetTcpProxyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetTcpProxiesConnection::DeleteTargetTcpProxy(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -90,16 +89,15 @@ TargetTcpProxiesConnection::InsertTargetTcpProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetTcpProxiesConnection::InsertTargetTcpProxy(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::target_tcp_proxies::v1::
-        InsertTargetTcpProxyRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::target_tcp_proxies::v1::
+                    InsertTargetTcpProxyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetTcpProxiesConnection::InsertTargetTcpProxy(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -124,16 +122,15 @@ TargetTcpProxiesConnection::SetBackendService(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetTcpProxiesConnection::SetBackendService(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::target_tcp_proxies::v1::
-        SetBackendServiceRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::target_tcp_proxies::v1::
+                    SetBackendServiceRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetTcpProxiesConnection::SetBackendService(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -150,16 +147,15 @@ TargetTcpProxiesConnection::SetProxyHeader(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetTcpProxiesConnection::SetProxyHeader(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::target_tcp_proxies::v1::
-        SetProxyHeaderRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::target_tcp_proxies::v1::
+                    SetProxyHeaderRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetTcpProxiesConnection::SetProxyHeader(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

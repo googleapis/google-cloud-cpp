@@ -22,7 +22,6 @@
 #include "google/cloud/apphub/v1/app_hub_connection_idempotency_policy.h"
 #include "google/cloud/apphub/v1/internal/app_hub_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -200,13 +199,13 @@ class AppHubConnection {
 
   virtual StatusOr<google::longrunning::Operation>
   CreateServiceProjectAttachment(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>>
   CreateServiceProjectAttachment(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>
   GetServiceProjectAttachment(
@@ -220,13 +219,13 @@ class AppHubConnection {
 
   virtual StatusOr<google::longrunning::Operation>
   DeleteServiceProjectAttachment(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
   DeleteServiceProjectAttachment(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual StatusOr<
       google::cloud::apphub::v1::DetachServiceProjectAttachmentResponse>
@@ -253,11 +252,11 @@ class AppHubConnection {
       google::cloud::apphub::v1::CreateServiceRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateService(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::apphub::v1::CreateServiceRequest const& request);
 
   virtual future<StatusOr<google::cloud::apphub::v1::Service>> CreateService(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::apphub::v1::Service> GetService(
       google::cloud::apphub::v1::GetServiceRequest const& request);
@@ -266,22 +265,21 @@ class AppHubConnection {
       google::cloud::apphub::v1::UpdateServiceRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateService(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::apphub::v1::UpdateServiceRequest const& request);
 
   virtual future<StatusOr<google::cloud::apphub::v1::Service>> UpdateService(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
   DeleteService(google::cloud::apphub::v1::DeleteServiceRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteService(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::apphub::v1::DeleteServiceRequest const& request);
 
   virtual future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
-  DeleteService(ExperimentalTag,
-                google::longrunning::Operation const& operation);
+  DeleteService(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::apphub::v1::DiscoveredWorkload>
   ListDiscoveredWorkloads(
@@ -303,11 +301,11 @@ class AppHubConnection {
       google::cloud::apphub::v1::CreateWorkloadRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateWorkload(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::apphub::v1::CreateWorkloadRequest const& request);
 
   virtual future<StatusOr<google::cloud::apphub::v1::Workload>> CreateWorkload(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::apphub::v1::Workload> GetWorkload(
       google::cloud::apphub::v1::GetWorkloadRequest const& request);
@@ -316,23 +314,22 @@ class AppHubConnection {
       google::cloud::apphub::v1::UpdateWorkloadRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateWorkload(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::apphub::v1::UpdateWorkloadRequest const& request);
 
   virtual future<StatusOr<google::cloud::apphub::v1::Workload>> UpdateWorkload(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
   DeleteWorkload(
       google::cloud::apphub::v1::DeleteWorkloadRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteWorkload(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::apphub::v1::DeleteWorkloadRequest const& request);
 
   virtual future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
-  DeleteWorkload(ExperimentalTag,
-                 google::longrunning::Operation const& operation);
+  DeleteWorkload(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::apphub::v1::Application> ListApplications(
       google::cloud::apphub::v1::ListApplicationsRequest request);
@@ -342,12 +339,11 @@ class AppHubConnection {
       google::cloud::apphub::v1::CreateApplicationRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateApplication(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::apphub::v1::CreateApplicationRequest const& request);
 
   virtual future<StatusOr<google::cloud::apphub::v1::Application>>
-  CreateApplication(ExperimentalTag,
-                    google::longrunning::Operation const& operation);
+  CreateApplication(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::apphub::v1::Application> GetApplication(
       google::cloud::apphub::v1::GetApplicationRequest const& request);
@@ -357,24 +353,22 @@ class AppHubConnection {
       google::cloud::apphub::v1::UpdateApplicationRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateApplication(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::apphub::v1::UpdateApplicationRequest const& request);
 
   virtual future<StatusOr<google::cloud::apphub::v1::Application>>
-  UpdateApplication(ExperimentalTag,
-                    google::longrunning::Operation const& operation);
+  UpdateApplication(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
   DeleteApplication(
       google::cloud::apphub::v1::DeleteApplicationRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteApplication(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::apphub::v1::DeleteApplicationRequest const& request);
 
   virtual future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
-  DeleteApplication(ExperimentalTag,
-                    google::longrunning::Operation const& operation);
+  DeleteApplication(google::longrunning::Operation const& operation);
 };
 
 /**

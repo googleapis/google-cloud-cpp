@@ -17,6 +17,9 @@
 #include "google/cloud/internal/parse_rfc3339.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <sstream>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

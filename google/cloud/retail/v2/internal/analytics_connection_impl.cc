@@ -105,7 +105,7 @@ AnalyticsServiceConnectionImpl::ExportAnalyticsMetrics(
 
 StatusOr<google::longrunning::Operation>
 AnalyticsServiceConnectionImpl::ExportAnalyticsMetrics(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -121,7 +121,7 @@ AnalyticsServiceConnectionImpl::ExportAnalyticsMetrics(
 
 future<StatusOr<google::cloud::retail::v2::ExportAnalyticsMetricsResponse>>
 AnalyticsServiceConnectionImpl::ExportAnalyticsMetrics(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::retail::v2::ExportMetadata>()) {

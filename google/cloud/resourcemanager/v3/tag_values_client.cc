@@ -94,13 +94,12 @@ TagValuesClient::CreateTagValue(
 }
 
 StatusOr<google::longrunning::Operation> TagValuesClient::CreateTagValue(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::resourcemanager::v3::TagValue const& tag_value,
+    NoAwaitTag, google::cloud::resourcemanager::v3::TagValue const& tag_value,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::resourcemanager::v3::CreateTagValueRequest request;
   *request.mutable_tag_value() = tag_value;
-  return connection_->CreateTagValue(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateTagValue(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>
@@ -112,19 +111,18 @@ TagValuesClient::CreateTagValue(
 }
 
 StatusOr<google::longrunning::Operation> TagValuesClient::CreateTagValue(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::resourcemanager::v3::CreateTagValueRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateTagValue(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateTagValue(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>
-TagValuesClient::CreateTagValue(ExperimentalTag,
-                                google::longrunning::Operation const& operation,
+TagValuesClient::CreateTagValue(google::longrunning::Operation const& operation,
                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateTagValue(ExperimentalTag{}, operation);
+  return connection_->CreateTagValue(operation);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>
@@ -139,14 +137,13 @@ TagValuesClient::UpdateTagValue(
 }
 
 StatusOr<google::longrunning::Operation> TagValuesClient::UpdateTagValue(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::resourcemanager::v3::TagValue const& tag_value,
+    NoAwaitTag, google::cloud::resourcemanager::v3::TagValue const& tag_value,
     google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::resourcemanager::v3::UpdateTagValueRequest request;
   *request.mutable_tag_value() = tag_value;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateTagValue(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->UpdateTagValue(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>
@@ -158,19 +155,18 @@ TagValuesClient::UpdateTagValue(
 }
 
 StatusOr<google::longrunning::Operation> TagValuesClient::UpdateTagValue(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::resourcemanager::v3::UpdateTagValueRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateTagValue(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->UpdateTagValue(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>
-TagValuesClient::UpdateTagValue(ExperimentalTag,
-                                google::longrunning::Operation const& operation,
+TagValuesClient::UpdateTagValue(google::longrunning::Operation const& operation,
                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateTagValue(ExperimentalTag{}, operation);
+  return connection_->UpdateTagValue(operation);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>
@@ -182,11 +178,11 @@ TagValuesClient::DeleteTagValue(std::string const& name, Options opts) {
 }
 
 StatusOr<google::longrunning::Operation> TagValuesClient::DeleteTagValue(
-    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::resourcemanager::v3::DeleteTagValueRequest request;
   request.set_name(name);
-  return connection_->DeleteTagValue(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteTagValue(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>
@@ -198,19 +194,18 @@ TagValuesClient::DeleteTagValue(
 }
 
 StatusOr<google::longrunning::Operation> TagValuesClient::DeleteTagValue(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::resourcemanager::v3::DeleteTagValueRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteTagValue(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteTagValue(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>
-TagValuesClient::DeleteTagValue(ExperimentalTag,
-                                google::longrunning::Operation const& operation,
+TagValuesClient::DeleteTagValue(google::longrunning::Operation const& operation,
                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteTagValue(ExperimentalTag{}, operation);
+  return connection_->DeleteTagValue(operation);
 }
 
 StatusOr<google::iam::v1::Policy> TagValuesClient::GetIamPolicy(

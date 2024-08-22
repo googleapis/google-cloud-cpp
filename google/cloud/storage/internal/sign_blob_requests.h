@@ -20,6 +20,7 @@
 #include "google/cloud/storage/version.h"
 #include "google/cloud/status_or.h"
 #include <string>
+#include <utility>
 #include <vector>
 
 namespace google {

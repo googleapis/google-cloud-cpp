@@ -109,7 +109,7 @@ DataTaxonomyServiceConnectionImpl::CreateDataTaxonomy(
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceConnectionImpl::CreateDataTaxonomy(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -125,7 +125,7 @@ DataTaxonomyServiceConnectionImpl::CreateDataTaxonomy(
 
 future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
 DataTaxonomyServiceConnectionImpl::CreateDataTaxonomy(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
@@ -202,7 +202,7 @@ DataTaxonomyServiceConnectionImpl::UpdateDataTaxonomy(
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceConnectionImpl::UpdateDataTaxonomy(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -218,7 +218,7 @@ DataTaxonomyServiceConnectionImpl::UpdateDataTaxonomy(
 
 future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
 DataTaxonomyServiceConnectionImpl::UpdateDataTaxonomy(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
@@ -295,7 +295,7 @@ DataTaxonomyServiceConnectionImpl::DeleteDataTaxonomy(
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceConnectionImpl::DeleteDataTaxonomy(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -311,7 +311,7 @@ DataTaxonomyServiceConnectionImpl::DeleteDataTaxonomy(
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataTaxonomyServiceConnectionImpl::DeleteDataTaxonomy(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
@@ -438,7 +438,7 @@ DataTaxonomyServiceConnectionImpl::CreateDataAttributeBinding(
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceConnectionImpl::CreateDataAttributeBinding(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -456,7 +456,7 @@ DataTaxonomyServiceConnectionImpl::CreateDataAttributeBinding(
 
 future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
 DataTaxonomyServiceConnectionImpl::CreateDataAttributeBinding(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
@@ -534,7 +534,7 @@ DataTaxonomyServiceConnectionImpl::UpdateDataAttributeBinding(
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceConnectionImpl::UpdateDataAttributeBinding(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -552,7 +552,7 @@ DataTaxonomyServiceConnectionImpl::UpdateDataAttributeBinding(
 
 future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
 DataTaxonomyServiceConnectionImpl::UpdateDataAttributeBinding(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
@@ -630,7 +630,7 @@ DataTaxonomyServiceConnectionImpl::DeleteDataAttributeBinding(
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceConnectionImpl::DeleteDataAttributeBinding(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -648,7 +648,7 @@ DataTaxonomyServiceConnectionImpl::DeleteDataAttributeBinding(
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataTaxonomyServiceConnectionImpl::DeleteDataAttributeBinding(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
@@ -777,7 +777,7 @@ DataTaxonomyServiceConnectionImpl::CreateDataAttribute(
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceConnectionImpl::CreateDataAttribute(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataplex::v1::CreateDataAttributeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -793,7 +793,7 @@ DataTaxonomyServiceConnectionImpl::CreateDataAttribute(
 
 future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
 DataTaxonomyServiceConnectionImpl::CreateDataAttribute(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
@@ -870,7 +870,7 @@ DataTaxonomyServiceConnectionImpl::UpdateDataAttribute(
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceConnectionImpl::UpdateDataAttribute(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -886,7 +886,7 @@ DataTaxonomyServiceConnectionImpl::UpdateDataAttribute(
 
 future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
 DataTaxonomyServiceConnectionImpl::UpdateDataAttribute(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
@@ -963,7 +963,7 @@ DataTaxonomyServiceConnectionImpl::DeleteDataAttribute(
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceConnectionImpl::DeleteDataAttribute(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -979,7 +979,7 @@ DataTaxonomyServiceConnectionImpl::DeleteDataAttribute(
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataTaxonomyServiceConnectionImpl::DeleteDataAttribute(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {

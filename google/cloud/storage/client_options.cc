@@ -28,9 +28,12 @@
 #include "google/cloud/universe_domain_options.h"
 #include "absl/strings/str_split.h"
 #include <cstdlib>
+#include <memory>
 #include <set>
 #include <sstream>
+#include <string>
 #include <thread>
+#include <utility>
 
 namespace google {
 namespace cloud {

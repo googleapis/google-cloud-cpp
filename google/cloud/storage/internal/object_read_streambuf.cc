@@ -16,7 +16,12 @@
 #include "google/cloud/storage/hash_mismatch_error.h"
 #include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/internal/make_status.h"
+#include <algorithm>
 #include <cstring>
+#include <memory>
+#include <string>
+#include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {

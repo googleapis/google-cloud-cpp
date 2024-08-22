@@ -69,15 +69,13 @@ DataFusionConnection::CreateInstance(
 }
 
 StatusOr<google::longrunning::Operation> DataFusionConnection::CreateInstance(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::datafusion::v1::CreateInstanceRequest const&) {
+    NoAwaitTag, google::cloud::datafusion::v1::CreateInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::datafusion::v1::Instance>>
-DataFusionConnection::CreateInstance(ExperimentalTag,
-                                     google::longrunning::Operation const&) {
+DataFusionConnection::CreateInstance(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::datafusion::v1::Instance>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -92,15 +90,13 @@ DataFusionConnection::DeleteInstance(
 }
 
 StatusOr<google::longrunning::Operation> DataFusionConnection::DeleteInstance(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::datafusion::v1::DeleteInstanceRequest const&) {
+    NoAwaitTag, google::cloud::datafusion::v1::DeleteInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::datafusion::v1::OperationMetadata>>
-DataFusionConnection::DeleteInstance(ExperimentalTag,
-                                     google::longrunning::Operation const&) {
+DataFusionConnection::DeleteInstance(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::datafusion::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -115,15 +111,13 @@ DataFusionConnection::UpdateInstance(
 }
 
 StatusOr<google::longrunning::Operation> DataFusionConnection::UpdateInstance(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::datafusion::v1::UpdateInstanceRequest const&) {
+    NoAwaitTag, google::cloud::datafusion::v1::UpdateInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::datafusion::v1::Instance>>
-DataFusionConnection::UpdateInstance(ExperimentalTag,
-                                     google::longrunning::Operation const&) {
+DataFusionConnection::UpdateInstance(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::datafusion::v1::Instance>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -138,15 +132,13 @@ DataFusionConnection::RestartInstance(
 }
 
 StatusOr<google::longrunning::Operation> DataFusionConnection::RestartInstance(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::datafusion::v1::RestartInstanceRequest const&) {
+    NoAwaitTag, google::cloud::datafusion::v1::RestartInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::datafusion::v1::Instance>>
-DataFusionConnection::RestartInstance(ExperimentalTag,
-                                      google::longrunning::Operation const&) {
+DataFusionConnection::RestartInstance(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::datafusion::v1::Instance>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

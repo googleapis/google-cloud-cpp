@@ -57,6 +57,12 @@ DefaultInstancesRestStub::AsyncAddAccessConfig(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back(
+            {"network_interface", request.network_interface()});
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.access_config_resource(),
@@ -66,10 +72,7 @@ DefaultInstancesRestStub::AsyncAddAccessConfig(
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "instances",
                              "/", request.instance(), "/", "addAccessConfig"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("network_interface",
-                                    request.network_interface()),
-                     std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -88,6 +91,11 @@ DefaultInstancesRestStub::AddAccessConfig(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::AddAccessConfigRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"network_interface", request.network_interface()});
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.access_config_resource(), false,
       absl::StrCat("/", "compute", "/",
@@ -95,9 +103,7 @@ DefaultInstancesRestStub::AddAccessConfig(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "addAccessConfig"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("network_interface", request.network_interface()),
-           std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -112,6 +118,10 @@ DefaultInstancesRestStub::AsyncAddResourcePolicies(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -123,8 +133,7 @@ DefaultInstancesRestStub::AsyncAddResourcePolicies(
                              "zones", "/", request.zone(), "/", "instances",
                              "/", request.instance(), "/",
                              "addResourcePolicies"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -143,6 +152,10 @@ DefaultInstancesRestStub::AddResourcePolicies(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::
         AddResourcePoliciesRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context,
       request.instances_add_resource_policies_request_resource(), false,
@@ -151,8 +164,7 @@ DefaultInstancesRestStub::AddResourcePolicies(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "addResourcePolicies"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceAggregatedList>
@@ -161,6 +173,20 @@ DefaultInstancesRestStub::AggregatedListInstances(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::
         AggregatedListInstancesRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"include_all_scopes", (request.include_all_scopes() ? "1" : "0")});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params.push_back(
+      {"service_project_number", request.service_project_number()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceAggregatedList>(
       *service_, rest_context, request, false,
@@ -168,17 +194,7 @@ DefaultInstancesRestStub::AggregatedListInstances(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "aggregated", "/",
                    "instances"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("include_all_scopes",
-                          (request.include_all_scopes() ? "1" : "0")),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0")),
-           std::make_pair("service_project_number",
-                          request.service_project_number())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -193,6 +209,12 @@ DefaultInstancesRestStub::AsyncAttachDisk(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back(
+            {"force_attach", (request.force_attach() ? "1" : "0")});
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.attached_disk_resource(),
@@ -202,10 +224,7 @@ DefaultInstancesRestStub::AsyncAttachDisk(
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "instances",
                              "/", request.instance(), "/", "attachDisk"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("force_attach",
-                                    (request.force_attach() ? "1" : "0")),
-                     std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -224,6 +243,12 @@ DefaultInstancesRestStub::AttachDisk(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::AttachDiskRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back(
+      {"force_attach", (request.force_attach() ? "1" : "0")});
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.attached_disk_resource(), false,
       absl::StrCat("/", "compute", "/",
@@ -231,9 +256,7 @@ DefaultInstancesRestStub::AttachDisk(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "attachDisk"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("force_attach", (request.force_attach() ? "1" : "0")),
-           std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -248,6 +271,10 @@ DefaultInstancesRestStub::AsyncBulkInsert(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -257,8 +284,7 @@ DefaultInstancesRestStub::AsyncBulkInsert(
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "instances",
                              "/", "bulkInsert"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -277,14 +303,17 @@ DefaultInstancesRestStub::BulkInsert(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::BulkInsertRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.bulk_insert_instance_resource(), false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", "bulkInsert"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -299,6 +328,10 @@ DefaultInstancesRestStub::AsyncDeleteInstance(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -307,8 +340,7 @@ DefaultInstancesRestStub::AsyncDeleteInstance(
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "instances",
                              "/", request.instance()),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -327,14 +359,17 @@ DefaultInstancesRestStub::DeleteInstance(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::DeleteInstanceRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -349,6 +384,7 @@ DefaultInstancesRestStub::AsyncDeleteAccessConfig(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -358,11 +394,7 @@ DefaultInstancesRestStub::AsyncDeleteAccessConfig(
                              "zones", "/", request.zone(), "/", "instances",
                              "/", request.instance(), "/",
                              "deleteAccessConfig"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("access_config", request.access_config()),
-                     std::make_pair("network_interface",
-                                    request.network_interface()),
-                     std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -381,6 +413,7 @@ DefaultInstancesRestStub::DeleteAccessConfig(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::DeleteAccessConfigRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -388,10 +421,7 @@ DefaultInstancesRestStub::DeleteAccessConfig(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "deleteAccessConfig"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("access_config", request.access_config()),
-           std::make_pair("network_interface", request.network_interface()),
-           std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -406,6 +436,7 @@ DefaultInstancesRestStub::AsyncDetachDisk(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -414,9 +445,7 @@ DefaultInstancesRestStub::AsyncDetachDisk(
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "instances",
                              "/", request.instance(), "/", "detachDisk"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("device_name", request.device_name()),
-                     std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -435,6 +464,7 @@ DefaultInstancesRestStub::DetachDisk(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::DetachDiskRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -442,9 +472,7 @@ DefaultInstancesRestStub::DetachDisk(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "detachDisk"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("device_name", request.device_name()),
-           std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Instance>
@@ -453,12 +481,14 @@ DefaultInstancesRestStub::GetInstance(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::GetInstanceRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<google::cloud::cpp::compute::v1::Instance>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
-                   request.zone(), "/", "instances", "/", request.instance()));
+                   request.zone(), "/", "instances", "/", request.instance()),
+      std::move(query_params));
 }
 
 StatusOr<
@@ -468,6 +498,10 @@ DefaultInstancesRestStub::GetEffectiveFirewalls(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::
         GetEffectiveFirewallsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"network_interface", request.network_interface()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstancesGetEffectiveFirewallsResponse>(
       *service_, rest_context, request, false,
@@ -476,8 +510,7 @@ DefaultInstancesRestStub::GetEffectiveFirewalls(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "getEffectiveFirewalls"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("network_interface", request.network_interface())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::GuestAttributes>
@@ -486,6 +519,11 @@ DefaultInstancesRestStub::GetGuestAttributes(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::GetGuestAttributesRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"query_path", request.query_path()});
+  query_params.push_back({"variable_key", request.variable_key()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::GuestAttributes>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -493,9 +531,7 @@ DefaultInstancesRestStub::GetGuestAttributes(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "getGuestAttributes"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("query_path", request.query_path()),
-           std::make_pair("variable_key", request.variable_key())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -504,6 +540,12 @@ DefaultInstancesRestStub::GetIamPolicy(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::GetIamPolicyRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back(
+      {"options_requested_policy_version",
+       std::to_string(request.options_requested_policy_version())});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -511,9 +553,7 @@ DefaultInstancesRestStub::GetIamPolicy(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.resource(),
                    "/", "getIamPolicy"),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair(
-          "options_requested_policy_version",
-          std::to_string(request.options_requested_policy_version()))}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Screenshot>
@@ -522,13 +562,15 @@ DefaultInstancesRestStub::GetScreenshot(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::GetScreenshotRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<google::cloud::cpp::compute::v1::Screenshot>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
-                   "/", "screenshot"));
+                   "/", "screenshot"),
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SerialPortOutput>
@@ -537,6 +579,11 @@ DefaultInstancesRestStub::GetSerialPortOutput(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::
         GetSerialPortOutputRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"port", std::to_string(request.port())});
+  query_params.push_back({"start", request.start()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::SerialPortOutput>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -544,9 +591,7 @@ DefaultInstancesRestStub::GetSerialPortOutput(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "serialPort"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("port", std::to_string(request.port())),
-           std::make_pair("start", request.start())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ShieldedInstanceIdentity>
@@ -555,6 +600,7 @@ DefaultInstancesRestStub::GetShieldedInstanceIdentity(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::
         GetShieldedInstanceIdentityRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ShieldedInstanceIdentity>(
       *service_, rest_context, request, false,
@@ -562,7 +608,8 @@ DefaultInstancesRestStub::GetShieldedInstanceIdentity(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
-                   "/", "getShieldedInstanceIdentity"));
+                   "/", "getShieldedInstanceIdentity"),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -577,6 +624,14 @@ DefaultInstancesRestStub::AsyncInsertInstance(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params.push_back(
+            {"source_instance_template", request.source_instance_template()});
+        query_params.push_back(
+            {"source_machine_image", request.source_machine_image()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.instance_resource(), false,
@@ -584,12 +639,7 @@ DefaultInstancesRestStub::AsyncInsertInstance(
                              rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "instances"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id()),
-                     std::make_pair("source_instance_template",
-                                    request.source_instance_template()),
-                     std::make_pair("source_machine_image",
-                                    request.source_machine_image())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -608,18 +658,21 @@ DefaultInstancesRestStub::InsertInstance(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::InsertInstanceRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params.push_back(
+      {"source_instance_template", request.source_instance_template()});
+  query_params.push_back(
+      {"source_machine_image", request.source_machine_image()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.instance_resource(), false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id()),
-           std::make_pair("source_instance_template",
-                          request.source_instance_template()),
-           std::make_pair("source_machine_image",
-                          request.source_machine_image())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceList>
@@ -628,19 +681,23 @@ DefaultInstancesRestStub::ListInstances(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::ListInstancesRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::InstanceList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceListReferrers>
@@ -649,6 +706,16 @@ DefaultInstancesRestStub::ListReferrers(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::ListReferrersRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceListReferrers>(
       *service_, rest_context, request, false,
@@ -657,13 +724,7 @@ DefaultInstancesRestStub::ListReferrers(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "referrers"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -678,6 +739,7 @@ DefaultInstancesRestStub::AsyncPerformMaintenance(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -687,8 +749,7 @@ DefaultInstancesRestStub::AsyncPerformMaintenance(
                              "zones", "/", request.zone(), "/", "instances",
                              "/", request.instance(), "/",
                              "performMaintenance"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -707,6 +768,7 @@ DefaultInstancesRestStub::PerformMaintenance(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::PerformMaintenanceRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -714,8 +776,7 @@ DefaultInstancesRestStub::PerformMaintenance(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "performMaintenance"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -730,6 +791,10 @@ DefaultInstancesRestStub::AsyncRemoveResourcePolicies(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -741,8 +806,7 @@ DefaultInstancesRestStub::AsyncRemoveResourcePolicies(
                              "zones", "/", request.zone(), "/", "instances",
                              "/", request.instance(), "/",
                              "removeResourcePolicies"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -761,6 +825,10 @@ DefaultInstancesRestStub::RemoveResourcePolicies(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::
         RemoveResourcePoliciesRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context,
       request.instances_remove_resource_policies_request_resource(), false,
@@ -769,8 +837,7 @@ DefaultInstancesRestStub::RemoveResourcePolicies(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "removeResourcePolicies"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -784,6 +851,7 @@ DefaultInstancesRestStub::AsyncReset(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -792,8 +860,7 @@ DefaultInstancesRestStub::AsyncReset(
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "instances",
                              "/", request.instance(), "/", "reset"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -811,6 +878,7 @@ DefaultInstancesRestStub::Reset(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::cpp::compute::instances::v1::ResetRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -818,8 +886,7 @@ DefaultInstancesRestStub::Reset(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "reset"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -833,6 +900,7 @@ DefaultInstancesRestStub::AsyncResume(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -841,8 +909,7 @@ DefaultInstancesRestStub::AsyncResume(
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "instances",
                              "/", request.instance(), "/", "resume"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -860,6 +927,7 @@ DefaultInstancesRestStub::Resume(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::cpp::compute::instances::v1::ResumeRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -867,8 +935,7 @@ DefaultInstancesRestStub::Resume(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "resume"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 Status DefaultInstancesRestStub::SendDiagnosticInterrupt(
@@ -876,13 +943,15 @@ Status DefaultInstancesRestStub::SendDiagnosticInterrupt(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::
         SendDiagnosticInterruptRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
-                   "/", "sendDiagnosticInterrupt"));
+                   "/", "sendDiagnosticInterrupt"),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -897,6 +966,7 @@ DefaultInstancesRestStub::AsyncSetDeletionProtection(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -906,11 +976,7 @@ DefaultInstancesRestStub::AsyncSetDeletionProtection(
                              "zones", "/", request.zone(), "/", "instances",
                              "/", request.resource(), "/",
                              "setDeletionProtection"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair(
-                         "deletion_protection",
-                         (request.deletion_protection() ? "1" : "0")),
-                     std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -929,6 +995,7 @@ DefaultInstancesRestStub::SetDeletionProtection(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::
         SetDeletionProtectionRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -936,10 +1003,7 @@ DefaultInstancesRestStub::SetDeletionProtection(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.resource(),
                    "/", "setDeletionProtection"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("deletion_protection",
-                          (request.deletion_protection() ? "1" : "0")),
-           std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -954,6 +1018,7 @@ DefaultInstancesRestStub::AsyncSetDiskAutoDelete(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -962,11 +1027,7 @@ DefaultInstancesRestStub::AsyncSetDiskAutoDelete(
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "instances",
                              "/", request.instance(), "/", "setDiskAutoDelete"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("auto_delete",
-                                    (request.auto_delete() ? "1" : "0")),
-                     std::make_pair("device_name", request.device_name()),
-                     std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -985,6 +1046,7 @@ DefaultInstancesRestStub::SetDiskAutoDelete(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::SetDiskAutoDeleteRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -992,10 +1054,7 @@ DefaultInstancesRestStub::SetDiskAutoDelete(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "setDiskAutoDelete"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("auto_delete", (request.auto_delete() ? "1" : "0")),
-           std::make_pair("device_name", request.device_name()),
-           std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -1004,6 +1063,7 @@ DefaultInstancesRestStub::SetIamPolicy(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::SetIamPolicyRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.zone_set_policy_request_resource(),
       false,
@@ -1011,7 +1071,8 @@ DefaultInstancesRestStub::SetIamPolicy(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.resource(),
-                   "/", "setIamPolicy"));
+                   "/", "setIamPolicy"),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1026,6 +1087,10 @@ DefaultInstancesRestStub::AsyncSetLabels(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -1035,8 +1100,7 @@ DefaultInstancesRestStub::AsyncSetLabels(
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "instances",
                              "/", request.instance(), "/", "setLabels"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -1055,6 +1119,10 @@ DefaultInstancesRestStub::SetLabels(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::SetLabelsRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.instances_set_labels_request_resource(),
       false,
@@ -1063,8 +1131,7 @@ DefaultInstancesRestStub::SetLabels(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "setLabels"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1079,6 +1146,10 @@ DefaultInstancesRestStub::AsyncSetMachineResources(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -1090,8 +1161,7 @@ DefaultInstancesRestStub::AsyncSetMachineResources(
                              "zones", "/", request.zone(), "/", "instances",
                              "/", request.instance(), "/",
                              "setMachineResources"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -1110,6 +1180,10 @@ DefaultInstancesRestStub::SetMachineResources(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::
         SetMachineResourcesRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context,
       request.instances_set_machine_resources_request_resource(), false,
@@ -1118,8 +1192,7 @@ DefaultInstancesRestStub::SetMachineResources(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "setMachineResources"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1134,6 +1207,10 @@ DefaultInstancesRestStub::AsyncSetMachineType(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -1143,8 +1220,7 @@ DefaultInstancesRestStub::AsyncSetMachineType(
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "instances",
                              "/", request.instance(), "/", "setMachineType"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -1163,6 +1239,10 @@ DefaultInstancesRestStub::SetMachineType(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::SetMachineTypeRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context,
       request.instances_set_machine_type_request_resource(), false,
@@ -1171,8 +1251,7 @@ DefaultInstancesRestStub::SetMachineType(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "setMachineType"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1187,6 +1266,10 @@ DefaultInstancesRestStub::AsyncSetMetadata(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.metadata_resource(), false,
@@ -1195,8 +1278,7 @@ DefaultInstancesRestStub::AsyncSetMetadata(
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "instances",
                              "/", request.instance(), "/", "setMetadata"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -1215,6 +1297,10 @@ DefaultInstancesRestStub::SetMetadata(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::SetMetadataRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.metadata_resource(), false,
       absl::StrCat("/", "compute", "/",
@@ -1222,8 +1308,7 @@ DefaultInstancesRestStub::SetMetadata(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "setMetadata"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1238,6 +1323,10 @@ DefaultInstancesRestStub::AsyncSetMinCpuPlatform(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -1248,8 +1337,7 @@ DefaultInstancesRestStub::AsyncSetMinCpuPlatform(
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "instances",
                              "/", request.instance(), "/", "setMinCpuPlatform"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -1268,6 +1356,10 @@ DefaultInstancesRestStub::SetMinCpuPlatform(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::SetMinCpuPlatformRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context,
       request.instances_set_min_cpu_platform_request_resource(), false,
@@ -1276,8 +1368,7 @@ DefaultInstancesRestStub::SetMinCpuPlatform(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "setMinCpuPlatform"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1291,6 +1382,10 @@ DefaultInstancesRestStub::AsyncSetName(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -1300,8 +1395,7 @@ DefaultInstancesRestStub::AsyncSetName(
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "instances",
                              "/", request.instance(), "/", "setName"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -1319,6 +1413,10 @@ DefaultInstancesRestStub::SetName(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::cpp::compute::instances::v1::SetNameRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.instances_set_name_request_resource(),
       false,
@@ -1327,8 +1425,7 @@ DefaultInstancesRestStub::SetName(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "setName"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1343,6 +1440,10 @@ DefaultInstancesRestStub::AsyncSetScheduling(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.scheduling_resource(), false,
@@ -1351,8 +1452,7 @@ DefaultInstancesRestStub::AsyncSetScheduling(
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "instances",
                              "/", request.instance(), "/", "setScheduling"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -1371,6 +1471,10 @@ DefaultInstancesRestStub::SetScheduling(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::SetSchedulingRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.scheduling_resource(), false,
       absl::StrCat("/", "compute", "/",
@@ -1378,8 +1482,7 @@ DefaultInstancesRestStub::SetScheduling(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "setScheduling"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1394,6 +1497,10 @@ DefaultInstancesRestStub::AsyncSetSecurityPolicy(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -1403,8 +1510,7 @@ DefaultInstancesRestStub::AsyncSetSecurityPolicy(
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "instances",
                              "/", request.instance(), "/", "setSecurityPolicy"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -1423,6 +1529,10 @@ DefaultInstancesRestStub::SetSecurityPolicy(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::SetSecurityPolicyRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context,
       request.instances_set_security_policy_request_resource(), false,
@@ -1431,8 +1541,7 @@ DefaultInstancesRestStub::SetSecurityPolicy(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "setSecurityPolicy"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1447,6 +1556,10 @@ DefaultInstancesRestStub::AsyncSetServiceAccount(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -1456,8 +1569,7 @@ DefaultInstancesRestStub::AsyncSetServiceAccount(
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "instances",
                              "/", request.instance(), "/", "setServiceAccount"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -1476,6 +1588,10 @@ DefaultInstancesRestStub::SetServiceAccount(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::SetServiceAccountRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context,
       request.instances_set_service_account_request_resource(), false,
@@ -1484,8 +1600,7 @@ DefaultInstancesRestStub::SetServiceAccount(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "setServiceAccount"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1500,6 +1615,10 @@ DefaultInstancesRestStub::AsyncSetShieldedInstanceIntegrityPolicy(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -1510,8 +1629,7 @@ DefaultInstancesRestStub::AsyncSetShieldedInstanceIntegrityPolicy(
                              "zones", "/", request.zone(), "/", "instances",
                              "/", request.instance(), "/",
                              "setShieldedInstanceIntegrityPolicy"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -1530,6 +1648,10 @@ DefaultInstancesRestStub::SetShieldedInstanceIntegrityPolicy(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::
         SetShieldedInstanceIntegrityPolicyRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context,
       request.shielded_instance_integrity_policy_resource(), false,
@@ -1538,8 +1660,7 @@ DefaultInstancesRestStub::SetShieldedInstanceIntegrityPolicy(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "setShieldedInstanceIntegrityPolicy"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1553,6 +1674,10 @@ DefaultInstancesRestStub::AsyncSetTags(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.tags_resource(), false,
@@ -1561,8 +1686,7 @@ DefaultInstancesRestStub::AsyncSetTags(
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "instances",
                              "/", request.instance(), "/", "setTags"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -1580,6 +1704,10 @@ DefaultInstancesRestStub::SetTags(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::cpp::compute::instances::v1::SetTagsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.tags_resource(), false,
       absl::StrCat("/", "compute", "/",
@@ -1587,8 +1715,7 @@ DefaultInstancesRestStub::SetTags(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "setTags"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1603,6 +1730,7 @@ DefaultInstancesRestStub::AsyncSimulateMaintenanceEvent(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -1612,12 +1740,7 @@ DefaultInstancesRestStub::AsyncSimulateMaintenanceEvent(
                              "zones", "/", request.zone(), "/", "instances",
                              "/", request.instance(), "/",
                              "simulateMaintenanceEvent"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id()),
-                     std::make_pair(
-                         "with_extended_notifications",
-                         (request.with_extended_notifications() ? "1"
-                                                                : "0"))})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -1636,6 +1759,7 @@ DefaultInstancesRestStub::SimulateMaintenanceEvent(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::
         SimulateMaintenanceEventRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -1643,11 +1767,7 @@ DefaultInstancesRestStub::SimulateMaintenanceEvent(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "simulateMaintenanceEvent"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id()),
-           std::make_pair(
-               "with_extended_notifications",
-               (request.with_extended_notifications() ? "1" : "0"))}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1661,6 +1781,7 @@ DefaultInstancesRestStub::AsyncStart(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -1669,8 +1790,7 @@ DefaultInstancesRestStub::AsyncStart(
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "instances",
                              "/", request.instance(), "/", "start"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -1688,6 +1808,7 @@ DefaultInstancesRestStub::Start(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::cpp::compute::instances::v1::StartRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -1695,8 +1816,7 @@ DefaultInstancesRestStub::Start(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "start"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1711,6 +1831,10 @@ DefaultInstancesRestStub::AsyncStartWithEncryptionKey(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -1722,8 +1846,7 @@ DefaultInstancesRestStub::AsyncStartWithEncryptionKey(
                              "zones", "/", request.zone(), "/", "instances",
                              "/", request.instance(), "/",
                              "startWithEncryptionKey"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -1742,6 +1865,10 @@ DefaultInstancesRestStub::StartWithEncryptionKey(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::
         StartWithEncryptionKeyRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context,
       request.instances_start_with_encryption_key_request_resource(), false,
@@ -1750,8 +1877,7 @@ DefaultInstancesRestStub::StartWithEncryptionKey(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "startWithEncryptionKey"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1765,6 +1891,7 @@ DefaultInstancesRestStub::AsyncStop(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -1773,10 +1900,7 @@ DefaultInstancesRestStub::AsyncStop(
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "instances",
                              "/", request.instance(), "/", "stop"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("discard_local_ssd",
-                                    (request.discard_local_ssd() ? "1" : "0")),
-                     std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -1794,6 +1918,7 @@ DefaultInstancesRestStub::Stop(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::cpp::compute::instances::v1::StopRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -1801,10 +1926,7 @@ DefaultInstancesRestStub::Stop(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "stop"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("discard_local_ssd",
-                          (request.discard_local_ssd() ? "1" : "0")),
-           std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1818,6 +1940,7 @@ DefaultInstancesRestStub::AsyncSuspend(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -1826,10 +1949,7 @@ DefaultInstancesRestStub::AsyncSuspend(
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "instances",
                              "/", request.instance(), "/", "suspend"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("discard_local_ssd",
-                                    (request.discard_local_ssd() ? "1" : "0")),
-                     std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -1847,6 +1967,7 @@ DefaultInstancesRestStub::Suspend(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::cpp::compute::instances::v1::SuspendRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -1854,10 +1975,7 @@ DefaultInstancesRestStub::Suspend(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "suspend"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("discard_local_ssd",
-                          (request.discard_local_ssd() ? "1" : "0")),
-           std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -1866,6 +1984,7 @@ DefaultInstancesRestStub::TestIamPermissions(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::TestIamPermissionsRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
@@ -1874,7 +1993,8 @@ DefaultInstancesRestStub::TestIamPermissions(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.resource(),
-                   "/", "testIamPermissions"));
+                   "/", "testIamPermissions"),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1889,6 +2009,13 @@ DefaultInstancesRestStub::AsyncUpdateInstance(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"minimal_action", request.minimal_action()});
+        query_params.push_back({"most_disruptive_allowed_action",
+                                request.most_disruptive_allowed_action()});
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.instance_resource(), false,
@@ -1897,11 +2024,7 @@ DefaultInstancesRestStub::AsyncUpdateInstance(
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "instances",
                              "/", request.instance()),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("minimal_action", request.minimal_action()),
-                     std::make_pair("most_disruptive_allowed_action",
-                                    request.most_disruptive_allowed_action()),
-                     std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -1920,17 +2043,20 @@ DefaultInstancesRestStub::UpdateInstance(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::UpdateInstanceRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"minimal_action", request.minimal_action()});
+  query_params.push_back({"most_disruptive_allowed_action",
+                          request.most_disruptive_allowed_action()});
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.instance_resource(), false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("minimal_action", request.minimal_action()),
-           std::make_pair("most_disruptive_allowed_action",
-                          request.most_disruptive_allowed_action()),
-           std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1945,6 +2071,12 @@ DefaultInstancesRestStub::AsyncUpdateAccessConfig(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back(
+            {"network_interface", request.network_interface()});
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.access_config_resource(),
@@ -1955,10 +2087,7 @@ DefaultInstancesRestStub::AsyncUpdateAccessConfig(
                              "zones", "/", request.zone(), "/", "instances",
                              "/", request.instance(), "/",
                              "updateAccessConfig"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("network_interface",
-                                    request.network_interface()),
-                     std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -1977,6 +2106,11 @@ DefaultInstancesRestStub::UpdateAccessConfig(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::UpdateAccessConfigRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"network_interface", request.network_interface()});
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.access_config_resource(), false,
       absl::StrCat("/", "compute", "/",
@@ -1984,9 +2118,7 @@ DefaultInstancesRestStub::UpdateAccessConfig(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "updateAccessConfig"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("network_interface", request.network_interface()),
-           std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -2001,6 +2133,10 @@ DefaultInstancesRestStub::AsyncUpdateDisplayDevice(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.display_device_resource(),
@@ -2011,8 +2147,7 @@ DefaultInstancesRestStub::AsyncUpdateDisplayDevice(
                              "zones", "/", request.zone(), "/", "instances",
                              "/", request.instance(), "/",
                              "updateDisplayDevice"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -2031,6 +2166,10 @@ DefaultInstancesRestStub::UpdateDisplayDevice(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::
         UpdateDisplayDeviceRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.display_device_resource(), false,
       absl::StrCat("/", "compute", "/",
@@ -2038,8 +2177,7 @@ DefaultInstancesRestStub::UpdateDisplayDevice(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "updateDisplayDevice"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -2054,6 +2192,12 @@ DefaultInstancesRestStub::AsyncUpdateNetworkInterface(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back(
+            {"network_interface", request.network_interface()});
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.network_interface_resource(),
@@ -2064,10 +2208,7 @@ DefaultInstancesRestStub::AsyncUpdateNetworkInterface(
                              "zones", "/", request.zone(), "/", "instances",
                              "/", request.instance(), "/",
                              "updateNetworkInterface"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("network_interface",
-                                    request.network_interface()),
-                     std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -2086,6 +2227,11 @@ DefaultInstancesRestStub::UpdateNetworkInterface(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::
         UpdateNetworkInterfaceRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"network_interface", request.network_interface()});
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.network_interface_resource(), false,
       absl::StrCat("/", "compute", "/",
@@ -2093,9 +2239,7 @@ DefaultInstancesRestStub::UpdateNetworkInterface(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "updateNetworkInterface"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("network_interface", request.network_interface()),
-           std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -2110,6 +2254,10 @@ DefaultInstancesRestStub::AsyncUpdateShieldedInstanceConfig(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -2120,8 +2268,7 @@ DefaultInstancesRestStub::AsyncUpdateShieldedInstanceConfig(
                              "zones", "/", request.zone(), "/", "instances",
                              "/", request.instance(), "/",
                              "updateShieldedInstanceConfig"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -2140,6 +2287,10 @@ DefaultInstancesRestStub::UpdateShieldedInstanceConfig(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::
         UpdateShieldedInstanceConfigRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.shielded_instance_config_resource(),
       false,
@@ -2148,8 +2299,7 @@ DefaultInstancesRestStub::UpdateShieldedInstanceConfig(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "updateShieldedInstanceConfig"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

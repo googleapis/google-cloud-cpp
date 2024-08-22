@@ -50,25 +50,44 @@ class MockSpeechConnection : public speech_v1::SpeechConnection {
               (google::cloud::speech::v1::RecognizeRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, LongRunningRecognize)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, LongRunningRecognize(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// LongRunningRecognize(Matcher<google::cloud::speech::v1::LongRunningRecognizeRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>,
       LongRunningRecognize,
       (google::cloud::speech::v1::LongRunningRecognizeRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, LongRunningRecognize(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, LongRunningRecognize,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::speech::v1::LongRunningRecognizeRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// LongRunningRecognize(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>,
-      LongRunningRecognize,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      LongRunningRecognize, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD((std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<

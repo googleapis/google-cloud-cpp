@@ -11,6 +11,18 @@ on:
         required: true
         description: "Build the full matrix"
         type: boolean
+      sccache-mode:
+        required: true
+        description: "READ_WRITE or DISABLED"
+        type: string
+      vcpkg-cache-mode:
+        required: true
+        description: "read or readwrite"
+        type: string
+      execute-integration-tests:
+        required: true
+        description: "Integration tests require credentials."
+        type: boolean
 
 permissions:
   contents: read
@@ -51,6 +63,7 @@ jobs:
       with:
         ref: ${{ inputs.checkout-ref }}
     - uses: google-github-actions/auth@v2
+      if: ${{ inputs.sccache-mode == 'READ_WRITE' && inputs.vcpkg-cache-mode == 'readwrite' }}
       with:
         create_credentials_file: true
         credentials_json: ${{ secrets.BUILD_CACHE_KEY }}
@@ -96,7 +109,7 @@ jobs:
         # run something like this and create shards:
         #
         # git grep -l 'class.*Client' 'google/cloud/**_client.h' |
-        #    egrep -v "(bigtable/|internal/|pubsub/|spanner/|storage/)" |
+        #    egrep -v "(bigtable/|internal/|pubsub/|pubsublite/|spanner/|storage/)" |
         #    cut -f -3 -d/| sort | uniq -c | sort -n |
         #    awk '{ s += $1; print s, $0}'
         #
@@ -112,16 +125,6 @@ jobs:
           aiplatform
         )
         shard2_features=(
-          policytroubleshooter
-          profiler
-          pubsublite
-          redis
-          securitycenter
-          servicedirectory
-          tpu
-          trace
-          vision
-          workflows
           beyondcorp
           billing
           binaryauthorization
@@ -141,6 +144,7 @@ jobs:
           contentwarehouse
           dataplex
           bigquery
+          bigquerycontrol
           resourcemanager
         )
         shard3_features=(
@@ -178,6 +182,15 @@ jobs:
           metastore
           networkconnectivity
           networkservices
+          policytroubleshooter
+          profiler
+          redis
+          securitycenter
+          servicedirectory
+          tpu
+          trace
+          vision
+          workflows
         )
         if [[ "${{ matrix.shard }}" == "Core1" ]]; then
           features="$(printf ",%s" "${core1_features[@]}")"
@@ -220,6 +233,7 @@ jobs:
         (sleep 60  ; choco install -y cmake --version 3.29.2) || \
         (sleep 120 ; choco install -y cmake --version 3.29.2)
     - name: Download and Install sccache
+      if: ${{ inputs.sccache-mode != 'DISABLED' }}
       working-directory: "${{runner.temp}}"
       shell: bash
       run: |
@@ -257,12 +271,13 @@ jobs:
         # Put the CMake output in a directory with more space and keep it short
         # to avoid running into the MSVC limits.
         export CMAKE_OUT='c:\b'
+        export EXECUTE_INTEGRATION_TESTS=${{ inputs.execute-integration-tests }}
         ci/gha/builds/windows-cmake.sh ${{ matrix.build_type }} ${{ steps.dynamic.outputs.features }}
     env:
-      SCCACHE_GCS_BUCKET: cloud-cpp-gha-cache
+      SCCACHE_GCS_BUCKET: cloud-cpp-community-gha-cache
       SCCACHE_GCS_KEY_PREFIX: sccache/${{ matrix.msvc }}/${{ matrix.arch}}/${{ matrix.build_type }}
-      SCCACHE_GCS_RW_MODE: READ_WRITE
+      SCCACHE_GCS_RW_MODE: ${{ inputs.sccache-mode }}
       SCCACHE_IGNORE_SERVER_IO_ERROR: 1
-      VCPKG_BINARY_SOURCES: x-gcs,gs://cloud-cpp-gha-cache/vcpkg-cache/${{ matrix.msvc }},readwrite
+      VCPKG_BINARY_SOURCES: x-gcs,gs://cloud-cpp-community-gha-cache/vcpkg-cache/${{ matrix.msvc }},${{ inputs.vcpkg-cache-mode }}
       VCPKG_TRIPLET: ${{ matrix.arch }}-windows
       GHA_TEST_BUCKET: "gcs-grpc-team-cloud-cpp-testing-bucket"

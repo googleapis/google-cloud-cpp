@@ -84,7 +84,7 @@ TelcoAutomationClient::CreateOrchestrationCluster(
 
 StatusOr<google::longrunning::Operation>
 TelcoAutomationClient::CreateOrchestrationCluster(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::cloud::telcoautomation::v1::OrchestrationCluster const&
         orchestration_cluster,
     std::string const& orchestration_cluster_id, Options opts) {
@@ -93,8 +93,7 @@ TelcoAutomationClient::CreateOrchestrationCluster(
   request.set_parent(parent);
   *request.mutable_orchestration_cluster() = orchestration_cluster;
   request.set_orchestration_cluster_id(orchestration_cluster_id);
-  return connection_->CreateOrchestrationCluster(ExperimentalTag{},
-                                                 NoAwaitTag{}, request);
+  return connection_->CreateOrchestrationCluster(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>
@@ -108,21 +107,19 @@ TelcoAutomationClient::CreateOrchestrationCluster(
 
 StatusOr<google::longrunning::Operation>
 TelcoAutomationClient::CreateOrchestrationCluster(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateOrchestrationCluster(ExperimentalTag{},
-                                                 NoAwaitTag{}, request);
+  return connection_->CreateOrchestrationCluster(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>
 TelcoAutomationClient::CreateOrchestrationCluster(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateOrchestrationCluster(ExperimentalTag{}, operation);
+  return connection_->CreateOrchestrationCluster(operation);
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
@@ -135,14 +132,13 @@ TelcoAutomationClient::DeleteOrchestrationCluster(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-TelcoAutomationClient::DeleteOrchestrationCluster(ExperimentalTag, NoAwaitTag,
+TelcoAutomationClient::DeleteOrchestrationCluster(NoAwaitTag,
                                                   std::string const& name,
                                                   Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest request;
   request.set_name(name);
-  return connection_->DeleteOrchestrationCluster(ExperimentalTag{},
-                                                 NoAwaitTag{}, request);
+  return connection_->DeleteOrchestrationCluster(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
@@ -156,21 +152,19 @@ TelcoAutomationClient::DeleteOrchestrationCluster(
 
 StatusOr<google::longrunning::Operation>
 TelcoAutomationClient::DeleteOrchestrationCluster(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteOrchestrationCluster(ExperimentalTag{},
-                                                 NoAwaitTag{}, request);
+  return connection_->DeleteOrchestrationCluster(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
 TelcoAutomationClient::DeleteOrchestrationCluster(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteOrchestrationCluster(ExperimentalTag{}, operation);
+  return connection_->DeleteOrchestrationCluster(operation);
 }
 
 StreamRange<google::cloud::telcoautomation::v1::EdgeSlm>
@@ -219,7 +213,7 @@ TelcoAutomationClient::CreateEdgeSlm(
 }
 
 StatusOr<google::longrunning::Operation> TelcoAutomationClient::CreateEdgeSlm(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::cloud::telcoautomation::v1::EdgeSlm const& edge_slm,
     std::string const& edge_slm_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -227,7 +221,7 @@ StatusOr<google::longrunning::Operation> TelcoAutomationClient::CreateEdgeSlm(
   request.set_parent(parent);
   *request.mutable_edge_slm() = edge_slm;
   request.set_edge_slm_id(edge_slm_id);
-  return connection_->CreateEdgeSlm(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateEdgeSlm(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>>
@@ -239,19 +233,18 @@ TelcoAutomationClient::CreateEdgeSlm(
 }
 
 StatusOr<google::longrunning::Operation> TelcoAutomationClient::CreateEdgeSlm(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateEdgeSlm(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateEdgeSlm(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>>
 TelcoAutomationClient::CreateEdgeSlm(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateEdgeSlm(ExperimentalTag{}, operation);
+  return connection_->CreateEdgeSlm(operation);
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
@@ -263,11 +256,11 @@ TelcoAutomationClient::DeleteEdgeSlm(std::string const& name, Options opts) {
 }
 
 StatusOr<google::longrunning::Operation> TelcoAutomationClient::DeleteEdgeSlm(
-    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest request;
   request.set_name(name);
-  return connection_->DeleteEdgeSlm(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteEdgeSlm(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
@@ -279,19 +272,18 @@ TelcoAutomationClient::DeleteEdgeSlm(
 }
 
 StatusOr<google::longrunning::Operation> TelcoAutomationClient::DeleteEdgeSlm(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteEdgeSlm(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteEdgeSlm(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
 TelcoAutomationClient::DeleteEdgeSlm(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteEdgeSlm(ExperimentalTag{}, operation);
+  return connection_->DeleteEdgeSlm(operation);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>

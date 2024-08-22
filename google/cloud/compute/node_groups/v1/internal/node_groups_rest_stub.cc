@@ -57,6 +57,10 @@ DefaultNodeGroupsRestStub::AsyncAddNodes(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -66,8 +70,7 @@ DefaultNodeGroupsRestStub::AsyncAddNodes(
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "nodeGroups",
                              "/", request.node_group(), "/", "addNodes"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -86,6 +89,10 @@ DefaultNodeGroupsRestStub::AddNodes(
     Options const& options,
     google::cloud::cpp::compute::node_groups::v1::AddNodesRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.node_groups_add_nodes_request_resource(),
       false,
@@ -94,8 +101,7 @@ DefaultNodeGroupsRestStub::AddNodes(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "nodeGroups", "/", request.node_group(),
                    "/", "addNodes"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeGroupAggregatedList>
@@ -104,6 +110,20 @@ DefaultNodeGroupsRestStub::AggregatedListNodeGroups(
     Options const& options,
     google::cloud::cpp::compute::node_groups::v1::
         AggregatedListNodeGroupsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"include_all_scopes", (request.include_all_scopes() ? "1" : "0")});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params.push_back(
+      {"service_project_number", request.service_project_number()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NodeGroupAggregatedList>(
       *service_, rest_context, request, false,
@@ -111,17 +131,7 @@ DefaultNodeGroupsRestStub::AggregatedListNodeGroups(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "aggregated", "/",
                    "nodeGroups"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("include_all_scopes",
-                          (request.include_all_scopes() ? "1" : "0")),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0")),
-           std::make_pair("service_project_number",
-                          request.service_project_number())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -136,6 +146,10 @@ DefaultNodeGroupsRestStub::AsyncDeleteNodeGroup(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -144,8 +158,7 @@ DefaultNodeGroupsRestStub::AsyncDeleteNodeGroup(
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "nodeGroups",
                              "/", request.node_group()),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -164,6 +177,10 @@ DefaultNodeGroupsRestStub::DeleteNodeGroup(
     Options const& options,
     google::cloud::cpp::compute::node_groups::v1::DeleteNodeGroupRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -171,8 +188,7 @@ DefaultNodeGroupsRestStub::DeleteNodeGroup(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "nodeGroups", "/",
                    request.node_group()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -187,6 +203,10 @@ DefaultNodeGroupsRestStub::AsyncDeleteNodes(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -196,8 +216,7 @@ DefaultNodeGroupsRestStub::AsyncDeleteNodes(
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "nodeGroups",
                              "/", request.node_group(), "/", "deleteNodes"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -216,6 +235,10 @@ DefaultNodeGroupsRestStub::DeleteNodes(
     Options const& options,
     google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context,
       request.node_groups_delete_nodes_request_resource(), false,
@@ -224,8 +247,7 @@ DefaultNodeGroupsRestStub::DeleteNodes(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "nodeGroups", "/", request.node_group(),
                    "/", "deleteNodes"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeGroup>
@@ -234,13 +256,15 @@ DefaultNodeGroupsRestStub::GetNodeGroup(
     Options const& options,
     google::cloud::cpp::compute::node_groups::v1::GetNodeGroupRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<google::cloud::cpp::compute::v1::NodeGroup>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "nodeGroups", "/",
-                   request.node_group()));
+                   request.node_group()),
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -249,6 +273,12 @@ DefaultNodeGroupsRestStub::GetIamPolicy(
     Options const& options,
     google::cloud::cpp::compute::node_groups::v1::GetIamPolicyRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back(
+      {"options_requested_policy_version",
+       std::to_string(request.options_requested_policy_version())});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -256,9 +286,7 @@ DefaultNodeGroupsRestStub::GetIamPolicy(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "nodeGroups", "/", request.resource(),
                    "/", "getIamPolicy"),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair(
-          "options_requested_policy_version",
-          std::to_string(request.options_requested_policy_version()))}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -273,6 +301,12 @@ DefaultNodeGroupsRestStub::AsyncInsertNodeGroup(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"initial_node_count",
+                                std::to_string(request.initial_node_count())});
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.node_group_resource(), false,
@@ -280,11 +314,7 @@ DefaultNodeGroupsRestStub::AsyncInsertNodeGroup(
                              rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "nodeGroups"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair(
-                         "initial_node_count",
-                         std::to_string(request.initial_node_count())),
-                     std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -303,16 +333,19 @@ DefaultNodeGroupsRestStub::InsertNodeGroup(
     Options const& options,
     google::cloud::cpp::compute::node_groups::v1::InsertNodeGroupRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back(
+      {"initial_node_count", std::to_string(request.initial_node_count())});
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.node_group_resource(), false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "nodeGroups"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("initial_node_count",
-                          std::to_string(request.initial_node_count())),
-           std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeGroupList>
@@ -321,19 +354,23 @@ DefaultNodeGroupsRestStub::ListNodeGroups(
     Options const& options,
     google::cloud::cpp::compute::node_groups::v1::ListNodeGroupsRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::NodeGroupList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "nodeGroups"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeGroupsListNodes>
@@ -342,6 +379,7 @@ DefaultNodeGroupsRestStub::ListNodes(
     Options const& options,
     google::cloud::cpp::compute::node_groups::v1::ListNodesRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::NodeGroupsListNodes>(
       *service_, rest_context, request, false,
@@ -350,13 +388,7 @@ DefaultNodeGroupsRestStub::ListNodes(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "nodeGroups", "/", request.node_group(),
                    "/", "listNodes"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -371,6 +403,10 @@ DefaultNodeGroupsRestStub::AsyncPatchNodeGroup(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.node_group_resource(), false,
@@ -379,8 +415,7 @@ DefaultNodeGroupsRestStub::AsyncPatchNodeGroup(
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "nodeGroups",
                              "/", request.node_group()),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -399,6 +434,10 @@ DefaultNodeGroupsRestStub::PatchNodeGroup(
     Options const& options,
     google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.node_group_resource(), false,
       absl::StrCat("/", "compute", "/",
@@ -406,8 +445,7 @@ DefaultNodeGroupsRestStub::PatchNodeGroup(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "nodeGroups", "/",
                    request.node_group()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -422,6 +460,10 @@ DefaultNodeGroupsRestStub::AsyncPerformMaintenance(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -433,8 +475,7 @@ DefaultNodeGroupsRestStub::AsyncPerformMaintenance(
                              "zones", "/", request.zone(), "/", "nodeGroups",
                              "/", request.node_group(), "/",
                              "performMaintenance"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -453,6 +494,10 @@ DefaultNodeGroupsRestStub::PerformMaintenance(
     Options const& options,
     google::cloud::cpp::compute::node_groups::v1::
         PerformMaintenanceRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context,
       request.node_groups_perform_maintenance_request_resource(), false,
@@ -461,8 +506,7 @@ DefaultNodeGroupsRestStub::PerformMaintenance(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "nodeGroups", "/", request.node_group(),
                    "/", "performMaintenance"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -471,6 +515,7 @@ DefaultNodeGroupsRestStub::SetIamPolicy(
     Options const& options,
     google::cloud::cpp::compute::node_groups::v1::SetIamPolicyRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.zone_set_policy_request_resource(),
       false,
@@ -478,7 +523,8 @@ DefaultNodeGroupsRestStub::SetIamPolicy(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "nodeGroups", "/", request.resource(),
-                   "/", "setIamPolicy"));
+                   "/", "setIamPolicy"),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -493,6 +539,10 @@ DefaultNodeGroupsRestStub::AsyncSetNodeTemplate(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -502,8 +552,7 @@ DefaultNodeGroupsRestStub::AsyncSetNodeTemplate(
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "nodeGroups",
                              "/", request.node_group(), "/", "setNodeTemplate"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -522,6 +571,10 @@ DefaultNodeGroupsRestStub::SetNodeTemplate(
     Options const& options,
     google::cloud::cpp::compute::node_groups::v1::SetNodeTemplateRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context,
       request.node_groups_set_node_template_request_resource(), false,
@@ -530,8 +583,7 @@ DefaultNodeGroupsRestStub::SetNodeTemplate(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "nodeGroups", "/", request.node_group(),
                    "/", "setNodeTemplate"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -546,6 +598,10 @@ DefaultNodeGroupsRestStub::AsyncSimulateMaintenanceEvent(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -558,8 +614,7 @@ DefaultNodeGroupsRestStub::AsyncSimulateMaintenanceEvent(
                              "zones", "/", request.zone(), "/", "nodeGroups",
                              "/", request.node_group(), "/",
                              "simulateMaintenanceEvent"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -578,6 +633,10 @@ DefaultNodeGroupsRestStub::SimulateMaintenanceEvent(
     Options const& options,
     google::cloud::cpp::compute::node_groups::v1::
         SimulateMaintenanceEventRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context,
       request.node_groups_simulate_maintenance_event_request_resource(), false,
@@ -586,8 +645,7 @@ DefaultNodeGroupsRestStub::SimulateMaintenanceEvent(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "nodeGroups", "/", request.node_group(),
                    "/", "simulateMaintenanceEvent"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -596,6 +654,7 @@ DefaultNodeGroupsRestStub::TestIamPermissions(
     Options const& options,
     google::cloud::cpp::compute::node_groups::v1::
         TestIamPermissionsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
@@ -604,7 +663,8 @@ DefaultNodeGroupsRestStub::TestIamPermissions(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "nodeGroups", "/", request.resource(),
-                   "/", "testIamPermissions"));
+                   "/", "testIamPermissions"),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

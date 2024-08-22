@@ -57,16 +57,15 @@ InstanceTemplatesConnection::DeleteInstanceTemplate(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceTemplatesConnection::DeleteInstanceTemplate(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::instance_templates::v1::
-        DeleteInstanceTemplateRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::instance_templates::v1::
+                    DeleteInstanceTemplateRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceTemplatesConnection::DeleteInstanceTemplate(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -97,16 +96,15 @@ InstanceTemplatesConnection::InsertInstanceTemplate(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceTemplatesConnection::InsertInstanceTemplate(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::instance_templates::v1::
-        InsertInstanceTemplateRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::instance_templates::v1::
+                    InsertInstanceTemplateRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceTemplatesConnection::InsertInstanceTemplate(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

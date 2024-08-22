@@ -110,7 +110,7 @@ DataStoreServiceConnectionImpl::CreateDataStore(
 
 StatusOr<google::longrunning::Operation>
 DataStoreServiceConnectionImpl::CreateDataStore(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -126,7 +126,7 @@ DataStoreServiceConnectionImpl::CreateDataStore(
 
 future<StatusOr<google::cloud::discoveryengine::v1::DataStore>>
 DataStoreServiceConnectionImpl::CreateDataStore(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::discoveryengine::v1::
@@ -254,7 +254,7 @@ DataStoreServiceConnectionImpl::DeleteDataStore(
 
 StatusOr<google::longrunning::Operation>
 DataStoreServiceConnectionImpl::DeleteDataStore(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -270,7 +270,7 @@ DataStoreServiceConnectionImpl::DeleteDataStore(
 
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteDataStoreMetadata>>
 DataStoreServiceConnectionImpl::DeleteDataStore(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::discoveryengine::v1::

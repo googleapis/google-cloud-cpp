@@ -16,6 +16,8 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <limits>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

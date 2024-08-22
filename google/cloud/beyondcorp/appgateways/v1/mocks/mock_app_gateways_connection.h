@@ -61,9 +61,15 @@ class MockAppGatewaysServiceConnection
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateAppGateway)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateAppGateway(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateAppGateway(Matcher<google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>,
       CreateAppGateway,
@@ -71,21 +77,39 @@ class MockAppGatewaysServiceConnection
            CreateAppGatewayRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateAppGateway(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateAppGateway,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::beyondcorp::appgateways::v1::
-                   CreateAppGatewayRequest const& request),
+              (NoAwaitTag, google::cloud::beyondcorp::appgateways::v1::
+                               CreateAppGatewayRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateAppGateway(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>,
-      CreateAppGateway,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      CreateAppGateway, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteAppGateway)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteAppGateway(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteAppGateway(Matcher<google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::beyondcorp::appgateways::v1::
                                   AppGatewayOperationMetadata>>,
               DeleteAppGateway,
@@ -93,18 +117,29 @@ class MockAppGatewaysServiceConnection
                    DeleteAppGatewayRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteAppGateway(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteAppGateway,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::beyondcorp::appgateways::v1::
-                   DeleteAppGatewayRequest const& request),
+              (NoAwaitTag, google::cloud::beyondcorp::appgateways::v1::
+                               DeleteAppGatewayRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteAppGateway(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::beyondcorp::appgateways::v1::
                                   AppGatewayOperationMetadata>>,
               DeleteAppGateway,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

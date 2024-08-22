@@ -17,6 +17,10 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <algorithm>
+#include <iterator>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -65,7 +69,9 @@ TEST_F(ServiceAccountIntegrationTest, CreateHmacKeyForProject) {
   // redesigning the tests to use a random service account (or creating one)
   // dynamically.  For now, simply skip these tests.
   if (!UsingEmulator()) GTEST_SKIP();
-  Client client(Options{}.set<ProjectIdOption>(project_id_));
+
+  auto client =
+      MakeIntegrationTestClient(Options{}.set<ProjectIdOption>(project_id_));
 
   StatusOr<std::pair<HmacKeyMetadata, std::string>> key = client.CreateHmacKey(
       service_account_, OverrideDefaultProject(project_id_));
@@ -87,7 +93,8 @@ TEST_F(ServiceAccountIntegrationTest, HmacKeyCRUD) {
   // redesigning the tests to use a random service account (or creating one)
   // dynamically.  For now, simply skip these tests.
   if (!UsingEmulator()) GTEST_SKIP();
-  Client client(Options{}.set<ProjectIdOption>(project_id_));
+  auto client =
+      MakeIntegrationTestClient(Options{}.set<ProjectIdOption>(project_id_));
 
   auto get_current_access_ids = [&client, this]() {
     std::vector<std::string> access_ids;
@@ -132,7 +139,10 @@ TEST_F(ServiceAccountIntegrationTest, HmacKeyCRUD) {
 }
 
 TEST_F(ServiceAccountIntegrationTest, HmacKeyCRUDFailures) {
-  Client client(Options{}.set<ProjectIdOption>(project_id_));
+  if (UsingGrpc()) GTEST_SKIP();
+
+  auto client =
+      MakeIntegrationTestClient(Options{}.set<ProjectIdOption>(project_id_));
 
   // Test failures in the HmacKey operations by using an invalid project id:
   auto create_status = client.CreateHmacKey("invalid-service-account",

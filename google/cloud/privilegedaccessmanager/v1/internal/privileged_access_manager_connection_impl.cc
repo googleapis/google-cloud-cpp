@@ -226,7 +226,7 @@ PrivilegedAccessManagerConnectionImpl::CreateEntitlement(
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerConnectionImpl::CreateEntitlement(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -243,7 +243,7 @@ PrivilegedAccessManagerConnectionImpl::CreateEntitlement(
 
 future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
 PrivilegedAccessManagerConnectionImpl::CreateEntitlement(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::privilegedaccessmanager::v1::
@@ -321,7 +321,7 @@ PrivilegedAccessManagerConnectionImpl::DeleteEntitlement(
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerConnectionImpl::DeleteEntitlement(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -338,7 +338,7 @@ PrivilegedAccessManagerConnectionImpl::DeleteEntitlement(
 
 future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
 PrivilegedAccessManagerConnectionImpl::DeleteEntitlement(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::privilegedaccessmanager::v1::
@@ -416,7 +416,7 @@ PrivilegedAccessManagerConnectionImpl::UpdateEntitlement(
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerConnectionImpl::UpdateEntitlement(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -433,7 +433,7 @@ PrivilegedAccessManagerConnectionImpl::UpdateEntitlement(
 
 future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
 PrivilegedAccessManagerConnectionImpl::UpdateEntitlement(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::privilegedaccessmanager::v1::
@@ -650,7 +650,7 @@ PrivilegedAccessManagerConnectionImpl::RevokeGrant(
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerConnectionImpl::RevokeGrant(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -668,7 +668,7 @@ PrivilegedAccessManagerConnectionImpl::RevokeGrant(
 
 future<StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>>
 PrivilegedAccessManagerConnectionImpl::RevokeGrant(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::privilegedaccessmanager::v1::

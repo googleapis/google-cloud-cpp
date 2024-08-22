@@ -48,7 +48,7 @@ VideoStitcherServiceConnection::CreateCdnKey(
 
 StatusOr<google::longrunning::Operation>
 VideoStitcherServiceConnection::CreateCdnKey(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::video::stitcher::v1::CreateCdnKeyRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -56,7 +56,7 @@ VideoStitcherServiceConnection::CreateCdnKey(
 
 future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>
 VideoStitcherServiceConnection::CreateCdnKey(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::video::stitcher::v1::CdnKey>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -86,7 +86,7 @@ VideoStitcherServiceConnection::DeleteCdnKey(
 
 StatusOr<google::longrunning::Operation>
 VideoStitcherServiceConnection::DeleteCdnKey(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -94,7 +94,7 @@ VideoStitcherServiceConnection::DeleteCdnKey(
 
 future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
 VideoStitcherServiceConnection::DeleteCdnKey(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -110,7 +110,7 @@ VideoStitcherServiceConnection::UpdateCdnKey(
 
 StatusOr<google::longrunning::Operation>
 VideoStitcherServiceConnection::UpdateCdnKey(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -118,7 +118,7 @@ VideoStitcherServiceConnection::UpdateCdnKey(
 
 future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>
 VideoStitcherServiceConnection::UpdateCdnKey(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::video::stitcher::v1::CdnKey>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -188,15 +188,14 @@ VideoStitcherServiceConnection::CreateSlate(
 
 StatusOr<google::longrunning::Operation>
 VideoStitcherServiceConnection::CreateSlate(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::video::stitcher::v1::CreateSlateRequest const&) {
+    NoAwaitTag, google::cloud::video::stitcher::v1::CreateSlateRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::Slate>>
 VideoStitcherServiceConnection::CreateSlate(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::video::stitcher::v1::Slate>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -226,15 +225,14 @@ VideoStitcherServiceConnection::UpdateSlate(
 
 StatusOr<google::longrunning::Operation>
 VideoStitcherServiceConnection::UpdateSlate(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::video::stitcher::v1::UpdateSlateRequest const&) {
+    NoAwaitTag, google::cloud::video::stitcher::v1::UpdateSlateRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::Slate>>
 VideoStitcherServiceConnection::UpdateSlate(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::video::stitcher::v1::Slate>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -250,15 +248,14 @@ VideoStitcherServiceConnection::DeleteSlate(
 
 StatusOr<google::longrunning::Operation>
 VideoStitcherServiceConnection::DeleteSlate(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::video::stitcher::v1::DeleteSlateRequest const&) {
+    NoAwaitTag, google::cloud::video::stitcher::v1::DeleteSlateRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
 VideoStitcherServiceConnection::DeleteSlate(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -286,7 +283,7 @@ VideoStitcherServiceConnection::CreateLiveConfig(
 
 StatusOr<google::longrunning::Operation>
 VideoStitcherServiceConnection::CreateLiveConfig(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::video::stitcher::v1::CreateLiveConfigRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -294,7 +291,7 @@ VideoStitcherServiceConnection::CreateLiveConfig(
 
 future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
 VideoStitcherServiceConnection::CreateLiveConfig(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -324,7 +321,7 @@ VideoStitcherServiceConnection::DeleteLiveConfig(
 
 StatusOr<google::longrunning::Operation>
 VideoStitcherServiceConnection::DeleteLiveConfig(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -332,7 +329,7 @@ VideoStitcherServiceConnection::DeleteLiveConfig(
 
 future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
 VideoStitcherServiceConnection::DeleteLiveConfig(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -348,7 +345,7 @@ VideoStitcherServiceConnection::UpdateLiveConfig(
 
 StatusOr<google::longrunning::Operation>
 VideoStitcherServiceConnection::UpdateLiveConfig(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -356,7 +353,7 @@ VideoStitcherServiceConnection::UpdateLiveConfig(
 
 future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
 VideoStitcherServiceConnection::UpdateLiveConfig(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -372,7 +369,7 @@ VideoStitcherServiceConnection::CreateVodConfig(
 
 StatusOr<google::longrunning::Operation>
 VideoStitcherServiceConnection::CreateVodConfig(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::video::stitcher::v1::CreateVodConfigRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -380,7 +377,7 @@ VideoStitcherServiceConnection::CreateVodConfig(
 
 future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
 VideoStitcherServiceConnection::CreateVodConfig(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::video::stitcher::v1::VodConfig>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -410,7 +407,7 @@ VideoStitcherServiceConnection::DeleteVodConfig(
 
 StatusOr<google::longrunning::Operation>
 VideoStitcherServiceConnection::DeleteVodConfig(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::video::stitcher::v1::DeleteVodConfigRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -418,7 +415,7 @@ VideoStitcherServiceConnection::DeleteVodConfig(
 
 future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
 VideoStitcherServiceConnection::DeleteVodConfig(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -434,7 +431,7 @@ VideoStitcherServiceConnection::UpdateVodConfig(
 
 StatusOr<google::longrunning::Operation>
 VideoStitcherServiceConnection::UpdateVodConfig(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::video::stitcher::v1::UpdateVodConfigRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -442,7 +439,7 @@ VideoStitcherServiceConnection::UpdateVodConfig(
 
 future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
 VideoStitcherServiceConnection::UpdateVodConfig(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::video::stitcher::v1::VodConfig>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

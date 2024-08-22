@@ -73,23 +73,22 @@ JobServiceTracingConnection::DeleteCustomJob(
 
 StatusOr<google::longrunning::Operation>
 JobServiceTracingConnection::DeleteCustomJob(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::JobServiceConnection::DeleteCustomJob");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteCustomJob(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteCustomJob(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 JobServiceTracingConnection::DeleteCustomJob(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::JobServiceConnection::DeleteCustomJob");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->DeleteCustomJob(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteCustomJob(operation));
 }
 
 Status JobServiceTracingConnection::CancelCustomJob(
@@ -144,25 +143,24 @@ JobServiceTracingConnection::DeleteDataLabelingJob(
 
 StatusOr<google::longrunning::Operation>
 JobServiceTracingConnection::DeleteDataLabelingJob(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const&
         request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::JobServiceConnection::DeleteDataLabelingJob");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span,
-      child_->DeleteDataLabelingJob(ExperimentalTag{}, NoAwaitTag{}, request));
+      *span, child_->DeleteDataLabelingJob(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 JobServiceTracingConnection::DeleteDataLabelingJob(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::JobServiceConnection::DeleteDataLabelingJob");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteDataLabelingJob(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteDataLabelingJob(operation));
 }
 
 Status JobServiceTracingConnection::CancelDataLabelingJob(
@@ -221,26 +219,24 @@ JobServiceTracingConnection::DeleteHyperparameterTuningJob(
 
 StatusOr<google::longrunning::Operation>
 JobServiceTracingConnection::DeleteHyperparameterTuningJob(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const&
         request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::JobServiceConnection::DeleteHyperparameterTuningJob");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteHyperparameterTuningJob(ExperimentalTag{},
-                                                   NoAwaitTag{}, request));
+      *span, child_->DeleteHyperparameterTuningJob(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 JobServiceTracingConnection::DeleteHyperparameterTuningJob(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::JobServiceConnection::DeleteHyperparameterTuningJob");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->DeleteHyperparameterTuningJob(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteHyperparameterTuningJob(operation));
 }
 
 Status JobServiceTracingConnection::CancelHyperparameterTuningJob(
@@ -293,23 +289,21 @@ JobServiceTracingConnection::DeleteNasJob(
 
 StatusOr<google::longrunning::Operation>
 JobServiceTracingConnection::DeleteNasJob(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteNasJobRequest const& request) {
   auto span =
       internal::MakeSpan("aiplatform_v1::JobServiceConnection::DeleteNasJob");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteNasJob(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteNasJob(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 JobServiceTracingConnection::DeleteNasJob(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("aiplatform_v1::JobServiceConnection::DeleteNasJob");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteNasJob(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteNasJob(operation));
 }
 
 Status JobServiceTracingConnection::CancelNasJob(
@@ -386,25 +380,24 @@ JobServiceTracingConnection::DeleteBatchPredictionJob(
 
 StatusOr<google::longrunning::Operation>
 JobServiceTracingConnection::DeleteBatchPredictionJob(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&
         request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::JobServiceConnection::DeleteBatchPredictionJob");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteBatchPredictionJob(ExperimentalTag{}, NoAwaitTag{},
-                                              request));
+      *span, child_->DeleteBatchPredictionJob(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 JobServiceTracingConnection::DeleteBatchPredictionJob(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::JobServiceConnection::DeleteBatchPredictionJob");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteBatchPredictionJob(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteBatchPredictionJob(operation));
 }
 
 Status JobServiceTracingConnection::CancelBatchPredictionJob(
@@ -481,28 +474,25 @@ JobServiceTracingConnection::UpdateModelDeploymentMonitoringJob(
 
 StatusOr<google::longrunning::Operation>
 JobServiceTracingConnection::UpdateModelDeploymentMonitoringJob(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::aiplatform::v1::
-        UpdateModelDeploymentMonitoringJobRequest const& request) {
+    NoAwaitTag, google::cloud::aiplatform::v1::
+                    UpdateModelDeploymentMonitoringJobRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::JobServiceConnection::"
       "UpdateModelDeploymentMonitoringJob");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->UpdateModelDeploymentMonitoringJob(ExperimentalTag{},
-                                                        NoAwaitTag{}, request));
+      *span, child_->UpdateModelDeploymentMonitoringJob(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>>
 JobServiceTracingConnection::UpdateModelDeploymentMonitoringJob(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::JobServiceConnection::"
       "UpdateModelDeploymentMonitoringJob");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->UpdateModelDeploymentMonitoringJob(ExperimentalTag{}, operation));
+      std::move(span), child_->UpdateModelDeploymentMonitoringJob(operation));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -519,28 +509,25 @@ JobServiceTracingConnection::DeleteModelDeploymentMonitoringJob(
 
 StatusOr<google::longrunning::Operation>
 JobServiceTracingConnection::DeleteModelDeploymentMonitoringJob(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::aiplatform::v1::
-        DeleteModelDeploymentMonitoringJobRequest const& request) {
+    NoAwaitTag, google::cloud::aiplatform::v1::
+                    DeleteModelDeploymentMonitoringJobRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::JobServiceConnection::"
       "DeleteModelDeploymentMonitoringJob");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteModelDeploymentMonitoringJob(ExperimentalTag{},
-                                                        NoAwaitTag{}, request));
+      *span, child_->DeleteModelDeploymentMonitoringJob(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 JobServiceTracingConnection::DeleteModelDeploymentMonitoringJob(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::JobServiceConnection::"
       "DeleteModelDeploymentMonitoringJob");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->DeleteModelDeploymentMonitoringJob(ExperimentalTag{}, operation));
+      std::move(span), child_->DeleteModelDeploymentMonitoringJob(operation));
 }
 
 Status JobServiceTracingConnection::PauseModelDeploymentMonitoringJob(

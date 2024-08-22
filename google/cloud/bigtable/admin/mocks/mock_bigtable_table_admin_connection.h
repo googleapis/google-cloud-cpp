@@ -59,67 +59,121 @@ class MockBigtableTableAdminConnection
               (google::bigtable::admin::v2::GetTableRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateTable)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateTable(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateTable(Matcher<google::bigtable::admin::v2::UpdateTableRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::Table>>, UpdateTable,
               (google::bigtable::admin::v2::UpdateTableRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateTable(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateTable,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::bigtable::admin::v2::UpdateTableRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateTable(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::Table>>, UpdateTable,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(Status, DeleteTable,
               (google::bigtable::admin::v2::DeleteTableRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UndeleteTable)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UndeleteTable(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UndeleteTable(Matcher<google::bigtable::admin::v2::UndeleteTableRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::bigtable::admin::v2::Table>>, UndeleteTable,
       (google::bigtable::admin::v2::UndeleteTableRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UndeleteTable(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UndeleteTable,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::bigtable::admin::v2::UndeleteTableRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UndeleteTable(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::Table>>,
-              UndeleteTable,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              UndeleteTable, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateAuthorizedView)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateAuthorizedView(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateAuthorizedView(Matcher<google::bigtable::admin::v2::CreateAuthorizedViewRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>,
       CreateAuthorizedView,
       (google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateAuthorizedView(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateAuthorizedView,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateAuthorizedView(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>,
               CreateAuthorizedView,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::bigtable::admin::v2::AuthorizedView>),
               ListAuthorizedViews,
@@ -131,26 +185,44 @@ class MockBigtableTableAdminConnection
       (google::bigtable::admin::v2::GetAuthorizedViewRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateAuthorizedView)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateAuthorizedView(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateAuthorizedView(Matcher<google::bigtable::admin::v2::UpdateAuthorizedViewRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>,
       UpdateAuthorizedView,
       (google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateAuthorizedView(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateAuthorizedView,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateAuthorizedView(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>,
               UpdateAuthorizedView,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       Status, DeleteAuthorizedView,
@@ -179,23 +251,41 @@ class MockBigtableTableAdminConnection
       (google::bigtable::admin::v2::CheckConsistencyRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateBackup)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateBackup(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateBackup(Matcher<google::bigtable::admin::v2::CreateBackupRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::Backup>>,
               CreateBackup,
               (google::bigtable::admin::v2::CreateBackupRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateBackup(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateBackup,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::bigtable::admin::v2::CreateBackupRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateBackup(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::Backup>>,
-              CreateBackup,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              CreateBackup, (google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::bigtable::admin::v2::Backup>, GetBackup,
@@ -214,41 +304,77 @@ class MockBigtableTableAdminConnection
               (google::bigtable::admin::v2::ListBackupsRequest request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, RestoreTable)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, RestoreTable(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RestoreTable(Matcher<google::bigtable::admin::v2::RestoreTableRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::Table>>,
               RestoreTable,
               (google::bigtable::admin::v2::RestoreTableRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, RestoreTable(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, RestoreTable,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::bigtable::admin::v2::RestoreTableRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, RestoreTable(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::Table>>,
-              RestoreTable,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              RestoreTable, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CopyBackup)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CopyBackup(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CopyBackup(Matcher<google::bigtable::admin::v2::CopyBackupRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::Backup>>, CopyBackup,
               (google::bigtable::admin::v2::CopyBackupRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CopyBackup(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CopyBackup,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::bigtable::admin::v2::CopyBackupRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CopyBackup(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::Backup>>, CopyBackup,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
               (google::iam::v1::GetIamPolicyRequest const& request),

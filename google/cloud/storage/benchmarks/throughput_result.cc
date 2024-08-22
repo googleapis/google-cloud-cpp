@@ -15,6 +15,7 @@
 #include "google/cloud/storage/benchmarks/throughput_result.h"
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
 #include "google/cloud/storage/benchmarks/throughput_options.h"
+#include <algorithm>
 #include <sstream>
 #include <string>
 

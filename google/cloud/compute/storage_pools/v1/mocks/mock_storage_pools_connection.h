@@ -56,26 +56,45 @@ class MockStoragePoolsConnection
            AggregatedListStoragePoolsRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteStoragePool)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteStoragePool(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteStoragePool(Matcher<google::cloud::cpp::compute::storage_pools::v1::DeleteStoragePoolRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteStoragePool,
               (google::cloud::cpp::compute::storage_pools::v1::
                    DeleteStoragePoolRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteStoragePool(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               DeleteStoragePool,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::storage_pools::v1::
-                   DeleteStoragePoolRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::storage_pools::v1::
+                               DeleteStoragePoolRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteStoragePool(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteStoragePool,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::StoragePool>,
@@ -89,26 +108,45 @@ class MockStoragePoolsConnection
                    GetIamPolicyRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, InsertStoragePool)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, InsertStoragePool(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InsertStoragePool(Matcher<google::cloud::cpp::compute::storage_pools::v1::InsertStoragePoolRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertStoragePool,
               (google::cloud::cpp::compute::storage_pools::v1::
                    InsertStoragePoolRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, InsertStoragePool(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               InsertStoragePool,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::storage_pools::v1::
-                   InsertStoragePoolRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::storage_pools::v1::
+                               InsertStoragePoolRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InsertStoragePool(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertStoragePool,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -136,26 +174,45 @@ class MockStoragePoolsConnection
            TestIamPermissionsRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateStoragePool)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateStoragePool(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateStoragePool(Matcher<google::cloud::cpp::compute::storage_pools::v1::UpdateStoragePoolRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               UpdateStoragePool,
               (google::cloud::cpp::compute::storage_pools::v1::
                    UpdateStoragePoolRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateStoragePool(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               UpdateStoragePool,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::storage_pools::v1::
-                   UpdateStoragePoolRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::storage_pools::v1::
+                               UpdateStoragePoolRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateStoragePool(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               UpdateStoragePool,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

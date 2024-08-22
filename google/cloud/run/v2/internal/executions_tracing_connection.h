@@ -49,22 +49,20 @@ class ExecutionsTracingConnection : public run_v2::ExecutionsConnection {
       google::cloud::run::v2::DeleteExecutionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteExecution(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::run::v2::DeleteExecutionRequest const& request) override;
 
   future<StatusOr<google::cloud::run::v2::Execution>> DeleteExecution(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::run::v2::Execution>> CancelExecution(
       google::cloud::run::v2::CancelExecutionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CancelExecution(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::run::v2::CancelExecutionRequest const& request) override;
 
   future<StatusOr<google::cloud::run::v2::Execution>> CancelExecution(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
  private:

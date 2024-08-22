@@ -68,23 +68,41 @@ class MockWebRiskServiceConnection
       (google::cloud::webrisk::v1::CreateSubmissionRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, SubmitUri)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, SubmitUri(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// SubmitUri(Matcher<google::cloud::webrisk::v1::SubmitUriRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::webrisk::v1::Submission>>,
               SubmitUri,
               (google::cloud::webrisk::v1::SubmitUriRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, SubmitUri(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, SubmitUri,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::webrisk::v1::SubmitUriRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, SubmitUri(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::webrisk::v1::Submission>>,
-              SubmitUri,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              SubmitUri, (google::longrunning::Operation const& operation),
               (override));
 };
 

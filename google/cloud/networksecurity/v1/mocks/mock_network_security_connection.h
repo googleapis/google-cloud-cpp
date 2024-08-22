@@ -61,9 +61,15 @@ class MockNetworkSecurityConnection
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateAuthorizationPolicy)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateAuthorizationPolicy(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateAuthorizationPolicy(Matcher<google::cloud::networksecurity::v1::CreateAuthorizationPolicyRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>,
       CreateAuthorizationPolicy,
@@ -71,22 +77,41 @@ class MockNetworkSecurityConnection
            CreateAuthorizationPolicyRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateAuthorizationPolicy(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               CreateAuthorizationPolicy,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::networksecurity::v1::
-                   CreateAuthorizationPolicyRequest const& request),
+              (NoAwaitTag, google::cloud::networksecurity::v1::
+                               CreateAuthorizationPolicyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateAuthorizationPolicy(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>,
       CreateAuthorizationPolicy,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateAuthorizationPolicy)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateAuthorizationPolicy(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateAuthorizationPolicy(Matcher<google::cloud::networksecurity::v1::UpdateAuthorizationPolicyRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>,
       UpdateAuthorizationPolicy,
@@ -94,22 +119,41 @@ class MockNetworkSecurityConnection
            UpdateAuthorizationPolicyRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateAuthorizationPolicy(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               UpdateAuthorizationPolicy,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::networksecurity::v1::
-                   UpdateAuthorizationPolicyRequest const& request),
+              (NoAwaitTag, google::cloud::networksecurity::v1::
+                               UpdateAuthorizationPolicyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateAuthorizationPolicy(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>,
       UpdateAuthorizationPolicy,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteAuthorizationPolicy)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteAuthorizationPolicy(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteAuthorizationPolicy(Matcher<google::cloud::networksecurity::v1::DeleteAuthorizationPolicyRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>,
       DeleteAuthorizationPolicy,
@@ -117,18 +161,31 @@ class MockNetworkSecurityConnection
            DeleteAuthorizationPolicyRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteAuthorizationPolicy(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               DeleteAuthorizationPolicy,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::networksecurity::v1::
-                   DeleteAuthorizationPolicyRequest const& request),
+              (NoAwaitTag, google::cloud::networksecurity::v1::
+                               DeleteAuthorizationPolicyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteAuthorizationPolicy(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>,
       DeleteAuthorizationPolicy,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       (StreamRange<google::cloud::networksecurity::v1::ServerTlsPolicy>),
@@ -144,9 +201,15 @@ class MockNetworkSecurityConnection
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateServerTlsPolicy)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateServerTlsPolicy(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateServerTlsPolicy(Matcher<google::cloud::networksecurity::v1::CreateServerTlsPolicyRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>,
       CreateServerTlsPolicy,
@@ -154,22 +217,41 @@ class MockNetworkSecurityConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateServerTlsPolicy(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateServerTlsPolicy,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::networksecurity::v1::CreateServerTlsPolicyRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateServerTlsPolicy(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>,
-      CreateServerTlsPolicy,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      CreateServerTlsPolicy, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateServerTlsPolicy)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateServerTlsPolicy(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateServerTlsPolicy(Matcher<google::cloud::networksecurity::v1::UpdateServerTlsPolicyRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>,
       UpdateServerTlsPolicy,
@@ -177,22 +259,41 @@ class MockNetworkSecurityConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateServerTlsPolicy(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateServerTlsPolicy,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::networksecurity::v1::UpdateServerTlsPolicyRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateServerTlsPolicy(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>,
-      UpdateServerTlsPolicy,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      UpdateServerTlsPolicy, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteServerTlsPolicy)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteServerTlsPolicy(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteServerTlsPolicy(Matcher<google::cloud::networksecurity::v1::DeleteServerTlsPolicyRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>,
       DeleteServerTlsPolicy,
@@ -200,17 +301,30 @@ class MockNetworkSecurityConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteServerTlsPolicy(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteServerTlsPolicy,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::networksecurity::v1::DeleteServerTlsPolicyRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteServerTlsPolicy(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>,
-      DeleteServerTlsPolicy,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteServerTlsPolicy, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -227,9 +341,15 @@ class MockNetworkSecurityConnection
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateClientTlsPolicy)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateClientTlsPolicy(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateClientTlsPolicy(Matcher<google::cloud::networksecurity::v1::CreateClientTlsPolicyRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>,
       CreateClientTlsPolicy,
@@ -237,22 +357,41 @@ class MockNetworkSecurityConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateClientTlsPolicy(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateClientTlsPolicy,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::networksecurity::v1::CreateClientTlsPolicyRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateClientTlsPolicy(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>,
-      CreateClientTlsPolicy,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      CreateClientTlsPolicy, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateClientTlsPolicy)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateClientTlsPolicy(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateClientTlsPolicy(Matcher<google::cloud::networksecurity::v1::UpdateClientTlsPolicyRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>,
       UpdateClientTlsPolicy,
@@ -260,22 +399,41 @@ class MockNetworkSecurityConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateClientTlsPolicy(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateClientTlsPolicy,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::networksecurity::v1::UpdateClientTlsPolicyRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateClientTlsPolicy(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>,
-      UpdateClientTlsPolicy,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      UpdateClientTlsPolicy, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteClientTlsPolicy)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteClientTlsPolicy(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteClientTlsPolicy(Matcher<google::cloud::networksecurity::v1::DeleteClientTlsPolicyRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>,
       DeleteClientTlsPolicy,
@@ -283,17 +441,30 @@ class MockNetworkSecurityConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteClientTlsPolicy(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteClientTlsPolicy,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::networksecurity::v1::DeleteClientTlsPolicyRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteClientTlsPolicy(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>,
-      DeleteClientTlsPolicy,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteClientTlsPolicy, (google::longrunning::Operation const& operation),
       (override));
 };
 

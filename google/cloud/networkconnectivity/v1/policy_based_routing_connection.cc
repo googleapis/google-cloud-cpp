@@ -64,16 +64,15 @@ PolicyBasedRoutingServiceConnection::CreatePolicyBasedRoute(
 
 StatusOr<google::longrunning::Operation>
 PolicyBasedRoutingServiceConnection::CreatePolicyBasedRoute(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::networkconnectivity::v1::
-        CreatePolicyBasedRouteRequest const&) {
+    NoAwaitTag, google::cloud::networkconnectivity::v1::
+                    CreatePolicyBasedRouteRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>
 PolicyBasedRoutingServiceConnection::CreatePolicyBasedRoute(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -90,16 +89,15 @@ PolicyBasedRoutingServiceConnection::DeletePolicyBasedRoute(
 
 StatusOr<google::longrunning::Operation>
 PolicyBasedRoutingServiceConnection::DeletePolicyBasedRoute(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::networkconnectivity::v1::
-        DeletePolicyBasedRouteRequest const&) {
+    NoAwaitTag, google::cloud::networkconnectivity::v1::
+                    DeletePolicyBasedRouteRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
 PolicyBasedRoutingServiceConnection::DeletePolicyBasedRoute(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

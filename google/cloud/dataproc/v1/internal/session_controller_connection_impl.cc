@@ -108,7 +108,7 @@ SessionControllerConnectionImpl::CreateSession(
 
 StatusOr<google::longrunning::Operation>
 SessionControllerConnectionImpl::CreateSession(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataproc::v1::CreateSessionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -123,7 +123,7 @@ SessionControllerConnectionImpl::CreateSession(
 
 future<StatusOr<google::cloud::dataproc::v1::Session>>
 SessionControllerConnectionImpl::CreateSession(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataproc::v1::
@@ -247,7 +247,7 @@ SessionControllerConnectionImpl::TerminateSession(
 
 StatusOr<google::longrunning::Operation>
 SessionControllerConnectionImpl::TerminateSession(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataproc::v1::TerminateSessionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -263,7 +263,7 @@ SessionControllerConnectionImpl::TerminateSession(
 
 future<StatusOr<google::cloud::dataproc::v1::Session>>
 SessionControllerConnectionImpl::TerminateSession(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataproc::v1::
@@ -339,7 +339,7 @@ SessionControllerConnectionImpl::DeleteSession(
 
 StatusOr<google::longrunning::Operation>
 SessionControllerConnectionImpl::DeleteSession(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataproc::v1::DeleteSessionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -354,7 +354,7 @@ SessionControllerConnectionImpl::DeleteSession(
 
 future<StatusOr<google::cloud::dataproc::v1::Session>>
 SessionControllerConnectionImpl::DeleteSession(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataproc::v1::

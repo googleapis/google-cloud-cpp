@@ -60,10 +60,15 @@ class MockAppHubConnection : public apphub_v1::AppHubConnection {
       (google::cloud::apphub::v1::ListServiceProjectAttachmentsRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateServiceProjectAttachment)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateServiceProjectAttachment(::testing::_))`
-  /// instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateServiceProjectAttachment(Matcher<google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>>,
       CreateServiceProjectAttachment,
@@ -71,18 +76,32 @@ class MockAppHubConnection : public apphub_v1::AppHubConnection {
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateServiceProjectAttachment(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateServiceProjectAttachment,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateServiceProjectAttachment(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>>,
       CreateServiceProjectAttachment,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>,
@@ -91,10 +110,15 @@ class MockAppHubConnection : public apphub_v1::AppHubConnection {
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteServiceProjectAttachment)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteServiceProjectAttachment(::testing::_))`
-  /// instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteServiceProjectAttachment(Matcher<google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>,
       DeleteServiceProjectAttachment,
@@ -102,18 +126,31 @@ class MockAppHubConnection : public apphub_v1::AppHubConnection {
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteServiceProjectAttachment(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteServiceProjectAttachment,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteServiceProjectAttachment(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>,
               DeleteServiceProjectAttachment,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<
@@ -146,65 +183,119 @@ class MockAppHubConnection : public apphub_v1::AppHubConnection {
               (google::cloud::apphub::v1::ListServicesRequest request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateService)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateService(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateService(Matcher<google::cloud::apphub::v1::CreateServiceRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::Service>>,
               CreateService,
               (google::cloud::apphub::v1::CreateServiceRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateService(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateService,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::apphub::v1::CreateServiceRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateService(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::Service>>,
-              CreateService,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              CreateService, (google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::apphub::v1::Service>, GetService,
               (google::cloud::apphub::v1::GetServiceRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateService)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateService(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateService(Matcher<google::cloud::apphub::v1::UpdateServiceRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::Service>>,
               UpdateService,
               (google::cloud::apphub::v1::UpdateServiceRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateService(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateService,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::apphub::v1::UpdateServiceRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateService(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::Service>>,
-              UpdateService,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              UpdateService, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteService)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteService(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteService(Matcher<google::cloud::apphub::v1::DeleteServiceRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>,
               DeleteService,
               (google::cloud::apphub::v1::DeleteServiceRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteService(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteService,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::apphub::v1::DeleteServiceRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteService(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>,
-              DeleteService,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              DeleteService, (google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -230,65 +321,119 @@ class MockAppHubConnection : public apphub_v1::AppHubConnection {
               (google::cloud::apphub::v1::ListWorkloadsRequest request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateWorkload)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateWorkload(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateWorkload(Matcher<google::cloud::apphub::v1::CreateWorkloadRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::Workload>>,
               CreateWorkload,
               (google::cloud::apphub::v1::CreateWorkloadRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateWorkload(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateWorkload,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::apphub::v1::CreateWorkloadRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateWorkload(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::Workload>>,
-              CreateWorkload,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              CreateWorkload, (google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::apphub::v1::Workload>, GetWorkload,
               (google::cloud::apphub::v1::GetWorkloadRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateWorkload)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateWorkload(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateWorkload(Matcher<google::cloud::apphub::v1::UpdateWorkloadRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::Workload>>,
               UpdateWorkload,
               (google::cloud::apphub::v1::UpdateWorkloadRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateWorkload(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateWorkload,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::apphub::v1::UpdateWorkloadRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateWorkload(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::Workload>>,
-              UpdateWorkload,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              UpdateWorkload, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteWorkload)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteWorkload(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteWorkload(Matcher<google::cloud::apphub::v1::DeleteWorkloadRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>,
               DeleteWorkload,
               (google::cloud::apphub::v1::DeleteWorkloadRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteWorkload(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteWorkload,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::apphub::v1::DeleteWorkloadRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteWorkload(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>,
-              DeleteWorkload,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              DeleteWorkload, (google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD((StreamRange<google::cloud::apphub::v1::Application>),
@@ -296,72 +441,126 @@ class MockAppHubConnection : public apphub_v1::AppHubConnection {
               (google::cloud::apphub::v1::ListApplicationsRequest request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateApplication)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateApplication(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateApplication(Matcher<google::cloud::apphub::v1::CreateApplicationRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::apphub::v1::Application>>,
       CreateApplication,
       (google::cloud::apphub::v1::CreateApplicationRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateApplication(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateApplication,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::apphub::v1::CreateApplicationRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateApplication(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::Application>>,
               CreateApplication,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::apphub::v1::Application>, GetApplication,
               (google::cloud::apphub::v1::GetApplicationRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateApplication)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateApplication(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateApplication(Matcher<google::cloud::apphub::v1::UpdateApplicationRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::apphub::v1::Application>>,
       UpdateApplication,
       (google::cloud::apphub::v1::UpdateApplicationRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateApplication(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateApplication,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::apphub::v1::UpdateApplicationRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateApplication(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::Application>>,
               UpdateApplication,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteApplication)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteApplication(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteApplication(Matcher<google::cloud::apphub::v1::DeleteApplicationRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>,
       DeleteApplication,
       (google::cloud::apphub::v1::DeleteApplicationRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteApplication(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteApplication,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::apphub::v1::DeleteApplicationRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteApplication(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>,
               DeleteApplication,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

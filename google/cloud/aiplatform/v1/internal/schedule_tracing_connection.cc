@@ -53,23 +53,22 @@ ScheduleServiceTracingConnection::DeleteSchedule(
 
 StatusOr<google::longrunning::Operation>
 ScheduleServiceTracingConnection::DeleteSchedule(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteScheduleRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::ScheduleServiceConnection::DeleteSchedule");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteSchedule(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteSchedule(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 ScheduleServiceTracingConnection::DeleteSchedule(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::ScheduleServiceConnection::DeleteSchedule");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->DeleteSchedule(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteSchedule(operation));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Schedule>

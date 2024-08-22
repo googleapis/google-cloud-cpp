@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_METADATA_CLIENT_H
 
 #include "google/cloud/aiplatform/v1/metadata_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -147,7 +146,7 @@ class MetadataServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateMetadataStore(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::aiplatform::v1::MetadataStore const& metadata_store,
       std::string const& metadata_store_id, Options opts = {});
 
@@ -202,7 +201,7 @@ class MetadataServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateMetadataStore(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request,
       Options opts = {});
 
@@ -216,8 +215,7 @@ class MetadataServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::MetadataStore>>
-  CreateMetadataStore(ExperimentalTag,
-                      google::longrunning::Operation const& operation,
+  CreateMetadataStore(google::longrunning::Operation const& operation,
                       Options opts = {});
 
   // clang-format off
@@ -402,7 +400,7 @@ class MetadataServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteMetadataStore(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -457,7 +455,7 @@ class MetadataServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteMetadataStore(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request,
       Options opts = {});
 
@@ -472,8 +470,7 @@ class MetadataServiceClient {
   // clang-format on
   future<StatusOr<
       google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>
-  DeleteMetadataStore(ExperimentalTag,
-                      google::longrunning::Operation const& operation,
+  DeleteMetadataStore(google::longrunning::Operation const& operation,
                       Options opts = {});
 
   // clang-format off
@@ -787,7 +784,7 @@ class MetadataServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteArtifact(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -840,7 +837,7 @@ class MetadataServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteArtifact(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteArtifactRequest const& request,
       Options opts = {});
 
@@ -854,8 +851,7 @@ class MetadataServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteArtifact(ExperimentalTag,
-                 google::longrunning::Operation const& operation,
+  DeleteArtifact(google::longrunning::Operation const& operation,
                  Options opts = {});
 
   // clang-format off
@@ -904,8 +900,7 @@ class MetadataServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> PurgeArtifacts(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
-      Options opts = {});
+      NoAwaitTag, std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -958,7 +953,7 @@ class MetadataServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> PurgeArtifacts(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request,
       Options opts = {});
 
@@ -972,8 +967,7 @@ class MetadataServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>
-  PurgeArtifacts(ExperimentalTag,
-                 google::longrunning::Operation const& operation,
+  PurgeArtifacts(google::longrunning::Operation const& operation,
                  Options opts = {});
 
   // clang-format off
@@ -1286,7 +1280,7 @@ class MetadataServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteContext(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1339,7 +1333,7 @@ class MetadataServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteContext(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteContextRequest const& request,
       Options opts = {});
 
@@ -1353,8 +1347,7 @@ class MetadataServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteContext(ExperimentalTag,
-                google::longrunning::Operation const& operation,
+  DeleteContext(google::longrunning::Operation const& operation,
                 Options opts = {});
 
   // clang-format off
@@ -1403,8 +1396,7 @@ class MetadataServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> PurgeContexts(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
-      Options opts = {});
+      NoAwaitTag, std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1457,7 +1449,7 @@ class MetadataServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> PurgeContexts(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::PurgeContextsRequest const& request,
       Options opts = {});
 
@@ -1471,8 +1463,7 @@ class MetadataServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::PurgeContextsResponse>>
-  PurgeContexts(ExperimentalTag,
-                google::longrunning::Operation const& operation,
+  PurgeContexts(google::longrunning::Operation const& operation,
                 Options opts = {});
 
   // clang-format off
@@ -2071,7 +2062,7 @@ class MetadataServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteExecution(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2124,7 +2115,7 @@ class MetadataServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteExecution(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteExecutionRequest const& request,
       Options opts = {});
 
@@ -2138,8 +2129,7 @@ class MetadataServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteExecution(ExperimentalTag,
-                  google::longrunning::Operation const& operation,
+  DeleteExecution(google::longrunning::Operation const& operation,
                   Options opts = {});
 
   // clang-format off
@@ -2188,8 +2178,7 @@ class MetadataServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> PurgeExecutions(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
-      Options opts = {});
+      NoAwaitTag, std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -2242,7 +2231,7 @@ class MetadataServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> PurgeExecutions(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request,
       Options opts = {});
 
@@ -2256,8 +2245,7 @@ class MetadataServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>
-  PurgeExecutions(ExperimentalTag,
-                  google::longrunning::Operation const& operation,
+  PurgeExecutions(google::longrunning::Operation const& operation,
                   Options opts = {});
 
   // clang-format off

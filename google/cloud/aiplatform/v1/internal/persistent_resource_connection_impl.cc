@@ -118,7 +118,7 @@ PersistentResourceServiceConnectionImpl::CreatePersistentResource(
 
 StatusOr<google::longrunning::Operation>
 PersistentResourceServiceConnectionImpl::CreatePersistentResource(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -136,7 +136,7 @@ PersistentResourceServiceConnectionImpl::CreatePersistentResource(
 
 future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
 PersistentResourceServiceConnectionImpl::CreatePersistentResource(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -268,7 +268,7 @@ PersistentResourceServiceConnectionImpl::DeletePersistentResource(
 
 StatusOr<google::longrunning::Operation>
 PersistentResourceServiceConnectionImpl::DeletePersistentResource(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -286,7 +286,7 @@ PersistentResourceServiceConnectionImpl::DeletePersistentResource(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 PersistentResourceServiceConnectionImpl::DeletePersistentResource(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -365,7 +365,7 @@ PersistentResourceServiceConnectionImpl::UpdatePersistentResource(
 
 StatusOr<google::longrunning::Operation>
 PersistentResourceServiceConnectionImpl::UpdatePersistentResource(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -383,7 +383,7 @@ PersistentResourceServiceConnectionImpl::UpdatePersistentResource(
 
 future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
 PersistentResourceServiceConnectionImpl::UpdatePersistentResource(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -462,7 +462,7 @@ PersistentResourceServiceConnectionImpl::RebootPersistentResource(
 
 StatusOr<google::longrunning::Operation>
 PersistentResourceServiceConnectionImpl::RebootPersistentResource(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -480,7 +480,7 @@ PersistentResourceServiceConnectionImpl::RebootPersistentResource(
 
 future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
 PersistentResourceServiceConnectionImpl::RebootPersistentResource(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::

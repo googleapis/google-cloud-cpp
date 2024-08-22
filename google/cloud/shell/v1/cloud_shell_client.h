@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SHELL_V1_CLOUD_SHELL_CLIENT_H
 
 #include "google/cloud/shell/v1/cloud_shell_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -208,7 +207,7 @@ class CloudShellServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> StartEnvironment(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::shell::v1::StartEnvironmentRequest const& request,
       Options opts = {});
 
@@ -222,8 +221,7 @@ class CloudShellServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>
-  StartEnvironment(ExperimentalTag,
-                   google::longrunning::Operation const& operation,
+  StartEnvironment(google::longrunning::Operation const& operation,
                    Options opts = {});
 
   // clang-format off
@@ -280,7 +278,7 @@ class CloudShellServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> AuthorizeEnvironment(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request,
       Options opts = {});
 
@@ -294,8 +292,7 @@ class CloudShellServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>
-  AuthorizeEnvironment(ExperimentalTag,
-                       google::longrunning::Operation const& operation,
+  AuthorizeEnvironment(google::longrunning::Operation const& operation,
                        Options opts = {});
 
   // clang-format off
@@ -350,8 +347,7 @@ class CloudShellServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> AddPublicKey(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::shell::v1::AddPublicKeyRequest const& request,
+      NoAwaitTag, google::cloud::shell::v1::AddPublicKeyRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -364,8 +360,7 @@ class CloudShellServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>> AddPublicKey(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -421,7 +416,7 @@ class CloudShellServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> RemovePublicKey(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::shell::v1::RemovePublicKeyRequest const& request,
       Options opts = {});
 
@@ -435,8 +430,7 @@ class CloudShellServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>
-  RemovePublicKey(ExperimentalTag,
-                  google::longrunning::Operation const& operation,
+  RemovePublicKey(google::longrunning::Operation const& operation,
                   Options opts = {});
 
  private:

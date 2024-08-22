@@ -15,6 +15,7 @@
 #include "google/cloud/storage/auto_finalize.h"
 #include <gmock/gmock.h>
 #include <sstream>
+#include <utility>
 
 namespace google {
 namespace cloud {

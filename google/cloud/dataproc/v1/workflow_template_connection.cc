@@ -61,7 +61,7 @@ WorkflowTemplateServiceConnection::InstantiateWorkflowTemplate(
 
 StatusOr<google::longrunning::Operation>
 WorkflowTemplateServiceConnection::InstantiateWorkflowTemplate(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -69,7 +69,7 @@ WorkflowTemplateServiceConnection::InstantiateWorkflowTemplate(
 
 future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
 WorkflowTemplateServiceConnection::InstantiateWorkflowTemplate(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -86,16 +86,15 @@ WorkflowTemplateServiceConnection::InstantiateInlineWorkflowTemplate(
 
 StatusOr<google::longrunning::Operation>
 WorkflowTemplateServiceConnection::InstantiateInlineWorkflowTemplate(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::dataproc::v1::
-        InstantiateInlineWorkflowTemplateRequest const&) {
+    NoAwaitTag, google::cloud::dataproc::v1::
+                    InstantiateInlineWorkflowTemplateRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
 WorkflowTemplateServiceConnection::InstantiateInlineWorkflowTemplate(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

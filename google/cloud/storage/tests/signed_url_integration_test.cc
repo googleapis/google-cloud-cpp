@@ -21,6 +21,7 @@
 #include <gmock/gmock.h>
 #include <chrono>
 #include <functional>
+#include <string>
 #include <thread>
 
 namespace google {

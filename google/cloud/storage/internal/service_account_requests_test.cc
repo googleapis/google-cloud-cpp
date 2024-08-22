@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/service_account_requests.h"
 #include <gmock/gmock.h>
+#include <sstream>
 
 namespace google {
 namespace cloud {

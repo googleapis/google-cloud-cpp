@@ -21,7 +21,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_PUBLIC_DELEGATED_PREFIXES_V1_PUBLIC_DELEGATED_PREFIXES_CLIENT_H
 
 #include "google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -124,7 +123,7 @@ class PublicDelegatedPrefixesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.public_delegated_prefixes.v1.AggregatedListPublicDelegatedPrefixesRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L145}
-  /// [google.cloud.cpp.compute.v1.PublicDelegatedPrefixesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_091.proto#L137}
+  /// [google.cloud.cpp.compute.v1.PublicDelegatedPrefixesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_093.proto#L137}
   ///
   // clang-format on
   StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
@@ -168,7 +167,7 @@ class PublicDelegatedPrefixesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.public_delegated_prefixes.v1.AggregatedListPublicDelegatedPrefixesRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L145}
-  /// [google.cloud.cpp.compute.v1.PublicDelegatedPrefixesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_091.proto#L137}
+  /// [google.cloud.cpp.compute.v1.PublicDelegatedPrefixesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_093.proto#L137}
   ///
   // clang-format on
   StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
@@ -226,9 +225,8 @@ class PublicDelegatedPrefixesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Announce(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& region, std::string const& public_delegated_prefix,
-      Options opts = {});
+      NoAwaitTag, std::string const& project, std::string const& region,
+      std::string const& public_delegated_prefix, Options opts = {});
 
   // clang-format off
   ///
@@ -281,7 +279,7 @@ class PublicDelegatedPrefixesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Announce(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
           AnnounceRequest const& request,
       Options opts = {});
@@ -296,7 +294,6 @@ class PublicDelegatedPrefixesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Announce(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -349,8 +346,7 @@ class PublicDelegatedPrefixesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeletePublicDelegatedPrefix(ExperimentalTag, NoAwaitTag,
-                              std::string const& project,
+  DeletePublicDelegatedPrefix(NoAwaitTag, std::string const& project,
                               std::string const& region,
                               std::string const& public_delegated_prefix,
                               Options opts = {});
@@ -408,7 +404,7 @@ class PublicDelegatedPrefixesClient {
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeletePublicDelegatedPrefix(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
           DeletePublicDelegatedPrefixRequest const& request,
       Options opts = {});
@@ -424,7 +420,6 @@ class PublicDelegatedPrefixesClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeletePublicDelegatedPrefix(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -450,7 +445,7 @@ class PublicDelegatedPrefixesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.public_delegated_prefixes.v1.GetPublicDelegatedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L298}
-  /// [google.cloud.cpp.compute.v1.PublicDelegatedPrefix]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_090.proto#L29}
+  /// [google.cloud.cpp.compute.v1.PublicDelegatedPrefix]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_092.proto#L29}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
@@ -484,7 +479,7 @@ class PublicDelegatedPrefixesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.public_delegated_prefixes.v1.GetPublicDelegatedPrefixRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L298}
-  /// [google.cloud.cpp.compute.v1.PublicDelegatedPrefix]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_090.proto#L29}
+  /// [google.cloud.cpp.compute.v1.PublicDelegatedPrefix]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_092.proto#L29}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
@@ -545,8 +540,7 @@ class PublicDelegatedPrefixesClient {
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertPublicDelegatedPrefix(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& region,
+      NoAwaitTag, std::string const& project, std::string const& region,
       google::cloud::cpp::compute::v1::PublicDelegatedPrefix const&
           public_delegated_prefix_resource,
       Options opts = {});
@@ -605,7 +599,7 @@ class PublicDelegatedPrefixesClient {
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertPublicDelegatedPrefix(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
           InsertPublicDelegatedPrefixRequest const& request,
       Options opts = {});
@@ -621,7 +615,6 @@ class PublicDelegatedPrefixesClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertPublicDelegatedPrefix(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -655,7 +648,7 @@ class PublicDelegatedPrefixesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.public_delegated_prefixes.v1.ListPublicDelegatedPrefixesRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L348}
-  /// [google.cloud.cpp.compute.v1.PublicDelegatedPrefix]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_090.proto#L29}
+  /// [google.cloud.cpp.compute.v1.PublicDelegatedPrefix]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_092.proto#L29}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
@@ -696,7 +689,7 @@ class PublicDelegatedPrefixesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.public_delegated_prefixes.v1.ListPublicDelegatedPrefixesRequest]: @cloud_cpp_reference_link{google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.proto#L348}
-  /// [google.cloud.cpp.compute.v1.PublicDelegatedPrefix]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_090.proto#L29}
+  /// [google.cloud.cpp.compute.v1.PublicDelegatedPrefix]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_092.proto#L29}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
@@ -760,8 +753,8 @@ class PublicDelegatedPrefixesClient {
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   PatchPublicDelegatedPrefix(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& region, std::string const& public_delegated_prefix,
+      NoAwaitTag, std::string const& project, std::string const& region,
+      std::string const& public_delegated_prefix,
       google::cloud::cpp::compute::v1::PublicDelegatedPrefix const&
           public_delegated_prefix_resource,
       Options opts = {});
@@ -821,7 +814,7 @@ class PublicDelegatedPrefixesClient {
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   PatchPublicDelegatedPrefix(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
           PatchPublicDelegatedPrefixRequest const& request,
       Options opts = {});
@@ -837,7 +830,6 @@ class PublicDelegatedPrefixesClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchPublicDelegatedPrefix(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -889,9 +881,8 @@ class PublicDelegatedPrefixesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Withdraw(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& region, std::string const& public_delegated_prefix,
-      Options opts = {});
+      NoAwaitTag, std::string const& project, std::string const& region,
+      std::string const& public_delegated_prefix, Options opts = {});
 
   // clang-format off
   ///
@@ -944,7 +935,7 @@ class PublicDelegatedPrefixesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Withdraw(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
           WithdrawRequest const& request,
       Options opts = {});
@@ -959,7 +950,6 @@ class PublicDelegatedPrefixesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Withdraw(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 

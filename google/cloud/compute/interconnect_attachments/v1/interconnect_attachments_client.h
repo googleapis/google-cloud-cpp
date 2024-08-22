@@ -21,7 +21,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INTERCONNECT_ATTACHMENTS_V1_INTERCONNECT_ATTACHMENTS_CLIENT_H
 
 #include "google/cloud/compute/interconnect_attachments/v1/interconnect_attachments_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -124,7 +123,7 @@ class InterconnectAttachmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.interconnect_attachments.v1.AggregatedListInterconnectAttachmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L134}
-  /// [google.cloud.cpp.compute.v1.InterconnectAttachmentsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_067.proto#L582}
+  /// [google.cloud.cpp.compute.v1.InterconnectAttachmentsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_069.proto#L582}
   ///
   // clang-format on
   StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
@@ -168,7 +167,7 @@ class InterconnectAttachmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.interconnect_attachments.v1.AggregatedListInterconnectAttachmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L134}
-  /// [google.cloud.cpp.compute.v1.InterconnectAttachmentsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_067.proto#L582}
+  /// [google.cloud.cpp.compute.v1.InterconnectAttachmentsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_069.proto#L582}
   ///
   // clang-format on
   StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
@@ -227,8 +226,7 @@ class InterconnectAttachmentsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteInterconnectAttachment(ExperimentalTag, NoAwaitTag,
-                               std::string const& project,
+  DeleteInterconnectAttachment(NoAwaitTag, std::string const& project,
                                std::string const& region,
                                std::string const& interconnect_attachment,
                                Options opts = {});
@@ -286,7 +284,7 @@ class InterconnectAttachmentsClient {
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteInterconnectAttachment(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::interconnect_attachments::v1::
           DeleteInterconnectAttachmentRequest const& request,
       Options opts = {});
@@ -302,7 +300,6 @@ class InterconnectAttachmentsClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteInterconnectAttachment(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -328,7 +325,7 @@ class InterconnectAttachmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.interconnect_attachments.v1.GetInterconnectAttachmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L251}
-  /// [google.cloud.cpp.compute.v1.InterconnectAttachment]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_067.proto#L30}
+  /// [google.cloud.cpp.compute.v1.InterconnectAttachment]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_069.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachment>
@@ -362,7 +359,7 @@ class InterconnectAttachmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.interconnect_attachments.v1.GetInterconnectAttachmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L251}
-  /// [google.cloud.cpp.compute.v1.InterconnectAttachment]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_067.proto#L30}
+  /// [google.cloud.cpp.compute.v1.InterconnectAttachment]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_069.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachment>
@@ -423,8 +420,7 @@ class InterconnectAttachmentsClient {
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertInterconnectAttachment(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& region,
+      NoAwaitTag, std::string const& project, std::string const& region,
       google::cloud::cpp::compute::v1::InterconnectAttachment const&
           interconnect_attachment_resource,
       Options opts = {});
@@ -483,7 +479,7 @@ class InterconnectAttachmentsClient {
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertInterconnectAttachment(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::interconnect_attachments::v1::
           InsertInterconnectAttachmentRequest const& request,
       Options opts = {});
@@ -499,7 +495,6 @@ class InterconnectAttachmentsClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertInterconnectAttachment(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -534,7 +529,7 @@ class InterconnectAttachmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.interconnect_attachments.v1.ListInterconnectAttachmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L304}
-  /// [google.cloud.cpp.compute.v1.InterconnectAttachment]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_067.proto#L30}
+  /// [google.cloud.cpp.compute.v1.InterconnectAttachment]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_069.proto#L30}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InterconnectAttachment>
@@ -576,7 +571,7 @@ class InterconnectAttachmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.interconnect_attachments.v1.ListInterconnectAttachmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto#L304}
-  /// [google.cloud.cpp.compute.v1.InterconnectAttachment]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_067.proto#L30}
+  /// [google.cloud.cpp.compute.v1.InterconnectAttachment]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_069.proto#L30}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InterconnectAttachment>
@@ -640,8 +635,8 @@ class InterconnectAttachmentsClient {
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   PatchInterconnectAttachment(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& region, std::string const& interconnect_attachment,
+      NoAwaitTag, std::string const& project, std::string const& region,
+      std::string const& interconnect_attachment,
       google::cloud::cpp::compute::v1::InterconnectAttachment const&
           interconnect_attachment_resource,
       Options opts = {});
@@ -701,7 +696,7 @@ class InterconnectAttachmentsClient {
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   PatchInterconnectAttachment(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::interconnect_attachments::v1::
           PatchInterconnectAttachmentRequest const& request,
       Options opts = {});
@@ -717,7 +712,6 @@ class InterconnectAttachmentsClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchInterconnectAttachment(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -773,8 +767,8 @@ class InterconnectAttachmentsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& region, std::string const& resource,
+      NoAwaitTag, std::string const& project, std::string const& region,
+      std::string const& resource,
       google::cloud::cpp::compute::v1::RegionSetLabelsRequest const&
           region_set_labels_request_resource,
       Options opts = {});
@@ -831,7 +825,7 @@ class InterconnectAttachmentsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::interconnect_attachments::v1::
           SetLabelsRequest const& request,
       Options opts = {});
@@ -846,7 +840,6 @@ class InterconnectAttachmentsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 

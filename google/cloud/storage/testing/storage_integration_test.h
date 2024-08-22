@@ -22,9 +22,11 @@
 #include "google/cloud/testing_util/integration_test.h"
 #include <gmock/gmock.h>
 #include <algorithm>
+#include <memory>
 #include <mutex>
 #include <string>
 #include <thread>
+#include <utility>
 #include <vector>
 
 namespace google {
@@ -40,6 +42,20 @@ class StorageIntegrationTest
   ~StorageIntegrationTest() override;
 
   /**
+   * Returns the recommended options to run integration tests.
+   *
+   * Most tests should use these options or call `MakeIntegrationTestClient()`.
+   */
+  static Options MakeTestOptions(Options opts = {});
+
+  /**
+   * Create options suitable for Bucket integration tests.
+   *
+   * Buckets need longer initial backoffs.
+   */
+  static Options MakeBucketTestOptions();
+
+  /**
    * Return a client suitable for most integration tests.
    *
    * Most integration tests, particularly when running against the emulator,
@@ -47,7 +63,16 @@ class StorageIntegrationTest
    * configured.
    */
   static google::cloud::storage::Client MakeIntegrationTestClient(
-      google::cloud::Options opts = {});
+      Options opts = {});
+
+  /**
+   * Create a gRPC or JSON client.
+   *
+   * If @p use_grpc is `true` and gRPC is not compiled-in, it creates a JSON
+   * client.
+   */
+  static google::cloud::storage::Client MakeIntegrationTestClient(
+      bool use_grpc, Options opts = {});
 
   /**
    * Return a client with retry policies suitable for CreateBucket() class.

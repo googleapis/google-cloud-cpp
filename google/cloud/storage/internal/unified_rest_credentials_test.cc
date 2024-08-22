@@ -24,6 +24,7 @@
 #include <cstdlib>
 #include <fstream>
 #include <random>
+#include <string>
 
 namespace google {
 namespace cloud {

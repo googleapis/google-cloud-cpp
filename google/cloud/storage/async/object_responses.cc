@@ -14,6 +14,8 @@
 
 #include "google/cloud/storage/async/object_responses.h"
 #include "google/cloud/storage/internal/async/write_payload_impl.h"
+#include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {

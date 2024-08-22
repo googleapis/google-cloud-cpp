@@ -10,6 +10,13 @@ project that need to create a new release. We expect the reader to be familiar
 the project itself, [git][git-docs], [GitHub][github-guides], and
 [semantic versioning](https://semver.org).
 
+## 0. Verify most recent googleapis SHA adheres to policy
+
+In order to ensure that our released version includes a SHA of the service proto
+definitions that is both current and stable ([googleapis-sha-update-policy]),
+aim for a commit SHA from 5-7 days ago (TODO(#13062): automate this update
+process).
+
 ## 1. Preparing for a release
 
 To create a new release you need to perform some maintenance tasks, these are
@@ -32,9 +39,9 @@ set(PROJECT_VERSION_PRE_RELEASE "")
 
 #### Update the version info
 
-Run any CMake-based build to update `google/cloud/internal/version_info.h`. If
-you do not feel like waiting for a build, make the corresponding change in
-`google/cloud/internal/version_info.h` manually.
+Run any CMake-based build to update `google/cloud/internal/version_info.h` and
+`MODULE.bazel`. If you do not feel like waiting for a build, make the
+corresponding changes in these files manually.
 
 #### Update CHANGELOG.md
 
@@ -100,7 +107,7 @@ the PR for review against `main`. You need to:
 - Update the ABI baseline to include the new version numbers in the inline
   namespace by running `ci/cloudbuild/build.sh -t check-api-pr`. This will leave
   the updated ABI files in `ci/abi-dumps`, and also update the
-  `google/cloud/internal/version_info.h` file.
+  `google/cloud/internal/version_info.h` and `MODULE.bazel` files.
 
 This will step will take a while. You can leave this and move onto step 3.
 
@@ -252,13 +259,12 @@ In `ports/google-cloud-cpp/vcpkg.json`
 ./vcpkg format-manifest ports/google-cloud-cpp/vcpkg.json
 ```
 
-#### Update the [SHA512]. To compute it, run:
+#### Update the [SHA512]
 
 ```shell
-curl -fSsL https://github.com/googleapis/google-cloud-cpp/archive/${VERSION}.tar.gz | sha512sum
+SHA512=($(curl -fSsL https://github.com/googleapis/google-cloud-cpp/archive/${VERSION}.tar.gz | sha512sum))
+sed -i "s/SHA512 .*/SHA512 ${SHA512[0]}/" ports/google-cloud-cpp/portfile.cmake
 ```
-
-In `ports/google-cloud-cpp/portfile.cmake`, use the generated SHA.
 
 #### Commit the changes
 
@@ -301,6 +307,7 @@ git push origin
 
 #### Make the PR with the following description
 
+<pre>
 Updates google-cloud-cpp to the latest release (vX.YZ.A)
 
 Tested locally (on x64-linux) with:
@@ -314,6 +321,7 @@ and
 ```
 ./vcpkg remove google-cloud-cpp && ./vcpkg install 'google-cloud-cpp[*]'
 ```
+</pre>
 
 ## 7. Monitor the automation on Conda
 
@@ -347,7 +355,7 @@ In your development fork:
   triggers.
   - Update the Google Cloud Build trigger definitions to compile this branch:
     ```shell
-    ci/cloudbuild/convert-to-branch-triggers.sh
+    ci/cloudbuild/convert-to-branch-triggers.sh --branch "${BRANCH}"
     ```
   - Actually create the triggers in GCB:
     ```shell
@@ -357,7 +365,7 @@ In your development fork:
     ```
   - Remove any old triggers for the same major version, e.g.:
     ```shell
-    cloud builds triggers list \
+    gcloud builds triggers list \
         --project=cloud-cpp-testing-resources \
         --filter=name:v2-10-x --format='value(id)' | \
         xargs -n 1 gcloud builds triggers delete \
@@ -385,8 +393,15 @@ ______________________________________________________________________
   ```
 - Create or cherry-pick commits with the desired changes.
 - Update `CHANGELOG.md` to reflect the changes made.
-- After merging the PR(s) with all the above changes, use the Release UI on
-  GitHub to create a pre-release along with a new tag for the release.
+- After merging the PR(s) with all the above changes, create the tag:
+  ```shell
+  git fetch upstream ${BRANCH}
+  git checkout upstream/${BRANCH}
+  git tag ${PATCH}
+  git push upstream ${PATCH}
+  ```
+- Use the Release UI on GitHub to create a pre-release from the new tag. Uncheck
+  the "Set as the latest release" box if this is not the latest release.
 - After review, publish the release.
 - Update our [vcpkg port].
 
@@ -394,6 +409,7 @@ ______________________________________________________________________
 [git-docs]: https://git-scm.com/doc
 [github-branch-settings]: https://github.com/googleapis/google-cloud-cpp/settings/branches
 [github-guides]: https://guides.github.com/
+[googleapis-sha-update-policy]: https://github.com/googleapis/google-cloud-cpp/blob/main/doc/adr/2024-08-13-googleapis-sha-update-policy.md
 [pr#138]: https://github.com/conda-forge/google-cloud-cpp-feedstock/pull/138
 [pr#32391]: https://github.com/microsoft/vcpkg/pull/32391
 [sha512]: https://learn.microsoft.com/en-us/vcpkg/maintainers/functions/vcpkg_from_github#sha512

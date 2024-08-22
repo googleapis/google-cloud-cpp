@@ -44,23 +44,22 @@ BigtableInstanceAdminTracingConnection::CreateInstance(
 
 StatusOr<google::longrunning::Operation>
 BigtableInstanceAdminTracingConnection::CreateInstance(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::bigtable::admin::v2::CreateInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableInstanceAdminConnection::CreateInstance");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateInstance(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateInstance(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::bigtable::admin::v2::Instance>>
 BigtableInstanceAdminTracingConnection::CreateInstance(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableInstanceAdminConnection::CreateInstance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->CreateInstance(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateInstance(operation));
 }
 
 StatusOr<google::bigtable::admin::v2::Instance>
@@ -102,24 +101,23 @@ BigtableInstanceAdminTracingConnection::PartialUpdateInstance(
 
 StatusOr<google::longrunning::Operation>
 BigtableInstanceAdminTracingConnection::PartialUpdateInstance(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableInstanceAdminConnection::PartialUpdateInstance");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span,
-      child_->PartialUpdateInstance(ExperimentalTag{}, NoAwaitTag{}, request));
+      *span, child_->PartialUpdateInstance(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::bigtable::admin::v2::Instance>>
 BigtableInstanceAdminTracingConnection::PartialUpdateInstance(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableInstanceAdminConnection::PartialUpdateInstance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->PartialUpdateInstance(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->PartialUpdateInstance(operation));
 }
 
 Status BigtableInstanceAdminTracingConnection::DeleteInstance(
@@ -141,23 +139,21 @@ BigtableInstanceAdminTracingConnection::CreateCluster(
 
 StatusOr<google::longrunning::Operation>
 BigtableInstanceAdminTracingConnection::CreateCluster(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::bigtable::admin::v2::CreateClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableInstanceAdminConnection::CreateCluster");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateCluster(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateCluster(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::bigtable::admin::v2::Cluster>>
 BigtableInstanceAdminTracingConnection::CreateCluster(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableInstanceAdminConnection::CreateCluster");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateCluster(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateCluster(operation));
 }
 
 StatusOr<google::bigtable::admin::v2::Cluster>
@@ -189,23 +185,20 @@ BigtableInstanceAdminTracingConnection::UpdateCluster(
 
 StatusOr<google::longrunning::Operation>
 BigtableInstanceAdminTracingConnection::UpdateCluster(
-    ExperimentalTag, NoAwaitTag,
-    google::bigtable::admin::v2::Cluster const& request) {
+    NoAwaitTag, google::bigtable::admin::v2::Cluster const& request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableInstanceAdminConnection::UpdateCluster");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UpdateCluster(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateCluster(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::bigtable::admin::v2::Cluster>>
 BigtableInstanceAdminTracingConnection::UpdateCluster(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableInstanceAdminConnection::UpdateCluster");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateCluster(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateCluster(operation));
 }
 
 future<StatusOr<google::bigtable::admin::v2::Cluster>>
@@ -220,24 +213,23 @@ BigtableInstanceAdminTracingConnection::PartialUpdateCluster(
 
 StatusOr<google::longrunning::Operation>
 BigtableInstanceAdminTracingConnection::PartialUpdateCluster(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::bigtable::admin::v2::PartialUpdateClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableInstanceAdminConnection::PartialUpdateCluster");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->PartialUpdateCluster(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->PartialUpdateCluster(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::bigtable::admin::v2::Cluster>>
 BigtableInstanceAdminTracingConnection::PartialUpdateCluster(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableInstanceAdminConnection::PartialUpdateCluster");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->PartialUpdateCluster(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->PartialUpdateCluster(operation));
 }
 
 Status BigtableInstanceAdminTracingConnection::DeleteCluster(
@@ -288,24 +280,23 @@ BigtableInstanceAdminTracingConnection::UpdateAppProfile(
 
 StatusOr<google::longrunning::Operation>
 BigtableInstanceAdminTracingConnection::UpdateAppProfile(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::bigtable::admin::v2::UpdateAppProfileRequest const& request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableInstanceAdminConnection::UpdateAppProfile");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->UpdateAppProfile(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateAppProfile(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::bigtable::admin::v2::AppProfile>>
 BigtableInstanceAdminTracingConnection::UpdateAppProfile(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableInstanceAdminConnection::UpdateAppProfile");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->UpdateAppProfile(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateAppProfile(operation));
 }
 
 Status BigtableInstanceAdminTracingConnection::DeleteAppProfile(

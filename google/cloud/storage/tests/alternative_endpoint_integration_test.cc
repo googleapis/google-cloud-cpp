@@ -21,6 +21,8 @@
 #include "absl/strings/str_split.h"
 #include <gmock/gmock.h>
 #include <fstream>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

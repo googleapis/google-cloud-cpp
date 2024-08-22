@@ -56,26 +56,45 @@ class MockNodeTemplatesConnection
            AggregatedListNodeTemplatesRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteNodeTemplate)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteNodeTemplate(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteNodeTemplate(Matcher<google::cloud::cpp::compute::node_templates::v1::DeleteNodeTemplateRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteNodeTemplate,
               (google::cloud::cpp::compute::node_templates::v1::
                    DeleteNodeTemplateRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteNodeTemplate(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               DeleteNodeTemplate,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::node_templates::v1::
-                   DeleteNodeTemplateRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::node_templates::v1::
+                               DeleteNodeTemplateRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteNodeTemplate(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteNodeTemplate,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::NodeTemplate>,
@@ -89,26 +108,45 @@ class MockNodeTemplatesConnection
                    GetIamPolicyRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, InsertNodeTemplate)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, InsertNodeTemplate(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InsertNodeTemplate(Matcher<google::cloud::cpp::compute::node_templates::v1::InsertNodeTemplateRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertNodeTemplate,
               (google::cloud::cpp::compute::node_templates::v1::
                    InsertNodeTemplateRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, InsertNodeTemplate(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               InsertNodeTemplate,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::node_templates::v1::
-                   InsertNodeTemplateRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::node_templates::v1::
+                               InsertNodeTemplateRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InsertNodeTemplate(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertNodeTemplate,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(

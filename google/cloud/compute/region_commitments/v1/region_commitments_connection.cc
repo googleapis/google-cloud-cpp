@@ -64,16 +64,15 @@ RegionCommitmentsConnection::InsertCommitment(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionCommitmentsConnection::InsertCommitment(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_commitments::v1::
-        InsertCommitmentRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::region_commitments::v1::
+                    InsertCommitmentRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionCommitmentsConnection::InsertCommitment(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -98,16 +97,15 @@ RegionCommitmentsConnection::UpdateCommitment(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionCommitmentsConnection::UpdateCommitment(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_commitments::v1::
-        UpdateCommitmentRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::region_commitments::v1::
+                    UpdateCommitmentRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionCommitmentsConnection::UpdateCommitment(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

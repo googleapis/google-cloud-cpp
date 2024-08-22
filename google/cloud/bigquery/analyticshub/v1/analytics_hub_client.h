@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_ANALYTICSHUB_V1_ANALYTICS_HUB_CLIENT_H
 
 #include "google/cloud/bigquery/analyticshub/v1/analytics_hub_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -909,7 +908,7 @@ class AnalyticsHubServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> SubscribeDataExchange(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -964,7 +963,7 @@ class AnalyticsHubServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> SubscribeDataExchange(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::bigquery::analyticshub::v1::
           SubscribeDataExchangeRequest const& request,
       Options opts = {});
@@ -980,8 +979,7 @@ class AnalyticsHubServiceClient {
   // clang-format on
   future<StatusOr<
       google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
-  SubscribeDataExchange(ExperimentalTag,
-                        google::longrunning::Operation const& operation,
+  SubscribeDataExchange(google::longrunning::Operation const& operation,
                         Options opts = {});
 
   // clang-format off
@@ -1032,7 +1030,7 @@ class AnalyticsHubServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> RefreshSubscription(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1088,7 +1086,7 @@ class AnalyticsHubServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> RefreshSubscription(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::bigquery::analyticshub::v1::
           RefreshSubscriptionRequest const& request,
       Options opts = {});
@@ -1104,8 +1102,7 @@ class AnalyticsHubServiceClient {
   // clang-format on
   future<StatusOr<
       google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
-  RefreshSubscription(ExperimentalTag,
-                      google::longrunning::Operation const& operation,
+  RefreshSubscription(google::longrunning::Operation const& operation,
                       Options opts = {});
 
   // clang-format off
@@ -1429,7 +1426,7 @@ class AnalyticsHubServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteSubscription(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1482,7 +1479,7 @@ class AnalyticsHubServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteSubscription(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::bigquery::analyticshub::v1::
           DeleteSubscriptionRequest const& request,
       Options opts = {});
@@ -1497,8 +1494,7 @@ class AnalyticsHubServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>
-  DeleteSubscription(ExperimentalTag,
-                     google::longrunning::Operation const& operation,
+  DeleteSubscription(google::longrunning::Operation const& operation,
                      Options opts = {});
 
   // clang-format off

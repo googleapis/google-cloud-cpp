@@ -20,6 +20,7 @@
 #include "google/cloud/status_or.h"
 #include <nlohmann/json.hpp>
 #include <chrono>
+#include <string>
 
 namespace google {
 namespace cloud {

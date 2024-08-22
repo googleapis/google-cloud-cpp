@@ -61,13 +61,11 @@ class InstanceSettingsRestConnectionImpl
           PatchInstanceSettingsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchInstanceSettings(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::instance_settings::v1::
-          PatchInstanceSettingsRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::instance_settings::v1::
+                      PatchInstanceSettingsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchInstanceSettings(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:

@@ -47,16 +47,15 @@ RegionAutoscalersConnection::DeleteAutoscaler(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionAutoscalersConnection::DeleteAutoscaler(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_autoscalers::v1::
-        DeleteAutoscalerRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::region_autoscalers::v1::
+                    DeleteAutoscalerRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionAutoscalersConnection::DeleteAutoscaler(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -80,16 +79,15 @@ RegionAutoscalersConnection::InsertAutoscaler(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionAutoscalersConnection::InsertAutoscaler(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_autoscalers::v1::
-        InsertAutoscalerRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::region_autoscalers::v1::
+                    InsertAutoscalerRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionAutoscalersConnection::InsertAutoscaler(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -114,16 +112,15 @@ RegionAutoscalersConnection::PatchAutoscaler(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionAutoscalersConnection::PatchAutoscaler(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_autoscalers::v1::
-        PatchAutoscalerRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::region_autoscalers::v1::
+                    PatchAutoscalerRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionAutoscalersConnection::PatchAutoscaler(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -140,16 +137,15 @@ RegionAutoscalersConnection::UpdateAutoscaler(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionAutoscalersConnection::UpdateAutoscaler(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_autoscalers::v1::
-        UpdateAutoscalerRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::region_autoscalers::v1::
+                    UpdateAutoscalerRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionAutoscalersConnection::UpdateAutoscaler(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

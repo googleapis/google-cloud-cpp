@@ -95,7 +95,7 @@ Status RoundRobinDecoratorGenerator::GenerateCc() {
   CcLocalIncludes({
       vars("round_robin_header_path"),
   });
-  CcSystemIncludes({});
+  CcSystemIncludes({"memory", "mutex", "vector"});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;

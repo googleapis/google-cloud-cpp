@@ -55,26 +55,45 @@ class MockTargetTcpProxiesConnection
            AggregatedListTargetTcpProxiesRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteTargetTcpProxy)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteTargetTcpProxy(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteTargetTcpProxy(Matcher<google::cloud::cpp::compute::target_tcp_proxies::v1::DeleteTargetTcpProxyRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteTargetTcpProxy,
               (google::cloud::cpp::compute::target_tcp_proxies::v1::
                    DeleteTargetTcpProxyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteTargetTcpProxy(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               DeleteTargetTcpProxy,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::target_tcp_proxies::v1::
-                   DeleteTargetTcpProxyRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::target_tcp_proxies::v1::
+                               DeleteTargetTcpProxyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteTargetTcpProxy(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteTargetTcpProxy,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy>,
@@ -83,26 +102,45 @@ class MockTargetTcpProxiesConnection
                    GetTargetTcpProxyRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, InsertTargetTcpProxy)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, InsertTargetTcpProxy(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InsertTargetTcpProxy(Matcher<google::cloud::cpp::compute::target_tcp_proxies::v1::InsertTargetTcpProxyRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertTargetTcpProxy,
               (google::cloud::cpp::compute::target_tcp_proxies::v1::
                    InsertTargetTcpProxyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, InsertTargetTcpProxy(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               InsertTargetTcpProxy,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::target_tcp_proxies::v1::
-                   InsertTargetTcpProxyRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::target_tcp_proxies::v1::
+                               InsertTargetTcpProxyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InsertTargetTcpProxy(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertTargetTcpProxy,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::TargetTcpProxy>),
@@ -111,48 +149,86 @@ class MockTargetTcpProxiesConnection
                    ListTargetTcpProxiesRequest request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, SetBackendService)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, SetBackendService(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// SetBackendService(Matcher<google::cloud::cpp::compute::target_tcp_proxies::v1::SetBackendServiceRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetBackendService,
               (google::cloud::cpp::compute::target_tcp_proxies::v1::
                    SetBackendServiceRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, SetBackendService(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               SetBackendService,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::target_tcp_proxies::v1::
-                   SetBackendServiceRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::target_tcp_proxies::v1::
+                               SetBackendServiceRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// SetBackendService(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetBackendService,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, SetProxyHeader)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, SetProxyHeader(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// SetProxyHeader(Matcher<google::cloud::cpp::compute::target_tcp_proxies::v1::SetProxyHeaderRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetProxyHeader,
               (google::cloud::cpp::compute::target_tcp_proxies::v1::
                    SetProxyHeaderRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, SetProxyHeader(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               SetProxyHeader,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::target_tcp_proxies::v1::
-                   SetProxyHeaderRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::target_tcp_proxies::v1::
+                               SetProxyHeaderRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// SetProxyHeader(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetProxyHeader,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

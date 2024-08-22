@@ -174,9 +174,8 @@ AppConnectionsServiceConnectionImpl::CreateAppConnection(
 
 StatusOr<google::longrunning::Operation>
 AppConnectionsServiceConnectionImpl::CreateAppConnection(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::beyondcorp::appconnections::v1::
-        CreateAppConnectionRequest const& request) {
+    NoAwaitTag, google::cloud::beyondcorp::appconnections::v1::
+                    CreateAppConnectionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -191,7 +190,7 @@ AppConnectionsServiceConnectionImpl::CreateAppConnection(
 
 future<StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>
 AppConnectionsServiceConnectionImpl::CreateAppConnection(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::beyondcorp::appconnections::v1::
@@ -269,9 +268,8 @@ AppConnectionsServiceConnectionImpl::UpdateAppConnection(
 
 StatusOr<google::longrunning::Operation>
 AppConnectionsServiceConnectionImpl::UpdateAppConnection(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::beyondcorp::appconnections::v1::
-        UpdateAppConnectionRequest const& request) {
+    NoAwaitTag, google::cloud::beyondcorp::appconnections::v1::
+                    UpdateAppConnectionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -286,7 +284,7 @@ AppConnectionsServiceConnectionImpl::UpdateAppConnection(
 
 future<StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>
 AppConnectionsServiceConnectionImpl::UpdateAppConnection(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::beyondcorp::appconnections::v1::
@@ -367,9 +365,8 @@ AppConnectionsServiceConnectionImpl::DeleteAppConnection(
 
 StatusOr<google::longrunning::Operation>
 AppConnectionsServiceConnectionImpl::DeleteAppConnection(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::beyondcorp::appconnections::v1::
-        DeleteAppConnectionRequest const& request) {
+    NoAwaitTag, google::cloud::beyondcorp::appconnections::v1::
+                    DeleteAppConnectionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -385,7 +382,7 @@ AppConnectionsServiceConnectionImpl::DeleteAppConnection(
 future<StatusOr<google::cloud::beyondcorp::appconnections::v1::
                     AppConnectionOperationMetadata>>
 AppConnectionsServiceConnectionImpl::DeleteAppConnection(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::beyondcorp::appconnections::v1::

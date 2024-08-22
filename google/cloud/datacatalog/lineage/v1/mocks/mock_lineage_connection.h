@@ -77,9 +77,15 @@ class MockLineageConnection : public datacatalog_lineage_v1::LineageConnection {
       (google::cloud::datacatalog::lineage::v1::ListProcessesRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteProcess)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteProcess(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteProcess(Matcher<google::cloud::datacatalog::lineage::v1::DeleteProcessRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>,
@@ -88,18 +94,31 @@ class MockLineageConnection : public datacatalog_lineage_v1::LineageConnection {
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteProcess(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteProcess,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteProcess(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>,
-      DeleteProcess,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteProcess, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(StatusOr<google::cloud::datacatalog::lineage::v1::Run>, CreateRun,
@@ -122,9 +141,15 @@ class MockLineageConnection : public datacatalog_lineage_v1::LineageConnection {
       (google::cloud::datacatalog::lineage::v1::ListRunsRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteRun)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteRun(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteRun(Matcher<google::cloud::datacatalog::lineage::v1::DeleteRunRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>,
@@ -133,18 +158,30 @@ class MockLineageConnection : public datacatalog_lineage_v1::LineageConnection {
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteRun(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteRun,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::datacatalog::lineage::v1::DeleteRunRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteRun(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>,
-      DeleteRun,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      DeleteRun, (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>,

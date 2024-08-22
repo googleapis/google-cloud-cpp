@@ -22,7 +22,6 @@
 #include "google/cloud/channel/v1/cloud_channel_connection_idempotency_policy.h"
 #include "google/cloud/channel/v1/internal/cloud_channel_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -220,12 +219,11 @@ class CloudChannelServiceConnection {
       google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> ProvisionCloudIdentity(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request);
 
   virtual future<StatusOr<google::cloud::channel::v1::Customer>>
-  ProvisionCloudIdentity(ExperimentalTag,
-                         google::longrunning::Operation const& operation);
+  ProvisionCloudIdentity(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::channel::v1::Entitlement> ListEntitlements(
       google::cloud::channel::v1::ListEntitlementsRequest request);
@@ -246,94 +244,87 @@ class CloudChannelServiceConnection {
       google::cloud::channel::v1::CreateEntitlementRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateEntitlement(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::channel::v1::CreateEntitlementRequest const& request);
 
   virtual future<StatusOr<google::cloud::channel::v1::Entitlement>>
-  CreateEntitlement(ExperimentalTag,
-                    google::longrunning::Operation const& operation);
+  CreateEntitlement(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::channel::v1::Entitlement>>
   ChangeParameters(
       google::cloud::channel::v1::ChangeParametersRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> ChangeParameters(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::channel::v1::ChangeParametersRequest const& request);
 
   virtual future<StatusOr<google::cloud::channel::v1::Entitlement>>
-  ChangeParameters(ExperimentalTag,
-                   google::longrunning::Operation const& operation);
+  ChangeParameters(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::channel::v1::Entitlement>>
   ChangeRenewalSettings(
       google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> ChangeRenewalSettings(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request);
 
   virtual future<StatusOr<google::cloud::channel::v1::Entitlement>>
-  ChangeRenewalSettings(ExperimentalTag,
-                        google::longrunning::Operation const& operation);
+  ChangeRenewalSettings(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::channel::v1::Entitlement>> ChangeOffer(
       google::cloud::channel::v1::ChangeOfferRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> ChangeOffer(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::channel::v1::ChangeOfferRequest const& request);
 
   virtual future<StatusOr<google::cloud::channel::v1::Entitlement>> ChangeOffer(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::channel::v1::Entitlement>>
   StartPaidService(
       google::cloud::channel::v1::StartPaidServiceRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> StartPaidService(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::channel::v1::StartPaidServiceRequest const& request);
 
   virtual future<StatusOr<google::cloud::channel::v1::Entitlement>>
-  StartPaidService(ExperimentalTag,
-                   google::longrunning::Operation const& operation);
+  StartPaidService(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::channel::v1::Entitlement>>
   SuspendEntitlement(
       google::cloud::channel::v1::SuspendEntitlementRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> SuspendEntitlement(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::channel::v1::SuspendEntitlementRequest const& request);
 
   virtual future<StatusOr<google::cloud::channel::v1::Entitlement>>
-  SuspendEntitlement(ExperimentalTag,
-                     google::longrunning::Operation const& operation);
+  SuspendEntitlement(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
   CancelEntitlement(
       google::cloud::channel::v1::CancelEntitlementRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CancelEntitlement(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::channel::v1::CancelEntitlementRequest const& request);
 
   virtual future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
-  CancelEntitlement(ExperimentalTag,
-                    google::longrunning::Operation const& operation);
+  CancelEntitlement(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::channel::v1::Entitlement>>
   ActivateEntitlement(
       google::cloud::channel::v1::ActivateEntitlementRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> ActivateEntitlement(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::channel::v1::ActivateEntitlementRequest const& request);
 
   virtual future<StatusOr<google::cloud::channel::v1::Entitlement>>
-  ActivateEntitlement(ExperimentalTag,
-                      google::longrunning::Operation const& operation);
+  ActivateEntitlement(google::longrunning::Operation const& operation);
 
   virtual future<
       StatusOr<google::cloud::channel::v1::TransferEntitlementsResponse>>
@@ -341,13 +332,12 @@ class CloudChannelServiceConnection {
       google::cloud::channel::v1::TransferEntitlementsRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> TransferEntitlements(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::channel::v1::TransferEntitlementsRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::channel::v1::TransferEntitlementsResponse>>
-  TransferEntitlements(ExperimentalTag,
-                       google::longrunning::Operation const& operation);
+  TransferEntitlements(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
   TransferEntitlementsToGoogle(
@@ -355,13 +345,12 @@ class CloudChannelServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> TransferEntitlementsToGoogle(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
-  TransferEntitlementsToGoogle(ExperimentalTag,
-                               google::longrunning::Operation const& operation);
+  TransferEntitlementsToGoogle(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::channel::v1::ChannelPartnerLink>
   ListChannelPartnerLinks(

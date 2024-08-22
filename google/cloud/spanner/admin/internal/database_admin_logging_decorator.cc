@@ -21,6 +21,8 @@
 #include "google/cloud/status_or.h"
 #include <google/spanner/admin/database/v1/spanner_database_admin.grpc.pb.h>
 #include <memory>
+#include <set>
+#include <string>
 #include <utility>
 
 namespace google {

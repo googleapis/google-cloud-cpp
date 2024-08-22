@@ -14,6 +14,8 @@
 
 #include "google/cloud/storage/testing/remove_stale_buckets.h"
 #include <regex>
+#include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {

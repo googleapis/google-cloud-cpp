@@ -67,25 +67,24 @@ CertificateManagerTracingConnection::CreateCertificate(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerTracingConnection::CreateCertificate(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::certificatemanager::v1::CreateCertificateRequest const&
         request) {
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::CreateCertificate");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->CreateCertificate(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateCertificate(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>
 CertificateManagerTracingConnection::CreateCertificate(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::CreateCertificate");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->CreateCertificate(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateCertificate(operation));
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>
@@ -100,25 +99,24 @@ CertificateManagerTracingConnection::UpdateCertificate(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerTracingConnection::UpdateCertificate(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::certificatemanager::v1::UpdateCertificateRequest const&
         request) {
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::UpdateCertificate");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->UpdateCertificate(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateCertificate(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>
 CertificateManagerTracingConnection::UpdateCertificate(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::UpdateCertificate");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->UpdateCertificate(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateCertificate(operation));
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
@@ -133,25 +131,24 @@ CertificateManagerTracingConnection::DeleteCertificate(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerTracingConnection::DeleteCertificate(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::certificatemanager::v1::DeleteCertificateRequest const&
         request) {
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::DeleteCertificate");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->DeleteCertificate(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteCertificate(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
 CertificateManagerTracingConnection::DeleteCertificate(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::DeleteCertificate");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->DeleteCertificate(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteCertificate(operation));
 }
 
 StreamRange<google::cloud::certificatemanager::v1::CertificateMap>
@@ -191,27 +188,26 @@ CertificateManagerTracingConnection::CreateCertificateMap(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerTracingConnection::CreateCertificateMap(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::certificatemanager::v1::CreateCertificateMapRequest const&
         request) {
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::"
       "CreateCertificateMap");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->CreateCertificateMap(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateCertificateMap(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
 CertificateManagerTracingConnection::CreateCertificateMap(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::"
       "CreateCertificateMap");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateCertificateMap(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateCertificateMap(operation));
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
@@ -228,27 +224,26 @@ CertificateManagerTracingConnection::UpdateCertificateMap(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerTracingConnection::UpdateCertificateMap(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::certificatemanager::v1::UpdateCertificateMapRequest const&
         request) {
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::"
       "UpdateCertificateMap");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->UpdateCertificateMap(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateCertificateMap(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
 CertificateManagerTracingConnection::UpdateCertificateMap(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::"
       "UpdateCertificateMap");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateCertificateMap(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateCertificateMap(operation));
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
@@ -265,27 +260,26 @@ CertificateManagerTracingConnection::DeleteCertificateMap(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerTracingConnection::DeleteCertificateMap(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::certificatemanager::v1::DeleteCertificateMapRequest const&
         request) {
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::"
       "DeleteCertificateMap");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->DeleteCertificateMap(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteCertificateMap(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
 CertificateManagerTracingConnection::DeleteCertificateMap(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::"
       "DeleteCertificateMap");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteCertificateMap(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteCertificateMap(operation));
 }
 
 StreamRange<google::cloud::certificatemanager::v1::CertificateMapEntry>
@@ -327,27 +321,25 @@ CertificateManagerTracingConnection::CreateCertificateMapEntry(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerTracingConnection::CreateCertificateMapEntry(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::certificatemanager::v1::
-        CreateCertificateMapEntryRequest const& request) {
+    NoAwaitTag, google::cloud::certificatemanager::v1::
+                    CreateCertificateMapEntryRequest const& request) {
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::"
       "CreateCertificateMapEntry");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->CreateCertificateMapEntry(ExperimentalTag{}, NoAwaitTag{},
-                                               request));
+      *span, child_->CreateCertificateMapEntry(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
 CertificateManagerTracingConnection::CreateCertificateMapEntry(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::"
       "CreateCertificateMapEntry");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateCertificateMapEntry(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateCertificateMapEntry(operation));
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
@@ -364,27 +356,25 @@ CertificateManagerTracingConnection::UpdateCertificateMapEntry(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerTracingConnection::UpdateCertificateMapEntry(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::certificatemanager::v1::
-        UpdateCertificateMapEntryRequest const& request) {
+    NoAwaitTag, google::cloud::certificatemanager::v1::
+                    UpdateCertificateMapEntryRequest const& request) {
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::"
       "UpdateCertificateMapEntry");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->UpdateCertificateMapEntry(ExperimentalTag{}, NoAwaitTag{},
-                                               request));
+      *span, child_->UpdateCertificateMapEntry(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
 CertificateManagerTracingConnection::UpdateCertificateMapEntry(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::"
       "UpdateCertificateMapEntry");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateCertificateMapEntry(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateCertificateMapEntry(operation));
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
@@ -401,27 +391,25 @@ CertificateManagerTracingConnection::DeleteCertificateMapEntry(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerTracingConnection::DeleteCertificateMapEntry(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::certificatemanager::v1::
-        DeleteCertificateMapEntryRequest const& request) {
+    NoAwaitTag, google::cloud::certificatemanager::v1::
+                    DeleteCertificateMapEntryRequest const& request) {
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::"
       "DeleteCertificateMapEntry");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteCertificateMapEntry(ExperimentalTag{}, NoAwaitTag{},
-                                               request));
+      *span, child_->DeleteCertificateMapEntry(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
 CertificateManagerTracingConnection::DeleteCertificateMapEntry(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::"
       "DeleteCertificateMapEntry");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteCertificateMapEntry(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteCertificateMapEntry(operation));
 }
 
 StreamRange<google::cloud::certificatemanager::v1::DnsAuthorization>
@@ -463,7 +451,7 @@ CertificateManagerTracingConnection::CreateDnsAuthorization(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerTracingConnection::CreateDnsAuthorization(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::certificatemanager::v1::CreateDnsAuthorizationRequest const&
         request) {
   auto span = internal::MakeSpan(
@@ -471,19 +459,18 @@ CertificateManagerTracingConnection::CreateDnsAuthorization(
       "CreateDnsAuthorization");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span,
-      child_->CreateDnsAuthorization(ExperimentalTag{}, NoAwaitTag{}, request));
+      *span, child_->CreateDnsAuthorization(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>
 CertificateManagerTracingConnection::CreateDnsAuthorization(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::"
       "CreateDnsAuthorization");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateDnsAuthorization(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateDnsAuthorization(operation));
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>
@@ -500,7 +487,7 @@ CertificateManagerTracingConnection::UpdateDnsAuthorization(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerTracingConnection::UpdateDnsAuthorization(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::certificatemanager::v1::UpdateDnsAuthorizationRequest const&
         request) {
   auto span = internal::MakeSpan(
@@ -508,19 +495,18 @@ CertificateManagerTracingConnection::UpdateDnsAuthorization(
       "UpdateDnsAuthorization");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span,
-      child_->UpdateDnsAuthorization(ExperimentalTag{}, NoAwaitTag{}, request));
+      *span, child_->UpdateDnsAuthorization(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>
 CertificateManagerTracingConnection::UpdateDnsAuthorization(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::"
       "UpdateDnsAuthorization");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateDnsAuthorization(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateDnsAuthorization(operation));
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
@@ -537,7 +523,7 @@ CertificateManagerTracingConnection::DeleteDnsAuthorization(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerTracingConnection::DeleteDnsAuthorization(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::certificatemanager::v1::DeleteDnsAuthorizationRequest const&
         request) {
   auto span = internal::MakeSpan(
@@ -545,19 +531,18 @@ CertificateManagerTracingConnection::DeleteDnsAuthorization(
       "DeleteDnsAuthorization");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span,
-      child_->DeleteDnsAuthorization(ExperimentalTag{}, NoAwaitTag{}, request));
+      *span, child_->DeleteDnsAuthorization(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
 CertificateManagerTracingConnection::DeleteDnsAuthorization(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::"
       "DeleteDnsAuthorization");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteDnsAuthorization(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteDnsAuthorization(operation));
 }
 
 StreamRange<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>
@@ -601,29 +586,26 @@ CertificateManagerTracingConnection::CreateCertificateIssuanceConfig(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerTracingConnection::CreateCertificateIssuanceConfig(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::certificatemanager::v1::
-        CreateCertificateIssuanceConfigRequest const& request) {
+    NoAwaitTag, google::cloud::certificatemanager::v1::
+                    CreateCertificateIssuanceConfigRequest const& request) {
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::"
       "CreateCertificateIssuanceConfig");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->CreateCertificateIssuanceConfig(ExperimentalTag{},
-                                                     NoAwaitTag{}, request));
+      *span, child_->CreateCertificateIssuanceConfig(NoAwaitTag{}, request));
 }
 
 future<
     StatusOr<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>
 CertificateManagerTracingConnection::CreateCertificateIssuanceConfig(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::"
       "CreateCertificateIssuanceConfig");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->CreateCertificateIssuanceConfig(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateCertificateIssuanceConfig(operation));
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
@@ -640,28 +622,25 @@ CertificateManagerTracingConnection::DeleteCertificateIssuanceConfig(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerTracingConnection::DeleteCertificateIssuanceConfig(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::certificatemanager::v1::
-        DeleteCertificateIssuanceConfigRequest const& request) {
+    NoAwaitTag, google::cloud::certificatemanager::v1::
+                    DeleteCertificateIssuanceConfigRequest const& request) {
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::"
       "DeleteCertificateIssuanceConfig");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteCertificateIssuanceConfig(ExperimentalTag{},
-                                                     NoAwaitTag{}, request));
+      *span, child_->DeleteCertificateIssuanceConfig(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
 CertificateManagerTracingConnection::DeleteCertificateIssuanceConfig(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::"
       "DeleteCertificateIssuanceConfig");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->DeleteCertificateIssuanceConfig(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteCertificateIssuanceConfig(operation));
 }
 
 StreamRange<google::cloud::certificatemanager::v1::TrustConfig>
@@ -698,25 +677,24 @@ CertificateManagerTracingConnection::CreateTrustConfig(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerTracingConnection::CreateTrustConfig(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::certificatemanager::v1::CreateTrustConfigRequest const&
         request) {
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::CreateTrustConfig");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->CreateTrustConfig(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateTrustConfig(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>
 CertificateManagerTracingConnection::CreateTrustConfig(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::CreateTrustConfig");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->CreateTrustConfig(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateTrustConfig(operation));
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>
@@ -731,25 +709,24 @@ CertificateManagerTracingConnection::UpdateTrustConfig(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerTracingConnection::UpdateTrustConfig(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const&
         request) {
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::UpdateTrustConfig");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->UpdateTrustConfig(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateTrustConfig(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>
 CertificateManagerTracingConnection::UpdateTrustConfig(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::UpdateTrustConfig");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->UpdateTrustConfig(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateTrustConfig(operation));
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
@@ -764,25 +741,24 @@ CertificateManagerTracingConnection::DeleteTrustConfig(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerTracingConnection::DeleteTrustConfig(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const&
         request) {
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::DeleteTrustConfig");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->DeleteTrustConfig(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteTrustConfig(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
 CertificateManagerTracingConnection::DeleteTrustConfig(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::DeleteTrustConfig");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->DeleteTrustConfig(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteTrustConfig(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

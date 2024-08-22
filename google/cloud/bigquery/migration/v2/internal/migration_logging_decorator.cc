@@ -21,6 +21,8 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/bigquery/migration/v2/migration_service.grpc.pb.h>
 #include <memory>
+#include <set>
+#include <string>
 #include <utility>
 
 namespace google {

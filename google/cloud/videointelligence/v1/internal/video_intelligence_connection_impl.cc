@@ -114,7 +114,7 @@ VideoIntelligenceServiceConnectionImpl::AnnotateVideo(
 
 StatusOr<google::longrunning::Operation>
 VideoIntelligenceServiceConnectionImpl::AnnotateVideo(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -130,7 +130,7 @@ VideoIntelligenceServiceConnectionImpl::AnnotateVideo(
 
 future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
 VideoIntelligenceServiceConnectionImpl::AnnotateVideo(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::videointelligence::v1::

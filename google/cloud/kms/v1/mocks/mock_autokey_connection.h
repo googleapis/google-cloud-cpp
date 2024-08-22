@@ -46,24 +46,42 @@ class MockAutokeyConnection : public kms_v1::AutokeyConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateKeyHandle)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateKeyHandle(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateKeyHandle(Matcher<google::cloud::kms::v1::CreateKeyHandleRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::kms::v1::KeyHandle>>,
               CreateKeyHandle,
               (google::cloud::kms::v1::CreateKeyHandleRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateKeyHandle(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateKeyHandle,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::kms::v1::CreateKeyHandleRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateKeyHandle(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::kms::v1::KeyHandle>>,
               CreateKeyHandle,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::kms::v1::KeyHandle>, GetKeyHandle,
               (google::cloud::kms::v1::GetKeyHandleRequest const& request),

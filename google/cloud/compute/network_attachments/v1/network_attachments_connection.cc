@@ -57,16 +57,15 @@ NetworkAttachmentsConnection::DeleteNetworkAttachment(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworkAttachmentsConnection::DeleteNetworkAttachment(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::network_attachments::v1::
-        DeleteNetworkAttachmentRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::network_attachments::v1::
+                    DeleteNetworkAttachmentRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkAttachmentsConnection::DeleteNetworkAttachment(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -97,16 +96,15 @@ NetworkAttachmentsConnection::InsertNetworkAttachment(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworkAttachmentsConnection::InsertNetworkAttachment(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::network_attachments::v1::
-        InsertNetworkAttachmentRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::network_attachments::v1::
+                    InsertNetworkAttachmentRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkAttachmentsConnection::InsertNetworkAttachment(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -131,16 +129,15 @@ NetworkAttachmentsConnection::PatchNetworkAttachment(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworkAttachmentsConnection::PatchNetworkAttachment(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::network_attachments::v1::
-        PatchNetworkAttachmentRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::network_attachments::v1::
+                    PatchNetworkAttachmentRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkAttachmentsConnection::PatchNetworkAttachment(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

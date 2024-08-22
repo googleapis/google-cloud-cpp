@@ -51,23 +51,41 @@ class MockPredictionServiceConnection
               (google::cloud::automl::v1::PredictRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, BatchPredict)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, BatchPredict(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchPredict(Matcher<google::cloud::automl::v1::BatchPredictRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::BatchPredictResult>>,
               BatchPredict,
               (google::cloud::automl::v1::BatchPredictRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, BatchPredict(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, BatchPredict,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::automl::v1::BatchPredictRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, BatchPredict(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::BatchPredictResult>>,
-              BatchPredict,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              BatchPredict, (google::longrunning::Operation const& operation),
               (override));
 };
 

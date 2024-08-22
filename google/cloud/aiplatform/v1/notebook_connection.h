@@ -22,7 +22,6 @@
 #include "google/cloud/aiplatform/v1/internal/notebook_retry_traits.h"
 #include "google/cloud/aiplatform/v1/notebook_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -197,14 +196,14 @@ class NotebookServiceConnection {
 
   virtual StatusOr<google::longrunning::Operation>
   CreateNotebookRuntimeTemplate(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const&
           request);
 
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>>
   CreateNotebookRuntimeTemplate(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
   GetNotebookRuntimeTemplate(
@@ -224,14 +223,14 @@ class NotebookServiceConnection {
 
   virtual StatusOr<google::longrunning::Operation>
   DeleteNotebookRuntimeTemplate(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const&
           request);
 
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteNotebookRuntimeTemplate(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
   UpdateNotebookRuntimeTemplate(
@@ -244,13 +243,12 @@ class NotebookServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> AssignNotebookRuntime(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>>
-  AssignNotebookRuntime(ExperimentalTag,
-                        google::longrunning::Operation const& operation);
+  AssignNotebookRuntime(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>
   GetNotebookRuntime(
@@ -267,14 +265,13 @@ class NotebookServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteNotebookRuntime(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const&
           request);
 
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteNotebookRuntime(ExperimentalTag,
-                        google::longrunning::Operation const& operation);
+  DeleteNotebookRuntime(google::longrunning::Operation const& operation);
 
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::UpgradeNotebookRuntimeResponse>>
@@ -283,14 +280,13 @@ class NotebookServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> UpgradeNotebookRuntime(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const&
           request);
 
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::UpgradeNotebookRuntimeResponse>>
-  UpgradeNotebookRuntime(ExperimentalTag,
-                         google::longrunning::Operation const& operation);
+  UpgradeNotebookRuntime(google::longrunning::Operation const& operation);
 
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::StartNotebookRuntimeResponse>>
@@ -299,14 +295,50 @@ class NotebookServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> StartNotebookRuntime(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const&
           request);
 
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::StartNotebookRuntimeResponse>>
-  StartNotebookRuntime(ExperimentalTag,
-                       google::longrunning::Operation const& operation);
+  StartNotebookRuntime(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>>
+  CreateNotebookExecutionJob(
+      google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateNotebookExecutionJob(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>>
+  CreateNotebookExecutionJob(google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>
+  GetNotebookExecutionJob(
+      google::cloud::aiplatform::v1::GetNotebookExecutionJobRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::aiplatform::v1::NotebookExecutionJob>
+  ListNotebookExecutionJobs(
+      google::cloud::aiplatform::v1::ListNotebookExecutionJobsRequest request);
+
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteNotebookExecutionJob(
+      google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteNotebookExecutionJob(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteNotebookExecutionJob(google::longrunning::Operation const& operation);
 };
 
 /**

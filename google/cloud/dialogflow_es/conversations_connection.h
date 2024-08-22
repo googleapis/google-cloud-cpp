@@ -22,7 +22,6 @@
 #include "google/cloud/dialogflow_es/conversations_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_es/internal/conversations_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -213,6 +212,12 @@ class ConversationsConnection {
       google::cloud::dialogflow::v2::GenerateStatelessSummaryResponse>
   GenerateStatelessSummary(
       google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
+          request);
+
+  virtual StatusOr<
+      google::cloud::dialogflow::v2::GenerateStatelessSuggestionResponse>
+  GenerateStatelessSuggestion(
+      google::cloud::dialogflow::v2::GenerateStatelessSuggestionRequest const&
           request);
 
   virtual StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>

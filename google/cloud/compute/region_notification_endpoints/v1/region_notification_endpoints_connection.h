@@ -23,7 +23,6 @@
 #include "google/cloud/compute/region_notification_endpoints/v1/internal/region_notification_endpoints_retry_traits.h"
 #include "google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -213,13 +212,11 @@ class RegionNotificationEndpointsConnection {
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteNotificationEndpoint(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::region_notification_endpoints::v1::
-          DeleteNotificationEndpointRequest const& request);
+      NoAwaitTag, google::cloud::cpp::compute::region_notification_endpoints::
+                      v1::DeleteNotificationEndpointRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteNotificationEndpoint(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::NotificationEndpoint>
@@ -234,13 +231,11 @@ class RegionNotificationEndpointsConnection {
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertNotificationEndpoint(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::region_notification_endpoints::v1::
-          InsertNotificationEndpointRequest const& request);
+      NoAwaitTag, google::cloud::cpp::compute::region_notification_endpoints::
+                      v1::InsertNotificationEndpointRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertNotificationEndpoint(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::NotificationEndpoint>

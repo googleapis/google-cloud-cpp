@@ -26,7 +26,9 @@
 #include "google/cloud/status_or.h"
 #include <google/storage/control/v2/storage_control.grpc.pb.h>
 #include <memory>
+#include <string>
 #include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {

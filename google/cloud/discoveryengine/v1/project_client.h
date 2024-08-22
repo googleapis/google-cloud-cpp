@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_PROJECT_CLIENT_H
 
 #include "google/cloud/discoveryengine/v1/project_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -143,7 +142,7 @@ class ProjectServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ProvisionProject(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -202,7 +201,7 @@ class ProjectServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ProvisionProject(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::discoveryengine::v1::ProvisionProjectRequest const&
           request,
       Options opts = {});
@@ -217,8 +216,7 @@ class ProjectServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::Project>>
-  ProvisionProject(ExperimentalTag,
-                   google::longrunning::Operation const& operation,
+  ProvisionProject(google::longrunning::Operation const& operation,
                    Options opts = {});
 
  private:

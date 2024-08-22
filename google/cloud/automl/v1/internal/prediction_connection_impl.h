@@ -58,11 +58,10 @@ class PredictionServiceConnectionImpl
       google::cloud::automl::v1::BatchPredictRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> BatchPredict(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::automl::v1::BatchPredictRequest const& request) override;
 
   future<StatusOr<google::cloud::automl::v1::BatchPredictResult>> BatchPredict(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
  private:

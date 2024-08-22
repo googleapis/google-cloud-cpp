@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_PRODUCT_CLIENT_H
 
 #include "google/cloud/retail/v2/product_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -539,7 +538,7 @@ class ProductServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> PurgeProducts(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::retail::v2::PurgeProductsRequest const& request,
       Options opts = {});
 
@@ -553,8 +552,7 @@ class ProductServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::PurgeProductsResponse>>
-  PurgeProducts(ExperimentalTag,
-                google::longrunning::Operation const& operation,
+  PurgeProducts(google::longrunning::Operation const& operation,
                 Options opts = {});
 
   // clang-format off
@@ -615,7 +613,7 @@ class ProductServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ImportProducts(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::retail::v2::ImportProductsRequest const& request,
       Options opts = {});
 
@@ -629,8 +627,7 @@ class ProductServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>
-  ImportProducts(ExperimentalTag,
-                 google::longrunning::Operation const& operation,
+  ImportProducts(google::longrunning::Operation const& operation,
                  Options opts = {});
 
   // clang-format off
@@ -748,8 +745,7 @@ class ProductServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> SetInventory(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::retail::v2::Product const& inventory,
+      NoAwaitTag, google::cloud::retail::v2::Product const& inventory,
       google::protobuf::FieldMask const& set_mask, Options opts = {});
 
   // clang-format off
@@ -863,8 +859,7 @@ class ProductServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> SetInventory(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::retail::v2::SetInventoryRequest const& request,
+      NoAwaitTag, google::cloud::retail::v2::SetInventoryRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -877,7 +872,7 @@ class ProductServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
-  SetInventory(ExperimentalTag, google::longrunning::Operation const& operation,
+  SetInventory(google::longrunning::Operation const& operation,
                Options opts = {});
 
   // clang-format off
@@ -968,8 +963,7 @@ class ProductServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> AddFulfillmentPlaces(
-      ExperimentalTag, NoAwaitTag, std::string const& product,
-      Options opts = {});
+      NoAwaitTag, std::string const& product, Options opts = {});
 
   // clang-format off
   ///
@@ -1060,7 +1054,7 @@ class ProductServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> AddFulfillmentPlaces(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request,
       Options opts = {});
 
@@ -1074,8 +1068,7 @@ class ProductServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
-  AddFulfillmentPlaces(ExperimentalTag,
-                       google::longrunning::Operation const& operation,
+  AddFulfillmentPlaces(google::longrunning::Operation const& operation,
                        Options opts = {});
 
   // clang-format off
@@ -1166,8 +1159,7 @@ class ProductServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> RemoveFulfillmentPlaces(
-      ExperimentalTag, NoAwaitTag, std::string const& product,
-      Options opts = {});
+      NoAwaitTag, std::string const& product, Options opts = {});
 
   // clang-format off
   ///
@@ -1258,7 +1250,7 @@ class ProductServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> RemoveFulfillmentPlaces(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request,
       Options opts = {});
 
@@ -1272,8 +1264,7 @@ class ProductServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
-  RemoveFulfillmentPlaces(ExperimentalTag,
-                          google::longrunning::Operation const& operation,
+  RemoveFulfillmentPlaces(google::longrunning::Operation const& operation,
                           Options opts = {});
 
   // clang-format off
@@ -1361,8 +1352,7 @@ class ProductServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> AddLocalInventories(
-      ExperimentalTag, NoAwaitTag, std::string const& product,
-      Options opts = {});
+      NoAwaitTag, std::string const& product, Options opts = {});
 
   // clang-format off
   ///
@@ -1450,7 +1440,7 @@ class ProductServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> AddLocalInventories(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::retail::v2::AddLocalInventoriesRequest const& request,
       Options opts = {});
 
@@ -1464,8 +1454,7 @@ class ProductServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
-  AddLocalInventories(ExperimentalTag,
-                      google::longrunning::Operation const& operation,
+  AddLocalInventories(google::longrunning::Operation const& operation,
                       Options opts = {});
 
   // clang-format off
@@ -1551,8 +1540,7 @@ class ProductServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> RemoveLocalInventories(
-      ExperimentalTag, NoAwaitTag, std::string const& product,
-      Options opts = {});
+      NoAwaitTag, std::string const& product, Options opts = {});
 
   // clang-format off
   ///
@@ -1638,7 +1626,7 @@ class ProductServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> RemoveLocalInventories(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request,
       Options opts = {});
 
@@ -1652,8 +1640,7 @@ class ProductServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
-  RemoveLocalInventories(ExperimentalTag,
-                         google::longrunning::Operation const& operation,
+  RemoveLocalInventories(google::longrunning::Operation const& operation,
                          Options opts = {});
 
  private:

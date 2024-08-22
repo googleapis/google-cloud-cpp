@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_STITCHER_V1_VIDEO_STITCHER_CLIENT_H
 
 #include "google/cloud/video/stitcher/v1/video_stitcher_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -149,7 +148,7 @@ class VideoStitcherServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateCdnKey(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::video::stitcher::v1::CdnKey const& cdn_key,
       std::string const& cdn_key_id, Options opts = {});
 
@@ -203,7 +202,7 @@ class VideoStitcherServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateCdnKey(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request,
       Options opts = {});
 
@@ -217,8 +216,7 @@ class VideoStitcherServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>> CreateCdnKey(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -396,8 +394,7 @@ class VideoStitcherServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteCdnKey(ExperimentalTag,
-                                                        NoAwaitTag,
+  StatusOr<google::longrunning::Operation> DeleteCdnKey(NoAwaitTag,
                                                         std::string const& name,
                                                         Options opts = {});
 
@@ -452,7 +449,7 @@ class VideoStitcherServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCdnKey(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request,
       Options opts = {});
 
@@ -466,7 +463,7 @@ class VideoStitcherServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
-  DeleteCdnKey(ExperimentalTag, google::longrunning::Operation const& operation,
+  DeleteCdnKey(google::longrunning::Operation const& operation,
                Options opts = {});
 
   // clang-format off
@@ -518,8 +515,7 @@ class VideoStitcherServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCdnKey(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::video::stitcher::v1::CdnKey const& cdn_key,
+      NoAwaitTag, google::cloud::video::stitcher::v1::CdnKey const& cdn_key,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -573,7 +569,7 @@ class VideoStitcherServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCdnKey(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request,
       Options opts = {});
 
@@ -587,8 +583,7 @@ class VideoStitcherServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>> UpdateCdnKey(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1173,7 +1168,7 @@ class VideoStitcherServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateSlate(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::video::stitcher::v1::Slate const& slate,
       std::string const& slate_id, Options opts = {});
 
@@ -1227,7 +1222,7 @@ class VideoStitcherServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateSlate(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::video::stitcher::v1::CreateSlateRequest const& request,
       Options opts = {});
 
@@ -1241,8 +1236,7 @@ class VideoStitcherServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::Slate>> CreateSlate(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1422,8 +1416,7 @@ class VideoStitcherServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateSlate(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::video::stitcher::v1::Slate const& slate,
+      NoAwaitTag, google::cloud::video::stitcher::v1::Slate const& slate,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -1476,7 +1469,7 @@ class VideoStitcherServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateSlate(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::video::stitcher::v1::UpdateSlateRequest const& request,
       Options opts = {});
 
@@ -1490,8 +1483,7 @@ class VideoStitcherServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::Slate>> UpdateSlate(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1537,8 +1529,7 @@ class VideoStitcherServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteSlate(ExperimentalTag,
-                                                       NoAwaitTag,
+  StatusOr<google::longrunning::Operation> DeleteSlate(NoAwaitTag,
                                                        std::string const& name,
                                                        Options opts = {});
 
@@ -1593,7 +1584,7 @@ class VideoStitcherServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteSlate(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::video::stitcher::v1::DeleteSlateRequest const& request,
       Options opts = {});
 
@@ -1607,7 +1598,7 @@ class VideoStitcherServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
-  DeleteSlate(ExperimentalTag, google::longrunning::Operation const& operation,
+  DeleteSlate(google::longrunning::Operation const& operation,
               Options opts = {});
 
   // clang-format off
@@ -1779,7 +1770,7 @@ class VideoStitcherServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateLiveConfig(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::video::stitcher::v1::LiveConfig const& live_config,
       std::string const& live_config_id, Options opts = {});
 
@@ -1836,7 +1827,7 @@ class VideoStitcherServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateLiveConfig(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::video::stitcher::v1::CreateLiveConfigRequest const&
           request,
       Options opts = {});
@@ -1851,8 +1842,7 @@ class VideoStitcherServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
-  CreateLiveConfig(ExperimentalTag,
-                   google::longrunning::Operation const& operation,
+  CreateLiveConfig(google::longrunning::Operation const& operation,
                    Options opts = {});
 
   // clang-format off
@@ -2037,7 +2027,7 @@ class VideoStitcherServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteLiveConfig(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2091,7 +2081,7 @@ class VideoStitcherServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteLiveConfig(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&
           request,
       Options opts = {});
@@ -2106,8 +2096,7 @@ class VideoStitcherServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
-  DeleteLiveConfig(ExperimentalTag,
-                   google::longrunning::Operation const& operation,
+  DeleteLiveConfig(google::longrunning::Operation const& operation,
                    Options opts = {});
 
   // clang-format off
@@ -2161,7 +2150,7 @@ class VideoStitcherServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateLiveConfig(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::video::stitcher::v1::LiveConfig const& live_config,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -2218,7 +2207,7 @@ class VideoStitcherServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateLiveConfig(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const&
           request,
       Options opts = {});
@@ -2233,8 +2222,7 @@ class VideoStitcherServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
-  UpdateLiveConfig(ExperimentalTag,
-                   google::longrunning::Operation const& operation,
+  UpdateLiveConfig(google::longrunning::Operation const& operation,
                    Options opts = {});
 
   // clang-format off
@@ -2288,7 +2276,7 @@ class VideoStitcherServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateVodConfig(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::video::stitcher::v1::VodConfig const& vod_config,
       std::string const& vod_config_id, Options opts = {});
 
@@ -2344,7 +2332,7 @@ class VideoStitcherServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateVodConfig(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::video::stitcher::v1::CreateVodConfigRequest const& request,
       Options opts = {});
 
@@ -2358,8 +2346,7 @@ class VideoStitcherServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
-  CreateVodConfig(ExperimentalTag,
-                  google::longrunning::Operation const& operation,
+  CreateVodConfig(google::longrunning::Operation const& operation,
                   Options opts = {});
 
   // clang-format off
@@ -2543,7 +2530,7 @@ class VideoStitcherServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteVodConfig(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2596,7 +2583,7 @@ class VideoStitcherServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteVodConfig(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::video::stitcher::v1::DeleteVodConfigRequest const& request,
       Options opts = {});
 
@@ -2610,8 +2597,7 @@ class VideoStitcherServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
-  DeleteVodConfig(ExperimentalTag,
-                  google::longrunning::Operation const& operation,
+  DeleteVodConfig(google::longrunning::Operation const& operation,
                   Options opts = {});
 
   // clang-format off
@@ -2665,7 +2651,7 @@ class VideoStitcherServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateVodConfig(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::video::stitcher::v1::VodConfig const& vod_config,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -2721,7 +2707,7 @@ class VideoStitcherServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateVodConfig(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::video::stitcher::v1::UpdateVodConfigRequest const& request,
       Options opts = {});
 
@@ -2735,8 +2721,7 @@ class VideoStitcherServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
-  UpdateVodConfig(ExperimentalTag,
-                  google::longrunning::Operation const& operation,
+  UpdateVodConfig(google::longrunning::Operation const& operation,
                   Options opts = {});
 
  private:

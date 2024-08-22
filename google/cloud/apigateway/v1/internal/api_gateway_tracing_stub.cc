@@ -18,6 +18,7 @@
 
 #include "google/cloud/apigateway/v1/internal/api_gateway_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

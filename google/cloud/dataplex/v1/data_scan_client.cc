@@ -46,7 +46,7 @@ DataScanServiceClient::CreateDataScan(
 }
 
 StatusOr<google::longrunning::Operation> DataScanServiceClient::CreateDataScan(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::cloud::dataplex::v1::DataScan const& data_scan,
     std::string const& data_scan_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -54,7 +54,7 @@ StatusOr<google::longrunning::Operation> DataScanServiceClient::CreateDataScan(
   request.set_parent(parent);
   *request.mutable_data_scan() = data_scan;
   request.set_data_scan_id(data_scan_id);
-  return connection_->CreateDataScan(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateDataScan(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataScan>>
@@ -66,19 +66,18 @@ DataScanServiceClient::CreateDataScan(
 }
 
 StatusOr<google::longrunning::Operation> DataScanServiceClient::CreateDataScan(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataplex::v1::CreateDataScanRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateDataScan(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateDataScan(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataScan>>
 DataScanServiceClient::CreateDataScan(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateDataScan(ExperimentalTag{}, operation);
+  return connection_->CreateDataScan(operation);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataScan>>
@@ -93,14 +92,13 @@ DataScanServiceClient::UpdateDataScan(
 }
 
 StatusOr<google::longrunning::Operation> DataScanServiceClient::UpdateDataScan(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::dataplex::v1::DataScan const& data_scan,
+    NoAwaitTag, google::cloud::dataplex::v1::DataScan const& data_scan,
     google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::UpdateDataScanRequest request;
   *request.mutable_data_scan() = data_scan;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateDataScan(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->UpdateDataScan(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataScan>>
@@ -112,19 +110,18 @@ DataScanServiceClient::UpdateDataScan(
 }
 
 StatusOr<google::longrunning::Operation> DataScanServiceClient::UpdateDataScan(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataplex::v1::UpdateDataScanRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateDataScan(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->UpdateDataScan(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataScan>>
 DataScanServiceClient::UpdateDataScan(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateDataScan(ExperimentalTag{}, operation);
+  return connection_->UpdateDataScan(operation);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
@@ -136,11 +133,11 @@ DataScanServiceClient::DeleteDataScan(std::string const& name, Options opts) {
 }
 
 StatusOr<google::longrunning::Operation> DataScanServiceClient::DeleteDataScan(
-    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::DeleteDataScanRequest request;
   request.set_name(name);
-  return connection_->DeleteDataScan(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteDataScan(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
@@ -152,19 +149,18 @@ DataScanServiceClient::DeleteDataScan(
 }
 
 StatusOr<google::longrunning::Operation> DataScanServiceClient::DeleteDataScan(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataplex::v1::DeleteDataScanRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteDataScan(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteDataScan(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataScanServiceClient::DeleteDataScan(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteDataScan(ExperimentalTag{}, operation);
+  return connection_->DeleteDataScan(operation);
 }
 
 StatusOr<google::cloud::dataplex::v1::DataScan>

@@ -18,17 +18,26 @@
 #include "google/cloud/storage/internal/base64.h"
 #include "google/cloud/storage/internal/signed_url_requests.h"
 #include "google/cloud/storage/list_objects_reader.h"
-#include "google/cloud/storage/tests/conformance_tests.pb.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/terminate_handler.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include <google/cloud/storage/tests/conformance_tests.pb.h>
 #include <google/protobuf/util/json_util.h>
 #include <gmock/gmock.h>
+#include <algorithm>
 #include <fstream>
+#include <iostream>
+#include <iterator>
+#include <map>
+#include <memory>
+#include <set>
+#include <string>
 #include <type_traits>
+#include <utility>
+#include <vector>
 
 /**
  * @file
@@ -83,7 +92,8 @@ TEST_P(V4SignedUrlConformanceTest, V4SignJson) {
   ASSERT_STATUS_OK(creds);
 
   std::string account_email = (*creds)->AccountEmail();
-  Client client(Options{}.set<Oauth2CredentialsOption>(*creds));
+  auto client =
+      MakeIntegrationTestClient(Options{}.set<Oauth2CredentialsOption>(*creds));
   std::string actual_canonical_request;
   std::string actual_string_to_sign;
 
@@ -186,7 +196,8 @@ TEST_P(V4PostPolicyConformanceTest, V4PostPolicy) {
   ASSERT_STATUS_OK(creds);
 
   std::string account_email = (*creds)->AccountEmail();
-  Client client(Options{}.set<Oauth2CredentialsOption>(*creds));
+  auto client =
+      MakeIntegrationTestClient(Options{}.set<Oauth2CredentialsOption>(*creds));
 
   auto const& test_params = (*post_policy_tests)[GetParam()];
   auto const& input = test_params.policyinput();

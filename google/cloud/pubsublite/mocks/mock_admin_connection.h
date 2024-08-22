@@ -105,25 +105,44 @@ class MockAdminServiceConnection : public pubsublite::AdminServiceConnection {
       (google::cloud::pubsublite::v1::DeleteSubscriptionRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, SeekSubscription)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, SeekSubscription(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// SeekSubscription(Matcher<google::cloud::pubsublite::v1::SeekSubscriptionRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>,
       SeekSubscription,
       (google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, SeekSubscription(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, SeekSubscription,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, SeekSubscription(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>,
-      SeekSubscription,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      SeekSubscription, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

@@ -21,6 +21,8 @@
 #include "google/cloud/status_or.h"
 #include <google/logging/v2/logging_metrics.grpc.pb.h>
 #include <memory>
+#include <set>
+#include <string>
 #include <utility>
 
 namespace google {

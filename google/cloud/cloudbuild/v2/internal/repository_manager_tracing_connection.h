@@ -46,13 +46,12 @@ class RepositoryManagerTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> CreateConnection(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::devtools::cloudbuild::v2::CreateConnectionRequest const& request)
       override;
 
   future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
-  CreateConnection(ExperimentalTag,
-                   google::longrunning::Operation const& operation) override;
+  CreateConnection(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::devtools::cloudbuild::v2::Connection> GetConnection(
       google::devtools::cloudbuild::v2::GetConnectionRequest const& request)
@@ -68,13 +67,12 @@ class RepositoryManagerTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> UpdateConnection(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request)
       override;
 
   future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
-  UpdateConnection(ExperimentalTag,
-                   google::longrunning::Operation const& operation) override;
+  UpdateConnection(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
   DeleteConnection(
@@ -82,13 +80,12 @@ class RepositoryManagerTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> DeleteConnection(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request)
       override;
 
   future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
-  DeleteConnection(ExperimentalTag,
-                   google::longrunning::Operation const& operation) override;
+  DeleteConnection(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::devtools::cloudbuild::v2::Repository>>
   CreateRepository(
@@ -96,13 +93,12 @@ class RepositoryManagerTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> CreateRepository(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request)
       override;
 
   future<StatusOr<google::devtools::cloudbuild::v2::Repository>>
-  CreateRepository(ExperimentalTag,
-                   google::longrunning::Operation const& operation) override;
+  CreateRepository(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<
       google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>
@@ -111,14 +107,13 @@ class RepositoryManagerTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> BatchCreateRepositories(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
           request) override;
 
   future<StatusOr<
       google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>
   BatchCreateRepositories(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::devtools::cloudbuild::v2::Repository> GetRepository(
@@ -135,13 +130,12 @@ class RepositoryManagerTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> DeleteRepository(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request)
       override;
 
   future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
-  DeleteRepository(ExperimentalTag,
-                   google::longrunning::Operation const& operation) override;
+  DeleteRepository(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse>
   FetchReadWriteToken(

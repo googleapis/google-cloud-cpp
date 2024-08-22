@@ -56,36 +56,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * }
  * @endcode
  */
-inline bigtable::RowReader MakeRowReader(std::vector<bigtable::Row> rows,
-                                         Status final_status = {}) {
-  class ConvenientRowReader : public bigtable_internal::RowReaderImpl {
-   public:
-    explicit ConvenientRowReader(std::vector<bigtable::Row> rows,
-                                 Status final_status)
-        : final_status_(std::move(final_status)),
-          rows_(std::move(rows)),
-          iter_(rows_.cbegin()) {}
-
-    ~ConvenientRowReader() override = default;
-
-    /// Skips remaining rows and invalidates current iterator.
-    void Cancel() override { iter_ = rows_.cend(); };
-
-    absl::variant<Status, bigtable::Row> Advance() override {
-      if (iter_ == rows_.cend()) return final_status_;
-      return *iter_++;
-    }
-
-   private:
-    Status final_status_;
-    std::vector<bigtable::Row> const rows_;
-    std::vector<bigtable::Row>::const_iterator iter_;
-  };
-
-  auto impl = std::make_shared<ConvenientRowReader>(std::move(rows),
-                                                    std::move(final_status));
-  return bigtable_internal::MakeRowReader(std::move(impl));
-}
+bigtable::RowReader MakeRowReader(std::vector<bigtable::Row> rows,
+                                  Status final_status = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_mocks

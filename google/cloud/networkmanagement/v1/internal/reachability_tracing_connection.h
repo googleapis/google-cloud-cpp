@@ -57,13 +57,12 @@ class ReachabilityServiceTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateConnectivityTest(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
           request) override;
 
   future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
   CreateConnectivityTest(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
@@ -72,13 +71,12 @@ class ReachabilityServiceTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateConnectivityTest(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
           request) override;
 
   future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
   UpdateConnectivityTest(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
@@ -87,13 +85,12 @@ class ReachabilityServiceTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> RerunConnectivityTest(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
           request) override;
 
   future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
   RerunConnectivityTest(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
@@ -102,13 +99,12 @@ class ReachabilityServiceTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteConnectivityTest(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
           request) override;
 
   future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
   DeleteConnectivityTest(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
  private:

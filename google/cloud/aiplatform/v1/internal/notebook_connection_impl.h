@@ -58,13 +58,12 @@ class NotebookServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateNotebookRuntimeTemplate(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const&
           request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>>
   CreateNotebookRuntimeTemplate(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
@@ -83,13 +82,12 @@ class NotebookServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteNotebookRuntimeTemplate(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const&
           request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteNotebookRuntimeTemplate(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
@@ -103,13 +101,12 @@ class NotebookServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> AssignNotebookRuntime(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const&
           request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>>
   AssignNotebookRuntime(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::aiplatform::v1::NotebookRuntime> GetNotebookRuntime(
@@ -127,13 +124,12 @@ class NotebookServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteNotebookRuntime(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const&
           request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteNotebookRuntime(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<
@@ -143,14 +139,13 @@ class NotebookServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UpgradeNotebookRuntime(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const&
           request) override;
 
   future<
       StatusOr<google::cloud::aiplatform::v1::UpgradeNotebookRuntimeResponse>>
   UpgradeNotebookRuntime(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::StartNotebookRuntimeResponse>>
@@ -159,13 +154,50 @@ class NotebookServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> StartNotebookRuntime(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request)
       override;
 
   future<StatusOr<google::cloud::aiplatform::v1::StartNotebookRuntimeResponse>>
   StartNotebookRuntime(
-      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>>
+  CreateNotebookExecutionJob(
+      google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateNotebookExecutionJob(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>>
+  CreateNotebookExecutionJob(
+      google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>
+  GetNotebookExecutionJob(
+      google::cloud::aiplatform::v1::GetNotebookExecutionJobRequest const&
+          request) override;
+
+  StreamRange<google::cloud::aiplatform::v1::NotebookExecutionJob>
+  ListNotebookExecutionJobs(
+      google::cloud::aiplatform::v1::ListNotebookExecutionJobsRequest request)
+      override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteNotebookExecutionJob(
+      google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteNotebookExecutionJob(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteNotebookExecutionJob(
       google::longrunning::Operation const& operation) override;
 
  private:

@@ -17,10 +17,10 @@
 #include "google/cloud/spanner/testing/cleanup_stale_databases.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
-#include "google/cloud/spanner/testing/singer.pb.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include <google/cloud/spanner/testing/singer.pb.h>
 #include <chrono>
 #include <iostream>
 

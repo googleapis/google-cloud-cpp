@@ -147,7 +147,7 @@ SubnetworksRestConnectionImpl::DeleteSubnetwork(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SubnetworksRestConnectionImpl::DeleteSubnetwork(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::subnetworks::v1::DeleteSubnetworkRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -164,7 +164,6 @@ SubnetworksRestConnectionImpl::DeleteSubnetwork(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SubnetworksRestConnectionImpl::DeleteSubnetwork(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -280,9 +279,8 @@ SubnetworksRestConnectionImpl::ExpandIpCidrRange(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SubnetworksRestConnectionImpl::ExpandIpCidrRange(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::subnetworks::v1::
-        ExpandIpCidrRangeRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::subnetworks::v1::
+                    ExpandIpCidrRangeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -297,7 +295,6 @@ SubnetworksRestConnectionImpl::ExpandIpCidrRange(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SubnetworksRestConnectionImpl::ExpandIpCidrRange(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -445,7 +442,7 @@ SubnetworksRestConnectionImpl::InsertSubnetwork(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SubnetworksRestConnectionImpl::InsertSubnetwork(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::subnetworks::v1::InsertSubnetworkRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -462,7 +459,6 @@ SubnetworksRestConnectionImpl::InsertSubnetwork(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SubnetworksRestConnectionImpl::InsertSubnetwork(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -650,7 +646,7 @@ SubnetworksRestConnectionImpl::PatchSubnetwork(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SubnetworksRestConnectionImpl::PatchSubnetwork(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworkRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -667,7 +663,6 @@ SubnetworksRestConnectionImpl::PatchSubnetwork(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SubnetworksRestConnectionImpl::PatchSubnetwork(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -799,9 +794,8 @@ SubnetworksRestConnectionImpl::SetPrivateIpGoogleAccess(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SubnetworksRestConnectionImpl::SetPrivateIpGoogleAccess(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::subnetworks::v1::
-        SetPrivateIpGoogleAccessRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::subnetworks::v1::
+                    SetPrivateIpGoogleAccessRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -816,7 +810,6 @@ SubnetworksRestConnectionImpl::SetPrivateIpGoogleAccess(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SubnetworksRestConnectionImpl::SetPrivateIpGoogleAccess(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

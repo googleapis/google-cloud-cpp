@@ -29,9 +29,15 @@
 #include <atomic>
 #include <future>
 #include <iomanip>
+#include <iostream>
+#include <iterator>
+#include <map>
+#include <mutex>
 #include <random>
 #include <sstream>
+#include <string>
 #include <thread>
+#include <utility>
 #include <vector>
 
 namespace {

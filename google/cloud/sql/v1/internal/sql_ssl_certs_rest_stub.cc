@@ -45,12 +45,14 @@ DefaultSqlSslCertsServiceRestStub::Delete(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlSslCertsDeleteRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Delete<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "sslCerts", "/",
-                   request.sha1_fingerprint()));
+                   request.sha1_fingerprint()),
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::sql::v1::SslCert>
@@ -58,12 +60,14 @@ DefaultSqlSslCertsServiceRestStub::Get(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlSslCertsGetRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<google::cloud::sql::v1::SslCert>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "sslCerts", "/",
-                   request.sha1_fingerprint()));
+                   request.sha1_fingerprint()),
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::sql::v1::SslCertsInsertResponse>
@@ -71,11 +75,13 @@ DefaultSqlSslCertsServiceRestStub::Insert(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlSslCertsInsertRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::sql::v1::SslCertsInsertResponse>(
       *service_, rest_context, request.body(), true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "sslCerts"));
+                   request.instance(), "/", "sslCerts"),
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::sql::v1::SslCertsListResponse>
@@ -83,11 +89,13 @@ DefaultSqlSslCertsServiceRestStub::List(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlSslCertsListRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<google::cloud::sql::v1::SslCertsListResponse>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "sslCerts"));
+                   request.instance(), "/", "sslCerts"),
+      std::move(query_params));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

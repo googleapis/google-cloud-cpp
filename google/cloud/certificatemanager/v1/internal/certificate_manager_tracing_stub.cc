@@ -18,6 +18,7 @@
 
 #include "google/cloud/certificatemanager/v1/internal/certificate_manager_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

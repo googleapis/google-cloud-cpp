@@ -17,6 +17,7 @@
 // in the final rendering.
 //! [async-includes]
 #include "google/cloud/storage/async/client.h"
+#include "google/cloud/storage/async/read_all.h"
 
 //! [async-includes]
 #include "google/cloud/storage/examples/storage_examples_common.h"
@@ -28,7 +29,10 @@
 #include <iostream>
 #include <map>
 #include <random>
+#include <sstream>
+#include <stdexcept>
 #include <string>
+#include <utility>
 #include <vector>
 
 namespace {
@@ -174,6 +178,32 @@ void ReadObject(google::cloud::storage_experimental::AsyncClient& client,
     co_return count;
   };
   //! [read-object]
+  // The example is easier to test and run if we call the coroutine and block
+  // until it completes.
+  auto const count = coro(client, argv.at(0), argv.at(1)).get();
+  std::cout << "The object contains " << count << " lines\n";
+}
+
+void ReadAll(google::cloud::storage_experimental::AsyncClient& client,
+             std::vector<std::string> const& argv) {
+  //! [read-all]
+  namespace gcs_ex = google::cloud::storage_experimental;
+  auto coro =
+      [](gcs_ex::AsyncClient& client, std::string bucket_name,
+         std::string object_name) -> google::cloud::future<std::uint64_t> {
+    // For small objects, consider `ReadAll()` which accumulates all the
+    // contents in memory using background threads.
+    auto payload = (co_await gcs_ex::ReadAll(client.ReadObject(
+                        gcs_ex::BucketName(std::move(bucket_name)),
+                        std::move(object_name))))
+                       .value();
+    std::uint64_t count = 0;
+    for (auto const& buffer : payload.contents()) {
+      count += std::count(buffer.begin(), buffer.end(), '\n');
+    }
+    co_return count;
+  };
+  //! [read-all]
   // The example is easier to test and run if we call the coroutine and block
   // until it completes.
   auto const count = coro(client, argv.at(0), argv.at(1)).get();
@@ -558,6 +588,12 @@ void ReadObject(google::cloud::storage_experimental::AsyncClient&,
   std::cerr << "AsyncClient::ReadObject() example requires coroutines\n";
 }
 
+void ReadAll(google::cloud::storage_experimental::AsyncClient&,
+             std::vector<std::string> const&) {
+  std::cerr << "google::cloud::storage_experimental::ReadAll()"
+            << " example requires coroutines\n";
+}
+
 void ReadObjectRange(google::cloud::storage_experimental::AsyncClient&,
                      std::vector<std::string> const&) {
   std::cerr << "AsyncClient::ReadObjectRange() example requires coroutines\n";
@@ -786,6 +822,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "Running the ReadObject() example" << std::endl;
   ReadObject(client, {bucket_name, composed_name});
 
+  std::cout << "Running the ReadAll() example" << std::endl;
+  ReadAll(client, {bucket_name, composed_name});
+
   std::cout << "Running the ReadObjectRange() example" << std::endl;
   ReadObjectRange(client, {bucket_name, composed_name});
 
@@ -941,6 +980,7 @@ int main(int argc, char* argv[]) try {
       make_entry("insert-object-vector-strings", {}, InsertObjectVectorStrings),
       make_entry("insert-object-vector-vectors", {}, InsertObjectVectorVectors),
       make_entry("read-object", {}, ReadObject),
+      make_entry("read-all", {}, ReadAll),
       make_entry("read-object-range", {}, ReadObjectRange),
       make_entry("read-object-with-options", {"<generation>"},
                  ReadObjectWithOptions),

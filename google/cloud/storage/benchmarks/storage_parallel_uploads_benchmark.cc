@@ -21,11 +21,17 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/terminate_handler.h"
+#include <algorithm>
 #include <cstdio>
 #include <future>
 #include <iomanip>
+#include <iostream>
+#include <mutex>
+#include <random>
 #include <sstream>
+#include <string>
 #include <utility>
+#include <vector>
 
 namespace {
 namespace gcs = ::google::cloud::storage;

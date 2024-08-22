@@ -19,9 +19,14 @@
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <algorithm>
 #include <cstdio>
 #include <fstream>
+#include <iterator>
+#include <random>
+#include <string>
 #include <thread>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -513,7 +518,7 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeout) {
   auto options = ClientOptions::CreateDefaultClientOptions();
   ASSERT_STATUS_OK(options);
 
-  Client client(
+  auto client = MakeIntegrationTestClient(
       Options{}
           .set<TransferStallTimeoutOption>(std::chrono::seconds(3))
           .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(3).clone()));
@@ -544,7 +549,7 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeoutContinues) {
   // The emulator does not support this type of fault injection for gRPC.
   if (!UsingEmulator() || UsingGrpc()) GTEST_SKIP();
 
-  Client client(
+  auto client = MakeIntegrationTestClient(
       Options{}
           .set<TransferStallTimeoutOption>(std::chrono::seconds(3))
           .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(10).clone()));
@@ -580,7 +585,7 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeoutContinues) {
 TEST_F(ObjectMediaIntegrationTest, StreamingReadInternalError) {
   if (!UsingEmulator()) GTEST_SKIP();
 
-  Client client(
+  auto client = MakeIntegrationTestClient(
       Options{}
           .set<TransferStallTimeoutOption>(std::chrono::seconds(3))
           .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(5).clone()));

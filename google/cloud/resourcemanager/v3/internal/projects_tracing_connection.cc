@@ -77,23 +77,21 @@ ProjectsTracingConnection::CreateProject(
 
 StatusOr<google::longrunning::Operation>
 ProjectsTracingConnection::CreateProject(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::resourcemanager::v3::CreateProjectRequest const& request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::ProjectsConnection::CreateProject");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateProject(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateProject(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
 ProjectsTracingConnection::CreateProject(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::ProjectsConnection::CreateProject");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateProject(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateProject(operation));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
@@ -107,23 +105,21 @@ ProjectsTracingConnection::UpdateProject(
 
 StatusOr<google::longrunning::Operation>
 ProjectsTracingConnection::UpdateProject(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::resourcemanager::v3::UpdateProjectRequest const& request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::ProjectsConnection::UpdateProject");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UpdateProject(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateProject(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
 ProjectsTracingConnection::UpdateProject(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::ProjectsConnection::UpdateProject");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateProject(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateProject(operation));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
@@ -136,23 +132,21 @@ ProjectsTracingConnection::MoveProject(
 }
 
 StatusOr<google::longrunning::Operation> ProjectsTracingConnection::MoveProject(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::resourcemanager::v3::MoveProjectRequest const& request) {
   auto span =
       internal::MakeSpan("resourcemanager_v3::ProjectsConnection::MoveProject");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->MoveProject(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->MoveProject(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
 ProjectsTracingConnection::MoveProject(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("resourcemanager_v3::ProjectsConnection::MoveProject");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->MoveProject(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->MoveProject(operation));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
@@ -166,23 +160,21 @@ ProjectsTracingConnection::DeleteProject(
 
 StatusOr<google::longrunning::Operation>
 ProjectsTracingConnection::DeleteProject(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::resourcemanager::v3::DeleteProjectRequest const& request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::ProjectsConnection::DeleteProject");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteProject(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteProject(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
 ProjectsTracingConnection::DeleteProject(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::ProjectsConnection::DeleteProject");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteProject(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteProject(operation));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
@@ -196,23 +188,22 @@ ProjectsTracingConnection::UndeleteProject(
 
 StatusOr<google::longrunning::Operation>
 ProjectsTracingConnection::UndeleteProject(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::ProjectsConnection::UndeleteProject");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UndeleteProject(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UndeleteProject(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
 ProjectsTracingConnection::UndeleteProject(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::ProjectsConnection::UndeleteProject");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->UndeleteProject(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UndeleteProject(operation));
 }
 
 StatusOr<google::iam::v1::Policy> ProjectsTracingConnection::GetIamPolicy(

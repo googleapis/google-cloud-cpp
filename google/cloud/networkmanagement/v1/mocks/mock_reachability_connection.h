@@ -61,9 +61,15 @@ class MockReachabilityServiceConnection
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateConnectivityTest)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateConnectivityTest(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateConnectivityTest(Matcher<google::cloud::networkmanagement::v1::CreateConnectivityTestRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>,
       CreateConnectivityTest,
@@ -71,21 +77,39 @@ class MockReachabilityServiceConnection
            CreateConnectivityTestRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateConnectivityTest(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateConnectivityTest,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::networkmanagement::v1::
-                   CreateConnectivityTestRequest const& request),
+              (NoAwaitTag, google::cloud::networkmanagement::v1::
+                               CreateConnectivityTestRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateConnectivityTest(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>,
-      CreateConnectivityTest,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      CreateConnectivityTest, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateConnectivityTest)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateConnectivityTest(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateConnectivityTest(Matcher<google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>,
       UpdateConnectivityTest,
@@ -93,21 +117,39 @@ class MockReachabilityServiceConnection
            UpdateConnectivityTestRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateConnectivityTest(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateConnectivityTest,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::networkmanagement::v1::
-                   UpdateConnectivityTestRequest const& request),
+              (NoAwaitTag, google::cloud::networkmanagement::v1::
+                               UpdateConnectivityTestRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateConnectivityTest(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>,
-      UpdateConnectivityTest,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      UpdateConnectivityTest, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, RerunConnectivityTest)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, RerunConnectivityTest(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RerunConnectivityTest(Matcher<google::cloud::networkmanagement::v1::RerunConnectivityTestRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>,
       RerunConnectivityTest,
@@ -115,22 +157,41 @@ class MockReachabilityServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, RerunConnectivityTest(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RerunConnectivityTest,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RerunConnectivityTest(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>,
-      RerunConnectivityTest,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      RerunConnectivityTest, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteConnectivityTest)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteConnectivityTest(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteConnectivityTest(Matcher<google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>,
       DeleteConnectivityTest,
@@ -138,16 +199,28 @@ class MockReachabilityServiceConnection
            DeleteConnectivityTestRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteConnectivityTest(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteConnectivityTest,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::networkmanagement::v1::
-                   DeleteConnectivityTestRequest const& request),
+              (NoAwaitTag, google::cloud::networkmanagement::v1::
+                               DeleteConnectivityTestRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteConnectivityTest(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>,
-      DeleteConnectivityTest,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteConnectivityTest, (google::longrunning::Operation const& operation),
       (override));
 };
 

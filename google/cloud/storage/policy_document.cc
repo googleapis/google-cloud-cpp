@@ -18,6 +18,7 @@
 #include <algorithm>
 #include <iostream>
 #include <numeric>
+#include <string>
 
 namespace google {
 namespace cloud {

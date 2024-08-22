@@ -21,7 +21,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_NOTIFICATION_ENDPOINTS_V1_REGION_NOTIFICATION_ENDPOINTS_CLIENT_H
 
 #include "google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -143,8 +142,7 @@ class RegionNotificationEndpointsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteNotificationEndpoint(ExperimentalTag, NoAwaitTag,
-                             std::string const& project,
+  DeleteNotificationEndpoint(NoAwaitTag, std::string const& project,
                              std::string const& region,
                              std::string const& notification_endpoint,
                              Options opts = {});
@@ -202,7 +200,7 @@ class RegionNotificationEndpointsClient {
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteNotificationEndpoint(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::region_notification_endpoints::v1::
           DeleteNotificationEndpointRequest const& request,
       Options opts = {});
@@ -218,7 +216,6 @@ class RegionNotificationEndpointsClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteNotificationEndpoint(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -244,7 +241,7 @@ class RegionNotificationEndpointsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_notification_endpoints.v1.GetNotificationEndpointRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L124}
-  /// [google.cloud.cpp.compute.v1.NotificationEndpoint]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_084.proto#L30}
+  /// [google.cloud.cpp.compute.v1.NotificationEndpoint]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_086.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::NotificationEndpoint>
@@ -277,7 +274,7 @@ class RegionNotificationEndpointsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_notification_endpoints.v1.GetNotificationEndpointRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L124}
-  /// [google.cloud.cpp.compute.v1.NotificationEndpoint]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_084.proto#L30}
+  /// [google.cloud.cpp.compute.v1.NotificationEndpoint]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_086.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::NotificationEndpoint>
@@ -338,8 +335,7 @@ class RegionNotificationEndpointsClient {
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertNotificationEndpoint(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& region,
+      NoAwaitTag, std::string const& project, std::string const& region,
       google::cloud::cpp::compute::v1::NotificationEndpoint const&
           notification_endpoint_resource,
       Options opts = {});
@@ -398,7 +394,7 @@ class RegionNotificationEndpointsClient {
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertNotificationEndpoint(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::region_notification_endpoints::v1::
           InsertNotificationEndpointRequest const& request,
       Options opts = {});
@@ -414,7 +410,6 @@ class RegionNotificationEndpointsClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertNotificationEndpoint(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -448,7 +443,7 @@ class RegionNotificationEndpointsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_notification_endpoints.v1.ListRegionNotificationEndpointsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L174}
-  /// [google.cloud.cpp.compute.v1.NotificationEndpoint]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_084.proto#L30}
+  /// [google.cloud.cpp.compute.v1.NotificationEndpoint]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_086.proto#L30}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::NotificationEndpoint>
@@ -489,7 +484,7 @@ class RegionNotificationEndpointsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_notification_endpoints.v1.ListRegionNotificationEndpointsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.proto#L174}
-  /// [google.cloud.cpp.compute.v1.NotificationEndpoint]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_084.proto#L30}
+  /// [google.cloud.cpp.compute.v1.NotificationEndpoint]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_086.proto#L30}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::NotificationEndpoint>

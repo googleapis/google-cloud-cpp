@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSUREDWORKLOADS_V1_ASSURED_WORKLOADS_CLIENT_H
 
 #include "google/cloud/assuredworkloads/v1/assured_workloads_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -140,7 +139,7 @@ class AssuredWorkloadsServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateWorkload(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::assuredworkloads::v1::Workload const& workload,
       Options opts = {});
 
@@ -195,7 +194,7 @@ class AssuredWorkloadsServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateWorkload(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request,
       Options opts = {});
 
@@ -209,8 +208,7 @@ class AssuredWorkloadsServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>
-  CreateWorkload(ExperimentalTag,
-                 google::longrunning::Operation const& operation,
+  CreateWorkload(google::longrunning::Operation const& operation,
                  Options opts = {});
 
   // clang-format off

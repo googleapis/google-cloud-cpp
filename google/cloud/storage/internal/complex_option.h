@@ -18,6 +18,7 @@
 #include "google/cloud/storage/version.h"
 #include "absl/types/optional.h"
 #include <iostream>
+#include <utility>
 
 namespace google {
 namespace cloud {

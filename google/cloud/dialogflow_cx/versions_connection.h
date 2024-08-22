@@ -22,7 +22,6 @@
 #include "google/cloud/dialogflow_cx/internal/versions_retry_traits.h"
 #include "google/cloud/dialogflow_cx/versions_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -197,12 +196,11 @@ class VersionsConnection {
       google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateVersion(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request);
 
   virtual future<StatusOr<google::cloud::dialogflow::cx::v3::Version>>
-  CreateVersion(ExperimentalTag,
-                google::longrunning::Operation const& operation);
+  CreateVersion(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::Version> UpdateVersion(
       google::cloud::dialogflow::cx::v3::UpdateVersionRequest const& request);
@@ -214,11 +212,11 @@ class VersionsConnection {
       google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> LoadVersion(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request);
 
   virtual future<StatusOr<google::protobuf::Struct>> LoadVersion(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::CompareVersionsResponse>
   CompareVersions(

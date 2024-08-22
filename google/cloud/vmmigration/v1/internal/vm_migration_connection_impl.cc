@@ -153,7 +153,7 @@ VmMigrationConnectionImpl::CreateSource(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationConnectionImpl::CreateSource(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmmigration::v1::CreateSourceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -169,7 +169,7 @@ VmMigrationConnectionImpl::CreateSource(
 
 future<StatusOr<google::cloud::vmmigration::v1::Source>>
 VmMigrationConnectionImpl::CreateSource(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
@@ -244,7 +244,7 @@ VmMigrationConnectionImpl::UpdateSource(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationConnectionImpl::UpdateSource(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmmigration::v1::UpdateSourceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -260,7 +260,7 @@ VmMigrationConnectionImpl::UpdateSource(
 
 future<StatusOr<google::cloud::vmmigration::v1::Source>>
 VmMigrationConnectionImpl::UpdateSource(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
@@ -335,7 +335,7 @@ VmMigrationConnectionImpl::DeleteSource(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationConnectionImpl::DeleteSource(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmmigration::v1::DeleteSourceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -351,7 +351,7 @@ VmMigrationConnectionImpl::DeleteSource(
 
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
 VmMigrationConnectionImpl::DeleteSource(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
@@ -496,7 +496,7 @@ VmMigrationConnectionImpl::CreateUtilizationReport(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationConnectionImpl::CreateUtilizationReport(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmmigration::v1::CreateUtilizationReportRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -514,7 +514,7 @@ VmMigrationConnectionImpl::CreateUtilizationReport(
 
 future<StatusOr<google::cloud::vmmigration::v1::UtilizationReport>>
 VmMigrationConnectionImpl::CreateUtilizationReport(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
@@ -592,7 +592,7 @@ VmMigrationConnectionImpl::DeleteUtilizationReport(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationConnectionImpl::DeleteUtilizationReport(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -610,7 +610,7 @@ VmMigrationConnectionImpl::DeleteUtilizationReport(
 
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
 VmMigrationConnectionImpl::DeleteUtilizationReport(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
@@ -740,7 +740,7 @@ VmMigrationConnectionImpl::CreateDatacenterConnector(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationConnectionImpl::CreateDatacenterConnector(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -757,7 +757,7 @@ VmMigrationConnectionImpl::CreateDatacenterConnector(
 
 future<StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>>
 VmMigrationConnectionImpl::CreateDatacenterConnector(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
@@ -834,7 +834,7 @@ VmMigrationConnectionImpl::DeleteDatacenterConnector(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationConnectionImpl::DeleteDatacenterConnector(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -851,7 +851,7 @@ VmMigrationConnectionImpl::DeleteDatacenterConnector(
 
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
 VmMigrationConnectionImpl::DeleteDatacenterConnector(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
@@ -928,7 +928,7 @@ VmMigrationConnectionImpl::UpgradeAppliance(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationConnectionImpl::UpgradeAppliance(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -944,7 +944,7 @@ VmMigrationConnectionImpl::UpgradeAppliance(
 
 future<StatusOr<google::cloud::vmmigration::v1::UpgradeApplianceResponse>>
 VmMigrationConnectionImpl::UpgradeAppliance(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
@@ -1021,7 +1021,7 @@ VmMigrationConnectionImpl::CreateMigratingVm(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationConnectionImpl::CreateMigratingVm(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1037,7 +1037,7 @@ VmMigrationConnectionImpl::CreateMigratingVm(
 
 future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
 VmMigrationConnectionImpl::CreateMigratingVm(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
@@ -1164,7 +1164,7 @@ VmMigrationConnectionImpl::UpdateMigratingVm(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationConnectionImpl::UpdateMigratingVm(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmmigration::v1::UpdateMigratingVmRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1180,7 +1180,7 @@ VmMigrationConnectionImpl::UpdateMigratingVm(
 
 future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
 VmMigrationConnectionImpl::UpdateMigratingVm(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
@@ -1257,7 +1257,7 @@ VmMigrationConnectionImpl::DeleteMigratingVm(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationConnectionImpl::DeleteMigratingVm(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmmigration::v1::DeleteMigratingVmRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1273,7 +1273,7 @@ VmMigrationConnectionImpl::DeleteMigratingVm(
 
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
 VmMigrationConnectionImpl::DeleteMigratingVm(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
@@ -1350,7 +1350,7 @@ VmMigrationConnectionImpl::StartMigration(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationConnectionImpl::StartMigration(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmmigration::v1::StartMigrationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1366,7 +1366,7 @@ VmMigrationConnectionImpl::StartMigration(
 
 future<StatusOr<google::cloud::vmmigration::v1::StartMigrationResponse>>
 VmMigrationConnectionImpl::StartMigration(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
@@ -1443,7 +1443,7 @@ VmMigrationConnectionImpl::ResumeMigration(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationConnectionImpl::ResumeMigration(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmmigration::v1::ResumeMigrationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1459,7 +1459,7 @@ VmMigrationConnectionImpl::ResumeMigration(
 
 future<StatusOr<google::cloud::vmmigration::v1::ResumeMigrationResponse>>
 VmMigrationConnectionImpl::ResumeMigration(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
@@ -1536,7 +1536,7 @@ VmMigrationConnectionImpl::PauseMigration(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationConnectionImpl::PauseMigration(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmmigration::v1::PauseMigrationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1552,7 +1552,7 @@ VmMigrationConnectionImpl::PauseMigration(
 
 future<StatusOr<google::cloud::vmmigration::v1::PauseMigrationResponse>>
 VmMigrationConnectionImpl::PauseMigration(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
@@ -1629,7 +1629,7 @@ VmMigrationConnectionImpl::FinalizeMigration(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationConnectionImpl::FinalizeMigration(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmmigration::v1::FinalizeMigrationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1645,7 +1645,7 @@ VmMigrationConnectionImpl::FinalizeMigration(
 
 future<StatusOr<google::cloud::vmmigration::v1::FinalizeMigrationResponse>>
 VmMigrationConnectionImpl::FinalizeMigration(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
@@ -1722,7 +1722,7 @@ VmMigrationConnectionImpl::CreateCloneJob(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationConnectionImpl::CreateCloneJob(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmmigration::v1::CreateCloneJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1738,7 +1738,7 @@ VmMigrationConnectionImpl::CreateCloneJob(
 
 future<StatusOr<google::cloud::vmmigration::v1::CloneJob>>
 VmMigrationConnectionImpl::CreateCloneJob(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
@@ -1815,7 +1815,7 @@ VmMigrationConnectionImpl::CancelCloneJob(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationConnectionImpl::CancelCloneJob(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmmigration::v1::CancelCloneJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1831,7 +1831,7 @@ VmMigrationConnectionImpl::CancelCloneJob(
 
 future<StatusOr<google::cloud::vmmigration::v1::CancelCloneJobResponse>>
 VmMigrationConnectionImpl::CancelCloneJob(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
@@ -1957,7 +1957,7 @@ VmMigrationConnectionImpl::CreateCutoverJob(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationConnectionImpl::CreateCutoverJob(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmmigration::v1::CreateCutoverJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1973,7 +1973,7 @@ VmMigrationConnectionImpl::CreateCutoverJob(
 
 future<StatusOr<google::cloud::vmmigration::v1::CutoverJob>>
 VmMigrationConnectionImpl::CreateCutoverJob(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
@@ -2050,7 +2050,7 @@ VmMigrationConnectionImpl::CancelCutoverJob(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationConnectionImpl::CancelCutoverJob(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmmigration::v1::CancelCutoverJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -2066,7 +2066,7 @@ VmMigrationConnectionImpl::CancelCutoverJob(
 
 future<StatusOr<google::cloud::vmmigration::v1::CancelCutoverJobResponse>>
 VmMigrationConnectionImpl::CancelCutoverJob(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
@@ -2238,7 +2238,7 @@ VmMigrationConnectionImpl::CreateGroup(
 }
 
 StatusOr<google::longrunning::Operation> VmMigrationConnectionImpl::CreateGroup(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmmigration::v1::CreateGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -2254,7 +2254,7 @@ StatusOr<google::longrunning::Operation> VmMigrationConnectionImpl::CreateGroup(
 
 future<StatusOr<google::cloud::vmmigration::v1::Group>>
 VmMigrationConnectionImpl::CreateGroup(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
@@ -2328,7 +2328,7 @@ VmMigrationConnectionImpl::UpdateGroup(
 }
 
 StatusOr<google::longrunning::Operation> VmMigrationConnectionImpl::UpdateGroup(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmmigration::v1::UpdateGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -2344,7 +2344,7 @@ StatusOr<google::longrunning::Operation> VmMigrationConnectionImpl::UpdateGroup(
 
 future<StatusOr<google::cloud::vmmigration::v1::Group>>
 VmMigrationConnectionImpl::UpdateGroup(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
@@ -2418,7 +2418,7 @@ VmMigrationConnectionImpl::DeleteGroup(
 }
 
 StatusOr<google::longrunning::Operation> VmMigrationConnectionImpl::DeleteGroup(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmmigration::v1::DeleteGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -2434,7 +2434,7 @@ StatusOr<google::longrunning::Operation> VmMigrationConnectionImpl::DeleteGroup(
 
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
 VmMigrationConnectionImpl::DeleteGroup(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
@@ -2511,7 +2511,7 @@ VmMigrationConnectionImpl::AddGroupMigration(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationConnectionImpl::AddGroupMigration(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmmigration::v1::AddGroupMigrationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -2527,7 +2527,7 @@ VmMigrationConnectionImpl::AddGroupMigration(
 
 future<StatusOr<google::cloud::vmmigration::v1::AddGroupMigrationResponse>>
 VmMigrationConnectionImpl::AddGroupMigration(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
@@ -2605,7 +2605,7 @@ VmMigrationConnectionImpl::RemoveGroupMigration(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationConnectionImpl::RemoveGroupMigration(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -2622,7 +2622,7 @@ VmMigrationConnectionImpl::RemoveGroupMigration(
 
 future<StatusOr<google::cloud::vmmigration::v1::RemoveGroupMigrationResponse>>
 VmMigrationConnectionImpl::RemoveGroupMigration(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
@@ -2749,7 +2749,7 @@ VmMigrationConnectionImpl::CreateTargetProject(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationConnectionImpl::CreateTargetProject(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmmigration::v1::CreateTargetProjectRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -2765,7 +2765,7 @@ VmMigrationConnectionImpl::CreateTargetProject(
 
 future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
 VmMigrationConnectionImpl::CreateTargetProject(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
@@ -2842,7 +2842,7 @@ VmMigrationConnectionImpl::UpdateTargetProject(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationConnectionImpl::UpdateTargetProject(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmmigration::v1::UpdateTargetProjectRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -2858,7 +2858,7 @@ VmMigrationConnectionImpl::UpdateTargetProject(
 
 future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
 VmMigrationConnectionImpl::UpdateTargetProject(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
@@ -2935,7 +2935,7 @@ VmMigrationConnectionImpl::DeleteTargetProject(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationConnectionImpl::DeleteTargetProject(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmmigration::v1::DeleteTargetProjectRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -2951,7 +2951,7 @@ VmMigrationConnectionImpl::DeleteTargetProject(
 
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
 VmMigrationConnectionImpl::DeleteTargetProject(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {

@@ -114,7 +114,7 @@ class WebhooksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.ListWebhooksRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L244}
+  /// [google.cloud.dialogflow.cx.v3.ListWebhooksRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L297}
   /// [google.cloud.dialogflow.cx.v3.Webhook]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L96}
   ///
   // clang-format on
@@ -153,7 +153,7 @@ class WebhooksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.ListWebhooksRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L244}
+  /// [google.cloud.dialogflow.cx.v3.ListWebhooksRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L297}
   /// [google.cloud.dialogflow.cx.v3.Webhook]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L96}
   ///
   // clang-format on
@@ -180,7 +180,7 @@ class WebhooksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.GetWebhookRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L276}
+  /// [google.cloud.dialogflow.cx.v3.GetWebhookRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L329}
   /// [google.cloud.dialogflow.cx.v3.Webhook]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L96}
   ///
   // clang-format on
@@ -210,7 +210,7 @@ class WebhooksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.GetWebhookRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L276}
+  /// [google.cloud.dialogflow.cx.v3.GetWebhookRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L329}
   /// [google.cloud.dialogflow.cx.v3.Webhook]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L96}
   ///
   // clang-format on
@@ -238,7 +238,7 @@ class WebhooksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CreateWebhookRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L290}
+  /// [google.cloud.dialogflow.cx.v3.CreateWebhookRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L343}
   /// [google.cloud.dialogflow.cx.v3.Webhook]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L96}
   ///
   // clang-format on
@@ -270,7 +270,7 @@ class WebhooksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CreateWebhookRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L290}
+  /// [google.cloud.dialogflow.cx.v3.CreateWebhookRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L343}
   /// [google.cloud.dialogflow.cx.v3.Webhook]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L96}
   ///
   // clang-format on
@@ -298,7 +298,7 @@ class WebhooksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.UpdateWebhookRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L306}
+  /// [google.cloud.dialogflow.cx.v3.UpdateWebhookRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L359}
   /// [google.cloud.dialogflow.cx.v3.Webhook]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L96}
   ///
   // clang-format on
@@ -329,7 +329,7 @@ class WebhooksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.UpdateWebhookRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L306}
+  /// [google.cloud.dialogflow.cx.v3.UpdateWebhookRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L359}
   /// [google.cloud.dialogflow.cx.v3.Webhook]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L96}
   ///
   // clang-format on
@@ -354,7 +354,7 @@ class WebhooksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeleteWebhookRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L317}
+  /// [google.cloud.dialogflow.cx.v3.DeleteWebhookRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L370}
   ///
   // clang-format on
   Status DeleteWebhook(std::string const& name, Options opts = {});
@@ -380,7 +380,7 @@ class WebhooksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeleteWebhookRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L317}
+  /// [google.cloud.dialogflow.cx.v3.DeleteWebhookRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L370}
   ///
   // clang-format on
   Status DeleteWebhook(

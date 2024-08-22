@@ -57,194 +57,356 @@ class MockDataMigrationServiceConnection
       (google::cloud::clouddms::v1::GetMigrationJobRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateMigrationJob)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateMigrationJob(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateMigrationJob(Matcher<google::cloud::clouddms::v1::CreateMigrationJobRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
       CreateMigrationJob,
       (google::cloud::clouddms::v1::CreateMigrationJobRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateMigrationJob(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateMigrationJob,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::clouddms::v1::CreateMigrationJobRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateMigrationJob(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
               CreateMigrationJob,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateMigrationJob)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateMigrationJob(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateMigrationJob(Matcher<google::cloud::clouddms::v1::UpdateMigrationJobRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
       UpdateMigrationJob,
       (google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateMigrationJob(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateMigrationJob,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateMigrationJob(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
               UpdateMigrationJob,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteMigrationJob)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteMigrationJob(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteMigrationJob(Matcher<google::cloud::clouddms::v1::DeleteMigrationJobRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>,
       DeleteMigrationJob,
       (google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteMigrationJob(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteMigrationJob,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteMigrationJob(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>,
               DeleteMigrationJob,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, StartMigrationJob)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, StartMigrationJob(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// StartMigrationJob(Matcher<google::cloud::clouddms::v1::StartMigrationJobRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
       StartMigrationJob,
       (google::cloud::clouddms::v1::StartMigrationJobRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, StartMigrationJob(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, StartMigrationJob,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::clouddms::v1::StartMigrationJobRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// StartMigrationJob(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
               StartMigrationJob,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, StopMigrationJob)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, StopMigrationJob(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// StopMigrationJob(Matcher<google::cloud::clouddms::v1::StopMigrationJobRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
       StopMigrationJob,
       (google::cloud::clouddms::v1::StopMigrationJobRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, StopMigrationJob(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, StopMigrationJob,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::clouddms::v1::StopMigrationJobRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, StopMigrationJob(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
               StopMigrationJob,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ResumeMigrationJob)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ResumeMigrationJob(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ResumeMigrationJob(Matcher<google::cloud::clouddms::v1::ResumeMigrationJobRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
       ResumeMigrationJob,
       (google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ResumeMigrationJob(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ResumeMigrationJob,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ResumeMigrationJob(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
               ResumeMigrationJob,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, PromoteMigrationJob)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, PromoteMigrationJob(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PromoteMigrationJob(Matcher<google::cloud::clouddms::v1::PromoteMigrationJobRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
       PromoteMigrationJob,
       (google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, PromoteMigrationJob(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, PromoteMigrationJob,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PromoteMigrationJob(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
               PromoteMigrationJob,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, VerifyMigrationJob)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, VerifyMigrationJob(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// VerifyMigrationJob(Matcher<google::cloud::clouddms::v1::VerifyMigrationJobRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
       VerifyMigrationJob,
       (google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, VerifyMigrationJob(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, VerifyMigrationJob,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// VerifyMigrationJob(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
               VerifyMigrationJob,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, RestartMigrationJob)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, RestartMigrationJob(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RestartMigrationJob(Matcher<google::cloud::clouddms::v1::RestartMigrationJobRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
       RestartMigrationJob,
       (google::cloud::clouddms::v1::RestartMigrationJobRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, RestartMigrationJob(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RestartMigrationJob,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::clouddms::v1::RestartMigrationJobRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RestartMigrationJob(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
               RestartMigrationJob,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::clouddms::v1::SshScript>, GenerateSshScript,
@@ -269,9 +431,15 @@ class MockDataMigrationServiceConnection
       (google::cloud::clouddms::v1::GetConnectionProfileRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateConnectionProfile)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateConnectionProfile(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateConnectionProfile(Matcher<google::cloud::clouddms::v1::CreateConnectionProfileRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>,
       CreateConnectionProfile,
@@ -279,22 +447,41 @@ class MockDataMigrationServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateConnectionProfile(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateConnectionProfile,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::clouddms::v1::CreateConnectionProfileRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateConnectionProfile(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>,
               CreateConnectionProfile,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateConnectionProfile)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateConnectionProfile(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateConnectionProfile(Matcher<google::cloud::clouddms::v1::UpdateConnectionProfileRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>,
       UpdateConnectionProfile,
@@ -302,22 +489,41 @@ class MockDataMigrationServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateConnectionProfile(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateConnectionProfile,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateConnectionProfile(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>,
               UpdateConnectionProfile,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteConnectionProfile)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteConnectionProfile(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteConnectionProfile(Matcher<google::cloud::clouddms::v1::DeleteConnectionProfileRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>,
       DeleteConnectionProfile,
@@ -325,22 +531,41 @@ class MockDataMigrationServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteConnectionProfile(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteConnectionProfile,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteConnectionProfile(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>,
               DeleteConnectionProfile,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreatePrivateConnection)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreatePrivateConnection(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreatePrivateConnection(Matcher<google::cloud::clouddms::v1::CreatePrivateConnectionRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::PrivateConnection>>,
       CreatePrivateConnection,
@@ -348,18 +573,31 @@ class MockDataMigrationServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreatePrivateConnection(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreatePrivateConnection,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::clouddms::v1::CreatePrivateConnectionRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreatePrivateConnection(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::PrivateConnection>>,
               CreatePrivateConnection,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::clouddms::v1::PrivateConnection>,
@@ -373,9 +611,15 @@ class MockDataMigrationServiceConnection
       (google::cloud::clouddms::v1::ListPrivateConnectionsRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeletePrivateConnection)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeletePrivateConnection(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeletePrivateConnection(Matcher<google::cloud::clouddms::v1::DeletePrivateConnectionRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>,
       DeletePrivateConnection,
@@ -383,18 +627,31 @@ class MockDataMigrationServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeletePrivateConnection(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeletePrivateConnection,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::clouddms::v1::DeletePrivateConnectionRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeletePrivateConnection(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>,
               DeletePrivateConnection,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>,
               GetConversionWorkspace,
@@ -408,9 +665,15 @@ class MockDataMigrationServiceConnection
       (google::cloud::clouddms::v1::ListConversionWorkspacesRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateConversionWorkspace)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateConversionWorkspace(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateConversionWorkspace(Matcher<google::cloud::clouddms::v1::CreateConversionWorkspaceRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
       CreateConversionWorkspace,
@@ -418,22 +681,42 @@ class MockDataMigrationServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateConversionWorkspace(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateConversionWorkspace,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateConversionWorkspace(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
       CreateConversionWorkspace,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateConversionWorkspace)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateConversionWorkspace(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateConversionWorkspace(Matcher<google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
       UpdateConversionWorkspace,
@@ -441,22 +724,42 @@ class MockDataMigrationServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateConversionWorkspace(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateConversionWorkspace,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateConversionWorkspace(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
       UpdateConversionWorkspace,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteConversionWorkspace)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteConversionWorkspace(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteConversionWorkspace(Matcher<google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>,
       DeleteConversionWorkspace,
@@ -464,18 +767,31 @@ class MockDataMigrationServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteConversionWorkspace(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteConversionWorkspace,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteConversionWorkspace(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>,
               DeleteConversionWorkspace,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::clouddms::v1::MappingRule>, CreateMappingRule,
@@ -497,9 +813,15 @@ class MockDataMigrationServiceConnection
       (google::cloud::clouddms::v1::GetMappingRuleRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, SeedConversionWorkspace)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, SeedConversionWorkspace(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// SeedConversionWorkspace(Matcher<google::cloud::clouddms::v1::SeedConversionWorkspaceRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
       SeedConversionWorkspace,
@@ -507,43 +829,82 @@ class MockDataMigrationServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, SeedConversionWorkspace(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, SeedConversionWorkspace,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// SeedConversionWorkspace(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
       SeedConversionWorkspace,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ImportMappingRules)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ImportMappingRules(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ImportMappingRules(Matcher<google::cloud::clouddms::v1::ImportMappingRulesRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
       ImportMappingRules,
       (google::cloud::clouddms::v1::ImportMappingRulesRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ImportMappingRules(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ImportMappingRules,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::clouddms::v1::ImportMappingRulesRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ImportMappingRules(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
-      ImportMappingRules,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      ImportMappingRules, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ConvertConversionWorkspace)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ConvertConversionWorkspace(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ConvertConversionWorkspace(Matcher<google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
       ConvertConversionWorkspace,
@@ -551,22 +912,42 @@ class MockDataMigrationServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ConvertConversionWorkspace(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ConvertConversionWorkspace,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ConvertConversionWorkspace(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
       ConvertConversionWorkspace,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CommitConversionWorkspace)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CommitConversionWorkspace(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CommitConversionWorkspace(Matcher<google::cloud::clouddms::v1::CommitConversionWorkspaceRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
       CommitConversionWorkspace,
@@ -574,22 +955,42 @@ class MockDataMigrationServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CommitConversionWorkspace(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CommitConversionWorkspace,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CommitConversionWorkspace(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
       CommitConversionWorkspace,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, RollbackConversionWorkspace)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, RollbackConversionWorkspace(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RollbackConversionWorkspace(Matcher<google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
       RollbackConversionWorkspace,
@@ -597,22 +998,42 @@ class MockDataMigrationServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, RollbackConversionWorkspace(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RollbackConversionWorkspace,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RollbackConversionWorkspace(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
       RollbackConversionWorkspace,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ApplyConversionWorkspace)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ApplyConversionWorkspace(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ApplyConversionWorkspace(Matcher<google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
       ApplyConversionWorkspace,
@@ -620,18 +1041,32 @@ class MockDataMigrationServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ApplyConversionWorkspace(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ApplyConversionWorkspace,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ApplyConversionWorkspace(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
       ApplyConversionWorkspace,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       (StreamRange<google::cloud::clouddms::v1::DatabaseEntity>),

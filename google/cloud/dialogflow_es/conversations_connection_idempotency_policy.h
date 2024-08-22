@@ -61,6 +61,10 @@ class ConversationsConnectionIdempotencyPolicy {
       google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
           request);
 
+  virtual google::cloud::Idempotency GenerateStatelessSuggestion(
+      google::cloud::dialogflow::v2::GenerateStatelessSuggestionRequest const&
+          request);
+
   virtual google::cloud::Idempotency SearchKnowledge(
       google::cloud::dialogflow::v2::SearchKnowledgeRequest const& request);
 };

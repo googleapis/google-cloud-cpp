@@ -17,7 +17,10 @@
 #include "google/cloud/storage/mocks/mock_async_reader_connection.h"
 #include <gmock/gmock.h>
 #include <iostream>
+#include <memory>
 #include <string>
+#include <tuple>
+#include <utility>
 
 namespace {
 

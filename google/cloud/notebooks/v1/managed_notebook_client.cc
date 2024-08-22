@@ -79,15 +79,14 @@ ManagedNotebookServiceClient::CreateRuntime(
 
 StatusOr<google::longrunning::Operation>
 ManagedNotebookServiceClient::CreateRuntime(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
-    std::string const& runtime_id,
+    NoAwaitTag, std::string const& parent, std::string const& runtime_id,
     google::cloud::notebooks::v1::Runtime const& runtime, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::notebooks::v1::CreateRuntimeRequest request;
   request.set_parent(parent);
   request.set_runtime_id(runtime_id);
   *request.mutable_runtime() = runtime;
-  return connection_->CreateRuntime(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateRuntime(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
@@ -100,19 +99,18 @@ ManagedNotebookServiceClient::CreateRuntime(
 
 StatusOr<google::longrunning::Operation>
 ManagedNotebookServiceClient::CreateRuntime(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::notebooks::v1::CreateRuntimeRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateRuntime(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateRuntime(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceClient::CreateRuntime(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateRuntime(ExperimentalTag{}, operation);
+  return connection_->CreateRuntime(operation);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
@@ -128,14 +126,13 @@ ManagedNotebookServiceClient::UpdateRuntime(
 
 StatusOr<google::longrunning::Operation>
 ManagedNotebookServiceClient::UpdateRuntime(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::notebooks::v1::Runtime const& runtime,
+    NoAwaitTag, google::cloud::notebooks::v1::Runtime const& runtime,
     google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::notebooks::v1::UpdateRuntimeRequest request;
   *request.mutable_runtime() = runtime;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateRuntime(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->UpdateRuntime(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
@@ -148,19 +145,18 @@ ManagedNotebookServiceClient::UpdateRuntime(
 
 StatusOr<google::longrunning::Operation>
 ManagedNotebookServiceClient::UpdateRuntime(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::notebooks::v1::UpdateRuntimeRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateRuntime(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->UpdateRuntime(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceClient::UpdateRuntime(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateRuntime(ExperimentalTag{}, operation);
+  return connection_->UpdateRuntime(operation);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
@@ -173,13 +169,12 @@ ManagedNotebookServiceClient::DeleteRuntime(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-ManagedNotebookServiceClient::DeleteRuntime(ExperimentalTag, NoAwaitTag,
-                                            std::string const& name,
+ManagedNotebookServiceClient::DeleteRuntime(NoAwaitTag, std::string const& name,
                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::notebooks::v1::DeleteRuntimeRequest request;
   request.set_name(name);
-  return connection_->DeleteRuntime(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteRuntime(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
@@ -192,19 +187,18 @@ ManagedNotebookServiceClient::DeleteRuntime(
 
 StatusOr<google::longrunning::Operation>
 ManagedNotebookServiceClient::DeleteRuntime(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::notebooks::v1::DeleteRuntimeRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteRuntime(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteRuntime(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
 ManagedNotebookServiceClient::DeleteRuntime(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteRuntime(ExperimentalTag{}, operation);
+  return connection_->DeleteRuntime(operation);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
@@ -217,13 +211,12 @@ ManagedNotebookServiceClient::StartRuntime(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-ManagedNotebookServiceClient::StartRuntime(ExperimentalTag, NoAwaitTag,
-                                           std::string const& name,
+ManagedNotebookServiceClient::StartRuntime(NoAwaitTag, std::string const& name,
                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::notebooks::v1::StartRuntimeRequest request;
   request.set_name(name);
-  return connection_->StartRuntime(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->StartRuntime(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
@@ -236,19 +229,18 @@ ManagedNotebookServiceClient::StartRuntime(
 
 StatusOr<google::longrunning::Operation>
 ManagedNotebookServiceClient::StartRuntime(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::notebooks::v1::StartRuntimeRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->StartRuntime(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->StartRuntime(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceClient::StartRuntime(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->StartRuntime(ExperimentalTag{}, operation);
+  return connection_->StartRuntime(operation);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
@@ -261,13 +253,12 @@ ManagedNotebookServiceClient::StopRuntime(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-ManagedNotebookServiceClient::StopRuntime(ExperimentalTag, NoAwaitTag,
-                                          std::string const& name,
+ManagedNotebookServiceClient::StopRuntime(NoAwaitTag, std::string const& name,
                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::notebooks::v1::StopRuntimeRequest request;
   request.set_name(name);
-  return connection_->StopRuntime(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->StopRuntime(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
@@ -280,19 +271,17 @@ ManagedNotebookServiceClient::StopRuntime(
 
 StatusOr<google::longrunning::Operation>
 ManagedNotebookServiceClient::StopRuntime(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::notebooks::v1::StopRuntimeRequest const& request,
+    NoAwaitTag, google::cloud::notebooks::v1::StopRuntimeRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->StopRuntime(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->StopRuntime(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceClient::StopRuntime(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->StopRuntime(ExperimentalTag{}, operation);
+  return connection_->StopRuntime(operation);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
@@ -305,13 +294,12 @@ ManagedNotebookServiceClient::SwitchRuntime(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-ManagedNotebookServiceClient::SwitchRuntime(ExperimentalTag, NoAwaitTag,
-                                            std::string const& name,
+ManagedNotebookServiceClient::SwitchRuntime(NoAwaitTag, std::string const& name,
                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::notebooks::v1::SwitchRuntimeRequest request;
   request.set_name(name);
-  return connection_->SwitchRuntime(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->SwitchRuntime(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
@@ -324,19 +312,18 @@ ManagedNotebookServiceClient::SwitchRuntime(
 
 StatusOr<google::longrunning::Operation>
 ManagedNotebookServiceClient::SwitchRuntime(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::notebooks::v1::SwitchRuntimeRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SwitchRuntime(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->SwitchRuntime(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceClient::SwitchRuntime(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SwitchRuntime(ExperimentalTag{}, operation);
+  return connection_->SwitchRuntime(operation);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
@@ -349,13 +336,12 @@ ManagedNotebookServiceClient::ResetRuntime(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-ManagedNotebookServiceClient::ResetRuntime(ExperimentalTag, NoAwaitTag,
-                                           std::string const& name,
+ManagedNotebookServiceClient::ResetRuntime(NoAwaitTag, std::string const& name,
                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::notebooks::v1::ResetRuntimeRequest request;
   request.set_name(name);
-  return connection_->ResetRuntime(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->ResetRuntime(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
@@ -368,19 +354,18 @@ ManagedNotebookServiceClient::ResetRuntime(
 
 StatusOr<google::longrunning::Operation>
 ManagedNotebookServiceClient::ResetRuntime(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::notebooks::v1::ResetRuntimeRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ResetRuntime(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->ResetRuntime(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceClient::ResetRuntime(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ResetRuntime(ExperimentalTag{}, operation);
+  return connection_->ResetRuntime(operation);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
@@ -393,13 +378,13 @@ ManagedNotebookServiceClient::UpgradeRuntime(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-ManagedNotebookServiceClient::UpgradeRuntime(ExperimentalTag, NoAwaitTag,
+ManagedNotebookServiceClient::UpgradeRuntime(NoAwaitTag,
                                              std::string const& name,
                                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::notebooks::v1::UpgradeRuntimeRequest request;
   request.set_name(name);
-  return connection_->UpgradeRuntime(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->UpgradeRuntime(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
@@ -412,19 +397,18 @@ ManagedNotebookServiceClient::UpgradeRuntime(
 
 StatusOr<google::longrunning::Operation>
 ManagedNotebookServiceClient::UpgradeRuntime(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpgradeRuntime(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->UpgradeRuntime(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceClient::UpgradeRuntime(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpgradeRuntime(ExperimentalTag{}, operation);
+  return connection_->UpgradeRuntime(operation);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
@@ -437,14 +421,13 @@ ManagedNotebookServiceClient::ReportRuntimeEvent(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-ManagedNotebookServiceClient::ReportRuntimeEvent(ExperimentalTag, NoAwaitTag,
+ManagedNotebookServiceClient::ReportRuntimeEvent(NoAwaitTag,
                                                  std::string const& name,
                                                  Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::notebooks::v1::ReportRuntimeEventRequest request;
   request.set_name(name);
-  return connection_->ReportRuntimeEvent(ExperimentalTag{}, NoAwaitTag{},
-                                         request);
+  return connection_->ReportRuntimeEvent(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
@@ -457,20 +440,18 @@ ManagedNotebookServiceClient::ReportRuntimeEvent(
 
 StatusOr<google::longrunning::Operation>
 ManagedNotebookServiceClient::ReportRuntimeEvent(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ReportRuntimeEvent(ExperimentalTag{}, NoAwaitTag{},
-                                         request);
+  return connection_->ReportRuntimeEvent(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceClient::ReportRuntimeEvent(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ReportRuntimeEvent(ExperimentalTag{}, operation);
+  return connection_->ReportRuntimeEvent(operation);
 }
 
 StatusOr<google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse>
@@ -506,14 +487,14 @@ ManagedNotebookServiceClient::DiagnoseRuntime(
 
 StatusOr<google::longrunning::Operation>
 ManagedNotebookServiceClient::DiagnoseRuntime(
-    ExperimentalTag, NoAwaitTag, std::string const& name,
+    NoAwaitTag, std::string const& name,
     google::cloud::notebooks::v1::DiagnosticConfig const& diagnostic_config,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::notebooks::v1::DiagnoseRuntimeRequest request;
   request.set_name(name);
   *request.mutable_diagnostic_config() = diagnostic_config;
-  return connection_->DiagnoseRuntime(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DiagnoseRuntime(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
@@ -526,19 +507,18 @@ ManagedNotebookServiceClient::DiagnoseRuntime(
 
 StatusOr<google::longrunning::Operation>
 ManagedNotebookServiceClient::DiagnoseRuntime(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::notebooks::v1::DiagnoseRuntimeRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DiagnoseRuntime(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DiagnoseRuntime(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceClient::DiagnoseRuntime(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DiagnoseRuntime(ExperimentalTag{}, operation);
+  return connection_->DiagnoseRuntime(operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

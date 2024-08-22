@@ -18,6 +18,7 @@
 
 #include "google/cloud/bigquery/biglake/v1/internal/metastore_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

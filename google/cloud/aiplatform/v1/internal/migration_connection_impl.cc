@@ -146,7 +146,7 @@ MigrationServiceConnectionImpl::BatchMigrateResources(
 
 StatusOr<google::longrunning::Operation>
 MigrationServiceConnectionImpl::BatchMigrateResources(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -163,7 +163,7 @@ MigrationServiceConnectionImpl::BatchMigrateResources(
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>
 MigrationServiceConnectionImpl::BatchMigrateResources(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::

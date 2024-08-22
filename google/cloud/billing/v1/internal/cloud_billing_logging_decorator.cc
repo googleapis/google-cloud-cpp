@@ -21,6 +21,8 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/billing/v1/cloud_billing.grpc.pb.h>
 #include <memory>
+#include <set>
+#include <string>
 #include <utility>
 
 namespace google {

@@ -16,6 +16,7 @@
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/internal/make_status.h"
 #include <iostream>
+#include <string>
 
 namespace google {
 namespace cloud {

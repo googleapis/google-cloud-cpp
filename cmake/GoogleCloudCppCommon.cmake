@@ -176,7 +176,7 @@ function (google_cloud_cpp_install_mocks library display_name)
     google_cloud_cpp_add_pkgconfig(
         ${library}_mocks "${display_name} Mocks"
         "Mocks for the ${display_name} C++ Client Library" "${library_target}"
-        "gmock_main")
+        "gmock")
 
     set(GOOGLE_CLOUD_CPP_CONFIG_LIBRARY "${library_target}")
     configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/mocks-config.cmake.in"

@@ -98,6 +98,30 @@ Idempotency NotebookServiceConnectionIdempotencyPolicy::StartNotebookRuntime(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency
+NotebookServiceConnectionIdempotencyPolicy::CreateNotebookExecutionJob(
+    google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NotebookServiceConnectionIdempotencyPolicy::GetNotebookExecutionJob(
+    google::cloud::aiplatform::v1::GetNotebookExecutionJobRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+NotebookServiceConnectionIdempotencyPolicy::ListNotebookExecutionJobs(
+    google::cloud::aiplatform::v1::
+        ListNotebookExecutionJobsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+NotebookServiceConnectionIdempotencyPolicy::DeleteNotebookExecutionJob(
+    google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<NotebookServiceConnectionIdempotencyPolicy>
 MakeDefaultNotebookServiceConnectionIdempotencyPolicy() {
   return std::make_unique<NotebookServiceConnectionIdempotencyPolicy>();

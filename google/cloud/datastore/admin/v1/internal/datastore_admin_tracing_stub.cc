@@ -18,6 +18,7 @@
 
 #include "google/cloud/datastore/admin/v1/internal/datastore_admin_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

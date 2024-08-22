@@ -55,26 +55,45 @@ class MockInstanceTemplatesConnection
            AggregatedListInstanceTemplatesRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteInstanceTemplate)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteInstanceTemplate(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteInstanceTemplate(Matcher<google::cloud::cpp::compute::instance_templates::v1::DeleteInstanceTemplateRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteInstanceTemplate,
               (google::cloud::cpp::compute::instance_templates::v1::
                    DeleteInstanceTemplateRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteInstanceTemplate(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               DeleteInstanceTemplate,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::instance_templates::v1::
-                   DeleteInstanceTemplateRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::instance_templates::v1::
+                               DeleteInstanceTemplateRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteInstanceTemplate(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteInstanceTemplate,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>,
@@ -88,26 +107,45 @@ class MockInstanceTemplatesConnection
                    GetIamPolicyRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, InsertInstanceTemplate)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, InsertInstanceTemplate(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InsertInstanceTemplate(Matcher<google::cloud::cpp::compute::instance_templates::v1::InsertInstanceTemplateRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertInstanceTemplate,
               (google::cloud::cpp::compute::instance_templates::v1::
                    InsertInstanceTemplateRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, InsertInstanceTemplate(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               InsertInstanceTemplate,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::instance_templates::v1::
-                   InsertInstanceTemplateRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::instance_templates::v1::
+                               InsertInstanceTemplateRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InsertInstanceTemplate(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertInstanceTemplate,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>),

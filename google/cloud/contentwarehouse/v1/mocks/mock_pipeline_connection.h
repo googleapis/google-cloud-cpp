@@ -47,9 +47,15 @@ class MockPipelineServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, RunPipeline)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, RunPipeline(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RunPipeline(Matcher<google::cloud::contentwarehouse::v1::RunPipelineRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>,
@@ -57,17 +63,30 @@ class MockPipelineServiceConnection
       (google::cloud::contentwarehouse::v1::RunPipelineRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, RunPipeline(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RunPipeline,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::contentwarehouse::v1::RunPipelineRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, RunPipeline(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>,
-      RunPipeline,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      RunPipeline, (google::longrunning::Operation const& operation),
       (override));
 };
 

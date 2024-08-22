@@ -109,9 +109,8 @@ RegionSslCertificatesRestConnectionImpl::DeleteSslCertificate(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionSslCertificatesRestConnectionImpl::DeleteSslCertificate(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_ssl_certificates::v1::
-        DeleteSslCertificateRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::region_ssl_certificates::v1::
+                    DeleteSslCertificateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -126,7 +125,6 @@ RegionSslCertificatesRestConnectionImpl::DeleteSslCertificate(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSslCertificatesRestConnectionImpl::DeleteSslCertificate(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -258,9 +256,8 @@ RegionSslCertificatesRestConnectionImpl::InsertSslCertificate(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionSslCertificatesRestConnectionImpl::InsertSslCertificate(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_ssl_certificates::v1::
-        InsertSslCertificateRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::region_ssl_certificates::v1::
+                    InsertSslCertificateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -275,7 +272,6 @@ RegionSslCertificatesRestConnectionImpl::InsertSslCertificate(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSslCertificatesRestConnectionImpl::InsertSslCertificate(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

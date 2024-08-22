@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/access_control_common_parser.h"
 #include "google/cloud/storage/internal/metadata_parser.h"
+#include <utility>
 // This file contains the implementation for deprecated functions, we need to
 // disable the warnings.
 #include "google/cloud/internal/disable_deprecation_warnings.inc"

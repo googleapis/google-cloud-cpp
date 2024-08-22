@@ -70,6 +70,12 @@ Idempotency ConversationsConnectionIdempotencyPolicy::GenerateStatelessSummary(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency
+ConversationsConnectionIdempotencyPolicy::GenerateStatelessSuggestion(
+    google::cloud::dialogflow::v2::GenerateStatelessSuggestionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency ConversationsConnectionIdempotencyPolicy::SearchKnowledge(
     google::cloud::dialogflow::v2::SearchKnowledgeRequest const&) {
   return Idempotency::kNonIdempotent;

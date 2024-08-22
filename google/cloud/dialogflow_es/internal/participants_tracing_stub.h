@@ -23,6 +23,7 @@
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
@@ -86,6 +87,12 @@ class ParticipantsTracingStub : public ParticipantsStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const& request)
       override;
+
+  StatusOr<google::cloud::dialogflow::v2::SuggestKnowledgeAssistResponse>
+  SuggestKnowledgeAssist(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::SuggestKnowledgeAssistRequest const&
+          request) override;
 
  private:
   std::shared_ptr<ParticipantsStub> child_;

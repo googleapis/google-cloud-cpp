@@ -36,9 +36,11 @@
 #include <condition_variable>
 #include <ctime>
 #include <iostream>
+#include <memory>
 #include <mutex>
 #include <set>
 #include <string>
+#include <utility>
 #include <vector>
 
 namespace google {

@@ -109,7 +109,7 @@ MetadataServiceConnectionImpl::CreateMetadataStore(
 
 StatusOr<google::longrunning::Operation>
 MetadataServiceConnectionImpl::CreateMetadataStore(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -125,7 +125,7 @@ MetadataServiceConnectionImpl::CreateMetadataStore(
 
 future<StatusOr<google::cloud::aiplatform::v1::MetadataStore>>
 MetadataServiceConnectionImpl::CreateMetadataStore(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -254,7 +254,7 @@ MetadataServiceConnectionImpl::DeleteMetadataStore(
 
 StatusOr<google::longrunning::Operation>
 MetadataServiceConnectionImpl::DeleteMetadataStore(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -271,7 +271,7 @@ MetadataServiceConnectionImpl::DeleteMetadataStore(
 future<StatusOr<
     google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>
 MetadataServiceConnectionImpl::DeleteMetadataStore(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -426,7 +426,7 @@ MetadataServiceConnectionImpl::DeleteArtifact(
 
 StatusOr<google::longrunning::Operation>
 MetadataServiceConnectionImpl::DeleteArtifact(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteArtifactRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -442,7 +442,7 @@ MetadataServiceConnectionImpl::DeleteArtifact(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 MetadataServiceConnectionImpl::DeleteArtifact(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -519,7 +519,7 @@ MetadataServiceConnectionImpl::PurgeArtifacts(
 
 StatusOr<google::longrunning::Operation>
 MetadataServiceConnectionImpl::PurgeArtifacts(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -535,7 +535,7 @@ MetadataServiceConnectionImpl::PurgeArtifacts(
 
 future<StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>
 MetadataServiceConnectionImpl::PurgeArtifacts(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -690,7 +690,7 @@ MetadataServiceConnectionImpl::DeleteContext(
 
 StatusOr<google::longrunning::Operation>
 MetadataServiceConnectionImpl::DeleteContext(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteContextRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -706,7 +706,7 @@ MetadataServiceConnectionImpl::DeleteContext(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 MetadataServiceConnectionImpl::DeleteContext(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -783,7 +783,7 @@ MetadataServiceConnectionImpl::PurgeContexts(
 
 StatusOr<google::longrunning::Operation>
 MetadataServiceConnectionImpl::PurgeContexts(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::PurgeContextsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -799,7 +799,7 @@ MetadataServiceConnectionImpl::PurgeContexts(
 
 future<StatusOr<google::cloud::aiplatform::v1::PurgeContextsResponse>>
 MetadataServiceConnectionImpl::PurgeContexts(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -1021,7 +1021,7 @@ MetadataServiceConnectionImpl::DeleteExecution(
 
 StatusOr<google::longrunning::Operation>
 MetadataServiceConnectionImpl::DeleteExecution(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteExecutionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1037,7 +1037,7 @@ MetadataServiceConnectionImpl::DeleteExecution(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 MetadataServiceConnectionImpl::DeleteExecution(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -1115,7 +1115,7 @@ MetadataServiceConnectionImpl::PurgeExecutions(
 
 StatusOr<google::longrunning::Operation>
 MetadataServiceConnectionImpl::PurgeExecutions(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1131,7 +1131,7 @@ MetadataServiceConnectionImpl::PurgeExecutions(
 
 future<StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>
 MetadataServiceConnectionImpl::PurgeExecutions(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::

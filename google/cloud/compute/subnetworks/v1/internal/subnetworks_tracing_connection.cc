@@ -60,26 +60,24 @@ SubnetworksTracingConnection::DeleteSubnetwork(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SubnetworksTracingConnection::DeleteSubnetwork(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::subnetworks::v1::DeleteSubnetworkRequest const&
         request) {
   auto span = internal::MakeSpan(
       "compute_subnetworks_v1::SubnetworksConnection::DeleteSubnetwork");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->DeleteSubnetwork(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteSubnetwork(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SubnetworksTracingConnection::DeleteSubnetwork(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_subnetworks_v1::SubnetworksConnection::DeleteSubnetwork");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->DeleteSubnetwork(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteSubnetwork(operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -94,26 +92,23 @@ SubnetworksTracingConnection::ExpandIpCidrRange(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SubnetworksTracingConnection::ExpandIpCidrRange(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::subnetworks::v1::
-        ExpandIpCidrRangeRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::subnetworks::v1::
+                    ExpandIpCidrRangeRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_subnetworks_v1::SubnetworksConnection::ExpandIpCidrRange");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->ExpandIpCidrRange(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->ExpandIpCidrRange(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SubnetworksTracingConnection::ExpandIpCidrRange(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_subnetworks_v1::SubnetworksConnection::ExpandIpCidrRange");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->ExpandIpCidrRange(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->ExpandIpCidrRange(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Subnetwork>
@@ -148,26 +143,24 @@ SubnetworksTracingConnection::InsertSubnetwork(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SubnetworksTracingConnection::InsertSubnetwork(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::subnetworks::v1::InsertSubnetworkRequest const&
         request) {
   auto span = internal::MakeSpan(
       "compute_subnetworks_v1::SubnetworksConnection::InsertSubnetwork");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->InsertSubnetwork(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->InsertSubnetwork(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SubnetworksTracingConnection::InsertSubnetwork(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_subnetworks_v1::SubnetworksConnection::InsertSubnetwork");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->InsertSubnetwork(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->InsertSubnetwork(operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Subnetwork>
@@ -207,25 +200,23 @@ SubnetworksTracingConnection::PatchSubnetwork(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SubnetworksTracingConnection::PatchSubnetwork(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworkRequest const&
         request) {
   auto span = internal::MakeSpan(
       "compute_subnetworks_v1::SubnetworksConnection::PatchSubnetwork");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->PatchSubnetwork(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->PatchSubnetwork(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SubnetworksTracingConnection::PatchSubnetwork(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_subnetworks_v1::SubnetworksConnection::PatchSubnetwork");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->PatchSubnetwork(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->PatchSubnetwork(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -252,28 +243,25 @@ SubnetworksTracingConnection::SetPrivateIpGoogleAccess(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SubnetworksTracingConnection::SetPrivateIpGoogleAccess(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::subnetworks::v1::
-        SetPrivateIpGoogleAccessRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::subnetworks::v1::
+                    SetPrivateIpGoogleAccessRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_subnetworks_v1::SubnetworksConnection::"
       "SetPrivateIpGoogleAccess");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->SetPrivateIpGoogleAccess(ExperimentalTag{}, NoAwaitTag{},
-                                              request));
+      *span, child_->SetPrivateIpGoogleAccess(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SubnetworksTracingConnection::SetPrivateIpGoogleAccess(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_subnetworks_v1::SubnetworksConnection::"
       "SetPrivateIpGoogleAccess");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->SetPrivateIpGoogleAccess(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->SetPrivateIpGoogleAccess(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

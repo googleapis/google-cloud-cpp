@@ -59,6 +59,11 @@ DefaultRegionSecurityPoliciesRestStub::AsyncAddRule(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back(
+            {"validate_only", (request.validate_only() ? "1" : "0")});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -69,8 +74,7 @@ DefaultRegionSecurityPoliciesRestStub::AsyncAddRule(
                              "regions", "/", request.region(), "/",
                              "securityPolicies", "/", request.security_policy(),
                              "/", "addRule"),
-                rest_internal::TrimEmptyQueryParameters({std::make_pair(
-                    "validate_only", (request.validate_only() ? "1" : "0"))})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -89,6 +93,11 @@ DefaultRegionSecurityPoliciesRestStub::AddRule(
     Options const& options,
     google::cloud::cpp::compute::region_security_policies::v1::
         AddRuleRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back(
+      {"validate_only", (request.validate_only() ? "1" : "0")});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.security_policy_rule_resource(), false,
       absl::StrCat("/", "compute", "/",
@@ -96,8 +105,7 @@ DefaultRegionSecurityPoliciesRestStub::AddRule(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "securityPolicies", "/",
                    request.security_policy(), "/", "addRule"),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair(
-          "validate_only", (request.validate_only() ? "1" : "0"))}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -112,6 +120,10 @@ DefaultRegionSecurityPoliciesRestStub::AsyncDeleteSecurityPolicy(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -121,8 +133,7 @@ DefaultRegionSecurityPoliciesRestStub::AsyncDeleteSecurityPolicy(
                              "regions", "/", request.region(), "/",
                              "securityPolicies", "/",
                              request.security_policy()),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -141,6 +152,10 @@ DefaultRegionSecurityPoliciesRestStub::DeleteSecurityPolicy(
     Options const& options,
     google::cloud::cpp::compute::region_security_policies::v1::
         DeleteSecurityPolicyRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -148,8 +163,7 @@ DefaultRegionSecurityPoliciesRestStub::DeleteSecurityPolicy(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "securityPolicies", "/",
                    request.security_policy()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
@@ -158,13 +172,15 @@ DefaultRegionSecurityPoliciesRestStub::GetSecurityPolicy(
     Options const& options,
     google::cloud::cpp::compute::region_security_policies::v1::
         GetSecurityPolicyRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<google::cloud::cpp::compute::v1::SecurityPolicy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "securityPolicies", "/",
-                   request.security_policy()));
+                   request.security_policy()),
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyRule>
@@ -173,6 +189,10 @@ DefaultRegionSecurityPoliciesRestStub::GetRule(
     Options const& options,
     google::cloud::cpp::compute::region_security_policies::v1::
         GetRuleRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"priority", std::to_string(request.priority())});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::SecurityPolicyRule>(
       *service_, rest_context, request, false,
@@ -181,8 +201,7 @@ DefaultRegionSecurityPoliciesRestStub::GetRule(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "securityPolicies", "/",
                    request.security_policy(), "/", "getRule"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("priority", std::to_string(request.priority()))}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -197,6 +216,12 @@ DefaultRegionSecurityPoliciesRestStub::AsyncInsertSecurityPolicy(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params.push_back(
+            {"validate_only", (request.validate_only() ? "1" : "0")});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.security_policy_resource(),
@@ -206,10 +231,7 @@ DefaultRegionSecurityPoliciesRestStub::AsyncInsertSecurityPolicy(
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "securityPolicies"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id()),
-                     std::make_pair("validate_only",
-                                    (request.validate_only() ? "1" : "0"))})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -228,16 +250,19 @@ DefaultRegionSecurityPoliciesRestStub::InsertSecurityPolicy(
     Options const& options,
     google::cloud::cpp::compute::region_security_policies::v1::
         InsertSecurityPolicyRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params.push_back(
+      {"validate_only", (request.validate_only() ? "1" : "0")});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.security_policy_resource(), false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "securityPolicies"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id()),
-           std::make_pair("validate_only",
-                          (request.validate_only() ? "1" : "0"))}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyList>
@@ -246,6 +271,16 @@ DefaultRegionSecurityPoliciesRestStub::ListRegionSecurityPolicies(
     Options const& options,
     google::cloud::cpp::compute::region_security_policies::v1::
         ListRegionSecurityPoliciesRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::SecurityPolicyList>(
       *service_, rest_context, request, false,
@@ -253,13 +288,7 @@ DefaultRegionSecurityPoliciesRestStub::ListRegionSecurityPolicies(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "securityPolicies"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -274,6 +303,11 @@ DefaultRegionSecurityPoliciesRestStub::AsyncPatchSecurityPolicy(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params.push_back({"update_mask", request.update_mask()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.security_policy_resource(),
@@ -284,9 +318,7 @@ DefaultRegionSecurityPoliciesRestStub::AsyncPatchSecurityPolicy(
                              "regions", "/", request.region(), "/",
                              "securityPolicies", "/",
                              request.security_policy()),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id()),
-                     std::make_pair("update_mask", request.update_mask())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -305,6 +337,11 @@ DefaultRegionSecurityPoliciesRestStub::PatchSecurityPolicy(
     Options const& options,
     google::cloud::cpp::compute::region_security_policies::v1::
         PatchSecurityPolicyRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params.push_back({"update_mask", request.update_mask()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.security_policy_resource(), false,
       absl::StrCat("/", "compute", "/",
@@ -312,9 +349,7 @@ DefaultRegionSecurityPoliciesRestStub::PatchSecurityPolicy(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "securityPolicies", "/",
                    request.security_policy()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id()),
-           std::make_pair("update_mask", request.update_mask())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -329,6 +364,14 @@ DefaultRegionSecurityPoliciesRestStub::AsyncPatchRule(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back(
+            {"priority", std::to_string(request.priority())});
+        query_params.push_back({"update_mask", request.update_mask()});
+        query_params.push_back(
+            {"validate_only", (request.validate_only() ? "1" : "0")});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -339,12 +382,7 @@ DefaultRegionSecurityPoliciesRestStub::AsyncPatchRule(
                              "regions", "/", request.region(), "/",
                              "securityPolicies", "/", request.security_policy(),
                              "/", "patchRule"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("priority",
-                                    std::to_string(request.priority())),
-                     std::make_pair("update_mask", request.update_mask()),
-                     std::make_pair("validate_only",
-                                    (request.validate_only() ? "1" : "0"))})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -363,6 +401,13 @@ DefaultRegionSecurityPoliciesRestStub::PatchRule(
     Options const& options,
     google::cloud::cpp::compute::region_security_policies::v1::
         PatchRuleRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"priority", std::to_string(request.priority())});
+  query_params.push_back({"update_mask", request.update_mask()});
+  query_params.push_back(
+      {"validate_only", (request.validate_only() ? "1" : "0")});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.security_policy_rule_resource(), false,
       absl::StrCat("/", "compute", "/",
@@ -370,11 +415,7 @@ DefaultRegionSecurityPoliciesRestStub::PatchRule(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "securityPolicies", "/",
                    request.security_policy(), "/", "patchRule"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("priority", std::to_string(request.priority())),
-           std::make_pair("update_mask", request.update_mask()),
-           std::make_pair("validate_only",
-                          (request.validate_only() ? "1" : "0"))}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -389,6 +430,7 @@ DefaultRegionSecurityPoliciesRestStub::AsyncRemoveRule(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -398,8 +440,7 @@ DefaultRegionSecurityPoliciesRestStub::AsyncRemoveRule(
                              "regions", "/", request.region(), "/",
                              "securityPolicies", "/", request.security_policy(),
                              "/", "removeRule"),
-                rest_internal::TrimEmptyQueryParameters({std::make_pair(
-                    "priority", std::to_string(request.priority()))})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -418,6 +459,7 @@ DefaultRegionSecurityPoliciesRestStub::RemoveRule(
     Options const& options,
     google::cloud::cpp::compute::region_security_policies::v1::
         RemoveRuleRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -425,8 +467,7 @@ DefaultRegionSecurityPoliciesRestStub::RemoveRule(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "securityPolicies", "/",
                    request.security_policy(), "/", "removeRule"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("priority", std::to_string(request.priority()))}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

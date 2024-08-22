@@ -47,70 +47,127 @@ class MockBackendBucketsConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, AddSignedUrlKey)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, AddSignedUrlKey(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// AddSignedUrlKey(Matcher<google::cloud::cpp::compute::backend_buckets::v1::AddSignedUrlKeyRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               AddSignedUrlKey,
               (google::cloud::cpp::compute::backend_buckets::v1::
                    AddSignedUrlKeyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, AddSignedUrlKey(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               AddSignedUrlKey,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::backend_buckets::v1::
-                   AddSignedUrlKeyRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::backend_buckets::v1::
+                               AddSignedUrlKeyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// AddSignedUrlKey(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               AddSignedUrlKey,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteBackendBucket)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteBackendBucket(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteBackendBucket(Matcher<google::cloud::cpp::compute::backend_buckets::v1::DeleteBackendBucketRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteBackendBucket,
               (google::cloud::cpp::compute::backend_buckets::v1::
                    DeleteBackendBucketRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteBackendBucket(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               DeleteBackendBucket,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::backend_buckets::v1::
-                   DeleteBackendBucketRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::backend_buckets::v1::
+                               DeleteBackendBucketRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteBackendBucket(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteBackendBucket,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteSignedUrlKey)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteSignedUrlKey(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteSignedUrlKey(Matcher<google::cloud::cpp::compute::backend_buckets::v1::DeleteSignedUrlKeyRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteSignedUrlKey,
               (google::cloud::cpp::compute::backend_buckets::v1::
                    DeleteSignedUrlKeyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteSignedUrlKey(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               DeleteSignedUrlKey,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::backend_buckets::v1::
-                   DeleteSignedUrlKeyRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::backend_buckets::v1::
+                               DeleteSignedUrlKeyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteSignedUrlKey(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteSignedUrlKey,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::BackendBucket>,
@@ -124,26 +181,45 @@ class MockBackendBucketsConnection
                    GetIamPolicyRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, InsertBackendBucket)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, InsertBackendBucket(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InsertBackendBucket(Matcher<google::cloud::cpp::compute::backend_buckets::v1::InsertBackendBucketRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertBackendBucket,
               (google::cloud::cpp::compute::backend_buckets::v1::
                    InsertBackendBucketRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, InsertBackendBucket(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               InsertBackendBucket,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::backend_buckets::v1::
-                   InsertBackendBucketRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::backend_buckets::v1::
+                               InsertBackendBucketRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InsertBackendBucket(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertBackendBucket,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::BackendBucket>),
@@ -152,48 +228,86 @@ class MockBackendBucketsConnection
                    ListBackendBucketsRequest request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, PatchBackendBucket)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, PatchBackendBucket(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PatchBackendBucket(Matcher<google::cloud::cpp::compute::backend_buckets::v1::PatchBackendBucketRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchBackendBucket,
               (google::cloud::cpp::compute::backend_buckets::v1::
                    PatchBackendBucketRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, PatchBackendBucket(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               PatchBackendBucket,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::backend_buckets::v1::
-                   PatchBackendBucketRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::backend_buckets::v1::
+                               PatchBackendBucketRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PatchBackendBucket(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchBackendBucket,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, SetEdgeSecurityPolicy)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, SetEdgeSecurityPolicy(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// SetEdgeSecurityPolicy(Matcher<google::cloud::cpp::compute::backend_buckets::v1::SetEdgeSecurityPolicyRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetEdgeSecurityPolicy,
               (google::cloud::cpp::compute::backend_buckets::v1::
                    SetEdgeSecurityPolicyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, SetEdgeSecurityPolicy(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               SetEdgeSecurityPolicy,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::backend_buckets::v1::
-                   SetEdgeSecurityPolicyRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::backend_buckets::v1::
+                               SetEdgeSecurityPolicyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// SetEdgeSecurityPolicy(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetEdgeSecurityPolicy,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,
@@ -208,26 +322,45 @@ class MockBackendBucketsConnection
            TestIamPermissionsRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateBackendBucket)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateBackendBucket(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateBackendBucket(Matcher<google::cloud::cpp::compute::backend_buckets::v1::UpdateBackendBucketRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               UpdateBackendBucket,
               (google::cloud::cpp::compute::backend_buckets::v1::
                    UpdateBackendBucketRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateBackendBucket(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               UpdateBackendBucket,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::backend_buckets::v1::
-                   UpdateBackendBucketRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::backend_buckets::v1::
+                               UpdateBackendBucketRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateBackendBucket(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               UpdateBackendBucket,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

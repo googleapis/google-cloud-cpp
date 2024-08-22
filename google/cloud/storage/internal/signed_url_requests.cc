@@ -21,7 +21,11 @@
 #include "absl/strings/str_split.h"
 #include <algorithm>
 #include <cctype>
+#include <map>
 #include <sstream>
+#include <string>
+#include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {

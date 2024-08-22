@@ -97,6 +97,13 @@ class MockParticipantsConnection
       (google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::dialogflow::v2::SuggestKnowledgeAssistResponse>,
+      SuggestKnowledgeAssist,
+      (google::cloud::dialogflow::v2::SuggestKnowledgeAssistRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

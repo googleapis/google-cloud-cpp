@@ -22,6 +22,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {

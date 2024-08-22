@@ -58,13 +58,12 @@ class DataTaxonomyServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateDataTaxonomy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request)
       override;
 
   future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
-  CreateDataTaxonomy(ExperimentalTag,
-                     google::longrunning::Operation const& operation) override;
+  CreateDataTaxonomy(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
   UpdateDataTaxonomy(
@@ -72,13 +71,12 @@ class DataTaxonomyServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateDataTaxonomy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request)
       override;
 
   future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
-  UpdateDataTaxonomy(ExperimentalTag,
-                     google::longrunning::Operation const& operation) override;
+  UpdateDataTaxonomy(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteDataTaxonomy(
@@ -86,13 +84,12 @@ class DataTaxonomyServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DeleteDataTaxonomy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request)
       override;
 
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteDataTaxonomy(ExperimentalTag,
-                     google::longrunning::Operation const& operation) override;
+  DeleteDataTaxonomy(google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::dataplex::v1::DataTaxonomy> ListDataTaxonomies(
       google::cloud::dataplex::v1::ListDataTaxonomiesRequest request) override;
@@ -107,13 +104,12 @@ class DataTaxonomyServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateDataAttributeBinding(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const&
           request) override;
 
   future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
   CreateDataAttributeBinding(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
@@ -122,13 +118,12 @@ class DataTaxonomyServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateDataAttributeBinding(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const&
           request) override;
 
   future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
   UpdateDataAttributeBinding(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
@@ -137,13 +132,12 @@ class DataTaxonomyServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteDataAttributeBinding(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&
           request) override;
 
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteDataAttributeBinding(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::dataplex::v1::DataAttributeBinding>
@@ -162,13 +156,12 @@ class DataTaxonomyServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateDataAttribute(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataplex::v1::CreateDataAttributeRequest const& request)
       override;
 
   future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
-  CreateDataAttribute(ExperimentalTag,
-                      google::longrunning::Operation const& operation) override;
+  CreateDataAttribute(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
   UpdateDataAttribute(
@@ -176,13 +169,12 @@ class DataTaxonomyServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateDataAttribute(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request)
       override;
 
   future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
-  UpdateDataAttribute(ExperimentalTag,
-                      google::longrunning::Operation const& operation) override;
+  UpdateDataAttribute(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteDataAttribute(
@@ -190,13 +182,12 @@ class DataTaxonomyServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DeleteDataAttribute(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request)
       override;
 
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteDataAttribute(ExperimentalTag,
-                      google::longrunning::Operation const& operation) override;
+  DeleteDataAttribute(google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::dataplex::v1::DataAttribute> ListDataAttributes(
       google::cloud::dataplex::v1::ListDataAttributesRequest request) override;

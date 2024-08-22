@@ -46,15 +46,14 @@ IndexEndpointServiceClient::CreateIndexEndpoint(
 
 StatusOr<google::longrunning::Operation>
 IndexEndpointServiceClient::CreateIndexEndpoint(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::cloud::aiplatform::v1::IndexEndpoint const& index_endpoint,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateIndexEndpointRequest request;
   request.set_parent(parent);
   *request.mutable_index_endpoint() = index_endpoint;
-  return connection_->CreateIndexEndpoint(ExperimentalTag{}, NoAwaitTag{},
-                                          request);
+  return connection_->CreateIndexEndpoint(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>>
@@ -67,20 +66,18 @@ IndexEndpointServiceClient::CreateIndexEndpoint(
 
 StatusOr<google::longrunning::Operation>
 IndexEndpointServiceClient::CreateIndexEndpoint(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::CreateIndexEndpointRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateIndexEndpoint(ExperimentalTag{}, NoAwaitTag{},
-                                          request);
+  return connection_->CreateIndexEndpoint(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>>
 IndexEndpointServiceClient::CreateIndexEndpoint(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateIndexEndpoint(ExperimentalTag{}, operation);
+  return connection_->CreateIndexEndpoint(operation);
 }
 
 StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>
@@ -146,14 +143,13 @@ IndexEndpointServiceClient::DeleteIndexEndpoint(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-IndexEndpointServiceClient::DeleteIndexEndpoint(ExperimentalTag, NoAwaitTag,
+IndexEndpointServiceClient::DeleteIndexEndpoint(NoAwaitTag,
                                                 std::string const& name,
                                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteIndexEndpointRequest request;
   request.set_name(name);
-  return connection_->DeleteIndexEndpoint(ExperimentalTag{}, NoAwaitTag{},
-                                          request);
+  return connection_->DeleteIndexEndpoint(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -166,20 +162,18 @@ IndexEndpointServiceClient::DeleteIndexEndpoint(
 
 StatusOr<google::longrunning::Operation>
 IndexEndpointServiceClient::DeleteIndexEndpoint(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteIndexEndpoint(ExperimentalTag{}, NoAwaitTag{},
-                                          request);
+  return connection_->DeleteIndexEndpoint(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 IndexEndpointServiceClient::DeleteIndexEndpoint(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteIndexEndpoint(ExperimentalTag{}, operation);
+  return connection_->DeleteIndexEndpoint(operation);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeployIndexResponse>>
@@ -196,14 +190,14 @@ IndexEndpointServiceClient::DeployIndex(
 
 StatusOr<google::longrunning::Operation>
 IndexEndpointServiceClient::DeployIndex(
-    ExperimentalTag, NoAwaitTag, std::string const& index_endpoint,
+    NoAwaitTag, std::string const& index_endpoint,
     google::cloud::aiplatform::v1::DeployedIndex const& deployed_index,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeployIndexRequest request;
   request.set_index_endpoint(index_endpoint);
   *request.mutable_deployed_index() = deployed_index;
-  return connection_->DeployIndex(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeployIndex(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeployIndexResponse>>
@@ -216,19 +210,18 @@ IndexEndpointServiceClient::DeployIndex(
 
 StatusOr<google::longrunning::Operation>
 IndexEndpointServiceClient::DeployIndex(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeployIndexRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeployIndex(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeployIndex(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeployIndexResponse>>
 IndexEndpointServiceClient::DeployIndex(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeployIndex(ExperimentalTag{}, operation);
+  return connection_->DeployIndex(operation);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::UndeployIndexResponse>>
@@ -243,7 +236,7 @@ IndexEndpointServiceClient::UndeployIndex(std::string const& index_endpoint,
 }
 
 StatusOr<google::longrunning::Operation>
-IndexEndpointServiceClient::UndeployIndex(ExperimentalTag, NoAwaitTag,
+IndexEndpointServiceClient::UndeployIndex(NoAwaitTag,
                                           std::string const& index_endpoint,
                                           std::string const& deployed_index_id,
                                           Options opts) {
@@ -251,7 +244,7 @@ IndexEndpointServiceClient::UndeployIndex(ExperimentalTag, NoAwaitTag,
   google::cloud::aiplatform::v1::UndeployIndexRequest request;
   request.set_index_endpoint(index_endpoint);
   request.set_deployed_index_id(deployed_index_id);
-  return connection_->UndeployIndex(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->UndeployIndex(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::UndeployIndexResponse>>
@@ -264,19 +257,18 @@ IndexEndpointServiceClient::UndeployIndex(
 
 StatusOr<google::longrunning::Operation>
 IndexEndpointServiceClient::UndeployIndex(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::UndeployIndexRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UndeployIndex(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->UndeployIndex(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::UndeployIndexResponse>>
 IndexEndpointServiceClient::UndeployIndex(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UndeployIndex(ExperimentalTag{}, operation);
+  return connection_->UndeployIndex(operation);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedIndexResponse>>
@@ -293,15 +285,14 @@ IndexEndpointServiceClient::MutateDeployedIndex(
 
 StatusOr<google::longrunning::Operation>
 IndexEndpointServiceClient::MutateDeployedIndex(
-    ExperimentalTag, NoAwaitTag, std::string const& index_endpoint,
+    NoAwaitTag, std::string const& index_endpoint,
     google::cloud::aiplatform::v1::DeployedIndex const& deployed_index,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::MutateDeployedIndexRequest request;
   request.set_index_endpoint(index_endpoint);
   *request.mutable_deployed_index() = deployed_index;
-  return connection_->MutateDeployedIndex(ExperimentalTag{}, NoAwaitTag{},
-                                          request);
+  return connection_->MutateDeployedIndex(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedIndexResponse>>
@@ -314,20 +305,18 @@ IndexEndpointServiceClient::MutateDeployedIndex(
 
 StatusOr<google::longrunning::Operation>
 IndexEndpointServiceClient::MutateDeployedIndex(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::MutateDeployedIndexRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->MutateDeployedIndex(ExperimentalTag{}, NoAwaitTag{},
-                                          request);
+  return connection_->MutateDeployedIndex(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedIndexResponse>>
 IndexEndpointServiceClient::MutateDeployedIndex(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->MutateDeployedIndex(ExperimentalTag{}, operation);
+  return connection_->MutateDeployedIndex(operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

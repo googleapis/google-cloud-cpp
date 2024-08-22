@@ -72,8 +72,8 @@ InstanceSettingsClient::PatchInstanceSettings(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceSettingsClient::PatchInstanceSettings(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& zone, std::string const& update_mask,
+    NoAwaitTag, std::string const& project, std::string const& zone,
+    std::string const& update_mask,
     google::cloud::cpp::compute::v1::InstanceSettings const&
         instance_settings_resource,
     Options opts) {
@@ -84,8 +84,7 @@ InstanceSettingsClient::PatchInstanceSettings(
   request.set_zone(zone);
   request.set_update_mask(update_mask);
   *request.mutable_instance_settings_resource() = instance_settings_resource;
-  return connection_->PatchInstanceSettings(ExperimentalTag{}, NoAwaitTag{},
-                                            request);
+  return connection_->PatchInstanceSettings(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -99,21 +98,19 @@ InstanceSettingsClient::PatchInstanceSettings(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceSettingsClient::PatchInstanceSettings(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::instance_settings::v1::
         PatchInstanceSettingsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchInstanceSettings(ExperimentalTag{}, NoAwaitTag{},
-                                            request);
+  return connection_->PatchInstanceSettings(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceSettingsClient::PatchInstanceSettings(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchInstanceSettings(ExperimentalTag{}, operation);
+  return connection_->PatchInstanceSettings(operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

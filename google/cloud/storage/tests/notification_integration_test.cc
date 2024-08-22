@@ -14,9 +14,9 @@
 
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -25,7 +25,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::internal::GetEnv;
-using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
 using ::testing::ElementsAre;
@@ -40,10 +39,7 @@ class GrpcNotificationIntegrationTest
 
 TEST_F(GrpcNotificationIntegrationTest, NotificationCRUD) {
   // TODO(#14396) - figure out what to do with the Notifications and gRPC
-  if (!UsingEmulator()) GTEST_SKIP();
-
-  ScopedEnvironment grpc_config("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
-                                "metadata");
+  if (!UsingEmulator() && UsingGrpc()) GTEST_SKIP();
 
   auto const project_id = GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
   ASSERT_THAT(project_id, Not(IsEmpty())) << "GOOGLE_CLOUD_PROJECT is not set";
@@ -53,7 +49,7 @@ TEST_F(GrpcNotificationIntegrationTest, NotificationCRUD) {
   ASSERT_THAT(topic_name, Not(IsEmpty()));
 
   std::string bucket_name = MakeRandomBucketName();
-  auto client = MakeBucketIntegrationTestClient();
+  auto client = MakeIntegrationTestClient(MakeBucketTestOptions());
 
   auto metadata =
       client.CreateBucketForProject(bucket_name, project_id, BucketMetadata());

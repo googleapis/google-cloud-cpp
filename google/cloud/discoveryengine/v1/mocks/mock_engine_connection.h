@@ -47,30 +47,54 @@ class MockEngineServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateEngine)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateEngine(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateEngine(Matcher<google::cloud::discoveryengine::v1::CreateEngineRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::discoveryengine::v1::Engine>>,
       CreateEngine,
       (google::cloud::discoveryengine::v1::CreateEngineRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateEngine(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateEngine,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::discoveryengine::v1::CreateEngineRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateEngine(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::Engine>>,
-              CreateEngine,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              CreateEngine, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteEngine)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteEngine(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteEngine(Matcher<google::cloud::discoveryengine::v1::DeleteEngineRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>,
@@ -78,17 +102,30 @@ class MockEngineServiceConnection
       (google::cloud::discoveryengine::v1::DeleteEngineRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteEngine(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteEngine,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::discoveryengine::v1::DeleteEngineRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteEngine(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>,
-      DeleteEngine,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteEngine, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

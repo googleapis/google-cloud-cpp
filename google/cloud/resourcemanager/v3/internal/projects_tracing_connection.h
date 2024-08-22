@@ -56,12 +56,11 @@ class ProjectsTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> CreateProject(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::resourcemanager::v3::CreateProjectRequest const& request)
       override;
 
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> CreateProject(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> UpdateProject(
@@ -69,12 +68,11 @@ class ProjectsTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> UpdateProject(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::resourcemanager::v3::UpdateProjectRequest const& request)
       override;
 
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> UpdateProject(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> MoveProject(
@@ -82,12 +80,11 @@ class ProjectsTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> MoveProject(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::resourcemanager::v3::MoveProjectRequest const& request)
       override;
 
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> MoveProject(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> DeleteProject(
@@ -95,12 +92,11 @@ class ProjectsTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> DeleteProject(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::resourcemanager::v3::DeleteProjectRequest const& request)
       override;
 
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> DeleteProject(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> UndeleteProject(
@@ -108,12 +104,11 @@ class ProjectsTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> UndeleteProject(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request)
       override;
 
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> UndeleteProject(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(

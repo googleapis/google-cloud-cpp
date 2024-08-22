@@ -24,12 +24,12 @@ set(storage_client_integration_tests
     decompressive_transcoding_integration_test.cc
     error_injection_integration_test.cc
     error_parsing_integration_test.cc
-    grpc_bucket_acl_integration_test.cc
+    bucket_acl_integration_test.cc
     grpc_bucket_metadata_integration_test.cc
-    grpc_default_object_acl_integration_test.cc
+    default_object_acl_integration_test.cc
     grpc_hmac_key_integration_test.cc
     grpc_integration_test.cc
-    grpc_notification_integration_test.cc
+    notification_integration_test.cc
     grpc_object_acl_integration_test.cc
     grpc_object_media_integration_test.cc
     grpc_object_metadata_integration_test.cc
@@ -83,16 +83,6 @@ include(CreateBazelConfig)
 export_list_to_bazel(
     "storage_client_integration_tests.bzl" "storage_client_integration_tests"
     "storage_client_integration_tests_production" YEAR "2018")
-
-# Signed URL conformance tests are parsed using protos. In order to simplify the
-# build files, only build these conformance tests if gRPC in GCS is compiled.
-if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
-    # We need to disable clang tidy for the generated CC files.
-    google_cloud_cpp_proto_library(
-        google_cloud_cpp_storage_tests_conformance_protos
-        conformance_tests.proto PROTO_PATH_DIRECTORIES
-        ${CMAKE_CURRENT_SOURCE_DIR})
-endif ()
 
 foreach (fname IN LISTS storage_client_integration_tests)
     google_cloud_cpp_add_executable(target "storage" "${fname}")

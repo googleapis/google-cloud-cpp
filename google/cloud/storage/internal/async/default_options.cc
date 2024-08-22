@@ -65,7 +65,7 @@ Options DefaultOptionsAsync(Options opts) {
       std::move(opts),
       Options{}
           .set<storage_experimental::ResumePolicyOption>(
-              storage_experimental::UnlimitedErrorCountResumePolicy())
+              storage_experimental::StopOnConsecutiveErrorsResumePolicy())
           .set<storage_experimental::IdempotencyPolicyOption>(
               storage_experimental::MakeStrictIdempotencyPolicy)
           .set<storage_experimental::EnableCrc32cValidationOption>(true));

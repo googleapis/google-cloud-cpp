@@ -47,9 +47,15 @@ class MockAnalyticsServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ExportAnalyticsMetrics)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ExportAnalyticsMetrics(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ExportAnalyticsMetrics(Matcher<google::cloud::retail::v2::ExportAnalyticsMetricsRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::retail::v2::ExportAnalyticsMetricsResponse>>,
@@ -57,17 +63,30 @@ class MockAnalyticsServiceConnection
       (google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ExportAnalyticsMetrics(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ExportAnalyticsMetrics,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ExportAnalyticsMetrics(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::retail::v2::ExportAnalyticsMetricsResponse>>,
-      ExportAnalyticsMetrics,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      ExportAnalyticsMetrics, (google::longrunning::Operation const& operation),
       (override));
 };
 

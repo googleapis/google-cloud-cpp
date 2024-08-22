@@ -20,6 +20,9 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include <algorithm>
 #include <chrono>
+#include <string>
+#include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {

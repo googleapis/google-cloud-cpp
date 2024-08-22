@@ -179,10 +179,6 @@ void SetLongrunningOperationServiceVars(
       auto operation_service_extension =
           method->options().GetExtension(google::cloud::operation_service);
       auto api_version = FormatApiVersionFromPackageName(*method);
-      if (!api_version) {
-        GCP_LOG(FATAL) << "Unrecognized API version in package name: "
-                       << method->file()->package();
-      }
 
       if (operation_service_extension == "GlobalOperations") {
         service_vars["longrunning_operation_include_header"] =
@@ -206,7 +202,7 @@ void SetLongrunningOperationServiceVars(
                               rest_internal::DetermineApiVersion("%s", *options),
                               "/projects/", request.project(),
                               "/global/operations/", request.operation()))""",
-            *api_version);
+            api_version);
         service_vars["longrunning_get_operation_path_rest"] = global_lro_path;
         service_vars["longrunning_cancel_operation_path_rest"] =
             global_lro_path;
@@ -231,7 +227,7 @@ void SetLongrunningOperationServiceVars(
             R"""(absl::StrCat("/compute/",
                               rest_internal::DetermineApiVersion("%s", *options),
                               "/locations/global/operations/", request.operation()))""",
-            *api_version);
+            api_version);
         service_vars["longrunning_get_operation_path_rest"] =
             global_org_lro_path;
         service_vars["longrunning_cancel_operation_path_rest"] =
@@ -261,7 +257,7 @@ void SetLongrunningOperationServiceVars(
                               "/projects/", request.project(),
                               "/regions/", request.region(),
                               "/operations/", request.operation()))""",
-            *api_version);
+            api_version);
         service_vars["longrunning_get_operation_path_rest"] = region_lro_path;
         service_vars["longrunning_cancel_operation_path_rest"] =
             region_lro_path;
@@ -290,7 +286,7 @@ void SetLongrunningOperationServiceVars(
                               "/projects/", request.project(),
                               "/zones/", request.zone(),
                               "/operations/", request.operation()))""",
-            *api_version);
+            api_version);
         service_vars["longrunning_get_operation_path_rest"] = zone_lro_path;
         service_vars["longrunning_cancel_operation_path_rest"] = zone_lro_path;
       } else {

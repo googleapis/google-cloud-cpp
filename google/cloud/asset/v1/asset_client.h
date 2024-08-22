@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSET_V1_ASSET_CLIENT_H
 
 #include "google/cloud/asset/v1/asset_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -151,8 +150,7 @@ class AssetServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ExportAssets(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::asset::v1::ExportAssetsRequest const& request,
+      NoAwaitTag, google::cloud::asset::v1::ExportAssetsRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -165,8 +163,7 @@ class AssetServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>> ExportAssets(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -889,7 +886,7 @@ class AssetServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> AnalyzeIamPolicyLongrunning(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
           request,
       Options opts = {});
@@ -905,8 +902,7 @@ class AssetServiceClient {
   // clang-format on
   future<
       StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>
-  AnalyzeIamPolicyLongrunning(ExperimentalTag,
-                              google::longrunning::Operation const& operation,
+  AnalyzeIamPolicyLongrunning(google::longrunning::Operation const& operation,
                               Options opts = {});
 
   // clang-format off

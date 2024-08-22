@@ -50,62 +50,116 @@ class MockApplicationsConnection : public appengine_v1::ApplicationsConnection {
               (google::appengine::v1::GetApplicationRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateApplication)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateApplication(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateApplication(Matcher<google::appengine::v1::CreateApplicationRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::appengine::v1::Application>>,
               CreateApplication,
               (google::appengine::v1::CreateApplicationRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateApplication(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateApplication,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::appengine::v1::CreateApplicationRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateApplication(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::appengine::v1::Application>>,
               CreateApplication,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateApplication)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateApplication(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateApplication(Matcher<google::appengine::v1::UpdateApplicationRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::appengine::v1::Application>>,
               UpdateApplication,
               (google::appengine::v1::UpdateApplicationRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateApplication(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateApplication,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::appengine::v1::UpdateApplicationRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateApplication(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::appengine::v1::Application>>,
               UpdateApplication,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, RepairApplication)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, RepairApplication(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RepairApplication(Matcher<google::appengine::v1::RepairApplicationRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::appengine::v1::Application>>,
               RepairApplication,
               (google::appengine::v1::RepairApplicationRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, RepairApplication(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, RepairApplication,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::appengine::v1::RepairApplicationRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RepairApplication(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::appengine::v1::Application>>,
               RepairApplication,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

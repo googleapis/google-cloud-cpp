@@ -60,13 +60,12 @@ class FeatureOnlineStoreAdminServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateFeatureOnlineStore(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const&
           request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
   CreateFeatureOnlineStore(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>
@@ -85,13 +84,12 @@ class FeatureOnlineStoreAdminServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateFeatureOnlineStore(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const&
           request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
   UpdateFeatureOnlineStore(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -100,13 +98,12 @@ class FeatureOnlineStoreAdminServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteFeatureOnlineStore(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&
           request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteFeatureOnlineStore(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
@@ -115,13 +112,12 @@ class FeatureOnlineStoreAdminServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateFeatureView(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request)
       override;
 
   future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
-  CreateFeatureView(ExperimentalTag,
-                    google::longrunning::Operation const& operation) override;
+  CreateFeatureView(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::aiplatform::v1::FeatureView> GetFeatureView(
       google::cloud::aiplatform::v1::GetFeatureViewRequest const& request)
@@ -136,13 +132,12 @@ class FeatureOnlineStoreAdminServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateFeatureView(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request)
       override;
 
   future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
-  UpdateFeatureView(ExperimentalTag,
-                    google::longrunning::Operation const& operation) override;
+  UpdateFeatureView(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteFeatureView(
@@ -150,13 +145,12 @@ class FeatureOnlineStoreAdminServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DeleteFeatureView(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request)
       override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeatureView(ExperimentalTag,
-                    google::longrunning::Operation const& operation) override;
+  DeleteFeatureView(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::aiplatform::v1::SyncFeatureViewResponse>
   SyncFeatureView(google::cloud::aiplatform::v1::SyncFeatureViewRequest const&

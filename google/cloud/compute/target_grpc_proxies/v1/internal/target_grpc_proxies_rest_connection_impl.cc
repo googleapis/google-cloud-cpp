@@ -105,9 +105,8 @@ TargetGrpcProxiesRestConnectionImpl::DeleteTargetGrpcProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetGrpcProxiesRestConnectionImpl::DeleteTargetGrpcProxy(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::target_grpc_proxies::v1::
-        DeleteTargetGrpcProxyRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::target_grpc_proxies::v1::
+                    DeleteTargetGrpcProxyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -122,7 +121,6 @@ TargetGrpcProxiesRestConnectionImpl::DeleteTargetGrpcProxy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetGrpcProxiesRestConnectionImpl::DeleteTargetGrpcProxy(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -250,9 +248,8 @@ TargetGrpcProxiesRestConnectionImpl::InsertTargetGrpcProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetGrpcProxiesRestConnectionImpl::InsertTargetGrpcProxy(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::target_grpc_proxies::v1::
-        InsertTargetGrpcProxyRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::target_grpc_proxies::v1::
+                    InsertTargetGrpcProxyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -267,7 +264,6 @@ TargetGrpcProxiesRestConnectionImpl::InsertTargetGrpcProxy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetGrpcProxiesRestConnectionImpl::InsertTargetGrpcProxy(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -419,9 +415,8 @@ TargetGrpcProxiesRestConnectionImpl::PatchTargetGrpcProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetGrpcProxiesRestConnectionImpl::PatchTargetGrpcProxy(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::target_grpc_proxies::v1::
-        PatchTargetGrpcProxyRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::target_grpc_proxies::v1::
+                    PatchTargetGrpcProxyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -436,7 +431,6 @@ TargetGrpcProxiesRestConnectionImpl::PatchTargetGrpcProxy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetGrpcProxiesRestConnectionImpl::PatchTargetGrpcProxy(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

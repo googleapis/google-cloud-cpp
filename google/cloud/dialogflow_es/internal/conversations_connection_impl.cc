@@ -207,6 +207,22 @@ ConversationsConnectionImpl::GenerateStatelessSummary(
       *current, request, __func__);
 }
 
+StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSuggestionResponse>
+ConversationsConnectionImpl::GenerateStatelessSuggestion(
+    google::cloud::dialogflow::v2::GenerateStatelessSuggestionRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GenerateStatelessSuggestion(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::v2::
+                 GenerateStatelessSuggestionRequest const& request) {
+        return stub_->GenerateStatelessSuggestion(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>
 ConversationsConnectionImpl::SearchKnowledge(
     google::cloud::dialogflow::v2::SearchKnowledgeRequest const& request) {

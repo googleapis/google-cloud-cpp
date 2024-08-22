@@ -102,7 +102,7 @@ SpeechConnectionImpl::CreateRecognizer(
 }
 
 StatusOr<google::longrunning::Operation> SpeechConnectionImpl::CreateRecognizer(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::speech::v2::CreateRecognizerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -118,7 +118,7 @@ StatusOr<google::longrunning::Operation> SpeechConnectionImpl::CreateRecognizer(
 
 future<StatusOr<google::cloud::speech::v2::Recognizer>>
 SpeechConnectionImpl::CreateRecognizer(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::speech::v2::OperationMetadata>()) {
@@ -240,7 +240,7 @@ SpeechConnectionImpl::UpdateRecognizer(
 }
 
 StatusOr<google::longrunning::Operation> SpeechConnectionImpl::UpdateRecognizer(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::speech::v2::UpdateRecognizerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -256,7 +256,7 @@ StatusOr<google::longrunning::Operation> SpeechConnectionImpl::UpdateRecognizer(
 
 future<StatusOr<google::cloud::speech::v2::Recognizer>>
 SpeechConnectionImpl::UpdateRecognizer(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::speech::v2::OperationMetadata>()) {
@@ -330,7 +330,7 @@ SpeechConnectionImpl::DeleteRecognizer(
 }
 
 StatusOr<google::longrunning::Operation> SpeechConnectionImpl::DeleteRecognizer(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::speech::v2::DeleteRecognizerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -346,7 +346,7 @@ StatusOr<google::longrunning::Operation> SpeechConnectionImpl::DeleteRecognizer(
 
 future<StatusOr<google::cloud::speech::v2::Recognizer>>
 SpeechConnectionImpl::DeleteRecognizer(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::speech::v2::OperationMetadata>()) {
@@ -421,7 +421,7 @@ SpeechConnectionImpl::UndeleteRecognizer(
 
 StatusOr<google::longrunning::Operation>
 SpeechConnectionImpl::UndeleteRecognizer(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::speech::v2::UndeleteRecognizerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -437,7 +437,7 @@ SpeechConnectionImpl::UndeleteRecognizer(
 
 future<StatusOr<google::cloud::speech::v2::Recognizer>>
 SpeechConnectionImpl::UndeleteRecognizer(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::speech::v2::OperationMetadata>()) {
@@ -534,7 +534,7 @@ SpeechConnectionImpl::BatchRecognize(
 }
 
 StatusOr<google::longrunning::Operation> SpeechConnectionImpl::BatchRecognize(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::speech::v2::BatchRecognizeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -549,7 +549,7 @@ StatusOr<google::longrunning::Operation> SpeechConnectionImpl::BatchRecognize(
 
 future<StatusOr<google::cloud::speech::v2::BatchRecognizeResponse>>
 SpeechConnectionImpl::BatchRecognize(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::speech::v2::OperationMetadata>()) {
@@ -651,7 +651,7 @@ SpeechConnectionImpl::CreateCustomClass(
 
 StatusOr<google::longrunning::Operation>
 SpeechConnectionImpl::CreateCustomClass(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::speech::v2::CreateCustomClassRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -667,7 +667,7 @@ SpeechConnectionImpl::CreateCustomClass(
 
 future<StatusOr<google::cloud::speech::v2::CustomClass>>
 SpeechConnectionImpl::CreateCustomClass(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::speech::v2::OperationMetadata>()) {
@@ -790,7 +790,7 @@ SpeechConnectionImpl::UpdateCustomClass(
 
 StatusOr<google::longrunning::Operation>
 SpeechConnectionImpl::UpdateCustomClass(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::speech::v2::UpdateCustomClassRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -806,7 +806,7 @@ SpeechConnectionImpl::UpdateCustomClass(
 
 future<StatusOr<google::cloud::speech::v2::CustomClass>>
 SpeechConnectionImpl::UpdateCustomClass(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::speech::v2::OperationMetadata>()) {
@@ -881,7 +881,7 @@ SpeechConnectionImpl::DeleteCustomClass(
 
 StatusOr<google::longrunning::Operation>
 SpeechConnectionImpl::DeleteCustomClass(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::speech::v2::DeleteCustomClassRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -897,7 +897,7 @@ SpeechConnectionImpl::DeleteCustomClass(
 
 future<StatusOr<google::cloud::speech::v2::CustomClass>>
 SpeechConnectionImpl::DeleteCustomClass(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::speech::v2::OperationMetadata>()) {
@@ -973,7 +973,7 @@ SpeechConnectionImpl::UndeleteCustomClass(
 
 StatusOr<google::longrunning::Operation>
 SpeechConnectionImpl::UndeleteCustomClass(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::speech::v2::UndeleteCustomClassRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -989,7 +989,7 @@ SpeechConnectionImpl::UndeleteCustomClass(
 
 future<StatusOr<google::cloud::speech::v2::CustomClass>>
 SpeechConnectionImpl::UndeleteCustomClass(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::speech::v2::OperationMetadata>()) {
@@ -1063,7 +1063,7 @@ SpeechConnectionImpl::CreatePhraseSet(
 }
 
 StatusOr<google::longrunning::Operation> SpeechConnectionImpl::CreatePhraseSet(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::speech::v2::CreatePhraseSetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1078,7 +1078,7 @@ StatusOr<google::longrunning::Operation> SpeechConnectionImpl::CreatePhraseSet(
 
 future<StatusOr<google::cloud::speech::v2::PhraseSet>>
 SpeechConnectionImpl::CreatePhraseSet(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::speech::v2::OperationMetadata>()) {
@@ -1200,7 +1200,7 @@ SpeechConnectionImpl::UpdatePhraseSet(
 }
 
 StatusOr<google::longrunning::Operation> SpeechConnectionImpl::UpdatePhraseSet(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::speech::v2::UpdatePhraseSetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1215,7 +1215,7 @@ StatusOr<google::longrunning::Operation> SpeechConnectionImpl::UpdatePhraseSet(
 
 future<StatusOr<google::cloud::speech::v2::PhraseSet>>
 SpeechConnectionImpl::UpdatePhraseSet(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::speech::v2::OperationMetadata>()) {
@@ -1289,7 +1289,7 @@ SpeechConnectionImpl::DeletePhraseSet(
 }
 
 StatusOr<google::longrunning::Operation> SpeechConnectionImpl::DeletePhraseSet(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::speech::v2::DeletePhraseSetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1304,7 +1304,7 @@ StatusOr<google::longrunning::Operation> SpeechConnectionImpl::DeletePhraseSet(
 
 future<StatusOr<google::cloud::speech::v2::PhraseSet>>
 SpeechConnectionImpl::DeletePhraseSet(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::speech::v2::OperationMetadata>()) {
@@ -1379,7 +1379,7 @@ SpeechConnectionImpl::UndeletePhraseSet(
 
 StatusOr<google::longrunning::Operation>
 SpeechConnectionImpl::UndeletePhraseSet(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::speech::v2::UndeletePhraseSetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1395,7 +1395,7 @@ SpeechConnectionImpl::UndeletePhraseSet(
 
 future<StatusOr<google::cloud::speech::v2::PhraseSet>>
 SpeechConnectionImpl::UndeletePhraseSet(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::speech::v2::OperationMetadata>()) {

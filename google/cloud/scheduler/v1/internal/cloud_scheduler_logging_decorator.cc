@@ -21,6 +21,8 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/scheduler/v1/cloudscheduler.grpc.pb.h>
 #include <memory>
+#include <set>
+#include <string>
 #include <utility>
 
 namespace google {

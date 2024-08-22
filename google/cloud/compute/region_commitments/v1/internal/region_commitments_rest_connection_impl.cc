@@ -166,9 +166,8 @@ RegionCommitmentsRestConnectionImpl::InsertCommitment(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionCommitmentsRestConnectionImpl::InsertCommitment(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_commitments::v1::
-        InsertCommitmentRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::region_commitments::v1::
+                    InsertCommitmentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -183,7 +182,6 @@ RegionCommitmentsRestConnectionImpl::InsertCommitment(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionCommitmentsRestConnectionImpl::InsertCommitment(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -339,9 +337,8 @@ RegionCommitmentsRestConnectionImpl::UpdateCommitment(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionCommitmentsRestConnectionImpl::UpdateCommitment(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_commitments::v1::
-        UpdateCommitmentRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::region_commitments::v1::
+                    UpdateCommitmentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -356,7 +353,6 @@ RegionCommitmentsRestConnectionImpl::UpdateCommitment(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionCommitmentsRestConnectionImpl::UpdateCommitment(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

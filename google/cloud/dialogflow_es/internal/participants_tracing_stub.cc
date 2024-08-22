@@ -19,6 +19,7 @@
 #include "google/cloud/dialogflow_es/internal/participants_tracing_stub.h"
 #include "google/cloud/internal/async_read_write_stream_tracing.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {
@@ -144,6 +145,20 @@ ParticipantsTracingStub::SuggestSmartReplies(
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span, child_->SuggestSmartReplies(context, options, request));
+}
+
+StatusOr<google::cloud::dialogflow::v2::SuggestKnowledgeAssistResponse>
+ParticipantsTracingStub::SuggestKnowledgeAssist(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::v2::SuggestKnowledgeAssistRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Participants",
+                                     "SuggestKnowledgeAssist");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->SuggestKnowledgeAssist(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/generate_message_boundary.h"
 #include <algorithm>
+#include <string>
 
 namespace google {
 namespace cloud {

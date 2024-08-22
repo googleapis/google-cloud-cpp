@@ -428,6 +428,13 @@ function (google_cloud_cpp_enable_features)
                 )
                 continue()
             endif ()
+            if (IS_DIRECTORY
+                "${PROJECT_SOURCE_DIR}/protos/google/cloud/${feature}"
+                AND EXISTS
+                    "${PROJECT_SOURCE_DIR}/protos/google/cloud/${feature}/CMakeLists.txt"
+            )
+                add_subdirectory(protos/google/cloud/${feature})
+            endif ()
             add_subdirectory(google/cloud/${feature})
             if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES
                 AND IS_DIRECTORY

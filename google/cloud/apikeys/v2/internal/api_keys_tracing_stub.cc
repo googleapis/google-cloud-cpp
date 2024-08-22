@@ -18,6 +18,7 @@
 
 #include "google/cloud/apikeys/v2/internal/api_keys_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

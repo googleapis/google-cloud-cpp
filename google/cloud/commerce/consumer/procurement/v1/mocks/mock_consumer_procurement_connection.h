@@ -49,9 +49,15 @@ class MockConsumerProcurementServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, PlaceOrder)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, PlaceOrder(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PlaceOrder(Matcher<google::cloud::commerce::consumer::procurement::v1::PlaceOrderRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>,
@@ -60,17 +66,29 @@ class MockConsumerProcurementServiceConnection
            PlaceOrderRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, PlaceOrder(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, PlaceOrder,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::commerce::consumer::procurement::v1::
-                   PlaceOrderRequest const& request),
+              (NoAwaitTag, google::cloud::commerce::consumer::procurement::v1::
+                               PlaceOrderRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, PlaceOrder(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>,
-      PlaceOrder,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      PlaceOrder, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

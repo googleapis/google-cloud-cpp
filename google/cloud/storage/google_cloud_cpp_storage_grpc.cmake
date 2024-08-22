@@ -78,6 +78,8 @@ add_library(
     async/object_responses.cc
     async/object_responses.h
     async/options.h
+    async/read_all.cc
+    async/read_all.h
     async/reader.cc
     async/reader.h
     async/reader_connection.h
@@ -93,8 +95,6 @@ add_library(
     async/writer_connection.h
     grpc_plugin.cc
     grpc_plugin.h
-    internal/async/accumulate_read_object.cc
-    internal/async/accumulate_read_object.h
     internal/async/connection_fwd.h
     internal/async/connection_impl.cc
     internal/async/connection_impl.h
@@ -355,7 +355,7 @@ if (GOOGLE_CLOUD_CPP_WITH_MOCKS)
     google_cloud_cpp_add_pkgconfig(
         storage_grpc_mocks "Google Cloud Storage (gRPC) Mocks"
         "Mocks for the Google Cloud Storage (gRPC) C++ Client Library"
-        "google_cloud_cpp_storage" " gmock_main")
+        "google_cloud_cpp_storage" " gmock")
 
     # Create and install the CMake configuration files.
     configure_file("mocks-config.cmake.in"
@@ -388,13 +388,13 @@ set(storage_client_grpc_unit_tests
     async/bucket_name_test.cc
     async/client_test.cc
     async/idempotency_policy_test.cc
+    async/read_all_test.cc
     async/reader_test.cc
     async/resume_policy_test.cc
     async/rewriter_test.cc
     async/token_test.cc
     async/writer_test.cc
     grpc_plugin_test.cc
-    internal/async/accumulate_read_object_test.cc
     internal/async/connection_impl_insert_test.cc
     internal/async/connection_impl_read_hash_test.cc
     internal/async/connection_impl_read_test.cc

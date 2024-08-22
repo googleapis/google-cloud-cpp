@@ -113,14 +113,12 @@ class AnalyticsHubServiceConnectionImpl
           SubscribeDataExchangeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> SubscribeDataExchange(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::bigquery::analyticshub::v1::
-          SubscribeDataExchangeRequest const& request) override;
+      NoAwaitTag, google::cloud::bigquery::analyticshub::v1::
+                      SubscribeDataExchangeRequest const& request) override;
 
   future<StatusOr<
       google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
   SubscribeDataExchange(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<
@@ -129,14 +127,12 @@ class AnalyticsHubServiceConnectionImpl
                           RefreshSubscriptionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RefreshSubscription(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::bigquery::analyticshub::v1::
-          RefreshSubscriptionRequest const& request) override;
+      NoAwaitTag, google::cloud::bigquery::analyticshub::v1::
+                      RefreshSubscriptionRequest const& request) override;
 
   future<StatusOr<
       google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
-  RefreshSubscription(ExperimentalTag,
-                      google::longrunning::Operation const& operation) override;
+  RefreshSubscription(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription>
   GetSubscription(
@@ -163,13 +159,11 @@ class AnalyticsHubServiceConnectionImpl
                          DeleteSubscriptionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteSubscription(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::bigquery::analyticshub::v1::
-          DeleteSubscriptionRequest const& request) override;
+      NoAwaitTag, google::cloud::bigquery::analyticshub::v1::
+                      DeleteSubscriptionRequest const& request) override;
 
   future<StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>
-  DeleteSubscription(ExperimentalTag,
-                     google::longrunning::Operation const& operation) override;
+  DeleteSubscription(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request) override;

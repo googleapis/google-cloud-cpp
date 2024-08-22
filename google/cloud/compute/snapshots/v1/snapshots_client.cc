@@ -43,14 +43,13 @@ SnapshotsClient::DeleteSnapshot(std::string const& project,
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-SnapshotsClient::DeleteSnapshot(ExperimentalTag, NoAwaitTag,
-                                std::string const& project,
+SnapshotsClient::DeleteSnapshot(NoAwaitTag, std::string const& project,
                                 std::string const& snapshot, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest request;
   request.set_project(project);
   request.set_snapshot(snapshot);
-  return connection_->DeleteSnapshot(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteSnapshot(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -64,20 +63,19 @@ SnapshotsClient::DeleteSnapshot(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SnapshotsClient::DeleteSnapshot(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteSnapshot(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteSnapshot(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SnapshotsClient::DeleteSnapshot(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteSnapshot(ExperimentalTag{}, operation);
+  return connection_->DeleteSnapshot(operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Snapshot>
@@ -130,14 +128,14 @@ SnapshotsClient::InsertSnapshot(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SnapshotsClient::InsertSnapshot(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
+    NoAwaitTag, std::string const& project,
     google::cloud::cpp::compute::v1::Snapshot const& snapshot_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest request;
   request.set_project(project);
   *request.mutable_snapshot_resource() = snapshot_resource;
-  return connection_->InsertSnapshot(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->InsertSnapshot(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -151,20 +149,19 @@ SnapshotsClient::InsertSnapshot(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SnapshotsClient::InsertSnapshot(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertSnapshot(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->InsertSnapshot(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SnapshotsClient::InsertSnapshot(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertSnapshot(ExperimentalTag{}, operation);
+  return connection_->InsertSnapshot(operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Snapshot>
@@ -221,8 +218,7 @@ SnapshotsClient::SetLabels(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation> SnapshotsClient::SetLabels(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& resource,
+    NoAwaitTag, std::string const& project, std::string const& resource,
     google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const&
         global_set_labels_request_resource,
     Options opts) {
@@ -232,7 +228,7 @@ StatusOr<google::cloud::cpp::compute::v1::Operation> SnapshotsClient::SetLabels(
   request.set_resource(resource);
   *request.mutable_global_set_labels_request_resource() =
       global_set_labels_request_resource;
-  return connection_->SetLabels(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->SetLabels(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -244,19 +240,18 @@ SnapshotsClient::SetLabels(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation> SnapshotsClient::SetLabels(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SetLabels(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->SetLabels(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SnapshotsClient::SetLabels(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SetLabels(ExperimentalTag{}, operation);
+  return connection_->SetLabels(operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

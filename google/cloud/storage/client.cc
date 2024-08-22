@@ -26,8 +26,10 @@
 #include "absl/strings/str_split.h"
 #include <fstream>
 #include <memory>
+#include <string>
 #include <thread>
 #include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {

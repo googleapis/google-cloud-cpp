@@ -19,6 +19,7 @@
 #include "google/cloud/storage/version.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/oauth2_minimal_iam_credentials_rest.h"
+#include <memory>
 #include <mutex>
 #include <string>
 

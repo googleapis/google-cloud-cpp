@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/make_jwt_assertion.h"
 #include "google/cloud/storage/internal/base64.h"
 #include "google/cloud/internal/sign_using_sha256.h"
+#include <utility>
 
 namespace google {
 namespace cloud {

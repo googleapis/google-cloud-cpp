@@ -24,7 +24,9 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/aiplatform/v1/schedule_service.grpc.pb.h>
 #include <memory>
+#include <string>
 #include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {

@@ -21,6 +21,8 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/vision/v1/image_annotator.grpc.pb.h>
 #include <memory>
+#include <set>
+#include <string>
 #include <utility>
 
 namespace google {

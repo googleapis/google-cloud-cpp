@@ -60,9 +60,15 @@ class MockCertificateManagerConnection
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateCertificate)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateCertificate(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateCertificate(Matcher<google::cloud::certificatemanager::v1::CreateCertificateRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>,
       CreateCertificate,
@@ -70,22 +76,41 @@ class MockCertificateManagerConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateCertificate(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateCertificate,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::certificatemanager::v1::CreateCertificateRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateCertificate(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>,
-      CreateCertificate,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      CreateCertificate, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateCertificate)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateCertificate(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateCertificate(Matcher<google::cloud::certificatemanager::v1::UpdateCertificateRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>,
       UpdateCertificate,
@@ -93,22 +118,41 @@ class MockCertificateManagerConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateCertificate(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateCertificate,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::certificatemanager::v1::UpdateCertificateRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateCertificate(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>,
-      UpdateCertificate,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      UpdateCertificate, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteCertificate)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteCertificate(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteCertificate(Matcher<google::cloud::certificatemanager::v1::DeleteCertificateRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>,
@@ -117,18 +161,31 @@ class MockCertificateManagerConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteCertificate(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteCertificate,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::certificatemanager::v1::DeleteCertificateRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteCertificate(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>,
-      DeleteCertificate,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteCertificate, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -145,9 +202,15 @@ class MockCertificateManagerConnection
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateCertificateMap)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateCertificateMap(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateCertificateMap(Matcher<google::cloud::certificatemanager::v1::CreateCertificateMapRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>,
       CreateCertificateMap,
@@ -155,22 +218,41 @@ class MockCertificateManagerConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateCertificateMap(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateCertificateMap,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::certificatemanager::v1::CreateCertificateMapRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateCertificateMap(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>,
-      CreateCertificateMap,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      CreateCertificateMap, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateCertificateMap)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateCertificateMap(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateCertificateMap(Matcher<google::cloud::certificatemanager::v1::UpdateCertificateMapRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>,
       UpdateCertificateMap,
@@ -178,22 +260,41 @@ class MockCertificateManagerConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateCertificateMap(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateCertificateMap,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::certificatemanager::v1::UpdateCertificateMapRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateCertificateMap(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>,
-      UpdateCertificateMap,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      UpdateCertificateMap, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteCertificateMap)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteCertificateMap(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteCertificateMap(Matcher<google::cloud::certificatemanager::v1::DeleteCertificateMapRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>,
@@ -202,18 +303,31 @@ class MockCertificateManagerConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteCertificateMap(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteCertificateMap,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::certificatemanager::v1::DeleteCertificateMapRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteCertificateMap(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>,
-      DeleteCertificateMap,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteCertificateMap, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -230,9 +344,15 @@ class MockCertificateManagerConnection
            GetCertificateMapEntryRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateCertificateMapEntry)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateCertificateMapEntry(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateCertificateMapEntry(Matcher<google::cloud::certificatemanager::v1::CreateCertificateMapEntryRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>,
@@ -241,23 +361,42 @@ class MockCertificateManagerConnection
            CreateCertificateMapEntryRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateCertificateMapEntry(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               CreateCertificateMapEntry,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::certificatemanager::v1::
-                   CreateCertificateMapEntryRequest const& request),
+              (NoAwaitTag, google::cloud::certificatemanager::v1::
+                               CreateCertificateMapEntryRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateCertificateMapEntry(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>,
       CreateCertificateMapEntry,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateCertificateMapEntry)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateCertificateMapEntry(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateCertificateMapEntry(Matcher<google::cloud::certificatemanager::v1::UpdateCertificateMapEntryRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>,
@@ -266,23 +405,42 @@ class MockCertificateManagerConnection
            UpdateCertificateMapEntryRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateCertificateMapEntry(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               UpdateCertificateMapEntry,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::certificatemanager::v1::
-                   UpdateCertificateMapEntryRequest const& request),
+              (NoAwaitTag, google::cloud::certificatemanager::v1::
+                               UpdateCertificateMapEntryRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateCertificateMapEntry(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>,
       UpdateCertificateMapEntry,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteCertificateMapEntry)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteCertificateMapEntry(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteCertificateMapEntry(Matcher<google::cloud::certificatemanager::v1::DeleteCertificateMapEntryRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>,
@@ -291,19 +449,32 @@ class MockCertificateManagerConnection
            DeleteCertificateMapEntryRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteCertificateMapEntry(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               DeleteCertificateMapEntry,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::certificatemanager::v1::
-                   DeleteCertificateMapEntryRequest const& request),
+              (NoAwaitTag, google::cloud::certificatemanager::v1::
+                               DeleteCertificateMapEntryRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteCertificateMapEntry(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>,
       DeleteCertificateMapEntry,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       (StreamRange<google::cloud::certificatemanager::v1::DnsAuthorization>),
@@ -319,9 +490,15 @@ class MockCertificateManagerConnection
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateDnsAuthorization)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateDnsAuthorization(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateDnsAuthorization(Matcher<google::cloud::certificatemanager::v1::CreateDnsAuthorizationRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>,
       CreateDnsAuthorization,
@@ -329,21 +506,39 @@ class MockCertificateManagerConnection
            CreateDnsAuthorizationRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateDnsAuthorization(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateDnsAuthorization,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::certificatemanager::v1::
-                   CreateDnsAuthorizationRequest const& request),
+              (NoAwaitTag, google::cloud::certificatemanager::v1::
+                               CreateDnsAuthorizationRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateDnsAuthorization(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>,
-      CreateDnsAuthorization,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      CreateDnsAuthorization, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateDnsAuthorization)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateDnsAuthorization(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateDnsAuthorization(Matcher<google::cloud::certificatemanager::v1::UpdateDnsAuthorizationRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>,
       UpdateDnsAuthorization,
@@ -351,21 +546,39 @@ class MockCertificateManagerConnection
            UpdateDnsAuthorizationRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateDnsAuthorization(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateDnsAuthorization,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::certificatemanager::v1::
-                   UpdateDnsAuthorizationRequest const& request),
+              (NoAwaitTag, google::cloud::certificatemanager::v1::
+                               UpdateDnsAuthorizationRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateDnsAuthorization(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>,
-      UpdateDnsAuthorization,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      UpdateDnsAuthorization, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteDnsAuthorization)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteDnsAuthorization(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteDnsAuthorization(Matcher<google::cloud::certificatemanager::v1::DeleteDnsAuthorizationRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>,
@@ -374,17 +587,29 @@ class MockCertificateManagerConnection
            DeleteDnsAuthorizationRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteDnsAuthorization(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteDnsAuthorization,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::certificatemanager::v1::
-                   DeleteDnsAuthorizationRequest const& request),
+              (NoAwaitTag, google::cloud::certificatemanager::v1::
+                               DeleteDnsAuthorizationRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteDnsAuthorization(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>,
-      DeleteDnsAuthorization,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteDnsAuthorization, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -403,10 +628,15 @@ class MockCertificateManagerConnection
            GetCertificateIssuanceConfigRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateCertificateIssuanceConfig)` is now ambiguous.
-  /// Use `EXPECT_CALL(*mock, CreateCertificateIssuanceConfig(::testing::_))`
-  /// instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateCertificateIssuanceConfig(Matcher<google::cloud::certificatemanager::v1::CreateCertificateIssuanceConfigRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>,
@@ -415,24 +645,43 @@ class MockCertificateManagerConnection
            CreateCertificateIssuanceConfigRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateCertificateIssuanceConfig(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               CreateCertificateIssuanceConfig,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::certificatemanager::v1::
                    CreateCertificateIssuanceConfigRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateCertificateIssuanceConfig(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>,
       CreateCertificateIssuanceConfig,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteCertificateIssuanceConfig)` is now ambiguous.
-  /// Use `EXPECT_CALL(*mock, DeleteCertificateIssuanceConfig(::testing::_))`
-  /// instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteCertificateIssuanceConfig(Matcher<google::cloud::certificatemanager::v1::DeleteCertificateIssuanceConfigRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>,
@@ -441,19 +690,33 @@ class MockCertificateManagerConnection
            DeleteCertificateIssuanceConfigRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteCertificateIssuanceConfig(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               DeleteCertificateIssuanceConfig,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::certificatemanager::v1::
                    DeleteCertificateIssuanceConfigRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteCertificateIssuanceConfig(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>,
       DeleteCertificateIssuanceConfig,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       (StreamRange<google::cloud::certificatemanager::v1::TrustConfig>),
@@ -468,9 +731,15 @@ class MockCertificateManagerConnection
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateTrustConfig)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateTrustConfig(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateTrustConfig(Matcher<google::cloud::certificatemanager::v1::CreateTrustConfigRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>,
       CreateTrustConfig,
@@ -478,22 +747,41 @@ class MockCertificateManagerConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateTrustConfig(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateTrustConfig,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::certificatemanager::v1::CreateTrustConfigRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateTrustConfig(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>,
-      CreateTrustConfig,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      CreateTrustConfig, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateTrustConfig)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateTrustConfig(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateTrustConfig(Matcher<google::cloud::certificatemanager::v1::UpdateTrustConfigRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>,
       UpdateTrustConfig,
@@ -501,22 +789,41 @@ class MockCertificateManagerConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateTrustConfig(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateTrustConfig,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateTrustConfig(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>,
-      UpdateTrustConfig,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      UpdateTrustConfig, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteTrustConfig)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteTrustConfig(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteTrustConfig(Matcher<google::cloud::certificatemanager::v1::DeleteTrustConfigRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>,
@@ -525,18 +832,31 @@ class MockCertificateManagerConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteTrustConfig(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteTrustConfig,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteTrustConfig(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>,
-      DeleteTrustConfig,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteTrustConfig, (google::longrunning::Operation const& operation),
       (override));
 };
 

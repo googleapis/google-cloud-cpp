@@ -22,7 +22,6 @@
 #include "google/cloud/resourcemanager/v3/folders_connection_idempotency_policy.h"
 #include "google/cloud/resourcemanager/v3/internal/folders_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -198,59 +197,55 @@ class FoldersConnection {
       google::cloud::resourcemanager::v3::CreateFolderRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateFolder(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::resourcemanager::v3::CreateFolderRequest const& request);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-  CreateFolder(ExperimentalTag,
-               google::longrunning::Operation const& operation);
+  CreateFolder(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
   UpdateFolder(
       google::cloud::resourcemanager::v3::UpdateFolderRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateFolder(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::resourcemanager::v3::UpdateFolderRequest const& request);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-  UpdateFolder(ExperimentalTag,
-               google::longrunning::Operation const& operation);
+  UpdateFolder(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
   MoveFolder(
       google::cloud::resourcemanager::v3::MoveFolderRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> MoveFolder(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::resourcemanager::v3::MoveFolderRequest const& request);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-  MoveFolder(ExperimentalTag, google::longrunning::Operation const& operation);
+  MoveFolder(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
   DeleteFolder(
       google::cloud::resourcemanager::v3::DeleteFolderRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteFolder(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::resourcemanager::v3::DeleteFolderRequest const& request);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-  DeleteFolder(ExperimentalTag,
-               google::longrunning::Operation const& operation);
+  DeleteFolder(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
   UndeleteFolder(
       google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UndeleteFolder(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-  UndeleteFolder(ExperimentalTag,
-                 google::longrunning::Operation const& operation);
+  UndeleteFolder(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request);

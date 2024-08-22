@@ -22,7 +22,6 @@
 #include "google/cloud/vision/v1/image_annotator_connection_idempotency_policy.h"
 #include "google/cloud/vision/v1/internal/image_annotator_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -201,14 +200,13 @@ class ImageAnnotatorConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> AsyncBatchAnnotateImages(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const&
           request);
 
   virtual future<
       StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>
-  AsyncBatchAnnotateImages(ExperimentalTag,
-                           google::longrunning::Operation const& operation);
+  AsyncBatchAnnotateImages(google::longrunning::Operation const& operation);
 
   virtual future<
       StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
@@ -216,13 +214,12 @@ class ImageAnnotatorConnection {
       google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> AsyncBatchAnnotateFiles(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
-  AsyncBatchAnnotateFiles(ExperimentalTag,
-                          google::longrunning::Operation const& operation);
+  AsyncBatchAnnotateFiles(google::longrunning::Operation const& operation);
 };
 
 /**

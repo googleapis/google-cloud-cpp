@@ -16,6 +16,8 @@
 #include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/internal/hash_validator.h"
 #include "google/cloud/internal/make_status.h"
+#include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

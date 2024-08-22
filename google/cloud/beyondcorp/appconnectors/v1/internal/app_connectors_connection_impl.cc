@@ -171,9 +171,8 @@ AppConnectorsServiceConnectionImpl::CreateAppConnector(
 
 StatusOr<google::longrunning::Operation>
 AppConnectorsServiceConnectionImpl::CreateAppConnector(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::beyondcorp::appconnectors::v1::
-        CreateAppConnectorRequest const& request) {
+    NoAwaitTag, google::cloud::beyondcorp::appconnectors::v1::
+                    CreateAppConnectorRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -188,7 +187,7 @@ AppConnectorsServiceConnectionImpl::CreateAppConnector(
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
 AppConnectorsServiceConnectionImpl::CreateAppConnector(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::beyondcorp::appconnectors::v1::
@@ -266,9 +265,8 @@ AppConnectorsServiceConnectionImpl::UpdateAppConnector(
 
 StatusOr<google::longrunning::Operation>
 AppConnectorsServiceConnectionImpl::UpdateAppConnector(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::beyondcorp::appconnectors::v1::
-        UpdateAppConnectorRequest const& request) {
+    NoAwaitTag, google::cloud::beyondcorp::appconnectors::v1::
+                    UpdateAppConnectorRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -283,7 +281,7 @@ AppConnectorsServiceConnectionImpl::UpdateAppConnector(
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
 AppConnectorsServiceConnectionImpl::UpdateAppConnector(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::beyondcorp::appconnectors::v1::
@@ -364,9 +362,8 @@ AppConnectorsServiceConnectionImpl::DeleteAppConnector(
 
 StatusOr<google::longrunning::Operation>
 AppConnectorsServiceConnectionImpl::DeleteAppConnector(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::beyondcorp::appconnectors::v1::
-        DeleteAppConnectorRequest const& request) {
+    NoAwaitTag, google::cloud::beyondcorp::appconnectors::v1::
+                    DeleteAppConnectorRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -382,7 +379,7 @@ AppConnectorsServiceConnectionImpl::DeleteAppConnector(
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
                     AppConnectorOperationMetadata>>
 AppConnectorsServiceConnectionImpl::DeleteAppConnector(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::beyondcorp::appconnectors::v1::
@@ -462,7 +459,7 @@ AppConnectorsServiceConnectionImpl::ReportStatus(
 
 StatusOr<google::longrunning::Operation>
 AppConnectorsServiceConnectionImpl::ReportStatus(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -479,7 +476,7 @@ AppConnectorsServiceConnectionImpl::ReportStatus(
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
 AppConnectorsServiceConnectionImpl::ReportStatus(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::beyondcorp::appconnectors::v1::

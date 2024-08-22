@@ -185,7 +185,7 @@ TEST(AsyncReaderConnectionResume, Resume) {
       });
 
   auto resume_policy = std::make_unique<MockResumePolicy>();
-  EXPECT_CALL(*resume_policy, OnStartSuccess).Times(3);
+  EXPECT_CALL(*resume_policy, OnStartSuccess).Times(5);  // Per Read() success
   EXPECT_CALL(*resume_policy, OnFinish)
       .WillRepeatedly(Return(ResumePolicy::kContinue));
 
@@ -257,7 +257,7 @@ TEST(AsyncReaderConnectionResume, HashValidation) {
   });
 
   auto resume_policy = std::make_unique<MockResumePolicy>();
-  EXPECT_CALL(*resume_policy, OnStartSuccess).Times(1);
+  EXPECT_CALL(*resume_policy, OnStartSuccess).Times(2);  // Per Read() success
   EXPECT_CALL(*resume_policy, OnFinish).Times(0);
 
   AsyncReaderConnectionResume tested(
@@ -317,7 +317,7 @@ TEST(AsyncReaderConnectionResume, HashValidationWithError) {
   });
 
   auto resume_policy = std::make_unique<MockResumePolicy>();
-  EXPECT_CALL(*resume_policy, OnStartSuccess).Times(1);
+  EXPECT_CALL(*resume_policy, OnStartSuccess).Times(2);  // Per Read() success
   EXPECT_CALL(*resume_policy, OnFinish).Times(0);
 
   AsyncReaderConnectionResume tested(
@@ -345,7 +345,7 @@ TEST(AsyncReaderConnectionResume, Cancel) {
   });
 
   auto resume_policy = std::make_unique<MockResumePolicy>();
-  EXPECT_CALL(*resume_policy, OnStartSuccess).Times(1);
+  EXPECT_CALL(*resume_policy, OnStartSuccess).Times(0);  // Per Read() success
   EXPECT_CALL(*resume_policy, OnFinish)
       .WillRepeatedly(Return(ResumePolicy::kStop));
 
@@ -374,7 +374,7 @@ TEST(AsyncReaderConnectionResume, GetRequestMetadata) {
   });
 
   auto resume_policy = std::make_unique<MockResumePolicy>();
-  EXPECT_CALL(*resume_policy, OnStartSuccess).Times(1);
+  EXPECT_CALL(*resume_policy, OnStartSuccess).Times(0);  // Per Read() success
   EXPECT_CALL(*resume_policy, OnFinish)
       .WillRepeatedly(Return(ResumePolicy::kStop));
 
@@ -416,7 +416,7 @@ TEST(AsyncReaderConnectionResume, ResumeUpdatesOffset) {
   }
 
   auto resume_policy = std::make_unique<MockResumePolicy>();
-  EXPECT_CALL(*resume_policy, OnStartSuccess).Times(4);
+  EXPECT_CALL(*resume_policy, OnStartSuccess).Times(3);  // Per Read() success
   EXPECT_CALL(*resume_policy, OnFinish)
       .WillRepeatedly(Return(ResumePolicy::kContinue));
 
@@ -449,7 +449,7 @@ TEST(AsyncReaderConnectionResume, StopOnReconnectError) {
       .WillOnce([&] { return make_ready_future(MakeMockReaderTransient()); });
 
   auto resume_policy = std::make_unique<MockResumePolicy>();
-  EXPECT_CALL(*resume_policy, OnStartSuccess).Times(1);
+  EXPECT_CALL(*resume_policy, OnStartSuccess).Times(2);  // Per Read() success
   EXPECT_CALL(*resume_policy, OnFinish)
       .WillRepeatedly(Return(ResumePolicy::kContinue));
 
@@ -483,7 +483,7 @@ TEST(AsyncReaderConnectionResume, StopAfterTooManyReconnects) {
   });
 
   auto resume_policy = std::make_unique<MockResumePolicy>();
-  EXPECT_CALL(*resume_policy, OnStartSuccess).Times(3);
+  EXPECT_CALL(*resume_policy, OnStartSuccess).Times(2);  // Once per Read()
   EXPECT_CALL(*resume_policy, OnFinish)
       .WillOnce(Return(ResumePolicy::kContinue))
       .WillOnce(Return(ResumePolicy::kContinue))

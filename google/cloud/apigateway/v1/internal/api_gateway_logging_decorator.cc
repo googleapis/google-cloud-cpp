@@ -21,6 +21,8 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/apigateway/v1/apigateway_service.grpc.pb.h>
 #include <memory>
+#include <set>
+#include <string>
 #include <utility>
 
 namespace google {

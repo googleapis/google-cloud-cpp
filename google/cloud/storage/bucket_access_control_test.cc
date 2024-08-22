@@ -16,6 +16,7 @@
 #include "google/cloud/storage/internal/bucket_access_control_parser.h"
 #include "google/cloud/storage/internal/bucket_acl_requests.h"
 #include <gmock/gmock.h>
+#include <string>
 
 namespace google {
 namespace cloud {

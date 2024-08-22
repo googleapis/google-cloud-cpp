@@ -8,10 +8,12 @@
 @com_google_googleapis//google/cloud/dialogflow/v2:conversation_model.proto
 @com_google_googleapis//google/cloud/dialogflow/v2:conversation_profile.proto
 @com_google_googleapis//google/cloud/dialogflow/v2:document.proto
+@com_google_googleapis//google/cloud/dialogflow/v2:encryption_spec.proto
 @com_google_googleapis//google/cloud/dialogflow/v2:entity_type.proto
 @com_google_googleapis//google/cloud/dialogflow/v2:environment.proto
 @com_google_googleapis//google/cloud/dialogflow/v2:fulfillment.proto
 @com_google_googleapis//google/cloud/dialogflow/v2:gcs.proto
+@com_google_googleapis//google/cloud/dialogflow/v2:generator.proto
 @com_google_googleapis//google/cloud/dialogflow/v2:human_agent_assistant_event.proto
 @com_google_googleapis//google/cloud/dialogflow/v2:intent.proto
 @com_google_googleapis//google/cloud/dialogflow/v2:knowledge_base.proto

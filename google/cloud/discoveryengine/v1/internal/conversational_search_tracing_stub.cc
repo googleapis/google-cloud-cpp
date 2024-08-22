@@ -18,6 +18,7 @@
 
 #include "google/cloud/discoveryengine/v1/internal/conversational_search_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

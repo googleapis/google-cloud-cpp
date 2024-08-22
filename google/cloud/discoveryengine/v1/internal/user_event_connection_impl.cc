@@ -141,7 +141,7 @@ UserEventServiceConnectionImpl::ImportUserEvents(
 
 StatusOr<google::longrunning::Operation>
 UserEventServiceConnectionImpl::ImportUserEvents(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -158,7 +158,7 @@ UserEventServiceConnectionImpl::ImportUserEvents(
 
 future<StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>
 UserEventServiceConnectionImpl::ImportUserEvents(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::discoveryengine::v1::

@@ -53,9 +53,15 @@ class MockFleetRoutingConnection
       (google::cloud::optimization::v1::OptimizeToursRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, BatchOptimizeTours)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, BatchOptimizeTours(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchOptimizeTours(Matcher<google::cloud::optimization::v1::BatchOptimizeToursRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<
                   google::cloud::optimization::v1::BatchOptimizeToursResponse>>,
               BatchOptimizeTours,
@@ -63,18 +69,30 @@ class MockFleetRoutingConnection
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, BatchOptimizeTours(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, BatchOptimizeTours,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::optimization::v1::BatchOptimizeToursRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchOptimizeTours(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<
                   google::cloud::optimization::v1::BatchOptimizeToursResponse>>,
               BatchOptimizeTours,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

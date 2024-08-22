@@ -18,6 +18,7 @@
 #include "google/cloud/storage/storage_class.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <string>
 
 namespace google {
 namespace cloud {

@@ -79,7 +79,6 @@ using ::google::cloud::internal::ToChronoTimePoint;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using std::chrono::hours;
-using ::testing::_;
 using ::testing::An;
 using ::testing::ElementsAre;
 using ::testing::ElementsAreArray;
@@ -427,7 +426,8 @@ TEST_F(TableAdminTest, CreateBackup) {
   auto const expire_time = std::chrono::system_clock::now() + hours(24);
   auto admin = DefaultTableAdmin();
 
-  EXPECT_CALL(*connection_, CreateBackup(_))
+  EXPECT_CALL(*connection_,
+              CreateBackup(An<btadmin::CreateBackupRequest const&>()))
       .WillOnce([expire_time](btadmin::CreateBackupRequest const& request) {
         CheckOptions(google::cloud::internal::CurrentOptions());
         EXPECT_EQ(kClusterName, request.parent());
@@ -585,7 +585,8 @@ TEST_F(TableAdminTest, RestoreTableParams) {
 TEST_F(TableAdminTest, RestoreTable) {
   auto admin = DefaultTableAdmin();
 
-  EXPECT_CALL(*connection_, RestoreTable(_))
+  EXPECT_CALL(*connection_,
+              RestoreTable(An<btadmin::RestoreTableRequest const&>()))
       .Times(2)
       .WillRepeatedly([](btadmin::RestoreTableRequest const& request) {
         CheckOptions(google::cloud::internal::CurrentOptions());

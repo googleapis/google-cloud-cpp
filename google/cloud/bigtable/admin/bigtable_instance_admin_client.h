@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ADMIN_BIGTABLE_INSTANCE_ADMIN_CLIENT_H
 
 #include "google/cloud/bigtable/admin/bigtable_instance_admin_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/iam_updater.h"
 #include "google/cloud/internal/make_status.h"
@@ -161,8 +160,7 @@ class BigtableInstanceAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateInstance(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
-      std::string const& instance_id,
+      NoAwaitTag, std::string const& parent, std::string const& instance_id,
       google::bigtable::admin::v2::Instance const& instance,
       std::map<std::string, google::bigtable::admin::v2::Cluster> const&
           clusters,
@@ -224,7 +222,7 @@ class BigtableInstanceAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::bigtable::admin::v2::CreateInstanceRequest const& request,
       Options opts = {});
 
@@ -238,8 +236,7 @@ class BigtableInstanceAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Instance>> CreateInstance(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -434,8 +431,7 @@ class BigtableInstanceAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> PartialUpdateInstance(
-      ExperimentalTag, NoAwaitTag,
-      google::bigtable::admin::v2::Instance const& instance,
+      NoAwaitTag, google::bigtable::admin::v2::Instance const& instance,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -489,7 +485,7 @@ class BigtableInstanceAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> PartialUpdateInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request,
       Options opts = {});
 
@@ -503,8 +499,7 @@ class BigtableInstanceAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Instance>> PartialUpdateInstance(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -613,8 +608,7 @@ class BigtableInstanceAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateCluster(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
-      std::string const& cluster_id,
+      NoAwaitTag, std::string const& parent, std::string const& cluster_id,
       google::bigtable::admin::v2::Cluster const& cluster, Options opts = {});
 
   // clang-format off
@@ -673,7 +667,7 @@ class BigtableInstanceAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::bigtable::admin::v2::CreateClusterRequest const& request,
       Options opts = {});
 
@@ -687,8 +681,7 @@ class BigtableInstanceAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Cluster>> CreateCluster(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -859,8 +852,8 @@ class BigtableInstanceAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCluster(
-      ExperimentalTag, NoAwaitTag,
-      google::bigtable::admin::v2::Cluster const& request, Options opts = {});
+      NoAwaitTag, google::bigtable::admin::v2::Cluster const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -872,8 +865,7 @@ class BigtableInstanceAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Cluster>> UpdateCluster(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -933,8 +925,7 @@ class BigtableInstanceAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> PartialUpdateCluster(
-      ExperimentalTag, NoAwaitTag,
-      google::bigtable::admin::v2::Cluster const& cluster,
+      NoAwaitTag, google::bigtable::admin::v2::Cluster const& cluster,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -998,7 +989,7 @@ class BigtableInstanceAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> PartialUpdateCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::bigtable::admin::v2::PartialUpdateClusterRequest const& request,
       Options opts = {});
 
@@ -1012,8 +1003,7 @@ class BigtableInstanceAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Cluster>> PartialUpdateCluster(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1311,8 +1301,7 @@ class BigtableInstanceAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAppProfile(
-      ExperimentalTag, NoAwaitTag,
-      google::bigtable::admin::v2::AppProfile const& app_profile,
+      NoAwaitTag, google::bigtable::admin::v2::AppProfile const& app_profile,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -1365,7 +1354,7 @@ class BigtableInstanceAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAppProfile(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::bigtable::admin::v2::UpdateAppProfileRequest const& request,
       Options opts = {});
 
@@ -1379,8 +1368,7 @@ class BigtableInstanceAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::AppProfile>> UpdateAppProfile(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///

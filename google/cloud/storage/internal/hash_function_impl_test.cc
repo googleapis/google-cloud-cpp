@@ -19,6 +19,9 @@
 #include "google/cloud/storage/testing/upload_hash_cases.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <memory>
+#include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -99,44 +102,88 @@ TEST(HashFunctionImplTest, Crc32cStringView) {
   EXPECT_THAT(actual.md5, IsEmpty());
 }
 
-TEST(HashFunctionImplTest, Crc32cStringViewWithCrc) {
+TEST(HashFunctionImplTest, Crc32cStringViewOffsetJumps) {
   Crc32cHashFunction function;
   auto payload = absl::string_view{kQuickFox};
-  for (std::size_t pos = 0; pos < payload.size(); pos += 5) {
-    auto message = payload.substr(pos, 5);
-    auto const message_crc = storage_internal::Crc32c(message);
-    EXPECT_STATUS_OK(function.Update(pos, message, message_crc));
-    EXPECT_STATUS_OK(function.Update(pos, message, message_crc));
-    EXPECT_THAT(function.Update(pos, payload, message_crc),
-                StatusIs(StatusCode::kInvalidArgument));
-  }
-  auto actual = function.Finish();
-  EXPECT_EQ(actual.crc32c, kQuickFoxCrc32cChecksum);
-  EXPECT_THAT(actual.md5, IsEmpty());
+  EXPECT_STATUS_OK(function.Update(1024, payload));
+  EXPECT_STATUS_OK(function.Update(1024 + payload.size(), payload));
+  EXPECT_THAT(function.Update(2048, payload),
+              StatusIs(StatusCode::kInvalidArgument));
+  EXPECT_THAT(function.Update(2048, payload, storage_internal::Crc32c(payload)),
+              StatusIs(StatusCode::kInvalidArgument));
+}
 
-  actual = function.Finish();
-  EXPECT_EQ(actual.crc32c, kQuickFoxCrc32cChecksum);
-  EXPECT_THAT(actual.md5, IsEmpty());
+TEST(HashFunctionImplTest, Crc32cStringViewOffsetRewinds) {
+  Crc32cHashFunction function;
+  auto payload = absl::string_view{kQuickFox};
+  EXPECT_STATUS_OK(function.Update(2048, payload));
+  EXPECT_STATUS_OK(function.Update(1024, payload));
+  EXPECT_STATUS_OK(
+      function.Update(1024, payload, storage_internal::Crc32c(payload)));
+}
+
+TEST(HashFunctionImplTest, Crc32cStringViewWithCrc) {
+  for (auto const offset : {0, 1024, 10240}) {
+    SCOPED_TRACE("Testing with offset: " + std::to_string(offset));
+    Crc32cHashFunction function;
+    auto payload = absl::string_view{kQuickFox};
+    for (std::size_t pos = 0; pos < payload.size(); pos += 5) {
+      auto message = payload.substr(pos, 5);
+      auto const message_crc = storage_internal::Crc32c(message);
+      EXPECT_STATUS_OK(function.Update(offset + pos, message, message_crc));
+      EXPECT_STATUS_OK(function.Update(offset + pos, message, message_crc));
+      EXPECT_THAT(function.Update(offset + pos, payload, message_crc),
+                  StatusIs(StatusCode::kInvalidArgument));
+    }
+    auto actual = function.Finish();
+    EXPECT_EQ(actual.crc32c, kQuickFoxCrc32cChecksum);
+    EXPECT_THAT(actual.md5, IsEmpty());
+
+    actual = function.Finish();
+    EXPECT_EQ(actual.crc32c, kQuickFoxCrc32cChecksum);
+    EXPECT_THAT(actual.md5, IsEmpty());
+  }
 }
 
 TEST(HashFunctionImplTest, Crc32cCord) {
+  for (auto const offset : {0, 1024, 10240}) {
+    SCOPED_TRACE("Testing with offset: " + std::to_string(offset));
+    Crc32cHashFunction function;
+    auto payload = absl::Cord(absl::string_view{kQuickFox});
+    for (std::size_t pos = 0; pos < payload.size(); pos += 5) {
+      auto message = payload.Subcord(pos, 5);
+      auto const message_crc = storage_internal::Crc32c(message);
+      EXPECT_STATUS_OK(function.Update(offset + pos, message, message_crc));
+      EXPECT_STATUS_OK(function.Update(offset + pos, message, message_crc));
+      EXPECT_THAT(function.Update(offset + pos, payload, message_crc),
+                  StatusIs(StatusCode::kInvalidArgument));
+    }
+    auto actual = function.Finish();
+    EXPECT_EQ(actual.crc32c, kQuickFoxCrc32cChecksum);
+    EXPECT_THAT(actual.md5, IsEmpty());
+
+    actual = function.Finish();
+    EXPECT_EQ(actual.crc32c, kQuickFoxCrc32cChecksum);
+    EXPECT_THAT(actual.md5, IsEmpty());
+  }
+}
+
+TEST(HashFunctionImplTest, Crc32cCordOffsetJumps) {
   Crc32cHashFunction function;
   auto payload = absl::Cord(absl::string_view{kQuickFox});
-  for (std::size_t pos = 0; pos < payload.size(); pos += 5) {
-    auto message = payload.Subcord(pos, 5);
-    auto const message_crc = storage_internal::Crc32c(message);
-    EXPECT_STATUS_OK(function.Update(pos, message, message_crc));
-    EXPECT_STATUS_OK(function.Update(pos, message, message_crc));
-    EXPECT_THAT(function.Update(pos, payload, message_crc),
-                StatusIs(StatusCode::kInvalidArgument));
-  }
-  auto actual = function.Finish();
-  EXPECT_EQ(actual.crc32c, kQuickFoxCrc32cChecksum);
-  EXPECT_THAT(actual.md5, IsEmpty());
+  auto const crc = storage_internal::Crc32c(payload);
+  EXPECT_STATUS_OK(function.Update(1024, payload, crc));
+  EXPECT_STATUS_OK(function.Update(1024 + payload.size(), payload, crc));
+  EXPECT_THAT(function.Update(2048, payload, crc),
+              StatusIs(StatusCode::kInvalidArgument));
+}
 
-  actual = function.Finish();
-  EXPECT_EQ(actual.crc32c, kQuickFoxCrc32cChecksum);
-  EXPECT_THAT(actual.md5, IsEmpty());
+TEST(HashFunctionImplTest, Crc32cCordOffsetRewinds) {
+  Crc32cHashFunction function;
+  auto payload = absl::Cord(absl::string_view{kQuickFox});
+  auto const crc = storage_internal::Crc32c(payload);
+  EXPECT_STATUS_OK(function.Update(2048, payload, crc));
+  EXPECT_STATUS_OK(function.Update(1024, payload, crc));
 }
 
 TEST(HashFunctionImplTest, MD5Empty) {
@@ -176,43 +223,67 @@ TEST(HashFunctionImplTest, MD5StringView) {
 }
 
 TEST(HashFunctionImplTest, MD5StringViewWithCrc) {
-  auto function = MD5HashFunction::Create();
-  auto payload = absl::string_view{kQuickFox};
-  for (std::size_t pos = 0; pos < payload.size(); pos += 5) {
-    auto message = payload.substr(pos, 5);
-    auto const unused = std::uint32_t{0};
-    EXPECT_STATUS_OK(function->Update(pos, message, unused));
-    EXPECT_STATUS_OK(function->Update(pos, message, unused));
-    EXPECT_THAT(function->Update(pos, payload, unused),
-                StatusIs(StatusCode::kInvalidArgument));
-  }
-  auto actual = function->Finish();
-  EXPECT_THAT(actual.crc32c, IsEmpty());
-  EXPECT_THAT(actual.md5, kQuickFoxMD5Hash);
+  for (auto const offset : {0, 1024, 10240}) {
+    SCOPED_TRACE("Testing with offset: " + std::to_string(offset));
+    auto function = MD5HashFunction::Create();
+    auto payload = absl::string_view{kQuickFox};
+    for (std::size_t pos = 0; pos < payload.size(); pos += 5) {
+      auto message = payload.substr(pos, 5);
+      auto const unused = std::uint32_t{0};
+      EXPECT_STATUS_OK(function->Update(offset + pos, message, unused));
+      EXPECT_STATUS_OK(function->Update(offset + pos, message, unused));
+      EXPECT_THAT(function->Update(offset + pos, payload, unused),
+                  StatusIs(StatusCode::kInvalidArgument));
+    }
+    auto actual = function->Finish();
+    EXPECT_THAT(actual.crc32c, IsEmpty());
+    EXPECT_THAT(actual.md5, kQuickFoxMD5Hash);
 
-  actual = function->Finish();
-  EXPECT_THAT(actual.crc32c, IsEmpty());
-  EXPECT_THAT(actual.md5, kQuickFoxMD5Hash);
+    actual = function->Finish();
+    EXPECT_THAT(actual.crc32c, IsEmpty());
+    EXPECT_THAT(actual.md5, kQuickFoxMD5Hash);
+  }
 }
 
 TEST(HashFunctionImplTest, MD5Cord) {
+  for (auto const offset : {0, 1024, 10240}) {
+    SCOPED_TRACE("Testing with offset: " + std::to_string(offset));
+    auto function = MD5HashFunction::Create();
+    auto payload = absl::Cord(absl::string_view{kQuickFox});
+    for (std::size_t pos = 0; pos < payload.size(); pos += 5) {
+      auto message = payload.Subcord(pos, 5);
+      auto const unused = std::uint32_t{0};
+      EXPECT_STATUS_OK(function->Update(offset + pos, message, unused));
+      EXPECT_STATUS_OK(function->Update(offset + pos, message, unused));
+      EXPECT_THAT(function->Update(offset + pos, payload, unused),
+                  StatusIs(StatusCode::kInvalidArgument));
+    }
+    auto const actual = function->Finish();
+    EXPECT_THAT(actual.crc32c, IsEmpty());
+    EXPECT_THAT(actual.md5, kQuickFoxMD5Hash);
+
+    auto const a2 = function->Finish();
+    EXPECT_THAT(a2.crc32c, IsEmpty());
+    EXPECT_THAT(a2.md5, kQuickFoxMD5Hash);
+  }
+}
+
+TEST(HashFunctionImplTest, MD5CordViewOffsetJumps) {
   auto function = MD5HashFunction::Create();
   auto payload = absl::Cord(absl::string_view{kQuickFox});
-  for (std::size_t pos = 0; pos < payload.size(); pos += 5) {
-    auto message = payload.Subcord(pos, 5);
-    auto const unused = std::uint32_t{0};
-    EXPECT_STATUS_OK(function->Update(pos, message, unused));
-    EXPECT_STATUS_OK(function->Update(pos, message, unused));
-    EXPECT_THAT(function->Update(pos, payload, unused),
-                StatusIs(StatusCode::kInvalidArgument));
-  }
-  auto const actual = function->Finish();
-  EXPECT_THAT(actual.crc32c, IsEmpty());
-  EXPECT_THAT(actual.md5, kQuickFoxMD5Hash);
+  auto const crc = storage_internal::Crc32c(payload);
+  EXPECT_STATUS_OK(function->Update(1024, payload, crc));
+  EXPECT_STATUS_OK(function->Update(1024 + payload.size(), payload, crc));
+  EXPECT_THAT(function->Update(2048, payload, crc),
+              StatusIs(StatusCode::kInvalidArgument));
+}
 
-  auto const a2 = function->Finish();
-  EXPECT_THAT(a2.crc32c, IsEmpty());
-  EXPECT_THAT(a2.md5, kQuickFoxMD5Hash);
+TEST(HashFunctionImplTest, MD5CordOffsetRewinds) {
+  auto function = MD5HashFunction::Create();
+  auto payload = absl::Cord(absl::string_view{kQuickFox});
+  auto const crc = storage_internal::Crc32c(payload);
+  EXPECT_STATUS_OK(function->Update(2048, payload, crc));
+  EXPECT_STATUS_OK(function->Update(1024, payload, crc));
 }
 
 TEST(HashFunctionImplTest, CompositeEmpty) {

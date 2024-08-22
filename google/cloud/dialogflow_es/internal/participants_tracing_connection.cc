@@ -115,6 +115,16 @@ ParticipantsTracingConnection::SuggestSmartReplies(
   return internal::EndSpan(*span, child_->SuggestSmartReplies(request));
 }
 
+StatusOr<google::cloud::dialogflow::v2::SuggestKnowledgeAssistResponse>
+ParticipantsTracingConnection::SuggestKnowledgeAssist(
+    google::cloud::dialogflow::v2::SuggestKnowledgeAssistRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ParticipantsConnection::SuggestKnowledgeAssist");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SuggestKnowledgeAssist(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<dialogflow_es::ParticipantsConnection>

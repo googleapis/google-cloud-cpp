@@ -26,6 +26,9 @@
 #include <fstream>
 #include <iterator>
 #include <memory>
+#include <set>
+#include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {

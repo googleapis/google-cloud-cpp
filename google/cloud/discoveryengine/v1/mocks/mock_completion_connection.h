@@ -53,10 +53,15 @@ class MockCompletionServiceConnection
       (google::cloud::discoveryengine::v1::CompleteQueryRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ImportSuggestionDenyListEntries)` is now ambiguous.
-  /// Use `EXPECT_CALL(*mock, ImportSuggestionDenyListEntries(::testing::_))`
-  /// instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ImportSuggestionDenyListEntries(Matcher<google::cloud::discoveryengine::v1::ImportSuggestionDenyListEntriesRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::
                                   ImportSuggestionDenyListEntriesResponse>>,
               ImportSuggestionDenyListEntries,
@@ -64,24 +69,42 @@ class MockCompletionServiceConnection
                    ImportSuggestionDenyListEntriesRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ImportSuggestionDenyListEntries(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               ImportSuggestionDenyListEntries,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::discoveryengine::v1::
                    ImportSuggestionDenyListEntriesRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ImportSuggestionDenyListEntries(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::
                                   ImportSuggestionDenyListEntriesResponse>>,
               ImportSuggestionDenyListEntries,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, PurgeSuggestionDenyListEntries)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, PurgeSuggestionDenyListEntries(::testing::_))`
-  /// instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PurgeSuggestionDenyListEntries(Matcher<google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::
                                   PurgeSuggestionDenyListEntriesResponse>>,
               PurgeSuggestionDenyListEntries,
@@ -89,23 +112,42 @@ class MockCompletionServiceConnection
                    PurgeSuggestionDenyListEntriesRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, PurgeSuggestionDenyListEntries(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               PurgeSuggestionDenyListEntries,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::discoveryengine::v1::
                    PurgeSuggestionDenyListEntriesRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PurgeSuggestionDenyListEntries(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::
                                   PurgeSuggestionDenyListEntriesResponse>>,
               PurgeSuggestionDenyListEntries,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ImportCompletionSuggestions)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ImportCompletionSuggestions(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ImportCompletionSuggestions(Matcher<google::cloud::discoveryengine::v1::ImportCompletionSuggestionsRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::
                                   ImportCompletionSuggestionsResponse>>,
               ImportCompletionSuggestions,
@@ -113,23 +155,42 @@ class MockCompletionServiceConnection
                    ImportCompletionSuggestionsRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ImportCompletionSuggestions(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               ImportCompletionSuggestions,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::discoveryengine::v1::
                    ImportCompletionSuggestionsRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ImportCompletionSuggestions(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::
                                   ImportCompletionSuggestionsResponse>>,
               ImportCompletionSuggestions,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, PurgeCompletionSuggestions)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, PurgeCompletionSuggestions(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PurgeCompletionSuggestions(Matcher<google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::
                                   PurgeCompletionSuggestionsResponse>>,
               PurgeCompletionSuggestions,
@@ -137,19 +198,32 @@ class MockCompletionServiceConnection
                    PurgeCompletionSuggestionsRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, PurgeCompletionSuggestions(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               PurgeCompletionSuggestions,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::discoveryengine::v1::
                    PurgeCompletionSuggestionsRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PurgeCompletionSuggestions(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::
                                   PurgeCompletionSuggestionsResponse>>,
               PurgeCompletionSuggestions,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_V2_POLICIES_CLIENT_H
 
 #include "google/cloud/iam/v2/policies_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -300,7 +299,7 @@ class PoliciesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreatePolicy(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::iam::v2::Policy const& policy, std::string const& policy_id,
       Options opts = {});
 
@@ -353,8 +352,8 @@ class PoliciesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreatePolicy(
-      ExperimentalTag, NoAwaitTag,
-      google::iam::v2::CreatePolicyRequest const& request, Options opts = {});
+      NoAwaitTag, google::iam::v2::CreatePolicyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -366,8 +365,7 @@ class PoliciesClient {
   ///
   // clang-format on
   future<StatusOr<google::iam::v2::Policy>> CreatePolicy(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -429,8 +427,8 @@ class PoliciesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdatePolicy(
-      ExperimentalTag, NoAwaitTag,
-      google::iam::v2::UpdatePolicyRequest const& request, Options opts = {});
+      NoAwaitTag, google::iam::v2::UpdatePolicyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -442,8 +440,7 @@ class PoliciesClient {
   ///
   // clang-format on
   future<StatusOr<google::iam::v2::Policy>> UpdatePolicy(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -496,8 +493,7 @@ class PoliciesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeletePolicy(ExperimentalTag,
-                                                        NoAwaitTag,
+  StatusOr<google::longrunning::Operation> DeletePolicy(NoAwaitTag,
                                                         std::string const& name,
                                                         Options opts = {});
 
@@ -550,8 +546,8 @@ class PoliciesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeletePolicy(
-      ExperimentalTag, NoAwaitTag,
-      google::iam::v2::DeletePolicyRequest const& request, Options opts = {});
+      NoAwaitTag, google::iam::v2::DeletePolicyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -563,8 +559,7 @@ class PoliciesClient {
   ///
   // clang-format on
   future<StatusOr<google::iam::v2::Policy>> DeletePolicy(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<PoliciesConnection> connection_;

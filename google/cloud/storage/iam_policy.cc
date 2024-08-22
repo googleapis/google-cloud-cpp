@@ -16,7 +16,11 @@
 #include "google/cloud/internal/make_status.h"
 #include "absl/types/optional.h"
 #include <nlohmann/json.hpp>
+#include <memory>
 #include <sstream>
+#include <string>
+#include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {

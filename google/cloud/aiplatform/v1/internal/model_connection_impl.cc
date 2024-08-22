@@ -105,7 +105,7 @@ ModelServiceConnectionImpl::UploadModel(
 
 StatusOr<google::longrunning::Operation>
 ModelServiceConnectionImpl::UploadModel(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::UploadModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -120,7 +120,7 @@ ModelServiceConnectionImpl::UploadModel(
 
 future<StatusOr<google::cloud::aiplatform::v1::UploadModelResponse>>
 ModelServiceConnectionImpl::UploadModel(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -297,7 +297,7 @@ ModelServiceConnectionImpl::UpdateExplanationDataset(
 
 StatusOr<google::longrunning::Operation>
 ModelServiceConnectionImpl::UpdateExplanationDataset(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -316,7 +316,7 @@ ModelServiceConnectionImpl::UpdateExplanationDataset(
 future<
     StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
 ModelServiceConnectionImpl::UpdateExplanationDataset(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -393,7 +393,7 @@ ModelServiceConnectionImpl::DeleteModel(
 
 StatusOr<google::longrunning::Operation>
 ModelServiceConnectionImpl::DeleteModel(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -408,7 +408,7 @@ ModelServiceConnectionImpl::DeleteModel(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 ModelServiceConnectionImpl::DeleteModel(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -486,7 +486,7 @@ ModelServiceConnectionImpl::DeleteModelVersion(
 
 StatusOr<google::longrunning::Operation>
 ModelServiceConnectionImpl::DeleteModelVersion(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -502,7 +502,7 @@ ModelServiceConnectionImpl::DeleteModelVersion(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 ModelServiceConnectionImpl::DeleteModelVersion(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -594,7 +594,7 @@ ModelServiceConnectionImpl::ExportModel(
 
 StatusOr<google::longrunning::Operation>
 ModelServiceConnectionImpl::ExportModel(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::ExportModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -609,7 +609,7 @@ ModelServiceConnectionImpl::ExportModel(
 
 future<StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>
 ModelServiceConnectionImpl::ExportModel(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -684,7 +684,7 @@ ModelServiceConnectionImpl::CopyModel(
 }
 
 StatusOr<google::longrunning::Operation> ModelServiceConnectionImpl::CopyModel(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::CopyModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -699,7 +699,7 @@ StatusOr<google::longrunning::Operation> ModelServiceConnectionImpl::CopyModel(
 
 future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>>
 ModelServiceConnectionImpl::CopyModel(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::

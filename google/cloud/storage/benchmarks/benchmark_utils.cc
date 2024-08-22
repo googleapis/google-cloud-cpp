@@ -27,8 +27,15 @@
 #include "absl/strings/str_split.h"
 #include "absl/strings/strip.h"
 #include "absl/time/time.h"
+#include <algorithm>
+#include <functional>
 #include <future>
+#include <iostream>
+#include <iterator>
 #include <sstream>
+#include <string>
+#include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {

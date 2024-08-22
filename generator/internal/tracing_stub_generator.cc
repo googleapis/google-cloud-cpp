@@ -47,6 +47,7 @@ Status TracingStubGenerator::GenerateHeader() {
   HeaderLocalIncludes({vars("stub_header_path"),
                        "google/cloud/internal/trace_propagator.h",
                        "google/cloud/options.h", "google/cloud/version.h"});
+  HeaderSystemIncludes({"memory"});
 
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
@@ -118,7 +119,7 @@ Status TracingStubGenerator::GenerateCc() {
            ? "google/cloud/internal/streaming_write_rpc_tracing.h"
            : "",
        "google/cloud/internal/grpc_opentelemetry.h"});
-  CcSystemIncludes({"utility"});
+  CcSystemIncludes({"memory", "utility"});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;

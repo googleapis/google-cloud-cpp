@@ -18,6 +18,7 @@
 #include "google/cloud/storage/async/writer_connection.h"
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
+#include <string>
 
 namespace google {
 namespace cloud {

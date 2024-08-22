@@ -47,9 +47,15 @@ class MockSecurityCenterConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, BulkMuteFindings)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, BulkMuteFindings(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BulkMuteFindings(Matcher<google::cloud::securitycenter::v1::BulkMuteFindingsRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<
                   google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>,
               BulkMuteFindings,
@@ -57,18 +63,30 @@ class MockSecurityCenterConnection
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, BulkMuteFindings(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, BulkMuteFindings,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::securitycenter::v1::BulkMuteFindingsRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, BulkMuteFindings(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<
                   google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>,
               BulkMuteFindings,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::securitycenter::v1::
@@ -244,9 +262,15 @@ class MockSecurityCenterConnection
               (google::cloud::securitycenter::v1::ListSourcesRequest request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, RunAssetDiscovery)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, RunAssetDiscovery(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RunAssetDiscovery(Matcher<google::cloud::securitycenter::v1::RunAssetDiscoveryRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>,
@@ -255,18 +279,31 @@ class MockSecurityCenterConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, RunAssetDiscovery(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RunAssetDiscovery,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RunAssetDiscovery(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>,
-      RunAssetDiscovery,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      RunAssetDiscovery, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(StatusOr<google::cloud::securitycenter::v1::Finding>,

@@ -132,9 +132,8 @@ CompletionServiceConnectionImpl::ImportSuggestionDenyListEntries(
 
 StatusOr<google::longrunning::Operation>
 CompletionServiceConnectionImpl::ImportSuggestionDenyListEntries(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::discoveryengine::v1::
-        ImportSuggestionDenyListEntriesRequest const& request) {
+    NoAwaitTag, google::cloud::discoveryengine::v1::
+                    ImportSuggestionDenyListEntriesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -151,7 +150,7 @@ CompletionServiceConnectionImpl::ImportSuggestionDenyListEntries(
 future<StatusOr<google::cloud::discoveryengine::v1::
                     ImportSuggestionDenyListEntriesResponse>>
 CompletionServiceConnectionImpl::ImportSuggestionDenyListEntries(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::discoveryengine::v1::
@@ -236,9 +235,8 @@ CompletionServiceConnectionImpl::PurgeSuggestionDenyListEntries(
 
 StatusOr<google::longrunning::Operation>
 CompletionServiceConnectionImpl::PurgeSuggestionDenyListEntries(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::discoveryengine::v1::
-        PurgeSuggestionDenyListEntriesRequest const& request) {
+    NoAwaitTag, google::cloud::discoveryengine::v1::
+                    PurgeSuggestionDenyListEntriesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -254,7 +252,7 @@ CompletionServiceConnectionImpl::PurgeSuggestionDenyListEntries(
 future<StatusOr<
     google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesResponse>>
 CompletionServiceConnectionImpl::PurgeSuggestionDenyListEntries(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::discoveryengine::v1::
@@ -337,9 +335,8 @@ CompletionServiceConnectionImpl::ImportCompletionSuggestions(
 
 StatusOr<google::longrunning::Operation>
 CompletionServiceConnectionImpl::ImportCompletionSuggestions(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::discoveryengine::v1::
-        ImportCompletionSuggestionsRequest const& request) {
+    NoAwaitTag, google::cloud::discoveryengine::v1::
+                    ImportCompletionSuggestionsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -355,7 +352,7 @@ CompletionServiceConnectionImpl::ImportCompletionSuggestions(
 future<StatusOr<
     google::cloud::discoveryengine::v1::ImportCompletionSuggestionsResponse>>
 CompletionServiceConnectionImpl::ImportCompletionSuggestions(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::discoveryengine::v1::
@@ -436,7 +433,7 @@ CompletionServiceConnectionImpl::PurgeCompletionSuggestions(
 
 StatusOr<google::longrunning::Operation>
 CompletionServiceConnectionImpl::PurgeCompletionSuggestions(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -454,7 +451,7 @@ CompletionServiceConnectionImpl::PurgeCompletionSuggestions(
 future<StatusOr<
     google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsResponse>>
 CompletionServiceConnectionImpl::PurgeCompletionSuggestions(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::discoveryengine::v1::

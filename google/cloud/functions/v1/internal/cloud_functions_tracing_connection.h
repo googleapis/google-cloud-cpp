@@ -51,12 +51,11 @@ class CloudFunctionsServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> CreateFunction(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::functions::v1::CreateFunctionRequest const& request)
       override;
 
   future<StatusOr<google::cloud::functions::v1::CloudFunction>> CreateFunction(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::functions::v1::CloudFunction>> UpdateFunction(
@@ -64,12 +63,11 @@ class CloudFunctionsServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> UpdateFunction(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::functions::v1::UpdateFunctionRequest const& request)
       override;
 
   future<StatusOr<google::cloud::functions::v1::CloudFunction>> UpdateFunction(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::functions::v1::OperationMetadataV1>>
@@ -77,13 +75,12 @@ class CloudFunctionsServiceTracingConnection
                      request) override;
 
   StatusOr<google::longrunning::Operation> DeleteFunction(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::functions::v1::DeleteFunctionRequest const& request)
       override;
 
   future<StatusOr<google::cloud::functions::v1::OperationMetadataV1>>
-  DeleteFunction(ExperimentalTag,
-                 google::longrunning::Operation const& operation) override;
+  DeleteFunction(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::functions::v1::CallFunctionResponse> CallFunction(
       google::cloud::functions::v1::CallFunctionRequest const& request)

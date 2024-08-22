@@ -18,6 +18,7 @@
 
 #include "google/cloud/edgenetwork/v1/internal/edge_network_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

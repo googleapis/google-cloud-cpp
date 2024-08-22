@@ -96,6 +96,16 @@ ConversationsAuth::GenerateStatelessSummary(
   return child_->GenerateStatelessSummary(context, options, request);
 }
 
+StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSuggestionResponse>
+ConversationsAuth::GenerateStatelessSuggestion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::v2::GenerateStatelessSuggestionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GenerateStatelessSuggestion(context, options, request);
+}
+
 StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>
 ConversationsAuth::SearchKnowledge(
     grpc::ClientContext& context, Options const& options,

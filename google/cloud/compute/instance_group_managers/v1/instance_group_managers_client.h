@@ -21,7 +21,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INSTANCE_GROUP_MANAGERS_V1_INSTANCE_GROUP_MANAGERS_CLIENT_H
 
 #include "google/cloud/compute/instance_group_managers/v1/instance_group_managers_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -156,8 +155,8 @@ class InstanceGroupManagersClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> AbandonInstances(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& zone, std::string const& instance_group_manager,
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance_group_manager,
       google::cloud::cpp::compute::v1::
           InstanceGroupManagersAbandonInstancesRequest const&
               instance_group_managers_abandon_instances_request_resource,
@@ -225,7 +224,7 @@ class InstanceGroupManagersClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> AbandonInstances(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instance_group_managers::v1::
           AbandonInstancesRequest const& request,
       Options opts = {});
@@ -240,7 +239,6 @@ class InstanceGroupManagersClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AbandonInstances(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -275,7 +273,7 @@ class InstanceGroupManagersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.instance_group_managers.v1.AggregatedListInstanceGroupManagersRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L426}
-  /// [google.cloud.cpp.compute.v1.InstanceGroupManagersScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_059.proto#L457}
+  /// [google.cloud.cpp.compute.v1.InstanceGroupManagersScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_061.proto#L457}
   ///
   // clang-format on
   StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
@@ -319,7 +317,7 @@ class InstanceGroupManagersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.instance_group_managers.v1.AggregatedListInstanceGroupManagersRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L426}
-  /// [google.cloud.cpp.compute.v1.InstanceGroupManagersScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_059.proto#L457}
+  /// [google.cloud.cpp.compute.v1.InstanceGroupManagersScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_061.proto#L457}
   ///
   // clang-format on
   StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
@@ -384,8 +382,8 @@ class InstanceGroupManagersClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> ApplyUpdatesToInstances(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& zone, std::string const& instance_group_manager,
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance_group_manager,
       google::cloud::cpp::compute::v1::
           InstanceGroupManagersApplyUpdatesRequest const&
               instance_group_managers_apply_updates_request_resource,
@@ -443,7 +441,7 @@ class InstanceGroupManagersClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> ApplyUpdatesToInstances(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instance_group_managers::v1::
           ApplyUpdatesToInstancesRequest const& request,
       Options opts = {});
@@ -459,7 +457,6 @@ class InstanceGroupManagersClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   ApplyUpdatesToInstances(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -521,8 +518,8 @@ class InstanceGroupManagersClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> CreateInstances(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& zone, std::string const& instance_group_manager,
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance_group_manager,
       google::cloud::cpp::compute::v1::
           InstanceGroupManagersCreateInstancesRequest const&
               instance_group_managers_create_instances_request_resource,
@@ -584,7 +581,7 @@ class InstanceGroupManagersClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> CreateInstances(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instance_group_managers::v1::
           CreateInstancesRequest const& request,
       Options opts = {});
@@ -599,7 +596,6 @@ class InstanceGroupManagersClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CreateInstances(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -654,8 +650,7 @@ class InstanceGroupManagersClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteInstanceGroupManager(ExperimentalTag, NoAwaitTag,
-                             std::string const& project,
+  DeleteInstanceGroupManager(NoAwaitTag, std::string const& project,
                              std::string const& zone,
                              std::string const& instance_group_manager,
                              Options opts = {});
@@ -715,7 +710,7 @@ class InstanceGroupManagersClient {
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteInstanceGroupManager(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instance_group_managers::v1::
           DeleteInstanceGroupManagerRequest const& request,
       Options opts = {});
@@ -731,7 +726,6 @@ class InstanceGroupManagersClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteInstanceGroupManager(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -797,8 +791,8 @@ class InstanceGroupManagersClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstances(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& zone, std::string const& instance_group_manager,
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance_group_manager,
       google::cloud::cpp::compute::v1::
           InstanceGroupManagersDeleteInstancesRequest const&
               instance_group_managers_delete_instances_request_resource,
@@ -865,7 +859,7 @@ class InstanceGroupManagersClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstances(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instance_group_managers::v1::
           DeleteInstancesRequest const& request,
       Options opts = {});
@@ -880,7 +874,6 @@ class InstanceGroupManagersClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteInstances(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -939,8 +932,8 @@ class InstanceGroupManagersClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeletePerInstanceConfigs(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& zone, std::string const& instance_group_manager,
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance_group_manager,
       google::cloud::cpp::compute::v1::
           InstanceGroupManagersDeletePerInstanceConfigsReq const&
               instance_group_managers_delete_per_instance_configs_req_resource,
@@ -999,7 +992,7 @@ class InstanceGroupManagersClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeletePerInstanceConfigs(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instance_group_managers::v1::
           DeletePerInstanceConfigsRequest const& request,
       Options opts = {});
@@ -1015,7 +1008,6 @@ class InstanceGroupManagersClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeletePerInstanceConfigs(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -1041,7 +1033,7 @@ class InstanceGroupManagersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.instance_group_managers.v1.GetInstanceGroupManagerRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L684}
-  /// [google.cloud.cpp.compute.v1.InstanceGroupManager]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_028.proto#L67}
+  /// [google.cloud.cpp.compute.v1.InstanceGroupManager]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_029.proto#L67}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManager>
@@ -1074,7 +1066,7 @@ class InstanceGroupManagersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.instance_group_managers.v1.GetInstanceGroupManagerRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L684}
-  /// [google.cloud.cpp.compute.v1.InstanceGroupManager]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_028.proto#L67}
+  /// [google.cloud.cpp.compute.v1.InstanceGroupManager]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_029.proto#L67}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManager>
@@ -1140,8 +1132,7 @@ class InstanceGroupManagersClient {
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertInstanceGroupManager(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& zone,
+      NoAwaitTag, std::string const& project, std::string const& zone,
       google::cloud::cpp::compute::v1::InstanceGroupManager const&
           instance_group_manager_resource,
       Options opts = {});
@@ -1206,7 +1197,7 @@ class InstanceGroupManagersClient {
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertInstanceGroupManager(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instance_group_managers::v1::
           InsertInstanceGroupManagerRequest const& request,
       Options opts = {});
@@ -1222,7 +1213,6 @@ class InstanceGroupManagersClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertInstanceGroupManager(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -1257,7 +1247,7 @@ class InstanceGroupManagersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.instance_group_managers.v1.ListInstanceGroupManagersRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L813}
-  /// [google.cloud.cpp.compute.v1.InstanceGroupManager]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_028.proto#L67}
+  /// [google.cloud.cpp.compute.v1.InstanceGroupManager]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_029.proto#L67}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InstanceGroupManager>
@@ -1299,7 +1289,7 @@ class InstanceGroupManagersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.instance_group_managers.v1.ListInstanceGroupManagersRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L813}
-  /// [google.cloud.cpp.compute.v1.InstanceGroupManager]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_028.proto#L67}
+  /// [google.cloud.cpp.compute.v1.InstanceGroupManager]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_029.proto#L67}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InstanceGroupManager>
@@ -1343,7 +1333,7 @@ class InstanceGroupManagersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.instance_group_managers.v1.ListErrorsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L733}
-  /// [google.cloud.cpp.compute.v1.InstanceManagedByIgmError]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_028.proto#L483}
+  /// [google.cloud.cpp.compute.v1.InstanceManagedByIgmError]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_029.proto#L495}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InstanceManagedByIgmError>
@@ -1385,7 +1375,7 @@ class InstanceGroupManagersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.instance_group_managers.v1.ListErrorsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L733}
-  /// [google.cloud.cpp.compute.v1.InstanceManagedByIgmError]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_028.proto#L483}
+  /// [google.cloud.cpp.compute.v1.InstanceManagedByIgmError]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_029.proto#L495}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InstanceManagedByIgmError>
@@ -1422,7 +1412,7 @@ class InstanceGroupManagersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.instance_group_managers.v1.ListManagedInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L884}
-  /// [google.cloud.cpp.compute.v1.InstanceGroupManagersListManagedInstancesResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_059.proto#L334}
+  /// [google.cloud.cpp.compute.v1.InstanceGroupManagersListManagedInstancesResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_061.proto#L334}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::
@@ -1463,7 +1453,7 @@ class InstanceGroupManagersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.instance_group_managers.v1.ListManagedInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L884}
-  /// [google.cloud.cpp.compute.v1.InstanceGroupManagersListManagedInstancesResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_059.proto#L334}
+  /// [google.cloud.cpp.compute.v1.InstanceGroupManagersListManagedInstancesResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_061.proto#L334}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::
@@ -1505,7 +1495,7 @@ class InstanceGroupManagersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.instance_group_managers.v1.ListPerInstanceConfigsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L961}
-  /// [google.cloud.cpp.compute.v1.PerInstanceConfig]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_028.proto#L738}
+  /// [google.cloud.cpp.compute.v1.PerInstanceConfig]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_029.proto#L750}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::PerInstanceConfig>
@@ -1548,7 +1538,7 @@ class InstanceGroupManagersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.instance_group_managers.v1.ListPerInstanceConfigsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_group_managers/v1/instance_group_managers.proto#L961}
-  /// [google.cloud.cpp.compute.v1.PerInstanceConfig]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_028.proto#L738}
+  /// [google.cloud.cpp.compute.v1.PerInstanceConfig]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_029.proto#L750}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::PerInstanceConfig>
@@ -1618,8 +1608,8 @@ class InstanceGroupManagersClient {
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   PatchInstanceGroupManager(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& zone, std::string const& instance_group_manager,
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance_group_manager,
       google::cloud::cpp::compute::v1::InstanceGroupManager const&
           instance_group_manager_resource,
       Options opts = {});
@@ -1686,7 +1676,7 @@ class InstanceGroupManagersClient {
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   PatchInstanceGroupManager(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instance_group_managers::v1::
           PatchInstanceGroupManagerRequest const& request,
       Options opts = {});
@@ -1702,7 +1692,6 @@ class InstanceGroupManagersClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchInstanceGroupManager(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -1762,8 +1751,8 @@ class InstanceGroupManagersClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchPerInstanceConfigs(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& zone, std::string const& instance_group_manager,
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance_group_manager,
       google::cloud::cpp::compute::v1::
           InstanceGroupManagersPatchPerInstanceConfigsReq const&
               instance_group_managers_patch_per_instance_configs_req_resource,
@@ -1822,7 +1811,7 @@ class InstanceGroupManagersClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchPerInstanceConfigs(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instance_group_managers::v1::
           PatchPerInstanceConfigsRequest const& request,
       Options opts = {});
@@ -1838,7 +1827,6 @@ class InstanceGroupManagersClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchPerInstanceConfigs(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -1904,8 +1892,8 @@ class InstanceGroupManagersClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> RecreateInstances(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& zone, std::string const& instance_group_manager,
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance_group_manager,
       google::cloud::cpp::compute::v1::
           InstanceGroupManagersRecreateInstancesRequest const&
               instance_group_managers_recreate_instances_request_resource,
@@ -1971,7 +1959,7 @@ class InstanceGroupManagersClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> RecreateInstances(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instance_group_managers::v1::
           RecreateInstancesRequest const& request,
       Options opts = {});
@@ -1986,8 +1974,7 @@ class InstanceGroupManagersClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  RecreateInstances(ExperimentalTag,
-                    google::cloud::cpp::compute::v1::Operation const& operation,
+  RecreateInstances(google::cloud::cpp::compute::v1::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -2055,9 +2042,9 @@ class InstanceGroupManagersClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Resize(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& zone, std::string const& instance_group_manager,
-      std::int32_t size, Options opts = {});
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance_group_manager, std::int32_t size,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2124,7 +2111,7 @@ class InstanceGroupManagersClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Resize(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instance_group_managers::v1::
           ResizeRequest const& request,
       Options opts = {});
@@ -2139,7 +2126,6 @@ class InstanceGroupManagersClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -2199,8 +2185,8 @@ class InstanceGroupManagersClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetInstanceTemplate(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& zone, std::string const& instance_group_manager,
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance_group_manager,
       google::cloud::cpp::compute::v1::
           InstanceGroupManagersSetInstanceTemplateRequest const&
               instance_group_managers_set_instance_template_request_resource,
@@ -2260,7 +2246,7 @@ class InstanceGroupManagersClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetInstanceTemplate(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instance_group_managers::v1::
           SetInstanceTemplateRequest const& request,
       Options opts = {});
@@ -2276,7 +2262,6 @@ class InstanceGroupManagersClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetInstanceTemplate(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -2337,8 +2322,8 @@ class InstanceGroupManagersClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetTargetPools(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& zone, std::string const& instance_group_manager,
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance_group_manager,
       google::cloud::cpp::compute::v1::
           InstanceGroupManagersSetTargetPoolsRequest const&
               instance_group_managers_set_target_pools_request_resource,
@@ -2400,7 +2385,7 @@ class InstanceGroupManagersClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetTargetPools(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instance_group_managers::v1::
           SetTargetPoolsRequest const& request,
       Options opts = {});
@@ -2415,7 +2400,6 @@ class InstanceGroupManagersClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetTargetPools(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -2475,8 +2459,8 @@ class InstanceGroupManagersClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdatePerInstanceConfigs(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& zone, std::string const& instance_group_manager,
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance_group_manager,
       google::cloud::cpp::compute::v1::
           InstanceGroupManagersUpdatePerInstanceConfigsReq const&
               instance_group_managers_update_per_instance_configs_req_resource,
@@ -2536,7 +2520,7 @@ class InstanceGroupManagersClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdatePerInstanceConfigs(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instance_group_managers::v1::
           UpdatePerInstanceConfigsRequest const& request,
       Options opts = {});
@@ -2552,7 +2536,6 @@ class InstanceGroupManagersClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdatePerInstanceConfigs(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 

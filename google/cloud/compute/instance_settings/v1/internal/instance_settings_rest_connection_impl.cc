@@ -122,9 +122,8 @@ InstanceSettingsRestConnectionImpl::PatchInstanceSettings(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceSettingsRestConnectionImpl::PatchInstanceSettings(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::instance_settings::v1::
-        PatchInstanceSettingsRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::instance_settings::v1::
+                    PatchInstanceSettingsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -139,7 +138,6 @@ InstanceSettingsRestConnectionImpl::PatchInstanceSettings(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceSettingsRestConnectionImpl::PatchInstanceSettings(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

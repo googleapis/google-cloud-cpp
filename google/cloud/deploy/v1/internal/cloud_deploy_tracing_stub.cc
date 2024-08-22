@@ -18,6 +18,7 @@
 
 #include "google/cloud/deploy/v1/internal/cloud_deploy_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

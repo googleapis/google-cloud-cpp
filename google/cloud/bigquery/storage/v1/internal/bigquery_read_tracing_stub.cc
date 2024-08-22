@@ -19,6 +19,7 @@
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_read_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
 #include "google/cloud/internal/streaming_read_rpc_tracing.h"
+#include <memory>
 #include <utility>
 
 namespace google {

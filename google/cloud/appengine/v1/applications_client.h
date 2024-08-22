@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_V1_APPLICATIONS_CLIENT_H
 
 #include "google/cloud/appengine/v1/applications_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -200,7 +199,7 @@ class ApplicationsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateApplication(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::appengine::v1::CreateApplicationRequest const& request,
       Options opts = {});
 
@@ -214,8 +213,7 @@ class ApplicationsClient {
   ///
   // clang-format on
   future<StatusOr<google::appengine::v1::Application>> CreateApplication(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -272,7 +270,7 @@ class ApplicationsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateApplication(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::appengine::v1::UpdateApplicationRequest const& request,
       Options opts = {});
 
@@ -286,8 +284,7 @@ class ApplicationsClient {
   ///
   // clang-format on
   future<StatusOr<google::appengine::v1::Application>> UpdateApplication(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -348,7 +345,7 @@ class ApplicationsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> RepairApplication(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::appengine::v1::RepairApplicationRequest const& request,
       Options opts = {});
 
@@ -362,8 +359,7 @@ class ApplicationsClient {
   ///
   // clang-format on
   future<StatusOr<google::appengine::v1::Application>> RepairApplication(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<ApplicationsConnection> connection_;

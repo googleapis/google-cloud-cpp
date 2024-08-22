@@ -50,28 +50,25 @@ ExternalVpnGatewaysTracingConnection::DeleteExternalVpnGateway(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ExternalVpnGatewaysTracingConnection::DeleteExternalVpnGateway(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::external_vpn_gateways::v1::
-        DeleteExternalVpnGatewayRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::external_vpn_gateways::v1::
+                    DeleteExternalVpnGatewayRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_external_vpn_gateways_v1::ExternalVpnGatewaysConnection::"
       "DeleteExternalVpnGateway");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteExternalVpnGateway(ExperimentalTag{}, NoAwaitTag{},
-                                              request));
+      *span, child_->DeleteExternalVpnGateway(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ExternalVpnGatewaysTracingConnection::DeleteExternalVpnGateway(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_external_vpn_gateways_v1::ExternalVpnGatewaysConnection::"
       "DeleteExternalVpnGateway");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteExternalVpnGateway(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteExternalVpnGateway(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ExternalVpnGateway>
@@ -99,28 +96,25 @@ ExternalVpnGatewaysTracingConnection::InsertExternalVpnGateway(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ExternalVpnGatewaysTracingConnection::InsertExternalVpnGateway(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::external_vpn_gateways::v1::
-        InsertExternalVpnGatewayRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::external_vpn_gateways::v1::
+                    InsertExternalVpnGatewayRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_external_vpn_gateways_v1::ExternalVpnGatewaysConnection::"
       "InsertExternalVpnGateway");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->InsertExternalVpnGateway(ExperimentalTag{}, NoAwaitTag{},
-                                              request));
+      *span, child_->InsertExternalVpnGateway(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ExternalVpnGatewaysTracingConnection::InsertExternalVpnGateway(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_external_vpn_gateways_v1::ExternalVpnGatewaysConnection::"
       "InsertExternalVpnGateway");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->InsertExternalVpnGateway(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->InsertExternalVpnGateway(operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::ExternalVpnGateway>
@@ -150,27 +144,23 @@ ExternalVpnGatewaysTracingConnection::SetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ExternalVpnGatewaysTracingConnection::SetLabels(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::external_vpn_gateways::v1::
-        SetLabelsRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::external_vpn_gateways::v1::
+                    SetLabelsRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_external_vpn_gateways_v1::ExternalVpnGatewaysConnection::"
       "SetLabels");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->SetLabels(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->SetLabels(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ExternalVpnGatewaysTracingConnection::SetLabels(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_external_vpn_gateways_v1::ExternalVpnGatewaysConnection::"
       "SetLabels");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->SetLabels(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->SetLabels(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

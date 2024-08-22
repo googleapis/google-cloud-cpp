@@ -17,6 +17,8 @@
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include <iostream>
+#include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {

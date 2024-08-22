@@ -546,19 +546,18 @@ DataCatalogClient::ReconcileTags(
 }
 
 StatusOr<google::longrunning::Operation> DataCatalogClient::ReconcileTags(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::datacatalog::v1::ReconcileTagsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ReconcileTags(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->ReconcileTags(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>
 DataCatalogClient::ReconcileTags(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ReconcileTags(ExperimentalTag{}, operation);
+  return connection_->ReconcileTags(operation);
 }
 
 StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>
@@ -674,19 +673,18 @@ DataCatalogClient::ImportEntries(
 }
 
 StatusOr<google::longrunning::Operation> DataCatalogClient::ImportEntries(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::datacatalog::v1::ImportEntriesRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ImportEntries(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->ImportEntries(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>
 DataCatalogClient::ImportEntries(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ImportEntries(ExperimentalTag{}, operation);
+  return connection_->ImportEntries(operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

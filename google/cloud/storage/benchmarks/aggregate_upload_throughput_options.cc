@@ -15,9 +15,12 @@
 #include "google/cloud/storage/benchmarks/aggregate_upload_throughput_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
+#include <iostream>
 #include <iterator>
 #include <sstream>
+#include <string>
 #include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {

@@ -61,108 +61,198 @@ class MockFoldersConnection : public resourcemanager_v3::FoldersConnection {
       (google::cloud::resourcemanager::v3::SearchFoldersRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateFolder)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateFolder(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateFolder(Matcher<google::cloud::resourcemanager::v3::CreateFolderRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::resourcemanager::v3::Folder>>,
       CreateFolder,
       (google::cloud::resourcemanager::v3::CreateFolderRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateFolder(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateFolder,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::resourcemanager::v3::CreateFolderRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateFolder(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::Folder>>,
-              CreateFolder,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              CreateFolder, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateFolder)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateFolder(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateFolder(Matcher<google::cloud::resourcemanager::v3::UpdateFolderRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::resourcemanager::v3::Folder>>,
       UpdateFolder,
       (google::cloud::resourcemanager::v3::UpdateFolderRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateFolder(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateFolder,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::resourcemanager::v3::UpdateFolderRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateFolder(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::Folder>>,
-              UpdateFolder,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              UpdateFolder, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, MoveFolder)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, MoveFolder(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// MoveFolder(Matcher<google::cloud::resourcemanager::v3::MoveFolderRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::resourcemanager::v3::Folder>>, MoveFolder,
       (google::cloud::resourcemanager::v3::MoveFolderRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, MoveFolder(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, MoveFolder,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::resourcemanager::v3::MoveFolderRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, MoveFolder(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::Folder>>,
-              MoveFolder,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              MoveFolder, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteFolder)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteFolder(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteFolder(Matcher<google::cloud::resourcemanager::v3::DeleteFolderRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::resourcemanager::v3::Folder>>,
       DeleteFolder,
       (google::cloud::resourcemanager::v3::DeleteFolderRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteFolder(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteFolder,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::resourcemanager::v3::DeleteFolderRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteFolder(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::Folder>>,
-              DeleteFolder,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              DeleteFolder, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UndeleteFolder)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UndeleteFolder(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UndeleteFolder(Matcher<google::cloud::resourcemanager::v3::UndeleteFolderRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::Folder>>,
               UndeleteFolder,
               (google::cloud::resourcemanager::v3::UndeleteFolderRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UndeleteFolder(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UndeleteFolder,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::resourcemanager::v3::UndeleteFolderRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UndeleteFolder(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::Folder>>,
-              UndeleteFolder,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              UndeleteFolder, (google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,

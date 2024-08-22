@@ -63,13 +63,11 @@ class TargetTcpProxiesRestConnectionImpl
                            DeleteTargetTcpProxyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetTcpProxy(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::target_tcp_proxies::v1::
-          DeleteTargetTcpProxyRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::target_tcp_proxies::v1::
+                      DeleteTargetTcpProxyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteTargetTcpProxy(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy> GetTargetTcpProxy(
@@ -81,13 +79,11 @@ class TargetTcpProxiesRestConnectionImpl
                            InsertTargetTcpProxyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetTcpProxy(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::target_tcp_proxies::v1::
-          InsertTargetTcpProxyRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::target_tcp_proxies::v1::
+                      InsertTargetTcpProxyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertTargetTcpProxy(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::TargetTcpProxy>
@@ -99,13 +95,11 @@ class TargetTcpProxiesRestConnectionImpl
                         SetBackendServiceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetBackendService(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::target_tcp_proxies::v1::
-          SetBackendServiceRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::target_tcp_proxies::v1::
+                      SetBackendServiceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetBackendService(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetProxyHeader(
@@ -113,12 +107,10 @@ class TargetTcpProxiesRestConnectionImpl
           SetProxyHeaderRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetProxyHeader(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::target_tcp_proxies::v1::
-          SetProxyHeaderRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::target_tcp_proxies::v1::
+                      SetProxyHeaderRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetProxyHeader(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:

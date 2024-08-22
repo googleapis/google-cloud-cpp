@@ -25,10 +25,19 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/log.h"
 #include "absl/time/time.h"
+#include <algorithm>
 #include <functional>
 #include <future>
+#include <iostream>
+#include <map>
+#include <memory>
+#include <mutex>
+#include <random>
 #include <set>
 #include <sstream>
+#include <string>
+#include <utility>
+#include <vector>
 
 namespace {
 namespace gcs = ::google::cloud::storage;

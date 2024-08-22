@@ -53,13 +53,15 @@ DefaultRegionInstanceGroupsRestStub::GetInstanceGroup(
     Options const& options,
     google::cloud::cpp::compute::region_instance_groups::v1::
         GetInstanceGroupRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<google::cloud::cpp::compute::v1::InstanceGroup>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "instanceGroups", "/",
-                   request.instance_group()));
+                   request.instance_group()),
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RegionInstanceGroupList>
@@ -68,6 +70,16 @@ DefaultRegionInstanceGroupsRestStub::ListRegionInstanceGroups(
     Options const& options,
     google::cloud::cpp::compute::region_instance_groups::v1::
         ListRegionInstanceGroupsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::RegionInstanceGroupList>(
       *service_, rest_context, request, false,
@@ -75,13 +87,7 @@ DefaultRegionInstanceGroupsRestStub::ListRegionInstanceGroups(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "instanceGroups"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RegionInstanceGroupsListInstances>
@@ -90,6 +96,16 @@ DefaultRegionInstanceGroupsRestStub::ListInstances(
     Options const& options,
     google::cloud::cpp::compute::region_instance_groups::v1::
         ListInstancesRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::RegionInstanceGroupsListInstances>(
       *service_, rest_context,
@@ -99,13 +115,7 @@ DefaultRegionInstanceGroupsRestStub::ListInstances(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "instanceGroups", "/",
                    request.instance_group(), "/", "listInstances"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -120,6 +130,10 @@ DefaultRegionInstanceGroupsRestStub::AsyncSetNamedPorts(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -132,8 +146,7 @@ DefaultRegionInstanceGroupsRestStub::AsyncSetNamedPorts(
                              "regions", "/", request.region(), "/",
                              "instanceGroups", "/", request.instance_group(),
                              "/", "setNamedPorts"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -152,6 +165,10 @@ DefaultRegionInstanceGroupsRestStub::SetNamedPorts(
     Options const& options,
     google::cloud::cpp::compute::region_instance_groups::v1::
         SetNamedPortsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context,
       request.region_instance_groups_set_named_ports_request_resource(), false,
@@ -160,8 +177,7 @@ DefaultRegionInstanceGroupsRestStub::SetNamedPorts(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "instanceGroups", "/",
                    request.instance_group(), "/", "setNamedPorts"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

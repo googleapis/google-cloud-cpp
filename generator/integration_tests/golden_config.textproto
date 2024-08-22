@@ -41,10 +41,6 @@ service {
   generate_round_robin_decorator: true
   generate_rest_transport: true
   forwarding_product_path: "generator/integration_tests/golden"
-  emitted_rpcs: [
-    "Deprecated2",
-    "GenerateAccessToken(std::string const&, std::string const&)"
-  ]
   idempotency_overrides: [
     {rpc_name: "GoldenThingAdmin.DropDatabase", idempotency: IDEMPOTENT},
     {rpc_name: "GoldenKitchenSink.ListLogs", idempotency: NON_IDEMPOTENT}

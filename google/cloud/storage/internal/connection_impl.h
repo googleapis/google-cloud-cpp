@@ -21,7 +21,9 @@
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/invocation_id_generator.h"
+#include <memory>
 #include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

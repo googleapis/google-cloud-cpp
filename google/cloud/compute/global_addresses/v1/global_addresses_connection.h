@@ -22,7 +22,6 @@
 #include "google/cloud/compute/global_addresses/v1/global_addresses_connection_idempotency_policy.h"
 #include "google/cloud/compute/global_addresses/v1/internal/global_addresses_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -193,13 +192,11 @@ class GlobalAddressesConnection {
                     DeleteAddressRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAddress(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::global_addresses::v1::
-          DeleteAddressRequest const& request);
+      NoAwaitTag, google::cloud::cpp::compute::global_addresses::v1::
+                      DeleteAddressRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteAddress(ExperimentalTag,
-                google::cloud::cpp::compute::v1::Operation const& operation);
+  DeleteAddress(google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Address> GetAddress(
       google::cloud::cpp::compute::global_addresses::v1::
@@ -210,13 +207,11 @@ class GlobalAddressesConnection {
                     InsertAddressRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAddress(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::global_addresses::v1::
-          InsertAddressRequest const& request);
+      NoAwaitTag, google::cloud::cpp::compute::global_addresses::v1::
+                      InsertAddressRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertAddress(ExperimentalTag,
-                google::cloud::cpp::compute::v1::Operation const& operation);
+  InsertAddress(google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Address>
   ListGlobalAddresses(google::cloud::cpp::compute::global_addresses::v1::
@@ -227,12 +222,11 @@ class GlobalAddressesConnection {
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> Move(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::global_addresses::v1::MoveRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Move(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -241,13 +235,12 @@ class GlobalAddressesConnection {
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(ExperimentalTag,
-            google::cloud::cpp::compute::v1::Operation const& operation);
+  SetLabels(google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

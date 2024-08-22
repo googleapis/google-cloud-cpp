@@ -36,6 +36,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
+#include <memory>
 #include <string>
 #include <vector>
 

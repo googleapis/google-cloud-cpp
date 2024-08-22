@@ -47,25 +47,43 @@ class MockAssuredWorkloadsServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateWorkload)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateWorkload(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateWorkload(Matcher<google::cloud::assuredworkloads::v1::CreateWorkloadRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>,
               CreateWorkload,
               (google::cloud::assuredworkloads::v1::CreateWorkloadRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateWorkload(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateWorkload,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::assuredworkloads::v1::CreateWorkloadRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateWorkload(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>,
-              CreateWorkload,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              CreateWorkload, (google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::assuredworkloads::v1::Workload>,

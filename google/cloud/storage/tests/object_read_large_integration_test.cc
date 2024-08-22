@@ -18,8 +18,11 @@
 #include "absl/strings/str_split.h"
 #include <gmock/gmock.h>
 #include <fstream>
+#include <iostream>
 #include <iterator>
+#include <sstream>
 #include <string>
+#include <utility>
 #include <vector>
 
 namespace google {

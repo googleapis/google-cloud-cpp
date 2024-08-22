@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CERTIFICATEMANAGER_V1_CERTIFICATE_MANAGER_CLIENT_H
 
 #include "google/cloud/certificatemanager/v1/certificate_manager_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -300,7 +299,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateCertificate(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::certificatemanager::v1::Certificate const& certificate,
       std::string const& certificate_id, Options opts = {});
 
@@ -356,7 +355,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateCertificate(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::certificatemanager::v1::CreateCertificateRequest const&
           request,
       Options opts = {});
@@ -371,8 +370,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>
-  CreateCertificate(ExperimentalTag,
-                    google::longrunning::Operation const& operation,
+  CreateCertificate(google::longrunning::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -424,7 +422,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCertificate(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::certificatemanager::v1::Certificate const& certificate,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -480,7 +478,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCertificate(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::certificatemanager::v1::UpdateCertificateRequest const&
           request,
       Options opts = {});
@@ -495,8 +493,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>
-  UpdateCertificate(ExperimentalTag,
-                    google::longrunning::Operation const& operation,
+  UpdateCertificate(google::longrunning::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -544,7 +541,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCertificate(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -598,7 +595,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCertificate(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::certificatemanager::v1::DeleteCertificateRequest const&
           request,
       Options opts = {});
@@ -613,8 +610,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
-  DeleteCertificate(ExperimentalTag,
-                    google::longrunning::Operation const& operation,
+  DeleteCertificate(google::longrunning::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -803,7 +799,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateCertificateMap(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::certificatemanager::v1::CertificateMap const&
           certificate_map,
       std::string const& certificate_map_id, Options opts = {});
@@ -860,7 +856,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateCertificateMap(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::certificatemanager::v1::CreateCertificateMapRequest const&
           request,
       Options opts = {});
@@ -875,8 +871,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
-  CreateCertificateMap(ExperimentalTag,
-                       google::longrunning::Operation const& operation,
+  CreateCertificateMap(google::longrunning::Operation const& operation,
                        Options opts = {});
 
   // clang-format off
@@ -929,7 +924,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCertificateMap(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::certificatemanager::v1::CertificateMap const&
           certificate_map,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
@@ -986,7 +981,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCertificateMap(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::certificatemanager::v1::UpdateCertificateMapRequest const&
           request,
       Options opts = {});
@@ -1001,8 +996,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
-  UpdateCertificateMap(ExperimentalTag,
-                       google::longrunning::Operation const& operation,
+  UpdateCertificateMap(google::longrunning::Operation const& operation,
                        Options opts = {});
 
   // clang-format off
@@ -1052,7 +1046,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCertificateMap(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1108,7 +1102,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCertificateMap(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::certificatemanager::v1::DeleteCertificateMapRequest const&
           request,
       Options opts = {});
@@ -1123,8 +1117,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
-  DeleteCertificateMap(ExperimentalTag,
-                       google::longrunning::Operation const& operation,
+  DeleteCertificateMap(google::longrunning::Operation const& operation,
                        Options opts = {});
 
   // clang-format off
@@ -1314,7 +1307,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateCertificateMapEntry(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::certificatemanager::v1::CertificateMapEntry const&
           certificate_map_entry,
       std::string const& certificate_map_entry_id, Options opts = {});
@@ -1370,7 +1363,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateCertificateMapEntry(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::certificatemanager::v1::
           CreateCertificateMapEntryRequest const& request,
       Options opts = {});
@@ -1385,8 +1378,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
-  CreateCertificateMapEntry(ExperimentalTag,
-                            google::longrunning::Operation const& operation,
+  CreateCertificateMapEntry(google::longrunning::Operation const& operation,
                             Options opts = {});
 
   // clang-format off
@@ -1439,7 +1431,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCertificateMapEntry(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::certificatemanager::v1::CertificateMapEntry const&
           certificate_map_entry,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
@@ -1495,7 +1487,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCertificateMapEntry(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::certificatemanager::v1::
           UpdateCertificateMapEntryRequest const& request,
       Options opts = {});
@@ -1510,8 +1502,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
-  UpdateCertificateMapEntry(ExperimentalTag,
-                            google::longrunning::Operation const& operation,
+  UpdateCertificateMapEntry(google::longrunning::Operation const& operation,
                             Options opts = {});
 
   // clang-format off
@@ -1559,7 +1550,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCertificateMapEntry(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1612,7 +1603,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCertificateMapEntry(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::certificatemanager::v1::
           DeleteCertificateMapEntryRequest const& request,
       Options opts = {});
@@ -1627,8 +1618,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
-  DeleteCertificateMapEntry(ExperimentalTag,
-                            google::longrunning::Operation const& operation,
+  DeleteCertificateMapEntry(google::longrunning::Operation const& operation,
                             Options opts = {});
 
   // clang-format off
@@ -1818,7 +1808,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateDnsAuthorization(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::certificatemanager::v1::DnsAuthorization const&
           dns_authorization,
       std::string const& dns_authorization_id, Options opts = {});
@@ -1874,7 +1864,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateDnsAuthorization(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::certificatemanager::v1::
           CreateDnsAuthorizationRequest const& request,
       Options opts = {});
@@ -1889,8 +1879,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>
-  CreateDnsAuthorization(ExperimentalTag,
-                         google::longrunning::Operation const& operation,
+  CreateDnsAuthorization(google::longrunning::Operation const& operation,
                          Options opts = {});
 
   // clang-format off
@@ -1943,7 +1932,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateDnsAuthorization(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::certificatemanager::v1::DnsAuthorization const&
           dns_authorization,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
@@ -1999,7 +1988,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateDnsAuthorization(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::certificatemanager::v1::
           UpdateDnsAuthorizationRequest const& request,
       Options opts = {});
@@ -2014,8 +2003,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>
-  UpdateDnsAuthorization(ExperimentalTag,
-                         google::longrunning::Operation const& operation,
+  UpdateDnsAuthorization(google::longrunning::Operation const& operation,
                          Options opts = {});
 
   // clang-format off
@@ -2063,7 +2051,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteDnsAuthorization(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2116,7 +2104,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteDnsAuthorization(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::certificatemanager::v1::
           DeleteDnsAuthorizationRequest const& request,
       Options opts = {});
@@ -2131,8 +2119,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
-  DeleteDnsAuthorization(ExperimentalTag,
-                         google::longrunning::Operation const& operation,
+  DeleteDnsAuthorization(google::longrunning::Operation const& operation,
                          Options opts = {});
 
   // clang-format off
@@ -2323,7 +2310,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateCertificateIssuanceConfig(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::certificatemanager::v1::CertificateIssuanceConfig const&
           certificate_issuance_config,
       std::string const& certificate_issuance_config_id, Options opts = {});
@@ -2381,7 +2368,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateCertificateIssuanceConfig(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::certificatemanager::v1::
           CreateCertificateIssuanceConfigRequest const& request,
       Options opts = {});
@@ -2398,8 +2385,7 @@ class CertificateManagerClient {
   future<StatusOr<
       google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>
   CreateCertificateIssuanceConfig(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2446,7 +2432,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCertificateIssuanceConfig(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2500,7 +2486,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCertificateIssuanceConfig(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::certificatemanager::v1::
           DeleteCertificateIssuanceConfigRequest const& request,
       Options opts = {});
@@ -2516,8 +2502,7 @@ class CertificateManagerClient {
   // clang-format on
   future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
   DeleteCertificateIssuanceConfig(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2704,7 +2689,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateTrustConfig(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::certificatemanager::v1::TrustConfig const& trust_config,
       std::string const& trust_config_id, Options opts = {});
 
@@ -2760,7 +2745,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateTrustConfig(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::certificatemanager::v1::CreateTrustConfigRequest const&
           request,
       Options opts = {});
@@ -2775,8 +2760,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>
-  CreateTrustConfig(ExperimentalTag,
-                    google::longrunning::Operation const& operation,
+  CreateTrustConfig(google::longrunning::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -2828,7 +2812,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateTrustConfig(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::certificatemanager::v1::TrustConfig const& trust_config,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -2884,7 +2868,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateTrustConfig(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const&
           request,
       Options opts = {});
@@ -2899,8 +2883,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>
-  UpdateTrustConfig(ExperimentalTag,
-                    google::longrunning::Operation const& operation,
+  UpdateTrustConfig(google::longrunning::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -2948,7 +2931,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteTrustConfig(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3002,7 +2985,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteTrustConfig(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const&
           request,
       Options opts = {});
@@ -3017,8 +3000,7 @@ class CertificateManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
-  DeleteTrustConfig(ExperimentalTag,
-                    google::longrunning::Operation const& operation,
+  DeleteTrustConfig(google::longrunning::Operation const& operation,
                     Options opts = {});
 
  private:

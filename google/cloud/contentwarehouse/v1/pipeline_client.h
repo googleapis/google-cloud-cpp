@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTENTWAREHOUSE_V1_PIPELINE_CLIENT_H
 
 #include "google/cloud/contentwarehouse/v1/pipeline_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -132,8 +131,7 @@ class PipelineServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RunPipeline(ExperimentalTag,
-                                                       NoAwaitTag,
+  StatusOr<google::longrunning::Operation> RunPipeline(NoAwaitTag,
                                                        std::string const& name,
                                                        Options opts = {});
 
@@ -188,7 +186,7 @@ class PipelineServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> RunPipeline(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::contentwarehouse::v1::RunPipelineRequest const& request,
       Options opts = {});
 
@@ -202,7 +200,7 @@ class PipelineServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>
-  RunPipeline(ExperimentalTag, google::longrunning::Operation const& operation,
+  RunPipeline(google::longrunning::Operation const& operation,
               Options opts = {});
 
  private:

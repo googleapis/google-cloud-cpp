@@ -22,7 +22,6 @@
 #include "google/cloud/dialogflow_es/conversation_datasets_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_es/internal/conversation_datasets_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -198,13 +197,12 @@ class ConversationDatasetsConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> CreateConversationDataset(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>
-  CreateConversationDataset(ExperimentalTag,
-                            google::longrunning::Operation const& operation);
+  CreateConversationDataset(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::dialogflow::v2::ConversationDataset>
   GetConversationDataset(
@@ -222,14 +220,13 @@ class ConversationDatasetsConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteConversationDataset(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::dialogflow::v2::
                               DeleteConversationDatasetOperationMetadata>>
-  DeleteConversationDataset(ExperimentalTag,
-                            google::longrunning::Operation const& operation);
+  DeleteConversationDataset(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<
       google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>>
@@ -238,14 +235,13 @@ class ConversationDatasetsConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> ImportConversationData(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::v2::ImportConversationDataRequest const&
           request);
 
   virtual future<StatusOr<
       google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>>
-  ImportConversationData(ExperimentalTag,
-                         google::longrunning::Operation const& operation);
+  ImportConversationData(google::longrunning::Operation const& operation);
 };
 
 /**

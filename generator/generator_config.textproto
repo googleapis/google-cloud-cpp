@@ -442,7 +442,6 @@ service {
   forwarding_product_path: "google/cloud/bigquery"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
-  emitted_rpcs: ["ScheduleTransferRuns"]
 }
 
 service {
@@ -459,7 +458,6 @@ service {
   forwarding_product_path: "google/cloud/bigquery"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
-  emitted_rpcs: ["SearchAssignments", "ScheduleTransferRuns"]
 }
 
 service {
@@ -701,7 +699,6 @@ service {
   product_path: "google/cloud/channel/v1"
   initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
-  emitted_rpcs: ["RunReportJob", "FetchReportResults", "ListReports"]
 }
 
 # Cloud Controls Partner
@@ -710,7 +707,6 @@ service {
   product_path: "google/cloud/cloudcontrolspartner/v1"
   initial_copyright_year: "2024"
   retryable_status_codes: ["kUnavailable"]
-  emitted_rpcs: ["ListAccessApprovalRequests"]
 }
 
 service {
@@ -1004,6 +1000,15 @@ discovery_products {
   }
 
   rest_services {
+    service_proto_path: "google/cloud/compute/instant_snapshots/v1/instant_snapshots.proto"
+    product_path: "google/cloud/compute/instant_snapshots/v1"
+    initial_copyright_year: "2024"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
     service_proto_path: "google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.proto"
     product_path: "google/cloud/compute/interconnect_attachments/v1"
     initial_copyright_year: "2023"
@@ -1277,6 +1282,15 @@ discovery_products {
     service_proto_path: "google/cloud/compute/region_instances/v1/region_instances.proto"
     product_path: "google/cloud/compute/region_instances/v1"
     initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    generate_grpc_transport: false
+  }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto"
+    product_path: "google/cloud/compute/region_instant_snapshots/v1"
+    initial_copyright_year: "2024"
     retryable_status_codes: ["kUnavailable"]
     generate_rest_transport: true
     generate_grpc_transport: false
@@ -1632,6 +1646,17 @@ discovery_products {
     generate_rest_transport: true
     generate_grpc_transport: false
   }
+
+  rest_services {
+    service_proto_path: "google/cloud/compute/future_reservations/v1/future_reservations.proto"
+    product_path: "google/cloud/compute/future_reservations/v1"
+    initial_copyright_year: "2024"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    generate_grpc_transport: false
+  }
+
+  # update_discovery_doc.sh additions
 }
 
 # Confidential Computing
@@ -1675,7 +1700,6 @@ service {
   forwarding_product_path: "google/cloud/container"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
-  emitted_rpcs: ["SetLocations"]
   omitted_rpcs: [
     "CreateCluster(std::string const&, std::string const&, google::container::v1::Cluster const&)",
     "UpdateCluster(std::string const&, std::string const&, std::string const&, google::container::v1::ClusterUpdate const&)",
@@ -2394,7 +2418,6 @@ service {
   product_path: "google/cloud/edgenetwork/v1"
   initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
-  emitted_rpcs: ["GetZone", "ListZones"]
 }
 
 # Essential Contacts
@@ -3009,9 +3032,6 @@ service {
   initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
   emulator_endpoint_env_var: "PUBSUB_EMULATOR_HOST"
-  emitted_rpcs: [
-    "DeleteSchemaRevision(std::string const&, std::string const&)"
-  ]
 }
 
 # Pub/Sub Lite
@@ -3073,9 +3093,6 @@ service {
   product_path: "google/cloud/recaptchaenterprise/v1"
   initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
-  emitted_rpcs: [
-    "SearchRelatedAccountGroupMemberships(std::string const&, std::string const&)"
-  ]
 }
 
 # Recommender
@@ -3245,13 +3262,6 @@ service {
 
 # Cloud Run
 service {
-  service_proto_path: "google/cloud/run/v2/execution.proto"
-  product_path: "google/cloud/run/v2"
-  initial_copyright_year: "2023"
-  retryable_status_codes: ["kUnavailable"]
-}
-
-service {
   service_proto_path: "google/cloud/run/v2/job.proto"
   additional_proto_files: ["google/cloud/run/v2/execution.proto"]
   product_path: "google/cloud/run/v2"
@@ -3315,7 +3325,6 @@ service {
   product_path: "google/cloud/securitycenter/v1"
   forwarding_product_path: "google/cloud/securitycenter"
   initial_copyright_year: "2022"
-  emitted_rpcs: ["GroupAssets", "ListAssets", "RunAssetDiscovery"]
   retryable_status_codes: ["kUnavailable"]
 }
 

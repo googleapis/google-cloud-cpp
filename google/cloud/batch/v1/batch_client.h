@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BATCH_V1_BATCH_CLIENT_H
 
 #include "google/cloud/batch/v1/batch_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -258,8 +257,7 @@ class BatchServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteJob(ExperimentalTag,
-                                                     NoAwaitTag,
+  StatusOr<google::longrunning::Operation> DeleteJob(NoAwaitTag,
                                                      std::string const& name,
                                                      Options opts = {});
 
@@ -313,8 +311,7 @@ class BatchServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteJob(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::batch::v1::DeleteJobRequest const& request,
+      NoAwaitTag, google::cloud::batch::v1::DeleteJobRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -327,8 +324,7 @@ class BatchServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::batch::v1::OperationMetadata>> DeleteJob(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -422,7 +418,7 @@ class BatchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.batch.v1.GetTaskRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L239}
-  /// [google.cloud.batch.v1.Task]: @googleapis_reference_link{google/cloud/batch/v1/task.proto#L415}
+  /// [google.cloud.batch.v1.Task]: @googleapis_reference_link{google/cloud/batch/v1/task.proto#L418}
   ///
   // clang-format on
   StatusOr<google::cloud::batch::v1::Task> GetTask(std::string const& name,
@@ -452,7 +448,7 @@ class BatchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.batch.v1.GetTaskRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L239}
-  /// [google.cloud.batch.v1.Task]: @googleapis_reference_link{google/cloud/batch/v1/task.proto#L415}
+  /// [google.cloud.batch.v1.Task]: @googleapis_reference_link{google/cloud/batch/v1/task.proto#L418}
   ///
   // clang-format on
   StatusOr<google::cloud::batch::v1::Task> GetTask(
@@ -489,7 +485,7 @@ class BatchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.batch.v1.ListTasksRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L205}
-  /// [google.cloud.batch.v1.Task]: @googleapis_reference_link{google/cloud/batch/v1/task.proto#L415}
+  /// [google.cloud.batch.v1.Task]: @googleapis_reference_link{google/cloud/batch/v1/task.proto#L418}
   ///
   // clang-format on
   StreamRange<google::cloud::batch::v1::Task> ListTasks(
@@ -528,7 +524,7 @@ class BatchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.batch.v1.ListTasksRequest]: @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L205}
-  /// [google.cloud.batch.v1.Task]: @googleapis_reference_link{google/cloud/batch/v1/task.proto#L415}
+  /// [google.cloud.batch.v1.Task]: @googleapis_reference_link{google/cloud/batch/v1/task.proto#L418}
   ///
   // clang-format on
   StreamRange<google::cloud::batch::v1::Task> ListTasks(

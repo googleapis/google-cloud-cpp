@@ -123,7 +123,9 @@ TEST(PlumbingTest, PollingLoopUsesPerCallPolicies) {
           std::move(background), std::move(stub), std::move(options));
   auto client = GoldenThingAdminClient(std::move(conn));
 
-  (void)client.CreateDatabase({}, std::move(call_options));
+  (void)client.CreateDatabase(
+      google::test::admin::database::v1::CreateDatabaseRequest{},
+      std::move(call_options));
 }
 
 }  // namespace

@@ -221,8 +221,8 @@ if (GOOGLE_CLOUD_CPP_WITH_MOCKS)
     )
     target_link_libraries(
         google_cloud_cpp_bigquery_rest_mocks
-        INTERFACE google-cloud-cpp::experimental-bigquery_rest
-                  GTest::gmock_main GTest::gmock GTest::gtest)
+        INTERFACE google-cloud-cpp::experimental-bigquery_rest GTest::gmock
+                  GTest::gtest)
     set_target_properties(
         google_cloud_cpp_bigquery_rest_mocks
         PROPERTIES EXPORT_NAME

@@ -23,7 +23,12 @@
 #include <gmock/gmock.h>
 #include <algorithm>
 #include <future>
+#include <iterator>
+#include <memory>
+#include <set>
+#include <string>
 #include <thread>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -104,6 +109,7 @@ TEST_F(ThreadIntegrationTest, Unshared) {
       PredefinedAcl("private"), PredefinedDefaultObjectAcl("projectPrivate"),
       Projection("full"));
   ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
   EXPECT_EQ(bucket_name, meta->name());
 
   // Clamp the thread count to the [8, 32] range. Sadly, `std::clamp` is a C++17
@@ -159,10 +165,11 @@ class CaptureSendHeaderBackend : public LogBackend {
 };
 
 TEST_F(ThreadIntegrationTest, ReuseConnections) {
+  if (UsingGrpc()) GTEST_SKIP();
+
   auto log_backend = std::make_shared<CaptureSendHeaderBackend>();
-
-  Client client(Options{}.set<LoggingComponentsOption>({"raw-client", "http"}));
-
+  auto client = MakeIntegrationTestClient(
+      Options{}.set<LoggingComponentsOption>({"raw-client", "http"}));
   std::string bucket_name = MakeRandomBucketName();
 
   auto id = LogSink::Instance().AddBackend(log_backend);

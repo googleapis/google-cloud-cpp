@@ -15,7 +15,9 @@
 #include "google/cloud/storage/internal/lifecycle_rule_parser.h"
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/internal/make_status.h"
+#include <string>
 #include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {

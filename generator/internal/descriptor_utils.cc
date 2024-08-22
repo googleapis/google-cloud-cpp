@@ -54,7 +54,6 @@ namespace {
 void SetMethodSignatureMethodVars(
     google::protobuf::ServiceDescriptor const& service,
     google::protobuf::MethodDescriptor const& method,
-    std::set<std::string> const& emitted_rpcs,
     std::set<std::string> const& omitted_rpcs, VarsDictionary& method_vars) {
   auto method_name = method.name();
   auto qualified_method_name = absl::StrCat(service.name(), ".", method_name);
@@ -130,19 +129,7 @@ void SetMethodSignatureMethodVars(
     };
     if (internal::ContainsIf(omitted_rpcs, any_match)) continue;
     if (field_deprecated) {
-      // RPCs with deprecated fields must be listed in either omitted_rpcs
-      // or emitted_rpcs. The former is used for newly-generated services,
-      // where we never want to support the deprecated field, and the
-      // latter for newly-deprecated fields, where we want to maintain
-      // backwards compatibility.
-      if (!internal::ContainsIf(emitted_rpcs, any_match)) {
-        GCP_LOG(FATAL) << "Deprecated RPC " << qualified_signature
-                       << " must be listed in either omitted_rpcs"
-                       << " or emitted_rpcs";
-      }
       method_vars["uses_deprecated_field"] = "true";
-      // TODO(#8486): Add a @deprecated Doxygen comment and the
-      // GOOGLE_CLOUD_CPP_DEPRECATED annotation to the generated RPC.
     }
     std::string key = "method_signature" + std::to_string(i);
     method_vars[key] = method_signature;
@@ -822,15 +809,12 @@ std::map<std::string, VarsDictionary> CreateMethodVars(
     for (auto& a : s) a = SafeReplaceAll(a, "@", ",");
     return {s.begin(), s.end()};
   };
-  auto const emitted_rpcs = split_arg("emitted_rpcs");
   auto const omitted_rpcs = split_arg("omitted_rpcs");
   auto const idempotency_overrides = ParseIdempotencyOverrides(vars);
   std::map<std::string, VarsDictionary> service_methods_vars;
   for (int i = 0; i < service.method_count(); i++) {
     auto const& method = *service.method(i);
     VarsDictionary method_vars;
-    method_vars["method_return_doxygen_link"] =
-        FormatDoxygenLink(*method.output_type());
     method_vars["idempotency"] = DefaultIdempotencyFromHttpOperation(method);
     if (!idempotency_overrides.empty()) {
       auto iter = idempotency_overrides.find(
@@ -852,8 +836,7 @@ std::map<std::string, VarsDictionary> CreateMethodVars(
     }
     SetLongrunningOperationMethodVars(method, method_vars);
     AssignPaginationMethodVars(method, method_vars);
-    SetMethodSignatureMethodVars(service, method, emitted_rpcs, omitted_rpcs,
-                                 method_vars);
+    SetMethodSignatureMethodVars(service, method, omitted_rpcs, method_vars);
     auto parsed_http_info = ParseHttpExtension(method);
     method_vars["request_resource"] =
         FormatRequestResource(*method.input_type(), parsed_http_info);

@@ -22,6 +22,8 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/v2/participant.grpc.pb.h>
 #include <memory>
+#include <set>
+#include <string>
 #include <utility>
 
 namespace google {
@@ -159,6 +161,20 @@ ParticipantsLogging::SuggestSmartReplies(
              google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const&
                  request) {
         return child_->SuggestSmartReplies(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::dialogflow::v2::SuggestKnowledgeAssistResponse>
+ParticipantsLogging::SuggestKnowledgeAssist(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::v2::SuggestKnowledgeAssistRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::v2::SuggestKnowledgeAssistRequest const&
+                 request) {
+        return child_->SuggestKnowledgeAssist(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }

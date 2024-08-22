@@ -22,7 +22,6 @@
 #include "google/cloud/discoveryengine/v1/internal/schema_retry_traits.h"
 #include "google/cloud/discoveryengine/v1/schema_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -198,24 +197,22 @@ class SchemaServiceConnection {
       google::cloud::discoveryengine::v1::CreateSchemaRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateSchema(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::discoveryengine::v1::CreateSchemaRequest const& request);
 
   virtual future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
-  CreateSchema(ExperimentalTag,
-               google::longrunning::Operation const& operation);
+  CreateSchema(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
   UpdateSchema(
       google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateSchema(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request);
 
   virtual future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
-  UpdateSchema(ExperimentalTag,
-               google::longrunning::Operation const& operation);
+  UpdateSchema(google::longrunning::Operation const& operation);
 
   virtual future<
       StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
@@ -223,13 +220,12 @@ class SchemaServiceConnection {
       google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteSchema(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
-  DeleteSchema(ExperimentalTag,
-               google::longrunning::Operation const& operation);
+  DeleteSchema(google::longrunning::Operation const& operation);
 };
 
 /**

@@ -93,7 +93,7 @@ class LlmUtilityServiceClient {
   /// @param endpoint  Required. The name of the Endpoint requested to perform token counting.
   ///  Format:
   ///  `projects/{project}/locations/{location}/endpoints/{endpoint}`
-  /// @param instances  Required. The instances that are the input to token counting call.
+  /// @param instances  Optional. The instances that are the input to token counting call.
   ///  Schema is identical to the prediction schema of the underlying model.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -109,7 +109,7 @@ class LlmUtilityServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.CountTokensRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L603}
-  /// [google.cloud.aiplatform.v1.CountTokensResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L629}
+  /// [google.cloud.aiplatform.v1.CountTokensResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L643}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::CountTokensResponse> CountTokens(
@@ -140,7 +140,7 @@ class LlmUtilityServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.CountTokensRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L603}
-  /// [google.cloud.aiplatform.v1.CountTokensResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L629}
+  /// [google.cloud.aiplatform.v1.CountTokensResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L643}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::CountTokensResponse> CountTokens(

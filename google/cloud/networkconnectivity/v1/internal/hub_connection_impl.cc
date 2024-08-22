@@ -156,7 +156,7 @@ HubServiceConnectionImpl::CreateHub(
 }
 
 StatusOr<google::longrunning::Operation> HubServiceConnectionImpl::CreateHub(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkconnectivity::v1::CreateHubRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -172,7 +172,7 @@ StatusOr<google::longrunning::Operation> HubServiceConnectionImpl::CreateHub(
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>
 HubServiceConnectionImpl::CreateHub(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkconnectivity::v1::
@@ -248,7 +248,7 @@ HubServiceConnectionImpl::UpdateHub(
 }
 
 StatusOr<google::longrunning::Operation> HubServiceConnectionImpl::UpdateHub(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkconnectivity::v1::UpdateHubRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -264,7 +264,7 @@ StatusOr<google::longrunning::Operation> HubServiceConnectionImpl::UpdateHub(
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>
 HubServiceConnectionImpl::UpdateHub(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkconnectivity::v1::
@@ -340,7 +340,7 @@ HubServiceConnectionImpl::DeleteHub(
 }
 
 StatusOr<google::longrunning::Operation> HubServiceConnectionImpl::DeleteHub(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkconnectivity::v1::DeleteHubRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -356,7 +356,7 @@ StatusOr<google::longrunning::Operation> HubServiceConnectionImpl::DeleteHub(
 
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
 HubServiceConnectionImpl::DeleteHub(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkconnectivity::v1::
@@ -518,7 +518,7 @@ HubServiceConnectionImpl::CreateSpoke(
 }
 
 StatusOr<google::longrunning::Operation> HubServiceConnectionImpl::CreateSpoke(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -534,7 +534,7 @@ StatusOr<google::longrunning::Operation> HubServiceConnectionImpl::CreateSpoke(
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>
 HubServiceConnectionImpl::CreateSpoke(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkconnectivity::v1::
@@ -611,7 +611,7 @@ HubServiceConnectionImpl::UpdateSpoke(
 }
 
 StatusOr<google::longrunning::Operation> HubServiceConnectionImpl::UpdateSpoke(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -627,7 +627,7 @@ StatusOr<google::longrunning::Operation> HubServiceConnectionImpl::UpdateSpoke(
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>
 HubServiceConnectionImpl::UpdateSpoke(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkconnectivity::v1::
@@ -706,7 +706,7 @@ HubServiceConnectionImpl::RejectHubSpoke(
 
 StatusOr<google::longrunning::Operation>
 HubServiceConnectionImpl::RejectHubSpoke(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -724,7 +724,7 @@ HubServiceConnectionImpl::RejectHubSpoke(
 
 future<StatusOr<google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>
 HubServiceConnectionImpl::RejectHubSpoke(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkconnectivity::v1::
@@ -803,7 +803,7 @@ HubServiceConnectionImpl::AcceptHubSpoke(
 
 StatusOr<google::longrunning::Operation>
 HubServiceConnectionImpl::AcceptHubSpoke(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -821,7 +821,7 @@ HubServiceConnectionImpl::AcceptHubSpoke(
 
 future<StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>
 HubServiceConnectionImpl::AcceptHubSpoke(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkconnectivity::v1::
@@ -898,7 +898,7 @@ HubServiceConnectionImpl::DeleteSpoke(
 }
 
 StatusOr<google::longrunning::Operation> HubServiceConnectionImpl::DeleteSpoke(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -914,7 +914,7 @@ StatusOr<google::longrunning::Operation> HubServiceConnectionImpl::DeleteSpoke(
 
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
 HubServiceConnectionImpl::DeleteSpoke(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkconnectivity::v1::

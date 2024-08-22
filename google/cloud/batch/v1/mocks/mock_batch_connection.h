@@ -54,23 +54,40 @@ class MockBatchServiceConnection : public batch_v1::BatchServiceConnection {
               (google::cloud::batch::v1::GetJobRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteJob)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteJob(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteJob(Matcher<google::cloud::batch::v1::DeleteJobRequest const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::batch::v1::OperationMetadata>>,
               DeleteJob,
               (google::cloud::batch::v1::DeleteJobRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteJob(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteJob,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::batch::v1::DeleteJobRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteJob(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::batch::v1::OperationMetadata>>,
-              DeleteJob,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              DeleteJob, (google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD((StreamRange<google::cloud::batch::v1::Job>), ListJobs,

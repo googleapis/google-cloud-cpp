@@ -88,6 +88,12 @@ class ParticipantsAuth : public ParticipantsStub {
       google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const& request)
       override;
 
+  StatusOr<google::cloud::dialogflow::v2::SuggestKnowledgeAssistResponse>
+  SuggestKnowledgeAssist(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::SuggestKnowledgeAssistRequest const&
+          request) override;
+
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<ParticipantsStub> child_;

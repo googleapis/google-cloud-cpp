@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_COMPLETION_CLIENT_H
 
 #include "google/cloud/discoveryengine/v1/completion_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -177,7 +176,7 @@ class CompletionServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ImportSuggestionDenyListEntries(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::discoveryengine::v1::
           ImportSuggestionDenyListEntriesRequest const& request,
       Options opts = {});
@@ -194,8 +193,7 @@ class CompletionServiceClient {
   future<StatusOr<google::cloud::discoveryengine::v1::
                       ImportSuggestionDenyListEntriesResponse>>
   ImportSuggestionDenyListEntries(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -253,7 +251,7 @@ class CompletionServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> PurgeSuggestionDenyListEntries(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::discoveryengine::v1::
           PurgeSuggestionDenyListEntriesRequest const& request,
       Options opts = {});
@@ -270,8 +268,7 @@ class CompletionServiceClient {
   future<StatusOr<google::cloud::discoveryengine::v1::
                       PurgeSuggestionDenyListEntriesResponse>>
   PurgeSuggestionDenyListEntries(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -329,7 +326,7 @@ class CompletionServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ImportCompletionSuggestions(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::discoveryengine::v1::
           ImportCompletionSuggestionsRequest const& request,
       Options opts = {});
@@ -345,8 +342,7 @@ class CompletionServiceClient {
   // clang-format on
   future<StatusOr<
       google::cloud::discoveryengine::v1::ImportCompletionSuggestionsResponse>>
-  ImportCompletionSuggestions(ExperimentalTag,
-                              google::longrunning::Operation const& operation,
+  ImportCompletionSuggestions(google::longrunning::Operation const& operation,
                               Options opts = {});
 
   // clang-format off
@@ -405,7 +401,7 @@ class CompletionServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> PurgeCompletionSuggestions(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::discoveryengine::v1::
           PurgeCompletionSuggestionsRequest const& request,
       Options opts = {});
@@ -421,8 +417,7 @@ class CompletionServiceClient {
   // clang-format on
   future<StatusOr<
       google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsResponse>>
-  PurgeCompletionSuggestions(ExperimentalTag,
-                             google::longrunning::Operation const& operation,
+  PurgeCompletionSuggestions(google::longrunning::Operation const& operation,
                              Options opts = {});
 
  private:

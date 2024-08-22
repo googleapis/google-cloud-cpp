@@ -118,6 +118,20 @@ DefaultConversationsStub::GenerateStatelessSummary(
   return response;
 }
 
+StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSuggestionResponse>
+DefaultConversationsStub::GenerateStatelessSuggestion(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dialogflow::v2::GenerateStatelessSuggestionRequest const&
+        request) {
+  google::cloud::dialogflow::v2::GenerateStatelessSuggestionResponse response;
+  auto status =
+      grpc_stub_->GenerateStatelessSuggestion(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>
 DefaultConversationsStub::SearchKnowledge(
     grpc::ClientContext& context, Options const&,

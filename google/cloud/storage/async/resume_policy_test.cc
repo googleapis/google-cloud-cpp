@@ -53,10 +53,19 @@ TEST(ResumePolicy, LimitedErrorCountResumePolicy) {
   EXPECT_EQ(p3->OnFinish(TransientError()), ResumePolicy::kStop);
 }
 
-TEST(ResumePolicy, UnlimitedErrorCountResumePolicy) {
-  auto policy = UnlimitedErrorCountResumePolicy()();
+TEST(ResumePolicy, StopOnConsecutiveErrorsResumePolicy) {
+  auto policy = StopOnConsecutiveErrorsResumePolicy()();
   ASSERT_THAT(policy, NotNull());
+  policy->OnStartSuccess();
   EXPECT_EQ(policy->OnFinish(TransientError()), ResumePolicy::kContinue);
+  policy->OnStartSuccess();
+  EXPECT_EQ(policy->OnFinish(TransientError()), ResumePolicy::kContinue);
+  policy->OnStartSuccess();
+  EXPECT_EQ(policy->OnFinish(TransientError()), ResumePolicy::kContinue);
+  policy->OnStartSuccess();
+  EXPECT_EQ(policy->OnFinish(TransientError()), ResumePolicy::kContinue);
+  EXPECT_EQ(policy->OnFinish(TransientError()), ResumePolicy::kStop);
+  EXPECT_EQ(policy->OnFinish(TransientError()), ResumePolicy::kStop);
 }
 
 }  // namespace

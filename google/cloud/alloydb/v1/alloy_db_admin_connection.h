@@ -22,7 +22,6 @@
 #include "google/cloud/alloydb/v1/alloy_db_admin_connection_idempotency_policy.h"
 #include "google/cloud/alloydb/v1/internal/alloy_db_admin_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -197,65 +196,63 @@ class AlloyDBAdminConnection {
       google::cloud::alloydb::v1::CreateClusterRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::alloydb::v1::CreateClusterRequest const& request);
 
   virtual future<StatusOr<google::cloud::alloydb::v1::Cluster>> CreateCluster(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::alloydb::v1::Cluster>> UpdateCluster(
       google::cloud::alloydb::v1::UpdateClusterRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::alloydb::v1::UpdateClusterRequest const& request);
 
   virtual future<StatusOr<google::cloud::alloydb::v1::Cluster>> UpdateCluster(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
   DeleteCluster(
       google::cloud::alloydb::v1::DeleteClusterRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::alloydb::v1::DeleteClusterRequest const& request);
 
   virtual future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
-  DeleteCluster(ExperimentalTag,
-                google::longrunning::Operation const& operation);
+  DeleteCluster(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::alloydb::v1::Cluster>> PromoteCluster(
       google::cloud::alloydb::v1::PromoteClusterRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> PromoteCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::alloydb::v1::PromoteClusterRequest const& request);
 
   virtual future<StatusOr<google::cloud::alloydb::v1::Cluster>> PromoteCluster(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::alloydb::v1::Cluster>> RestoreCluster(
       google::cloud::alloydb::v1::RestoreClusterRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> RestoreCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::alloydb::v1::RestoreClusterRequest const& request);
 
   virtual future<StatusOr<google::cloud::alloydb::v1::Cluster>> RestoreCluster(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::alloydb::v1::Cluster>>
   CreateSecondaryCluster(
       google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateSecondaryCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request);
 
   virtual future<StatusOr<google::cloud::alloydb::v1::Cluster>>
-  CreateSecondaryCluster(ExperimentalTag,
-                         google::longrunning::Operation const& operation);
+  CreateSecondaryCluster(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::alloydb::v1::Instance> ListInstances(
       google::cloud::alloydb::v1::ListInstancesRequest request);
@@ -267,11 +264,11 @@ class AlloyDBAdminConnection {
       google::cloud::alloydb::v1::CreateInstanceRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::alloydb::v1::CreateInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::alloydb::v1::Instance>> CreateInstance(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::alloydb::v1::Instance>>
   CreateSecondaryInstance(
@@ -279,13 +276,12 @@ class AlloyDBAdminConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> CreateSecondaryInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::alloydb::v1::Instance>>
-  CreateSecondaryInstance(ExperimentalTag,
-                          google::longrunning::Operation const& operation);
+  CreateSecondaryInstance(google::longrunning::Operation const& operation);
 
   virtual future<
       StatusOr<google::cloud::alloydb::v1::BatchCreateInstancesResponse>>
@@ -293,69 +289,65 @@ class AlloyDBAdminConnection {
       google::cloud::alloydb::v1::BatchCreateInstancesRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> BatchCreateInstances(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::alloydb::v1::BatchCreateInstancesRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::alloydb::v1::BatchCreateInstancesResponse>>
-  BatchCreateInstances(ExperimentalTag,
-                       google::longrunning::Operation const& operation);
+  BatchCreateInstances(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::alloydb::v1::Instance>> UpdateInstance(
       google::cloud::alloydb::v1::UpdateInstanceRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::alloydb::v1::UpdateInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::alloydb::v1::Instance>> UpdateInstance(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
   DeleteInstance(
       google::cloud::alloydb::v1::DeleteInstanceRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::alloydb::v1::DeleteInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
-  DeleteInstance(ExperimentalTag,
-                 google::longrunning::Operation const& operation);
+  DeleteInstance(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::alloydb::v1::Instance>>
   FailoverInstance(
       google::cloud::alloydb::v1::FailoverInstanceRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> FailoverInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::alloydb::v1::FailoverInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::alloydb::v1::Instance>>
-  FailoverInstance(ExperimentalTag,
-                   google::longrunning::Operation const& operation);
+  FailoverInstance(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::alloydb::v1::Instance>> InjectFault(
       google::cloud::alloydb::v1::InjectFaultRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> InjectFault(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::alloydb::v1::InjectFaultRequest const& request);
 
   virtual future<StatusOr<google::cloud::alloydb::v1::Instance>> InjectFault(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::alloydb::v1::Instance>>
   RestartInstance(
       google::cloud::alloydb::v1::RestartInstanceRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> RestartInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::alloydb::v1::RestartInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::alloydb::v1::Instance>>
-  RestartInstance(ExperimentalTag,
-                  google::longrunning::Operation const& operation);
+  RestartInstance(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::alloydb::v1::Backup> ListBackups(
       google::cloud::alloydb::v1::ListBackupsRequest request);
@@ -367,32 +359,31 @@ class AlloyDBAdminConnection {
       google::cloud::alloydb::v1::CreateBackupRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateBackup(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::alloydb::v1::CreateBackupRequest const& request);
 
   virtual future<StatusOr<google::cloud::alloydb::v1::Backup>> CreateBackup(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::alloydb::v1::Backup>> UpdateBackup(
       google::cloud::alloydb::v1::UpdateBackupRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateBackup(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::alloydb::v1::UpdateBackupRequest const& request);
 
   virtual future<StatusOr<google::cloud::alloydb::v1::Backup>> UpdateBackup(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
   DeleteBackup(google::cloud::alloydb::v1::DeleteBackupRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteBackup(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::alloydb::v1::DeleteBackupRequest const& request);
 
   virtual future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
-  DeleteBackup(ExperimentalTag,
-               google::longrunning::Operation const& operation);
+  DeleteBackup(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::alloydb::v1::SupportedDatabaseFlag>
   ListSupportedDatabaseFlags(

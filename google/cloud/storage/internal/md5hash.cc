@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/md5hash.h"
 #include <algorithm>
 #include <array>
+#include <vector>
 #ifdef _WIN32
 #include <Windows.h>
 #include <wincrypt.h>

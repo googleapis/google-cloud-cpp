@@ -14,10 +14,10 @@
 
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <iterator>
+#include <string>
 #include <vector>
 
 namespace google {
@@ -28,35 +28,45 @@ namespace {
 
 using ::google::cloud::internal::GetEnv;
 using ::google::cloud::storage::testing::AclEntityNames;
-using ::google::cloud::testing_util::ScopedEnvironment;
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
 using ::testing::IsEmpty;
 using ::testing::Not;
 
-class GrpcDefaultObjectAclIntegrationTest
-    : public google::cloud::storage::testing::StorageIntegrationTest {};
+class DefaultObjectAclIntegrationTest
+    : public google::cloud::storage::testing::StorageIntegrationTest {
+ protected:
+  void SetUp() override {
+    ASSERT_THAT(project_id_, Not(IsEmpty()))
+        << "GOOGLE_CLOUD_PROJECT is not set";
+  }
 
-TEST_F(GrpcDefaultObjectAclIntegrationTest, AclCRUD) {
-  ScopedEnvironment grpc_config("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
-                                "metadata");
-  auto const project_id = GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
-  ASSERT_THAT(project_id, Not(IsEmpty())) << "GOOGLE_CLOUD_PROJECT is not set";
+  std::string project_id() const { return project_id_; }
 
+  std::string MakeEntityName() {
+    // We always use the viewers for the project because it is known to exist.
+    return "project-viewers-" + project_id_;
+  }
+
+  std::string project_id_ = GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+};
+
+TEST_F(DefaultObjectAclIntegrationTest, AclCRUD) {
   std::string bucket_name = MakeRandomBucketName();
-  auto client = MakeBucketIntegrationTestClient();
+  auto client = MakeIntegrationTestClient(MakeBucketTestOptions());
 
   // Create a new bucket to run the test, with the "private"
   // PredefinedDefaultObjectAcl, so we know what the contents of the ACL will
   // be.
   auto metadata = client.CreateBucketForProject(
-      bucket_name, project_id, BucketMetadata(),
+      bucket_name, project_id(), BucketMetadata(),
       PredefinedDefaultObjectAcl("authenticatedRead"), Projection("full"));
   ASSERT_STATUS_OK(metadata);
   ScheduleForDelete(*metadata);
 
   // We always use "project-viewers-${project_id}" because it is known to exist.
-  auto const viewers = "project-viewers-" + project_id;
+  auto const viewers = "project-viewers-" + project_id();
 
   ASSERT_THAT(metadata->default_acl(), Not(IsEmpty()))
       << "Test aborted. Empty default object ACL returned from newly created"
@@ -78,10 +88,6 @@ TEST_F(GrpcDefaultObjectAclIntegrationTest, AclCRUD) {
       client.GetDefaultObjectAcl(bucket_name, existing_entity.entity());
   ASSERT_STATUS_OK(get_acl);
   EXPECT_EQ(*get_acl, existing_entity);
-
-  auto not_found_acl =
-      client.GetDefaultObjectAcl(bucket_name, "not-found-entity");
-  EXPECT_THAT(not_found_acl, StatusIs(StatusCode::kNotFound));
 
   auto create_acl = client.CreateDefaultObjectAcl(
       bucket_name, viewers, ObjectAccessControl::ROLE_READER());
@@ -142,8 +148,116 @@ TEST_F(GrpcDefaultObjectAclIntegrationTest, AclCRUD) {
   EXPECT_THAT(AclEntityNames(*current_acl),
               Not(Contains(create_acl->entity())));
 
+  // With gRPC, this behavior is emulated by the library and thus needs testing.
+  auto not_found_acl = client.GetDefaultObjectAcl(bucket_name, viewers);
+  EXPECT_THAT(not_found_acl, StatusIs(StatusCode::kNotFound));
+
   auto status = client.DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);
+}
+
+TEST_F(DefaultObjectAclIntegrationTest, CreatePredefinedDefaultObjectAcl) {
+  std::vector<PredefinedDefaultObjectAcl> test_values{
+      PredefinedDefaultObjectAcl::AuthenticatedRead(),
+      PredefinedDefaultObjectAcl::BucketOwnerFullControl(),
+      PredefinedDefaultObjectAcl::BucketOwnerRead(),
+      PredefinedDefaultObjectAcl::Private(),
+      PredefinedDefaultObjectAcl::ProjectPrivate(),
+      PredefinedDefaultObjectAcl::PublicRead(),
+  };
+
+  auto client = MakeBucketIntegrationTestClient();
+  for (auto const& acl : test_values) {
+    SCOPED_TRACE(std::string("Testing with ") +
+                 acl.well_known_parameter_name() + "=" + acl.value());
+    std::string bucket_name = MakeRandomBucketName();
+
+    auto metadata = client.CreateBucketForProject(
+        bucket_name, project_id_, BucketMetadata(),
+        PredefinedDefaultObjectAcl(acl));
+    ASSERT_STATUS_OK(metadata);
+    EXPECT_EQ(bucket_name, metadata->name());
+
+    // Wait at least 2 seconds before trying to create / delete another bucket.
+    if (!UsingEmulator()) std::this_thread::sleep_for(std::chrono::seconds(2));
+
+    auto status = client.DeleteBucket(bucket_name);
+    ASSERT_STATUS_OK(status);
+
+    // Wait at least 2 seconds before trying to create / delete another bucket.
+    if (!UsingEmulator()) std::this_thread::sleep_for(std::chrono::seconds(2));
+  }
+}
+
+TEST_F(DefaultObjectAclIntegrationTest, ListDefaultAccessControlFailure) {
+  auto client = MakeIntegrationTestClient();
+  std::string bucket_name = MakeRandomBucketName();
+
+  // This operation should fail because the target bucket does not exist.
+  auto status = client.ListDefaultObjectAcl(bucket_name).status();
+  EXPECT_THAT(status, Not(IsOk()));
+}
+
+TEST_F(DefaultObjectAclIntegrationTest, CreateDefaultAccessControlFailure) {
+  auto client = MakeIntegrationTestClient();
+  std::string bucket_name = MakeRandomBucketName();
+  auto entity_name = MakeEntityName();
+
+  // This operation should fail because the target bucket does not exist.
+  auto status =
+      client.CreateDefaultObjectAcl(bucket_name, entity_name, "READER")
+          .status();
+  EXPECT_THAT(status, Not(IsOk()));
+}
+
+TEST_F(DefaultObjectAclIntegrationTest, GetDefaultAccessControlFailure) {
+  auto client = MakeIntegrationTestClient();
+  std::string bucket_name = MakeRandomBucketName();
+  auto entity_name = MakeEntityName();
+
+  // This operation should fail because the target bucket does not exist.
+  auto status = client.GetDefaultObjectAcl(bucket_name, entity_name).status();
+  EXPECT_THAT(status, Not(IsOk()));
+}
+
+TEST_F(DefaultObjectAclIntegrationTest, UpdateDefaultAccessControlFailure) {
+  auto client = MakeIntegrationTestClient();
+  std::string bucket_name = MakeRandomBucketName();
+  auto entity_name = MakeEntityName();
+
+  // This operation should fail because the target bucket does not exist.
+  auto status =
+      client
+          .UpdateDefaultObjectAcl(
+              bucket_name,
+              ObjectAccessControl().set_entity(entity_name).set_role("READER"))
+          .status();
+  EXPECT_THAT(status, Not(IsOk()));
+}
+
+TEST_F(DefaultObjectAclIntegrationTest, PatchDefaultAccessControlFailure) {
+  auto client = MakeIntegrationTestClient();
+  std::string bucket_name = MakeRandomBucketName();
+  auto entity_name = MakeEntityName();
+
+  // This operation should fail because the target bucket does not exist.
+  auto status =
+      client
+          .PatchDefaultObjectAcl(
+              bucket_name, entity_name, ObjectAccessControl(),
+              ObjectAccessControl().set_entity(entity_name).set_role("READER"))
+          .status();
+  EXPECT_THAT(status, Not(IsOk()));
+}
+
+TEST_F(DefaultObjectAclIntegrationTest, DeleteDefaultAccessControlFailure) {
+  auto client = MakeIntegrationTestClient();
+  std::string bucket_name = MakeRandomBucketName();
+  auto entity_name = MakeEntityName();
+
+  // This operation should fail because the target bucket does not exist.
+  auto status = client.DeleteDefaultObjectAcl(bucket_name, entity_name);
+  EXPECT_THAT(status, Not(IsOk()));
 }
 
 }  // namespace

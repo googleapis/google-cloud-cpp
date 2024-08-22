@@ -71,16 +71,15 @@ RegionInstanceGroupsConnection::SetNamedPorts(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceGroupsConnection::SetNamedPorts(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_instance_groups::v1::
-        SetNamedPortsRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::region_instance_groups::v1::
+                    SetNamedPortsRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceGroupsConnection::SetNamedPorts(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

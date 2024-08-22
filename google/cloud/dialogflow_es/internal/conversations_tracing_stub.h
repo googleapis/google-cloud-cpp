@@ -23,6 +23,7 @@
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
@@ -73,6 +74,12 @@ class ConversationsTracingStub : public ConversationsStub {
   GenerateStatelessSummary(
       grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
+          request) override;
+
+  StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSuggestionResponse>
+  GenerateStatelessSuggestion(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::GenerateStatelessSuggestionRequest const&
           request) override;
 
   StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>

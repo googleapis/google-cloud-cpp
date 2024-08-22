@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIKEYS_V2_API_KEYS_CLIENT_H
 
 #include "google/cloud/apikeys/v2/api_keys_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -147,7 +146,7 @@ class ApiKeysClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateKey(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::api::apikeys::v2::Key const& key, std::string const& key_id,
       Options opts = {});
 
@@ -204,8 +203,7 @@ class ApiKeysClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateKey(
-      ExperimentalTag, NoAwaitTag,
-      google::api::apikeys::v2::CreateKeyRequest const& request,
+      NoAwaitTag, google::api::apikeys::v2::CreateKeyRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -218,8 +216,7 @@ class ApiKeysClient {
   ///
   // clang-format on
   future<StatusOr<google::api::apikeys::v2::Key>> CreateKey(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -486,7 +483,7 @@ class ApiKeysClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateKey(
-      ExperimentalTag, NoAwaitTag, google::api::apikeys::v2::Key const& key,
+      NoAwaitTag, google::api::apikeys::v2::Key const& key,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -543,8 +540,7 @@ class ApiKeysClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateKey(
-      ExperimentalTag, NoAwaitTag,
-      google::api::apikeys::v2::UpdateKeyRequest const& request,
+      NoAwaitTag, google::api::apikeys::v2::UpdateKeyRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -557,8 +553,7 @@ class ApiKeysClient {
   ///
   // clang-format on
   future<StatusOr<google::api::apikeys::v2::Key>> UpdateKey(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -607,8 +602,7 @@ class ApiKeysClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteKey(ExperimentalTag,
-                                                     NoAwaitTag,
+  StatusOr<google::longrunning::Operation> DeleteKey(NoAwaitTag,
                                                      std::string const& name,
                                                      Options opts = {});
 
@@ -666,8 +660,7 @@ class ApiKeysClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteKey(
-      ExperimentalTag, NoAwaitTag,
-      google::api::apikeys::v2::DeleteKeyRequest const& request,
+      NoAwaitTag, google::api::apikeys::v2::DeleteKeyRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -680,8 +673,7 @@ class ApiKeysClient {
   ///
   // clang-format on
   future<StatusOr<google::api::apikeys::v2::Key>> DeleteKey(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -736,8 +728,7 @@ class ApiKeysClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UndeleteKey(
-      ExperimentalTag, NoAwaitTag,
-      google::api::apikeys::v2::UndeleteKeyRequest const& request,
+      NoAwaitTag, google::api::apikeys::v2::UndeleteKeyRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -750,8 +741,7 @@ class ApiKeysClient {
   ///
   // clang-format on
   future<StatusOr<google::api::apikeys::v2::Key>> UndeleteKey(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///

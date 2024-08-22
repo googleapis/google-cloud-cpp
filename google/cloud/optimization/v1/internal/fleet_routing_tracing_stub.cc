@@ -18,6 +18,7 @@
 
 #include "google/cloud/optimization/v1/internal/fleet_routing_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

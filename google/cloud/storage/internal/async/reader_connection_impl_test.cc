@@ -19,6 +19,7 @@
 #include "google/cloud/storage/options.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_hash_function.h"
+#include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/mock_async_streaming_read_rpc.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>
@@ -34,6 +35,7 @@ using ::google::cloud::storage::internal::HashValues;
 using ::google::cloud::storage::testing::MockHashFunction;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage_experimental::ReadPayload;
+using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
@@ -167,13 +169,16 @@ TEST(ReaderConnectionImpl, WithError) {
 }
 
 TEST(ReaderConnectionImpl, HashingError) {
+  AsyncSequencer<bool> sequencer;
   auto mock = std::make_unique<MockStream>();
-  EXPECT_CALL(*mock, Read).WillOnce([] {
-    return make_ready_future(
-        absl::make_optional(google::storage::v2::ReadObjectResponse{}));
+  EXPECT_CALL(*mock, Read).WillOnce([&] {
+    return sequencer.PushBack("Read").then([](auto) {
+      return absl::make_optional(google::storage::v2::ReadObjectResponse{});
+    });
   });
-  EXPECT_CALL(*mock, Finish).WillOnce([] {
-    return make_ready_future(Status{});
+  EXPECT_CALL(*mock, Cancel).WillOnce([&] { sequencer.PushBack("Cancel"); });
+  EXPECT_CALL(*mock, Finish).WillOnce([&] {
+    return sequencer.PushBack("Finish").then([](auto) { return Status{}; });
   });
 
   auto hash_function = std::make_shared<MockHashFunction>();
@@ -182,7 +187,21 @@ TEST(ReaderConnectionImpl, HashingError) {
 
   AsyncReaderConnectionImpl tested(TestOptions(), std::move(mock),
                                    std::move(hash_function));
-  EXPECT_THAT(tested.Read().get(),
+
+  auto pending = tested.Read();
+  auto read = sequencer.PopFrontWithName();
+  EXPECT_EQ(read.second, "Read");
+  read.first.set_value(false);
+  auto cancel = sequencer.PopFrontWithName();
+  EXPECT_EQ(cancel.second, "Cancel");
+  cancel.first.set_value(false);
+  auto finish = sequencer.PopFrontWithName();
+  EXPECT_EQ(finish.second, "Finish");
+
+  EXPECT_FALSE(pending.is_ready());
+  finish.first.set_value(false);
+
+  EXPECT_THAT(pending.get(),
               VariantWith<Status>(StatusIs(StatusCode::kInvalidArgument)));
 }
 

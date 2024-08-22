@@ -60,26 +60,23 @@ ReservationsTracingConnection::DeleteReservation(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ReservationsTracingConnection::DeleteReservation(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::reservations::v1::
-        DeleteReservationRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::reservations::v1::
+                    DeleteReservationRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_reservations_v1::ReservationsConnection::DeleteReservation");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->DeleteReservation(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteReservation(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ReservationsTracingConnection::DeleteReservation(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_reservations_v1::ReservationsConnection::DeleteReservation");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->DeleteReservation(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteReservation(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Reservation>
@@ -114,26 +111,23 @@ ReservationsTracingConnection::InsertReservation(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ReservationsTracingConnection::InsertReservation(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::reservations::v1::
-        InsertReservationRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::reservations::v1::
+                    InsertReservationRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_reservations_v1::ReservationsConnection::InsertReservation");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->InsertReservation(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->InsertReservation(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ReservationsTracingConnection::InsertReservation(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_reservations_v1::ReservationsConnection::InsertReservation");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->InsertReservation(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->InsertReservation(operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Reservation>
@@ -161,25 +155,22 @@ ReservationsTracingConnection::Resize(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ReservationsTracingConnection::Resize(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::reservations::v1::ResizeRequest const&
         request) {
   auto span = internal::MakeSpan(
       "compute_reservations_v1::ReservationsConnection::Resize");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->Resize(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->Resize(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ReservationsTracingConnection::Resize(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_reservations_v1::ReservationsConnection::Resize");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->Resize(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->Resize(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -214,26 +205,23 @@ ReservationsTracingConnection::UpdateReservation(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ReservationsTracingConnection::UpdateReservation(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::reservations::v1::
-        UpdateReservationRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::reservations::v1::
+                    UpdateReservationRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_reservations_v1::ReservationsConnection::UpdateReservation");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->UpdateReservation(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateReservation(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ReservationsTracingConnection::UpdateReservation(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_reservations_v1::ReservationsConnection::UpdateReservation");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->UpdateReservation(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateReservation(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -158,7 +158,7 @@ AppHubConnectionImpl::CreateServiceProjectAttachment(
 
 StatusOr<google::longrunning::Operation>
 AppHubConnectionImpl::CreateServiceProjectAttachment(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -175,7 +175,7 @@ AppHubConnectionImpl::CreateServiceProjectAttachment(
 
 future<StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>>
 AppHubConnectionImpl::CreateServiceProjectAttachment(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::apphub::v1::OperationMetadata>()) {
@@ -270,7 +270,7 @@ AppHubConnectionImpl::DeleteServiceProjectAttachment(
 
 StatusOr<google::longrunning::Operation>
 AppHubConnectionImpl::DeleteServiceProjectAttachment(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -287,7 +287,7 @@ AppHubConnectionImpl::DeleteServiceProjectAttachment(
 
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
 AppHubConnectionImpl::DeleteServiceProjectAttachment(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::apphub::v1::OperationMetadata>()) {
@@ -478,7 +478,7 @@ AppHubConnectionImpl::CreateService(
 }
 
 StatusOr<google::longrunning::Operation> AppHubConnectionImpl::CreateService(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::apphub::v1::CreateServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -493,7 +493,7 @@ StatusOr<google::longrunning::Operation> AppHubConnectionImpl::CreateService(
 
 future<StatusOr<google::cloud::apphub::v1::Service>>
 AppHubConnectionImpl::CreateService(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::apphub::v1::OperationMetadata>()) {
@@ -580,7 +580,7 @@ AppHubConnectionImpl::UpdateService(
 }
 
 StatusOr<google::longrunning::Operation> AppHubConnectionImpl::UpdateService(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::apphub::v1::UpdateServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -595,7 +595,7 @@ StatusOr<google::longrunning::Operation> AppHubConnectionImpl::UpdateService(
 
 future<StatusOr<google::cloud::apphub::v1::Service>>
 AppHubConnectionImpl::UpdateService(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::apphub::v1::OperationMetadata>()) {
@@ -669,7 +669,7 @@ AppHubConnectionImpl::DeleteService(
 }
 
 StatusOr<google::longrunning::Operation> AppHubConnectionImpl::DeleteService(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::apphub::v1::DeleteServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -684,7 +684,7 @@ StatusOr<google::longrunning::Operation> AppHubConnectionImpl::DeleteService(
 
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
 AppHubConnectionImpl::DeleteService(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::apphub::v1::OperationMetadata>()) {
@@ -859,7 +859,7 @@ AppHubConnectionImpl::CreateWorkload(
 }
 
 StatusOr<google::longrunning::Operation> AppHubConnectionImpl::CreateWorkload(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::apphub::v1::CreateWorkloadRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -874,7 +874,7 @@ StatusOr<google::longrunning::Operation> AppHubConnectionImpl::CreateWorkload(
 
 future<StatusOr<google::cloud::apphub::v1::Workload>>
 AppHubConnectionImpl::CreateWorkload(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::apphub::v1::OperationMetadata>()) {
@@ -961,7 +961,7 @@ AppHubConnectionImpl::UpdateWorkload(
 }
 
 StatusOr<google::longrunning::Operation> AppHubConnectionImpl::UpdateWorkload(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::apphub::v1::UpdateWorkloadRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -976,7 +976,7 @@ StatusOr<google::longrunning::Operation> AppHubConnectionImpl::UpdateWorkload(
 
 future<StatusOr<google::cloud::apphub::v1::Workload>>
 AppHubConnectionImpl::UpdateWorkload(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::apphub::v1::OperationMetadata>()) {
@@ -1050,7 +1050,7 @@ AppHubConnectionImpl::DeleteWorkload(
 }
 
 StatusOr<google::longrunning::Operation> AppHubConnectionImpl::DeleteWorkload(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::apphub::v1::DeleteWorkloadRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1065,7 +1065,7 @@ StatusOr<google::longrunning::Operation> AppHubConnectionImpl::DeleteWorkload(
 
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
 AppHubConnectionImpl::DeleteWorkload(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::apphub::v1::OperationMetadata>()) {
@@ -1175,7 +1175,7 @@ AppHubConnectionImpl::CreateApplication(
 
 StatusOr<google::longrunning::Operation>
 AppHubConnectionImpl::CreateApplication(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::apphub::v1::CreateApplicationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1191,7 +1191,7 @@ AppHubConnectionImpl::CreateApplication(
 
 future<StatusOr<google::cloud::apphub::v1::Application>>
 AppHubConnectionImpl::CreateApplication(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::apphub::v1::OperationMetadata>()) {
@@ -1280,7 +1280,7 @@ AppHubConnectionImpl::UpdateApplication(
 
 StatusOr<google::longrunning::Operation>
 AppHubConnectionImpl::UpdateApplication(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::apphub::v1::UpdateApplicationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1296,7 +1296,7 @@ AppHubConnectionImpl::UpdateApplication(
 
 future<StatusOr<google::cloud::apphub::v1::Application>>
 AppHubConnectionImpl::UpdateApplication(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::apphub::v1::OperationMetadata>()) {
@@ -1371,7 +1371,7 @@ AppHubConnectionImpl::DeleteApplication(
 
 StatusOr<google::longrunning::Operation>
 AppHubConnectionImpl::DeleteApplication(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::apphub::v1::DeleteApplicationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1387,7 +1387,7 @@ AppHubConnectionImpl::DeleteApplication(
 
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
 AppHubConnectionImpl::DeleteApplication(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::apphub::v1::OperationMetadata>()) {

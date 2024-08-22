@@ -54,9 +54,15 @@ class MockSiteSearchEngineServiceConnection
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateTargetSite)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateTargetSite(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateTargetSite(Matcher<google::cloud::discoveryengine::v1::CreateTargetSiteRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>,
       CreateTargetSite,
@@ -64,22 +70,40 @@ class MockSiteSearchEngineServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateTargetSite(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateTargetSite,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateTargetSite(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>,
               CreateTargetSite,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, BatchCreateTargetSites)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, BatchCreateTargetSites(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchCreateTargetSites(Matcher<google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>,
@@ -88,18 +112,31 @@ class MockSiteSearchEngineServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, BatchCreateTargetSites(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, BatchCreateTargetSites,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchCreateTargetSites(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>,
-      BatchCreateTargetSites,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      BatchCreateTargetSites, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -107,9 +144,15 @@ class MockSiteSearchEngineServiceConnection
       (google::cloud::discoveryengine::v1::GetTargetSiteRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateTargetSite)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateTargetSite(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateTargetSite(Matcher<google::cloud::discoveryengine::v1::UpdateTargetSiteRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>,
       UpdateTargetSite,
@@ -117,22 +160,40 @@ class MockSiteSearchEngineServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateTargetSite(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateTargetSite,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateTargetSite(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>,
               UpdateTargetSite,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteTargetSite)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteTargetSite(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteTargetSite(Matcher<google::cloud::discoveryengine::v1::DeleteTargetSiteRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>,
@@ -141,18 +202,31 @@ class MockSiteSearchEngineServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteTargetSite(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteTargetSite,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteTargetSite(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>,
-      DeleteTargetSite,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteTargetSite, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -161,9 +235,15 @@ class MockSiteSearchEngineServiceConnection
       (google::cloud::discoveryengine::v1::ListTargetSitesRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, EnableAdvancedSiteSearch)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, EnableAdvancedSiteSearch(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// EnableAdvancedSiteSearch(Matcher<google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::
                                   EnableAdvancedSiteSearchResponse>>,
               EnableAdvancedSiteSearch,
@@ -171,23 +251,41 @@ class MockSiteSearchEngineServiceConnection
                    EnableAdvancedSiteSearchRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, EnableAdvancedSiteSearch(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               EnableAdvancedSiteSearch,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::discoveryengine::v1::
-                   EnableAdvancedSiteSearchRequest const& request),
+              (NoAwaitTag, google::cloud::discoveryengine::v1::
+                               EnableAdvancedSiteSearchRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// EnableAdvancedSiteSearch(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::
                                   EnableAdvancedSiteSearchResponse>>,
               EnableAdvancedSiteSearch,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DisableAdvancedSiteSearch)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DisableAdvancedSiteSearch(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DisableAdvancedSiteSearch(Matcher<google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::
                                   DisableAdvancedSiteSearchResponse>>,
               DisableAdvancedSiteSearch,
@@ -195,44 +293,81 @@ class MockSiteSearchEngineServiceConnection
                    DisableAdvancedSiteSearchRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DisableAdvancedSiteSearch(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               DisableAdvancedSiteSearch,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::discoveryengine::v1::
-                   DisableAdvancedSiteSearchRequest const& request),
+              (NoAwaitTag, google::cloud::discoveryengine::v1::
+                               DisableAdvancedSiteSearchRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DisableAdvancedSiteSearch(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::
                                   DisableAdvancedSiteSearchResponse>>,
               DisableAdvancedSiteSearch,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, RecrawlUris)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, RecrawlUris(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RecrawlUris(Matcher<google::cloud::discoveryengine::v1::RecrawlUrisRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::discoveryengine::v1::RecrawlUrisResponse>>,
       RecrawlUris,
       (google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, RecrawlUris(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RecrawlUris,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, RecrawlUris(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::discoveryengine::v1::RecrawlUrisResponse>>,
-      RecrawlUris,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      RecrawlUris, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, BatchVerifyTargetSites)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, BatchVerifyTargetSites(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchVerifyTargetSites(Matcher<google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>,
@@ -241,18 +376,31 @@ class MockSiteSearchEngineServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, BatchVerifyTargetSites(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, BatchVerifyTargetSites,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchVerifyTargetSites(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>,
-      BatchVerifyTargetSites,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      BatchVerifyTargetSites, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

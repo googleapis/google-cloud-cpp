@@ -21,6 +21,8 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/translate/v3/translation_service.grpc.pb.h>
 #include <memory>
+#include <set>
+#include <string>
 #include <utility>
 
 namespace google {
@@ -42,6 +44,19 @@ TranslationServiceLogging::TranslateText(
           grpc::ClientContext& context, Options const& options,
           google::cloud::translation::v3::TranslateTextRequest const& request) {
         return child_->TranslateText(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::translation::v3::RomanizeTextResponse>
+TranslationServiceLogging::RomanizeText(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::translation::v3::RomanizeTextRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::translation::v3::RomanizeTextRequest const& request) {
+        return child_->RomanizeText(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
@@ -186,6 +201,38 @@ TranslationServiceLogging::CreateGlossary(
       context, options, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+TranslationServiceLogging::AsyncUpdateGlossary(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::translation::v3::UpdateGlossaryRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::translation::v3::UpdateGlossaryRequest const&
+                 request) {
+        return child_->AsyncUpdateGlossary(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+TranslationServiceLogging::UpdateGlossary(
+    grpc::ClientContext& context, Options options,
+    google::cloud::translation::v3::UpdateGlossaryRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::translation::v3::UpdateGlossaryRequest const&
+                 request) {
+        return child_->UpdateGlossary(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::translation::v3::ListGlossariesResponse>
 TranslationServiceLogging::ListGlossaries(
     grpc::ClientContext& context, Options const& options,
@@ -240,6 +287,159 @@ TranslationServiceLogging::DeleteGlossary(
              google::cloud::translation::v3::DeleteGlossaryRequest const&
                  request) {
         return child_->DeleteGlossary(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::translation::v3::GlossaryEntry>
+TranslationServiceLogging::GetGlossaryEntry(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::translation::v3::GetGlossaryEntryRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::translation::v3::GetGlossaryEntryRequest const&
+                 request) {
+        return child_->GetGlossaryEntry(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::translation::v3::ListGlossaryEntriesResponse>
+TranslationServiceLogging::ListGlossaryEntries(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::translation::v3::ListGlossaryEntriesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::translation::v3::ListGlossaryEntriesRequest const&
+                 request) {
+        return child_->ListGlossaryEntries(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::translation::v3::GlossaryEntry>
+TranslationServiceLogging::CreateGlossaryEntry(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::translation::v3::CreateGlossaryEntryRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::translation::v3::CreateGlossaryEntryRequest const&
+                 request) {
+        return child_->CreateGlossaryEntry(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::translation::v3::GlossaryEntry>
+TranslationServiceLogging::UpdateGlossaryEntry(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::translation::v3::UpdateGlossaryEntryRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::translation::v3::UpdateGlossaryEntryRequest const&
+                 request) {
+        return child_->UpdateGlossaryEntry(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+Status TranslationServiceLogging::DeleteGlossaryEntry(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::translation::v3::DeleteGlossaryEntryRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::translation::v3::DeleteGlossaryEntryRequest const&
+                 request) {
+        return child_->DeleteGlossaryEntry(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+TranslationServiceLogging::AsyncCreateDataset(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::translation::v3::CreateDatasetRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::translation::v3::CreateDatasetRequest const& request) {
+        return child_->AsyncCreateDataset(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+TranslationServiceLogging::CreateDataset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::translation::v3::CreateDatasetRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::translation::v3::CreateDatasetRequest const& request) {
+        return child_->CreateDataset(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::translation::v3::Dataset>
+TranslationServiceLogging::GetDataset(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::translation::v3::GetDatasetRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::translation::v3::GetDatasetRequest const& request) {
+        return child_->GetDataset(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::translation::v3::ListDatasetsResponse>
+TranslationServiceLogging::ListDatasets(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::translation::v3::ListDatasetsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::translation::v3::ListDatasetsRequest const& request) {
+        return child_->ListDatasets(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+TranslationServiceLogging::AsyncDeleteDataset(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::translation::v3::DeleteDatasetRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::translation::v3::DeleteDatasetRequest const& request) {
+        return child_->AsyncDeleteDataset(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+TranslationServiceLogging::DeleteDataset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::translation::v3::DeleteDatasetRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::translation::v3::DeleteDatasetRequest const& request) {
+        return child_->DeleteDataset(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
@@ -379,6 +579,163 @@ TranslationServiceLogging::ListAdaptiveMtSentences(
           google::cloud::translation::v3::ListAdaptiveMtSentencesRequest const&
               request) {
         return child_->ListAdaptiveMtSentences(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+TranslationServiceLogging::AsyncImportData(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::translation::v3::ImportDataRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::translation::v3::ImportDataRequest const& request) {
+        return child_->AsyncImportData(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> TranslationServiceLogging::ImportData(
+    grpc::ClientContext& context, Options options,
+    google::cloud::translation::v3::ImportDataRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::translation::v3::ImportDataRequest const& request) {
+        return child_->ImportData(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+TranslationServiceLogging::AsyncExportData(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::translation::v3::ExportDataRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::translation::v3::ExportDataRequest const& request) {
+        return child_->AsyncExportData(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> TranslationServiceLogging::ExportData(
+    grpc::ClientContext& context, Options options,
+    google::cloud::translation::v3::ExportDataRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::translation::v3::ExportDataRequest const& request) {
+        return child_->ExportData(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::translation::v3::ListExamplesResponse>
+TranslationServiceLogging::ListExamples(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::translation::v3::ListExamplesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::translation::v3::ListExamplesRequest const& request) {
+        return child_->ListExamples(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+TranslationServiceLogging::AsyncCreateModel(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::translation::v3::CreateModelRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::translation::v3::CreateModelRequest const& request) {
+        return child_->AsyncCreateModel(cq, std::move(context),
+                                        std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> TranslationServiceLogging::CreateModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::translation::v3::CreateModelRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::translation::v3::CreateModelRequest const& request) {
+        return child_->CreateModel(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::translation::v3::ListModelsResponse>
+TranslationServiceLogging::ListModels(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::translation::v3::ListModelsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::translation::v3::ListModelsRequest const& request) {
+        return child_->ListModels(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::translation::v3::Model>
+TranslationServiceLogging::GetModel(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::translation::v3::GetModelRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::translation::v3::GetModelRequest const& request) {
+        return child_->GetModel(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+TranslationServiceLogging::AsyncDeleteModel(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::translation::v3::DeleteModelRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::translation::v3::DeleteModelRequest const& request) {
+        return child_->AsyncDeleteModel(cq, std::move(context),
+                                        std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> TranslationServiceLogging::DeleteModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::translation::v3::DeleteModelRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::translation::v3::DeleteModelRequest const& request) {
+        return child_->DeleteModel(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }

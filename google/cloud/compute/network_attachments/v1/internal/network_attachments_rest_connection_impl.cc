@@ -150,9 +150,8 @@ NetworkAttachmentsRestConnectionImpl::DeleteNetworkAttachment(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworkAttachmentsRestConnectionImpl::DeleteNetworkAttachment(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::network_attachments::v1::
-        DeleteNetworkAttachmentRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::network_attachments::v1::
+                    DeleteNetworkAttachmentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -167,7 +166,6 @@ NetworkAttachmentsRestConnectionImpl::DeleteNetworkAttachment(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkAttachmentsRestConnectionImpl::DeleteNetworkAttachment(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -315,9 +313,8 @@ NetworkAttachmentsRestConnectionImpl::InsertNetworkAttachment(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworkAttachmentsRestConnectionImpl::InsertNetworkAttachment(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::network_attachments::v1::
-        InsertNetworkAttachmentRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::network_attachments::v1::
+                    InsertNetworkAttachmentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -332,7 +329,6 @@ NetworkAttachmentsRestConnectionImpl::InsertNetworkAttachment(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkAttachmentsRestConnectionImpl::InsertNetworkAttachment(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -488,9 +484,8 @@ NetworkAttachmentsRestConnectionImpl::PatchNetworkAttachment(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworkAttachmentsRestConnectionImpl::PatchNetworkAttachment(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::network_attachments::v1::
-        PatchNetworkAttachmentRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::network_attachments::v1::
+                    PatchNetworkAttachmentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -505,7 +500,6 @@ NetworkAttachmentsRestConnectionImpl::PatchNetworkAttachment(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkAttachmentsRestConnectionImpl::PatchNetworkAttachment(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

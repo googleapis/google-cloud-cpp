@@ -15,8 +15,9 @@
 #include "google/cloud/storage/internal/async/connection_impl.h"
 #include "google/cloud/storage/async/idempotency_policy.h"
 #include "google/cloud/storage/async/options.h"
+#include "google/cloud/storage/async/read_all.h"
+#include "google/cloud/storage/async/reader.h"
 #include "google/cloud/storage/async/resume_policy.h"
-#include "google/cloud/storage/internal/async/accumulate_read_object.h"
 #include "google/cloud/storage/internal/async/default_options.h"
 #include "google/cloud/storage/internal/async/insert_object.h"
 #include "google/cloud/storage/internal/async/read_payload_impl.h"
@@ -104,7 +105,12 @@ std::unique_ptr<storage::internal::HashFunction> CreateHashFunction(
 }
 
 std::unique_ptr<storage::internal::HashValidator> CreateHashValidator(
+    google::storage::v2::ReadObjectRequest const& request,
     Options const& options) {
+  auto const is_ranged_read =
+      request.read_limit() != 0 || request.read_offset() != 0;
+  if (is_ranged_read) return storage::internal::CreateNullHashValidator();
+
   auto const enable_crc32c =
       options.get<storage_experimental::EnableCrc32cValidationOption>();
   auto const enable_md5 =
@@ -192,7 +198,7 @@ AsyncConnectionImpl::ReadObject(ReadObjectParams p) {
   auto hash_function =
       std::make_shared<storage::internal::Crc32cMessageHashFunction>(
           CreateHashFunction(*current));
-  auto hash_validator = CreateHashValidator(*current);
+  auto hash_validator = CreateHashValidator(p.request, *current);
 
   auto connection_factory = MakeReaderConnectionFactory(
       std::move(current), std::move(p.request), hash_function);
@@ -205,15 +211,16 @@ AsyncConnectionImpl::ReadObject(ReadObjectParams p) {
 
 future<StatusOr<storage_experimental::ReadPayload>>
 AsyncConnectionImpl::ReadObjectRange(ReadObjectParams p) {
-  auto current = internal::MakeImmutableOptions(std::move(p.options));
-  auto context_factory = []() {
-    return std::make_shared<grpc::ClientContext>();
-  };
-  return storage_internal::AsyncAccumulateReadObjectFull(
-             cq_, stub_, std::move(context_factory), std::move(p.request),
-             std::move(current))
-      .then([](future<storage_internal::AsyncAccumulateReadObjectResult> f) {
-        return ToResponse(f.get());
+  return ReadObject(std::move(p))
+      .then([](auto f) -> future<StatusOr<storage_experimental::ReadPayload>> {
+        auto r = f.get();
+        if (!r) {
+          return make_ready_future(StatusOr<storage_experimental::ReadPayload>(
+              std::move(r).status()));
+        }
+        auto token = storage_internal::MakeAsyncToken(r->get());
+        return storage_experimental::ReadAll(
+            storage_experimental::AsyncReader(*std::move(r)), std::move(token));
       });
 }
 
@@ -373,8 +380,10 @@ AsyncReaderConnectionFactory AsyncConnectionImpl::MakeReaderConnectionFactory(
     auto start = rpc->Start();
     return start.then([rpc = std::move(rpc)](auto f) mutable {
       if (f.get()) return make_ready_future(make_status_or(std::move(rpc)));
-      auto r = std::move(rpc);
-      return r->Finish().then([](auto f) {
+      auto pending = rpc->Finish();
+      return pending.then([rpc = std::move(rpc)](auto f) mutable {
+        // Extend the lifetime until Finish() completes, but not any longer.
+        rpc.reset();
         auto status = f.get();
         return StatusOr<std::unique_ptr<StreamingRpc>>(std::move(status));
       });
@@ -575,8 +584,10 @@ AsyncConnectionImpl::UnbufferedUploadImpl(
     auto start = rpc->Start();
     return start.then([rpc = std::move(rpc)](auto f) mutable {
       if (f.get()) return make_ready_future(make_status_or(std::move(rpc)));
-      auto r = std::move(rpc);
-      return r->Finish().then([](auto f) {
+      auto pending = rpc->Finish();
+      return pending.then([rpc = std::move(rpc)](auto f) mutable {
+        // Extend the lifetime until Finish() completes, but not any longer.
+        rpc.reset();
         auto status = f.get();
         return StatusOr<std::unique_ptr<StreamingRpc>>(std::move(status));
       });

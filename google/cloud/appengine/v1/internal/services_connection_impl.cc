@@ -147,8 +147,7 @@ ServicesConnectionImpl::UpdateService(
 }
 
 StatusOr<google::longrunning::Operation> ServicesConnectionImpl::UpdateService(
-    ExperimentalTag, NoAwaitTag,
-    google::appengine::v1::UpdateServiceRequest const& request) {
+    NoAwaitTag, google::appengine::v1::UpdateServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -162,7 +161,7 @@ StatusOr<google::longrunning::Operation> ServicesConnectionImpl::UpdateService(
 
 future<StatusOr<google::appengine::v1::Service>>
 ServicesConnectionImpl::UpdateService(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::appengine::v1::OperationMetadataV1>()) {
@@ -236,8 +235,7 @@ ServicesConnectionImpl::DeleteService(
 }
 
 StatusOr<google::longrunning::Operation> ServicesConnectionImpl::DeleteService(
-    ExperimentalTag, NoAwaitTag,
-    google::appengine::v1::DeleteServiceRequest const& request) {
+    NoAwaitTag, google::appengine::v1::DeleteServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -251,7 +249,7 @@ StatusOr<google::longrunning::Operation> ServicesConnectionImpl::DeleteService(
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
 ServicesConnectionImpl::DeleteService(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::appengine::v1::OperationMetadataV1>()) {

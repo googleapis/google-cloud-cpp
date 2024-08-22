@@ -17,6 +17,7 @@
 
 #include "google/cloud/future.h"
 #include "google/cloud/version.h"
+#include <algorithm>
 #include <condition_variable>
 #include <deque>
 #include <mutex>
@@ -103,8 +104,13 @@ class AsyncSequencer {
 
   std::size_t MaxSize() const { return max_size_; }
 
+  bool empty() const {
+    std::lock_guard<std::mutex> lk(mu_);
+    return queue_.empty();
+  }
+
  private:
-  std::mutex mu_;
+  mutable std::mutex mu_;
   std::condition_variable cv_;
   std::deque<std::pair<promise<T>, std::string>> queue_;
   std::size_t max_size_ = 0;

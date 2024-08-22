@@ -18,6 +18,7 @@
 
 #include "google/cloud/binaryauthorization/v1/internal/system_policy_v1_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

@@ -96,19 +96,18 @@ StorageTransferServiceClient::RunTransferJob(
 
 StatusOr<google::longrunning::Operation>
 StorageTransferServiceClient::RunTransferJob(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::storagetransfer::v1::RunTransferJobRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RunTransferJob(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->RunTransferJob(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::storagetransfer::v1::TransferOperation>>
 StorageTransferServiceClient::RunTransferJob(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RunTransferJob(ExperimentalTag{}, operation);
+  return connection_->RunTransferJob(operation);
 }
 
 Status StorageTransferServiceClient::DeleteTransferJob(

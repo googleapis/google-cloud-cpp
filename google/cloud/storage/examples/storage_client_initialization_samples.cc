@@ -19,8 +19,12 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
 #include <iostream>
+#include <random>
+#include <stdexcept>
 #include <string>
 #include <thread>
+#include <utility>
+#include <vector>
 
 namespace {
 

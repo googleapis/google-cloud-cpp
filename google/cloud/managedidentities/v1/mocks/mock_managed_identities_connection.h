@@ -47,26 +47,44 @@ class MockManagedIdentitiesServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateMicrosoftAdDomain)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateMicrosoftAdDomain(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateMicrosoftAdDomain(Matcher<google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
               CreateMicrosoftAdDomain,
               (google::cloud::managedidentities::v1::
                    CreateMicrosoftAdDomainRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateMicrosoftAdDomain(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateMicrosoftAdDomain,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::managedidentities::v1::
-                   CreateMicrosoftAdDomainRequest const& request),
+              (NoAwaitTag, google::cloud::managedidentities::v1::
+                               CreateMicrosoftAdDomainRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateMicrosoftAdDomain(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
               CreateMicrosoftAdDomain,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<
@@ -86,30 +104,54 @@ class MockManagedIdentitiesServiceConnection
       (google::cloud::managedidentities::v1::GetDomainRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateDomain)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateDomain(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateDomain(Matcher<google::cloud::managedidentities::v1::UpdateDomainRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
               UpdateDomain,
               (google::cloud::managedidentities::v1::UpdateDomainRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateDomain(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateDomain,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::managedidentities::v1::UpdateDomainRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateDomain(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
-              UpdateDomain,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              UpdateDomain, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteDomain)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteDomain(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteDomain(Matcher<google::cloud::managedidentities::v1::DeleteDomainRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>,
       DeleteDomain,
@@ -117,42 +159,79 @@ class MockManagedIdentitiesServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteDomain(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteDomain,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::managedidentities::v1::DeleteDomainRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteDomain(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>,
-      DeleteDomain,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteDomain, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, AttachTrust)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, AttachTrust(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// AttachTrust(Matcher<google::cloud::managedidentities::v1::AttachTrustRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
       AttachTrust,
       (google::cloud::managedidentities::v1::AttachTrustRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, AttachTrust(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, AttachTrust,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::managedidentities::v1::AttachTrustRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, AttachTrust(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
-              AttachTrust,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              AttachTrust, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ReconfigureTrust)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ReconfigureTrust(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ReconfigureTrust(Matcher<google::cloud::managedidentities::v1::ReconfigureTrustRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
       ReconfigureTrust,
@@ -160,59 +239,107 @@ class MockManagedIdentitiesServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ReconfigureTrust(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ReconfigureTrust,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, ReconfigureTrust(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
               ReconfigureTrust,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DetachTrust)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DetachTrust(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DetachTrust(Matcher<google::cloud::managedidentities::v1::DetachTrustRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
       DetachTrust,
       (google::cloud::managedidentities::v1::DetachTrustRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DetachTrust(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DetachTrust,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::managedidentities::v1::DetachTrustRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DetachTrust(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
-              DetachTrust,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              DetachTrust, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ValidateTrust)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ValidateTrust(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ValidateTrust(Matcher<google::cloud::managedidentities::v1::ValidateTrustRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
               ValidateTrust,
               (google::cloud::managedidentities::v1::ValidateTrustRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ValidateTrust(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, ValidateTrust,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::managedidentities::v1::ValidateTrustRequest const&
                    request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, ValidateTrust(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
-              ValidateTrust,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              ValidateTrust, (google::longrunning::Operation const& operation),
               (override));
 };
 

@@ -47,15 +47,13 @@ ModelServiceConnection::CreateModel(
 }
 
 StatusOr<google::longrunning::Operation> ModelServiceConnection::CreateModel(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::retail::v2::CreateModelRequest const&) {
+    NoAwaitTag, google::cloud::retail::v2::CreateModelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::retail::v2::Model>>
-ModelServiceConnection::CreateModel(ExperimentalTag,
-                                    google::longrunning::Operation const&) {
+ModelServiceConnection::CreateModel(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::retail::v2::Model>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -103,15 +101,13 @@ ModelServiceConnection::TuneModel(
 }
 
 StatusOr<google::longrunning::Operation> ModelServiceConnection::TuneModel(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::retail::v2::TuneModelRequest const&) {
+    NoAwaitTag, google::cloud::retail::v2::TuneModelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::retail::v2::TuneModelResponse>>
-ModelServiceConnection::TuneModel(ExperimentalTag,
-                                  google::longrunning::Operation const&) {
+ModelServiceConnection::TuneModel(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::retail::v2::TuneModelResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

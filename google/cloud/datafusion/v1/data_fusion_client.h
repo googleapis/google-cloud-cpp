@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAFUSION_V1_DATA_FUSION_CLIENT_H
 
 #include "google/cloud/datafusion/v1/data_fusion_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -286,7 +285,7 @@ class DataFusionClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateInstance(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::datafusion::v1::Instance const& instance,
       std::string const& instance_id, Options opts = {});
 
@@ -340,7 +339,7 @@ class DataFusionClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::datafusion::v1::CreateInstanceRequest const& request,
       Options opts = {});
 
@@ -354,8 +353,7 @@ class DataFusionClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::datafusion::v1::Instance>> CreateInstance(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -402,7 +400,7 @@ class DataFusionClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteInstance(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -455,7 +453,7 @@ class DataFusionClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::datafusion::v1::DeleteInstanceRequest const& request,
       Options opts = {});
 
@@ -469,8 +467,7 @@ class DataFusionClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::datafusion::v1::OperationMetadata>>
-  DeleteInstance(ExperimentalTag,
-                 google::longrunning::Operation const& operation,
+  DeleteInstance(google::longrunning::Operation const& operation,
                  Options opts = {});
 
   // clang-format off
@@ -526,8 +523,7 @@ class DataFusionClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateInstance(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::datafusion::v1::Instance const& instance,
+      NoAwaitTag, google::cloud::datafusion::v1::Instance const& instance,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -580,7 +576,7 @@ class DataFusionClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::datafusion::v1::UpdateInstanceRequest const& request,
       Options opts = {});
 
@@ -594,8 +590,7 @@ class DataFusionClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::datafusion::v1::Instance>> UpdateInstance(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -648,7 +643,7 @@ class DataFusionClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> RestartInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::datafusion::v1::RestartInstanceRequest const& request,
       Options opts = {});
 
@@ -662,8 +657,7 @@ class DataFusionClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::datafusion::v1::Instance>> RestartInstance(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<DataFusionConnection> connection_;

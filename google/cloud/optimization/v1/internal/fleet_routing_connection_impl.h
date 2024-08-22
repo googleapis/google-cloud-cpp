@@ -61,13 +61,12 @@ class FleetRoutingConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> BatchOptimizeTours(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::optimization::v1::BatchOptimizeToursRequest const& request)
       override;
 
   future<StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>
-  BatchOptimizeTours(ExperimentalTag,
-                     google::longrunning::Operation const& operation) override;
+  BatchOptimizeTours(google::longrunning::Operation const& operation) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

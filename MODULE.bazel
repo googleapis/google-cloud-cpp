@@ -16,15 +16,15 @@
 
 module(
     name = "google_cloud_cpp",
-    version = "2.27.0-rc",  # Updated by CMake
+    version = "2.29.0-rc",  # Updated by CMake
     compatibility_level = 2,  # Updated by CMake
 )
 
 bazel_dep(name = "platforms", version = "0.0.10")
 bazel_dep(name = "bazel_skylib", version = "1.7.1")
 bazel_dep(name = "rules_cc", version = "0.0.9")
-bazel_dep(name = "abseil-cpp", version = "20240116.2", repo_name = "com_google_absl")
-bazel_dep(name = "protobuf", version = "27.2", repo_name = "com_google_protobuf")
+bazel_dep(name = "abseil-cpp", version = "20240722.0", repo_name = "com_google_absl")
+bazel_dep(name = "protobuf", version = "27.3", repo_name = "com_google_protobuf")
 bazel_dep(name = "boringssl", version = "0.0.0-20230215-5c22014")
 bazel_dep(name = "grpc", version = "1.63.1.bcr.1", repo_name = "com_github_grpc_grpc")
 bazel_dep(name = "nlohmann_json", version = "3.11.3", repo_name = "com_github_nlohmann_json")
@@ -33,18 +33,18 @@ bazel_dep(name = "crc32c", version = "1.1.0", repo_name = "com_github_google_crc
 bazel_dep(name = "opentelemetry-cpp", version = "1.16.0", repo_name = "io_opentelemetry_cpp")
 
 bazel_dep(name = "rules_proto", version = "6.0.2", dev_dependency = True)
-bazel_dep(name = "googletest", version = "1.15.0", dev_dependency = True, repo_name = "com_google_googletest")
-bazel_dep(name = "google_benchmark", version = "1.8.4", dev_dependency = True, repo_name = "com_google_benchmark")
+bazel_dep(name = "googletest", version = "1.15.2", dev_dependency = True, repo_name = "com_google_googletest")
+bazel_dep(name = "google_benchmark", version = "1.8.5", dev_dependency = True, repo_name = "com_google_benchmark")
 bazel_dep(name = "yaml-cpp", version = "0.8.0", dev_dependency = True, repo_name = "com_github_jbeder_yaml_cpp")
 bazel_dep(name = "pugixml", version = "1.14.bcr.1", dev_dependency = True, repo_name = "com_github_zeux_pugixml")
 
 # Our `curl.BUILD` file uses these.
-bazel_dep(name = "zlib", version = "1.3.1.bcr.1")
+bazel_dep(name = "zlib", version = "1.3.1.bcr.3")
 bazel_dep(name = "c-ares", version = "1.16.1", repo_name = "com_github_cares_cares")
 
 # `google-cloud-cpp` uses this indirectly in the coverage build. And we need
 # to configure it for our CI builds.
-bazel_dep(name = "rules_python", version = "0.34.0", dev_dependency = True)
+bazel_dep(name = "rules_python", version = "0.35.0", dev_dependency = True)
 
 python = use_extension("@rules_python//python/extensions:python.bzl", "python")
 python.toolchain(
@@ -55,12 +55,12 @@ python.toolchain(
 bazel_dep(name = "googleapis", version = "0.0.0", repo_name = "com_google_googleapis")
 archive_override(
     module_name = "googleapis",
-    integrity = "sha256-KWb0YSXvNmUyk0Aoh3HoX7j24omy9PmtuXL9tC1J4YA=",
+    integrity = "sha256-aeixbXZTv5ZJU5Jo3YS6QqjduohxXWBH3R4pYFe4qT8=",
     patch_strip = 1,
     patches = ["//bazel:googleapis.modules.patch"],
-    strip_prefix = "googleapis-e3838fbf057c3b69efc1e0b8e1a5a288ee91a00d",
+    strip_prefix = "googleapis-0a250ef2318e97b1b3153423e7af0fdbe5731741",
     urls = [
-        "https://github.com/googleapis/googleapis/archive/e3838fbf057c3b69efc1e0b8e1a5a288ee91a00d.tar.gz",
+        "https://github.com/googleapis/googleapis/archive/0a250ef2318e97b1b3153423e7af0fdbe5731741.tar.gz",
     ],
 )
 

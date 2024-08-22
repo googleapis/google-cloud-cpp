@@ -18,7 +18,9 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <string>
 #include <thread>
+#include <vector>
 
 namespace google {
 namespace cloud {

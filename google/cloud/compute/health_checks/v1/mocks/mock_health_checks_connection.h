@@ -56,26 +56,45 @@ class MockHealthChecksConnection
            AggregatedListHealthChecksRequest request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteHealthCheck)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteHealthCheck(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteHealthCheck(Matcher<google::cloud::cpp::compute::health_checks::v1::DeleteHealthCheckRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteHealthCheck,
               (google::cloud::cpp::compute::health_checks::v1::
                    DeleteHealthCheckRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteHealthCheck(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               DeleteHealthCheck,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::health_checks::v1::
-                   DeleteHealthCheckRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::health_checks::v1::
+                               DeleteHealthCheckRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteHealthCheck(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteHealthCheck,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::HealthCheck>,
@@ -84,26 +103,45 @@ class MockHealthChecksConnection
                    GetHealthCheckRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, InsertHealthCheck)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, InsertHealthCheck(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InsertHealthCheck(Matcher<google::cloud::cpp::compute::health_checks::v1::InsertHealthCheckRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertHealthCheck,
               (google::cloud::cpp::compute::health_checks::v1::
                    InsertHealthCheckRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, InsertHealthCheck(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               InsertHealthCheck,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::health_checks::v1::
-                   InsertHealthCheckRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::health_checks::v1::
+                               InsertHealthCheckRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InsertHealthCheck(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertHealthCheck,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -113,48 +151,86 @@ class MockHealthChecksConnection
            request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, PatchHealthCheck)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, PatchHealthCheck(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PatchHealthCheck(Matcher<google::cloud::cpp::compute::health_checks::v1::PatchHealthCheckRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchHealthCheck,
               (google::cloud::cpp::compute::health_checks::v1::
                    PatchHealthCheckRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, PatchHealthCheck(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               PatchHealthCheck,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::health_checks::v1::
-                   PatchHealthCheckRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::health_checks::v1::
+                               PatchHealthCheckRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// PatchHealthCheck(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchHealthCheck,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateHealthCheck)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateHealthCheck(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateHealthCheck(Matcher<google::cloud::cpp::compute::health_checks::v1::UpdateHealthCheckRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               UpdateHealthCheck,
               (google::cloud::cpp::compute::health_checks::v1::
                    UpdateHealthCheckRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateHealthCheck(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               UpdateHealthCheck,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::health_checks::v1::
-                   UpdateHealthCheckRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::health_checks::v1::
+                               UpdateHealthCheckRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateHealthCheck(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               UpdateHealthCheck,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

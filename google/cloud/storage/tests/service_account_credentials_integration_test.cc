@@ -22,6 +22,9 @@
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
 #include <chrono>
+#include <set>
+#include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {

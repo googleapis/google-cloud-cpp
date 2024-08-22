@@ -54,24 +54,22 @@ JobControllerTracingConnection::SubmitJobAsOperation(
 
 StatusOr<google::longrunning::Operation>
 JobControllerTracingConnection::SubmitJobAsOperation(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::dataproc::v1::SubmitJobRequest const& request) {
+    NoAwaitTag, google::cloud::dataproc::v1::SubmitJobRequest const& request) {
   auto span = internal::MakeSpan(
       "dataproc_v1::JobControllerConnection::SubmitJobAsOperation");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->SubmitJobAsOperation(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->SubmitJobAsOperation(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Job>>
 JobControllerTracingConnection::SubmitJobAsOperation(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "dataproc_v1::JobControllerConnection::SubmitJobAsOperation");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->SubmitJobAsOperation(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->SubmitJobAsOperation(operation));
 }
 
 StatusOr<google::cloud::dataproc::v1::Job>

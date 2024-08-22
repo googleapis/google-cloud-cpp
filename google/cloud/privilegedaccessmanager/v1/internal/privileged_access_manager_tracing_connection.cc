@@ -100,27 +100,26 @@ PrivilegedAccessManagerTracingConnection::CreateEntitlement(
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerTracingConnection::CreateEntitlement(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const&
         request) {
   auto span = internal::MakeSpan(
       "privilegedaccessmanager_v1::PrivilegedAccessManagerConnection::"
       "CreateEntitlement");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->CreateEntitlement(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateEntitlement(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
 PrivilegedAccessManagerTracingConnection::CreateEntitlement(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "privilegedaccessmanager_v1::PrivilegedAccessManagerConnection::"
       "CreateEntitlement");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->CreateEntitlement(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateEntitlement(operation));
 }
 
 future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
@@ -136,27 +135,26 @@ PrivilegedAccessManagerTracingConnection::DeleteEntitlement(
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerTracingConnection::DeleteEntitlement(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const&
         request) {
   auto span = internal::MakeSpan(
       "privilegedaccessmanager_v1::PrivilegedAccessManagerConnection::"
       "DeleteEntitlement");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->DeleteEntitlement(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteEntitlement(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
 PrivilegedAccessManagerTracingConnection::DeleteEntitlement(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "privilegedaccessmanager_v1::PrivilegedAccessManagerConnection::"
       "DeleteEntitlement");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->DeleteEntitlement(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteEntitlement(operation));
 }
 
 future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
@@ -172,27 +170,26 @@ PrivilegedAccessManagerTracingConnection::UpdateEntitlement(
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerTracingConnection::UpdateEntitlement(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const&
         request) {
   auto span = internal::MakeSpan(
       "privilegedaccessmanager_v1::PrivilegedAccessManagerConnection::"
       "UpdateEntitlement");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->UpdateEntitlement(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateEntitlement(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
 PrivilegedAccessManagerTracingConnection::UpdateEntitlement(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "privilegedaccessmanager_v1::PrivilegedAccessManagerConnection::"
       "UpdateEntitlement");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->UpdateEntitlement(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateEntitlement(operation));
 }
 
 StreamRange<google::cloud::privilegedaccessmanager::v1::Grant>
@@ -278,26 +275,24 @@ PrivilegedAccessManagerTracingConnection::RevokeGrant(
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerTracingConnection::RevokeGrant(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const&
         request) {
   auto span = internal::MakeSpan(
       "privilegedaccessmanager_v1::PrivilegedAccessManagerConnection::"
       "RevokeGrant");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->RevokeGrant(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->RevokeGrant(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>>
 PrivilegedAccessManagerTracingConnection::RevokeGrant(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "privilegedaccessmanager_v1::PrivilegedAccessManagerConnection::"
       "RevokeGrant");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->RevokeGrant(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->RevokeGrant(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -59,13 +59,12 @@ class VideoIntelligenceServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> AnnotateVideo(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::videointelligence::v1::AnnotateVideoRequest const& request)
       override;
 
   future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
-  AnnotateVideo(ExperimentalTag,
-                google::longrunning::Operation const& operation) override;
+  AnnotateVideo(google::longrunning::Operation const& operation) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

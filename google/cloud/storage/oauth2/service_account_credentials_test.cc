@@ -29,8 +29,13 @@
 #include "absl/strings/str_split.h"
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
+#include <algorithm>
 #include <chrono>
 #include <fstream>
+#include <memory>
+#include <set>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

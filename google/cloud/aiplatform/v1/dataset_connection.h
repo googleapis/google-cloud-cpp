@@ -22,7 +22,6 @@
 #include "google/cloud/aiplatform/v1/dataset_connection_idempotency_policy.h"
 #include "google/cloud/aiplatform/v1/internal/dataset_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -193,12 +192,11 @@ class DatasetServiceConnection {
       google::cloud::aiplatform::v1::CreateDatasetRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateDataset(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::CreateDatasetRequest const& request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::Dataset>>
-  CreateDataset(ExperimentalTag,
-                google::longrunning::Operation const& operation);
+  CreateDataset(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::aiplatform::v1::Dataset> GetDataset(
       google::cloud::aiplatform::v1::GetDatasetRequest const& request);
@@ -215,33 +213,32 @@ class DatasetServiceConnection {
       google::cloud::aiplatform::v1::DeleteDatasetRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteDataset(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteDatasetRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteDataset(ExperimentalTag,
-                google::longrunning::Operation const& operation);
+  DeleteDataset(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>
   ImportData(google::cloud::aiplatform::v1::ImportDataRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> ImportData(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::ImportDataRequest const& request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>
-  ImportData(ExperimentalTag, google::longrunning::Operation const& operation);
+  ImportData(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::ExportDataResponse>>
   ExportData(google::cloud::aiplatform::v1::ExportDataRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> ExportData(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::ExportDataRequest const& request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::ExportDataResponse>>
-  ExportData(ExperimentalTag, google::longrunning::Operation const& operation);
+  ExportData(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
   CreateDatasetVersion(
@@ -249,13 +246,12 @@ class DatasetServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> CreateDatasetVersion(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::CreateDatasetVersionRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
-  CreateDatasetVersion(ExperimentalTag,
-                       google::longrunning::Operation const& operation);
+  CreateDatasetVersion(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
   UpdateDatasetVersion(
@@ -269,14 +265,13 @@ class DatasetServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteDatasetVersion(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const&
           request);
 
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteDatasetVersion(ExperimentalTag,
-                       google::longrunning::Operation const& operation);
+  DeleteDatasetVersion(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
   GetDatasetVersion(
@@ -292,13 +287,12 @@ class DatasetServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> RestoreDatasetVersion(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
-  RestoreDatasetVersion(ExperimentalTag,
-                        google::longrunning::Operation const& operation);
+  RestoreDatasetVersion(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::aiplatform::v1::DataItem> ListDataItems(
       google::cloud::aiplatform::v1::ListDataItemsRequest request);
@@ -317,13 +311,12 @@ class DatasetServiceConnection {
       google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteSavedQuery(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteSavedQuery(ExperimentalTag,
-                   google::longrunning::Operation const& operation);
+  DeleteSavedQuery(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::aiplatform::v1::AnnotationSpec>
   GetAnnotationSpec(

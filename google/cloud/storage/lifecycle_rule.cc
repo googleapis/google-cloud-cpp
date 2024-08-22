@@ -16,6 +16,9 @@
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include <algorithm>
 #include <iostream>
+#include <string>
+#include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {

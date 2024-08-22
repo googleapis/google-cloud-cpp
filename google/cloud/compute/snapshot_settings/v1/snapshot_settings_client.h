@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SNAPSHOT_SETTINGS_V1_SNAPSHOT_SETTINGS_CLIENT_H
 
 #include "google/cloud/compute/snapshot_settings/v1/snapshot_settings_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -109,7 +108,7 @@ class SnapshotSettingsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.snapshot_settings.v1.GetSnapshotSettingsRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshot_settings/v1/snapshot_settings.proto#L65}
-  /// [google.cloud.cpp.compute.v1.SnapshotSettings]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_116.proto#L24}
+  /// [google.cloud.cpp.compute.v1.SnapshotSettings]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_118.proto#L24}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SnapshotSettings>
@@ -140,7 +139,7 @@ class SnapshotSettingsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.snapshot_settings.v1.GetSnapshotSettingsRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshot_settings/v1/snapshot_settings.proto#L65}
-  /// [google.cloud.cpp.compute.v1.SnapshotSettings]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_116.proto#L24}
+  /// [google.cloud.cpp.compute.v1.SnapshotSettings]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_118.proto#L24}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SnapshotSettings>
@@ -198,8 +197,7 @@ class SnapshotSettingsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSnapshotSettings(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& update_mask,
+      NoAwaitTag, std::string const& project, std::string const& update_mask,
       google::cloud::cpp::compute::v1::SnapshotSettings const&
           snapshot_settings_resource,
       Options opts = {});
@@ -255,7 +253,7 @@ class SnapshotSettingsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSnapshotSettings(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::snapshot_settings::v1::
           PatchSnapshotSettingsRequest const& request,
       Options opts = {});
@@ -271,7 +269,6 @@ class SnapshotSettingsClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchSnapshotSettings(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 

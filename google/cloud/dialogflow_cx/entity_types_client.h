@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_ENTITY_TYPES_CLIENT_H
 
 #include "google/cloud/dialogflow_cx/entity_types_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -468,7 +467,7 @@ class EntityTypesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ExportEntityTypes(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
           request,
       Options opts = {});
@@ -483,8 +482,7 @@ class EntityTypesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportEntityTypesResponse>>
-  ExportEntityTypes(ExperimentalTag,
-                    google::longrunning::Operation const& operation,
+  ExportEntityTypes(google::longrunning::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -539,7 +537,7 @@ class EntityTypesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ImportEntityTypes(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
           request,
       Options opts = {});
@@ -554,8 +552,7 @@ class EntityTypesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>
-  ImportEntityTypes(ExperimentalTag,
-                    google::longrunning::Operation const& operation,
+  ImportEntityTypes(google::longrunning::Operation const& operation,
                     Options opts = {});
 
  private:

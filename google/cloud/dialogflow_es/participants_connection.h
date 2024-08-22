@@ -22,7 +22,6 @@
 #include "google/cloud/dialogflow_es/internal/participants_retry_traits.h"
 #include "google/cloud/dialogflow_es/participants_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -220,6 +219,12 @@ class ParticipantsConnection {
   virtual StatusOr<google::cloud::dialogflow::v2::SuggestSmartRepliesResponse>
   SuggestSmartReplies(
       google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const& request);
+
+  virtual StatusOr<
+      google::cloud::dialogflow::v2::SuggestKnowledgeAssistResponse>
+  SuggestKnowledgeAssist(
+      google::cloud::dialogflow::v2::SuggestKnowledgeAssistRequest const&
+          request);
 };
 
 /**

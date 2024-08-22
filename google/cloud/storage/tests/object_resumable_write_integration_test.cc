@@ -17,7 +17,13 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <algorithm>
+#include <iostream>
+#include <random>
+#include <sstream>
+#include <string>
 #include <thread>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -336,7 +342,8 @@ TEST_F(ObjectResumableWriteIntegrationTest, WithXUploadContentLength) {
   auto constexpr kMiB = 1024 * 1024L;
   auto constexpr kChunkSize = 2 * kMiB;
 
-  Client client(Options{}.set<UploadBufferSizeOption>(kChunkSize));
+  auto client = MakeIntegrationTestClient(
+      Options{}.set<UploadBufferSizeOption>(kChunkSize));
 
   auto const chunk = MakeRandomData(kChunkSize);
 
@@ -369,8 +376,8 @@ TEST_F(ObjectResumableWriteIntegrationTest, WithXUploadContentLengthRandom) {
   auto constexpr kQuantum = 256 * 1024L;
   size_t constexpr kChunkSize = 2 * kQuantum;
 
-  Client client(Options{}.set<UploadBufferSizeOption>(kChunkSize));
-
+  auto client = MakeIntegrationTestClient(
+      Options{}.set<UploadBufferSizeOption>(kChunkSize));
   auto const chunk = MakeRandomData(kChunkSize);
 
   std::uniform_int_distribution<std::size_t> size_gen(kQuantum, 5 * kQuantum);

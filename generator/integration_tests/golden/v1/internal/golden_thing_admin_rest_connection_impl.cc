@@ -105,7 +105,7 @@ GoldenThingAdminRestConnectionImpl::CreateDatabase(google::test::admin::database
 }
 
 StatusOr<google::longrunning::Operation>
-GoldenThingAdminRestConnectionImpl::CreateDatabase(ExperimentalTag, NoAwaitTag, google::test::admin::database::v1::CreateDatabaseRequest const& request) {
+GoldenThingAdminRestConnectionImpl::CreateDatabase(NoAwaitTag, google::test::admin::database::v1::CreateDatabaseRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -118,7 +118,7 @@ GoldenThingAdminRestConnectionImpl::CreateDatabase(ExperimentalTag, NoAwaitTag, 
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>
-GoldenThingAdminRestConnectionImpl::CreateDatabase(ExperimentalTag,
+GoldenThingAdminRestConnectionImpl::CreateDatabase(
     google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::test::admin::database::v1::CreateDatabaseMetadata>()) {
@@ -193,7 +193,7 @@ GoldenThingAdminRestConnectionImpl::UpdateDatabaseDdl(google::test::admin::datab
 }
 
 StatusOr<google::longrunning::Operation>
-GoldenThingAdminRestConnectionImpl::UpdateDatabaseDdl(ExperimentalTag, NoAwaitTag, google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
+GoldenThingAdminRestConnectionImpl::UpdateDatabaseDdl(NoAwaitTag, google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -206,7 +206,7 @@ GoldenThingAdminRestConnectionImpl::UpdateDatabaseDdl(ExperimentalTag, NoAwaitTa
 }
 
 future<StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
-GoldenThingAdminRestConnectionImpl::UpdateDatabaseDdl(ExperimentalTag,
+GoldenThingAdminRestConnectionImpl::UpdateDatabaseDdl(
     google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::test::admin::database::v1::UpdateDatabaseDdlMetadata>()) {
@@ -333,7 +333,7 @@ GoldenThingAdminRestConnectionImpl::CreateBackup(google::test::admin::database::
 }
 
 StatusOr<google::longrunning::Operation>
-GoldenThingAdminRestConnectionImpl::CreateBackup(ExperimentalTag, NoAwaitTag, google::test::admin::database::v1::CreateBackupRequest const& request) {
+GoldenThingAdminRestConnectionImpl::CreateBackup(NoAwaitTag, google::test::admin::database::v1::CreateBackupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -346,7 +346,7 @@ GoldenThingAdminRestConnectionImpl::CreateBackup(ExperimentalTag, NoAwaitTag, go
 }
 
 future<StatusOr<google::test::admin::database::v1::Backup>>
-GoldenThingAdminRestConnectionImpl::CreateBackup(ExperimentalTag,
+GoldenThingAdminRestConnectionImpl::CreateBackup(
     google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::test::admin::database::v1::CreateBackupMetadata>()) {
@@ -476,7 +476,7 @@ GoldenThingAdminRestConnectionImpl::RestoreDatabase(google::test::admin::databas
 }
 
 StatusOr<google::longrunning::Operation>
-GoldenThingAdminRestConnectionImpl::RestoreDatabase(ExperimentalTag, NoAwaitTag, google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
+GoldenThingAdminRestConnectionImpl::RestoreDatabase(NoAwaitTag, google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -489,7 +489,7 @@ GoldenThingAdminRestConnectionImpl::RestoreDatabase(ExperimentalTag, NoAwaitTag,
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>
-GoldenThingAdminRestConnectionImpl::RestoreDatabase(ExperimentalTag,
+GoldenThingAdminRestConnectionImpl::RestoreDatabase(
     google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::test::admin::database::v1::RestoreDatabaseMetadata>()) {

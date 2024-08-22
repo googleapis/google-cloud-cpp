@@ -80,13 +80,12 @@ class MigrationCenterTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> CreateImportJob(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::CreateImportJobRequest const& request)
       override;
 
   future<StatusOr<google::cloud::migrationcenter::v1::ImportJob>>
-  CreateImportJob(ExperimentalTag,
-                  google::longrunning::Operation const& operation) override;
+  CreateImportJob(google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::migrationcenter::v1::ImportJob> ListImportJobs(
       google::cloud::migrationcenter::v1::ListImportJobsRequest request)
@@ -102,13 +101,12 @@ class MigrationCenterTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> DeleteImportJob(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::DeleteImportJobRequest const& request)
       override;
 
   future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
-  DeleteImportJob(ExperimentalTag,
-                  google::longrunning::Operation const& operation) override;
+  DeleteImportJob(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::migrationcenter::v1::ImportJob>>
   UpdateImportJob(
@@ -116,13 +114,12 @@ class MigrationCenterTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> UpdateImportJob(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::UpdateImportJobRequest const& request)
       override;
 
   future<StatusOr<google::cloud::migrationcenter::v1::ImportJob>>
-  UpdateImportJob(ExperimentalTag,
-                  google::longrunning::Operation const& operation) override;
+  UpdateImportJob(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
   ValidateImportJob(
@@ -130,26 +127,24 @@ class MigrationCenterTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> ValidateImportJob(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::ValidateImportJobRequest const&
           request) override;
 
   future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
-  ValidateImportJob(ExperimentalTag,
-                    google::longrunning::Operation const& operation) override;
+  ValidateImportJob(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
   RunImportJob(google::cloud::migrationcenter::v1::RunImportJobRequest const&
                    request) override;
 
   StatusOr<google::longrunning::Operation> RunImportJob(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::RunImportJobRequest const& request)
       override;
 
   future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
-  RunImportJob(ExperimentalTag,
-               google::longrunning::Operation const& operation) override;
+  RunImportJob(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::migrationcenter::v1::ImportDataFile>
   GetImportDataFile(
@@ -167,13 +162,12 @@ class MigrationCenterTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateImportDataFile(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::CreateImportDataFileRequest const&
           request) override;
 
   future<StatusOr<google::cloud::migrationcenter::v1::ImportDataFile>>
   CreateImportDataFile(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
@@ -182,13 +176,12 @@ class MigrationCenterTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteImportDataFile(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::DeleteImportDataFileRequest const&
           request) override;
 
   future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
   DeleteImportDataFile(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::migrationcenter::v1::Group> ListGroups(
@@ -203,12 +196,11 @@ class MigrationCenterTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> CreateGroup(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::CreateGroupRequest const& request)
       override;
 
   future<StatusOr<google::cloud::migrationcenter::v1::Group>> CreateGroup(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::migrationcenter::v1::Group>> UpdateGroup(
@@ -216,12 +208,11 @@ class MigrationCenterTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> UpdateGroup(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::UpdateGroupRequest const& request)
       override;
 
   future<StatusOr<google::cloud::migrationcenter::v1::Group>> UpdateGroup(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
@@ -229,25 +220,23 @@ class MigrationCenterTracingConnection
                   request) override;
 
   StatusOr<google::longrunning::Operation> DeleteGroup(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::DeleteGroupRequest const& request)
       override;
 
   future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
-  DeleteGroup(ExperimentalTag,
-              google::longrunning::Operation const& operation) override;
+  DeleteGroup(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::migrationcenter::v1::Group>> AddAssetsToGroup(
       google::cloud::migrationcenter::v1::AddAssetsToGroupRequest const&
           request) override;
 
   StatusOr<google::longrunning::Operation> AddAssetsToGroup(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::AddAssetsToGroupRequest const&
           request) override;
 
   future<StatusOr<google::cloud::migrationcenter::v1::Group>> AddAssetsToGroup(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::migrationcenter::v1::Group>>
@@ -256,13 +245,12 @@ class MigrationCenterTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> RemoveAssetsFromGroup(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::RemoveAssetsFromGroupRequest const&
           request) override;
 
   future<StatusOr<google::cloud::migrationcenter::v1::Group>>
   RemoveAssetsFromGroup(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::migrationcenter::v1::ErrorFrame> ListErrorFrames(
@@ -285,12 +273,11 @@ class MigrationCenterTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> CreateSource(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::CreateSourceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::migrationcenter::v1::Source>> CreateSource(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::migrationcenter::v1::Source>> UpdateSource(
@@ -298,12 +285,11 @@ class MigrationCenterTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> UpdateSource(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::UpdateSourceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::migrationcenter::v1::Source>> UpdateSource(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
@@ -311,13 +297,12 @@ class MigrationCenterTracingConnection
                    request) override;
 
   StatusOr<google::longrunning::Operation> DeleteSource(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::DeleteSourceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
-  DeleteSource(ExperimentalTag,
-               google::longrunning::Operation const& operation) override;
+  DeleteSource(google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::migrationcenter::v1::PreferenceSet>
   ListPreferenceSets(
@@ -334,13 +319,12 @@ class MigrationCenterTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> CreatePreferenceSet(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::CreatePreferenceSetRequest const&
           request) override;
 
   future<StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>>
-  CreatePreferenceSet(ExperimentalTag,
-                      google::longrunning::Operation const& operation) override;
+  CreatePreferenceSet(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>>
   UpdatePreferenceSet(
@@ -348,13 +332,12 @@ class MigrationCenterTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdatePreferenceSet(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::UpdatePreferenceSetRequest const&
           request) override;
 
   future<StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>>
-  UpdatePreferenceSet(ExperimentalTag,
-                      google::longrunning::Operation const& operation) override;
+  UpdatePreferenceSet(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
   DeletePreferenceSet(
@@ -362,13 +345,12 @@ class MigrationCenterTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> DeletePreferenceSet(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::DeletePreferenceSetRequest const&
           request) override;
 
   future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
-  DeletePreferenceSet(ExperimentalTag,
-                      google::longrunning::Operation const& operation) override;
+  DeletePreferenceSet(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::migrationcenter::v1::Settings> GetSettings(
       google::cloud::migrationcenter::v1::GetSettingsRequest const& request)
@@ -379,12 +361,11 @@ class MigrationCenterTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> UpdateSettings(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::UpdateSettingsRequest const& request)
       override;
 
   future<StatusOr<google::cloud::migrationcenter::v1::Settings>> UpdateSettings(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::migrationcenter::v1::ReportConfig>>
@@ -393,13 +374,12 @@ class MigrationCenterTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateReportConfig(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::CreateReportConfigRequest const&
           request) override;
 
   future<StatusOr<google::cloud::migrationcenter::v1::ReportConfig>>
-  CreateReportConfig(ExperimentalTag,
-                     google::longrunning::Operation const& operation) override;
+  CreateReportConfig(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::migrationcenter::v1::ReportConfig> GetReportConfig(
       google::cloud::migrationcenter::v1::GetReportConfigRequest const& request)
@@ -415,25 +395,23 @@ class MigrationCenterTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteReportConfig(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::DeleteReportConfigRequest const&
           request) override;
 
   future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
-  DeleteReportConfig(ExperimentalTag,
-                     google::longrunning::Operation const& operation) override;
+  DeleteReportConfig(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::migrationcenter::v1::Report>> CreateReport(
       google::cloud::migrationcenter::v1::CreateReportRequest const& request)
       override;
 
   StatusOr<google::longrunning::Operation> CreateReport(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::CreateReportRequest const& request)
       override;
 
   future<StatusOr<google::cloud::migrationcenter::v1::Report>> CreateReport(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::migrationcenter::v1::Report> GetReport(
@@ -448,13 +426,12 @@ class MigrationCenterTracingConnection
                    request) override;
 
   StatusOr<google::longrunning::Operation> DeleteReport(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::DeleteReportRequest const& request)
       override;
 
   future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
-  DeleteReport(ExperimentalTag,
-               google::longrunning::Operation const& operation) override;
+  DeleteReport(google::longrunning::Operation const& operation) override;
 
  private:
   std::shared_ptr<migrationcenter_v1::MigrationCenterConnection> child_;

@@ -68,7 +68,7 @@ PredictionServiceClient::BatchPredict(
 }
 
 StatusOr<google::longrunning::Operation> PredictionServiceClient::BatchPredict(
-    ExperimentalTag, NoAwaitTag, std::string const& name,
+    NoAwaitTag, std::string const& name,
     google::cloud::automl::v1::BatchPredictInputConfig const& input_config,
     google::cloud::automl::v1::BatchPredictOutputConfig const& output_config,
     std::map<std::string, std::string> const& params, Options opts) {
@@ -78,7 +78,7 @@ StatusOr<google::longrunning::Operation> PredictionServiceClient::BatchPredict(
   *request.mutable_input_config() = input_config;
   *request.mutable_output_config() = output_config;
   *request.mutable_params() = {params.begin(), params.end()};
-  return connection_->BatchPredict(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->BatchPredict(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::automl::v1::BatchPredictResult>>
@@ -90,19 +90,17 @@ PredictionServiceClient::BatchPredict(
 }
 
 StatusOr<google::longrunning::Operation> PredictionServiceClient::BatchPredict(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::automl::v1::BatchPredictRequest const& request,
+    NoAwaitTag, google::cloud::automl::v1::BatchPredictRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchPredict(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->BatchPredict(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::automl::v1::BatchPredictResult>>
 PredictionServiceClient::BatchPredict(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchPredict(ExperimentalTag{}, operation);
+  return connection_->BatchPredict(operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

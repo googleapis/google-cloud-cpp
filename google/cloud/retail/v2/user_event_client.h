@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_USER_EVENT_CLIENT_H
 
 #include "google/cloud/retail/v2/user_event_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -210,7 +209,7 @@ class UserEventServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> PurgeUserEvents(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::retail::v2::PurgeUserEventsRequest const& request,
       Options opts = {});
 
@@ -224,8 +223,7 @@ class UserEventServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>
-  PurgeUserEvents(ExperimentalTag,
-                  google::longrunning::Operation const& operation,
+  PurgeUserEvents(google::longrunning::Operation const& operation,
                   Options opts = {});
 
   // clang-format off
@@ -285,7 +283,7 @@ class UserEventServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ImportUserEvents(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::retail::v2::ImportUserEventsRequest const& request,
       Options opts = {});
 
@@ -299,8 +297,7 @@ class UserEventServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>
-  ImportUserEvents(ExperimentalTag,
-                   google::longrunning::Operation const& operation,
+  ImportUserEvents(google::longrunning::Operation const& operation,
                    Options opts = {});
 
   // clang-format off
@@ -361,7 +358,7 @@ class UserEventServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> RejoinUserEvents(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::retail::v2::RejoinUserEventsRequest const& request,
       Options opts = {});
 
@@ -375,8 +372,7 @@ class UserEventServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>
-  RejoinUserEvents(ExperimentalTag,
-                   google::longrunning::Operation const& operation,
+  RejoinUserEvents(google::longrunning::Operation const& operation,
                    Options opts = {});
 
  private:

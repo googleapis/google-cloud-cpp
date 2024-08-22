@@ -114,6 +114,12 @@ static std::size_t ReadFunction(  // NOLINT(misc-use-anonymous-namespace)
   return writev->MoveTo(absl::MakeSpan(buffer, size * nitems));
 }
 
+// Instead of trying to send any more bytes from userdata, aborts.
+static std::size_t ReadFunctionAbort(  // NOLINT(misc-use-anonymous-namespace)
+    char*, std::size_t, std::size_t, void*) {
+  return CURL_READFUNC_ABORT;
+}
+
 static int SeekFunction(  // NOLINT(misc-use-anonymous-namespace)
     void* userdata, curl_off_t offset, int origin) {
   auto* const writev = reinterpret_cast<WriteVector*>(userdata);
@@ -481,6 +487,22 @@ std::size_t CurlImpl::HeaderCallback(absl::Span<char> response) {
                               response.size());
 }
 
+class CurlImpl::ReadFunctionAbortGuard {
+ public:
+  explicit ReadFunctionAbortGuard(CurlImpl& impl) : impl_(impl) {}
+  ~ReadFunctionAbortGuard() {
+    // If curl_closed_ is true, then the handle has already been recycled and
+    // attempting to set an option on it will error.
+    if (!impl_.curl_closed_) {
+      impl_.handle_.SetOptionUnchecked(CURLOPT_READFUNCTION,
+                                       &ReadFunctionAbort);
+    }
+  }
+
+ private:
+  CurlImpl& impl_;
+};
+
 Status CurlImpl::MakeRequestImpl(RestContext& context) {
   TRACE_STATE() << ", url_=" << url_;
 
@@ -503,6 +525,11 @@ Status CurlImpl::MakeRequestImpl(RestContext& context) {
   handle_.SetOptionUnchecked(CURLOPT_HTTP_VERSION,
                              VersionToCurlCode(http_version_));
 
+  // All data in the WriteVector should be written after ReadImpl returns unless
+  // an error, typically a timeout, has occurred. Use ReadFunctionAbortGuard to
+  // leverage RAII to instruct curl to not attempt to send anymore data on this
+  // handle regardless if an error or exception is encountered.
+  ReadFunctionAbortGuard guard(*this);
   auto error = curl_multi_add_handle(multi_.get(), handle_.handle_.get());
 
   // This indicates that we are using the API incorrectly. The application

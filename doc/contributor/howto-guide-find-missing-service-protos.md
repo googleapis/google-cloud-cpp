@@ -25,7 +25,7 @@ bazel build //:grpc_utils
 Next find out where bazel downloaded the code:
 
 ```shell
-googleapis="$(bazel info output_base)/external/com_google_googleapis/"
+googleapis="$(bazel info output_base)/external/googleapis~/"
 ```
 
 At this point we can run a "one liner" to find the mismatched repos:

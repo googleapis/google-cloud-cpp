@@ -19,9 +19,14 @@
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <algorithm>
 #include <cstdio>
 #include <fstream>
+#include <random>
+#include <sstream>
+#include <string>
 #include <thread>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -49,13 +54,14 @@ class ObjectFileIntegrationTest
     ASSERT_FALSE(bucket_name_.empty());
   }
 
+  // Create a client configured to always use resumable uploads for files.
+  static Client ClientWithSimpleUploadDisabled() {
+    return MakeIntegrationTestClient(
+        Options{}.set<MaximumSimpleUploadSizeOption>(0));
+  }
+
   std::string bucket_name_;
 };
-
-// Create a client configured to always use resumable uploads for files.
-Client ClientWithSimpleUploadDisabled() {
-  return Client(Options{}.set<MaximumSimpleUploadSizeOption>(0));
-}
 
 TEST_F(ObjectFileIntegrationTest, JsonDownloadFile) {
   auto client = MakeIntegrationTestClient();

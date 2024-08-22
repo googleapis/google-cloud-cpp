@@ -42,6 +42,15 @@ TranslationServiceTracingConnection::TranslateText(
   return internal::EndSpan(*span, child_->TranslateText(request));
 }
 
+StatusOr<google::cloud::translation::v3::RomanizeTextResponse>
+TranslationServiceTracingConnection::RomanizeText(
+    google::cloud::translation::v3::RomanizeTextRequest const& request) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::RomanizeText");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->RomanizeText(request));
+}
+
 StatusOr<google::cloud::translation::v3::DetectLanguageResponse>
 TranslationServiceTracingConnection::DetectLanguage(
     google::cloud::translation::v3::DetectLanguageRequest const& request) {
@@ -82,24 +91,23 @@ TranslationServiceTracingConnection::BatchTranslateText(
 
 StatusOr<google::longrunning::Operation>
 TranslationServiceTracingConnection::BatchTranslateText(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::translation::v3::BatchTranslateTextRequest const& request) {
   auto span = internal::MakeSpan(
       "translate_v3::TranslationServiceConnection::BatchTranslateText");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->BatchTranslateText(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->BatchTranslateText(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>
 TranslationServiceTracingConnection::BatchTranslateText(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "translate_v3::TranslationServiceConnection::BatchTranslateText");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->BatchTranslateText(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->BatchTranslateText(operation));
 }
 
 future<StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>
@@ -115,25 +123,24 @@ TranslationServiceTracingConnection::BatchTranslateDocument(
 
 StatusOr<google::longrunning::Operation>
 TranslationServiceTracingConnection::BatchTranslateDocument(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::translation::v3::BatchTranslateDocumentRequest const&
         request) {
   auto span = internal::MakeSpan(
       "translate_v3::TranslationServiceConnection::BatchTranslateDocument");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span,
-      child_->BatchTranslateDocument(ExperimentalTag{}, NoAwaitTag{}, request));
+      *span, child_->BatchTranslateDocument(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>
 TranslationServiceTracingConnection::BatchTranslateDocument(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "translate_v3::TranslationServiceConnection::BatchTranslateDocument");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->BatchTranslateDocument(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->BatchTranslateDocument(operation));
 }
 
 future<StatusOr<google::cloud::translation::v3::Glossary>>
@@ -147,23 +154,51 @@ TranslationServiceTracingConnection::CreateGlossary(
 
 StatusOr<google::longrunning::Operation>
 TranslationServiceTracingConnection::CreateGlossary(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::translation::v3::CreateGlossaryRequest const& request) {
   auto span = internal::MakeSpan(
       "translate_v3::TranslationServiceConnection::CreateGlossary");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateGlossary(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateGlossary(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::translation::v3::Glossary>>
 TranslationServiceTracingConnection::CreateGlossary(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "translate_v3::TranslationServiceConnection::CreateGlossary");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->CreateGlossary(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateGlossary(operation));
+}
+
+future<StatusOr<google::cloud::translation::v3::Glossary>>
+TranslationServiceTracingConnection::UpdateGlossary(
+    google::cloud::translation::v3::UpdateGlossaryRequest const& request) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::UpdateGlossary");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateGlossary(request));
+}
+
+StatusOr<google::longrunning::Operation>
+TranslationServiceTracingConnection::UpdateGlossary(
+    NoAwaitTag,
+    google::cloud::translation::v3::UpdateGlossaryRequest const& request) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::UpdateGlossary");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->UpdateGlossary(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::translation::v3::Glossary>>
+TranslationServiceTracingConnection::UpdateGlossary(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::UpdateGlossary");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateGlossary(operation));
 }
 
 StreamRange<google::cloud::translation::v3::Glossary>
@@ -197,23 +232,145 @@ TranslationServiceTracingConnection::DeleteGlossary(
 
 StatusOr<google::longrunning::Operation>
 TranslationServiceTracingConnection::DeleteGlossary(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::translation::v3::DeleteGlossaryRequest const& request) {
   auto span = internal::MakeSpan(
       "translate_v3::TranslationServiceConnection::DeleteGlossary");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteGlossary(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteGlossary(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
 TranslationServiceTracingConnection::DeleteGlossary(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "translate_v3::TranslationServiceConnection::DeleteGlossary");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->DeleteGlossary(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteGlossary(operation));
+}
+
+StatusOr<google::cloud::translation::v3::GlossaryEntry>
+TranslationServiceTracingConnection::GetGlossaryEntry(
+    google::cloud::translation::v3::GetGlossaryEntryRequest const& request) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::GetGlossaryEntry");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetGlossaryEntry(request));
+}
+
+StreamRange<google::cloud::translation::v3::GlossaryEntry>
+TranslationServiceTracingConnection::ListGlossaryEntries(
+    google::cloud::translation::v3::ListGlossaryEntriesRequest request) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::ListGlossaryEntries");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListGlossaryEntries(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::translation::v3::GlossaryEntry>(std::move(span),
+                                                     std::move(sr));
+}
+
+StatusOr<google::cloud::translation::v3::GlossaryEntry>
+TranslationServiceTracingConnection::CreateGlossaryEntry(
+    google::cloud::translation::v3::CreateGlossaryEntryRequest const& request) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::CreateGlossaryEntry");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateGlossaryEntry(request));
+}
+
+StatusOr<google::cloud::translation::v3::GlossaryEntry>
+TranslationServiceTracingConnection::UpdateGlossaryEntry(
+    google::cloud::translation::v3::UpdateGlossaryEntryRequest const& request) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::UpdateGlossaryEntry");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateGlossaryEntry(request));
+}
+
+Status TranslationServiceTracingConnection::DeleteGlossaryEntry(
+    google::cloud::translation::v3::DeleteGlossaryEntryRequest const& request) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::DeleteGlossaryEntry");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteGlossaryEntry(request));
+}
+
+future<StatusOr<google::cloud::translation::v3::Dataset>>
+TranslationServiceTracingConnection::CreateDataset(
+    google::cloud::translation::v3::CreateDatasetRequest const& request) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::CreateDataset");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateDataset(request));
+}
+
+StatusOr<google::longrunning::Operation>
+TranslationServiceTracingConnection::CreateDataset(
+    NoAwaitTag,
+    google::cloud::translation::v3::CreateDatasetRequest const& request) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::CreateDataset");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->CreateDataset(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::translation::v3::Dataset>>
+TranslationServiceTracingConnection::CreateDataset(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::CreateDataset");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateDataset(operation));
+}
+
+StatusOr<google::cloud::translation::v3::Dataset>
+TranslationServiceTracingConnection::GetDataset(
+    google::cloud::translation::v3::GetDatasetRequest const& request) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::GetDataset");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetDataset(request));
+}
+
+StreamRange<google::cloud::translation::v3::Dataset>
+TranslationServiceTracingConnection::ListDatasets(
+    google::cloud::translation::v3::ListDatasetsRequest request) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::ListDatasets");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListDatasets(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::translation::v3::Dataset>(std::move(span), std::move(sr));
+}
+
+future<StatusOr<google::cloud::translation::v3::DeleteDatasetMetadata>>
+TranslationServiceTracingConnection::DeleteDataset(
+    google::cloud::translation::v3::DeleteDatasetRequest const& request) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::DeleteDataset");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteDataset(request));
+}
+
+StatusOr<google::longrunning::Operation>
+TranslationServiceTracingConnection::DeleteDataset(
+    NoAwaitTag,
+    google::cloud::translation::v3::DeleteDatasetRequest const& request) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::DeleteDataset");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->DeleteDataset(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::translation::v3::DeleteDatasetMetadata>>
+TranslationServiceTracingConnection::DeleteDataset(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::DeleteDataset");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteDataset(operation));
 }
 
 StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
@@ -316,6 +473,149 @@ TranslationServiceTracingConnection::ListAdaptiveMtSentences(
   return internal::MakeTracedStreamRange<
       google::cloud::translation::v3::AdaptiveMtSentence>(std::move(span),
                                                           std::move(sr));
+}
+
+future<StatusOr<google::cloud::translation::v3::ImportDataMetadata>>
+TranslationServiceTracingConnection::ImportData(
+    google::cloud::translation::v3::ImportDataRequest const& request) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::ImportData");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->ImportData(request));
+}
+
+StatusOr<google::longrunning::Operation>
+TranslationServiceTracingConnection::ImportData(
+    NoAwaitTag,
+    google::cloud::translation::v3::ImportDataRequest const& request) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::ImportData");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->ImportData(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::translation::v3::ImportDataMetadata>>
+TranslationServiceTracingConnection::ImportData(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::ImportData");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->ImportData(operation));
+}
+
+future<StatusOr<google::cloud::translation::v3::ExportDataMetadata>>
+TranslationServiceTracingConnection::ExportData(
+    google::cloud::translation::v3::ExportDataRequest const& request) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::ExportData");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->ExportData(request));
+}
+
+StatusOr<google::longrunning::Operation>
+TranslationServiceTracingConnection::ExportData(
+    NoAwaitTag,
+    google::cloud::translation::v3::ExportDataRequest const& request) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::ExportData");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->ExportData(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::translation::v3::ExportDataMetadata>>
+TranslationServiceTracingConnection::ExportData(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::ExportData");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->ExportData(operation));
+}
+
+StreamRange<google::cloud::translation::v3::Example>
+TranslationServiceTracingConnection::ListExamples(
+    google::cloud::translation::v3::ListExamplesRequest request) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::ListExamples");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListExamples(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::translation::v3::Example>(std::move(span), std::move(sr));
+}
+
+future<StatusOr<google::cloud::translation::v3::Model>>
+TranslationServiceTracingConnection::CreateModel(
+    google::cloud::translation::v3::CreateModelRequest const& request) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::CreateModel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateModel(request));
+}
+
+StatusOr<google::longrunning::Operation>
+TranslationServiceTracingConnection::CreateModel(
+    NoAwaitTag,
+    google::cloud::translation::v3::CreateModelRequest const& request) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::CreateModel");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->CreateModel(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::translation::v3::Model>>
+TranslationServiceTracingConnection::CreateModel(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::CreateModel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateModel(operation));
+}
+
+StreamRange<google::cloud::translation::v3::Model>
+TranslationServiceTracingConnection::ListModels(
+    google::cloud::translation::v3::ListModelsRequest request) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::ListModels");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListModels(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::translation::v3::Model>(
+      std::move(span), std::move(sr));
+}
+
+StatusOr<google::cloud::translation::v3::Model>
+TranslationServiceTracingConnection::GetModel(
+    google::cloud::translation::v3::GetModelRequest const& request) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::GetModel");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetModel(request));
+}
+
+future<StatusOr<google::cloud::translation::v3::DeleteModelMetadata>>
+TranslationServiceTracingConnection::DeleteModel(
+    google::cloud::translation::v3::DeleteModelRequest const& request) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::DeleteModel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteModel(request));
+}
+
+StatusOr<google::longrunning::Operation>
+TranslationServiceTracingConnection::DeleteModel(
+    NoAwaitTag,
+    google::cloud::translation::v3::DeleteModelRequest const& request) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::DeleteModel");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->DeleteModel(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::translation::v3::DeleteModelMetadata>>
+TranslationServiceTracingConnection::DeleteModel(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "translate_v3::TranslationServiceConnection::DeleteModel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteModel(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

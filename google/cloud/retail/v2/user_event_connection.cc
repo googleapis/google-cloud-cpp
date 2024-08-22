@@ -58,15 +58,14 @@ UserEventServiceConnection::PurgeUserEvents(
 
 StatusOr<google::longrunning::Operation>
 UserEventServiceConnection::PurgeUserEvents(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::retail::v2::PurgeUserEventsRequest const&) {
+    NoAwaitTag, google::cloud::retail::v2::PurgeUserEventsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>
 UserEventServiceConnection::PurgeUserEvents(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -82,15 +81,14 @@ UserEventServiceConnection::ImportUserEvents(
 
 StatusOr<google::longrunning::Operation>
 UserEventServiceConnection::ImportUserEvents(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::retail::v2::ImportUserEventsRequest const&) {
+    NoAwaitTag, google::cloud::retail::v2::ImportUserEventsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>
 UserEventServiceConnection::ImportUserEvents(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -106,15 +104,14 @@ UserEventServiceConnection::RejoinUserEvents(
 
 StatusOr<google::longrunning::Operation>
 UserEventServiceConnection::RejoinUserEvents(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::retail::v2::RejoinUserEventsRequest const&) {
+    NoAwaitTag, google::cloud::retail::v2::RejoinUserEventsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>
 UserEventServiceConnection::RejoinUserEvents(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

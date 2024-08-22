@@ -455,7 +455,6 @@ void ServiceCodeGenerator::SetMethods() {
     for (auto& a : s) a = SafeReplaceAll(a, "@", ",");
     return {s.begin(), s.end()};
   };
-  auto const emitted_rpcs = split_arg("emitted_rpcs");
   auto const omitted_rpcs = split_arg("omitted_rpcs");
   auto const gen_async_rpcs = split_arg("gen_async_rpcs");
 
@@ -468,20 +467,6 @@ void ServiceCodeGenerator::SetMethods() {
       return v == method_name || v == qualified_method_name;
     };
     bool omit_rpc = internal::ContainsIf(omitted_rpcs, any_match);
-    if (!omit_rpc && method->options().deprecated()) {
-      // Deprecated RPCs must be listed in either omitted_rpcs or
-      // emitted_rpcs. The former is used for newly-generated services,
-      // where we never want to support the deprecated RPC, and the
-      // latter for newly-deprecated RPCs, where we want to maintain
-      // backwards compatibility.
-      if (!internal::ContainsIf(emitted_rpcs, any_match)) {
-        GCP_LOG(FATAL) << "Deprecated RPC " << qualified_method_name
-                       << " must be listed in either omitted_rpcs"
-                       << " or emitted_rpcs";
-      }
-      // TODO(#8486): Add a @deprecated Doxygen comment and the
-      // GOOGLE_CLOUD_CPP_DEPRECATED annotation to the generated RPC.
-    }
     if (!omit_rpc) methods_.emplace_back(*method);
     if (internal::ContainsIf(gen_async_rpcs, any_match)) {
       // We still generate the async API for omitted (and possibly

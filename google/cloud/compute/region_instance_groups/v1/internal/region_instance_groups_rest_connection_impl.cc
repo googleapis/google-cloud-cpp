@@ -202,9 +202,8 @@ RegionInstanceGroupsRestConnectionImpl::SetNamedPorts(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceGroupsRestConnectionImpl::SetNamedPorts(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_instance_groups::v1::
-        SetNamedPortsRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::region_instance_groups::v1::
+                    SetNamedPortsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -219,7 +218,6 @@ RegionInstanceGroupsRestConnectionImpl::SetNamedPorts(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceGroupsRestConnectionImpl::SetNamedPorts(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

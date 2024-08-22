@@ -43,6 +43,18 @@ DefaultTranslationServiceStub::TranslateText(
   return response;
 }
 
+StatusOr<google::cloud::translation::v3::RomanizeTextResponse>
+DefaultTranslationServiceStub::RomanizeText(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::translation::v3::RomanizeTextRequest const& request) {
+  google::cloud::translation::v3::RomanizeTextResponse response;
+  auto status = grpc_stub_->RomanizeText(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::translation::v3::DetectLanguageResponse>
 DefaultTranslationServiceStub::DetectLanguage(
     grpc::ClientContext& context, Options const&,
@@ -177,6 +189,37 @@ DefaultTranslationServiceStub::CreateGlossary(
   return response;
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultTranslationServiceStub::AsyncUpdateGlossary(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::translation::v3::UpdateGlossaryRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::translation::v3::UpdateGlossaryRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::translation::v3::UpdateGlossaryRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateGlossary(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultTranslationServiceStub::UpdateGlossary(
+    grpc::ClientContext& context, Options,
+    google::cloud::translation::v3::UpdateGlossaryRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateGlossary(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::translation::v3::ListGlossariesResponse>
 DefaultTranslationServiceStub::ListGlossaries(
     grpc::ClientContext& context, Options const&,
@@ -226,6 +269,151 @@ DefaultTranslationServiceStub::DeleteGlossary(
     google::cloud::translation::v3::DeleteGlossaryRequest const& request) {
   google::longrunning::Operation response;
   auto status = grpc_stub_->DeleteGlossary(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::translation::v3::GlossaryEntry>
+DefaultTranslationServiceStub::GetGlossaryEntry(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::translation::v3::GetGlossaryEntryRequest const& request) {
+  google::cloud::translation::v3::GlossaryEntry response;
+  auto status = grpc_stub_->GetGlossaryEntry(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::translation::v3::ListGlossaryEntriesResponse>
+DefaultTranslationServiceStub::ListGlossaryEntries(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::translation::v3::ListGlossaryEntriesRequest const& request) {
+  google::cloud::translation::v3::ListGlossaryEntriesResponse response;
+  auto status = grpc_stub_->ListGlossaryEntries(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::translation::v3::GlossaryEntry>
+DefaultTranslationServiceStub::CreateGlossaryEntry(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::translation::v3::CreateGlossaryEntryRequest const& request) {
+  google::cloud::translation::v3::GlossaryEntry response;
+  auto status = grpc_stub_->CreateGlossaryEntry(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::translation::v3::GlossaryEntry>
+DefaultTranslationServiceStub::UpdateGlossaryEntry(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::translation::v3::UpdateGlossaryEntryRequest const& request) {
+  google::cloud::translation::v3::GlossaryEntry response;
+  auto status = grpc_stub_->UpdateGlossaryEntry(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+Status DefaultTranslationServiceStub::DeleteGlossaryEntry(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::translation::v3::DeleteGlossaryEntryRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteGlossaryEntry(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultTranslationServiceStub::AsyncCreateDataset(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::translation::v3::CreateDatasetRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::translation::v3::CreateDatasetRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::translation::v3::CreateDatasetRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateDataset(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultTranslationServiceStub::CreateDataset(
+    grpc::ClientContext& context, Options,
+    google::cloud::translation::v3::CreateDatasetRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateDataset(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::translation::v3::Dataset>
+DefaultTranslationServiceStub::GetDataset(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::translation::v3::GetDatasetRequest const& request) {
+  google::cloud::translation::v3::Dataset response;
+  auto status = grpc_stub_->GetDataset(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::translation::v3::ListDatasetsResponse>
+DefaultTranslationServiceStub::ListDatasets(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::translation::v3::ListDatasetsRequest const& request) {
+  google::cloud::translation::v3::ListDatasetsResponse response;
+  auto status = grpc_stub_->ListDatasets(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultTranslationServiceStub::AsyncDeleteDataset(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::translation::v3::DeleteDatasetRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::translation::v3::DeleteDatasetRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::translation::v3::DeleteDatasetRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteDataset(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultTranslationServiceStub::DeleteDataset(
+    grpc::ClientContext& context, Options,
+    google::cloud::translation::v3::DeleteDatasetRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteDataset(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
@@ -355,6 +543,162 @@ DefaultTranslationServiceStub::ListAdaptiveMtSentences(
   google::cloud::translation::v3::ListAdaptiveMtSentencesResponse response;
   auto status =
       grpc_stub_->ListAdaptiveMtSentences(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultTranslationServiceStub::AsyncImportData(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::translation::v3::ImportDataRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::translation::v3::ImportDataRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::translation::v3::ImportDataRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncImportData(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultTranslationServiceStub::ImportData(
+    grpc::ClientContext& context, Options,
+    google::cloud::translation::v3::ImportDataRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ImportData(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultTranslationServiceStub::AsyncExportData(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::translation::v3::ExportDataRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::translation::v3::ExportDataRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::translation::v3::ExportDataRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncExportData(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultTranslationServiceStub::ExportData(
+    grpc::ClientContext& context, Options,
+    google::cloud::translation::v3::ExportDataRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ExportData(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::translation::v3::ListExamplesResponse>
+DefaultTranslationServiceStub::ListExamples(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::translation::v3::ListExamplesRequest const& request) {
+  google::cloud::translation::v3::ListExamplesResponse response;
+  auto status = grpc_stub_->ListExamples(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultTranslationServiceStub::AsyncCreateModel(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::translation::v3::CreateModelRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::translation::v3::CreateModelRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::translation::v3::CreateModelRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateModel(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultTranslationServiceStub::CreateModel(
+    grpc::ClientContext& context, Options,
+    google::cloud::translation::v3::CreateModelRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateModel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::translation::v3::ListModelsResponse>
+DefaultTranslationServiceStub::ListModels(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::translation::v3::ListModelsRequest const& request) {
+  google::cloud::translation::v3::ListModelsResponse response;
+  auto status = grpc_stub_->ListModels(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::translation::v3::Model>
+DefaultTranslationServiceStub::GetModel(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::translation::v3::GetModelRequest const& request) {
+  google::cloud::translation::v3::Model response;
+  auto status = grpc_stub_->GetModel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultTranslationServiceStub::AsyncDeleteModel(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::translation::v3::DeleteModelRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::translation::v3::DeleteModelRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::translation::v3::DeleteModelRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteModel(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultTranslationServiceStub::DeleteModel(
+    grpc::ClientContext& context, Options,
+    google::cloud::translation::v3::DeleteModelRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteModel(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

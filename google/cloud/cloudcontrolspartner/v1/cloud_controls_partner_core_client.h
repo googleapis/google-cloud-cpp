@@ -475,6 +475,8 @@ class CloudControlsPartnerCoreClient {
 
   // clang-format off
   ///
+  /// @deprecated This RPC is deprecated.
+  ///
   /// Deprecated: Only returns access approval requests directly associated with
   /// an assured workload folder.
   ///
@@ -507,10 +509,13 @@ class CloudControlsPartnerCoreClient {
   /// [google.cloud.cloudcontrolspartner.v1.ListAccessApprovalRequestsRequest]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/access_approval_requests.proto#L56}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StreamRange<google::cloud::cloudcontrolspartner::v1::AccessApprovalRequest>
   ListAccessApprovalRequests(std::string const& parent, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Deprecated: Only returns access approval requests directly associated with
   /// an assured workload folder.
@@ -547,6 +552,7 @@ class CloudControlsPartnerCoreClient {
   /// [google.cloud.cloudcontrolspartner.v1.ListAccessApprovalRequestsRequest]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/access_approval_requests.proto#L56}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StreamRange<google::cloud::cloudcontrolspartner::v1::AccessApprovalRequest>
   ListAccessApprovalRequests(
       google::cloud::cloudcontrolspartner::v1::ListAccessApprovalRequestsRequest

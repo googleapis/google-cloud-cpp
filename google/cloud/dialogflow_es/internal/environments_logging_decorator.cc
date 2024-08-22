@@ -21,6 +21,8 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/v2/environment.grpc.pb.h>
 #include <memory>
+#include <set>
+#include <string>
 #include <utility>
 
 namespace google {

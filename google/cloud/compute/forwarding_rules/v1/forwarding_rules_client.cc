@@ -68,7 +68,7 @@ ForwardingRulesClient::DeleteForwardingRule(std::string const& project,
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-ForwardingRulesClient::DeleteForwardingRule(ExperimentalTag, NoAwaitTag,
+ForwardingRulesClient::DeleteForwardingRule(NoAwaitTag,
                                             std::string const& project,
                                             std::string const& region,
                                             std::string const& forwarding_rule,
@@ -79,8 +79,7 @@ ForwardingRulesClient::DeleteForwardingRule(ExperimentalTag, NoAwaitTag,
   request.set_project(project);
   request.set_region(region);
   request.set_forwarding_rule(forwarding_rule);
-  return connection_->DeleteForwardingRule(ExperimentalTag{}, NoAwaitTag{},
-                                           request);
+  return connection_->DeleteForwardingRule(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -94,21 +93,19 @@ ForwardingRulesClient::DeleteForwardingRule(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ForwardingRulesClient::DeleteForwardingRule(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::forwarding_rules::v1::
         DeleteForwardingRuleRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteForwardingRule(ExperimentalTag{}, NoAwaitTag{},
-                                           request);
+  return connection_->DeleteForwardingRule(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ForwardingRulesClient::DeleteForwardingRule(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteForwardingRule(ExperimentalTag{}, operation);
+  return connection_->DeleteForwardingRule(operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ForwardingRule>
@@ -151,8 +148,7 @@ ForwardingRulesClient::InsertForwardingRule(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ForwardingRulesClient::InsertForwardingRule(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& region,
+    NoAwaitTag, std::string const& project, std::string const& region,
     google::cloud::cpp::compute::v1::ForwardingRule const&
         forwarding_rule_resource,
     Options opts) {
@@ -162,8 +158,7 @@ ForwardingRulesClient::InsertForwardingRule(
   request.set_project(project);
   request.set_region(region);
   *request.mutable_forwarding_rule_resource() = forwarding_rule_resource;
-  return connection_->InsertForwardingRule(ExperimentalTag{}, NoAwaitTag{},
-                                           request);
+  return connection_->InsertForwardingRule(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -177,21 +172,19 @@ ForwardingRulesClient::InsertForwardingRule(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ForwardingRulesClient::InsertForwardingRule(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::forwarding_rules::v1::
         InsertForwardingRuleRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertForwardingRule(ExperimentalTag{}, NoAwaitTag{},
-                                           request);
+  return connection_->InsertForwardingRule(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ForwardingRulesClient::InsertForwardingRule(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertForwardingRule(ExperimentalTag{}, operation);
+  return connection_->InsertForwardingRule(operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::ForwardingRule>
@@ -234,8 +227,8 @@ ForwardingRulesClient::PatchForwardingRule(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ForwardingRulesClient::PatchForwardingRule(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& region, std::string const& forwarding_rule,
+    NoAwaitTag, std::string const& project, std::string const& region,
+    std::string const& forwarding_rule,
     google::cloud::cpp::compute::v1::ForwardingRule const&
         forwarding_rule_resource,
     Options opts) {
@@ -246,8 +239,7 @@ ForwardingRulesClient::PatchForwardingRule(
   request.set_region(region);
   request.set_forwarding_rule(forwarding_rule);
   *request.mutable_forwarding_rule_resource() = forwarding_rule_resource;
-  return connection_->PatchForwardingRule(ExperimentalTag{}, NoAwaitTag{},
-                                          request);
+  return connection_->PatchForwardingRule(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -261,21 +253,19 @@ ForwardingRulesClient::PatchForwardingRule(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ForwardingRulesClient::PatchForwardingRule(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::forwarding_rules::v1::
         PatchForwardingRuleRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchForwardingRule(ExperimentalTag{}, NoAwaitTag{},
-                                          request);
+  return connection_->PatchForwardingRule(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ForwardingRulesClient::PatchForwardingRule(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchForwardingRule(ExperimentalTag{}, operation);
+  return connection_->PatchForwardingRule(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -297,8 +287,8 @@ ForwardingRulesClient::SetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ForwardingRulesClient::SetLabels(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& region, std::string const& resource,
+    NoAwaitTag, std::string const& project, std::string const& region,
+    std::string const& resource,
     google::cloud::cpp::compute::v1::RegionSetLabelsRequest const&
         region_set_labels_request_resource,
     Options opts) {
@@ -309,7 +299,7 @@ ForwardingRulesClient::SetLabels(
   request.set_resource(resource);
   *request.mutable_region_set_labels_request_resource() =
       region_set_labels_request_resource;
-  return connection_->SetLabels(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->SetLabels(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -323,20 +313,19 @@ ForwardingRulesClient::SetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ForwardingRulesClient::SetLabels(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::forwarding_rules::v1::SetLabelsRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SetLabels(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->SetLabels(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ForwardingRulesClient::SetLabels(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SetLabels(ExperimentalTag{}, operation);
+  return connection_->SetLabels(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -357,8 +346,8 @@ ForwardingRulesClient::SetTarget(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ForwardingRulesClient::SetTarget(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& region, std::string const& forwarding_rule,
+    NoAwaitTag, std::string const& project, std::string const& region,
+    std::string const& forwarding_rule,
     google::cloud::cpp::compute::v1::TargetReference const&
         target_reference_resource,
     Options opts) {
@@ -368,7 +357,7 @@ ForwardingRulesClient::SetTarget(
   request.set_region(region);
   request.set_forwarding_rule(forwarding_rule);
   *request.mutable_target_reference_resource() = target_reference_resource;
-  return connection_->SetTarget(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->SetTarget(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -382,20 +371,19 @@ ForwardingRulesClient::SetTarget(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ForwardingRulesClient::SetTarget(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::forwarding_rules::v1::SetTargetRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SetTarget(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->SetTarget(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ForwardingRulesClient::SetTarget(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SetTarget(ExperimentalTag{}, operation);
+  return connection_->SetTarget(operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -92,7 +92,13 @@ class RegionsClient {
   /// information (the `quotas` field). To exclude one or more fields, set your
   /// request's `fields` query parameter to only include the fields you need. For
   /// example, to only include the `id` and `selfLink` fields, add the query
-  /// parameter `?fields=id,selfLink` to your request.
+  /// parameter `?fields=id,selfLink` to your request. This method fails if the
+  /// quota information is unavailable for the region and if the organization
+  /// policy constraint compute.requireBasicQuotaInResponse is enforced. This
+  /// constraint, when enforced, disables the fail-open behaviour when quota
+  /// information (the `items.quotas` field) is unavailable for the region. It is
+  /// recommended to use the default setting for the constraint unless your
+  /// application requires the fail-closed behaviour for this method.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/regions/get
   ///
   /// @param project  Project ID for this request.
@@ -110,8 +116,8 @@ class RegionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.regions.v1.GetRegionRequest]: @cloud_cpp_reference_link{google/cloud/compute/regions/v1/regions.proto#L72}
-  /// [google.cloud.cpp.compute.v1.Region]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_093.proto#L29}
+  /// [google.cloud.cpp.compute.regions.v1.GetRegionRequest]: @cloud_cpp_reference_link{google/cloud/compute/regions/v1/regions.proto#L84}
+  /// [google.cloud.cpp.compute.v1.Region]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_095.proto#L29}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Region> GetRegion(
@@ -125,7 +131,13 @@ class RegionsClient {
   /// information (the `quotas` field). To exclude one or more fields, set your
   /// request's `fields` query parameter to only include the fields you need. For
   /// example, to only include the `id` and `selfLink` fields, add the query
-  /// parameter `?fields=id,selfLink` to your request.
+  /// parameter `?fields=id,selfLink` to your request. This method fails if the
+  /// quota information is unavailable for the region and if the organization
+  /// policy constraint compute.requireBasicQuotaInResponse is enforced. This
+  /// constraint, when enforced, disables the fail-open behaviour when quota
+  /// information (the `items.quotas` field) is unavailable for the region. It is
+  /// recommended to use the default setting for the constraint unless your
+  /// application requires the fail-closed behaviour for this method.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/regions/get
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -147,8 +159,8 @@ class RegionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.regions.v1.GetRegionRequest]: @cloud_cpp_reference_link{google/cloud/compute/regions/v1/regions.proto#L72}
-  /// [google.cloud.cpp.compute.v1.Region]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_093.proto#L29}
+  /// [google.cloud.cpp.compute.regions.v1.GetRegionRequest]: @cloud_cpp_reference_link{google/cloud/compute/regions/v1/regions.proto#L84}
+  /// [google.cloud.cpp.compute.v1.Region]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_095.proto#L29}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Region> GetRegion(
@@ -164,7 +176,13 @@ class RegionsClient {
   /// field). To exclude one or more fields, set your request's `fields` query
   /// parameter to only include the fields you need. For example, to only include
   /// the `id` and `selfLink` fields, add the query parameter
-  /// `?fields=id,selfLink` to your request.
+  /// `?fields=id,selfLink` to your request. This method fails if the quota
+  /// information is unavailable for the region and if the organization policy
+  /// constraint compute.requireBasicQuotaInResponse is enforced. This
+  /// constraint, when enforced, disables the fail-open behaviour when quota
+  /// information (the `items.quotas` field) is unavailable for the region. It is
+  /// recommended to use the default setting for the constraint unless your
+  /// application requires the fail-closed behaviour for this method.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/regions/list
   ///
   /// @param project  Project ID for this request.
@@ -190,8 +208,8 @@ class RegionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.regions.v1.ListRegionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/regions/v1/regions.proto#L83}
-  /// [google.cloud.cpp.compute.v1.Region]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_093.proto#L29}
+  /// [google.cloud.cpp.compute.regions.v1.ListRegionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/regions/v1/regions.proto#L95}
+  /// [google.cloud.cpp.compute.v1.Region]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_095.proto#L29}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Region> ListRegions(
@@ -206,7 +224,13 @@ class RegionsClient {
   /// field). To exclude one or more fields, set your request's `fields` query
   /// parameter to only include the fields you need. For example, to only include
   /// the `id` and `selfLink` fields, add the query parameter
-  /// `?fields=id,selfLink` to your request.
+  /// `?fields=id,selfLink` to your request. This method fails if the quota
+  /// information is unavailable for the region and if the organization policy
+  /// constraint compute.requireBasicQuotaInResponse is enforced. This
+  /// constraint, when enforced, disables the fail-open behaviour when quota
+  /// information (the `items.quotas` field) is unavailable for the region. It is
+  /// recommended to use the default setting for the constraint unless your
+  /// application requires the fail-closed behaviour for this method.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/regions/list
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -237,8 +261,8 @@ class RegionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cpp.compute.regions.v1.ListRegionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/regions/v1/regions.proto#L83}
-  /// [google.cloud.cpp.compute.v1.Region]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_093.proto#L29}
+  /// [google.cloud.cpp.compute.regions.v1.ListRegionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/regions/v1/regions.proto#L95}
+  /// [google.cloud.cpp.compute.v1.Region]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_095.proto#L29}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Region> ListRegions(

@@ -66,13 +66,12 @@ class VmwareEngineConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreatePrivateCloud(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vmwareengine::v1::CreatePrivateCloudRequest const& request)
       override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-  CreatePrivateCloud(ExperimentalTag,
-                     google::longrunning::Operation const& operation) override;
+  CreatePrivateCloud(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
   UpdatePrivateCloud(
@@ -80,13 +79,12 @@ class VmwareEngineConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdatePrivateCloud(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const& request)
       override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-  UpdatePrivateCloud(ExperimentalTag,
-                     google::longrunning::Operation const& operation) override;
+  UpdatePrivateCloud(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
   DeletePrivateCloud(
@@ -94,13 +92,12 @@ class VmwareEngineConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DeletePrivateCloud(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vmwareengine::v1::DeletePrivateCloudRequest const& request)
       override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-  DeletePrivateCloud(ExperimentalTag,
-                     google::longrunning::Operation const& operation) override;
+  DeletePrivateCloud(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
   UndeletePrivateCloud(
@@ -108,13 +105,12 @@ class VmwareEngineConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UndeletePrivateCloud(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest const&
           request) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
   UndeletePrivateCloud(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::vmwareengine::v1::Cluster> ListClusters(
@@ -129,12 +125,11 @@ class VmwareEngineConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vmwareengine::v1::CreateClusterRequest const& request)
       override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::Cluster>> CreateCluster(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::Cluster>> UpdateCluster(
@@ -142,12 +137,11 @@ class VmwareEngineConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vmwareengine::v1::UpdateClusterRequest const& request)
       override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::Cluster>> UpdateCluster(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
@@ -155,13 +149,12 @@ class VmwareEngineConnectionImpl
                     request) override;
 
   StatusOr<google::longrunning::Operation> DeleteCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vmwareengine::v1::DeleteClusterRequest const& request)
       override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-  DeleteCluster(ExperimentalTag,
-                google::longrunning::Operation const& operation) override;
+  DeleteCluster(google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::vmwareengine::v1::Node> ListNodes(
       google::cloud::vmwareengine::v1::ListNodesRequest request) override;
@@ -189,13 +182,12 @@ class VmwareEngineConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateExternalAddress(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vmwareengine::v1::CreateExternalAddressRequest const&
           request) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
   CreateExternalAddress(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
@@ -204,13 +196,12 @@ class VmwareEngineConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateExternalAddress(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vmwareengine::v1::UpdateExternalAddressRequest const&
           request) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
   UpdateExternalAddress(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
@@ -219,13 +210,12 @@ class VmwareEngineConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteExternalAddress(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vmwareengine::v1::DeleteExternalAddressRequest const&
           request) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
   DeleteExternalAddress(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::vmwareengine::v1::Subnet> ListSubnets(
@@ -240,12 +230,11 @@ class VmwareEngineConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateSubnet(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request)
       override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::Subnet>> UpdateSubnet(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::vmwareengine::v1::ExternalAccessRule>
@@ -264,13 +253,12 @@ class VmwareEngineConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateExternalAccessRule(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vmwareengine::v1::CreateExternalAccessRuleRequest const&
           request) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
   CreateExternalAccessRule(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
@@ -279,13 +267,12 @@ class VmwareEngineConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateExternalAccessRule(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest const&
           request) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
   UpdateExternalAccessRule(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
@@ -294,13 +281,12 @@ class VmwareEngineConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteExternalAccessRule(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest const&
           request) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
   DeleteExternalAccessRule(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::vmwareengine::v1::LoggingServer>
@@ -317,13 +303,12 @@ class VmwareEngineConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateLoggingServer(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vmwareengine::v1::CreateLoggingServerRequest const&
           request) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
-  CreateLoggingServer(ExperimentalTag,
-                      google::longrunning::Operation const& operation) override;
+  CreateLoggingServer(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
   UpdateLoggingServer(
@@ -331,13 +316,12 @@ class VmwareEngineConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateLoggingServer(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vmwareengine::v1::UpdateLoggingServerRequest const&
           request) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
-  UpdateLoggingServer(ExperimentalTag,
-                      google::longrunning::Operation const& operation) override;
+  UpdateLoggingServer(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
   DeleteLoggingServer(
@@ -345,13 +329,12 @@ class VmwareEngineConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteLoggingServer(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vmwareengine::v1::DeleteLoggingServerRequest const&
           request) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-  DeleteLoggingServer(ExperimentalTag,
-                      google::longrunning::Operation const& operation) override;
+  DeleteLoggingServer(google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::vmwareengine::v1::NodeType> ListNodeTypes(
       google::cloud::vmwareengine::v1::ListNodeTypesRequest request) override;
@@ -374,13 +357,12 @@ class VmwareEngineConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> ResetNsxCredentials(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vmwareengine::v1::ResetNsxCredentialsRequest const&
           request) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-  ResetNsxCredentials(ExperimentalTag,
-                      google::longrunning::Operation const& operation) override;
+  ResetNsxCredentials(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
   ResetVcenterCredentials(
@@ -388,13 +370,12 @@ class VmwareEngineConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> ResetVcenterCredentials(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const&
           request) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
   ResetVcenterCredentials(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::vmwareengine::v1::DnsForwarding> GetDnsForwarding(
@@ -407,13 +388,12 @@ class VmwareEngineConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateDnsForwarding(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest const&
           request) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>>
-  UpdateDnsForwarding(ExperimentalTag,
-                      google::longrunning::Operation const& operation) override;
+  UpdateDnsForwarding(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::vmwareengine::v1::NetworkPeering> GetNetworkPeering(
       google::cloud::vmwareengine::v1::GetNetworkPeeringRequest const& request)
@@ -430,13 +410,12 @@ class VmwareEngineConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateNetworkPeering(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vmwareengine::v1::CreateNetworkPeeringRequest const&
           request) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
   CreateNetworkPeering(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
@@ -445,13 +424,12 @@ class VmwareEngineConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteNetworkPeering(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest const&
           request) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
   DeleteNetworkPeering(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
@@ -460,13 +438,12 @@ class VmwareEngineConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateNetworkPeering(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest const&
           request) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
   UpdateNetworkPeering(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::vmwareengine::v1::PeeringRoute> ListPeeringRoutes(
@@ -479,13 +456,12 @@ class VmwareEngineConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateHcxActivationKey(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest const&
           request) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>>
   CreateHcxActivationKey(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::vmwareengine::v1::HcxActivationKey>
@@ -513,13 +489,12 @@ class VmwareEngineConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateNetworkPolicy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vmwareengine::v1::CreateNetworkPolicyRequest const&
           request) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
-  CreateNetworkPolicy(ExperimentalTag,
-                      google::longrunning::Operation const& operation) override;
+  CreateNetworkPolicy(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
   UpdateNetworkPolicy(
@@ -527,13 +502,12 @@ class VmwareEngineConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateNetworkPolicy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest const&
           request) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
-  UpdateNetworkPolicy(ExperimentalTag,
-                      google::longrunning::Operation const& operation) override;
+  UpdateNetworkPolicy(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
   DeleteNetworkPolicy(
@@ -541,13 +515,12 @@ class VmwareEngineConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteNetworkPolicy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const&
           request) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-  DeleteNetworkPolicy(ExperimentalTag,
-                      google::longrunning::Operation const& operation) override;
+  DeleteNetworkPolicy(google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>
   ListManagementDnsZoneBindings(
@@ -565,13 +538,12 @@ class VmwareEngineConnectionImpl
           CreateManagementDnsZoneBindingRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateManagementDnsZoneBinding(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vmwareengine::v1::
           CreateManagementDnsZoneBindingRequest const& request) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
   CreateManagementDnsZoneBinding(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
@@ -580,13 +552,12 @@ class VmwareEngineConnectionImpl
           UpdateManagementDnsZoneBindingRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateManagementDnsZoneBinding(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vmwareengine::v1::
           UpdateManagementDnsZoneBindingRequest const& request) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
   UpdateManagementDnsZoneBinding(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
@@ -595,13 +566,12 @@ class VmwareEngineConnectionImpl
           DeleteManagementDnsZoneBindingRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteManagementDnsZoneBinding(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vmwareengine::v1::
           DeleteManagementDnsZoneBindingRequest const& request) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
   DeleteManagementDnsZoneBinding(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
@@ -610,13 +580,12 @@ class VmwareEngineConnectionImpl
           RepairManagementDnsZoneBindingRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RepairManagementDnsZoneBinding(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vmwareengine::v1::
           RepairManagementDnsZoneBindingRequest const& request) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
   RepairManagementDnsZoneBinding(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
@@ -625,13 +594,12 @@ class VmwareEngineConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateVmwareEngineNetwork(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vmwareengine::v1::CreateVmwareEngineNetworkRequest const&
           request) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
   CreateVmwareEngineNetwork(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
@@ -640,13 +608,12 @@ class VmwareEngineConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateVmwareEngineNetwork(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vmwareengine::v1::UpdateVmwareEngineNetworkRequest const&
           request) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
   UpdateVmwareEngineNetwork(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
@@ -655,13 +622,12 @@ class VmwareEngineConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteVmwareEngineNetwork(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vmwareengine::v1::DeleteVmwareEngineNetworkRequest const&
           request) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
   DeleteVmwareEngineNetwork(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>
@@ -680,13 +646,12 @@ class VmwareEngineConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreatePrivateConnection(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&
           request) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
   CreatePrivateConnection(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>
@@ -705,13 +670,12 @@ class VmwareEngineConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdatePrivateConnection(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&
           request) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
   UpdatePrivateConnection(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
@@ -720,13 +684,12 @@ class VmwareEngineConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeletePrivateConnection(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
           request) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
   DeletePrivateConnection(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>
@@ -740,13 +703,12 @@ class VmwareEngineConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> GrantDnsBindPermission(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vmwareengine::v1::GrantDnsBindPermissionRequest const&
           request) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
   GrantDnsBindPermission(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>
@@ -760,13 +722,12 @@ class VmwareEngineConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> RevokeDnsBindPermission(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest const&
           request) override;
 
   future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
   RevokeDnsBindPermission(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
  private:

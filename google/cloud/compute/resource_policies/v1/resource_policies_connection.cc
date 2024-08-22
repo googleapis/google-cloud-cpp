@@ -57,16 +57,15 @@ ResourcePoliciesConnection::DeleteResourcePolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ResourcePoliciesConnection::DeleteResourcePolicy(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::resource_policies::v1::
-        DeleteResourcePolicyRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::resource_policies::v1::
+                    DeleteResourcePolicyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ResourcePoliciesConnection::DeleteResourcePolicy(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -97,16 +96,15 @@ ResourcePoliciesConnection::InsertResourcePolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ResourcePoliciesConnection::InsertResourcePolicy(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::resource_policies::v1::
-        InsertResourcePolicyRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::resource_policies::v1::
+                    InsertResourcePolicyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ResourcePoliciesConnection::InsertResourcePolicy(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -131,16 +129,15 @@ ResourcePoliciesConnection::PatchResourcePolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ResourcePoliciesConnection::PatchResourcePolicy(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::resource_policies::v1::
-        PatchResourcePolicyRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::resource_policies::v1::
+                    PatchResourcePolicyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ResourcePoliciesConnection::PatchResourcePolicy(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

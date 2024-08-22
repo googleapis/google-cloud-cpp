@@ -48,7 +48,7 @@ VideoIntelligenceServiceConnection::AnnotateVideo(
 
 StatusOr<google::longrunning::Operation>
 VideoIntelligenceServiceConnection::AnnotateVideo(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::videointelligence::v1::AnnotateVideoRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -56,7 +56,7 @@ VideoIntelligenceServiceConnection::AnnotateVideo(
 
 future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
 VideoIntelligenceServiceConnection::AnnotateVideo(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

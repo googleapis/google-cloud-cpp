@@ -57,6 +57,10 @@ DefaultRegionDisksRestStub::AsyncAddResourcePolicies(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -67,8 +71,7 @@ DefaultRegionDisksRestStub::AsyncAddResourcePolicies(
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/", "disks",
                              "/", request.disk(), "/", "addResourcePolicies"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -87,6 +90,10 @@ DefaultRegionDisksRestStub::AddResourcePolicies(
     Options const& options,
     google::cloud::cpp::compute::region_disks::v1::
         AddResourcePoliciesRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context,
       request.region_disks_add_resource_policies_request_resource(), false,
@@ -95,8 +102,7 @@ DefaultRegionDisksRestStub::AddResourcePolicies(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "disks", "/", request.disk(), "/",
                    "addResourcePolicies"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -111,6 +117,10 @@ DefaultRegionDisksRestStub::AsyncBulkInsert(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.bulk_insert_disk_resource(),
@@ -120,8 +130,7 @@ DefaultRegionDisksRestStub::AsyncBulkInsert(
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/", "disks",
                              "/", "bulkInsert"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -140,14 +149,17 @@ DefaultRegionDisksRestStub::BulkInsert(
     Options const& options,
     google::cloud::cpp::compute::region_disks::v1::BulkInsertRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.bulk_insert_disk_resource(), false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "disks", "/", "bulkInsert"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -162,6 +174,10 @@ DefaultRegionDisksRestStub::AsyncCreateSnapshot(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.snapshot_resource(), false,
@@ -170,8 +186,7 @@ DefaultRegionDisksRestStub::AsyncCreateSnapshot(
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/", "disks",
                              "/", request.disk(), "/", "createSnapshot"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -190,6 +205,10 @@ DefaultRegionDisksRestStub::CreateSnapshot(
     Options const& options,
     google::cloud::cpp::compute::region_disks::v1::CreateSnapshotRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.snapshot_resource(), false,
       absl::StrCat("/", "compute", "/",
@@ -197,8 +216,7 @@ DefaultRegionDisksRestStub::CreateSnapshot(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "disks", "/", request.disk(), "/",
                    "createSnapshot"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -213,6 +231,10 @@ DefaultRegionDisksRestStub::AsyncDeleteDisk(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -221,8 +243,7 @@ DefaultRegionDisksRestStub::AsyncDeleteDisk(
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/", "disks",
                              "/", request.disk()),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -241,14 +262,17 @@ DefaultRegionDisksRestStub::DeleteDisk(
     Options const& options,
     google::cloud::cpp::compute::region_disks::v1::DeleteDiskRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "disks", "/", request.disk()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Disk>
@@ -257,12 +281,14 @@ DefaultRegionDisksRestStub::GetDisk(
     Options const& options,
     google::cloud::cpp::compute::region_disks::v1::GetDiskRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<google::cloud::cpp::compute::v1::Disk>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
-                   request.region(), "/", "disks", "/", request.disk()));
+                   request.region(), "/", "disks", "/", request.disk()),
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -271,6 +297,12 @@ DefaultRegionDisksRestStub::GetIamPolicy(
     Options const& options,
     google::cloud::cpp::compute::region_disks::v1::GetIamPolicyRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back(
+      {"options_requested_policy_version",
+       std::to_string(request.options_requested_policy_version())});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -278,9 +310,7 @@ DefaultRegionDisksRestStub::GetIamPolicy(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "disks", "/", request.resource(), "/",
                    "getIamPolicy"),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair(
-          "options_requested_policy_version",
-          std::to_string(request.options_requested_policy_version()))}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -295,6 +325,11 @@ DefaultRegionDisksRestStub::AsyncInsertDisk(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params.push_back({"source_image", request.source_image()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.disk_resource(), false,
@@ -302,9 +337,7 @@ DefaultRegionDisksRestStub::AsyncInsertDisk(
                              rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/", "disks"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id()),
-                     std::make_pair("source_image", request.source_image())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -323,15 +356,18 @@ DefaultRegionDisksRestStub::InsertDisk(
     Options const& options,
     google::cloud::cpp::compute::region_disks::v1::InsertDiskRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params.push_back({"source_image", request.source_image()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.disk_resource(), false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "disks"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id()),
-           std::make_pair("source_image", request.source_image())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::DiskList>
@@ -340,19 +376,23 @@ DefaultRegionDisksRestStub::ListRegionDisks(
     Options const& options,
     google::cloud::cpp::compute::region_disks::v1::ListRegionDisksRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::DiskList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "disks"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -367,6 +407,10 @@ DefaultRegionDisksRestStub::AsyncRemoveResourcePolicies(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -379,8 +423,7 @@ DefaultRegionDisksRestStub::AsyncRemoveResourcePolicies(
                              "regions", "/", request.region(), "/", "disks",
                              "/", request.disk(), "/",
                              "removeResourcePolicies"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -399,6 +442,10 @@ DefaultRegionDisksRestStub::RemoveResourcePolicies(
     Options const& options,
     google::cloud::cpp::compute::region_disks::v1::
         RemoveResourcePoliciesRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context,
       request.region_disks_remove_resource_policies_request_resource(), false,
@@ -407,8 +454,7 @@ DefaultRegionDisksRestStub::RemoveResourcePolicies(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "disks", "/", request.disk(), "/",
                    "removeResourcePolicies"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -423,6 +469,10 @@ DefaultRegionDisksRestStub::AsyncResize(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -432,8 +482,7 @@ DefaultRegionDisksRestStub::AsyncResize(
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/", "disks",
                              "/", request.disk(), "/", "resize"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -452,6 +501,10 @@ DefaultRegionDisksRestStub::Resize(
     Options const& options,
     google::cloud::cpp::compute::region_disks::v1::ResizeRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.region_disks_resize_request_resource(),
       false,
@@ -460,8 +513,7 @@ DefaultRegionDisksRestStub::Resize(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "disks", "/", request.disk(), "/",
                    "resize"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -470,6 +522,7 @@ DefaultRegionDisksRestStub::SetIamPolicy(
     Options const& options,
     google::cloud::cpp::compute::region_disks::v1::SetIamPolicyRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.region_set_policy_request_resource(),
       false,
@@ -477,7 +530,8 @@ DefaultRegionDisksRestStub::SetIamPolicy(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "disks", "/", request.resource(), "/",
-                   "setIamPolicy"));
+                   "setIamPolicy"),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -492,6 +546,10 @@ DefaultRegionDisksRestStub::AsyncSetLabels(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -501,8 +559,7 @@ DefaultRegionDisksRestStub::AsyncSetLabels(
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/", "disks",
                              "/", request.resource(), "/", "setLabels"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -521,6 +578,10 @@ DefaultRegionDisksRestStub::SetLabels(
     Options const& options,
     google::cloud::cpp::compute::region_disks::v1::SetLabelsRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.region_set_labels_request_resource(),
       false,
@@ -529,8 +590,7 @@ DefaultRegionDisksRestStub::SetLabels(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "disks", "/", request.resource(), "/",
                    "setLabels"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -545,6 +605,10 @@ DefaultRegionDisksRestStub::AsyncStartAsyncReplication(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -555,8 +619,7 @@ DefaultRegionDisksRestStub::AsyncStartAsyncReplication(
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/", "disks",
                              "/", request.disk(), "/", "startAsyncReplication"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -575,6 +638,10 @@ DefaultRegionDisksRestStub::StartAsyncReplication(
     Options const& options,
     google::cloud::cpp::compute::region_disks::v1::
         StartAsyncReplicationRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context,
       request.region_disks_start_async_replication_request_resource(), false,
@@ -583,8 +650,7 @@ DefaultRegionDisksRestStub::StartAsyncReplication(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "disks", "/", request.disk(), "/",
                    "startAsyncReplication"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -599,6 +665,7 @@ DefaultRegionDisksRestStub::AsyncStopAsyncReplication(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -607,8 +674,7 @@ DefaultRegionDisksRestStub::AsyncStopAsyncReplication(
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/", "disks",
                              "/", request.disk(), "/", "stopAsyncReplication"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -627,6 +693,7 @@ DefaultRegionDisksRestStub::StopAsyncReplication(
     Options const& options,
     google::cloud::cpp::compute::region_disks::v1::
         StopAsyncReplicationRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -634,8 +701,7 @@ DefaultRegionDisksRestStub::StopAsyncReplication(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "disks", "/", request.disk(), "/",
                    "stopAsyncReplication"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -650,6 +716,10 @@ DefaultRegionDisksRestStub::AsyncStopGroupAsyncReplication(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -659,8 +729,7 @@ DefaultRegionDisksRestStub::AsyncStopGroupAsyncReplication(
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/", "disks",
                              "/", "stopGroupAsyncReplication"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -679,6 +748,10 @@ DefaultRegionDisksRestStub::StopGroupAsyncReplication(
     Options const& options,
     google::cloud::cpp::compute::region_disks::v1::
         StopGroupAsyncReplicationRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context,
       request.disks_stop_group_async_replication_resource(), false,
@@ -687,8 +760,7 @@ DefaultRegionDisksRestStub::StopGroupAsyncReplication(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "disks", "/",
                    "stopGroupAsyncReplication"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -697,6 +769,7 @@ DefaultRegionDisksRestStub::TestIamPermissions(
     Options const& options,
     google::cloud::cpp::compute::region_disks::v1::
         TestIamPermissionsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
@@ -705,7 +778,8 @@ DefaultRegionDisksRestStub::TestIamPermissions(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "disks", "/", request.resource(), "/",
-                   "testIamPermissions"));
+                   "testIamPermissions"),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -720,6 +794,12 @@ DefaultRegionDisksRestStub::AsyncUpdateDisk(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"paths", request.paths()});
+        query_params.push_back({"request_id", request.request_id()});
+        query_params.push_back({"update_mask", request.update_mask()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.disk_resource(), false,
@@ -728,10 +808,7 @@ DefaultRegionDisksRestStub::AsyncUpdateDisk(
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/", "disks",
                              "/", request.disk()),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("paths", request.paths()),
-                     std::make_pair("request_id", request.request_id()),
-                     std::make_pair("update_mask", request.update_mask())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -750,16 +827,19 @@ DefaultRegionDisksRestStub::UpdateDisk(
     Options const& options,
     google::cloud::cpp::compute::region_disks::v1::UpdateDiskRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"paths", request.paths()});
+  query_params.push_back({"request_id", request.request_id()});
+  query_params.push_back({"update_mask", request.update_mask()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.disk_resource(), false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "disks", "/", request.disk()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("paths", request.paths()),
-           std::make_pair("request_id", request.request_id()),
-           std::make_pair("update_mask", request.update_mask())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

@@ -46,22 +46,39 @@ class MockApiKeysConnection : public apikeys_v2::ApiKeysConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateKey)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateKey(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateKey(Matcher<google::api::apikeys::v2::CreateKeyRequest const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::api::apikeys::v2::Key>>, CreateKey,
               (google::api::apikeys::v2::CreateKeyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateKey(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateKey,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::api::apikeys::v2::CreateKeyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateKey(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::api::apikeys::v2::Key>>, CreateKey,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::api::apikeys::v2::Key>), ListKeys,
               (google::api::apikeys::v2::ListKeysRequest request), (override));
@@ -75,56 +92,108 @@ class MockApiKeysConnection : public apikeys_v2::ApiKeysConnection {
               (google::api::apikeys::v2::GetKeyStringRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateKey)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateKey(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateKey(Matcher<google::api::apikeys::v2::UpdateKeyRequest const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::api::apikeys::v2::Key>>, UpdateKey,
               (google::api::apikeys::v2::UpdateKeyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateKey(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateKey,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::api::apikeys::v2::UpdateKeyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateKey(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::api::apikeys::v2::Key>>, UpdateKey,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteKey)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteKey(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteKey(Matcher<google::api::apikeys::v2::DeleteKeyRequest const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::api::apikeys::v2::Key>>, DeleteKey,
               (google::api::apikeys::v2::DeleteKeyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteKey(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteKey,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::api::apikeys::v2::DeleteKeyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteKey(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::api::apikeys::v2::Key>>, DeleteKey,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UndeleteKey)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UndeleteKey(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UndeleteKey(Matcher<google::api::apikeys::v2::UndeleteKeyRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::api::apikeys::v2::Key>>, UndeleteKey,
               (google::api::apikeys::v2::UndeleteKeyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UndeleteKey(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UndeleteKey,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::api::apikeys::v2::UndeleteKeyRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UndeleteKey(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::api::apikeys::v2::Key>>, UndeleteKey,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::api::apikeys::v2::LookupKeyResponse>, LookupKey,
               (google::api::apikeys::v2::LookupKeyRequest const& request),

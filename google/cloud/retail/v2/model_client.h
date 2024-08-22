@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_MODEL_CLIENT_H
 
 #include "google/cloud/retail/v2/model_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -147,7 +146,7 @@ class ModelServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateModel(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::retail::v2::Model const& model, Options opts = {});
 
   // clang-format off
@@ -200,8 +199,7 @@ class ModelServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateModel(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::retail::v2::CreateModelRequest const& request,
+      NoAwaitTag, google::cloud::retail::v2::CreateModelRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -214,8 +212,7 @@ class ModelServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::Model>> CreateModel(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -628,8 +625,7 @@ class ModelServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> TuneModel(ExperimentalTag,
-                                                     NoAwaitTag,
+  StatusOr<google::longrunning::Operation> TuneModel(NoAwaitTag,
                                                      std::string const& name,
                                                      Options opts = {});
 
@@ -683,8 +679,7 @@ class ModelServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> TuneModel(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::retail::v2::TuneModelRequest const& request,
+      NoAwaitTag, google::cloud::retail::v2::TuneModelRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -697,8 +692,7 @@ class ModelServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::TuneModelResponse>> TuneModel(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<ModelServiceConnection> connection_;

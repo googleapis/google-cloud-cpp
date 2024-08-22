@@ -22,7 +22,6 @@
 #include "google/cloud/dialogflow_es/conversation_models_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_es/internal/conversation_models_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -197,13 +196,12 @@ class ConversationModelsConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> CreateConversationModel(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::v2::CreateConversationModelRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::dialogflow::v2::ConversationModel>>
-  CreateConversationModel(ExperimentalTag,
-                          google::longrunning::Operation const& operation);
+  CreateConversationModel(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::dialogflow::v2::ConversationModel>
   GetConversationModel(
@@ -221,14 +219,13 @@ class ConversationModelsConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteConversationModel(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
           request);
 
   virtual future<StatusOr<
       google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata>>
-  DeleteConversationModel(ExperimentalTag,
-                          google::longrunning::Operation const& operation);
+  DeleteConversationModel(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<
       google::cloud::dialogflow::v2::DeployConversationModelOperationMetadata>>
@@ -237,14 +234,13 @@ class ConversationModelsConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> DeployConversationModel(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::v2::DeployConversationModelRequest const&
           request);
 
   virtual future<StatusOr<
       google::cloud::dialogflow::v2::DeployConversationModelOperationMetadata>>
-  DeployConversationModel(ExperimentalTag,
-                          google::longrunning::Operation const& operation);
+  DeployConversationModel(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::dialogflow::v2::
                               UndeployConversationModelOperationMetadata>>
@@ -253,14 +249,13 @@ class ConversationModelsConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> UndeployConversationModel(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::dialogflow::v2::
                               UndeployConversationModelOperationMetadata>>
-  UndeployConversationModel(ExperimentalTag,
-                            google::longrunning::Operation const& operation);
+  UndeployConversationModel(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>
   GetConversationModelEvaluation(
@@ -281,14 +276,13 @@ class ConversationModelsConnection {
 
   virtual StatusOr<google::longrunning::Operation>
   CreateConversationModelEvaluation(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::dialogflow::v2::
-          CreateConversationModelEvaluationRequest const& request);
+      NoAwaitTag, google::cloud::dialogflow::v2::
+                      CreateConversationModelEvaluationRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>>
   CreateConversationModelEvaluation(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 };
 
 /**

@@ -44,24 +44,23 @@ RepositoryManagerTracingConnection::CreateConnection(
 
 StatusOr<google::longrunning::Operation>
 RepositoryManagerTracingConnection::CreateConnection(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::devtools::cloudbuild::v2::CreateConnectionRequest const& request) {
   auto span = internal::MakeSpan(
       "cloudbuild_v2::RepositoryManagerConnection::CreateConnection");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->CreateConnection(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateConnection(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
 RepositoryManagerTracingConnection::CreateConnection(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "cloudbuild_v2::RepositoryManagerConnection::CreateConnection");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->CreateConnection(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateConnection(operation));
 }
 
 StatusOr<google::devtools::cloudbuild::v2::Connection>
@@ -96,24 +95,23 @@ RepositoryManagerTracingConnection::UpdateConnection(
 
 StatusOr<google::longrunning::Operation>
 RepositoryManagerTracingConnection::UpdateConnection(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request) {
   auto span = internal::MakeSpan(
       "cloudbuild_v2::RepositoryManagerConnection::UpdateConnection");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->UpdateConnection(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateConnection(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
 RepositoryManagerTracingConnection::UpdateConnection(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "cloudbuild_v2::RepositoryManagerConnection::UpdateConnection");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->UpdateConnection(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateConnection(operation));
 }
 
 future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
@@ -127,24 +125,23 @@ RepositoryManagerTracingConnection::DeleteConnection(
 
 StatusOr<google::longrunning::Operation>
 RepositoryManagerTracingConnection::DeleteConnection(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request) {
   auto span = internal::MakeSpan(
       "cloudbuild_v2::RepositoryManagerConnection::DeleteConnection");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->DeleteConnection(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteConnection(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
 RepositoryManagerTracingConnection::DeleteConnection(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "cloudbuild_v2::RepositoryManagerConnection::DeleteConnection");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->DeleteConnection(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteConnection(operation));
 }
 
 future<StatusOr<google::devtools::cloudbuild::v2::Repository>>
@@ -158,24 +155,23 @@ RepositoryManagerTracingConnection::CreateRepository(
 
 StatusOr<google::longrunning::Operation>
 RepositoryManagerTracingConnection::CreateRepository(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request) {
   auto span = internal::MakeSpan(
       "cloudbuild_v2::RepositoryManagerConnection::CreateRepository");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->CreateRepository(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateRepository(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::devtools::cloudbuild::v2::Repository>>
 RepositoryManagerTracingConnection::CreateRepository(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "cloudbuild_v2::RepositoryManagerConnection::CreateRepository");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->CreateRepository(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateRepository(operation));
 }
 
 future<
@@ -192,26 +188,25 @@ RepositoryManagerTracingConnection::BatchCreateRepositories(
 
 StatusOr<google::longrunning::Operation>
 RepositoryManagerTracingConnection::BatchCreateRepositories(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
         request) {
   auto span = internal::MakeSpan(
       "cloudbuild_v2::RepositoryManagerConnection::BatchCreateRepositories");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->BatchCreateRepositories(ExperimentalTag{}, NoAwaitTag{},
-                                             request));
+      *span, child_->BatchCreateRepositories(NoAwaitTag{}, request));
 }
 
 future<
     StatusOr<google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>
 RepositoryManagerTracingConnection::BatchCreateRepositories(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "cloudbuild_v2::RepositoryManagerConnection::BatchCreateRepositories");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->BatchCreateRepositories(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->BatchCreateRepositories(operation));
 }
 
 StatusOr<google::devtools::cloudbuild::v2::Repository>
@@ -246,24 +241,23 @@ RepositoryManagerTracingConnection::DeleteRepository(
 
 StatusOr<google::longrunning::Operation>
 RepositoryManagerTracingConnection::DeleteRepository(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request) {
   auto span = internal::MakeSpan(
       "cloudbuild_v2::RepositoryManagerConnection::DeleteRepository");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->DeleteRepository(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteRepository(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
 RepositoryManagerTracingConnection::DeleteRepository(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "cloudbuild_v2::RepositoryManagerConnection::DeleteRepository");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->DeleteRepository(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteRepository(operation));
 }
 
 StatusOr<google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse>

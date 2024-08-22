@@ -65,16 +65,15 @@ AppConnectionsServiceConnection::CreateAppConnection(
 
 StatusOr<google::longrunning::Operation>
 AppConnectionsServiceConnection::CreateAppConnection(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::beyondcorp::appconnections::v1::
-        CreateAppConnectionRequest const&) {
+    NoAwaitTag, google::cloud::beyondcorp::appconnections::v1::
+                    CreateAppConnectionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>
 AppConnectionsServiceConnection::CreateAppConnection(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -91,16 +90,15 @@ AppConnectionsServiceConnection::UpdateAppConnection(
 
 StatusOr<google::longrunning::Operation>
 AppConnectionsServiceConnection::UpdateAppConnection(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::beyondcorp::appconnections::v1::
-        UpdateAppConnectionRequest const&) {
+    NoAwaitTag, google::cloud::beyondcorp::appconnections::v1::
+                    UpdateAppConnectionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>
 AppConnectionsServiceConnection::UpdateAppConnection(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -119,9 +117,8 @@ AppConnectionsServiceConnection::DeleteAppConnection(
 
 StatusOr<google::longrunning::Operation>
 AppConnectionsServiceConnection::DeleteAppConnection(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::beyondcorp::appconnections::v1::
-        DeleteAppConnectionRequest const&) {
+    NoAwaitTag, google::cloud::beyondcorp::appconnections::v1::
+                    DeleteAppConnectionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
@@ -129,7 +126,7 @@ AppConnectionsServiceConnection::DeleteAppConnection(
 future<StatusOr<google::cloud::beyondcorp::appconnections::v1::
                     AppConnectionOperationMetadata>>
 AppConnectionsServiceConnection::DeleteAppConnection(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::beyondcorp::appconnections::v1::
                    AppConnectionOperationMetadata>>(

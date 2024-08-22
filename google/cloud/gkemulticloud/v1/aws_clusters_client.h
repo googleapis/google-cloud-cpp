@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEMULTICLOUD_V1_AWS_CLUSTERS_CLIENT_H
 
 #include "google/cloud/gkemulticloud/v1/aws_clusters_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -161,7 +160,7 @@ class AwsClustersClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateAwsCluster(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::gkemulticloud::v1::AwsCluster const& aws_cluster,
       std::string const& aws_cluster_id, Options opts = {});
 
@@ -222,7 +221,7 @@ class AwsClustersClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateAwsCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request,
       Options opts = {});
 
@@ -236,8 +235,7 @@ class AwsClustersClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
-  CreateAwsCluster(ExperimentalTag,
-                   google::longrunning::Operation const& operation,
+  CreateAwsCluster(google::longrunning::Operation const& operation,
                    Options opts = {});
 
   // clang-format off
@@ -291,7 +289,7 @@ class AwsClustersClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAwsCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::gkemulticloud::v1::AwsCluster const& aws_cluster,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -346,7 +344,7 @@ class AwsClustersClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAwsCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request,
       Options opts = {});
 
@@ -360,8 +358,7 @@ class AwsClustersClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
-  UpdateAwsCluster(ExperimentalTag,
-                   google::longrunning::Operation const& operation,
+  UpdateAwsCluster(google::longrunning::Operation const& operation,
                    Options opts = {});
 
   // clang-format off
@@ -574,7 +571,7 @@ class AwsClustersClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAwsCluster(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -638,7 +635,7 @@ class AwsClustersClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAwsCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request,
       Options opts = {});
 
@@ -652,8 +649,7 @@ class AwsClustersClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-  DeleteAwsCluster(ExperimentalTag,
-                   google::longrunning::Operation const& operation,
+  DeleteAwsCluster(google::longrunning::Operation const& operation,
                    Options opts = {});
 
   // clang-format off
@@ -797,7 +793,7 @@ class AwsClustersClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateAwsNodePool(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::gkemulticloud::v1::AwsNodePool const& aws_node_pool,
       std::string const& aws_node_pool_id, Options opts = {});
 
@@ -859,7 +855,7 @@ class AwsClustersClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateAwsNodePool(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request,
       Options opts = {});
 
@@ -873,8 +869,7 @@ class AwsClustersClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
-  CreateAwsNodePool(ExperimentalTag,
-                    google::longrunning::Operation const& operation,
+  CreateAwsNodePool(google::longrunning::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -928,7 +923,7 @@ class AwsClustersClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAwsNodePool(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::gkemulticloud::v1::AwsNodePool const& aws_node_pool,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -983,7 +978,7 @@ class AwsClustersClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAwsNodePool(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request,
       Options opts = {});
 
@@ -997,8 +992,7 @@ class AwsClustersClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
-  UpdateAwsNodePool(ExperimentalTag,
-                    google::longrunning::Operation const& operation,
+  UpdateAwsNodePool(google::longrunning::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -1058,7 +1052,7 @@ class AwsClustersClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> RollbackAwsNodePoolUpdate(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1117,7 +1111,7 @@ class AwsClustersClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> RollbackAwsNodePoolUpdate(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
           request,
       Options opts = {});
@@ -1132,8 +1126,7 @@ class AwsClustersClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
-  RollbackAwsNodePoolUpdate(ExperimentalTag,
-                            google::longrunning::Operation const& operation,
+  RollbackAwsNodePoolUpdate(google::longrunning::Operation const& operation,
                             Options opts = {});
 
   // clang-format off
@@ -1347,7 +1340,7 @@ class AwsClustersClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAwsNodePool(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1407,7 +1400,7 @@ class AwsClustersClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAwsNodePool(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request,
       Options opts = {});
 
@@ -1421,8 +1414,7 @@ class AwsClustersClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-  DeleteAwsNodePool(ExperimentalTag,
-                    google::longrunning::Operation const& operation,
+  DeleteAwsNodePool(google::longrunning::Operation const& operation,
                     Options opts = {});
 
   // clang-format off

@@ -18,6 +18,7 @@
 
 #include "google/cloud/bigquery/datapolicies/v1/internal/data_policy_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

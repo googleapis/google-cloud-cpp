@@ -26,7 +26,13 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <cstdio>
+#include <map>
+#include <memory>
+#include <mutex>
 #include <stack>
+#include <string>
+#include <utility>
+#include <vector>
 #ifdef __linux__
 #include <sys/stat.h>
 #include <unistd.h>

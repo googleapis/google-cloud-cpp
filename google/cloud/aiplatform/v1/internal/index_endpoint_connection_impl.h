@@ -58,13 +58,12 @@ class IndexEndpointServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateIndexEndpoint(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::CreateIndexEndpointRequest const& request)
       override;
 
   future<StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>>
-  CreateIndexEndpoint(ExperimentalTag,
-                      google::longrunning::Operation const& operation) override;
+  CreateIndexEndpoint(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::aiplatform::v1::IndexEndpoint> GetIndexEndpoint(
       google::cloud::aiplatform::v1::GetIndexEndpointRequest const& request)
@@ -84,39 +83,36 @@ class IndexEndpointServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DeleteIndexEndpoint(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const& request)
       override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteIndexEndpoint(ExperimentalTag,
-                      google::longrunning::Operation const& operation) override;
+  DeleteIndexEndpoint(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeployIndexResponse>>
   DeployIndex(google::cloud::aiplatform::v1::DeployIndexRequest const& request)
       override;
 
   StatusOr<google::longrunning::Operation> DeployIndex(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeployIndexRequest const& request)
       override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeployIndexResponse>>
-  DeployIndex(ExperimentalTag,
-              google::longrunning::Operation const& operation) override;
+  DeployIndex(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::UndeployIndexResponse>>
   UndeployIndex(google::cloud::aiplatform::v1::UndeployIndexRequest const&
                     request) override;
 
   StatusOr<google::longrunning::Operation> UndeployIndex(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::UndeployIndexRequest const& request)
       override;
 
   future<StatusOr<google::cloud::aiplatform::v1::UndeployIndexResponse>>
-  UndeployIndex(ExperimentalTag,
-                google::longrunning::Operation const& operation) override;
+  UndeployIndex(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedIndexResponse>>
   MutateDeployedIndex(
@@ -124,13 +120,12 @@ class IndexEndpointServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> MutateDeployedIndex(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::MutateDeployedIndexRequest const& request)
       override;
 
   future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedIndexResponse>>
-  MutateDeployedIndex(ExperimentalTag,
-                      google::longrunning::Operation const& operation) override;
+  MutateDeployedIndex(google::longrunning::Operation const& operation) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

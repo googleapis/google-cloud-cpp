@@ -50,9 +50,8 @@ EnvironmentsConnection::CreateEnvironment(
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsConnection::CreateEnvironment(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::orchestration::airflow::service::v1::
-        CreateEnvironmentRequest const&) {
+    NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
+                    CreateEnvironmentRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
@@ -60,7 +59,7 @@ EnvironmentsConnection::CreateEnvironment(
 future<
     StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
 EnvironmentsConnection::CreateEnvironment(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<
       google::cloud::orchestration::airflow::service::v1::Environment>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -93,9 +92,8 @@ EnvironmentsConnection::UpdateEnvironment(
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsConnection::UpdateEnvironment(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::orchestration::airflow::service::v1::
-        UpdateEnvironmentRequest const&) {
+    NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
+                    UpdateEnvironmentRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
@@ -103,7 +101,7 @@ EnvironmentsConnection::UpdateEnvironment(
 future<
     StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
 EnvironmentsConnection::UpdateEnvironment(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<
       google::cloud::orchestration::airflow::service::v1::Environment>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -121,9 +119,8 @@ EnvironmentsConnection::DeleteEnvironment(
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsConnection::DeleteEnvironment(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::orchestration::airflow::service::v1::
-        DeleteEnvironmentRequest const&) {
+    NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
+                    DeleteEnvironmentRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
@@ -131,7 +128,7 @@ EnvironmentsConnection::DeleteEnvironment(
 future<StatusOr<
     google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
 EnvironmentsConnection::DeleteEnvironment(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<
       google::cloud::orchestration::airflow::service::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -263,17 +260,15 @@ EnvironmentsConnection::SaveSnapshot(
 }
 
 StatusOr<google::longrunning::Operation> EnvironmentsConnection::SaveSnapshot(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::orchestration::airflow::service::v1::
-        SaveSnapshotRequest const&) {
+    NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
+                    SaveSnapshotRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<
     google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
-EnvironmentsConnection::SaveSnapshot(ExperimentalTag,
-                                     google::longrunning::Operation const&) {
+EnvironmentsConnection::SaveSnapshot(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::orchestration::airflow::service::v1::
                    SaveSnapshotResponse>>(
@@ -292,17 +287,15 @@ EnvironmentsConnection::LoadSnapshot(
 }
 
 StatusOr<google::longrunning::Operation> EnvironmentsConnection::LoadSnapshot(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::orchestration::airflow::service::v1::
-        LoadSnapshotRequest const&) {
+    NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
+                    LoadSnapshotRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<
     google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
-EnvironmentsConnection::LoadSnapshot(ExperimentalTag,
-                                     google::longrunning::Operation const&) {
+EnvironmentsConnection::LoadSnapshot(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::orchestration::airflow::service::v1::
                    LoadSnapshotResponse>>(
@@ -322,9 +315,8 @@ EnvironmentsConnection::DatabaseFailover(
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsConnection::DatabaseFailover(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::orchestration::airflow::service::v1::
-        DatabaseFailoverRequest const&) {
+    NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
+                    DatabaseFailoverRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
@@ -332,7 +324,7 @@ EnvironmentsConnection::DatabaseFailover(
 future<StatusOr<google::cloud::orchestration::airflow::service::v1::
                     DatabaseFailoverResponse>>
 EnvironmentsConnection::DatabaseFailover(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::orchestration::airflow::service::v1::
                    DatabaseFailoverResponse>>(

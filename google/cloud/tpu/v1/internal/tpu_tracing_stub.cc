@@ -18,6 +18,7 @@
 
 #include "google/cloud/tpu/v1/internal/tpu_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

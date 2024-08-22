@@ -82,6 +82,21 @@ TranslationServiceConnectionImpl::TranslateText(
       *current, request, __func__);
 }
 
+StatusOr<google::cloud::translation::v3::RomanizeTextResponse>
+TranslationServiceConnectionImpl::RomanizeText(
+    google::cloud::translation::v3::RomanizeTextRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RomanizeText(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::translation::v3::RomanizeTextRequest const& request) {
+        return stub_->RomanizeText(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 StatusOr<google::cloud::translation::v3::DetectLanguageResponse>
 TranslationServiceConnectionImpl::DetectLanguage(
     google::cloud::translation::v3::DetectLanguageRequest const& request) {
@@ -170,7 +185,7 @@ TranslationServiceConnectionImpl::BatchTranslateText(
 
 StatusOr<google::longrunning::Operation>
 TranslationServiceConnectionImpl::BatchTranslateText(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::translation::v3::BatchTranslateTextRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -186,7 +201,7 @@ TranslationServiceConnectionImpl::BatchTranslateText(
 
 future<StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>
 TranslationServiceConnectionImpl::BatchTranslateText(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::translation::v3::
@@ -265,7 +280,7 @@ TranslationServiceConnectionImpl::BatchTranslateDocument(
 
 StatusOr<google::longrunning::Operation>
 TranslationServiceConnectionImpl::BatchTranslateDocument(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::translation::v3::BatchTranslateDocumentRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -283,7 +298,7 @@ TranslationServiceConnectionImpl::BatchTranslateDocument(
 
 future<StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>
 TranslationServiceConnectionImpl::BatchTranslateDocument(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::translation::v3::
@@ -361,7 +376,7 @@ TranslationServiceConnectionImpl::CreateGlossary(
 
 StatusOr<google::longrunning::Operation>
 TranslationServiceConnectionImpl::CreateGlossary(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::translation::v3::CreateGlossaryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -377,7 +392,7 @@ TranslationServiceConnectionImpl::CreateGlossary(
 
 future<StatusOr<google::cloud::translation::v3::Glossary>>
 TranslationServiceConnectionImpl::CreateGlossary(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::translation::v3::
@@ -386,6 +401,100 @@ TranslationServiceConnectionImpl::CreateGlossary(
         StatusOr<google::cloud::translation::v3::Glossary>>(
         internal::InvalidArgumentError(
             "operation does not correspond to CreateGlossary",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::translation::v3::Glossary>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::translation::v3::Glossary>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::translation::v3::Glossary>>
+TranslationServiceConnectionImpl::UpdateGlossary(
+    google::cloud::translation::v3::UpdateGlossaryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateGlossary(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::translation::v3::Glossary>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::translation::v3::UpdateGlossaryRequest const&
+              request) {
+        return stub->AsyncUpdateGlossary(cq, std::move(context),
+                                         std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::translation::v3::Glossary>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+TranslationServiceConnectionImpl::UpdateGlossary(
+    NoAwaitTag,
+    google::cloud::translation::v3::UpdateGlossaryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateGlossary(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::translation::v3::UpdateGlossaryRequest const&
+                 request) {
+        return stub_->UpdateGlossary(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::translation::v3::Glossary>>
+TranslationServiceConnectionImpl::UpdateGlossary(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::translation::v3::
+                   UpdateGlossaryMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::translation::v3::Glossary>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateGlossary",
             GCP_ERROR_INFO().WithMetadata("operation",
                                           operation.metadata().DebugString())));
   }
@@ -504,7 +613,7 @@ TranslationServiceConnectionImpl::DeleteGlossary(
 
 StatusOr<google::longrunning::Operation>
 TranslationServiceConnectionImpl::DeleteGlossary(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::translation::v3::DeleteGlossaryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -520,7 +629,7 @@ TranslationServiceConnectionImpl::DeleteGlossary(
 
 future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
 TranslationServiceConnectionImpl::DeleteGlossary(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::translation::v3::
@@ -553,6 +662,332 @@ TranslationServiceConnectionImpl::DeleteGlossary(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::translation::v3::DeleteGlossaryResponse>,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::cloud::translation::v3::GlossaryEntry>
+TranslationServiceConnectionImpl::GetGlossaryEntry(
+    google::cloud::translation::v3::GetGlossaryEntryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetGlossaryEntry(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::translation::v3::GetGlossaryEntryRequest const&
+                 request) {
+        return stub_->GetGlossaryEntry(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StreamRange<google::cloud::translation::v3::GlossaryEntry>
+TranslationServiceConnectionImpl::ListGlossaryEntries(
+    google::cloud::translation::v3::ListGlossaryEntriesRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListGlossaryEntries(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::translation::v3::GlossaryEntry>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<translate_v3::TranslationServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::translation::v3::ListGlossaryEntriesRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::translation::v3::
+                       ListGlossaryEntriesRequest const& request) {
+              return stub->ListGlossaryEntries(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::translation::v3::ListGlossaryEntriesResponse r) {
+        std::vector<google::cloud::translation::v3::GlossaryEntry> result(
+            r.glossary_entries().size());
+        auto& messages = *r.mutable_glossary_entries();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::translation::v3::GlossaryEntry>
+TranslationServiceConnectionImpl::CreateGlossaryEntry(
+    google::cloud::translation::v3::CreateGlossaryEntryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateGlossaryEntry(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::translation::v3::CreateGlossaryEntryRequest const&
+                 request) {
+        return stub_->CreateGlossaryEntry(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::translation::v3::GlossaryEntry>
+TranslationServiceConnectionImpl::UpdateGlossaryEntry(
+    google::cloud::translation::v3::UpdateGlossaryEntryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateGlossaryEntry(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::translation::v3::UpdateGlossaryEntryRequest const&
+                 request) {
+        return stub_->UpdateGlossaryEntry(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+Status TranslationServiceConnectionImpl::DeleteGlossaryEntry(
+    google::cloud::translation::v3::DeleteGlossaryEntryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteGlossaryEntry(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::translation::v3::DeleteGlossaryEntryRequest const&
+                 request) {
+        return stub_->DeleteGlossaryEntry(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::translation::v3::Dataset>>
+TranslationServiceConnectionImpl::CreateDataset(
+    google::cloud::translation::v3::CreateDatasetRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateDataset(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::translation::v3::Dataset>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::translation::v3::CreateDatasetRequest const& request) {
+        return stub->AsyncCreateDataset(cq, std::move(context),
+                                        std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::translation::v3::Dataset>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+TranslationServiceConnectionImpl::CreateDataset(
+    NoAwaitTag,
+    google::cloud::translation::v3::CreateDatasetRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateDataset(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::translation::v3::CreateDatasetRequest const& request) {
+        return stub_->CreateDataset(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::translation::v3::Dataset>>
+TranslationServiceConnectionImpl::CreateDataset(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::translation::v3::
+                   CreateDatasetMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::translation::v3::Dataset>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateDataset",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::translation::v3::Dataset>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::translation::v3::Dataset>,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::cloud::translation::v3::Dataset>
+TranslationServiceConnectionImpl::GetDataset(
+    google::cloud::translation::v3::GetDatasetRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetDataset(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::translation::v3::GetDatasetRequest const& request) {
+        return stub_->GetDataset(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StreamRange<google::cloud::translation::v3::Dataset>
+TranslationServiceConnectionImpl::ListDatasets(
+    google::cloud::translation::v3::ListDatasetsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListDatasets(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::translation::v3::Dataset>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<translate_v3::TranslationServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::translation::v3::ListDatasetsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::translation::v3::ListDatasetsRequest const&
+                       request) {
+              return stub->ListDatasets(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::translation::v3::ListDatasetsResponse r) {
+        std::vector<google::cloud::translation::v3::Dataset> result(
+            r.datasets().size());
+        auto& messages = *r.mutable_datasets();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+future<StatusOr<google::cloud::translation::v3::DeleteDatasetMetadata>>
+TranslationServiceConnectionImpl::DeleteDataset(
+    google::cloud::translation::v3::DeleteDatasetRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteDataset(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::translation::v3::DeleteDatasetMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::translation::v3::DeleteDatasetRequest const& request) {
+        return stub->AsyncDeleteDataset(cq, std::move(context),
+                                        std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::translation::v3::DeleteDatasetMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+TranslationServiceConnectionImpl::DeleteDataset(
+    NoAwaitTag,
+    google::cloud::translation::v3::DeleteDatasetRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteDataset(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::translation::v3::DeleteDatasetRequest const& request) {
+        return stub_->DeleteDataset(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::translation::v3::DeleteDatasetMetadata>>
+TranslationServiceConnectionImpl::DeleteDataset(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::translation::v3::
+                   DeleteDatasetMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::translation::v3::DeleteDatasetMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteDataset",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::translation::v3::DeleteDatasetMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::translation::v3::DeleteDatasetMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -770,6 +1205,455 @@ TranslationServiceConnectionImpl::ListAdaptiveMtSentences(
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
+}
+
+future<StatusOr<google::cloud::translation::v3::ImportDataMetadata>>
+TranslationServiceConnectionImpl::ImportData(
+    google::cloud::translation::v3::ImportDataRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ImportData(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::translation::v3::ImportDataMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::translation::v3::ImportDataRequest const& request) {
+        return stub->AsyncImportData(cq, std::move(context), std::move(options),
+                                     request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::translation::v3::ImportDataMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+TranslationServiceConnectionImpl::ImportData(
+    NoAwaitTag,
+    google::cloud::translation::v3::ImportDataRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ImportData(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::translation::v3::ImportDataRequest const& request) {
+        return stub_->ImportData(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::translation::v3::ImportDataMetadata>>
+TranslationServiceConnectionImpl::ImportData(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::translation::v3::ImportDataMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::translation::v3::ImportDataMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ImportData",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::translation::v3::ImportDataMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::translation::v3::ImportDataMetadata>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::translation::v3::ExportDataMetadata>>
+TranslationServiceConnectionImpl::ExportData(
+    google::cloud::translation::v3::ExportDataRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ExportData(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::translation::v3::ExportDataMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::translation::v3::ExportDataRequest const& request) {
+        return stub->AsyncExportData(cq, std::move(context), std::move(options),
+                                     request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::translation::v3::ExportDataMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+TranslationServiceConnectionImpl::ExportData(
+    NoAwaitTag,
+    google::cloud::translation::v3::ExportDataRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ExportData(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::translation::v3::ExportDataRequest const& request) {
+        return stub_->ExportData(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::translation::v3::ExportDataMetadata>>
+TranslationServiceConnectionImpl::ExportData(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::translation::v3::ExportDataMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::translation::v3::ExportDataMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ExportData",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::translation::v3::ExportDataMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::translation::v3::ExportDataMetadata>,
+      polling_policy(*current), __func__);
+}
+
+StreamRange<google::cloud::translation::v3::Example>
+TranslationServiceConnectionImpl::ListExamples(
+    google::cloud::translation::v3::ListExamplesRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListExamples(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::translation::v3::Example>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<translate_v3::TranslationServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::translation::v3::ListExamplesRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::translation::v3::ListExamplesRequest const&
+                       request) {
+              return stub->ListExamples(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::translation::v3::ListExamplesResponse r) {
+        std::vector<google::cloud::translation::v3::Example> result(
+            r.examples().size());
+        auto& messages = *r.mutable_examples();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+future<StatusOr<google::cloud::translation::v3::Model>>
+TranslationServiceConnectionImpl::CreateModel(
+    google::cloud::translation::v3::CreateModelRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateModel(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::translation::v3::Model>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::translation::v3::CreateModelRequest const& request) {
+        return stub->AsyncCreateModel(cq, std::move(context),
+                                      std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::translation::v3::Model>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+TranslationServiceConnectionImpl::CreateModel(
+    NoAwaitTag,
+    google::cloud::translation::v3::CreateModelRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateModel(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::translation::v3::CreateModelRequest const& request) {
+        return stub_->CreateModel(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::translation::v3::Model>>
+TranslationServiceConnectionImpl::CreateModel(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::translation::v3::
+                   CreateModelMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::translation::v3::Model>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateModel",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::translation::v3::Model>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::translation::v3::Model>,
+      polling_policy(*current), __func__);
+}
+
+StreamRange<google::cloud::translation::v3::Model>
+TranslationServiceConnectionImpl::ListModels(
+    google::cloud::translation::v3::ListModelsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListModels(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::translation::v3::Model>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<translate_v3::TranslationServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::translation::v3::ListModelsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::translation::v3::ListModelsRequest const&
+                       request) {
+              return stub->ListModels(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::translation::v3::ListModelsResponse r) {
+        std::vector<google::cloud::translation::v3::Model> result(
+            r.models().size());
+        auto& messages = *r.mutable_models();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::translation::v3::Model>
+TranslationServiceConnectionImpl::GetModel(
+    google::cloud::translation::v3::GetModelRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetModel(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::translation::v3::GetModelRequest const& request) {
+        return stub_->GetModel(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::translation::v3::DeleteModelMetadata>>
+TranslationServiceConnectionImpl::DeleteModel(
+    google::cloud::translation::v3::DeleteModelRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteModel(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::translation::v3::DeleteModelMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::translation::v3::DeleteModelRequest const& request) {
+        return stub->AsyncDeleteModel(cq, std::move(context),
+                                      std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::translation::v3::DeleteModelMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+TranslationServiceConnectionImpl::DeleteModel(
+    NoAwaitTag,
+    google::cloud::translation::v3::DeleteModelRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteModel(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::translation::v3::DeleteModelRequest const& request) {
+        return stub_->DeleteModel(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::translation::v3::DeleteModelMetadata>>
+TranslationServiceConnectionImpl::DeleteModel(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::translation::v3::
+                   DeleteModelMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::translation::v3::DeleteModelMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteModel",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::translation::v3::DeleteModelMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::translation::v3::DeleteModelMetadata>,
+      polling_policy(*current), __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

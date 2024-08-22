@@ -49,11 +49,10 @@ class BatchServiceTracingConnection : public batch_v1::BatchServiceConnection {
       google::cloud::batch::v1::DeleteJobRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteJob(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::batch::v1::DeleteJobRequest const& request) override;
 
   future<StatusOr<google::cloud::batch::v1::OperationMetadata>> DeleteJob(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::batch::v1::Job> ListJobs(

@@ -145,8 +145,7 @@ IDSConnectionImpl::CreateEndpoint(
 }
 
 StatusOr<google::longrunning::Operation> IDSConnectionImpl::CreateEndpoint(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::ids::v1::CreateEndpointRequest const& request) {
+    NoAwaitTag, google::cloud::ids::v1::CreateEndpointRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -160,7 +159,7 @@ StatusOr<google::longrunning::Operation> IDSConnectionImpl::CreateEndpoint(
 
 future<StatusOr<google::cloud::ids::v1::Endpoint>>
 IDSConnectionImpl::CreateEndpoint(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::ids::v1::OperationMetadata>()) {
@@ -234,8 +233,7 @@ IDSConnectionImpl::DeleteEndpoint(
 }
 
 StatusOr<google::longrunning::Operation> IDSConnectionImpl::DeleteEndpoint(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::ids::v1::DeleteEndpointRequest const& request) {
+    NoAwaitTag, google::cloud::ids::v1::DeleteEndpointRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -249,7 +247,7 @@ StatusOr<google::longrunning::Operation> IDSConnectionImpl::DeleteEndpoint(
 
 future<StatusOr<google::cloud::ids::v1::OperationMetadata>>
 IDSConnectionImpl::DeleteEndpoint(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::ids::v1::OperationMetadata>()) {

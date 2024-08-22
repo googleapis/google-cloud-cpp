@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_DOCUMENTS_CLIENT_H
 
 #include "google/cloud/dialogflow_es/documents_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -280,7 +279,7 @@ class DocumentsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateDocument(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::dialogflow::v2::Document const& document,
       Options opts = {});
 
@@ -343,7 +342,7 @@ class DocumentsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateDocument(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::v2::CreateDocumentRequest const& request,
       Options opts = {});
 
@@ -357,8 +356,7 @@ class DocumentsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::Document>> CreateDocument(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -423,7 +421,7 @@ class DocumentsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ImportDocuments(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::v2::ImportDocumentsRequest const& request,
       Options opts = {});
 
@@ -437,8 +435,7 @@ class DocumentsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ImportDocumentsResponse>>
-  ImportDocuments(ExperimentalTag,
-                  google::longrunning::Operation const& operation,
+  ImportDocuments(google::longrunning::Operation const& operation,
                   Options opts = {});
 
   // clang-format off
@@ -495,7 +492,7 @@ class DocumentsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteDocument(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -557,7 +554,7 @@ class DocumentsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteDocument(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::v2::DeleteDocumentRequest const& request,
       Options opts = {});
 
@@ -571,8 +568,7 @@ class DocumentsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::KnowledgeOperationMetadata>>
-  DeleteDocument(ExperimentalTag,
-                 google::longrunning::Operation const& operation,
+  DeleteDocument(google::longrunning::Operation const& operation,
                  Options opts = {});
 
   // clang-format off
@@ -632,8 +628,7 @@ class DocumentsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateDocument(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::dialogflow::v2::Document const& document,
+      NoAwaitTag, google::cloud::dialogflow::v2::Document const& document,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -695,7 +690,7 @@ class DocumentsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateDocument(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::v2::UpdateDocumentRequest const& request,
       Options opts = {});
 
@@ -709,8 +704,7 @@ class DocumentsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::Document>> UpdateDocument(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -778,8 +772,8 @@ class DocumentsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ReloadDocument(
-      ExperimentalTag, NoAwaitTag, std::string const& name,
-      std::string const& content_uri, Options opts = {});
+      NoAwaitTag, std::string const& name, std::string const& content_uri,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -846,7 +840,7 @@ class DocumentsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ReloadDocument(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::v2::ReloadDocumentRequest const& request,
       Options opts = {});
 
@@ -860,8 +854,7 @@ class DocumentsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::Document>> ReloadDocument(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -923,7 +916,7 @@ class DocumentsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ExportDocument(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::v2::ExportDocumentRequest const& request,
       Options opts = {});
 
@@ -937,8 +930,7 @@ class DocumentsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::Document>> ExportDocument(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<DocumentsConnection> connection_;

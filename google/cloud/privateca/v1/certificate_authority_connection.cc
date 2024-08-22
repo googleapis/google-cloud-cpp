@@ -82,16 +82,15 @@ CertificateAuthorityServiceConnection::ActivateCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnection::ActivateCertificateAuthority(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        ActivateCertificateAuthorityRequest const&) {
+    NoAwaitTag, google::cloud::security::privateca::v1::
+                    ActivateCertificateAuthorityRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceConnection::ActivateCertificateAuthority(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -108,16 +107,15 @@ CertificateAuthorityServiceConnection::CreateCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnection::CreateCertificateAuthority(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        CreateCertificateAuthorityRequest const&) {
+    NoAwaitTag, google::cloud::security::privateca::v1::
+                    CreateCertificateAuthorityRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceConnection::CreateCertificateAuthority(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -134,16 +132,15 @@ CertificateAuthorityServiceConnection::DisableCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnection::DisableCertificateAuthority(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        DisableCertificateAuthorityRequest const&) {
+    NoAwaitTag, google::cloud::security::privateca::v1::
+                    DisableCertificateAuthorityRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceConnection::DisableCertificateAuthority(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -160,16 +157,15 @@ CertificateAuthorityServiceConnection::EnableCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnection::EnableCertificateAuthority(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        EnableCertificateAuthorityRequest const&) {
+    NoAwaitTag, google::cloud::security::privateca::v1::
+                    EnableCertificateAuthorityRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceConnection::EnableCertificateAuthority(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -209,16 +205,15 @@ CertificateAuthorityServiceConnection::UndeleteCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnection::UndeleteCertificateAuthority(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        UndeleteCertificateAuthorityRequest const&) {
+    NoAwaitTag, google::cloud::security::privateca::v1::
+                    UndeleteCertificateAuthorityRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceConnection::UndeleteCertificateAuthority(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -235,16 +230,15 @@ CertificateAuthorityServiceConnection::DeleteCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnection::DeleteCertificateAuthority(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        DeleteCertificateAuthorityRequest const&) {
+    NoAwaitTag, google::cloud::security::privateca::v1::
+                    DeleteCertificateAuthorityRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceConnection::DeleteCertificateAuthority(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -261,16 +255,15 @@ CertificateAuthorityServiceConnection::UpdateCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnection::UpdateCertificateAuthority(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        UpdateCertificateAuthorityRequest const&) {
+    NoAwaitTag, google::cloud::security::privateca::v1::
+                    UpdateCertificateAuthorityRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceConnection::UpdateCertificateAuthority(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -286,7 +279,7 @@ CertificateAuthorityServiceConnection::CreateCaPool(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnection::CreateCaPool(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::security::privateca::v1::CreateCaPoolRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -294,7 +287,7 @@ CertificateAuthorityServiceConnection::CreateCaPool(
 
 future<StatusOr<google::cloud::security::privateca::v1::CaPool>>
 CertificateAuthorityServiceConnection::CreateCaPool(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::security::privateca::v1::CaPool>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -310,7 +303,7 @@ CertificateAuthorityServiceConnection::UpdateCaPool(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnection::UpdateCaPool(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::security::privateca::v1::UpdateCaPoolRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -318,7 +311,7 @@ CertificateAuthorityServiceConnection::UpdateCaPool(
 
 future<StatusOr<google::cloud::security::privateca::v1::CaPool>>
 CertificateAuthorityServiceConnection::UpdateCaPool(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::security::privateca::v1::CaPool>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -348,7 +341,7 @@ CertificateAuthorityServiceConnection::DeleteCaPool(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnection::DeleteCaPool(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::security::privateca::v1::DeleteCaPoolRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -356,7 +349,7 @@ CertificateAuthorityServiceConnection::DeleteCaPool(
 
 future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
 CertificateAuthorityServiceConnection::DeleteCaPool(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -395,9 +388,8 @@ CertificateAuthorityServiceConnection::UpdateCertificateRevocationList(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnection::UpdateCertificateRevocationList(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        UpdateCertificateRevocationListRequest const&) {
+    NoAwaitTag, google::cloud::security::privateca::v1::
+                    UpdateCertificateRevocationListRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
@@ -405,7 +397,7 @@ CertificateAuthorityServiceConnection::UpdateCertificateRevocationList(
 future<
     StatusOr<google::cloud::security::privateca::v1::CertificateRevocationList>>
 CertificateAuthorityServiceConnection::UpdateCertificateRevocationList(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<
       google::cloud::security::privateca::v1::CertificateRevocationList>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -422,16 +414,15 @@ CertificateAuthorityServiceConnection::CreateCertificateTemplate(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnection::CreateCertificateTemplate(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        CreateCertificateTemplateRequest const&) {
+    NoAwaitTag, google::cloud::security::privateca::v1::
+                    CreateCertificateTemplateRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
 CertificateAuthorityServiceConnection::CreateCertificateTemplate(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -448,16 +439,15 @@ CertificateAuthorityServiceConnection::DeleteCertificateTemplate(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnection::DeleteCertificateTemplate(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        DeleteCertificateTemplateRequest const&) {
+    NoAwaitTag, google::cloud::security::privateca::v1::
+                    DeleteCertificateTemplateRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
 CertificateAuthorityServiceConnection::DeleteCertificateTemplate(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -489,16 +479,15 @@ CertificateAuthorityServiceConnection::UpdateCertificateTemplate(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnection::UpdateCertificateTemplate(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        UpdateCertificateTemplateRequest const&) {
+    NoAwaitTag, google::cloud::security::privateca::v1::
+                    UpdateCertificateTemplateRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
 CertificateAuthorityServiceConnection::UpdateCertificateTemplate(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

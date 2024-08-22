@@ -18,6 +18,7 @@
 
 #include "google/cloud/dataproc/v1/internal/node_group_controller_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

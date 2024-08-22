@@ -22,6 +22,8 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <regex>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -38,8 +40,7 @@ using ::testing::Not;
 using ::testing::Pair;
 
 class ObjectHashIntegrationTest
-    : public google::cloud::storage::testing::StorageIntegrationTest,
-      public ::testing::WithParamInterface<std::string> {
+    : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:
   void SetUp() override {
     bucket_name_ = google::cloud::internal::GetEnv(
@@ -52,7 +53,7 @@ class ObjectHashIntegrationTest
 };
 
 /// @test Verify that MD5 hashes are disabled by default in InsertObject().
-TEST_P(ObjectHashIntegrationTest, InsertObjectDefault) {
+TEST_F(ObjectHashIntegrationTest, InsertObjectDefault) {
   auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
   auto meta =
@@ -68,7 +69,7 @@ TEST_P(ObjectHashIntegrationTest, InsertObjectDefault) {
 }
 
 /// @test Verify that MD5 hashes can be explicitly disabled in InsertObject().
-TEST_P(ObjectHashIntegrationTest, InsertObjectExplicitDisable) {
+TEST_F(ObjectHashIntegrationTest, InsertObjectExplicitDisable) {
   auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
@@ -85,7 +86,7 @@ TEST_P(ObjectHashIntegrationTest, InsertObjectExplicitDisable) {
 }
 
 /// @test Verify that MD5 hashes can be explicitly enabled in InsertObject().
-TEST_P(ObjectHashIntegrationTest, InsertObjectExplicitEnable) {
+TEST_F(ObjectHashIntegrationTest, InsertObjectExplicitEnable) {
   auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
@@ -102,7 +103,7 @@ TEST_P(ObjectHashIntegrationTest, InsertObjectExplicitEnable) {
 }
 
 /// @test Verify that valid MD5 hash values work in InsertObject().
-TEST_P(ObjectHashIntegrationTest, InsertObjectWithValueSuccess) {
+TEST_F(ObjectHashIntegrationTest, InsertObjectWithValueSuccess) {
   auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
   auto meta =
@@ -119,7 +120,7 @@ TEST_P(ObjectHashIntegrationTest, InsertObjectWithValueSuccess) {
 }
 
 /// @test Verify that incorrect MD5 hash values work in InsertObject().
-TEST_P(ObjectHashIntegrationTest, InsertObjectWithValueFailure) {
+TEST_F(ObjectHashIntegrationTest, InsertObjectWithValueFailure) {
   // TODO(#14385) - the emulator does not support this feature for gRPC.
   if (UsingEmulator() && UsingGrpc()) GTEST_SKIP();
 
@@ -282,7 +283,7 @@ TEST_F(ObjectHashIntegrationTest, WriteObjectUploadBadChecksum) {
 }
 
 /// @test Verify that MD5 hashes are disabled by default on downloads.
-TEST_P(ObjectHashIntegrationTest, ReadObjectDefault) {
+TEST_F(ObjectHashIntegrationTest, ReadObjectDefault) {
   // TODO(#14385) - the emulator does not support this feature for gRPC.
   if (UsingEmulator() && UsingGrpc()) GTEST_SKIP();
 
@@ -303,7 +304,7 @@ TEST_P(ObjectHashIntegrationTest, ReadObjectDefault) {
 
 /// @test Verify that MD5 hashes mismatches are reported (if enabled) on
 /// downloads.
-TEST_P(ObjectHashIntegrationTest, ReadObjectCorruptedByServerGetc) {
+TEST_F(ObjectHashIntegrationTest, ReadObjectCorruptedByServerGetc) {
   // This test is disabled when not using the emulator as it relies on the
   // emulator to inject faults. The emulator does not support this type of fault
   // injection for gRPC either.
@@ -342,7 +343,7 @@ TEST_P(ObjectHashIntegrationTest, ReadObjectCorruptedByServerGetc) {
 
 /// @test Verify that MD5 hashes mismatches are reported (if enabled) on
 /// downloads.
-TEST_P(ObjectHashIntegrationTest, ReadObjectCorruptedByServerRead) {
+TEST_F(ObjectHashIntegrationTest, ReadObjectCorruptedByServerRead) {
   // This test is disabled when not using the emulator as it relies on the
   // emulator to inject faults. The emulator does not support this type of fault
   // injection for gRPC either.
@@ -371,9 +372,6 @@ TEST_P(ObjectHashIntegrationTest, ReadObjectCorruptedByServerRead) {
   EXPECT_NE(stream.received_hash(), stream.computed_hash());
   EXPECT_EQ(stream.received_hash(), meta->md5_hash());
 }
-
-INSTANTIATE_TEST_SUITE_P(ObjectHashIntegrationTestJson,
-                         ObjectHashIntegrationTest, ::testing::Values("JSON"));
 
 }  // anonymous namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

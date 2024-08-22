@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_V1_CLOUD_FUNCTIONS_CLIENT_H
 
 #include "google/cloud/functions/v1/cloud_functions_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -238,7 +237,7 @@ class CloudFunctionsServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateFunction(
-      ExperimentalTag, NoAwaitTag, std::string const& location,
+      NoAwaitTag, std::string const& location,
       google::cloud::functions::v1::CloudFunction const& function,
       Options opts = {});
 
@@ -294,7 +293,7 @@ class CloudFunctionsServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateFunction(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::functions::v1::CreateFunctionRequest const& request,
       Options opts = {});
 
@@ -308,8 +307,7 @@ class CloudFunctionsServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::functions::v1::CloudFunction>> CreateFunction(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -356,8 +354,7 @@ class CloudFunctionsServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateFunction(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::functions::v1::CloudFunction const& function,
+      NoAwaitTag, google::cloud::functions::v1::CloudFunction const& function,
       Options opts = {});
 
   // clang-format off
@@ -410,7 +407,7 @@ class CloudFunctionsServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateFunction(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::functions::v1::UpdateFunctionRequest const& request,
       Options opts = {});
 
@@ -424,8 +421,7 @@ class CloudFunctionsServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::functions::v1::CloudFunction>> UpdateFunction(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -473,7 +469,7 @@ class CloudFunctionsServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteFunction(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -528,7 +524,7 @@ class CloudFunctionsServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteFunction(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::functions::v1::DeleteFunctionRequest const& request,
       Options opts = {});
 
@@ -542,8 +538,7 @@ class CloudFunctionsServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::functions::v1::OperationMetadataV1>>
-  DeleteFunction(ExperimentalTag,
-                 google::longrunning::Operation const& operation,
+  DeleteFunction(google::longrunning::Operation const& operation,
                  Options opts = {});
 
   // clang-format off

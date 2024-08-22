@@ -22,7 +22,6 @@
 #include "google/cloud/compute/machine_images/v1/internal/machine_images_retry_traits.h"
 #include "google/cloud/compute/machine_images/v1/machine_images_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -192,13 +191,12 @@ class MachineImagesConnection {
                          DeleteMachineImageRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteMachineImage(ExperimentalTag, NoAwaitTag,
+  DeleteMachineImage(NoAwaitTag,
                      google::cloud::cpp::compute::machine_images::v1::
                          DeleteMachineImageRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteMachineImage(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::MachineImage>
@@ -214,13 +212,12 @@ class MachineImagesConnection {
                          InsertMachineImageRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertMachineImage(ExperimentalTag, NoAwaitTag,
+  InsertMachineImage(NoAwaitTag,
                      google::cloud::cpp::compute::machine_images::v1::
                          InsertMachineImageRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertMachineImage(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::MachineImage>

@@ -24,6 +24,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_firewall_policies_v1::FirewallPoliciesClient](@ref compute_firewall_policies_v1::FirewallPoliciesClient-endpoint-snippet)
 - [\c compute_firewalls_v1::FirewallsClient](@ref compute_firewalls_v1::FirewallsClient-endpoint-snippet)
 - [\c compute_forwarding_rules_v1::ForwardingRulesClient](@ref compute_forwarding_rules_v1::ForwardingRulesClient-endpoint-snippet)
+- [\c compute_future_reservations_v1::FutureReservationsClient](@ref compute_future_reservations_v1::FutureReservationsClient-endpoint-snippet)
 - [\c compute_global_addresses_v1::GlobalAddressesClient](@ref compute_global_addresses_v1::GlobalAddressesClient-endpoint-snippet)
 - [\c compute_global_forwarding_rules_v1::GlobalForwardingRulesClient](@ref compute_global_forwarding_rules_v1::GlobalForwardingRulesClient-endpoint-snippet)
 - [\c compute_global_network_endpoint_groups_v1::GlobalNetworkEndpointGroupsClient](@ref compute_global_network_endpoint_groups_v1::GlobalNetworkEndpointGroupsClient-endpoint-snippet)
@@ -41,6 +42,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_instance_settings_v1::InstanceSettingsClient](@ref compute_instance_settings_v1::InstanceSettingsClient-endpoint-snippet)
 - [\c compute_instance_templates_v1::InstanceTemplatesClient](@ref compute_instance_templates_v1::InstanceTemplatesClient-endpoint-snippet)
 - [\c compute_instances_v1::InstancesClient](@ref compute_instances_v1::InstancesClient-endpoint-snippet)
+- [\c compute_instant_snapshots_v1::InstantSnapshotsClient](@ref compute_instant_snapshots_v1::InstantSnapshotsClient-endpoint-snippet)
 - [\c compute_interconnect_attachments_v1::InterconnectAttachmentsClient](@ref compute_interconnect_attachments_v1::InterconnectAttachmentsClient-endpoint-snippet)
 - [\c compute_interconnect_locations_v1::InterconnectLocationsClient](@ref compute_interconnect_locations_v1::InterconnectLocationsClient-endpoint-snippet)
 - [\c compute_interconnect_remote_locations_v1::InterconnectRemoteLocationsClient](@ref compute_interconnect_remote_locations_v1::InterconnectRemoteLocationsClient-endpoint-snippet)
@@ -72,6 +74,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_region_instance_groups_v1::RegionInstanceGroupsClient](@ref compute_region_instance_groups_v1::RegionInstanceGroupsClient-endpoint-snippet)
 - [\c compute_region_instance_templates_v1::RegionInstanceTemplatesClient](@ref compute_region_instance_templates_v1::RegionInstanceTemplatesClient-endpoint-snippet)
 - [\c compute_region_instances_v1::RegionInstancesClient](@ref compute_region_instances_v1::RegionInstancesClient-endpoint-snippet)
+- [\c compute_region_instant_snapshots_v1::RegionInstantSnapshotsClient](@ref compute_region_instant_snapshots_v1::RegionInstantSnapshotsClient-endpoint-snippet)
 - [\c compute_region_network_endpoint_groups_v1::RegionNetworkEndpointGroupsClient](@ref compute_region_network_endpoint_groups_v1::RegionNetworkEndpointGroupsClient-endpoint-snippet)
 - [\c compute_region_network_firewall_policies_v1::RegionNetworkFirewallPoliciesClient](@ref compute_region_network_firewall_policies_v1::RegionNetworkFirewallPoliciesClient-endpoint-snippet)
 - [\c compute_region_notification_endpoints_v1::RegionNotificationEndpointsClient](@ref compute_region_notification_endpoints_v1::RegionNotificationEndpointsClient-endpoint-snippet)
@@ -184,6 +187,12 @@ Follow these links to find examples for other \c *Client classes:
 
 */
 
+/*! @page compute_future_reservations_v1::FutureReservationsClient-endpoint-snippet Override compute_future_reservations_v1::FutureReservationsClient Endpoint Configuration
+
+@snippet google/cloud/compute/future_reservations/v1/samples/future_reservations_client_samples.cc set-client-endpoint
+
+*/
+
 /*! @page compute_global_addresses_v1::GlobalAddressesClient-endpoint-snippet Override compute_global_addresses_v1::GlobalAddressesClient Endpoint Configuration
 
 @snippet google/cloud/compute/global_addresses/v1/samples/global_addresses_client_samples.cc set-client-endpoint
@@ -283,6 +292,12 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page compute_instances_v1::InstancesClient-endpoint-snippet Override compute_instances_v1::InstancesClient Endpoint Configuration
 
 @snippet google/cloud/compute/instances/v1/samples/instances_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_instant_snapshots_v1::InstantSnapshotsClient-endpoint-snippet Override compute_instant_snapshots_v1::InstantSnapshotsClient Endpoint Configuration
+
+@snippet google/cloud/compute/instant_snapshots/v1/samples/instant_snapshots_client_samples.cc set-client-endpoint
 
 */
 
@@ -469,6 +484,12 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page compute_region_instances_v1::RegionInstancesClient-endpoint-snippet Override compute_region_instances_v1::RegionInstancesClient Endpoint Configuration
 
 @snippet google/cloud/compute/region_instances/v1/samples/region_instances_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_region_instant_snapshots_v1::RegionInstantSnapshotsClient-endpoint-snippet Override compute_region_instant_snapshots_v1::RegionInstantSnapshotsClient Endpoint Configuration
+
+@snippet google/cloud/compute/region_instant_snapshots/v1/samples/region_instant_snapshots_client_samples.cc set-client-endpoint
 
 */
 

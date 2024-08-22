@@ -24,7 +24,9 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/translate/v3/translation_service.grpc.pb.h>
 #include <memory>
+#include <string>
 #include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -49,6 +51,15 @@ TranslationServiceMetadata::TranslateText(
   SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->TranslateText(context, options, request);
+}
+
+StatusOr<google::cloud::translation::v3::RomanizeTextResponse>
+TranslationServiceMetadata::RomanizeText(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::translation::v3::RomanizeTextRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->RomanizeText(context, options, request);
 }
 
 StatusOr<google::cloud::translation::v3::DetectLanguageResponse>
@@ -144,6 +155,29 @@ TranslationServiceMetadata::CreateGlossary(
   return child_->CreateGlossary(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+TranslationServiceMetadata::AsyncUpdateGlossary(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::translation::v3::UpdateGlossaryRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("glossary.name=",
+                           internal::UrlEncode(request.glossary().name())));
+  return child_->AsyncUpdateGlossary(cq, std::move(context), std::move(options),
+                                     request);
+}
+
+StatusOr<google::longrunning::Operation>
+TranslationServiceMetadata::UpdateGlossary(
+    grpc::ClientContext& context, Options options,
+    google::cloud::translation::v3::UpdateGlossaryRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("glossary.name=",
+                           internal::UrlEncode(request.glossary().name())));
+  return child_->UpdateGlossary(context, options, request);
+}
+
 StatusOr<google::cloud::translation::v3::ListGlossariesResponse>
 TranslationServiceMetadata::ListGlossaries(
     grpc::ClientContext& context, Options const& options,
@@ -181,6 +215,112 @@ TranslationServiceMetadata::DeleteGlossary(
   SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteGlossary(context, options, request);
+}
+
+StatusOr<google::cloud::translation::v3::GlossaryEntry>
+TranslationServiceMetadata::GetGlossaryEntry(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::translation::v3::GetGlossaryEntryRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetGlossaryEntry(context, options, request);
+}
+
+StatusOr<google::cloud::translation::v3::ListGlossaryEntriesResponse>
+TranslationServiceMetadata::ListGlossaryEntries(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::translation::v3::ListGlossaryEntriesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListGlossaryEntries(context, options, request);
+}
+
+StatusOr<google::cloud::translation::v3::GlossaryEntry>
+TranslationServiceMetadata::CreateGlossaryEntry(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::translation::v3::CreateGlossaryEntryRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateGlossaryEntry(context, options, request);
+}
+
+StatusOr<google::cloud::translation::v3::GlossaryEntry>
+TranslationServiceMetadata::UpdateGlossaryEntry(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::translation::v3::UpdateGlossaryEntryRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("glossary_entry.name=",
+                   internal::UrlEncode(request.glossary_entry().name())));
+  return child_->UpdateGlossaryEntry(context, options, request);
+}
+
+Status TranslationServiceMetadata::DeleteGlossaryEntry(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::translation::v3::DeleteGlossaryEntryRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteGlossaryEntry(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+TranslationServiceMetadata::AsyncCreateDataset(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::translation::v3::CreateDatasetRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateDataset(cq, std::move(context), std::move(options),
+                                    request);
+}
+
+StatusOr<google::longrunning::Operation>
+TranslationServiceMetadata::CreateDataset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::translation::v3::CreateDatasetRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateDataset(context, options, request);
+}
+
+StatusOr<google::cloud::translation::v3::Dataset>
+TranslationServiceMetadata::GetDataset(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::translation::v3::GetDatasetRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetDataset(context, options, request);
+}
+
+StatusOr<google::cloud::translation::v3::ListDatasetsResponse>
+TranslationServiceMetadata::ListDatasets(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::translation::v3::ListDatasetsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListDatasets(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+TranslationServiceMetadata::AsyncDeleteDataset(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::translation::v3::DeleteDatasetRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteDataset(cq, std::move(context), std::move(options),
+                                    request);
+}
+
+StatusOr<google::longrunning::Operation>
+TranslationServiceMetadata::DeleteDataset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::translation::v3::DeleteDatasetRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteDataset(context, options, request);
 }
 
 StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
@@ -276,6 +416,115 @@ TranslationServiceMetadata::ListAdaptiveMtSentences(
   SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListAdaptiveMtSentences(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+TranslationServiceMetadata::AsyncImportData(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::translation::v3::ImportDataRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("dataset=", internal::UrlEncode(request.dataset())));
+  return child_->AsyncImportData(cq, std::move(context), std::move(options),
+                                 request);
+}
+
+StatusOr<google::longrunning::Operation> TranslationServiceMetadata::ImportData(
+    grpc::ClientContext& context, Options options,
+    google::cloud::translation::v3::ImportDataRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("dataset=", internal::UrlEncode(request.dataset())));
+  return child_->ImportData(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+TranslationServiceMetadata::AsyncExportData(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::translation::v3::ExportDataRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("dataset=", internal::UrlEncode(request.dataset())));
+  return child_->AsyncExportData(cq, std::move(context), std::move(options),
+                                 request);
+}
+
+StatusOr<google::longrunning::Operation> TranslationServiceMetadata::ExportData(
+    grpc::ClientContext& context, Options options,
+    google::cloud::translation::v3::ExportDataRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("dataset=", internal::UrlEncode(request.dataset())));
+  return child_->ExportData(context, options, request);
+}
+
+StatusOr<google::cloud::translation::v3::ListExamplesResponse>
+TranslationServiceMetadata::ListExamples(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::translation::v3::ListExamplesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListExamples(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+TranslationServiceMetadata::AsyncCreateModel(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::translation::v3::CreateModelRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateModel(cq, std::move(context), std::move(options),
+                                  request);
+}
+
+StatusOr<google::longrunning::Operation>
+TranslationServiceMetadata::CreateModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::translation::v3::CreateModelRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateModel(context, options, request);
+}
+
+StatusOr<google::cloud::translation::v3::ListModelsResponse>
+TranslationServiceMetadata::ListModels(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::translation::v3::ListModelsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListModels(context, options, request);
+}
+
+StatusOr<google::cloud::translation::v3::Model>
+TranslationServiceMetadata::GetModel(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::translation::v3::GetModelRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetModel(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+TranslationServiceMetadata::AsyncDeleteModel(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::translation::v3::DeleteModelRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteModel(cq, std::move(context), std::move(options),
+                                  request);
+}
+
+StatusOr<google::longrunning::Operation>
+TranslationServiceMetadata::DeleteModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::translation::v3::DeleteModelRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteModel(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

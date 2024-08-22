@@ -19,6 +19,9 @@
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/testing/upload_hash_cases.h"
 #include <gmock/gmock.h>
+#include <memory>
+#include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {

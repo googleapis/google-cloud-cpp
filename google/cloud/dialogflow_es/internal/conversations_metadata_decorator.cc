@@ -24,7 +24,9 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/v2/conversation.grpc.pb.h>
 #include <memory>
+#include <string>
 #include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -108,6 +110,16 @@ ConversationsMetadata::GenerateStatelessSummary(
                            internal::UrlEncode(
                                request.stateless_conversation().parent())));
   return child_->GenerateStatelessSummary(context, options, request);
+}
+
+StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSuggestionResponse>
+ConversationsMetadata::GenerateStatelessSuggestion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::v2::GenerateStatelessSuggestionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->GenerateStatelessSuggestion(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>

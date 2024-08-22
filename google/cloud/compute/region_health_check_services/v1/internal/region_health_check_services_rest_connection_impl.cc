@@ -110,9 +110,8 @@ RegionHealthCheckServicesRestConnectionImpl::DeleteHealthCheckService(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionHealthCheckServicesRestConnectionImpl::DeleteHealthCheckService(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_health_check_services::v1::
-        DeleteHealthCheckServiceRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::region_health_check_services::v1::
+                    DeleteHealthCheckServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -127,7 +126,6 @@ RegionHealthCheckServicesRestConnectionImpl::DeleteHealthCheckService(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionHealthCheckServicesRestConnectionImpl::DeleteHealthCheckService(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -259,9 +257,8 @@ RegionHealthCheckServicesRestConnectionImpl::InsertHealthCheckService(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionHealthCheckServicesRestConnectionImpl::InsertHealthCheckService(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_health_check_services::v1::
-        InsertHealthCheckServiceRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::region_health_check_services::v1::
+                    InsertHealthCheckServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -276,7 +273,6 @@ RegionHealthCheckServicesRestConnectionImpl::InsertHealthCheckService(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionHealthCheckServicesRestConnectionImpl::InsertHealthCheckService(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -433,9 +429,8 @@ RegionHealthCheckServicesRestConnectionImpl::PatchHealthCheckService(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionHealthCheckServicesRestConnectionImpl::PatchHealthCheckService(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_health_check_services::v1::
-        PatchHealthCheckServiceRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::region_health_check_services::v1::
+                    PatchHealthCheckServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -450,7 +445,6 @@ RegionHealthCheckServicesRestConnectionImpl::PatchHealthCheckService(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionHealthCheckServicesRestConnectionImpl::PatchHealthCheckService(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

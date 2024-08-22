@@ -77,8 +77,7 @@ Status ClientGenerator::GenerateHeader() {
       {HasGenerateGrpcTransport() ? vars("connection_header_path")
                                   : vars("connection_rest_header_path"),
        HasLongrunningMethod() ? "google/cloud/no_await_tag.h" : "",
-       // TODO(#14344): Restore conditional experimental tag include.
-       HasLongrunningMethod() ? "google/cloud/experimental_tag.h" : "",
+       IsExperimental() ? "google/cloud/experimental_tag.h" : "",
        "google/cloud/future.h", "google/cloud/options.h",
        "google/cloud/polling_policy.h",
        HasIamPolicyExtension() ? "google/cloud/internal/make_status.h" : "",
@@ -126,7 +125,15 @@ class $client_class_name$ {
   ///@}
 )""");
 
+  auto constexpr kDeprecationMacro =
+      R"""(  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
+)""";
+
   for (google::protobuf::MethodDescriptor const& method : methods()) {
+    bool is_method_deprecated =
+        method.options().has_deprecated() && method.options().deprecated();
+    std::string const deprecation_macro =
+        is_method_deprecated ? kDeprecationMacro : "";
     if (IsBidirStreaming(method)) {
       HeaderPrintMethod(
           method, __FILE__, __LINE__,
@@ -134,6 +141,7 @@ class $client_class_name$ {
               "\n",
               FormatMethodComments(method, "", IsDiscoveryDocumentProto()),
               // clang-format off
+              deprecation_macro,
 R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       $request_type$,
       $response_type$>>
@@ -148,15 +156,16 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       if (OmitMethodSignature(method, i)) continue;
       std::string const method_string = absl::StrCat(
           "  $method_name$($method_signature", i, "$Options opts = {});\n");
-      std::string const start_method_string = absl::StrCat(
-          "  $method_name$(ExperimentalTag, NoAwaitTag, $method_signature", i,
-          "$Options opts = {});\n");
+      std::string const start_method_string =
+          absl::StrCat("  $method_name$(NoAwaitTag, $method_signature", i,
+                       "$Options opts = {});\n");
       std::string const signature = method_signature_extension[i];
       HeaderPrintMethod(
           method,
           {MethodPattern({{"\n"},
                           {FormatMethodCommentsMethodSignature(
                               method, signature, IsDiscoveryDocumentProto())},
+                          {deprecation_macro},
                           {IsResponseTypeEmpty,
                            // clang-format off
                    "  Status\n",
@@ -169,6 +178,7 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                {{"\n"},
                 {FormatMethodCommentsMethodSignature(
                     method, signature, IsDiscoveryDocumentProto())},
+                {deprecation_macro},
                 {IsResponseTypeEmpty,
                  // clang-format off
                     "  future<Status>\n",
@@ -176,7 +186,8 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                 // clang-format on
                 {method_string},
                 {"\n"},
-                {FormatStartMethodComments()},
+                {FormatStartMethodComments(is_method_deprecated)},
+                {deprecation_macro},
                 {IsResponseTypeEmpty,
                  // clang-format off
                     "  Status\n",
@@ -189,6 +200,7 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                    {"\n"},
                    {FormatMethodCommentsMethodSignature(
                        method, signature, IsDiscoveryDocumentProto())},
+                   {deprecation_macro},
                    {"  StreamRange<$range_output_type$>\n"},
                    {method_string},
                },
@@ -198,6 +210,7 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                    {"\n"},
                    {FormatMethodCommentsMethodSignature(
                        method, signature, IsDiscoveryDocumentProto())},
+                   {deprecation_macro},
                    {"  StreamRange<$response_type$>\n"},
                    {method_string},
                },
@@ -248,6 +261,7 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                  {"\n"},
                  {FormatMethodCommentsProtobufRequest(
                      method, IsDiscoveryDocumentProto())},
+                 {deprecation_macro},
                  {IsResponseTypeEmpty,
                   // clang-format off
     "  Status\n",
@@ -262,28 +276,29 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                  {"\n"},
                  {FormatMethodCommentsProtobufRequest(
                      method, IsDiscoveryDocumentProto())},
+                 {deprecation_macro},
                  {IsResponseTypeEmpty,
                   // clang-format off
     "  future<Status>\n",
     "  future<StatusOr<$longrunning_deduced_response_type$>>\n"},
    {"  $method_name$($request_type$ const& request, Options opts = {});\n"},
    {"\n"},
-                {FormatStartMethodComments()},
+                {FormatStartMethodComments(is_method_deprecated)},
+                {deprecation_macro},
                  // clang-format on
                  {IsResponseTypeEmpty,
                   // clang-format off
     "  Status\n",
     "  StatusOr<$longrunning_operation_type$>\n"},
-   {"  $method_name$(ExperimentalTag, "
-    "NoAwaitTag, "
-    "$request_type$ const& request, Options opts = {});\n\n"},
+   {"  $method_name$(NoAwaitTag, $request_type$ const& request, Options opts = {});\n\n"},
                  // clang-format on
-                 {FormatAwaitMethodComments()},
+                 {FormatAwaitMethodComments(is_method_deprecated)},
+                 {deprecation_macro},
                  {IsResponseTypeEmpty,
                   // clang-format off
     "  future<Status>\n",
     "  future<StatusOr<$longrunning_deduced_response_type$>>\n"},
-   {"  $method_name$(ExperimentalTag, $longrunning_operation_type$ const& operation, Options opts = {});\n"}
+   {"  $method_name$($longrunning_operation_type$ const& operation, Options opts = {});\n"}
                  // clang-format on
              },
              All(IsNonStreaming, IsLongrunningOperation, Not(IsPaginated))),
@@ -292,6 +307,7 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                  {"\n"},
                  {FormatMethodCommentsProtobufRequest(
                      method, IsDiscoveryDocumentProto())},
+                 {deprecation_macro},
                  // clang-format off
    {"  StreamRange<$range_output_type$>\n"
     "  $method_name$($request_type$ request, Options opts = {});\n"},
@@ -303,6 +319,7 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                  {"\n"},
                  {FormatMethodCommentsProtobufRequest(
                      method, IsDiscoveryDocumentProto())},
+                 {deprecation_macro},
                  // clang-format off
    {"  StreamRange<$response_type$>\n"
     "  $method_name$($request_type$ const& request, Options opts = {});\n"},
@@ -315,6 +332,10 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
   for (google::protobuf::MethodDescriptor const& method : async_methods()) {
     if (IsStreamingRead(method)) continue;
     if (IsStreamingWrite(method)) continue;
+    bool is_method_deprecated =
+        method.options().has_deprecated() && method.options().deprecated();
+    std::string const deprecation_macro =
+        is_method_deprecated ? kDeprecationMacro : "";
     auto method_signature_extension =
         method.options().GetRepeatedExtension(google::api::method_signature);
     for (int i = 0; i < method_signature_extension.size(); ++i) {
@@ -328,6 +349,7 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
               {{"\n"},
                {FormatMethodCommentsMethodSignature(
                    method, signature, IsDiscoveryDocumentProto())},
+               {deprecation_macro},
                {IsResponseTypeEmpty,
                 // clang-format off
                    "  future<Status>\n",
@@ -345,6 +367,7 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                 {"\n"},
                 {FormatMethodCommentsProtobufRequest(
                     method, IsDiscoveryDocumentProto())},
+                {deprecation_macro},
                 {IsResponseTypeEmpty,
                  // clang-format off
     "  future<Status>\n",
@@ -433,9 +456,8 @@ $client_class_name$::Async$method_name$(Options opts) {
           absl::StrCat("$client_class_name$::$method_name$($method_signature",
                        i, "$Options opts) {\n");
       std::string start_method_string = absl::StrCat(
-          "$client_class_name$::$method_name$(ExperimentalTag, NoAwaitTag, "
-          "$method_signature",
-          i, "$Options opts) {\n");
+          "$client_class_name$::$method_name$(NoAwaitTag, $method_signature", i,
+          "$Options opts) {\n");
       std::string method_request_string =
           absl::StrCat("$method_request_setters", i, "$");
       CcPrintMethod(
@@ -480,7 +502,7 @@ $client_class_name$::Async$method_name$(Options opts) {
                    "std::move(opts), options_));\n"},
                   {"  $request_type$ request;\n"},
                    {method_request_string},
-                  {"  return connection_->$method_name$(ExperimentalTag{}, NoAwaitTag{}, request);\n"
+                  {"  return connection_->$method_name$(NoAwaitTag{}, request);\n"
                   "}\n"}
                    // clang-format on
                },
@@ -609,24 +631,23 @@ $client_class_name$::Async$method_name$(Options opts) {
                   // clang-format off
     "\nStatus\n",
     "\nStatusOr<$longrunning_operation_type$>\n"},
-   {"$client_class_name$::$method_name$(ExperimentalTag"
-    ", NoAwaitTag"
+   {"$client_class_name$::$method_name$(NoAwaitTag"
     ", $request_type$ const& request"
     ", Options opts) {\n"
     "  internal::OptionsSpan span(internal::MergeOptions("
     "std::move(opts), options_));\n"
-    "  return connection_->$method_name$(ExperimentalTag{}, NoAwaitTag{}, request);\n"
+    "  return connection_->$method_name$(NoAwaitTag{}, request);\n"
     "}\n"},
                  // clang-format on
                  {IsResponseTypeEmpty,
                   // clang-format off
     "\nfuture<Status>\n",
     "\nfuture<StatusOr<$longrunning_deduced_response_type$>>\n"},
-   {"$client_class_name$::$method_name$(ExperimentalTag"
-    ", $longrunning_operation_type$ const& operation, Options opts) {\n"
+   {"$client_class_name$::$method_name$("
+    "$longrunning_operation_type$ const& operation, Options opts) {\n"
     "  internal::OptionsSpan span(internal::MergeOptions("
     "std::move(opts), options_));\n"
-    "  return connection_->$method_name$(ExperimentalTag{}, operation);\n"},
+    "  return connection_->$method_name$(operation);\n"},
    {"}\n"}
                  // clang-format on
              },

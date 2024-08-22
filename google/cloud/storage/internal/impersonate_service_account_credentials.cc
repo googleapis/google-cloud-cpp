@@ -15,6 +15,10 @@
 #include "google/cloud/storage/internal/impersonate_service_account_credentials.h"
 #include "google/cloud/internal/rest_client.h"
 #include "google/cloud/internal/unified_rest_credentials.h"
+#include <memory>
+#include <mutex>
+#include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {

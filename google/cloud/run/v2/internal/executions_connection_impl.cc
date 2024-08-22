@@ -151,8 +151,7 @@ ExecutionsConnectionImpl::DeleteExecution(
 
 StatusOr<google::longrunning::Operation>
 ExecutionsConnectionImpl::DeleteExecution(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::run::v2::DeleteExecutionRequest const& request) {
+    NoAwaitTag, google::cloud::run::v2::DeleteExecutionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -166,7 +165,7 @@ ExecutionsConnectionImpl::DeleteExecution(
 
 future<StatusOr<google::cloud::run::v2::Execution>>
 ExecutionsConnectionImpl::DeleteExecution(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::cloud::run::v2::Execution>()) {
     return make_ready_future<StatusOr<google::cloud::run::v2::Execution>>(
@@ -240,8 +239,7 @@ ExecutionsConnectionImpl::CancelExecution(
 
 StatusOr<google::longrunning::Operation>
 ExecutionsConnectionImpl::CancelExecution(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::run::v2::CancelExecutionRequest const& request) {
+    NoAwaitTag, google::cloud::run::v2::CancelExecutionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -255,7 +253,7 @@ ExecutionsConnectionImpl::CancelExecution(
 
 future<StatusOr<google::cloud::run::v2::Execution>>
 ExecutionsConnectionImpl::CancelExecution(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::cloud::run::v2::Execution>()) {
     return make_ready_future<StatusOr<google::cloud::run::v2::Execution>>(

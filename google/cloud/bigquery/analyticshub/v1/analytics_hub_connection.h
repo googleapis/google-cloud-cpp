@@ -22,7 +22,6 @@
 #include "google/cloud/bigquery/analyticshub/v1/analytics_hub_connection_idempotency_policy.h"
 #include "google/cloud/bigquery/analyticshub/v1/internal/analytics_hub_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -252,14 +251,12 @@ class AnalyticsHubServiceConnection {
                             SubscribeDataExchangeRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> SubscribeDataExchange(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::bigquery::analyticshub::v1::
-          SubscribeDataExchangeRequest const& request);
+      NoAwaitTag, google::cloud::bigquery::analyticshub::v1::
+                      SubscribeDataExchangeRequest const& request);
 
   virtual future<StatusOr<
       google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
-  SubscribeDataExchange(ExperimentalTag,
-                        google::longrunning::Operation const& operation);
+  SubscribeDataExchange(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<
       google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
@@ -267,14 +264,12 @@ class AnalyticsHubServiceConnection {
                           RefreshSubscriptionRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> RefreshSubscription(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::bigquery::analyticshub::v1::
-          RefreshSubscriptionRequest const& request);
+      NoAwaitTag, google::cloud::bigquery::analyticshub::v1::
+                      RefreshSubscriptionRequest const& request);
 
   virtual future<StatusOr<
       google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
-  RefreshSubscription(ExperimentalTag,
-                      google::longrunning::Operation const& operation);
+  RefreshSubscription(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription>
   GetSubscription(
@@ -302,14 +297,12 @@ class AnalyticsHubServiceConnection {
                          DeleteSubscriptionRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteSubscription(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::bigquery::analyticshub::v1::
-          DeleteSubscriptionRequest const& request);
+      NoAwaitTag, google::cloud::bigquery::analyticshub::v1::
+                      DeleteSubscriptionRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>
-  DeleteSubscription(ExperimentalTag,
-                     google::longrunning::Operation const& operation);
+  DeleteSubscription(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request);

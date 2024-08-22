@@ -62,26 +62,45 @@ class MockRegionCommitmentsConnection
                    GetCommitmentRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, InsertCommitment)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, InsertCommitment(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InsertCommitment(Matcher<google::cloud::cpp::compute::region_commitments::v1::InsertCommitmentRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertCommitment,
               (google::cloud::cpp::compute::region_commitments::v1::
                    InsertCommitmentRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, InsertCommitment(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               InsertCommitment,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::region_commitments::v1::
-                   InsertCommitmentRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::region_commitments::v1::
+                               InsertCommitmentRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InsertCommitment(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertCommitment,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::Commitment>),
@@ -90,26 +109,45 @@ class MockRegionCommitmentsConnection
                    ListRegionCommitmentsRequest request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateCommitment)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateCommitment(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateCommitment(Matcher<google::cloud::cpp::compute::region_commitments::v1::UpdateCommitmentRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               UpdateCommitment,
               (google::cloud::cpp::compute::region_commitments::v1::
                    UpdateCommitmentRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateCommitment(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               UpdateCommitment,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::region_commitments::v1::
-                   UpdateCommitmentRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::region_commitments::v1::
+                               UpdateCommitmentRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateCommitment(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               UpdateCommitment,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

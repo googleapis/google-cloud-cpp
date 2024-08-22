@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PRIVATECA_V1_CERTIFICATE_AUTHORITY_CLIENT_H
 
 #include "google/cloud/privateca/v1/certificate_authority_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -500,7 +499,7 @@ class CertificateAuthorityServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ActivateCertificateAuthority(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -566,7 +565,7 @@ class CertificateAuthorityServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ActivateCertificateAuthority(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::security::privateca::v1::
           ActivateCertificateAuthorityRequest const& request,
       Options opts = {});
@@ -581,8 +580,7 @@ class CertificateAuthorityServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  ActivateCertificateAuthority(ExperimentalTag,
-                               google::longrunning::Operation const& operation,
+  ActivateCertificateAuthority(google::longrunning::Operation const& operation,
                                Options opts = {});
 
   // clang-format off
@@ -644,7 +642,7 @@ class CertificateAuthorityServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateCertificateAuthority(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::security::privateca::v1::CertificateAuthority const&
           certificate_authority,
       std::string const& certificate_authority_id, Options opts = {});
@@ -703,7 +701,7 @@ class CertificateAuthorityServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateCertificateAuthority(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::security::privateca::v1::
           CreateCertificateAuthorityRequest const& request,
       Options opts = {});
@@ -718,8 +716,7 @@ class CertificateAuthorityServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  CreateCertificateAuthority(ExperimentalTag,
-                             google::longrunning::Operation const& operation,
+  CreateCertificateAuthority(google::longrunning::Operation const& operation,
                              Options opts = {});
 
   // clang-format off
@@ -769,7 +766,7 @@ class CertificateAuthorityServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DisableCertificateAuthority(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -824,7 +821,7 @@ class CertificateAuthorityServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DisableCertificateAuthority(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::security::privateca::v1::
           DisableCertificateAuthorityRequest const& request,
       Options opts = {});
@@ -839,8 +836,7 @@ class CertificateAuthorityServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  DisableCertificateAuthority(ExperimentalTag,
-                              google::longrunning::Operation const& operation,
+  DisableCertificateAuthority(google::longrunning::Operation const& operation,
                               Options opts = {});
 
   // clang-format off
@@ -890,7 +886,7 @@ class CertificateAuthorityServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> EnableCertificateAuthority(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -945,7 +941,7 @@ class CertificateAuthorityServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> EnableCertificateAuthority(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::security::privateca::v1::
           EnableCertificateAuthorityRequest const& request,
       Options opts = {});
@@ -960,8 +956,7 @@ class CertificateAuthorityServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  EnableCertificateAuthority(ExperimentalTag,
-                             google::longrunning::Operation const& operation,
+  EnableCertificateAuthority(google::longrunning::Operation const& operation,
                              Options opts = {});
 
   // clang-format off
@@ -1247,7 +1242,7 @@ class CertificateAuthorityServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UndeleteCertificateAuthority(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1303,7 +1298,7 @@ class CertificateAuthorityServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UndeleteCertificateAuthority(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::security::privateca::v1::
           UndeleteCertificateAuthorityRequest const& request,
       Options opts = {});
@@ -1318,8 +1313,7 @@ class CertificateAuthorityServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  UndeleteCertificateAuthority(ExperimentalTag,
-                               google::longrunning::Operation const& operation,
+  UndeleteCertificateAuthority(google::longrunning::Operation const& operation,
                                Options opts = {});
 
   // clang-format off
@@ -1369,7 +1363,7 @@ class CertificateAuthorityServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCertificateAuthority(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1424,7 +1418,7 @@ class CertificateAuthorityServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCertificateAuthority(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::security::privateca::v1::
           DeleteCertificateAuthorityRequest const& request,
       Options opts = {});
@@ -1439,8 +1433,7 @@ class CertificateAuthorityServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  DeleteCertificateAuthority(ExperimentalTag,
-                             google::longrunning::Operation const& operation,
+  DeleteCertificateAuthority(google::longrunning::Operation const& operation,
                              Options opts = {});
 
   // clang-format off
@@ -1494,7 +1487,7 @@ class CertificateAuthorityServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCertificateAuthority(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::security::privateca::v1::CertificateAuthority const&
           certificate_authority,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
@@ -1552,7 +1545,7 @@ class CertificateAuthorityServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCertificateAuthority(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::security::privateca::v1::
           UpdateCertificateAuthorityRequest const& request,
       Options opts = {});
@@ -1567,8 +1560,7 @@ class CertificateAuthorityServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  UpdateCertificateAuthority(ExperimentalTag,
-                             google::longrunning::Operation const& operation,
+  UpdateCertificateAuthority(google::longrunning::Operation const& operation,
                              Options opts = {});
 
   // clang-format off
@@ -1623,7 +1615,7 @@ class CertificateAuthorityServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateCaPool(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::security::privateca::v1::CaPool const& ca_pool,
       std::string const& ca_pool_id, Options opts = {});
 
@@ -1678,7 +1670,7 @@ class CertificateAuthorityServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateCaPool(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::security::privateca::v1::CreateCaPoolRequest const&
           request,
       Options opts = {});
@@ -1693,8 +1685,7 @@ class CertificateAuthorityServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CaPool>> CreateCaPool(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1743,8 +1734,7 @@ class CertificateAuthorityServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCaPool(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::security::privateca::v1::CaPool const& ca_pool,
+      NoAwaitTag, google::cloud::security::privateca::v1::CaPool const& ca_pool,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -1798,7 +1788,7 @@ class CertificateAuthorityServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCaPool(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::security::privateca::v1::UpdateCaPoolRequest const&
           request,
       Options opts = {});
@@ -1813,8 +1803,7 @@ class CertificateAuthorityServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CaPool>> UpdateCaPool(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1996,8 +1985,7 @@ class CertificateAuthorityServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteCaPool(ExperimentalTag,
-                                                        NoAwaitTag,
+  StatusOr<google::longrunning::Operation> DeleteCaPool(NoAwaitTag,
                                                         std::string const& name,
                                                         Options opts = {});
 
@@ -2054,7 +2042,7 @@ class CertificateAuthorityServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCaPool(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::security::privateca::v1::DeleteCaPoolRequest const&
           request,
       Options opts = {});
@@ -2069,7 +2057,7 @@ class CertificateAuthorityServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
-  DeleteCaPool(ExperimentalTag, google::longrunning::Operation const& operation,
+  DeleteCaPool(google::longrunning::Operation const& operation,
                Options opts = {});
 
   // clang-format off
@@ -2337,7 +2325,7 @@ class CertificateAuthorityServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCertificateRevocationList(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::security::privateca::v1::CertificateRevocationList const&
           certificate_revocation_list,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
@@ -2396,7 +2384,7 @@ class CertificateAuthorityServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCertificateRevocationList(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::security::privateca::v1::
           UpdateCertificateRevocationListRequest const& request,
       Options opts = {});
@@ -2413,8 +2401,7 @@ class CertificateAuthorityServiceClient {
   future<StatusOr<
       google::cloud::security::privateca::v1::CertificateRevocationList>>
   UpdateCertificateRevocationList(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2473,7 +2460,7 @@ class CertificateAuthorityServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateCertificateTemplate(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::security::privateca::v1::CertificateTemplate const&
           certificate_template,
       std::string const& certificate_template_id, Options opts = {});
@@ -2531,7 +2518,7 @@ class CertificateAuthorityServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateCertificateTemplate(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::security::privateca::v1::
           CreateCertificateTemplateRequest const& request,
       Options opts = {});
@@ -2546,8 +2533,7 @@ class CertificateAuthorityServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
-  CreateCertificateTemplate(ExperimentalTag,
-                            google::longrunning::Operation const& operation,
+  CreateCertificateTemplate(google::longrunning::Operation const& operation,
                             Options opts = {});
 
   // clang-format off
@@ -2598,7 +2584,7 @@ class CertificateAuthorityServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCertificateTemplate(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2653,7 +2639,7 @@ class CertificateAuthorityServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCertificateTemplate(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::security::privateca::v1::
           DeleteCertificateTemplateRequest const& request,
       Options opts = {});
@@ -2668,8 +2654,7 @@ class CertificateAuthorityServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
-  DeleteCertificateTemplate(ExperimentalTag,
-                            google::longrunning::Operation const& operation,
+  DeleteCertificateTemplate(google::longrunning::Operation const& operation,
                             Options opts = {});
 
   // clang-format off
@@ -2866,7 +2851,7 @@ class CertificateAuthorityServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCertificateTemplate(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::security::privateca::v1::CertificateTemplate const&
           certificate_template,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
@@ -2923,7 +2908,7 @@ class CertificateAuthorityServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCertificateTemplate(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::security::privateca::v1::
           UpdateCertificateTemplateRequest const& request,
       Options opts = {});
@@ -2938,8 +2923,7 @@ class CertificateAuthorityServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
-  UpdateCertificateTemplate(ExperimentalTag,
-                            google::longrunning::Operation const& operation,
+  UpdateCertificateTemplate(google::longrunning::Operation const& operation,
                             Options opts = {});
 
  private:

@@ -104,7 +104,7 @@ LicensesRestConnectionImpl::DeleteLicense(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 LicensesRestConnectionImpl::DeleteLicense(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -122,7 +122,6 @@ LicensesRestConnectionImpl::DeleteLicense(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 LicensesRestConnectionImpl::DeleteLicense(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -268,7 +267,7 @@ LicensesRestConnectionImpl::InsertLicense(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 LicensesRestConnectionImpl::InsertLicense(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -286,7 +285,6 @@ LicensesRestConnectionImpl::InsertLicense(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 LicensesRestConnectionImpl::InsertLicense(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

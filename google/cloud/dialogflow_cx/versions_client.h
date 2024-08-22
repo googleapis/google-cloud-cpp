@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_VERSIONS_CLIENT_H
 
 #include "google/cloud/dialogflow_cx/versions_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -285,7 +284,7 @@ class VersionsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateVersion(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::dialogflow::cx::v3::Version const& version,
       Options opts = {});
 
@@ -350,7 +349,7 @@ class VersionsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateVersion(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request,
       Options opts = {});
 
@@ -364,8 +363,7 @@ class VersionsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::Version>> CreateVersion(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -532,8 +530,7 @@ class VersionsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> LoadVersion(ExperimentalTag,
-                                                       NoAwaitTag,
+  StatusOr<google::longrunning::Operation> LoadVersion(NoAwaitTag,
                                                        std::string const& name,
                                                        Options opts = {});
 
@@ -596,7 +593,7 @@ class VersionsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> LoadVersion(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request,
       Options opts = {});
 
@@ -610,8 +607,7 @@ class VersionsClient {
   ///
   // clang-format on
   future<StatusOr<google::protobuf::Struct>> LoadVersion(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///

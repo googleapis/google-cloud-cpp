@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/signed_url_options.h"
 #include <gmock/gmock.h>
+#include <string>
 
 namespace google {
 namespace cloud {

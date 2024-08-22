@@ -21,6 +21,8 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/webrisk/v1/webrisk.grpc.pb.h>
 #include <memory>
+#include <set>
+#include <string>
 #include <utility>
 
 namespace google {

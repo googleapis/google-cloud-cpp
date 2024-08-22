@@ -21,6 +21,8 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/resourcemanager/v3/tag_bindings.grpc.pb.h>
 #include <memory>
+#include <set>
+#include <string>
 #include <utility>
 
 namespace google {

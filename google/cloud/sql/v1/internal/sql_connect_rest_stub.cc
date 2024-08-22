@@ -45,11 +45,13 @@ DefaultSqlConnectServiceRestStub::GetConnectSettings(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::GetConnectSettingsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<google::cloud::sql::v1::ConnectSettings>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "connectSettings"));
+                   request.instance(), "/", "connectSettings"),
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::sql::v1::GenerateEphemeralCertResponse>
@@ -57,15 +59,14 @@ DefaultSqlConnectServiceRestStub::GenerateEphemeralCert(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::GenerateEphemeralCertRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<
       google::cloud::sql::v1::GenerateEphemeralCertResponse>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), ":generateEphemeralCert"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("public_key", request.public_key()),
-           std::make_pair("access_token", request.access_token())}));
+      std::move(query_params));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

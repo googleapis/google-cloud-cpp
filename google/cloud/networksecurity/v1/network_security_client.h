@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKSECURITY_V1_NETWORK_SECURITY_CLIENT_H
 
 #include "google/cloud/networksecurity/v1/network_security_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -282,7 +281,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateAuthorizationPolicy(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::networksecurity::v1::AuthorizationPolicy const&
           authorization_policy,
       std::string const& authorization_policy_id, Options opts = {});
@@ -338,7 +337,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateAuthorizationPolicy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networksecurity::v1::
           CreateAuthorizationPolicyRequest const& request,
       Options opts = {});
@@ -353,8 +352,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
-  CreateAuthorizationPolicy(ExperimentalTag,
-                            google::longrunning::Operation const& operation,
+  CreateAuthorizationPolicy(google::longrunning::Operation const& operation,
                             Options opts = {});
 
   // clang-format off
@@ -409,7 +407,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAuthorizationPolicy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networksecurity::v1::AuthorizationPolicy const&
           authorization_policy,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
@@ -465,7 +463,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAuthorizationPolicy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networksecurity::v1::
           UpdateAuthorizationPolicyRequest const& request,
       Options opts = {});
@@ -480,8 +478,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
-  UpdateAuthorizationPolicy(ExperimentalTag,
-                            google::longrunning::Operation const& operation,
+  UpdateAuthorizationPolicy(google::longrunning::Operation const& operation,
                             Options opts = {});
 
   // clang-format off
@@ -529,7 +526,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAuthorizationPolicy(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -582,7 +579,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAuthorizationPolicy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networksecurity::v1::
           DeleteAuthorizationPolicyRequest const& request,
       Options opts = {});
@@ -597,8 +594,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
-  DeleteAuthorizationPolicy(ExperimentalTag,
-                            google::longrunning::Operation const& operation,
+  DeleteAuthorizationPolicy(google::longrunning::Operation const& operation,
                             Options opts = {});
 
   // clang-format off
@@ -789,7 +785,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateServerTlsPolicy(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::networksecurity::v1::ServerTlsPolicy const&
           server_tls_policy,
       std::string const& server_tls_policy_id, Options opts = {});
@@ -846,7 +842,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateServerTlsPolicy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networksecurity::v1::CreateServerTlsPolicyRequest const&
           request,
       Options opts = {});
@@ -861,8 +857,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>
-  CreateServerTlsPolicy(ExperimentalTag,
-                        google::longrunning::Operation const& operation,
+  CreateServerTlsPolicy(google::longrunning::Operation const& operation,
                         Options opts = {});
 
   // clang-format off
@@ -918,7 +913,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateServerTlsPolicy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networksecurity::v1::ServerTlsPolicy const&
           server_tls_policy,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
@@ -975,7 +970,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateServerTlsPolicy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networksecurity::v1::UpdateServerTlsPolicyRequest const&
           request,
       Options opts = {});
@@ -990,8 +985,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>
-  UpdateServerTlsPolicy(ExperimentalTag,
-                        google::longrunning::Operation const& operation,
+  UpdateServerTlsPolicy(google::longrunning::Operation const& operation,
                         Options opts = {});
 
   // clang-format off
@@ -1039,7 +1033,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteServerTlsPolicy(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1093,7 +1087,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteServerTlsPolicy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networksecurity::v1::DeleteServerTlsPolicyRequest const&
           request,
       Options opts = {});
@@ -1108,8 +1102,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
-  DeleteServerTlsPolicy(ExperimentalTag,
-                        google::longrunning::Operation const& operation,
+  DeleteServerTlsPolicy(google::longrunning::Operation const& operation,
                         Options opts = {});
 
   // clang-format off
@@ -1300,7 +1293,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateClientTlsPolicy(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::networksecurity::v1::ClientTlsPolicy const&
           client_tls_policy,
       std::string const& client_tls_policy_id, Options opts = {});
@@ -1357,7 +1350,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateClientTlsPolicy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networksecurity::v1::CreateClientTlsPolicyRequest const&
           request,
       Options opts = {});
@@ -1372,8 +1365,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>
-  CreateClientTlsPolicy(ExperimentalTag,
-                        google::longrunning::Operation const& operation,
+  CreateClientTlsPolicy(google::longrunning::Operation const& operation,
                         Options opts = {});
 
   // clang-format off
@@ -1429,7 +1421,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateClientTlsPolicy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networksecurity::v1::ClientTlsPolicy const&
           client_tls_policy,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
@@ -1486,7 +1478,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateClientTlsPolicy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networksecurity::v1::UpdateClientTlsPolicyRequest const&
           request,
       Options opts = {});
@@ -1501,8 +1493,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>
-  UpdateClientTlsPolicy(ExperimentalTag,
-                        google::longrunning::Operation const& operation,
+  UpdateClientTlsPolicy(google::longrunning::Operation const& operation,
                         Options opts = {});
 
   // clang-format off
@@ -1550,7 +1541,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteClientTlsPolicy(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1604,7 +1595,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteClientTlsPolicy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networksecurity::v1::DeleteClientTlsPolicyRequest const&
           request,
       Options opts = {});
@@ -1619,8 +1610,7 @@ class NetworkSecurityClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
-  DeleteClientTlsPolicy(ExperimentalTag,
-                        google::longrunning::Operation const& operation,
+  DeleteClientTlsPolicy(google::longrunning::Operation const& operation,
                         Options opts = {});
 
  private:

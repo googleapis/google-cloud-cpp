@@ -21,6 +21,8 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/orchestration/airflow/service/v1/image_versions.grpc.pb.h>
 #include <memory>
+#include <set>
+#include <string>
 #include <utility>
 
 namespace google {

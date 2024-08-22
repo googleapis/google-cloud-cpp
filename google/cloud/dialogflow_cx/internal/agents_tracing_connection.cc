@@ -87,23 +87,21 @@ AgentsTracingConnection::ExportAgent(
 }
 
 StatusOr<google::longrunning::Operation> AgentsTracingConnection::ExportAgent(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_cx::AgentsConnection::ExportAgent");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->ExportAgent(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->ExportAgent(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ExportAgentResponse>>
 AgentsTracingConnection::ExportAgent(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("dialogflow_cx::AgentsConnection::ExportAgent");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->ExportAgent(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->ExportAgent(operation));
 }
 
 future<StatusOr<google::protobuf::Struct>>
@@ -116,23 +114,21 @@ AgentsTracingConnection::RestoreAgent(
 }
 
 StatusOr<google::longrunning::Operation> AgentsTracingConnection::RestoreAgent(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_cx::AgentsConnection::RestoreAgent");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->RestoreAgent(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->RestoreAgent(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::protobuf::Struct>>
 AgentsTracingConnection::RestoreAgent(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("dialogflow_cx::AgentsConnection::RestoreAgent");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->RestoreAgent(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->RestoreAgent(operation));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>

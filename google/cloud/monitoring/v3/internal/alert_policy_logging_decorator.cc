@@ -21,6 +21,8 @@
 #include "google/cloud/status_or.h"
 #include <google/monitoring/v3/alert_service.grpc.pb.h>
 #include <memory>
+#include <set>
+#include <string>
 #include <utility>
 
 namespace google {

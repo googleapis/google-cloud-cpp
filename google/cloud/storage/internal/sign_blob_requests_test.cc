@@ -15,6 +15,9 @@
 #include "google/cloud/storage/internal/sign_blob_requests.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <sstream>
+#include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {

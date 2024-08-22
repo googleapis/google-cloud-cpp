@@ -56,65 +56,120 @@ class MockApiGatewayServiceConnection
               (google::cloud::apigateway::v1::GetGatewayRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateGateway)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateGateway(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateGateway(Matcher<google::cloud::apigateway::v1::CreateGatewayRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::apigateway::v1::Gateway>>, CreateGateway,
       (google::cloud::apigateway::v1::CreateGatewayRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateGateway(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateGateway,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::apigateway::v1::CreateGatewayRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateGateway(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::apigateway::v1::Gateway>>,
-              CreateGateway,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              CreateGateway, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateGateway)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateGateway(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateGateway(Matcher<google::cloud::apigateway::v1::UpdateGatewayRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::apigateway::v1::Gateway>>, UpdateGateway,
       (google::cloud::apigateway::v1::UpdateGatewayRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateGateway(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateGateway,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::apigateway::v1::UpdateGatewayRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateGateway(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::apigateway::v1::Gateway>>,
-              UpdateGateway,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              UpdateGateway, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteGateway)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteGateway(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteGateway(Matcher<google::cloud::apigateway::v1::DeleteGatewayRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>,
       DeleteGateway,
       (google::cloud::apigateway::v1::DeleteGatewayRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteGateway(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteGateway,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::apigateway::v1::DeleteGatewayRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteGateway(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>,
-      DeleteGateway,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteGateway, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD((StreamRange<google::cloud::apigateway::v1::Api>), ListApis,
@@ -125,59 +180,113 @@ class MockApiGatewayServiceConnection
               (google::cloud::apigateway::v1::GetApiRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateApi)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateApi(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateApi(Matcher<google::cloud::apigateway::v1::CreateApiRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::apigateway::v1::Api>>, CreateApi,
               (google::cloud::apigateway::v1::CreateApiRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateApi(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateApi,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::apigateway::v1::CreateApiRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateApi(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::apigateway::v1::Api>>, CreateApi,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateApi)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateApi(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateApi(Matcher<google::cloud::apigateway::v1::UpdateApiRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::apigateway::v1::Api>>, UpdateApi,
               (google::cloud::apigateway::v1::UpdateApiRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateApi(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateApi,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::apigateway::v1::UpdateApiRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateApi(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::apigateway::v1::Api>>, UpdateApi,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteApi)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteApi(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteApi(Matcher<google::cloud::apigateway::v1::DeleteApiRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>,
       DeleteApi,
       (google::cloud::apigateway::v1::DeleteApiRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteApi(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteApi,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::apigateway::v1::DeleteApiRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteApi(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>,
-      DeleteApi,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      DeleteApi, (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::apigateway::v1::ApiConfig>),
               ListApiConfigs,
@@ -189,67 +298,122 @@ class MockApiGatewayServiceConnection
       (google::cloud::apigateway::v1::GetApiConfigRequest const& request),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateApiConfig)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateApiConfig(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateApiConfig(Matcher<google::cloud::apigateway::v1::CreateApiConfigRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>,
       CreateApiConfig,
       (google::cloud::apigateway::v1::CreateApiConfigRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateApiConfig(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateApiConfig,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::apigateway::v1::CreateApiConfigRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateApiConfig(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>,
               CreateApiConfig,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateApiConfig)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateApiConfig(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateApiConfig(Matcher<google::cloud::apigateway::v1::UpdateApiConfigRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>,
       UpdateApiConfig,
       (google::cloud::apigateway::v1::UpdateApiConfigRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateApiConfig(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateApiConfig,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::apigateway::v1::UpdateApiConfigRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateApiConfig(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>,
               UpdateApiConfig,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteApiConfig)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteApiConfig(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteApiConfig(Matcher<google::cloud::apigateway::v1::DeleteApiConfigRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>,
       DeleteApiConfig,
       (google::cloud::apigateway::v1::DeleteApiConfigRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteApiConfig(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteApiConfig,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::apigateway::v1::DeleteApiConfigRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteApiConfig(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>,
-      DeleteApiConfig,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteApiConfig, (google::longrunning::Operation const& operation),
       (override));
 };
 

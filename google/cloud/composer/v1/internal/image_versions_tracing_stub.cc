@@ -18,6 +18,7 @@
 
 #include "google/cloud/composer/v1/internal/image_versions_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

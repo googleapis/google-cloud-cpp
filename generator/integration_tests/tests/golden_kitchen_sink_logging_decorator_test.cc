@@ -297,7 +297,10 @@ TEST_F(LoggingDecoratorTest, AsyncStreamingRead) {
   EXPECT_THAT(finish, StatusIs(StatusCode::kAborted));
 
   auto const log_lines = log_.ExtractLines();
-  EXPECT_THAT(log_lines, Contains(StartsWith("AsyncStreamingRead(")));
+  EXPECT_THAT(
+      log_lines,
+      Contains(AllOf(StartsWith("AsyncStreamingRead("),
+                     HasSubstr("google.test.admin.database.v1.Request"))));
   EXPECT_THAT(log_lines, Contains(StartsWith("Start(")));
   EXPECT_THAT(log_lines, Contains(StartsWith("Finish(")));
 }

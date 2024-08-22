@@ -162,7 +162,7 @@ DepServiceConnectionImpl::CreateLbTrafficExtension(
 
 StatusOr<google::longrunning::Operation>
 DepServiceConnectionImpl::CreateLbTrafficExtension(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -179,7 +179,7 @@ DepServiceConnectionImpl::CreateLbTrafficExtension(
 
 future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
 DepServiceConnectionImpl::CreateLbTrafficExtension(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkservices::v1::
@@ -257,7 +257,7 @@ DepServiceConnectionImpl::UpdateLbTrafficExtension(
 
 StatusOr<google::longrunning::Operation>
 DepServiceConnectionImpl::UpdateLbTrafficExtension(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -274,7 +274,7 @@ DepServiceConnectionImpl::UpdateLbTrafficExtension(
 
 future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
 DepServiceConnectionImpl::UpdateLbTrafficExtension(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkservices::v1::
@@ -352,7 +352,7 @@ DepServiceConnectionImpl::DeleteLbTrafficExtension(
 
 StatusOr<google::longrunning::Operation>
 DepServiceConnectionImpl::DeleteLbTrafficExtension(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -369,7 +369,7 @@ DepServiceConnectionImpl::DeleteLbTrafficExtension(
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 DepServiceConnectionImpl::DeleteLbTrafficExtension(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkservices::v1::
@@ -499,7 +499,7 @@ DepServiceConnectionImpl::CreateLbRouteExtension(
 
 StatusOr<google::longrunning::Operation>
 DepServiceConnectionImpl::CreateLbRouteExtension(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -516,7 +516,7 @@ DepServiceConnectionImpl::CreateLbRouteExtension(
 
 future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
 DepServiceConnectionImpl::CreateLbRouteExtension(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkservices::v1::
@@ -594,7 +594,7 @@ DepServiceConnectionImpl::UpdateLbRouteExtension(
 
 StatusOr<google::longrunning::Operation>
 DepServiceConnectionImpl::UpdateLbRouteExtension(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -611,7 +611,7 @@ DepServiceConnectionImpl::UpdateLbRouteExtension(
 
 future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
 DepServiceConnectionImpl::UpdateLbRouteExtension(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkservices::v1::
@@ -689,7 +689,7 @@ DepServiceConnectionImpl::DeleteLbRouteExtension(
 
 StatusOr<google::longrunning::Operation>
 DepServiceConnectionImpl::DeleteLbRouteExtension(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -706,7 +706,7 @@ DepServiceConnectionImpl::DeleteLbRouteExtension(
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 DepServiceConnectionImpl::DeleteLbRouteExtension(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkservices::v1::

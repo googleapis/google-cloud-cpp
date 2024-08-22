@@ -14,6 +14,8 @@
 
 #include "google/cloud/storage/async/rewriter.h"
 #include "google/cloud/internal/make_status.h"
+#include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

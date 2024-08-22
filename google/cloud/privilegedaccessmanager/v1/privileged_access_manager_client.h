@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PRIVILEGEDACCESSMANAGER_V1_PRIVILEGED_ACCESS_MANAGER_CLIENT_H
 
 #include "google/cloud/privilegedaccessmanager/v1/privileged_access_manager_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -385,7 +384,7 @@ class PrivilegedAccessManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateEntitlement(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::privilegedaccessmanager::v1::Entitlement const&
           entitlement,
       std::string const& entitlement_id, Options opts = {});
@@ -442,7 +441,7 @@ class PrivilegedAccessManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateEntitlement(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::privilegedaccessmanager::v1::
           CreateEntitlementRequest const& request,
       Options opts = {});
@@ -457,8 +456,7 @@ class PrivilegedAccessManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
-  CreateEntitlement(ExperimentalTag,
-                    google::longrunning::Operation const& operation,
+  CreateEntitlement(google::longrunning::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -507,7 +505,7 @@ class PrivilegedAccessManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteEntitlement(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -562,7 +560,7 @@ class PrivilegedAccessManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteEntitlement(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::privilegedaccessmanager::v1::
           DeleteEntitlementRequest const& request,
       Options opts = {});
@@ -577,8 +575,7 @@ class PrivilegedAccessManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
-  DeleteEntitlement(ExperimentalTag,
-                    google::longrunning::Operation const& operation,
+  DeleteEntitlement(google::longrunning::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -656,7 +653,7 @@ class PrivilegedAccessManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateEntitlement(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::privilegedaccessmanager::v1::Entitlement const&
           entitlement,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
@@ -731,7 +728,7 @@ class PrivilegedAccessManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateEntitlement(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::privilegedaccessmanager::v1::
           UpdateEntitlementRequest const& request,
       Options opts = {});
@@ -746,8 +743,7 @@ class PrivilegedAccessManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
-  UpdateEntitlement(ExperimentalTag,
-                    google::longrunning::Operation const& operation,
+  UpdateEntitlement(google::longrunning::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -1104,7 +1100,7 @@ class PrivilegedAccessManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> RevokeGrant(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const&
           request,
       Options opts = {});
@@ -1119,7 +1115,7 @@ class PrivilegedAccessManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>>
-  RevokeGrant(ExperimentalTag, google::longrunning::Operation const& operation,
+  RevokeGrant(google::longrunning::Operation const& operation,
               Options opts = {});
 
  private:

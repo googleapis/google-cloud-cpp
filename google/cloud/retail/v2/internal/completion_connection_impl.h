@@ -60,13 +60,12 @@ class CompletionServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> ImportCompletionData(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::retail::v2::ImportCompletionDataRequest const& request)
       override;
 
   future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>
   ImportCompletionData(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
  private:

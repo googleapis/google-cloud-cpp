@@ -57,12 +57,11 @@ class CatalogServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateEntryType(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataplex::v1::CreateEntryTypeRequest const& request)
       override;
 
   future<StatusOr<google::cloud::dataplex::v1::EntryType>> CreateEntryType(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dataplex::v1::EntryType>> UpdateEntryType(
@@ -70,12 +69,11 @@ class CatalogServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateEntryType(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request)
       override;
 
   future<StatusOr<google::cloud::dataplex::v1::EntryType>> UpdateEntryType(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
@@ -83,13 +81,12 @@ class CatalogServiceConnectionImpl
                       request) override;
 
   StatusOr<google::longrunning::Operation> DeleteEntryType(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request)
       override;
 
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteEntryType(ExperimentalTag,
-                  google::longrunning::Operation const& operation) override;
+  DeleteEntryType(google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::dataplex::v1::EntryType> ListEntryTypes(
       google::cloud::dataplex::v1::ListEntryTypesRequest request) override;
@@ -102,12 +99,11 @@ class CatalogServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateAspectType(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataplex::v1::CreateAspectTypeRequest const& request)
       override;
 
   future<StatusOr<google::cloud::dataplex::v1::AspectType>> CreateAspectType(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dataplex::v1::AspectType>> UpdateAspectType(
@@ -115,12 +111,11 @@ class CatalogServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateAspectType(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request)
       override;
 
   future<StatusOr<google::cloud::dataplex::v1::AspectType>> UpdateAspectType(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
@@ -128,13 +123,12 @@ class CatalogServiceConnectionImpl
                        request) override;
 
   StatusOr<google::longrunning::Operation> DeleteAspectType(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request)
       override;
 
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteAspectType(ExperimentalTag,
-                   google::longrunning::Operation const& operation) override;
+  DeleteAspectType(google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::dataplex::v1::AspectType> ListAspectTypes(
       google::cloud::dataplex::v1::ListAspectTypesRequest request) override;
@@ -148,12 +142,11 @@ class CatalogServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateEntryGroup(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataplex::v1::CreateEntryGroupRequest const& request)
       override;
 
   future<StatusOr<google::cloud::dataplex::v1::EntryGroup>> CreateEntryGroup(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dataplex::v1::EntryGroup>> UpdateEntryGroup(
@@ -161,12 +154,11 @@ class CatalogServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateEntryGroup(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request)
       override;
 
   future<StatusOr<google::cloud::dataplex::v1::EntryGroup>> UpdateEntryGroup(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
@@ -174,13 +166,12 @@ class CatalogServiceConnectionImpl
                        request) override;
 
   StatusOr<google::longrunning::Operation> DeleteEntryGroup(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request)
       override;
 
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteEntryGroup(ExperimentalTag,
-                   google::longrunning::Operation const& operation) override;
+  DeleteEntryGroup(google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::dataplex::v1::EntryGroup> ListEntryGroups(
       google::cloud::dataplex::v1::ListEntryGroupsRequest request) override;

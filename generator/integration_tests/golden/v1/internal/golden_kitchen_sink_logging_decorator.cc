@@ -26,6 +26,8 @@
 #include "google/cloud/status_or.h"
 #include <generator/integration_tests/test.grpc.pb.h>
 #include <memory>
+#include <set>
+#include <string>
 #include <utility>
 
 namespace google {
@@ -243,7 +245,9 @@ GoldenKitchenSinkLogging::AsyncStreamingRead(
      ::google::cloud::internal::AsyncStreamingReadRpcLogging<google::test::admin::database::v1::Response>;
 
   auto request_id = google::cloud::internal::RequestIdForLogging();
-  GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
+  google::cloud::internal::LogRequest(
+      __func__, request_id,
+      google::cloud::internal::DebugString(request, tracing_options_));
   auto stream = child_->AsyncStreamingRead(
       cq, std::move(context), std::move(options), request);
   if (stream_logging_) {

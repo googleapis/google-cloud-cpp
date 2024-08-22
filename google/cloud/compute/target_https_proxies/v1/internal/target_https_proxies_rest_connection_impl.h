@@ -66,13 +66,11 @@ class TargetHttpsProxiesRestConnectionImpl
           DeleteTargetHttpsProxyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetHttpsProxy(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::target_https_proxies::v1::
-          DeleteTargetHttpsProxyRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::target_https_proxies::v1::
+                      DeleteTargetHttpsProxyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteTargetHttpsProxy(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetHttpsProxy>
@@ -85,13 +83,11 @@ class TargetHttpsProxiesRestConnectionImpl
           InsertTargetHttpsProxyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetHttpsProxy(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::target_https_proxies::v1::
-          InsertTargetHttpsProxyRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::target_https_proxies::v1::
+                      InsertTargetHttpsProxyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertTargetHttpsProxy(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::TargetHttpsProxy>
@@ -104,13 +100,11 @@ class TargetHttpsProxiesRestConnectionImpl
           PatchTargetHttpsProxyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchTargetHttpsProxy(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::target_https_proxies::v1::
-          PatchTargetHttpsProxyRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::target_https_proxies::v1::
+                      PatchTargetHttpsProxyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchTargetHttpsProxy(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -118,13 +112,11 @@ class TargetHttpsProxiesRestConnectionImpl
                         SetCertificateMapRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetCertificateMap(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::target_https_proxies::v1::
-          SetCertificateMapRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::target_https_proxies::v1::
+                      SetCertificateMapRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetCertificateMap(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetQuicOverride(
@@ -132,12 +124,10 @@ class TargetHttpsProxiesRestConnectionImpl
           SetQuicOverrideRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetQuicOverride(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::target_https_proxies::v1::
-          SetQuicOverrideRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::target_https_proxies::v1::
+                      SetQuicOverrideRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetQuicOverride(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -145,13 +135,11 @@ class TargetHttpsProxiesRestConnectionImpl
                          SetSslCertificatesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetSslCertificates(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::target_https_proxies::v1::
-          SetSslCertificatesRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::target_https_proxies::v1::
+                      SetSslCertificatesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetSslCertificates(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetSslPolicy(
@@ -159,12 +147,10 @@ class TargetHttpsProxiesRestConnectionImpl
           SetSslPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetSslPolicy(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::target_https_proxies::v1::
-          SetSslPolicyRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::target_https_proxies::v1::
+                      SetSslPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetSslPolicy(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetUrlMap(
@@ -172,12 +158,10 @@ class TargetHttpsProxiesRestConnectionImpl
           SetUrlMapRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetUrlMap(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::target_https_proxies::v1::
-          SetUrlMapRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::target_https_proxies::v1::
+                      SetUrlMapRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetUrlMap(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:

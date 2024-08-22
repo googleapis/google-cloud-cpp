@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_COMPLETION_CLIENT_H
 
 #include "google/cloud/retail/v2/completion_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -185,7 +184,7 @@ class CompletionServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ImportCompletionData(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::retail::v2::ImportCompletionDataRequest const& request,
       Options opts = {});
 
@@ -199,8 +198,7 @@ class CompletionServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>
-  ImportCompletionData(ExperimentalTag,
-                       google::longrunning::Operation const& operation,
+  ImportCompletionData(google::longrunning::Operation const& operation,
                        Options opts = {});
 
  private:

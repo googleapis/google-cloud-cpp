@@ -125,10 +125,6 @@ message ServiceConfiguration {
   // https://github.com/googleapis/google-cloud-cpp/blob/main/doc/adr/2022-11-11-multiple-versions-of-GCP-service-in-one-library.md
   string forwarding_product_path = 19;
 
-  // Force the generation of the (sync) APIs for these deprecated RPCs so
-  // as to maintain backwards compatibility with previous releases.
-  repeated string emitted_rpcs = 20;
-
   // Override idempotency policy values for specific rpcs.
   message IdempotencyOverride {
     // rpc_name should be qualified with the service name e.g.: Service.Method.

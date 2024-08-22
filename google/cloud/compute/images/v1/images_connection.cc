@@ -46,7 +46,7 @@ ImagesConnection::DeleteImage(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ImagesConnection::DeleteImage(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::images::v1::DeleteImageRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -54,7 +54,7 @@ ImagesConnection::DeleteImage(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ImagesConnection::DeleteImage(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -70,15 +70,14 @@ ImagesConnection::Deprecate(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ImagesConnection::Deprecate(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::images::v1::DeprecateRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ImagesConnection::Deprecate(ExperimentalTag,
-                            google::cloud::cpp::compute::v1::Operation const&) {
+ImagesConnection::Deprecate(google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -111,7 +110,7 @@ ImagesConnection::InsertImage(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ImagesConnection::InsertImage(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::images::v1::InsertImageRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -119,7 +118,7 @@ ImagesConnection::InsertImage(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ImagesConnection::InsertImage(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -143,7 +142,7 @@ ImagesConnection::PatchImage(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ImagesConnection::PatchImage(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::images::v1::PatchImageRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -151,7 +150,7 @@ ImagesConnection::PatchImage(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ImagesConnection::PatchImage(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -173,15 +172,14 @@ ImagesConnection::SetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ImagesConnection::SetLabels(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::images::v1::SetLabelsRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-ImagesConnection::SetLabels(ExperimentalTag,
-                            google::cloud::cpp::compute::v1::Operation const&) {
+ImagesConnection::SetLabels(google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

@@ -46,26 +46,24 @@ DisksTracingConnection::AddResourcePolicies(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DisksTracingConnection::AddResourcePolicies(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::disks::v1::AddResourcePoliciesRequest const&
         request) {
   auto span = internal::MakeSpan(
       "compute_disks_v1::DisksConnection::AddResourcePolicies");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->AddResourcePolicies(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->AddResourcePolicies(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksTracingConnection::AddResourcePolicies(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_disks_v1::DisksConnection::AddResourcePolicies");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->AddResourcePolicies(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->AddResourcePolicies(operation));
 }
 
 StreamRange<
@@ -93,24 +91,21 @@ DisksTracingConnection::BulkInsert(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DisksTracingConnection::BulkInsert(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::disks::v1::BulkInsertRequest const& request) {
   auto span =
       internal::MakeSpan("compute_disks_v1::DisksConnection::BulkInsert");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->BulkInsert(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->BulkInsert(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksTracingConnection::BulkInsert(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span =
       internal::MakeSpan("compute_disks_v1::DisksConnection::BulkInsert");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->BulkInsert(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->BulkInsert(operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -125,25 +120,23 @@ DisksTracingConnection::CreateSnapshot(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DisksTracingConnection::CreateSnapshot(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const&
         request) {
   auto span =
       internal::MakeSpan("compute_disks_v1::DisksConnection::CreateSnapshot");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateSnapshot(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateSnapshot(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksTracingConnection::CreateSnapshot(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span =
       internal::MakeSpan("compute_disks_v1::DisksConnection::CreateSnapshot");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->CreateSnapshot(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateSnapshot(operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -157,24 +150,21 @@ DisksTracingConnection::DeleteDisk(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DisksTracingConnection::DeleteDisk(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::disks::v1::DeleteDiskRequest const& request) {
   auto span =
       internal::MakeSpan("compute_disks_v1::DisksConnection::DeleteDisk");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteDisk(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteDisk(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksTracingConnection::DeleteDisk(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span =
       internal::MakeSpan("compute_disks_v1::DisksConnection::DeleteDisk");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteDisk(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteDisk(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Disk> DisksTracingConnection::GetDisk(
@@ -205,24 +195,21 @@ DisksTracingConnection::InsertDisk(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DisksTracingConnection::InsertDisk(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::disks::v1::InsertDiskRequest const& request) {
   auto span =
       internal::MakeSpan("compute_disks_v1::DisksConnection::InsertDisk");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->InsertDisk(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->InsertDisk(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksTracingConnection::InsertDisk(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span =
       internal::MakeSpan("compute_disks_v1::DisksConnection::InsertDisk");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->InsertDisk(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->InsertDisk(operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Disk>
@@ -249,26 +236,24 @@ DisksTracingConnection::RemoveResourcePolicies(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DisksTracingConnection::RemoveResourcePolicies(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::disks::v1::RemoveResourcePoliciesRequest const&
         request) {
   auto span = internal::MakeSpan(
       "compute_disks_v1::DisksConnection::RemoveResourcePolicies");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span,
-      child_->RemoveResourcePolicies(ExperimentalTag{}, NoAwaitTag{}, request));
+      *span, child_->RemoveResourcePolicies(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksTracingConnection::RemoveResourcePolicies(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_disks_v1::DisksConnection::RemoveResourcePolicies");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->RemoveResourcePolicies(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->RemoveResourcePolicies(operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -281,22 +266,19 @@ DisksTracingConnection::Resize(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DisksTracingConnection::Resize(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::disks::v1::ResizeRequest const& request) {
   auto span = internal::MakeSpan("compute_disks_v1::DisksConnection::Resize");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->Resize(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->Resize(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksTracingConnection::Resize(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan("compute_disks_v1::DisksConnection::Resize");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->Resize(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->Resize(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -320,24 +302,21 @@ DisksTracingConnection::SetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DisksTracingConnection::SetLabels(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::disks::v1::SetLabelsRequest const& request) {
   auto span =
       internal::MakeSpan("compute_disks_v1::DisksConnection::SetLabels");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->SetLabels(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->SetLabels(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksTracingConnection::SetLabels(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span =
       internal::MakeSpan("compute_disks_v1::DisksConnection::SetLabels");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->SetLabels(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->SetLabels(operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -353,26 +332,24 @@ DisksTracingConnection::StartAsyncReplication(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DisksTracingConnection::StartAsyncReplication(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::disks::v1::StartAsyncReplicationRequest const&
         request) {
   auto span = internal::MakeSpan(
       "compute_disks_v1::DisksConnection::StartAsyncReplication");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span,
-      child_->StartAsyncReplication(ExperimentalTag{}, NoAwaitTag{}, request));
+      *span, child_->StartAsyncReplication(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksTracingConnection::StartAsyncReplication(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_disks_v1::DisksConnection::StartAsyncReplication");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->StartAsyncReplication(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->StartAsyncReplication(operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -388,26 +365,24 @@ DisksTracingConnection::StopAsyncReplication(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DisksTracingConnection::StopAsyncReplication(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::disks::v1::StopAsyncReplicationRequest const&
         request) {
   auto span = internal::MakeSpan(
       "compute_disks_v1::DisksConnection::StopAsyncReplication");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->StopAsyncReplication(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->StopAsyncReplication(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksTracingConnection::StopAsyncReplication(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_disks_v1::DisksConnection::StopAsyncReplication");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->StopAsyncReplication(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->StopAsyncReplication(operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -423,26 +398,23 @@ DisksTracingConnection::StopGroupAsyncReplication(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DisksTracingConnection::StopGroupAsyncReplication(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::disks::v1::
-        StopGroupAsyncReplicationRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::disks::v1::
+                    StopGroupAsyncReplicationRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_disks_v1::DisksConnection::StopGroupAsyncReplication");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->StopGroupAsyncReplication(ExperimentalTag{}, NoAwaitTag{},
-                                               request));
+      *span, child_->StopGroupAsyncReplication(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksTracingConnection::StopGroupAsyncReplication(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_disks_v1::DisksConnection::StopGroupAsyncReplication");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->StopGroupAsyncReplication(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->StopGroupAsyncReplication(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -466,24 +438,21 @@ DisksTracingConnection::UpdateDisk(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DisksTracingConnection::UpdateDisk(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::disks::v1::UpdateDiskRequest const& request) {
   auto span =
       internal::MakeSpan("compute_disks_v1::DisksConnection::UpdateDisk");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UpdateDisk(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateDisk(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksTracingConnection::UpdateDisk(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span =
       internal::MakeSpan("compute_disks_v1::DisksConnection::UpdateDisk");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateDisk(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateDisk(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

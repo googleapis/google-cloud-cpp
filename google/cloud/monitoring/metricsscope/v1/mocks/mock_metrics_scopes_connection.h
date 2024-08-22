@@ -61,9 +61,15 @@ class MockMetricsScopesConnection
                    ListMetricsScopesByMonitoredProjectRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateMonitoredProject)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateMonitoredProject(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateMonitoredProject(Matcher<google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>,
       CreateMonitoredProject,
@@ -71,21 +77,39 @@ class MockMetricsScopesConnection
            CreateMonitoredProjectRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateMonitoredProject(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateMonitoredProject,
-              (ExperimentalTag, NoAwaitTag,
-               google::monitoring::metricsscope::v1::
-                   CreateMonitoredProjectRequest const& request),
+              (NoAwaitTag, google::monitoring::metricsscope::v1::
+                               CreateMonitoredProjectRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateMonitoredProject(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>,
-      CreateMonitoredProject,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      CreateMonitoredProject, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteMonitoredProject)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteMonitoredProject(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteMonitoredProject(Matcher<google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>,
       DeleteMonitoredProject,
@@ -93,16 +117,28 @@ class MockMetricsScopesConnection
            DeleteMonitoredProjectRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteMonitoredProject(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteMonitoredProject,
-              (ExperimentalTag, NoAwaitTag,
-               google::monitoring::metricsscope::v1::
-                   DeleteMonitoredProjectRequest const& request),
+              (NoAwaitTag, google::monitoring::metricsscope::v1::
+                               DeleteMonitoredProjectRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteMonitoredProject(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>,
-      DeleteMonitoredProject,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteMonitoredProject, (google::longrunning::Operation const& operation),
       (override));
 };
 

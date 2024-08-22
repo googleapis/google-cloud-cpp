@@ -41,12 +41,12 @@ ProjectsClient::DisableXpnHost(std::string const& project, Options opts) {
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-ProjectsClient::DisableXpnHost(ExperimentalTag, NoAwaitTag,
-                               std::string const& project, Options opts) {
+ProjectsClient::DisableXpnHost(NoAwaitTag, std::string const& project,
+                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest request;
   request.set_project(project);
-  return connection_->DisableXpnHost(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DisableXpnHost(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -60,20 +60,19 @@ ProjectsClient::DisableXpnHost(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsClient::DisableXpnHost(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DisableXpnHost(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DisableXpnHost(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsClient::DisableXpnHost(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DisableXpnHost(ExperimentalTag{}, operation);
+  return connection_->DisableXpnHost(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -92,7 +91,7 @@ ProjectsClient::DisableXpnResource(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsClient::DisableXpnResource(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
+    NoAwaitTag, std::string const& project,
     google::cloud::cpp::compute::v1::ProjectsDisableXpnResourceRequest const&
         projects_disable_xpn_resource_request_resource,
     Options opts) {
@@ -101,8 +100,7 @@ ProjectsClient::DisableXpnResource(
   request.set_project(project);
   *request.mutable_projects_disable_xpn_resource_request_resource() =
       projects_disable_xpn_resource_request_resource;
-  return connection_->DisableXpnResource(ExperimentalTag{}, NoAwaitTag{},
-                                         request);
+  return connection_->DisableXpnResource(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -116,21 +114,19 @@ ProjectsClient::DisableXpnResource(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsClient::DisableXpnResource(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DisableXpnResource(ExperimentalTag{}, NoAwaitTag{},
-                                         request);
+  return connection_->DisableXpnResource(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsClient::DisableXpnResource(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DisableXpnResource(ExperimentalTag{}, operation);
+  return connection_->DisableXpnResource(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -142,12 +138,12 @@ ProjectsClient::EnableXpnHost(std::string const& project, Options opts) {
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-ProjectsClient::EnableXpnHost(ExperimentalTag, NoAwaitTag,
-                              std::string const& project, Options opts) {
+ProjectsClient::EnableXpnHost(NoAwaitTag, std::string const& project,
+                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest request;
   request.set_project(project);
-  return connection_->EnableXpnHost(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->EnableXpnHost(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -161,20 +157,19 @@ ProjectsClient::EnableXpnHost(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsClient::EnableXpnHost(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->EnableXpnHost(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->EnableXpnHost(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsClient::EnableXpnHost(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->EnableXpnHost(ExperimentalTag{}, operation);
+  return connection_->EnableXpnHost(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -193,7 +188,7 @@ ProjectsClient::EnableXpnResource(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsClient::EnableXpnResource(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
+    NoAwaitTag, std::string const& project,
     google::cloud::cpp::compute::v1::ProjectsEnableXpnResourceRequest const&
         projects_enable_xpn_resource_request_resource,
     Options opts) {
@@ -202,8 +197,7 @@ ProjectsClient::EnableXpnResource(
   request.set_project(project);
   *request.mutable_projects_enable_xpn_resource_request_resource() =
       projects_enable_xpn_resource_request_resource;
-  return connection_->EnableXpnResource(ExperimentalTag{}, NoAwaitTag{},
-                                        request);
+  return connection_->EnableXpnResource(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -217,21 +211,19 @@ ProjectsClient::EnableXpnResource(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsClient::EnableXpnResource(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->EnableXpnResource(ExperimentalTag{}, NoAwaitTag{},
-                                        request);
+  return connection_->EnableXpnResource(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsClient::EnableXpnResource(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->EnableXpnResource(ExperimentalTag{}, operation);
+  return connection_->EnableXpnResource(operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Project> ProjectsClient::GetProject(
@@ -316,7 +308,7 @@ ProjectsClient::MoveDisk(std::string const& project,
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation> ProjectsClient::MoveDisk(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
+    NoAwaitTag, std::string const& project,
     google::cloud::cpp::compute::v1::DiskMoveRequest const&
         disk_move_request_resource,
     Options opts) {
@@ -324,7 +316,7 @@ StatusOr<google::cloud::cpp::compute::v1::Operation> ProjectsClient::MoveDisk(
   google::cloud::cpp::compute::projects::v1::MoveDiskRequest request;
   request.set_project(project);
   *request.mutable_disk_move_request_resource() = disk_move_request_resource;
-  return connection_->MoveDisk(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->MoveDisk(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -336,19 +328,18 @@ ProjectsClient::MoveDisk(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation> ProjectsClient::MoveDisk(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->MoveDisk(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->MoveDisk(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsClient::MoveDisk(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->MoveDisk(ExperimentalTag{}, operation);
+  return connection_->MoveDisk(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -367,7 +358,7 @@ ProjectsClient::MoveInstance(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsClient::MoveInstance(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
+    NoAwaitTag, std::string const& project,
     google::cloud::cpp::compute::v1::InstanceMoveRequest const&
         instance_move_request_resource,
     Options opts) {
@@ -376,7 +367,7 @@ ProjectsClient::MoveInstance(
   request.set_project(project);
   *request.mutable_instance_move_request_resource() =
       instance_move_request_resource;
-  return connection_->MoveInstance(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->MoveInstance(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -390,20 +381,19 @@ ProjectsClient::MoveInstance(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsClient::MoveInstance(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->MoveInstance(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->MoveInstance(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsClient::MoveInstance(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->MoveInstance(ExperimentalTag{}, operation);
+  return connection_->MoveInstance(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -422,7 +412,7 @@ ProjectsClient::SetCloudArmorTier(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsClient::SetCloudArmorTier(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
+    NoAwaitTag, std::string const& project,
     google::cloud::cpp::compute::v1::ProjectsSetCloudArmorTierRequest const&
         projects_set_cloud_armor_tier_request_resource,
     Options opts) {
@@ -431,8 +421,7 @@ ProjectsClient::SetCloudArmorTier(
   request.set_project(project);
   *request.mutable_projects_set_cloud_armor_tier_request_resource() =
       projects_set_cloud_armor_tier_request_resource;
-  return connection_->SetCloudArmorTier(ExperimentalTag{}, NoAwaitTag{},
-                                        request);
+  return connection_->SetCloudArmorTier(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -446,21 +435,19 @@ ProjectsClient::SetCloudArmorTier(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsClient::SetCloudArmorTier(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SetCloudArmorTier(ExperimentalTag{}, NoAwaitTag{},
-                                        request);
+  return connection_->SetCloudArmorTier(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsClient::SetCloudArmorTier(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SetCloudArmorTier(ExperimentalTag{}, operation);
+  return connection_->SetCloudArmorTier(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -478,7 +465,7 @@ ProjectsClient::SetCommonInstanceMetadata(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsClient::SetCommonInstanceMetadata(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
+    NoAwaitTag, std::string const& project,
     google::cloud::cpp::compute::v1::Metadata const& metadata_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -486,8 +473,7 @@ ProjectsClient::SetCommonInstanceMetadata(
       request;
   request.set_project(project);
   *request.mutable_metadata_resource() = metadata_resource;
-  return connection_->SetCommonInstanceMetadata(ExperimentalTag{}, NoAwaitTag{},
-                                                request);
+  return connection_->SetCommonInstanceMetadata(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -501,21 +487,19 @@ ProjectsClient::SetCommonInstanceMetadata(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsClient::SetCommonInstanceMetadata(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::projects::v1::
         SetCommonInstanceMetadataRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SetCommonInstanceMetadata(ExperimentalTag{}, NoAwaitTag{},
-                                                request);
+  return connection_->SetCommonInstanceMetadata(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsClient::SetCommonInstanceMetadata(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SetCommonInstanceMetadata(ExperimentalTag{}, operation);
+  return connection_->SetCommonInstanceMetadata(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -535,7 +519,7 @@ ProjectsClient::SetDefaultNetworkTier(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsClient::SetDefaultNetworkTier(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
+    NoAwaitTag, std::string const& project,
     google::cloud::cpp::compute::v1::ProjectsSetDefaultNetworkTierRequest const&
         projects_set_default_network_tier_request_resource,
     Options opts) {
@@ -545,8 +529,7 @@ ProjectsClient::SetDefaultNetworkTier(
   request.set_project(project);
   *request.mutable_projects_set_default_network_tier_request_resource() =
       projects_set_default_network_tier_request_resource;
-  return connection_->SetDefaultNetworkTier(ExperimentalTag{}, NoAwaitTag{},
-                                            request);
+  return connection_->SetDefaultNetworkTier(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -560,21 +543,19 @@ ProjectsClient::SetDefaultNetworkTier(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsClient::SetDefaultNetworkTier(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::projects::v1::
         SetDefaultNetworkTierRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SetDefaultNetworkTier(ExperimentalTag{}, NoAwaitTag{},
-                                            request);
+  return connection_->SetDefaultNetworkTier(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsClient::SetDefaultNetworkTier(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SetDefaultNetworkTier(ExperimentalTag{}, operation);
+  return connection_->SetDefaultNetworkTier(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -594,7 +575,7 @@ ProjectsClient::SetUsageExportBucket(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsClient::SetUsageExportBucket(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
+    NoAwaitTag, std::string const& project,
     google::cloud::cpp::compute::v1::UsageExportLocation const&
         usage_export_location_resource,
     Options opts) {
@@ -604,8 +585,7 @@ ProjectsClient::SetUsageExportBucket(
   request.set_project(project);
   *request.mutable_usage_export_location_resource() =
       usage_export_location_resource;
-  return connection_->SetUsageExportBucket(ExperimentalTag{}, NoAwaitTag{},
-                                           request);
+  return connection_->SetUsageExportBucket(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -619,21 +599,19 @@ ProjectsClient::SetUsageExportBucket(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsClient::SetUsageExportBucket(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::projects::v1::
         SetUsageExportBucketRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SetUsageExportBucket(ExperimentalTag{}, NoAwaitTag{},
-                                           request);
+  return connection_->SetUsageExportBucket(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsClient::SetUsageExportBucket(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SetUsageExportBucket(ExperimentalTag{}, operation);
+  return connection_->SetUsageExportBucket(operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

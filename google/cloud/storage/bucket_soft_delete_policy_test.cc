@@ -17,6 +17,7 @@
 #include "absl/time/time.h"
 #include <gmock/gmock.h>
 #include <sstream>
+#include <string>
 
 namespace google {
 namespace cloud {

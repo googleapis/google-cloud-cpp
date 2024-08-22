@@ -21,6 +21,8 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/workflows/v1/workflows.grpc.pb.h>
 #include <memory>
+#include <set>
+#include <string>
 #include <utility>
 
 namespace google {

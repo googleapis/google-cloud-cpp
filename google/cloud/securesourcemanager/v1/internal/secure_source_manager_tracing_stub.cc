@@ -18,6 +18,7 @@
 
 #include "google/cloud/securesourcemanager/v1/internal/secure_source_manager_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

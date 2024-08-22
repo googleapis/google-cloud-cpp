@@ -16,6 +16,7 @@
 #include "google/cloud/storage/internal/patch_builder_details.h"
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
+#include <string>
 #include <vector>
 
 namespace google {

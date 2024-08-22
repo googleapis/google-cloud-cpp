@@ -18,6 +18,8 @@
 #include "google/cloud/internal/parse_rfc3339.h"
 #include <gmock/gmock.h>
 #include <sstream>
+#include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {

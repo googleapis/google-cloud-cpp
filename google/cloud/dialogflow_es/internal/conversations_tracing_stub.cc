@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_es/internal/conversations_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {
@@ -117,6 +118,20 @@ ConversationsTracingStub::GenerateStatelessSummary(
   return internal::EndSpan(
       context, *span,
       child_->GenerateStatelessSummary(context, options, request));
+}
+
+StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSuggestionResponse>
+ConversationsTracingStub::GenerateStatelessSuggestion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::v2::GenerateStatelessSuggestionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Conversations",
+                                     "GenerateStatelessSuggestion");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->GenerateStatelessSuggestion(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>

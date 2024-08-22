@@ -67,12 +67,11 @@ class DataFusionConnectionImpl : public datafusion_v1::DataFusionConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::datafusion::v1::CreateInstanceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::datafusion::v1::Instance>> CreateInstance(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::datafusion::v1::OperationMetadata>>
@@ -80,25 +79,23 @@ class DataFusionConnectionImpl : public datafusion_v1::DataFusionConnection {
                      request) override;
 
   StatusOr<google::longrunning::Operation> DeleteInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::datafusion::v1::DeleteInstanceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::datafusion::v1::OperationMetadata>>
-  DeleteInstance(ExperimentalTag,
-                 google::longrunning::Operation const& operation) override;
+  DeleteInstance(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::datafusion::v1::Instance>> UpdateInstance(
       google::cloud::datafusion::v1::UpdateInstanceRequest const& request)
       override;
 
   StatusOr<google::longrunning::Operation> UpdateInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::datafusion::v1::UpdateInstanceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::datafusion::v1::Instance>> UpdateInstance(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::datafusion::v1::Instance>> RestartInstance(
@@ -106,12 +103,11 @@ class DataFusionConnectionImpl : public datafusion_v1::DataFusionConnection {
       override;
 
   StatusOr<google::longrunning::Operation> RestartInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::datafusion::v1::RestartInstanceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::datafusion::v1::Instance>> RestartInstance(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
  private:

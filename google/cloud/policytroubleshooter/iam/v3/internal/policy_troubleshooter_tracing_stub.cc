@@ -18,6 +18,7 @@
 
 #include "google/cloud/policytroubleshooter/iam/v3/internal/policy_troubleshooter_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

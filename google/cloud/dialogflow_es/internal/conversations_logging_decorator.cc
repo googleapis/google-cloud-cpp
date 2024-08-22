@@ -21,6 +21,8 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/v2/conversation.grpc.pb.h>
 #include <memory>
+#include <set>
+#include <string>
 #include <utility>
 
 namespace google {
@@ -123,6 +125,20 @@ ConversationsLogging::GenerateStatelessSummary(
           google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
               request) {
         return child_->GenerateStatelessSummary(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSuggestionResponse>
+ConversationsLogging::GenerateStatelessSuggestion(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::v2::GenerateStatelessSuggestionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::v2::
+                 GenerateStatelessSuggestionRequest const& request) {
+        return child_->GenerateStatelessSuggestion(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }

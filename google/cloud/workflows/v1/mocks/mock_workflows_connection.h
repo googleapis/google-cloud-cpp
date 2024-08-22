@@ -55,65 +55,119 @@ class MockWorkflowsConnection : public workflows_v1::WorkflowsConnection {
               (google::cloud::workflows::v1::GetWorkflowRequest const& request),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateWorkflow)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateWorkflow(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateWorkflow(Matcher<google::cloud::workflows::v1::CreateWorkflowRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::workflows::v1::Workflow>>, CreateWorkflow,
       (google::cloud::workflows::v1::CreateWorkflowRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateWorkflow(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateWorkflow,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::workflows::v1::CreateWorkflowRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateWorkflow(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::workflows::v1::Workflow>>,
-              CreateWorkflow,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              CreateWorkflow, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteWorkflow)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteWorkflow(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteWorkflow(Matcher<google::cloud::workflows::v1::DeleteWorkflowRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>,
       DeleteWorkflow,
       (google::cloud::workflows::v1::DeleteWorkflowRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteWorkflow(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteWorkflow,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::workflows::v1::DeleteWorkflowRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteWorkflow(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>,
-              DeleteWorkflow,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              DeleteWorkflow, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateWorkflow)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateWorkflow(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateWorkflow(Matcher<google::cloud::workflows::v1::UpdateWorkflowRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::workflows::v1::Workflow>>, UpdateWorkflow,
       (google::cloud::workflows::v1::UpdateWorkflowRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateWorkflow(_, _))
+  /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateWorkflow,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::workflows::v1::UpdateWorkflowRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateWorkflow(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::workflows::v1::Workflow>>,
-              UpdateWorkflow,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              UpdateWorkflow, (google::longrunning::Operation const& operation),
               (override));
 };
 

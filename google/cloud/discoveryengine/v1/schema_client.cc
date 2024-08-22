@@ -78,7 +78,7 @@ SchemaServiceClient::CreateSchema(
 }
 
 StatusOr<google::longrunning::Operation> SchemaServiceClient::CreateSchema(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::cloud::discoveryengine::v1::Schema const& schema,
     std::string const& schema_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -86,7 +86,7 @@ StatusOr<google::longrunning::Operation> SchemaServiceClient::CreateSchema(
   request.set_parent(parent);
   *request.mutable_schema() = schema;
   request.set_schema_id(schema_id);
-  return connection_->CreateSchema(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateSchema(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
@@ -98,19 +98,18 @@ SchemaServiceClient::CreateSchema(
 }
 
 StatusOr<google::longrunning::Operation> SchemaServiceClient::CreateSchema(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::discoveryengine::v1::CreateSchemaRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateSchema(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateSchema(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
 SchemaServiceClient::CreateSchema(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateSchema(ExperimentalTag{}, operation);
+  return connection_->CreateSchema(operation);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
@@ -122,19 +121,18 @@ SchemaServiceClient::UpdateSchema(
 }
 
 StatusOr<google::longrunning::Operation> SchemaServiceClient::UpdateSchema(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateSchema(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->UpdateSchema(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
 SchemaServiceClient::UpdateSchema(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateSchema(ExperimentalTag{}, operation);
+  return connection_->UpdateSchema(operation);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
@@ -146,11 +144,11 @@ SchemaServiceClient::DeleteSchema(std::string const& name, Options opts) {
 }
 
 StatusOr<google::longrunning::Operation> SchemaServiceClient::DeleteSchema(
-    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::discoveryengine::v1::DeleteSchemaRequest request;
   request.set_name(name);
-  return connection_->DeleteSchema(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteSchema(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
@@ -162,19 +160,18 @@ SchemaServiceClient::DeleteSchema(
 }
 
 StatusOr<google::longrunning::Operation> SchemaServiceClient::DeleteSchema(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteSchema(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteSchema(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
 SchemaServiceClient::DeleteSchema(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteSchema(ExperimentalTag{}, operation);
+  return connection_->DeleteSchema(operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
