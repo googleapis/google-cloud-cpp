@@ -204,7 +204,7 @@ void InsertDataWithDml(google::cloud::spanner::Client client) {
         return spanner::Mutations{};
       });
   if (!commit_result) throw std::move(commit_result).status();
-  std::cout << "Rows inserted into Account: " << rows_inserted;
+  std::cout << "Rows inserted into Account: " << rows_inserted << "\n";
 
   commit_result = client.Commit(
     [&client, &rows_inserted](
@@ -222,7 +222,8 @@ void InsertDataWithDml(google::cloud::spanner::Client client) {
         return spanner::Mutations{};
       });
   if (!commit_result) throw std::move(commit_result).status();
-  std::cout << "Rows inserted into AccountTransferAccount: " << rows_inserted;
+  std::cout << "Rows inserted into AccountTransferAccount: "
+            << rows_inserted << "\n";
  
   std::cout << "Insert was successful [spanner_insert_graph_data_with_dml]\n";
 }
@@ -278,8 +279,8 @@ void UpdateDataWithGraphQueryInDml(google::cloud::spanner::Client client) {
         return spanner::Mutations{};
       });
   if (!commit_result) throw std::move(commit_result).status();
-  std::cout << "Update was successful " << 
-               "[spanner_update_graph_data_with_graph_query_in_dml]\n";
+  std::cout << "Update was successful "
+            << "[spanner_update_graph_data_with_graph_query_in_dml]\n";
 }
 //! [END spanner_update_graph_data_with_graph_query_in_dml]
 
