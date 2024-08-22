@@ -31,9 +31,6 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     set_tests_properties(
         gkeconnect_quickstart
         PROPERTIES
-            LABELS
-            "integration-test;quickstart"
-            PASS_REGULAR_EXPRESSION
-            "google::cloud::Status thrown: INVALID_ARGUMENT: Permanent error"
-    )
+            LABELS "integration-test;quickstart" PASS_REGULAR_EXPRESSION
+            "google::cloud::Status thrown: INVALID_ARGUMENT: Permanent error")
 endif ()
