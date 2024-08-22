@@ -18,6 +18,7 @@
 
 #include "google/cloud/texttospeech/v1/internal/text_to_speech_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/texttospeech/v1/cloud_tts.grpc.pb.h>
 #include <memory>
@@ -52,6 +53,22 @@ DefaultTextToSpeechStub::SynthesizeSpeech(
     return google::cloud::MakeStatusFromRpcError(status);
   }
   return response;
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::texttospeech::v1::StreamingSynthesizeRequest,
+    google::cloud::texttospeech::v1::StreamingSynthesizeResponse>>
+DefaultTextToSpeechStub::AsyncStreamingSynthesize(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  return google::cloud::internal::MakeStreamingReadWriteRpc<
+      google::cloud::texttospeech::v1::StreamingSynthesizeRequest,
+      google::cloud::texttospeech::v1::StreamingSynthesizeResponse>(
+      cq, std::move(context), std::move(options),
+      [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
+        return grpc_stub_->PrepareAsyncStreamingSynthesize(context, cq);
+      });
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

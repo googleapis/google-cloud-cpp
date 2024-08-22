@@ -49,8 +49,8 @@ declare -A -r LIBRARIES=(
   ["automl"]="@com_google_googleapis//google/cloud/automl/v1:automl_cc_grpc"
   ["backupdr"]="$(
     printf ",%s" \
-      "@com_google_googleapis//google/cloud/backupdr/v1:backupdr_cc_grpc"
-    "@com_google_googleapis//google/cloud/backupdr/logging/v1:logging_cc_grpc"
+      "@com_google_googleapis//google/cloud/backupdr/v1:backupdr_cc_grpc" \
+      "@com_google_googleapis//google/cloud/backupdr/logging/v1:logging_cc_grpc"
   )"
   ["baremetalsolution"]="@com_google_googleapis//google/cloud/baremetalsolution/v2:baremetalsolution_cc_grpc"
   ["batch"]="@com_google_googleapis//google/cloud/batch/v1:batch_cc_grpc"

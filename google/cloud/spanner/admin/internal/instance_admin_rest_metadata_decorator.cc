@@ -284,6 +284,25 @@ InstanceAdminRestMetadata::ListInstancePartitionOperations(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+InstanceAdminRestMetadata::AsyncMoveInstance(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::spanner::admin::instance::v1::MoveInstanceRequest const& request) {
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncMoveInstance(cq, std::move(rest_context),
+                                   std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+InstanceAdminRestMetadata::MoveInstance(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::instance::v1::MoveInstanceRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->MoveInstance(rest_context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 InstanceAdminRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,

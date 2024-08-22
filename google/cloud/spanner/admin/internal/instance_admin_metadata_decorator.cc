@@ -326,6 +326,26 @@ InstanceAdminMetadata::ListInstancePartitionOperations(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+InstanceAdminMetadata::AsyncMoveInstance(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::spanner::admin::instance::v1::MoveInstanceRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncMoveInstance(cq, std::move(context), std::move(options),
+                                   request);
+}
+
+StatusOr<google::longrunning::Operation> InstanceAdminMetadata::MoveInstance(
+    grpc::ClientContext& context, Options options,
+    google::spanner::admin::instance::v1::MoveInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->MoveInstance(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 InstanceAdminMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

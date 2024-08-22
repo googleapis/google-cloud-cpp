@@ -17,6 +17,7 @@
 // source: google/cloud/texttospeech/v1/cloud_tts.proto
 
 #include "google/cloud/texttospeech/v1/internal/text_to_speech_tracing_stub.h"
+#include "google/cloud/internal/async_read_write_stream_tracing.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
 #include <memory>
 #include <utility>
@@ -54,6 +55,24 @@ TextToSpeechTracingStub::SynthesizeSpeech(
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->SynthesizeSpeech(context, options, request));
+}
+
+std::unique_ptr<AsyncStreamingReadWriteRpc<
+    google::cloud::texttospeech::v1::StreamingSynthesizeRequest,
+    google::cloud::texttospeech::v1::StreamingSynthesizeResponse>>
+TextToSpeechTracingStub::AsyncStreamingSynthesize(
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.texttospeech.v1.TextToSpeech", "StreamingSynthesize");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto stream =
+      child_->AsyncStreamingSynthesize(cq, context, std::move(options));
+  return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
+      google::cloud::texttospeech::v1::StreamingSynthesizeRequest,
+      google::cloud::texttospeech::v1::StreamingSynthesizeResponse>>(
+      std::move(context), std::move(stream), std::move(span));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

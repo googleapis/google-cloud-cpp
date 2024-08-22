@@ -49,6 +49,17 @@ TextToSpeechConnection::SynthesizeSpeech(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::texttospeech::v1::StreamingSynthesizeRequest,
+    google::cloud::texttospeech::v1::StreamingSynthesizeResponse>>
+TextToSpeechConnection::AsyncStreamingSynthesize() {
+  return std::make_unique<
+      ::google::cloud::internal::AsyncStreamingReadWriteRpcError<
+          google::cloud::texttospeech::v1::StreamingSynthesizeRequest,
+          google::cloud::texttospeech::v1::StreamingSynthesizeResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 std::shared_ptr<TextToSpeechConnection> MakeTextToSpeechConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

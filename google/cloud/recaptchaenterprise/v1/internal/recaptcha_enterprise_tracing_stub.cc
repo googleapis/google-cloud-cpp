@@ -153,6 +153,20 @@ RecaptchaEnterpriseServiceTracingStub::MigrateKey(
                            child_->MigrateKey(context, options, request));
 }
 
+StatusOr<google::cloud::recaptchaenterprise::v1::AddIpOverrideResponse>
+RecaptchaEnterpriseServiceTracingStub::AddIpOverride(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::recaptchaenterprise::v1::AddIpOverrideRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService",
+      "AddIpOverride");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->AddIpOverride(context, options, request));
+}
+
 StatusOr<google::cloud::recaptchaenterprise::v1::Metrics>
 RecaptchaEnterpriseServiceTracingStub::GetMetrics(
     grpc::ClientContext& context, Options const& options,

@@ -19,6 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TEXTTOSPEECH_V1_INTERNAL_TEXT_TO_SPEECH_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TEXTTOSPEECH_V1_INTERNAL_TEXT_TO_SPEECH_STUB_H
 
+#include "google/cloud/async_streaming_read_write_rpc.h"
+#include "google/cloud/completion_queue.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -45,6 +47,14 @@ class TextToSpeechStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::texttospeech::v1::SynthesizeSpeechRequest const&
           request) = 0;
+
+  virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::texttospeech::v1::StreamingSynthesizeRequest,
+      google::cloud::texttospeech::v1::StreamingSynthesizeResponse>>
+  AsyncStreamingSynthesize(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) = 0;
 };
 
 class DefaultTextToSpeechStub : public TextToSpeechStub {
@@ -65,6 +75,14 @@ class DefaultTextToSpeechStub : public TextToSpeechStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request)
       override;
+
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::texttospeech::v1::StreamingSynthesizeRequest,
+      google::cloud::texttospeech::v1::StreamingSynthesizeResponse>>
+  AsyncStreamingSynthesize(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
 
  private:
   std::unique_ptr<google::cloud::texttospeech::v1::TextToSpeech::StubInterface>

@@ -24,6 +24,7 @@
 #include "google/cloud/texttospeech/v1/text_to_speech_connection.h"
 #include "google/cloud/texttospeech/v1/text_to_speech_connection_idempotency_policy.h"
 #include "google/cloud/texttospeech/v1/text_to_speech_options.h"
+#include "google/cloud/async_streaming_read_write_rpc.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
@@ -56,6 +57,11 @@ class TextToSpeechConnectionImpl
   SynthesizeSpeech(
       google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request)
       override;
+
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::texttospeech::v1::StreamingSynthesizeRequest,
+      google::cloud::texttospeech::v1::StreamingSynthesizeResponse>>
+  AsyncStreamingSynthesize() override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

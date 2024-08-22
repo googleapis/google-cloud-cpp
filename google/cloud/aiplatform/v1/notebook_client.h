@@ -1191,7 +1191,7 @@ class NotebookServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.CreateNotebookExecutionJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L602}
-  /// [google.cloud.aiplatform.v1.NotebookExecutionJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_execution_job.proto#L35}
+  /// [google.cloud.aiplatform.v1.NotebookExecutionJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_execution_job.proto#L36}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>>
@@ -1249,7 +1249,7 @@ class NotebookServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.CreateNotebookExecutionJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L602}
-  /// [google.cloud.aiplatform.v1.NotebookExecutionJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_execution_job.proto#L35}
+  /// [google.cloud.aiplatform.v1.NotebookExecutionJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_execution_job.proto#L36}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>>
@@ -1307,7 +1307,7 @@ class NotebookServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.GetNotebookExecutionJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L632}
-  /// [google.cloud.aiplatform.v1.NotebookExecutionJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_execution_job.proto#L35}
+  /// [google.cloud.aiplatform.v1.NotebookExecutionJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_execution_job.proto#L36}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>
@@ -1337,7 +1337,7 @@ class NotebookServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.GetNotebookExecutionJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L632}
-  /// [google.cloud.aiplatform.v1.NotebookExecutionJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_execution_job.proto#L35}
+  /// [google.cloud.aiplatform.v1.NotebookExecutionJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_execution_job.proto#L36}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>
@@ -1376,7 +1376,7 @@ class NotebookServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.ListNotebookExecutionJobsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L646}
-  /// [google.cloud.aiplatform.v1.NotebookExecutionJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_execution_job.proto#L35}
+  /// [google.cloud.aiplatform.v1.NotebookExecutionJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_execution_job.proto#L36}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::NotebookExecutionJob>
@@ -1415,7 +1415,7 @@ class NotebookServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.ListNotebookExecutionJobsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L646}
-  /// [google.cloud.aiplatform.v1.NotebookExecutionJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_execution_job.proto#L35}
+  /// [google.cloud.aiplatform.v1.NotebookExecutionJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_execution_job.proto#L36}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::NotebookExecutionJob>

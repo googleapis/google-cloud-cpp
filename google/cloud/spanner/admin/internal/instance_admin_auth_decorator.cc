@@ -348,6 +348,34 @@ InstanceAdminAuth::ListInstancePartitionOperations(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+InstanceAdminAuth::AsyncMoveInstance(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::spanner::admin::instance::v1::MoveInstanceRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncMoveInstance(cq, *std::move(context),
+                                        std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> InstanceAdminAuth::MoveInstance(
+    grpc::ClientContext& context, Options options,
+    google::spanner::admin::instance::v1::MoveInstanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->MoveInstance(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 InstanceAdminAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

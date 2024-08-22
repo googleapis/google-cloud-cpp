@@ -110,6 +110,9 @@ class InstanceAdminConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ListInstancePartitionOperations(
       google::spanner::admin::instance::v1::
           ListInstancePartitionOperationsRequest request);
+
+  virtual google::cloud::Idempotency MoveInstance(
+      google::spanner::admin::instance::v1::MoveInstanceRequest const& request);
 };
 
 std::unique_ptr<InstanceAdminConnectionIdempotencyPolicy>

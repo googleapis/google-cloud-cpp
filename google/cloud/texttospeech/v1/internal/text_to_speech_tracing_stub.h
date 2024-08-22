@@ -49,6 +49,14 @@ class TextToSpeechTracingStub : public TextToSpeechStub {
       google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request)
       override;
 
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::texttospeech::v1::StreamingSynthesizeRequest,
+      google::cloud::texttospeech::v1::StreamingSynthesizeResponse>>
+  AsyncStreamingSynthesize(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
+
  private:
   std::shared_ptr<TextToSpeechStub> child_;
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>

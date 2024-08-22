@@ -50,6 +50,13 @@ TextToSpeechTracingConnection::SynthesizeSpeech(
   return internal::EndSpan(*span, child_->SynthesizeSpeech(request));
 }
 
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::texttospeech::v1::StreamingSynthesizeRequest,
+    google::cloud::texttospeech::v1::StreamingSynthesizeResponse>>
+TextToSpeechTracingConnection::AsyncStreamingSynthesize() {
+  return child_->AsyncStreamingSynthesize();
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<texttospeech_v1::TextToSpeechConnection>
