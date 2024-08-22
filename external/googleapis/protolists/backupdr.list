@@ -1,1 +1,3 @@
+@com_google_googleapis//google/cloud/backupdr/logging/v1:eventlog.proto
+@com_google_googleapis//google/cloud/backupdr/logging/v1:reportlog.proto
 @com_google_googleapis//google/cloud/backupdr/v1:backupdr.proto
