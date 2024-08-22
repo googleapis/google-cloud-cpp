@@ -14,17 +14,19 @@
 
 #include "google/cloud/internal/detect_gcp_impl.h"
 #include "google/cloud/internal/filesystem.h"
+#include "google/cloud/internal/getenv.h"
 #include "absl/strings/ascii.h"
 #include "absl/strings/string_view.h"
 #include <algorithm>
-#include <cstdlib>
 #include <fstream>
 #include <iostream>
+#include <memory>
 #include <regex>
 #include <string>
 #include <vector>
 #ifdef _WIN32
 #include <winreg.h>
+#include <wtypes.h>
 #endif
 
 namespace google {
@@ -79,28 +81,25 @@ bool GcpDetectorImpl::IsGoogleCloudBios() {
 }
 
 bool GcpDetectorImpl::IsGoogleCloudServerless() {
+  return std::any_of(
+      this->config_.env_variables.begin(), this->config_.env_variables.end(),
+      [](std::string const& env_var) {
+        return google::cloud::internal::GetEnv(env_var.c_str()).has_value();
+      });
+}
+
+std::shared_ptr<GcpDetector> MakeGcpDetector() {
+  auto config = GcpDetectorImpl::GcpDetectorConfig{};
+  config.env_variables = {"CLOUD_RUN_JOB", "FUNCTION_NAME", "K_SERVICE"};
 #ifdef _WIN32
-  return std::any_of(this->config_.env_variables.begin(),
-                     this->config_.env_variables.end(),
-                     [](std::string const& env_var) {
-                       char* buf = nullptr;
-                       size_t size = 0;
-                       // Use _dupenv_s here instead of getenv.
-                       // MSVC throws a security error on getenv.
-                       auto result = _dupenv_s(&buf, &size, env_var.c_str());
-                       if (result == 0 && buf != nullptr) {
-                         free(buf);
-                         return true;
-                       }
-                       return false;
-                     });
+  config.key = HKEY_LOCAL_MACHINE;
+  config.sub_key = "SYSTEM\\HardwareConfig\\Current";
+  config.value_key = "SystemProductName";
 #else  // _WIN32
-  return std::any_of(this->config_.env_variables.begin(),
-                     this->config_.env_variables.end(),
-                     [](std::string const& env_var) {
-                       return std::getenv(env_var.c_str()) != nullptr;
-                     });
+  config.path = "/sys/class/dmi/id/product_name";
 #endif
+
+  return std::make_shared<GcpDetectorImpl>(config);
 }
 
 }  // namespace internal
