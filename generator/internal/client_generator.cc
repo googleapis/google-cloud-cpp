@@ -162,25 +162,20 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       std::string const signature = method_signature_extension[i];
       HeaderPrintMethod(
           method,
-          {MethodPattern(
-               {{"\n"},
-                {FormatMethodCommentsMethodSignature(
-                    method, signature, IsDiscoveryDocumentProto())},
-                {deprecation_macro},
-                {FormatMethodReturnType(method, /*is_async=*/false,
-                                        /*is_longrunning=*/false,
-                                        /*prefix=*/"  ", /*suffix=*/"\n")},
-                {method_string}},
-               All(IsNonStreaming, Not(IsLongrunningOperation),
-                   Not(IsPaginated))),
+          {MethodPattern({{"\n"},
+                          {FormatMethodCommentsMethodSignature(
+                              method, signature, IsDiscoveryDocumentProto())},
+                          {deprecation_macro},
+                          {"  $sync_return_type$\n"},
+                          {method_string}},
+                         All(IsNonStreaming, Not(IsLongrunningOperation),
+                             Not(IsPaginated))),
            MethodPattern(
                {{"\n"},
                 {FormatMethodCommentsMethodSignature(
                     method, signature, IsDiscoveryDocumentProto())},
                 {deprecation_macro},
-                {FormatMethodReturnType(method, /*is_async=*/true,
-                                        /*is_longrunning=*/true,
-                                        /*prefix=*/"  ", /*suffix=*/"\n")},
+                {"  $async_return_type$\n"},
                 {method_string},
                 {"\n"},
                 {FormatStartMethodComments(is_method_deprecated)},
