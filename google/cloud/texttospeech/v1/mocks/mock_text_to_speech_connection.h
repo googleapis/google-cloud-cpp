@@ -57,6 +57,12 @@ class MockTextToSpeechConnection
       SynthesizeSpeech,
       (google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      (std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+           google::cloud::texttospeech::v1::StreamingSynthesizeRequest,
+           google::cloud::texttospeech::v1::StreamingSynthesizeResponse>>),
+      AsyncStreamingSynthesize, (), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

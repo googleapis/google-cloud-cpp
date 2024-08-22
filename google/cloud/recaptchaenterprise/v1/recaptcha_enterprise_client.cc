@@ -193,6 +193,27 @@ RecaptchaEnterpriseServiceClient::MigrateKey(
   return connection_->MigrateKey(request);
 }
 
+StatusOr<google::cloud::recaptchaenterprise::v1::AddIpOverrideResponse>
+RecaptchaEnterpriseServiceClient::AddIpOverride(
+    std::string const& name,
+    google::cloud::recaptchaenterprise::v1::IpOverrideData const&
+        ip_override_data,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::recaptchaenterprise::v1::AddIpOverrideRequest request;
+  request.set_name(name);
+  *request.mutable_ip_override_data() = ip_override_data;
+  return connection_->AddIpOverride(request);
+}
+
+StatusOr<google::cloud::recaptchaenterprise::v1::AddIpOverrideResponse>
+RecaptchaEnterpriseServiceClient::AddIpOverride(
+    google::cloud::recaptchaenterprise::v1::AddIpOverrideRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AddIpOverride(request);
+}
+
 StatusOr<google::cloud::recaptchaenterprise::v1::Metrics>
 RecaptchaEnterpriseServiceClient::GetMetrics(std::string const& name,
                                              Options opts) {

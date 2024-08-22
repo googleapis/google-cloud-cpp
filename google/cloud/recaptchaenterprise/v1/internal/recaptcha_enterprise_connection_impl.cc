@@ -229,6 +229,22 @@ RecaptchaEnterpriseServiceConnectionImpl::MigrateKey(
       *current, request, __func__);
 }
 
+StatusOr<google::cloud::recaptchaenterprise::v1::AddIpOverrideResponse>
+RecaptchaEnterpriseServiceConnectionImpl::AddIpOverride(
+    google::cloud::recaptchaenterprise::v1::AddIpOverrideRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AddIpOverride(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::recaptchaenterprise::v1::AddIpOverrideRequest const&
+                 request) {
+        return stub_->AddIpOverride(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 StatusOr<google::cloud::recaptchaenterprise::v1::Metrics>
 RecaptchaEnterpriseServiceConnectionImpl::GetMetrics(
     google::cloud::recaptchaenterprise::v1::GetMetricsRequest const& request) {

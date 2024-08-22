@@ -395,6 +395,31 @@ InstanceAdminTracingStub::ListInstancePartitionOperations(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+InstanceAdminTracingStub::AsyncMoveInstance(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::spanner::admin::instance::v1::MoveInstanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.spanner.admin.instance.v1.InstanceAdmin", "MoveInstance");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncMoveInstance(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> InstanceAdminTracingStub::MoveInstance(
+    grpc::ClientContext& context, Options options,
+    google::spanner::admin::instance::v1::MoveInstanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.spanner.admin.instance.v1.InstanceAdmin", "MoveInstance");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->MoveInstance(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
 InstanceAdminTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

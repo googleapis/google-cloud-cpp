@@ -144,6 +144,11 @@ InstanceAdminConnectionIdempotencyPolicy::ListInstancePartitionOperations(
   return Idempotency::kIdempotent;
 }
 
+Idempotency InstanceAdminConnectionIdempotencyPolicy::MoveInstance(
+    google::spanner::admin::instance::v1::MoveInstanceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<InstanceAdminConnectionIdempotencyPolicy>
 MakeDefaultInstanceAdminConnectionIdempotencyPolicy() {
   return std::make_unique<InstanceAdminConnectionIdempotencyPolicy>();

@@ -93,7 +93,9 @@ class SqlInstancesServiceClient {
   /// instance. Required to prepare for a certificate rotation. If a CA version
   /// was previously added but never used in a certificate rotation, this
   /// operation replaces that version. There cannot be more than one CA version
-  /// waiting to be rotated in.
+  /// waiting to be rotated in. For instances that have enabled Certificate
+  /// Authority Service (CAS) based server CA, please use AddServerCertificate to
+  /// add a new server certificate.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -114,8 +116,8 @@ class SqlInstancesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L887}
-  /// [google.cloud.sql.v1.SqlInstancesAddServerCaRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L342}
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L903}
+  /// [google.cloud.sql.v1.SqlInstancesAddServerCaRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L346}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> AddServerCa(
@@ -146,8 +148,8 @@ class SqlInstancesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L887}
-  /// [google.cloud.sql.v1.SqlInstancesCloneRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L351}
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L903}
+  /// [google.cloud.sql.v1.SqlInstancesCloneRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L355}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> Clone(
@@ -177,8 +179,8 @@ class SqlInstancesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L887}
-  /// [google.cloud.sql.v1.SqlInstancesDeleteRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L363}
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L903}
+  /// [google.cloud.sql.v1.SqlInstancesDeleteRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L367}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> Delete(
@@ -209,8 +211,8 @@ class SqlInstancesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L887}
-  /// [google.cloud.sql.v1.SqlInstancesDemoteMasterRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L372}
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L903}
+  /// [google.cloud.sql.v1.SqlInstancesDemoteMasterRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L376}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> DemoteMaster(
@@ -241,8 +243,8 @@ class SqlInstancesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L887}
-  /// [google.cloud.sql.v1.SqlInstancesDemoteRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L383}
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L903}
+  /// [google.cloud.sql.v1.SqlInstancesDemoteRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L387}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> Demote(
@@ -273,8 +275,8 @@ class SqlInstancesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L887}
-  /// [google.cloud.sql.v1.SqlInstancesExportRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L395}
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L903}
+  /// [google.cloud.sql.v1.SqlInstancesExportRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L399}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> Export(
@@ -311,8 +313,8 @@ class SqlInstancesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L887}
-  /// [google.cloud.sql.v1.SqlInstancesFailoverRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L406}
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L903}
+  /// [google.cloud.sql.v1.SqlInstancesFailoverRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L410}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> Failover(
@@ -342,8 +344,8 @@ class SqlInstancesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L887}
-  /// [google.cloud.sql.v1.SqlInstancesReencryptRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L629}
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L903}
+  /// [google.cloud.sql.v1.SqlInstancesReencryptRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L633}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> Reencrypt(
@@ -373,8 +375,8 @@ class SqlInstancesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.DatabaseInstance]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L993}
-  /// [google.cloud.sql.v1.SqlInstancesGetRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L417}
+  /// [google.cloud.sql.v1.DatabaseInstance]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L997}
+  /// [google.cloud.sql.v1.SqlInstancesGetRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L421}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::DatabaseInstance> Get(
@@ -405,8 +407,8 @@ class SqlInstancesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L887}
-  /// [google.cloud.sql.v1.SqlInstancesImportRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L426}
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L903}
+  /// [google.cloud.sql.v1.SqlInstancesImportRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L430}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> Import(
@@ -436,8 +438,8 @@ class SqlInstancesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L887}
-  /// [google.cloud.sql.v1.SqlInstancesInsertRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L437}
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L903}
+  /// [google.cloud.sql.v1.SqlInstancesInsertRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L441}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> Insert(
@@ -476,8 +478,8 @@ class SqlInstancesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.DatabaseInstance]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L993}
-  /// [google.cloud.sql.v1.SqlInstancesListRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L446}
+  /// [google.cloud.sql.v1.DatabaseInstance]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L997}
+  /// [google.cloud.sql.v1.SqlInstancesListRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L450}
   ///
   // clang-format on
   StreamRange<google::cloud::sql::v1::DatabaseInstance> List(
@@ -511,8 +513,8 @@ class SqlInstancesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.InstancesListServerCasResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L865}
-  /// [google.cloud.sql.v1.SqlInstancesListServerCasRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L473}
+  /// [google.cloud.sql.v1.InstancesListServerCasResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L869}
+  /// [google.cloud.sql.v1.SqlInstancesListServerCasRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L477}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::InstancesListServerCasResponse>
@@ -544,8 +546,8 @@ class SqlInstancesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L887}
-  /// [google.cloud.sql.v1.SqlInstancesPatchRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L482}
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L903}
+  /// [google.cloud.sql.v1.SqlInstancesPatchRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L486}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> Patch(
@@ -577,8 +579,8 @@ class SqlInstancesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L887}
-  /// [google.cloud.sql.v1.SqlInstancesPromoteReplicaRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L493}
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L903}
+  /// [google.cloud.sql.v1.SqlInstancesPromoteReplicaRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L497}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> PromoteReplica(
@@ -609,8 +611,8 @@ class SqlInstancesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L887}
-  /// [google.cloud.sql.v1.SqlInstancesSwitchoverRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L511}
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L903}
+  /// [google.cloud.sql.v1.SqlInstancesSwitchoverRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L515}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> Switchover(
@@ -641,8 +643,8 @@ class SqlInstancesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L887}
-  /// [google.cloud.sql.v1.SqlInstancesResetSslConfigRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L526}
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L903}
+  /// [google.cloud.sql.v1.SqlInstancesResetSslConfigRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L530}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> ResetSslConfig(
@@ -672,8 +674,8 @@ class SqlInstancesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L887}
-  /// [google.cloud.sql.v1.SqlInstancesRestartRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L535}
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L903}
+  /// [google.cloud.sql.v1.SqlInstancesRestartRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L539}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> Restart(
@@ -704,8 +706,8 @@ class SqlInstancesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L887}
-  /// [google.cloud.sql.v1.SqlInstancesRestoreBackupRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L544}
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L903}
+  /// [google.cloud.sql.v1.SqlInstancesRestoreBackupRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L548}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> RestoreBackup(
@@ -715,7 +717,9 @@ class SqlInstancesServiceClient {
   // clang-format off
   ///
   /// Rotates the server certificate to one signed by the Certificate Authority
-  /// (CA) version previously added with the addServerCA method.
+  /// (CA) version previously added with the addServerCA method. For instances
+  /// that have enabled Certificate Authority Service (CAS) based server CA,
+  /// please use RotateServerCertificate to rotate the server certificate.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -736,8 +740,8 @@ class SqlInstancesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L887}
-  /// [google.cloud.sql.v1.SqlInstancesRotateServerCaRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L555}
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L903}
+  /// [google.cloud.sql.v1.SqlInstancesRotateServerCaRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L559}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> RotateServerCa(
@@ -767,8 +771,8 @@ class SqlInstancesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L887}
-  /// [google.cloud.sql.v1.SqlInstancesStartReplicaRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L566}
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L903}
+  /// [google.cloud.sql.v1.SqlInstancesStartReplicaRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L570}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> StartReplica(
@@ -798,8 +802,8 @@ class SqlInstancesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L887}
-  /// [google.cloud.sql.v1.SqlInstancesStopReplicaRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L575}
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L903}
+  /// [google.cloud.sql.v1.SqlInstancesStopReplicaRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L579}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> StopReplica(
@@ -830,8 +834,8 @@ class SqlInstancesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L887}
-  /// [google.cloud.sql.v1.SqlInstancesTruncateLogRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L584}
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L903}
+  /// [google.cloud.sql.v1.SqlInstancesTruncateLogRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L588}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> TruncateLog(
@@ -862,8 +866,8 @@ class SqlInstancesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L887}
-  /// [google.cloud.sql.v1.SqlInstancesUpdateRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L607}
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L903}
+  /// [google.cloud.sql.v1.SqlInstancesUpdateRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L611}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> Update(
@@ -896,8 +900,8 @@ class SqlInstancesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.SqlInstancesCreateEphemeralCertRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L792}
-  /// [google.cloud.sql.v1.SslCert]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L1399}
+  /// [google.cloud.sql.v1.SqlInstancesCreateEphemeralCertRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L796}
+  /// [google.cloud.sql.v1.SslCert]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L1418}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::SslCert> CreateEphemeral(
@@ -928,8 +932,8 @@ class SqlInstancesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L887}
-  /// [google.cloud.sql.v1.SqlInstancesRescheduleMaintenanceRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L618}
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L903}
+  /// [google.cloud.sql.v1.SqlInstancesRescheduleMaintenanceRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L622}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> RescheduleMaintenance(
@@ -960,8 +964,8 @@ class SqlInstancesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.SqlInstancesVerifyExternalSyncSettingsRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L692}
-  /// [google.cloud.sql.v1.SqlInstancesVerifyExternalSyncSettingsResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L900}
+  /// [google.cloud.sql.v1.SqlInstancesVerifyExternalSyncSettingsRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L696}
+  /// [google.cloud.sql.v1.SqlInstancesVerifyExternalSyncSettingsResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L904}
   ///
   // clang-format on
   StatusOr<
@@ -994,8 +998,8 @@ class SqlInstancesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L887}
-  /// [google.cloud.sql.v1.SqlInstancesStartExternalSyncRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L752}
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L903}
+  /// [google.cloud.sql.v1.SqlInstancesStartExternalSyncRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L756}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> StartExternalSync(
@@ -1026,8 +1030,8 @@ class SqlInstancesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L887}
-  /// [google.cloud.sql.v1.SqlInstancesPerformDiskShrinkRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L595}
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L903}
+  /// [google.cloud.sql.v1.SqlInstancesPerformDiskShrinkRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L599}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> PerformDiskShrink(
@@ -1058,8 +1062,8 @@ class SqlInstancesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.SqlInstancesGetDiskShrinkConfigRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L683}
-  /// [google.cloud.sql.v1.SqlInstancesGetDiskShrinkConfigResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L912}
+  /// [google.cloud.sql.v1.SqlInstancesGetDiskShrinkConfigRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L687}
+  /// [google.cloud.sql.v1.SqlInstancesGetDiskShrinkConfigResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L916}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigResponse>
@@ -1091,8 +1095,8 @@ class SqlInstancesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L887}
-  /// [google.cloud.sql.v1.SqlInstancesResetReplicaSizeRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L783}
+  /// [google.cloud.sql.v1.Operation]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_resources.proto#L903}
+  /// [google.cloud.sql.v1.SqlInstancesResetReplicaSizeRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L787}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::Operation> ResetReplicaSize(
@@ -1123,8 +1127,8 @@ class SqlInstancesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.SqlInstancesGetLatestRecoveryTimeRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L924}
-  /// [google.cloud.sql.v1.SqlInstancesGetLatestRecoveryTimeResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L933}
+  /// [google.cloud.sql.v1.SqlInstancesGetLatestRecoveryTimeRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L928}
+  /// [google.cloud.sql.v1.SqlInstancesGetLatestRecoveryTimeResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L937}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeResponse>
@@ -1156,8 +1160,8 @@ class SqlInstancesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.SqlInstancesAcquireSsrsLeaseRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L1692}
-  /// [google.cloud.sql.v1.SqlInstancesAcquireSsrsLeaseResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L1709}
+  /// [google.cloud.sql.v1.SqlInstancesAcquireSsrsLeaseRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L1712}
+  /// [google.cloud.sql.v1.SqlInstancesAcquireSsrsLeaseResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L1729}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseResponse>
@@ -1189,8 +1193,8 @@ class SqlInstancesServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.sql.v1.SqlInstancesReleaseSsrsLeaseRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L1715}
-  /// [google.cloud.sql.v1.SqlInstancesReleaseSsrsLeaseResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L1727}
+  /// [google.cloud.sql.v1.SqlInstancesReleaseSsrsLeaseRequest]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L1735}
+  /// [google.cloud.sql.v1.SqlInstancesReleaseSsrsLeaseResponse]: @googleapis_reference_link{google/cloud/sql/v1/cloud_sql_instances.proto#L1747}
   ///
   // clang-format on
   StatusOr<google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseResponse>

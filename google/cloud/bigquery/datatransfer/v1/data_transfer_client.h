@@ -310,7 +310,7 @@ class DataTransferServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.datatransfer.v1.TransferConfig]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L113}
-  /// [google.cloud.bigquery.datatransfer.v1.UpdateTransferConfigRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L561}
+  /// [google.cloud.bigquery.datatransfer.v1.UpdateTransferConfigRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L566}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
@@ -344,7 +344,7 @@ class DataTransferServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.datatransfer.v1.TransferConfig]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L113}
-  /// [google.cloud.bigquery.datatransfer.v1.UpdateTransferConfigRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L561}
+  /// [google.cloud.bigquery.datatransfer.v1.UpdateTransferConfigRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L566}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
@@ -371,7 +371,7 @@ class DataTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.datatransfer.v1.DeleteTransferConfigRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L628}
+  /// [google.cloud.bigquery.datatransfer.v1.DeleteTransferConfigRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L638}
   ///
   // clang-format on
   Status DeleteTransferConfig(std::string const& name, Options opts = {});
@@ -398,7 +398,7 @@ class DataTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.datatransfer.v1.DeleteTransferConfigRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L628}
+  /// [google.cloud.bigquery.datatransfer.v1.DeleteTransferConfigRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L638}
   ///
   // clang-format on
   Status DeleteTransferConfig(google::cloud::bigquery::datatransfer::v1::
@@ -425,7 +425,7 @@ class DataTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.datatransfer.v1.GetTransferConfigRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L614}
+  /// [google.cloud.bigquery.datatransfer.v1.GetTransferConfigRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L624}
   /// [google.cloud.bigquery.datatransfer.v1.TransferConfig]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L113}
   ///
   // clang-format on
@@ -455,7 +455,7 @@ class DataTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.datatransfer.v1.GetTransferConfigRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L614}
+  /// [google.cloud.bigquery.datatransfer.v1.GetTransferConfigRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L624}
   /// [google.cloud.bigquery.datatransfer.v1.TransferConfig]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L113}
   ///
   // clang-format on
@@ -495,7 +495,7 @@ class DataTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.datatransfer.v1.ListTransferConfigsRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L669}
+  /// [google.cloud.bigquery.datatransfer.v1.ListTransferConfigsRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L679}
   /// [google.cloud.bigquery.datatransfer.v1.TransferConfig]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L113}
   ///
   // clang-format on
@@ -535,7 +535,7 @@ class DataTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.datatransfer.v1.ListTransferConfigsRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L669}
+  /// [google.cloud.bigquery.datatransfer.v1.ListTransferConfigsRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L679}
   /// [google.cloud.bigquery.datatransfer.v1.TransferConfig]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L113}
   ///
   // clang-format on
@@ -575,8 +575,8 @@ class DataTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.datatransfer.v1.ScheduleTransferRunsRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L824}
-  /// [google.cloud.bigquery.datatransfer.v1.ScheduleTransferRunsResponse]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L847}
+  /// [google.cloud.bigquery.datatransfer.v1.ScheduleTransferRunsRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L834}
+  /// [google.cloud.bigquery.datatransfer.v1.ScheduleTransferRunsResponse]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L857}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -616,8 +616,8 @@ class DataTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.datatransfer.v1.ScheduleTransferRunsRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L824}
-  /// [google.cloud.bigquery.datatransfer.v1.ScheduleTransferRunsResponse]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L847}
+  /// [google.cloud.bigquery.datatransfer.v1.ScheduleTransferRunsRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L834}
+  /// [google.cloud.bigquery.datatransfer.v1.ScheduleTransferRunsResponse]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L857}
   ///
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
@@ -653,8 +653,8 @@ class DataTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.datatransfer.v1.StartManualTransferRunsRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L853}
-  /// [google.cloud.bigquery.datatransfer.v1.StartManualTransferRunsResponse]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L898}
+  /// [google.cloud.bigquery.datatransfer.v1.StartManualTransferRunsRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L863}
+  /// [google.cloud.bigquery.datatransfer.v1.StartManualTransferRunsResponse]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L908}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::datatransfer::v1::
@@ -684,7 +684,7 @@ class DataTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.datatransfer.v1.GetTransferRunRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L641}
+  /// [google.cloud.bigquery.datatransfer.v1.GetTransferRunRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L651}
   /// [google.cloud.bigquery.datatransfer.v1.TransferRun]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L227}
   ///
   // clang-format on
@@ -714,7 +714,7 @@ class DataTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.datatransfer.v1.GetTransferRunRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L641}
+  /// [google.cloud.bigquery.datatransfer.v1.GetTransferRunRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L651}
   /// [google.cloud.bigquery.datatransfer.v1.TransferRun]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L227}
   ///
   // clang-format on
@@ -743,7 +743,7 @@ class DataTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.datatransfer.v1.DeleteTransferRunRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L655}
+  /// [google.cloud.bigquery.datatransfer.v1.DeleteTransferRunRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L665}
   ///
   // clang-format on
   Status DeleteTransferRun(std::string const& name, Options opts = {});
@@ -769,7 +769,7 @@ class DataTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.datatransfer.v1.DeleteTransferRunRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L655}
+  /// [google.cloud.bigquery.datatransfer.v1.DeleteTransferRunRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L665}
   ///
   // clang-format on
   Status DeleteTransferRun(
@@ -807,7 +807,7 @@ class DataTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.datatransfer.v1.ListTransferRunsRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L708}
+  /// [google.cloud.bigquery.datatransfer.v1.ListTransferRunsRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L718}
   /// [google.cloud.bigquery.datatransfer.v1.TransferRun]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L227}
   ///
   // clang-format on
@@ -846,7 +846,7 @@ class DataTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.datatransfer.v1.ListTransferRunsRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L708}
+  /// [google.cloud.bigquery.datatransfer.v1.ListTransferRunsRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L718}
   /// [google.cloud.bigquery.datatransfer.v1.TransferRun]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L227}
   ///
   // clang-format on
@@ -885,7 +885,7 @@ class DataTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.datatransfer.v1.ListTransferLogsRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L760}
+  /// [google.cloud.bigquery.datatransfer.v1.ListTransferLogsRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L770}
   /// [google.cloud.bigquery.datatransfer.v1.TransferMessage]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L310}
   ///
   // clang-format on
@@ -924,7 +924,7 @@ class DataTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.datatransfer.v1.ListTransferLogsRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L760}
+  /// [google.cloud.bigquery.datatransfer.v1.ListTransferLogsRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L770}
   /// [google.cloud.bigquery.datatransfer.v1.TransferMessage]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L310}
   ///
   // clang-format on
@@ -955,8 +955,8 @@ class DataTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.datatransfer.v1.CheckValidCredsRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L805}
-  /// [google.cloud.bigquery.datatransfer.v1.CheckValidCredsResponse]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L818}
+  /// [google.cloud.bigquery.datatransfer.v1.CheckValidCredsRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L815}
+  /// [google.cloud.bigquery.datatransfer.v1.CheckValidCredsResponse]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L828}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::datatransfer::v1::CheckValidCredsResponse>
@@ -986,8 +986,8 @@ class DataTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.datatransfer.v1.CheckValidCredsRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L805}
-  /// [google.cloud.bigquery.datatransfer.v1.CheckValidCredsResponse]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L818}
+  /// [google.cloud.bigquery.datatransfer.v1.CheckValidCredsRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L815}
+  /// [google.cloud.bigquery.datatransfer.v1.CheckValidCredsResponse]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L828}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::datatransfer::v1::CheckValidCredsResponse>
@@ -1024,7 +1024,7 @@ class DataTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.datatransfer.v1.EnrollDataSourcesRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L905}
+  /// [google.cloud.bigquery.datatransfer.v1.EnrollDataSourcesRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L915}
   ///
   // clang-format on
   Status EnrollDataSources(
@@ -1057,7 +1057,7 @@ class DataTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.datatransfer.v1.UnenrollDataSourcesRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L917}
+  /// [google.cloud.bigquery.datatransfer.v1.UnenrollDataSourcesRequest]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L927}
   ///
   // clang-format on
   Status UnenrollDataSources(google::cloud::bigquery::datatransfer::v1::

@@ -80,6 +80,11 @@ class RecaptchaEnterpriseServiceTracingConnection
       google::cloud::recaptchaenterprise::v1::MigrateKeyRequest const& request)
       override;
 
+  StatusOr<google::cloud::recaptchaenterprise::v1::AddIpOverrideResponse>
+  AddIpOverride(
+      google::cloud::recaptchaenterprise::v1::AddIpOverrideRequest const&
+          request) override;
+
   StatusOr<google::cloud::recaptchaenterprise::v1::Metrics> GetMetrics(
       google::cloud::recaptchaenterprise::v1::GetMetricsRequest const& request)
       override;
