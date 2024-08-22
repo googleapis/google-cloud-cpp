@@ -17,10 +17,6 @@
 
 #include "google/cloud/version.h"
 #include <string>
-#include <vector>
-#ifdef _WIN32
-#include <wtypes.h>
-#endif
 
 namespace google {
 namespace cloud {
@@ -36,27 +32,8 @@ namespace internal {
  */
 class GcpDetector {
  public:
-#ifdef _WIN32
-  struct GcpDetectorConfig {
-    HKEY key = HKEY_LOCAL_MACHINE;
-    std::string sub_key = "SYSTEM\\HardwareConfig\\Current";
-    std::string value_key = "SystemProductName";
-    std::vector<std::string> env_variables = {"CLOUD_RUN_JOB", "FUNCTION_NAME",
-                                              "K_SERVICE"};
-  };
-#else  // _WIN32
-  struct GcpDetectorConfig {
-    std::string path = "/sys/class/dmi/id/product_name";
-    std::vector<std::string> env_variables = {"CLOUD_RUN_JOB", "FUNCTION_NAME",
-                                              "K_SERVICE"};
-  };
-#endif
-
   virtual bool IsGoogleCloudBios() = 0;
   virtual bool IsGoogleCloudServerless() = 0;
-
- private:
-  virtual std::string GetBiosInformation() = 0;
 };
 
 }  // namespace internal
