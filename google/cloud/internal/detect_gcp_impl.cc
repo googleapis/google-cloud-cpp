@@ -34,7 +34,7 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-std::string GcpDetectorImpl::GetBiosInformation() {
+std::string GcpDetectorImpl::GetBiosInformation() const {
 #ifdef _WIN32
   DWORD size{};
   LONG result = RegGetValueA(this->config_.key, this->config_.sub_key.c_str(),

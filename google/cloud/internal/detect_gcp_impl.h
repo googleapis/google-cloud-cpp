@@ -19,6 +19,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <utility>
 #include <vector>
 #ifdef _WIN32
 #include <wtypes.h>
@@ -44,12 +45,13 @@ class GcpDetectorImpl : public GcpDetector {
     std::vector<std::string> env_variables;
   };
 #endif
-  explicit GcpDetectorImpl(GcpDetectorConfig const config) : config_(config) {};
+  explicit GcpDetectorImpl(GcpDetectorConfig config)
+      : config_(std::move(config)) {};
   bool IsGoogleCloudBios() override;
   bool IsGoogleCloudServerless() override;
 
  private:
-  std::string GetBiosInformation();
+  std::string GetBiosInformation() const;
   GcpDetectorConfig config_;
 };
 

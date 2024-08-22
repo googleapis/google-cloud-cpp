@@ -32,6 +32,7 @@ namespace internal {
  */
 class GcpDetector {
  public:
+  virtual ~GcpDetector() = default;
   virtual bool IsGoogleCloudBios() = 0;
   virtual bool IsGoogleCloudServerless() = 0;
 };
