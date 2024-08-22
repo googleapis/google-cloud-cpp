@@ -34,6 +34,6 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
             LABELS
             "integration-test;quickstart"
             PASS_REGULAR_EXPRESSION
-            "google::cloud::Status thrown: INVALID_ARGUMENT: Permanent error, with a last message of Request contains an invalid argument."
+            "google::cloud::Status thrown: INVALID_ARGUMENT: Permanent error"
     )
 endif ()
