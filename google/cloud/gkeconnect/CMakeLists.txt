@@ -26,11 +26,14 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     google_cloud_cpp_add_common_options(gkeconnect_quickstart)
     add_test(
         NAME gkeconnect_quickstart
-        COMMAND
-            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
-            $<TARGET_FILE:gkeconnect_quickstart> GOOGLE_CLOUD_PROJECT
-            GOOGLE_CLOUD_CPP_TEST_REGION # EDIT HERE
+        COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+                $<TARGET_FILE:gkeconnect_quickstart> GOOGLE_CLOUD_PROJECT)
+    set_tests_properties(
+        gkeconnect_quickstart
+        PROPERTIES
+            LABELS
+            "integration-test;quickstart"
+            PASS_REGULAR_EXPRESSION
+            "google::cloud::Status thrown: INVALID_ARGUMENT: Permanent error, with a last message of Request contains an invalid argument."
     )
-    set_tests_properties(gkeconnect_quickstart
-                         PROPERTIES LABELS "integration-test;quickstart")
 endif ()
