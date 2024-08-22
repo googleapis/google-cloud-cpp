@@ -536,6 +536,48 @@ DefaultInstanceAdminRestStub::ListInstancePartitionOperations(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DefaultInstanceAdminRestStub::AsyncMoveInstance(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::spanner::admin::instance::v1::MoveInstanceRequest const& request) {
+  promise<StatusOr<google::longrunning::Operation>> p;
+  future<StatusOr<google::longrunning::Operation>> f = p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        p.set_value(rest_internal::Post<google::longrunning::Operation>(
+            *service, *rest_context, request, false,
+            absl::StrCat("/",
+                         rest_internal::DetermineApiVersion("v1", *options),
+                         "/", request.name(), ":move"),
+            std::move(query_params)));
+      },
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      std::move(options)};
+  return f.then([t = std::move(t), cq](auto f) mutable {
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    return f.get();
+  });
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultInstanceAdminRestStub::MoveInstance(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::spanner::admin::instance::v1::MoveInstanceRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  return rest_internal::Post<google::longrunning::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
+                   request.name(), ":move"),
+      std::move(query_params));
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DefaultInstanceAdminRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,

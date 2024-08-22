@@ -87,6 +87,12 @@ class RecaptchaEnterpriseServiceLogging
       google::cloud::recaptchaenterprise::v1::MigrateKeyRequest const& request)
       override;
 
+  StatusOr<google::cloud::recaptchaenterprise::v1::AddIpOverrideResponse>
+  AddIpOverride(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::recaptchaenterprise::v1::AddIpOverrideRequest const&
+          request) override;
+
   StatusOr<google::cloud::recaptchaenterprise::v1::Metrics> GetMetrics(
       grpc::ClientContext& context, Options const& options,
       google::cloud::recaptchaenterprise::v1::GetMetricsRequest const& request)

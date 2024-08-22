@@ -22,6 +22,7 @@
 #include "google/cloud/texttospeech/v1/internal/text_to_speech_retry_traits.h"
 #include "google/cloud/texttospeech/v1/text_to_speech_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -187,6 +188,11 @@ class TextToSpeechConnection {
   virtual StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
   SynthesizeSpeech(
       google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request);
+
+  virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::texttospeech::v1::StreamingSynthesizeRequest,
+      google::cloud::texttospeech::v1::StreamingSynthesizeResponse>>
+  AsyncStreamingSynthesize();
 };
 
 /**

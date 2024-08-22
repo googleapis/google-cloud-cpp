@@ -115,6 +115,16 @@ RecaptchaEnterpriseServiceAuth::MigrateKey(
   return child_->MigrateKey(context, options, request);
 }
 
+StatusOr<google::cloud::recaptchaenterprise::v1::AddIpOverrideResponse>
+RecaptchaEnterpriseServiceAuth::AddIpOverride(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::recaptchaenterprise::v1::AddIpOverrideRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->AddIpOverride(context, options, request);
+}
+
 StatusOr<google::cloud::recaptchaenterprise::v1::Metrics>
 RecaptchaEnterpriseServiceAuth::GetMetrics(
     grpc::ClientContext& context, Options const& options,

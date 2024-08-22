@@ -60,6 +60,18 @@ TextToSpeechMetadata::SynthesizeSpeech(
   return child_->SynthesizeSpeech(context, options, request);
 }
 
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::texttospeech::v1::StreamingSynthesizeRequest,
+    google::cloud::texttospeech::v1::StreamingSynthesizeResponse>>
+TextToSpeechMetadata::AsyncStreamingSynthesize(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  SetMetadata(*context, *options);
+  return child_->AsyncStreamingSynthesize(cq, std::move(context),
+                                          std::move(options));
+}
+
 void TextToSpeechMetadata::SetMetadata(grpc::ClientContext& context,
                                        Options const& options,
                                        std::string const& request_params) {

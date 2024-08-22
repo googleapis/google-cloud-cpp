@@ -320,6 +320,19 @@ class InstanceAdminConnection {
   ListInstancePartitionOperations(
       google::spanner::admin::instance::v1::
           ListInstancePartitionOperationsRequest request);
+
+  virtual future<
+      StatusOr<google::spanner::admin::instance::v1::MoveInstanceResponse>>
+  MoveInstance(
+      google::spanner::admin::instance::v1::MoveInstanceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> MoveInstance(
+      NoAwaitTag,
+      google::spanner::admin::instance::v1::MoveInstanceRequest const& request);
+
+  virtual future<
+      StatusOr<google::spanner::admin::instance::v1::MoveInstanceResponse>>
+  MoveInstance(google::longrunning::Operation const& operation);
 };
 
 /**

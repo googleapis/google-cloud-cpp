@@ -96,6 +96,12 @@ RecaptchaEnterpriseServiceConnection::MigrateKey(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::recaptchaenterprise::v1::AddIpOverrideResponse>
+RecaptchaEnterpriseServiceConnection::AddIpOverride(
+    google::cloud::recaptchaenterprise::v1::AddIpOverrideRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::cloud::recaptchaenterprise::v1::Metrics>
 RecaptchaEnterpriseServiceConnection::GetMetrics(
     google::cloud::recaptchaenterprise::v1::GetMetricsRequest const&) {

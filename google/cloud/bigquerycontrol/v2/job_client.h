@@ -111,8 +111,8 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.CancelJobRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L173}
-  /// [google.cloud.bigquery.v2.JobCancelResponse]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L194}
+  /// [google.cloud.bigquery.v2.CancelJobRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L171}
+  /// [google.cloud.bigquery.v2.JobCancelResponse]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L192}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::JobCancelResponse> CancelJob(
@@ -144,7 +144,7 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.GetJobRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L203}
+  /// [google.cloud.bigquery.v2.GetJobRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L201}
   /// [google.cloud.bigquery.v2.Job]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L129}
   ///
   // clang-format on
@@ -185,7 +185,7 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.InsertJobRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L224}
+  /// [google.cloud.bigquery.v2.InsertJobRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L222}
   /// [google.cloud.bigquery.v2.Job]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L129}
   ///
   // clang-format on
@@ -215,7 +215,7 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.DeleteJobRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L233}
+  /// [google.cloud.bigquery.v2.DeleteJobRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L231}
   ///
   // clang-format on
   Status DeleteJob(google::cloud::bigquery::v2::DeleteJobRequest const& request,
@@ -257,8 +257,8 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.ListFormatJob]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L326}
-  /// [google.cloud.bigquery.v2.ListJobsRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L250}
+  /// [google.cloud.bigquery.v2.ListFormatJob]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L324}
+  /// [google.cloud.bigquery.v2.ListJobsRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L248}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::v2::ListFormatJob> ListJobs(
@@ -287,8 +287,8 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.GetQueryResultsRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L383}
-  /// [google.cloud.bigquery.v2.GetQueryResultsResponse]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L433}
+  /// [google.cloud.bigquery.v2.GetQueryResultsRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L381}
+  /// [google.cloud.bigquery.v2.GetQueryResultsResponse]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L431}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::GetQueryResultsResponse>
@@ -320,8 +320,8 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.PostQueryRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L495}
-  /// [google.cloud.bigquery.v2.QueryResponse]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L664}
+  /// [google.cloud.bigquery.v2.PostQueryRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L493}
+  /// [google.cloud.bigquery.v2.QueryResponse]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L658}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::QueryResponse> Query(

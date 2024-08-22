@@ -143,6 +143,19 @@ DefaultRecaptchaEnterpriseServiceStub::MigrateKey(
   return response;
 }
 
+StatusOr<google::cloud::recaptchaenterprise::v1::AddIpOverrideResponse>
+DefaultRecaptchaEnterpriseServiceStub::AddIpOverride(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::recaptchaenterprise::v1::AddIpOverrideRequest const&
+        request) {
+  google::cloud::recaptchaenterprise::v1::AddIpOverrideResponse response;
+  auto status = grpc_stub_->AddIpOverride(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::recaptchaenterprise::v1::Metrics>
 DefaultRecaptchaEnterpriseServiceStub::GetMetrics(
     grpc::ClientContext& context, Options const&,
