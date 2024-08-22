@@ -67,20 +67,11 @@ class UniquePtrReinterpretProxy {
   std::unique_ptr<void, Deleter> ptr_;
 };
 
-struct HCryptProvDeleter {
-  void operator()(void* key) const {
-    CryptReleaseContext(reinterpret_cast<HCRYPTPROV>(key), 0);
-  }
-};
-
 struct HCryptKeyDeleter {
   void operator()(void* key) const {
     CryptDestroyKey(reinterpret_cast<HCRYPTKEY>(key));
   }
 };
-
-using UniqueCryptProv =
-    UniquePtrReinterpretProxy<HCRYPTPROV, HCryptProvDeleter>;
 
 using UniqueCryptKey = UniquePtrReinterpretProxy<HCRYPTKEY, HCryptKeyDeleter>;
 
@@ -108,8 +99,8 @@ StatusOr<UniqueCertStore> OpenP12File(std::string const& source) {
   // get a truncated view of them, and fail to read them.
   CRYPT_DATA_BLOB dataBlob = {static_cast<DWORD>(data.size()), data.data()};
   // Import the PKCS#12 file into a certificate store.
-  HCERTSTORE certstore_raw =
-      PFXImportCertStore(&dataBlob, L"notasecret", CRYPT_EXPORTABLE);
+  HCERTSTORE certstore_raw = PFXImportCertStore(
+      &dataBlob, L"notasecret", CRYPT_EXPORTABLE | PKCS12_NO_PERSIST_KEY);
   if (certstore_raw == nullptr) {
     return InvalidArgumentError(
         FormatWin32Errors("Cannot parse PKCS#12 file (", source, "): "),
@@ -121,9 +112,7 @@ StatusOr<UniqueCertStore> OpenP12File(std::string const& source) {
 StatusOr<UniqueCertContext> GetCertificate(HCERTSTORE certstore,
                                            std::string const& source) {
   // Get the certificate from the store.
-  PCCERT_CONTEXT cert_raw = CertFindCertificateInStore(
-      certstore, X509_ASN_ENCODING | PKCS_7_ASN_ENCODING, 0, CERT_FIND_ANY,
-      nullptr, nullptr);
+  PCCERT_CONTEXT cert_raw = CertEnumCertificatesInStore(certstore, nullptr);
   if (cert_raw == nullptr) {
     return InvalidArgumentError(
         absl::StrCat("No certificate found in PKCS#12 file (", source, ")"),
@@ -142,23 +131,29 @@ std::string GetCertificateCommonName(PCCERT_CONTEXT cert) {
   return result;
 }
 
-StatusOr<UniqueCryptProv> GetCertificatePrivateKey(PCCERT_CONTEXT cert,
-                                                   DWORD& dwKeySpec,
-                                                   std::string const& source) {
-  HCRYPTPROV prov_raw;
-  BOOL pfCallerFreeProvOrNCryptKey;
-  if (!CryptAcquireCertificatePrivateKey(cert, CRYPT_ACQUIRE_SILENT_FLAG,
-                                         nullptr, &prov_raw, &dwKeySpec,
-                                         &pfCallerFreeProvOrNCryptKey)) {
+StatusOr<HCRYPTPROV> GetCertificatePrivateKey(PCCERT_CONTEXT cert,
+                                              DWORD& dwKeySpec,
+                                              std::string const& source) {
+  DWORD context_length;
+  if (!CertGetCertificateContextProperty(cert, CERT_KEY_CONTEXT_PROP_ID,
+                                         nullptr, &context_length)) {
     return InvalidArgumentError(
         FormatWin32Errors("No private key found in PKCS#12 file (", source,
                           "): "),
         GCP_ERROR_INFO());
   }
-  // According to documentation of CryptAcquireCertificatePrivateKey,
-  // pfCallerFreeProvOrNCryptKey will always be true in our case so
-  // we don't need to check it.
-  return UniqueCryptProv(prov_raw);
+  std::vector<BYTE> buffer(context_length);
+  CertGetCertificateContextProperty(cert, CERT_KEY_CONTEXT_PROP_ID,
+                                    buffer.data(), &context_length);
+  auto& context = *reinterpret_cast<CERT_KEY_CONTEXT*>(buffer.data());
+  dwKeySpec = context.dwKeySpec;
+  // Documentation says that if we use PKCS12_NO_PERSIST_KEY, the key will
+  // always be an NCRYPT_KEY_HANDLE. However it was observed that this is not
+  // the case (https://github.com/MicrosoftDocs/sdk-api/pull/1874).
+  assert(dwKeySpec != CERT_NCRYPT_KEY_SPEC);
+  // Don't free the provider, its lifetime is controlled by the certificate
+  // context (https://github.com/dotnet/corefx/pull/12010).
+  return context.hCryptProv;
 }
 
 StatusOr<UniqueCryptKey> GetKeyFromProvider(HCRYPTPROV prov, DWORD dwKeySpec,
@@ -289,7 +284,7 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
   if (!prov) return std::move(prov).status();
 
   // Get the private key from the provider.
-  auto pkey = GetKeyFromProvider(prov->get(), dwKeySpec, source);
+  auto pkey = GetKeyFromProvider(*prov, dwKeySpec, source);
   if (!pkey) return std::move(pkey).status();
 
   // Export the private key from the certificate to a blob.

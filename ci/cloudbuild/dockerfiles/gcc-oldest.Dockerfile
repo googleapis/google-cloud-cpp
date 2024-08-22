@@ -44,7 +44,7 @@ RUN curl -fsSL https://github.com/google/googletest/archive/v1.15.2.tar.gz | \
 
 # Download and compile Google microbenchmark support library:
 WORKDIR /var/tmp/build
-RUN curl -fsSL https://github.com/google/benchmark/archive/v1.8.5.tar.gz | \
+RUN curl -fsSL https://github.com/google/benchmark/archive/v1.9.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE="Release" \
@@ -87,7 +87,7 @@ RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.16
     ldconfig && cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/grpc
-RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.65.2.tar.gz | \
+RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.65.5.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \

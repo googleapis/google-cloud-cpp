@@ -10,6 +10,13 @@ project that need to create a new release. We expect the reader to be familiar
 the project itself, [git][git-docs], [GitHub][github-guides], and
 [semantic versioning](https://semver.org).
 
+## 0. Verify most recent googleapis SHA adheres to policy
+
+In order to ensure that our released version includes a SHA of the service proto
+definitions that is both current and stable ([googleapis-sha-update-policy]),
+aim for a commit SHA from 5-7 days ago (TODO(#13062): automate this update
+process).
+
 ## 1. Preparing for a release
 
 To create a new release you need to perform some maintenance tasks, these are
@@ -402,6 +409,7 @@ ______________________________________________________________________
 [git-docs]: https://git-scm.com/doc
 [github-branch-settings]: https://github.com/googleapis/google-cloud-cpp/settings/branches
 [github-guides]: https://guides.github.com/
+[googleapis-sha-update-policy]: https://github.com/googleapis/google-cloud-cpp/blob/main/doc/adr/2024-08-13-googleapis-sha-update-policy.md
 [pr#138]: https://github.com/conda-forge/google-cloud-cpp-feedstock/pull/138
 [pr#32391]: https://github.com/microsoft/vcpkg/pull/32391
 [sha512]: https://learn.microsoft.com/en-us/vcpkg/maintainers/functions/vcpkg_from_github#sha512

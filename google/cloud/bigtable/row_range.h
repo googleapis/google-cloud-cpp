@@ -26,19 +26,19 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
 /**
  * Define the interfaces to create row key ranges.
  *
  * Example:
  * @code
  * // Create a range for the keys starting with the given prefix.
- * auto range = bigtable::RowRange("foo/");
+ * auto range = bigtable::RowRange::StartingAt("foo/");
  * @endcode
  */
 class RowRange {
  public:
-  explicit RowRange(::google::bigtable::v2::RowRange rhs)
-      : row_range_(std::move(rhs)) {}
+  explicit RowRange(::google::bigtable::v2::RowRange rhs);
 
   RowRange(RowRange&&) = default;
   RowRange& operator=(RowRange&&) = default;
