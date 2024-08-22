@@ -765,6 +765,11 @@
 ./include/google/cloud/gkebackup/v1
 ./include/google/cloud/gkebackup/v1/internal
 ./include/google/cloud/gkebackup/v1/mocks
+./include/google/cloud/gkeconnect
+./include/google/cloud/gkeconnect/gateway
+./include/google/cloud/gkeconnect/gateway/v1
+./include/google/cloud/gkeconnect/gateway/v1/internal
+./include/google/cloud/gkeconnect/gateway/v1/mocks
 ./include/google/cloud/gkehub
 ./include/google/cloud/gkehub/mocks
 ./include/google/cloud/gkehub/v1
@@ -1378,6 +1383,8 @@
 ./lib64/cmake/google_cloud_cpp_functions_mocks
 ./lib64/cmake/google_cloud_cpp_gkebackup
 ./lib64/cmake/google_cloud_cpp_gkebackup_mocks
+./lib64/cmake/google_cloud_cpp_gkeconnect
+./lib64/cmake/google_cloud_cpp_gkeconnect_mocks
 ./lib64/cmake/google_cloud_cpp_gkehub
 ./lib64/cmake/google_cloud_cpp_gkehub_mocks
 ./lib64/cmake/google_cloud_cpp_gkemulticloud
