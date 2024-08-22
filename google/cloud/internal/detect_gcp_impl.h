@@ -20,6 +20,7 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
+#include <utility>
 #include <vector>
 #ifdef _WIN32
 #include <wtypes.h>
