@@ -55,6 +55,8 @@ class GcpDetectorImpl : public GcpDetector {
   GcpDetectorConfig config_;
 };
 
+std::shared_ptr<GcpDetector> MakeGcpDetector();
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
