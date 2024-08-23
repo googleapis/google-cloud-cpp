@@ -26,8 +26,10 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     google_cloud_cpp_add_common_options(gkeconnect_quickstart)
     add_test(
         NAME gkeconnect_quickstart
-        COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
-                $<TARGET_FILE:gkeconnect_quickstart> GOOGLE_CLOUD_PROJECT)
+        COMMAND
+            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+            $<TARGET_FILE:gkeconnect_quickstart> GOOGLE_CLOUD_PROJECT
+            GOOGLE_CLOUD_CPP_TEST_REGION "fakedmembership")
     set_tests_properties(
         gkeconnect_quickstart
         PROPERTIES
