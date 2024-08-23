@@ -31,7 +31,7 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
             $<TARGET_FILE:gkeconnect_quickstart> GOOGLE_CLOUD_PROJECT
             GOOGLE_CLOUD_CPP_TEST_REGION
             # use GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID as input
-            # membership-id we don't expect it to be valid.
+            # membership-id. we don't expect it to be valid.
             GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID)
     set_tests_properties(
         gkeconnect_quickstart
