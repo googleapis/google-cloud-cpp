@@ -15,13 +15,13 @@
 #include "google/cloud/internal/detect_gcp_impl.h"
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/status.h"
 #include "absl/strings/ascii.h"
 #include "absl/strings/string_view.h"
 #include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <memory>
-#include <regex>
 #include <string>
 #include <vector>
 #ifdef _WIN32
@@ -34,22 +34,26 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-std::string GcpDetectorImpl::GetBiosInformation() const {
+StatusOr<std::string> GcpDetectorImpl::GetBiosInformation() const {
 #ifdef _WIN32
   DWORD size{};
-  LONG result = RegGetValueA(this->config_.key, this->config_.sub_key.c_str(),
-                             this->config_.value_key.c_str(), RRF_RT_REG_SZ,
-                             nullptr, nullptr, &size);
+  LONG result = RegGetValueA(config_.key, config_.sub_key.c_str(),
+                             config_.value_key.c_str(), RRF_RT_REG_SZ, nullptr,
+                             nullptr, &size);
 
-  if (result != ERROR_SUCCESS) return "";
+  if (result != ERROR_SUCCESS)
+    return StatusOr<std::string>(
+        Status(result, "error querying registry value"));
 
   std::string contents;
   contents.resize(size / sizeof(char));
-  result = RegGetValueA(this->config_.key, this->config_.sub_key.c_str(),
-                        this->config_.value_key.c_str(), RRF_RT_REG_SZ, nullptr,
+  result = RegGetValueA(config_.key, config_.sub_key.c_str(),
+                        config_.value_key.c_str(), RRF_RT_REG_SZ, nullptr,
                         &contents[0], &size);
 
-  if (result != ERROR_SUCCESS) return "";
+  if (result != ERROR_SUCCESS)
+    return return StatusOr<std::string>(
+        Status(result, "error querying registry value"));
 
   DWORD content_length = size / sizeof(char);
   content_length--;  // Exclude NUL written by WIN32
@@ -57,13 +61,16 @@ std::string GcpDetectorImpl::GetBiosInformation() const {
 
   return contents;
 #else  // _WIN32
-  auto product_name_status =
-      google::cloud::internal::status(this->config_.path);
-  if (!google::cloud::internal::exists(product_name_status)) return "";
+  auto product_name_status = status(config_.path);
+  if (!exists(product_name_status))
+    return StatusOr<std::string>(
+        Status(StatusCode::kNotFound, "file does not exist"));
 
-  std::ifstream product_name_file(this->config_.path);
+  std::ifstream product_name_file(config_.path);
   std::string contents;
-  if (!product_name_file.is_open()) return "";
+  if (!product_name_file.is_open())
+    return StatusOr<std::string>(
+        Status(StatusCode::kUnknown, "unable to open file"));
 
   std::getline(product_name_file, contents);
   product_name_file.close();
@@ -73,7 +80,10 @@ std::string GcpDetectorImpl::GetBiosInformation() const {
 }
 
 bool GcpDetectorImpl::IsGoogleCloudBios() {
-  auto bios_information = this->GetBiosInformation();
+  auto status = GetBiosInformation();
+  if (!status.ok()) return false;
+
+  auto bios_information = status.value();
   absl::StripAsciiWhitespace(&bios_information);
 
   return bios_information == "Google" ||
@@ -81,11 +91,10 @@ bool GcpDetectorImpl::IsGoogleCloudBios() {
 }
 
 bool GcpDetectorImpl::IsGoogleCloudServerless() {
-  return std::any_of(
-      this->config_.env_variables.begin(), this->config_.env_variables.end(),
-      [](std::string const& env_var) {
-        return google::cloud::internal::GetEnv(env_var.c_str()).has_value();
-      });
+  return std::any_of(config_.env_variables.begin(), config_.env_variables.end(),
+                     [](std::string const& env_var) {
+                       return GetEnv(env_var.c_str()).has_value();
+                     });
 }
 
 std::shared_ptr<GcpDetector> MakeGcpDetector() {

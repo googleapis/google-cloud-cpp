@@ -16,10 +16,10 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_DETECT_GCP_IMPL_H
 
 #include "google/cloud/internal/detect_gcp.h"
+#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
-#include <utility>
 #include <vector>
 #ifdef _WIN32
 #include <wtypes.h>
@@ -51,11 +51,9 @@ class GcpDetectorImpl : public GcpDetector {
   bool IsGoogleCloudServerless() override;
 
  private:
-  std::string GetBiosInformation() const;
+  StatusOr<std::string> GetBiosInformation() const;
   GcpDetectorConfig config_;
 };
-
-std::shared_ptr<GcpDetector> MakeGcpDetector();
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
