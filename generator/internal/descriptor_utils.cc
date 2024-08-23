@@ -491,15 +491,6 @@ absl::optional<std::string> GetReplacementComment(VarsDictionary const& vars,
   return absl::nullopt;
 }
 
-std::string FormatMethodReturnType(
-    google::protobuf::MethodDescriptor const& method,
-    VarsDictionary const& method_vars) {
-  bool is_response_type_empty = IsResponseTypeEmpty(method);
-  return is_response_type_empty
-             ? "Status"
-             : absl::StrFormat("StatusOr<%s>", method_vars.at("response_type"));
-}
-
 }  // namespace
 
 std::string CppTypeToString(FieldDescriptor const* field) {
@@ -820,8 +811,6 @@ std::map<std::string, VarsDictionary> CreateMethodVars(
     return {s.begin(), s.end()};
   };
   auto const omitted_rpcs = split_arg("omitted_rpcs");
-  auto const gen_async_rpcs = split_arg("gen_async_rpcs");
-
   auto const idempotency_overrides = ParseIdempotencyOverrides(vars);
   std::map<std::string, VarsDictionary> service_methods_vars;
   for (int i = 0; i < service.method_count(); i++) {
@@ -842,7 +831,10 @@ std::map<std::string, VarsDictionary> CreateMethodVars(
     method_vars["response_message_type"] = method.output_type()->full_name();
     method_vars["response_type"] =
         ProtoNameToCppName(method.output_type()->full_name());
-    method_vars["return_type"] = FormatMethodReturnType(method, method_vars);
+    method_vars["return_type"] =
+        IsResponseTypeEmpty(method)
+            ? "Status"
+            : absl::StrFormat("StatusOr<%s>", method_vars.at("response_type"));
     auto request_id_field_name = RequestIdFieldName(service_config, method);
     if (!request_id_field_name.empty()) {
       method_vars["request_id_field_name"] = std::move(request_id_field_name);
