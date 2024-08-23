@@ -215,6 +215,20 @@ class InstanceAdminRestMetadata : public InstanceAdminRestStub {
           ListInstancePartitionOperationsRequest const& request) override;
 
   google::cloud::future<StatusOr<google::longrunning::Operation>>
+  AsyncMoveInstance(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::spanner::admin::instance::v1::MoveInstanceRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> MoveInstance(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::spanner::admin::instance::v1::MoveInstanceRequest const& request)
+      override;
+
+  google::cloud::future<StatusOr<google::longrunning::Operation>>
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,

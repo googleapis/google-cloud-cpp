@@ -427,6 +427,37 @@ InstanceAdminRestLogging::ListInstancePartitionOperations(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+InstanceAdminRestLogging::AsyncMoveInstance(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::spanner::admin::instance::v1::MoveInstanceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq,
+             std::unique_ptr<rest_internal::RestContext> rest_context,
+             google::cloud::internal::ImmutableOptions options,
+             google::spanner::admin::instance::v1::MoveInstanceRequest const&
+                 request) {
+        return child_->AsyncMoveInstance(cq, std::move(rest_context),
+                                         std::move(options), request);
+      },
+      cq, std::move(rest_context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> InstanceAdminRestLogging::MoveInstance(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::instance::v1::MoveInstanceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::instance::v1::MoveInstanceRequest const&
+                 request) {
+        return child_->MoveInstance(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 InstanceAdminRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,

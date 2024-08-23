@@ -49,8 +49,8 @@ declare -A -r LIBRARIES=(
   ["automl"]="@com_google_googleapis//google/cloud/automl/v1:automl_cc_grpc"
   ["backupdr"]="$(
     printf ",%s" \
-      "@com_google_googleapis//google/cloud/backupdr/v1:backupdr_cc_grpc"
-    "@com_google_googleapis//google/cloud/backupdr/logging/v1:logging_cc_grpc"
+      "@com_google_googleapis//google/cloud/backupdr/v1:backupdr_cc_grpc" \
+      "@com_google_googleapis//google/cloud/backupdr/logging/v1:logging_cc_grpc"
   )"
   ["baremetalsolution"]="@com_google_googleapis//google/cloud/baremetalsolution/v2:baremetalsolution_cc_grpc"
   ["batch"]="@com_google_googleapis//google/cloud/batch/v1:batch_cc_grpc"
@@ -154,6 +154,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/gkebackup/logging/v1:logging_cc_grpc" \
       "@com_google_googleapis//google/cloud/gkebackup/v1:gkebackup_cc_grpc"
   )"
+  ["gkeconnect"]="@com_google_googleapis//google/cloud/gkeconnect/gateway/v1:gateway_cc_grpc"
   ["gkehub"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/cloud/gkehub/v1:gkehub_cc_grpc" \

@@ -187,6 +187,18 @@ class InstanceAdminMetadata : public InstanceAdminStub {
       google::spanner::admin::instance::v1::
           ListInstancePartitionOperationsRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncMoveInstance(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::spanner::admin::instance::v1::MoveInstanceRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> MoveInstance(
+      grpc::ClientContext& context, Options options,
+      google::spanner::admin::instance::v1::MoveInstanceRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

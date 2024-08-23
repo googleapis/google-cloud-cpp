@@ -154,6 +154,20 @@ RecaptchaEnterpriseServiceLogging::MigrateKey(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::recaptchaenterprise::v1::AddIpOverrideResponse>
+RecaptchaEnterpriseServiceLogging::AddIpOverride(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::recaptchaenterprise::v1::AddIpOverrideRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::recaptchaenterprise::v1::AddIpOverrideRequest const&
+                 request) {
+        return child_->AddIpOverride(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::recaptchaenterprise::v1::Metrics>
 RecaptchaEnterpriseServiceLogging::GetMetrics(
     grpc::ClientContext& context, Options const& options,

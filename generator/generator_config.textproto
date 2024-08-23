@@ -2497,6 +2497,14 @@ service {
   endpoint_location_style: LOCATION_DEPENDENT
 }
 
+# GKE Connect
+service {
+  service_proto_path: "google/cloud/gkeconnect/gateway/v1/control.proto"
+  product_path: "google/cloud/gkeconnect/gateway/v1"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 service {
   service_proto_path: "google/cloud/gkemulticloud/v1/aws_service.proto"
   product_path: "google/cloud/gkemulticloud/v1"

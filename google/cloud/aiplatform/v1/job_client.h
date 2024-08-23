@@ -1668,7 +1668,7 @@ class JobServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.GetNasTrialDetailRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L956}
-  /// [google.cloud.aiplatform.v1.NasTrialDetail]: @googleapis_reference_link{google/cloud/aiplatform/v1/nas_job.proto#L104}
+  /// [google.cloud.aiplatform.v1.NasTrialDetail]: @googleapis_reference_link{google/cloud/aiplatform/v1/nas_job.proto#L110}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::NasTrialDetail> GetNasTrialDetail(
@@ -1698,7 +1698,7 @@ class JobServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.GetNasTrialDetailRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L956}
-  /// [google.cloud.aiplatform.v1.NasTrialDetail]: @googleapis_reference_link{google/cloud/aiplatform/v1/nas_job.proto#L104}
+  /// [google.cloud.aiplatform.v1.NasTrialDetail]: @googleapis_reference_link{google/cloud/aiplatform/v1/nas_job.proto#L110}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::NasTrialDetail> GetNasTrialDetail(
@@ -1735,7 +1735,7 @@ class JobServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.ListNasTrialDetailsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L970}
-  /// [google.cloud.aiplatform.v1.NasTrialDetail]: @googleapis_reference_link{google/cloud/aiplatform/v1/nas_job.proto#L104}
+  /// [google.cloud.aiplatform.v1.NasTrialDetail]: @googleapis_reference_link{google/cloud/aiplatform/v1/nas_job.proto#L110}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::NasTrialDetail>
@@ -1774,7 +1774,7 @@ class JobServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.ListNasTrialDetailsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L970}
-  /// [google.cloud.aiplatform.v1.NasTrialDetail]: @googleapis_reference_link{google/cloud/aiplatform/v1/nas_job.proto#L104}
+  /// [google.cloud.aiplatform.v1.NasTrialDetail]: @googleapis_reference_link{google/cloud/aiplatform/v1/nas_job.proto#L110}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::NasTrialDetail>
@@ -2279,7 +2279,7 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ModelMonitoringStatsAnomalies]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_deployment_monitoring_job.proto#L303}
+  /// [google.cloud.aiplatform.v1.ModelMonitoringStatsAnomalies]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_deployment_monitoring_job.proto#L309}
   /// [google.cloud.aiplatform.v1.SearchModelDeploymentMonitoringStatsAnomaliesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L1147}
   ///
   // clang-format on
@@ -2320,7 +2320,7 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ModelMonitoringStatsAnomalies]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_deployment_monitoring_job.proto#L303}
+  /// [google.cloud.aiplatform.v1.ModelMonitoringStatsAnomalies]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_deployment_monitoring_job.proto#L309}
   /// [google.cloud.aiplatform.v1.SearchModelDeploymentMonitoringStatsAnomaliesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L1147}
   ///
   // clang-format on

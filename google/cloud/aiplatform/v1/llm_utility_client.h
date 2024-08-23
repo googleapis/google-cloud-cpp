@@ -108,8 +108,8 @@ class LlmUtilityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CountTokensRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L603}
-  /// [google.cloud.aiplatform.v1.CountTokensResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L643}
+  /// [google.cloud.aiplatform.v1.CountTokensRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L619}
+  /// [google.cloud.aiplatform.v1.CountTokensResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L659}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::CountTokensResponse> CountTokens(
@@ -139,8 +139,8 @@ class LlmUtilityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CountTokensRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L603}
-  /// [google.cloud.aiplatform.v1.CountTokensResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L643}
+  /// [google.cloud.aiplatform.v1.CountTokensRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L619}
+  /// [google.cloud.aiplatform.v1.CountTokensResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L659}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::CountTokensResponse> CountTokens(
@@ -169,8 +169,8 @@ class LlmUtilityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ComputeTokensRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/llm_utility_service.proto#L69}
-  /// [google.cloud.aiplatform.v1.ComputeTokensResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/llm_utility_service.proto#L107}
+  /// [google.cloud.aiplatform.v1.ComputeTokensRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/llm_utility_service.proto#L85}
+  /// [google.cloud.aiplatform.v1.ComputeTokensResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/llm_utility_service.proto#L123}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse> ComputeTokens(
@@ -200,8 +200,8 @@ class LlmUtilityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ComputeTokensRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/llm_utility_service.proto#L69}
-  /// [google.cloud.aiplatform.v1.ComputeTokensResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/llm_utility_service.proto#L107}
+  /// [google.cloud.aiplatform.v1.ComputeTokensRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/llm_utility_service.proto#L85}
+  /// [google.cloud.aiplatform.v1.ComputeTokensResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/llm_utility_service.proto#L123}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse> ComputeTokens(

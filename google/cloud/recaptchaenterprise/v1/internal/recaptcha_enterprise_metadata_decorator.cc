@@ -129,6 +129,16 @@ RecaptchaEnterpriseServiceMetadata::MigrateKey(
   return child_->MigrateKey(context, options, request);
 }
 
+StatusOr<google::cloud::recaptchaenterprise::v1::AddIpOverrideResponse>
+RecaptchaEnterpriseServiceMetadata::AddIpOverride(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::recaptchaenterprise::v1::AddIpOverrideRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AddIpOverride(context, options, request);
+}
+
 StatusOr<google::cloud::recaptchaenterprise::v1::Metrics>
 RecaptchaEnterpriseServiceMetadata::GetMetrics(
     grpc::ClientContext& context, Options const& options,

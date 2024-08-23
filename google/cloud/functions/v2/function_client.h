@@ -111,8 +111,8 @@ class FunctionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.functions.v2.Function]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L210}
-  /// [google.cloud.functions.v2.GetFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L811}
+  /// [google.cloud.functions.v2.Function]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L226}
+  /// [google.cloud.functions.v2.GetFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L874}
   ///
   // clang-format on
   StatusOr<google::cloud::functions::v2::Function> GetFunction(
@@ -141,8 +141,8 @@ class FunctionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.functions.v2.Function]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L210}
-  /// [google.cloud.functions.v2.GetFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L811}
+  /// [google.cloud.functions.v2.Function]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L226}
+  /// [google.cloud.functions.v2.GetFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L874}
   ///
   // clang-format on
   StatusOr<google::cloud::functions::v2::Function> GetFunction(
@@ -181,8 +181,8 @@ class FunctionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.functions.v2.Function]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L210}
-  /// [google.cloud.functions.v2.ListFunctionsRequest]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L822}
+  /// [google.cloud.functions.v2.Function]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L226}
+  /// [google.cloud.functions.v2.ListFunctionsRequest]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L893}
   ///
   // clang-format on
   StreamRange<google::cloud::functions::v2::Function> ListFunctions(
@@ -220,8 +220,8 @@ class FunctionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.functions.v2.Function]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L210}
-  /// [google.cloud.functions.v2.ListFunctionsRequest]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L822}
+  /// [google.cloud.functions.v2.Function]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L226}
+  /// [google.cloud.functions.v2.ListFunctionsRequest]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L893}
   ///
   // clang-format on
   StreamRange<google::cloud::functions::v2::Function> ListFunctions(
@@ -262,8 +262,8 @@ class FunctionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.functions.v2.CreateFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L873}
-  /// [google.cloud.functions.v2.Function]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L210}
+  /// [google.cloud.functions.v2.CreateFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L944}
+  /// [google.cloud.functions.v2.Function]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L226}
   ///
   // clang-format on
   future<StatusOr<google::cloud::functions::v2::Function>> CreateFunction(
@@ -319,8 +319,8 @@ class FunctionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.functions.v2.CreateFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L873}
-  /// [google.cloud.functions.v2.Function]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L210}
+  /// [google.cloud.functions.v2.CreateFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L944}
+  /// [google.cloud.functions.v2.Function]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L226}
   ///
   // clang-format on
   future<StatusOr<google::cloud::functions::v2::Function>> CreateFunction(
@@ -361,8 +361,7 @@ class FunctionServiceClient {
   ///
   /// @param function  Required. New version of the function.
   /// @param update_mask  The list of fields to be updated.
-  ///  If no field mask is provided, all provided fields in the request will be
-  ///  updated.
+  ///  If no field mask is provided, all fields will be updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -383,8 +382,8 @@ class FunctionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.functions.v2.Function]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L210}
-  /// [google.cloud.functions.v2.UpdateFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L895}
+  /// [google.cloud.functions.v2.Function]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L226}
+  /// [google.cloud.functions.v2.UpdateFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L966}
   ///
   // clang-format on
   future<StatusOr<google::cloud::functions::v2::Function>> UpdateFunction(
@@ -436,8 +435,8 @@ class FunctionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.functions.v2.Function]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L210}
-  /// [google.cloud.functions.v2.UpdateFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L895}
+  /// [google.cloud.functions.v2.Function]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L226}
+  /// [google.cloud.functions.v2.UpdateFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L966}
   ///
   // clang-format on
   future<StatusOr<google::cloud::functions::v2::Function>> UpdateFunction(
@@ -499,8 +498,8 @@ class FunctionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.functions.v2.DeleteFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L906}
-  /// [google.cloud.functions.v2.OperationMetadata]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L1050}
+  /// [google.cloud.functions.v2.DeleteFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L976}
+  /// [google.cloud.functions.v2.OperationMetadata]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L1143}
   ///
   // clang-format on
   future<StatusOr<google::cloud::functions::v2::OperationMetadata>>
@@ -552,8 +551,8 @@ class FunctionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.functions.v2.DeleteFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L906}
-  /// [google.cloud.functions.v2.OperationMetadata]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L1050}
+  /// [google.cloud.functions.v2.DeleteFunctionRequest]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L976}
+  /// [google.cloud.functions.v2.OperationMetadata]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L1143}
   ///
   // clang-format on
   future<StatusOr<google::cloud::functions::v2::OperationMetadata>>
@@ -608,11 +607,11 @@ class FunctionServiceClient {
   ///   attached, the identity from the credentials would be used, but that
   ///   identity does not have permissions to upload files to the URL.
   ///
-  /// When making a HTTP PUT request, these two headers need to be specified:
+  /// When making a HTTP PUT request, specify this header:
   ///
   /// * `content-type: application/zip`
   ///
-  /// And this header SHOULD NOT be specified:
+  /// Do not specify this header:
   ///
   /// * `Authorization: Bearer YOUR_TOKEN`
   ///
@@ -635,8 +634,8 @@ class FunctionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.functions.v2.GenerateUploadUrlRequest]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L917}
-  /// [google.cloud.functions.v2.GenerateUploadUrlResponse]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L948}
+  /// [google.cloud.functions.v2.GenerateUploadUrlRequest]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L987}
+  /// [google.cloud.functions.v2.GenerateUploadUrlResponse]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L1024}
   ///
   // clang-format on
   StatusOr<google::cloud::functions::v2::GenerateUploadUrlResponse>
@@ -671,8 +670,8 @@ class FunctionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.functions.v2.GenerateDownloadUrlRequest]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L966}
-  /// [google.cloud.functions.v2.GenerateDownloadUrlResponse]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L978}
+  /// [google.cloud.functions.v2.GenerateDownloadUrlRequest]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L1042}
+  /// [google.cloud.functions.v2.GenerateDownloadUrlResponse]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L1054}
   ///
   // clang-format on
   StatusOr<google::cloud::functions::v2::GenerateDownloadUrlResponse>
@@ -699,8 +698,8 @@ class FunctionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.functions.v2.ListRuntimesRequest]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L985}
-  /// [google.cloud.functions.v2.ListRuntimesResponse]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L1001}
+  /// [google.cloud.functions.v2.ListRuntimesRequest]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L1061}
+  /// [google.cloud.functions.v2.ListRuntimesResponse]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L1077}
   ///
   // clang-format on
   StatusOr<google::cloud::functions::v2::ListRuntimesResponse> ListRuntimes(
@@ -729,8 +728,8 @@ class FunctionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.functions.v2.ListRuntimesRequest]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L985}
-  /// [google.cloud.functions.v2.ListRuntimesResponse]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L1001}
+  /// [google.cloud.functions.v2.ListRuntimesRequest]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L1061}
+  /// [google.cloud.functions.v2.ListRuntimesResponse]: @googleapis_reference_link{google/cloud/functions/v2/functions.proto#L1077}
   ///
   // clang-format on
   StatusOr<google::cloud::functions::v2::ListRuntimesResponse> ListRuntimes(

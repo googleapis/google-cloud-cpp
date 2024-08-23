@@ -70,6 +70,9 @@ expected_dirs+=(
   # no RPC services in google/cloud/appengine/logging
   ./include/google/appengine/logging
   ./include/google/appengine/logging/v1
+  # no RPC services in google/cloud/backupdr/logging
+  ./include/google/cloud/backupdr/logging
+  ./include/google/cloud/backupdr/logging/v1
   # no RPC services in google/cloud/bigquery/logging
   ./include/google/cloud/bigquery/logging
   ./include/google/cloud/bigquery/logging/v1
