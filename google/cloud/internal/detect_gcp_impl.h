@@ -20,7 +20,6 @@
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
-#include <utility>
 #include <vector>
 #ifdef _WIN32
 #include <wtypes.h>
@@ -55,8 +54,6 @@ class GcpDetectorImpl : public GcpDetector {
   StatusOr<std::string> GetBiosInformation() const;
   GcpDetectorConfig config_;
 };
-
-std::shared_ptr<GcpDetector> MakeGcpDetector();
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
