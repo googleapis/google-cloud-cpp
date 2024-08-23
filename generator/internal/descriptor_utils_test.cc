@@ -1257,6 +1257,8 @@ INSTANTIATE_TEST_SUITE_P(
                              "response_message_type", "google.protobuf.Empty"),
         MethodVarsTestValues("my.service.v1.Service.Method0", "response_type",
                              "google::protobuf::Empty"),
+        MethodVarsTestValues("my.service.v1.Service.Method0", "return_type",
+                             "Status"),
         MethodVarsTestValues("my.service.v1.Service.Method0", "idempotency",
                              "kNonIdempotent"),
         // Method1
@@ -1268,6 +1270,8 @@ INSTANTIATE_TEST_SUITE_P(
                              "my::service::v1::Bar"),
         MethodVarsTestValues("my.service.v1.Service.Method1", "response_type",
                              "my::service::v1::Bar"),
+        MethodVarsTestValues("my.service.v1.Service.Method1", "return_type",
+                             "StatusOr<my::service::v1::Bar>"),
         // Method2
         MethodVarsTestValues("my.service.v1.Service.Method2",
                              "longrunning_metadata_type",
