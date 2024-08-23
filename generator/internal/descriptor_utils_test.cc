@@ -40,7 +40,6 @@ using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::DescriptorPool;
 using ::google::protobuf::FileDescriptor;
 using ::google::protobuf::FileDescriptorProto;
-using ::google::protobuf::MethodDescriptor;
 using ::testing::_;
 using ::testing::AllOf;
 using ::testing::Contains;
