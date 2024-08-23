@@ -43,7 +43,7 @@ StatusOr<std::string> GcpDetectorImpl::GetBiosInformation() const {
 
   if (result != ERROR_SUCCESS)
     return StatusOr<std::string>(
-        Status(result, "error querying registry value"));
+        Status(StatusCode::kUnknown, "error querying registry value"));
 
   std::string contents;
   contents.resize(size / sizeof(char));
@@ -52,8 +52,8 @@ StatusOr<std::string> GcpDetectorImpl::GetBiosInformation() const {
                         &contents[0], &size);
 
   if (result != ERROR_SUCCESS)
-    return return StatusOr<std::string>(
-        Status(result, "error querying registry value"));
+    return StatusOr<std::string>(
+        Status(StatusCode::kUnknown, "error querying registry value"));
 
   DWORD content_length = size / sizeof(char);
   content_length--;  // Exclude NUL written by WIN32
