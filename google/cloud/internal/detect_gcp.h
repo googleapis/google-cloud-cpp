@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_DETECT_GCP_H
 
 #include "google/cloud/version.h"
+#include <memory>
 #include <string>
 
 namespace google {
@@ -36,6 +37,8 @@ class GcpDetector {
   virtual bool IsGoogleCloudBios() = 0;
   virtual bool IsGoogleCloudServerless() = 0;
 };
+
+std::shared_ptr<GcpDetector> MakeGcpDetector();
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
