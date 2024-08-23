@@ -14,7 +14,6 @@
 
 //! [all]
 #include "google/cloud/gkeconnect/gateway/v1/gateway_control_client.h"
-#include "absl/strings/str_cat.h"
 #include "google/cloud/location.h"
 #include <iostream>
 
@@ -32,7 +31,7 @@ int main(int argc, char* argv[]) try {
       gkeconnect::MakeGatewayControlConnection());
 
   google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest request;
-  request.set_name(absl::StrCat(location.FullName(), "/memberships/", argv[3]));
+  request.set_name(location.FullName() + "/memberships/" + argv[3]);
 
   auto response = client.GenerateCredentials(request);
   if (!response) throw std::move(response).status();
