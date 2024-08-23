@@ -166,11 +166,7 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                           {FormatMethodCommentsMethodSignature(
                               method, signature, IsDiscoveryDocumentProto())},
                           {deprecation_macro},
-                          {IsResponseTypeEmpty,
-                           // clang-format off
-                   "  Status\n",
-                   "  StatusOr<$response_type$>\n"},
-                          // clang-format on
+                          {"  $return_type$\n"},
                           {method_string}},
                          All(IsNonStreaming, Not(IsLongrunningOperation),
                              Not(IsPaginated))),
@@ -262,10 +258,8 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                  {FormatMethodCommentsProtobufRequest(
                      method, IsDiscoveryDocumentProto())},
                  {deprecation_macro},
-                 {IsResponseTypeEmpty,
-                  // clang-format off
-    "  Status\n",
-    "  StatusOr<$response_type$>\n"},
+                 {"  $return_type$\n"},
+                 // clang-format off
    {"  $method_name$($request_type$ const& request, Options opts = {});\n"}
                  // clang-format on
              },
@@ -345,39 +339,31 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       std::string const signature = method_signature_extension[i];
       HeaderPrintMethod(
           method,
-          {MethodPattern(
-              {{"\n"},
-               {FormatMethodCommentsMethodSignature(
-                   method, signature, IsDiscoveryDocumentProto())},
-               {deprecation_macro},
-               {IsResponseTypeEmpty,
-                // clang-format off
-                   "  future<Status>\n",
-                   "  future<StatusOr<$response_type$>>\n"},
-               // clang-format on
-               {method_string}},
-              All(IsNonStreaming, Not(IsLongrunningOperation),
-                  Not(IsPaginated)))},
+          {MethodPattern({{"\n"},
+                          {FormatMethodCommentsMethodSignature(
+                              method, signature, IsDiscoveryDocumentProto())},
+                          {deprecation_macro},
+                          {"  future<$return_type$>\n"},
+                          {method_string}},
+                         All(IsNonStreaming, Not(IsLongrunningOperation),
+                             Not(IsPaginated)))},
           __FILE__, __LINE__);
     }
-    HeaderPrintMethod(
-        method,
-        {MethodPattern(
-            {
-                {"\n"},
-                {FormatMethodCommentsProtobufRequest(
-                    method, IsDiscoveryDocumentProto())},
-                {deprecation_macro},
-                {IsResponseTypeEmpty,
-                 // clang-format off
-    "  future<Status>\n",
-    "  future<StatusOr<$response_type$>>\n"},
+    HeaderPrintMethod(method,
+                      {MethodPattern(
+                          {
+                              {"\n"},
+                              {FormatMethodCommentsProtobufRequest(
+                                  method, IsDiscoveryDocumentProto())},
+                              {deprecation_macro},
+                              {"  future<$return_type$>\n"},
+                              // clang-format off
    {"  Async$method_name$($request_type$ const& request, Options opts = {});\n"}
-                // clang-format on
-            },
-            All(IsNonStreaming, Not(IsLongrunningOperation),
-                Not(IsPaginated)))},
-        __FILE__, __LINE__);
+                              // clang-format on
+                          },
+                          All(IsNonStreaming, Not(IsLongrunningOperation),
+                              Not(IsPaginated)))},
+                      __FILE__, __LINE__);
   }
 
   HeaderPrint(  // clang-format off
@@ -464,10 +450,8 @@ $client_class_name$::Async$method_name$(Options opts) {
           method,
           {MethodPattern(
                {
-                   {IsResponseTypeEmpty,
-                    // clang-format off
-                   "\nStatus\n",
-                   "\nStatusOr<$response_type$>\n"},
+                   {"\n$return_type$\n"},
+                   // clang-format off
                   {method_string},
                   {"  internal::OptionsSpan span(internal::MergeOptions("
                    "std::move(opts), options_));\n"},
@@ -600,10 +584,8 @@ $client_class_name$::Async$method_name$(Options opts) {
         method,
         {MethodPattern(
              {
-                 {IsResponseTypeEmpty,
-                  // clang-format off
-    "\nStatus\n",
-    "\nStatusOr<$response_type$>\n"},
+                 {"\n$return_type$\n"},
+                 // clang-format off
    {"$client_class_name$::$method_name$($request_type$ const& request"
     ", Options opts) {\n"
     "  internal::OptionsSpan span(internal::MergeOptions("
@@ -696,10 +678,8 @@ $client_class_name$::Async$method_name$(Options opts) {
           method,
           {MethodPattern(
               {
-                  {IsResponseTypeEmpty,
-                   // clang-format off
-                   "\nfuture<Status>\n",
-                   "\nfuture<StatusOr<$response_type$>>\n"},
+                  {"\nfuture<$return_type$>\n"},
+                  // clang-format off
                   {method_string},
                   {"  internal::OptionsSpan span(internal::MergeOptions("
                    "std::move(opts), options_));\n"},
@@ -717,10 +697,8 @@ $client_class_name$::Async$method_name$(Options opts) {
         method,
         {MethodPattern(
             {
-                {IsResponseTypeEmpty,
-                 // clang-format off
-    "\nfuture<Status>\n",
-    "\nfuture<StatusOr<$response_type$>>\n"},
+                {"\nfuture<$return_type$>\n"},
+                // clang-format off
    {"$client_class_name$::Async$method_name$($request_type$ const& request"
     ", Options opts) {\n"
     "  internal::OptionsSpan span(internal::MergeOptions("
