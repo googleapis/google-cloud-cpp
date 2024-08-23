@@ -14,7 +14,6 @@
 
 #include "generator/internal/auth_decorator_generator.h"
 #include "generator/internal/codegen_utils.h"
-#include "generator/internal/descriptor_utils.h"
 #include "generator/internal/longrunning.h"
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/printer.h"
@@ -217,10 +216,7 @@ $auth_class_name$::$method_name$(
 )""");
       continue;
     }
-    CcPrintMethod(method, __FILE__, __LINE__,
-                  FormatMethodReturnType(method, /*is_async=*/false,
-                                         /*is_longrunning=*/false,
-                                         /*prefix=*/"\n", /*suffix=*/""));
+    CcPrintMethod(method, __FILE__, __LINE__, "\n$return_type$");
     CcPrintMethod(method, __FILE__, __LINE__,
                   R"""( $auth_class_name$::$method_name$(
     grpc::ClientContext& context,

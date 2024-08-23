@@ -93,17 +93,6 @@ bool CheckParameterCommentSubstitutions();
  */
 std::string CppTypeToString(google::protobuf::FieldDescriptor const* field);
 
-/**
- * Format the return type of methods by
- * 1. is method return type empty
- * 2. is method async
- * 3. is method longrunning
- * 4. prefix and suffix
- */
-std::string FormatMethodReturnType(
-    google::protobuf::MethodDescriptor const& method, bool is_async,
-    bool is_longrunning, std::string const& prefix, std::string const& suffix);
-
 }  // namespace generator_internal
 }  // namespace cloud
 }  // namespace google

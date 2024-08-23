@@ -491,58 +491,13 @@ absl::optional<std::string> GetReplacementComment(VarsDictionary const& vars,
   return absl::nullopt;
 }
 
-void FormatMethodReturnType(google::protobuf::ServiceDescriptor const& service,
-                            google::protobuf::MethodDescriptor const& method,
-                            std::set<std::string> const& gen_async_rpcs,
-                            VarsDictionary& method_vars) {
+std::string FormatMethodReturnType(
+    google::protobuf::MethodDescriptor const& method,
+    VarsDictionary const& method_vars) {
   bool is_response_type_empty = IsResponseTypeEmpty(method);
-  bool is_longrunning = IsLongrunningOperation(method);
-
-  if (is_response_type_empty) {
-    method_vars["sync_return_type"] = "Status";
-    method_vars["async_return_type"] = "future<Status>";
-  } else {
-    if (is_longrunning) {
-      method_vars["sync_return_type"] = absl::StrFormat(
-          "StatusOr<%s>", method_vars["longrunning_operation_type"]);
-      method_vars["async_return_type"] =
-          absl::StrFormat("future<StatusOr<%s>>",
-                          method_vars["longrunning_deduced_response_type"]);
-    } else {
-      method_vars["sync_return_type"] =
-          absl::StrFormat("StatusOr<%s>", method_vars["response_type"]);
-      method_vars["async_return_type"] = absl::StrFormat(
-          "future<%s>", method_vars["sync_return_type"]);
-    }
-  }
-
-  // bool is_response_type_empty = IsResponseTypeEmpty(method);
-
-  // auto service_name = service.name();
-  // auto method_name = method.name();
-  // auto qualified_method_name = absl::StrCat(service_name, ".", method_name);
-  // auto any_match = [&](std::string const& v) {
-  //   return v == method_name || v == qualified_method_name;
-  // };
-  // bool is_async = internal::ContainsIf(gen_async_rpcs, any_match);
-  // if (is_response_type_empty) {
-  //   return is_async ? "future<Status>" : "Status";
-  // }
-
-  // bool is_longrunning = IsLongrunningOperation(method);
-  // if (is_longrunning) {
-  //   return is_async
-  //              ? absl::StrFormat(
-  //                    "future<StatusOr<%s>>",
-  //                    method_vars.at("longrunning_deduced_response_type"))
-  //              : absl::StrFormat("StatusOr<%s>",
-  //                                method_vars.at("longrunning_operation_type"));
-  // }
-  // return is_async
-  //            ? absl::StrFormat("future<StatusOr<%s>>",
-  //                              method_vars.at("response_type"))
-  //            : absl::StrFormat("StatusOr<%s>",
-  //            method_vars.at("response_type"));
+  return is_response_type_empty
+             ? "Status"
+             : absl::StrFormat("StatusOr<%s>", method_vars.at("response_type"));
 }
 
 }  // namespace
@@ -887,6 +842,7 @@ std::map<std::string, VarsDictionary> CreateMethodVars(
     method_vars["response_message_type"] = method.output_type()->full_name();
     method_vars["response_type"] =
         ProtoNameToCppName(method.output_type()->full_name());
+    method_vars["return_type"] = FormatMethodReturnType(method, method_vars);
     auto request_id_field_name = RequestIdFieldName(service_config, method);
     if (!request_id_field_name.empty()) {
       method_vars["request_id_field_name"] = std::move(request_id_field_name);
@@ -899,7 +855,6 @@ std::map<std::string, VarsDictionary> CreateMethodVars(
         FormatRequestResource(*method.input_type(), parsed_http_info);
     SetHttpDerivedMethodVars(parsed_http_info, method, method_vars);
     SetHttpQueryParameters(parsed_http_info, method, method_vars);
-    FormatMethodReturnType(service, method, gen_async_rpcs, method_vars);
     service_methods_vars[method.full_name()] = method_vars;
   }
   return service_methods_vars;
@@ -930,36 +885,6 @@ Status PrintMethod(google::protobuf::MethodDescriptor const& method,
     printer.Print(line, file, vars, f(method));
   }
   return {};
-}
-
-std::string FormatMethodReturnType(
-    google::protobuf::MethodDescriptor const& method, bool is_async,
-    bool is_longrunning, std::string const& prefix, std::string const& suffix) {
-  bool is_response_type_empty = IsResponseTypeEmpty(method);
-  std::string return_type;
-
-  if (is_async) {
-    if (is_longrunning) {
-      return_type =
-          is_response_type_empty
-              ? "future<Status>"
-              : "future<StatusOr<$longrunning_deduced_response_type$>>";
-    } else {
-      return_type = is_response_type_empty
-                        ? "future<Status>"
-                        : "future<StatusOr<$response_type$>>";
-    }
-  } else {
-    if (is_longrunning) {
-      return_type = is_response_type_empty
-                        ? "Status"
-                        : "StatusOr<$longrunning_operation_type$>";
-    } else {
-      return_type =
-          is_response_type_empty ? "Status" : "StatusOr<$response_type$>";
-    }
-  }
-  return absl::StrCat(prefix, return_type, suffix);
 }
 
 }  // namespace generator_internal

@@ -166,7 +166,7 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                           {FormatMethodCommentsMethodSignature(
                               method, signature, IsDiscoveryDocumentProto())},
                           {deprecation_macro},
-                          {"  $sync_return_type$\n"},
+                          {"  $return_type$\n"},
                           {method_string}},
                          All(IsNonStreaming, Not(IsLongrunningOperation),
                              Not(IsPaginated))),
@@ -175,14 +175,20 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                 {FormatMethodCommentsMethodSignature(
                     method, signature, IsDiscoveryDocumentProto())},
                 {deprecation_macro},
-                {"  $async_return_type$\n"},
+                {IsResponseTypeEmpty,
+                 // clang-format off
+                    "  future<Status>\n",
+                    "  future<StatusOr<$longrunning_deduced_response_type$>>\n"},
+                // clang-format on
                 {method_string},
                 {"\n"},
                 {FormatStartMethodComments(is_method_deprecated)},
                 {deprecation_macro},
-                {FormatMethodReturnType(method, /*is_async=*/false,
-                                        /*is_longrunning=*/true,
-                                        /*prefix=*/"  ", /*suffix=*/"\n")},
+                {IsResponseTypeEmpty,
+                 // clang-format off
+                    "  Status\n",
+                    "  StatusOr<$longrunning_operation_type$>\n"},
+                // clang-format on
                 {start_method_string}},
                All(IsNonStreaming, IsLongrunningOperation, Not(IsPaginated))),
            MethodPattern(
@@ -252,9 +258,7 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                  {FormatMethodCommentsProtobufRequest(
                      method, IsDiscoveryDocumentProto())},
                  {deprecation_macro},
-                 {FormatMethodReturnType(method, /*is_async=*/false,
-                                         /*is_longrunning=*/false,
-                                         /*prefix=*/"  ", /*suffix=*/"\n")},
+                 {"  $return_type$\n"},
                  // clang-format off
    {"  $method_name$($request_type$ const& request, Options opts = {});\n"}
                  // clang-format on
@@ -267,27 +271,27 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                  {FormatMethodCommentsProtobufRequest(
                      method, IsDiscoveryDocumentProto())},
                  {deprecation_macro},
-                 {FormatMethodReturnType(method, /*is_async=*/true,
-                                         /*is_longrunning=*/true,
-                                         /*prefix=*/"  ", /*suffix=*/"\n")},
-                 // clang-format off
+                 {IsResponseTypeEmpty,
+                  // clang-format off
+    "  future<Status>\n",
+    "  future<StatusOr<$longrunning_deduced_response_type$>>\n"},
    {"  $method_name$($request_type$ const& request, Options opts = {});\n"},
    {"\n"},
                 {FormatStartMethodComments(is_method_deprecated)},
                 {deprecation_macro},
                  // clang-format on
-                 {FormatMethodReturnType(method, /*is_async=*/false,
-                                         /*is_longrunning=*/true,
-                                         /*prefix=*/"  ", /*suffix=*/"\n")},
-                 // clang-format off
+                 {IsResponseTypeEmpty,
+                  // clang-format off
+    "  Status\n",
+    "  StatusOr<$longrunning_operation_type$>\n"},
    {"  $method_name$(NoAwaitTag, $request_type$ const& request, Options opts = {});\n\n"},
                  // clang-format on
                  {FormatAwaitMethodComments(is_method_deprecated)},
                  {deprecation_macro},
-                 {FormatMethodReturnType(method, /*is_async=*/true,
-                                         /*is_longrunning=*/true,
-                                         /*prefix=*/"  ", /*suffix=*/"\n")},
-                 // clang-format off
+                 {IsResponseTypeEmpty,
+                  // clang-format off
+    "  future<Status>\n",
+    "  future<StatusOr<$longrunning_deduced_response_type$>>\n"},
    {"  $method_name$($longrunning_operation_type$ const& operation, Options opts = {});\n"}
                  // clang-format on
              },
@@ -335,37 +339,31 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       std::string const signature = method_signature_extension[i];
       HeaderPrintMethod(
           method,
-          {MethodPattern(
-              {{"\n"},
-               {FormatMethodCommentsMethodSignature(
-                   method, signature, IsDiscoveryDocumentProto())},
-               {deprecation_macro},
-               {FormatMethodReturnType(method, /*is_async=*/true,
-                                       /*is_longrunning=*/false,
-                                       /*prefix=*/"  ", /*suffix=*/"\n")},
-               {method_string}},
-              All(IsNonStreaming, Not(IsLongrunningOperation),
-                  Not(IsPaginated)))},
+          {MethodPattern({{"\n"},
+                          {FormatMethodCommentsMethodSignature(
+                              method, signature, IsDiscoveryDocumentProto())},
+                          {deprecation_macro},
+                          {"  future<$return_type$>\n"},
+                          {method_string}},
+                         All(IsNonStreaming, Not(IsLongrunningOperation),
+                             Not(IsPaginated)))},
           __FILE__, __LINE__);
     }
-    HeaderPrintMethod(
-        method,
-        {MethodPattern(
-            {
-                {"\n"},
-                {FormatMethodCommentsProtobufRequest(
-                    method, IsDiscoveryDocumentProto())},
-                {deprecation_macro},
-                {FormatMethodReturnType(method, /*is_async=*/true,
-                                        /*is_longrunning=*/false,
-                                        /*prefix=*/"  ", /*suffix=*/"\n")},
-                // clang-format off
+    HeaderPrintMethod(method,
+                      {MethodPattern(
+                          {
+                              {"\n"},
+                              {FormatMethodCommentsProtobufRequest(
+                                  method, IsDiscoveryDocumentProto())},
+                              {deprecation_macro},
+                              {"  future<$return_type$>\n"},
+                              // clang-format off
    {"  Async$method_name$($request_type$ const& request, Options opts = {});\n"}
-                // clang-format on
-            },
-            All(IsNonStreaming, Not(IsLongrunningOperation),
-                Not(IsPaginated)))},
-        __FILE__, __LINE__);
+                              // clang-format on
+                          },
+                          All(IsNonStreaming, Not(IsLongrunningOperation),
+                              Not(IsPaginated)))},
+                      __FILE__, __LINE__);
   }
 
   HeaderPrint(  // clang-format off
@@ -452,11 +450,9 @@ $client_class_name$::Async$method_name$(Options opts) {
           method,
           {MethodPattern(
                {
-                   {FormatMethodReturnType(method, /*is_async=*/false,
-                                           /*is_longrunning=*/false,
-                                           /*prefix=*/"\n", /*suffix=*/"\n")},
-                   {method_string},
+                   {"\n$return_type$\n"},
                    // clang-format off
+                  {method_string},
                   {"  internal::OptionsSpan span(internal::MergeOptions("
                    "std::move(opts), options_));\n"},
                   {"  $request_type$ request;\n"},
@@ -469,11 +465,11 @@ $client_class_name$::Async$method_name$(Options opts) {
                    Not(IsPaginated))),
            MethodPattern(
                {
-                   {FormatMethodReturnType(method, /*is_async=*/true,
-                                           /*is_longrunning=*/true,
-                                           /*prefix=*/"\n", /*suffix=*/"\n")},
-                   {method_string},
-                   // clang-format off
+                   {IsResponseTypeEmpty,
+                    // clang-format off
+                    "\nfuture<Status>\n",
+                    "\nfuture<StatusOr<$longrunning_deduced_response_type$>>\n"},
+                  {method_string},
                   {"  internal::OptionsSpan span(internal::MergeOptions("
                    "std::move(opts), options_));\n"},
                   {"  $request_type$ request;\n"},
@@ -481,10 +477,10 @@ $client_class_name$::Async$method_name$(Options opts) {
                   {"  return connection_->$method_name$(request);\n"
                   "}\n"},
                    // clang-format on
-                   {FormatMethodReturnType(method, /*is_async=*/false,
-                                           /*is_longrunning=*/true,
-                                           /*prefix=*/"\n", /*suffix=*/"\n")},
-                   // clang-format off
+                   {IsResponseTypeEmpty,
+                    // clang-format off
+                    "\nStatus\n",
+                    "\nStatusOr<$longrunning_operation_type$>\n"},
                   {start_method_string},
                   {"  internal::OptionsSpan span(internal::MergeOptions("
                    "std::move(opts), options_));\n"},
@@ -588,9 +584,7 @@ $client_class_name$::Async$method_name$(Options opts) {
         method,
         {MethodPattern(
              {
-                 {FormatMethodReturnType(method, /*is_async=*/false,
-                                         /*is_longrunning=*/false,
-                                         /*prefix=*/"\n", /*suffix=*/"\n")},
+                 {"\n$return_type$\n"},
                  // clang-format off
    {"$client_class_name$::$method_name$($request_type$ const& request"
     ", Options opts) {\n"
@@ -604,10 +598,10 @@ $client_class_name$::Async$method_name$(Options opts) {
                  Not(IsPaginated))),
          MethodPattern(
              {
-                 {FormatMethodReturnType(method, /*is_async=*/true,
-                                         /*is_longrunning=*/true,
-                                         /*prefix=*/"\n", /*suffix=*/"\n")},
-                 // clang-format off
+                 {IsResponseTypeEmpty,
+                  // clang-format off
+    "\nfuture<Status>\n",
+    "\nfuture<StatusOr<$longrunning_deduced_response_type$>>\n"},
    {"$client_class_name$::$method_name$($request_type$ const& request"
     ", Options opts) {\n"
     "  internal::OptionsSpan span(internal::MergeOptions("
@@ -615,10 +609,10 @@ $client_class_name$::Async$method_name$(Options opts) {
     "  return connection_->$method_name$(request);\n"
     "}\n"},
                  // clang-format on
-                 {FormatMethodReturnType(method, /*is_async=*/false,
-                                         /*is_longrunning=*/true,
-                                         /*prefix=*/"\n", /*suffix=*/"\n")},
-                 // clang-format off
+                 {IsResponseTypeEmpty,
+                  // clang-format off
+    "\nStatus\n",
+    "\nStatusOr<$longrunning_operation_type$>\n"},
    {"$client_class_name$::$method_name$(NoAwaitTag"
     ", $request_type$ const& request"
     ", Options opts) {\n"
@@ -627,10 +621,10 @@ $client_class_name$::Async$method_name$(Options opts) {
     "  return connection_->$method_name$(NoAwaitTag{}, request);\n"
     "}\n"},
                  // clang-format on
-                 {FormatMethodReturnType(method, /*is_async=*/true,
-                                         /*is_longrunning=*/true,
-                                         /*prefix=*/"\n", /*suffix=*/"\n")},
-                 // clang-format off
+                 {IsResponseTypeEmpty,
+                  // clang-format off
+    "\nfuture<Status>\n",
+    "\nfuture<StatusOr<$longrunning_deduced_response_type$>>\n"},
    {"$client_class_name$::$method_name$("
     "$longrunning_operation_type$ const& operation, Options opts) {\n"
     "  internal::OptionsSpan span(internal::MergeOptions("
@@ -684,11 +678,9 @@ $client_class_name$::Async$method_name$(Options opts) {
           method,
           {MethodPattern(
               {
-                  {FormatMethodReturnType(method, /*is_async=*/true,
-                                          /*is_longrunning=*/false,
-                                          /*prefix=*/"\n", /*suffix=*/"\n")},
-                  {method_string},
+                  {"\nfuture<$return_type$>\n"},
                   // clang-format off
+                  {method_string},
                   {"  internal::OptionsSpan span(internal::MergeOptions("
                    "std::move(opts), options_));\n"},
                   {"  $request_type$ request;\n"},
@@ -705,9 +697,7 @@ $client_class_name$::Async$method_name$(Options opts) {
         method,
         {MethodPattern(
             {
-                {FormatMethodReturnType(method, /*is_async=*/true,
-                                        /*is_longrunning=*/false,
-                                        /*prefix=*/"\n", /*suffix=*/"\n")},
+                {"\nfuture<$return_type$>\n"},
                 // clang-format off
    {"$client_class_name$::Async$method_name$($request_type$ const& request"
     ", Options opts) {\n"
