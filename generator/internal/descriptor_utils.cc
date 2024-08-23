@@ -21,6 +21,7 @@
 #include "generator/internal/http_option_utils.h"
 #include "generator/internal/longrunning.h"
 #include "generator/internal/pagination.h"
+#include "generator/internal/predicate_utils.h"
 #include "generator/internal/request_id.h"
 #include "generator/internal/resolve_method_return.h"
 #include "generator/internal/routing.h"
@@ -830,6 +831,10 @@ std::map<std::string, VarsDictionary> CreateMethodVars(
     method_vars["response_message_type"] = method.output_type()->full_name();
     method_vars["response_type"] =
         ProtoNameToCppName(method.output_type()->full_name());
+    method_vars["return_type"] =
+        IsResponseTypeEmpty(method)
+            ? "Status"
+            : absl::StrFormat("StatusOr<%s>", method_vars.at("response_type"));
     auto request_id_field_name = RequestIdFieldName(service_config, method);
     if (!request_id_field_name.empty()) {
       method_vars["request_id_field_name"] = std::move(request_id_field_name);
