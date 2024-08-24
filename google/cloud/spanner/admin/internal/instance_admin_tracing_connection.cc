@@ -370,6 +370,34 @@ InstanceAdminTracingConnection::ListInstancePartitionOperations(
       std::move(span), std::move(sr));
 }
 
+future<StatusOr<google::spanner::admin::instance::v1::MoveInstanceResponse>>
+InstanceAdminTracingConnection::MoveInstance(
+    google::spanner::admin::instance::v1::MoveInstanceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::MoveInstance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->MoveInstance(request));
+}
+
+StatusOr<google::longrunning::Operation>
+InstanceAdminTracingConnection::MoveInstance(
+    NoAwaitTag,
+    google::spanner::admin::instance::v1::MoveInstanceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::MoveInstance");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->MoveInstance(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::MoveInstanceResponse>>
+InstanceAdminTracingConnection::MoveInstance(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::MoveInstance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->MoveInstance(operation));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<spanner_admin::InstanceAdminConnection>

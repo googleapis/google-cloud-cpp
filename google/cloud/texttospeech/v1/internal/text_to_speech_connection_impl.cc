@@ -89,6 +89,15 @@ TextToSpeechConnectionImpl::SynthesizeSpeech(
       *current, request, __func__);
 }
 
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::texttospeech::v1::StreamingSynthesizeRequest,
+    google::cloud::texttospeech::v1::StreamingSynthesizeResponse>>
+TextToSpeechConnectionImpl::AsyncStreamingSynthesize() {
+  return stub_->AsyncStreamingSynthesize(
+      background_->cq(), std::make_shared<grpc::ClientContext>(),
+      internal::SaveCurrentOptions());
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace texttospeech_v1_internal
 }  // namespace cloud

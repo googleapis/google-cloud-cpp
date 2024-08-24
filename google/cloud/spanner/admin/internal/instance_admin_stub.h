@@ -193,6 +193,18 @@ class InstanceAdminStub {
       google::spanner::admin::instance::v1::
           ListInstancePartitionOperationsRequest const& request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncMoveInstance(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::spanner::admin::instance::v1::MoveInstanceRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> MoveInstance(
+      grpc::ClientContext& context, Options options,
+      google::spanner::admin::instance::v1::MoveInstanceRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -363,6 +375,18 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
       grpc::ClientContext& context, Options const& options,
       google::spanner::admin::instance::v1::
           ListInstancePartitionOperationsRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncMoveInstance(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::spanner::admin::instance::v1::MoveInstanceRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> MoveInstance(
+      grpc::ClientContext& context, Options options,
+      google::spanner::admin::instance::v1::MoveInstanceRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

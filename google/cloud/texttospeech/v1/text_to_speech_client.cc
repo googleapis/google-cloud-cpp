@@ -70,6 +70,14 @@ TextToSpeechClient::SynthesizeSpeech(
   return connection_->SynthesizeSpeech(request);
 }
 
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::texttospeech::v1::StreamingSynthesizeRequest,
+    google::cloud::texttospeech::v1::StreamingSynthesizeResponse>>
+TextToSpeechClient::AsyncStreamingSynthesize(Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AsyncStreamingSynthesize();
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace texttospeech_v1
 }  // namespace cloud

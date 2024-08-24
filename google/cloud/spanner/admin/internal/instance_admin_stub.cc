@@ -412,6 +412,36 @@ DefaultInstanceAdminStub::ListInstancePartitionOperations(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DefaultInstanceAdminStub::AsyncMoveInstance(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::spanner::admin::instance::v1::MoveInstanceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::spanner::admin::instance::v1::MoveInstanceRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::spanner::admin::instance::v1::MoveInstanceRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncMoveInstance(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultInstanceAdminStub::MoveInstance(
+    grpc::ClientContext& context, Options,
+    google::spanner::admin::instance::v1::MoveInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->MoveInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DefaultInstanceAdminStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

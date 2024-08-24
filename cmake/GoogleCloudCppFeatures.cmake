@@ -101,6 +101,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "filestore"
     "functions"
     "gkebackup"
+    "gkeconnect"
     "gkehub"
     "gkemulticloud"
     "iam"

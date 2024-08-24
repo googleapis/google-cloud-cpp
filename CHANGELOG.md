@@ -6,6 +6,13 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
 
 ## v2.29.0 - TBD
 
+### New Libraries
+
+We are happy to announce the following GA libraries. Unless specifically noted,
+the APIs in these libraries are stable, and are ready for production use.
+
+- [GKE Connect API](/google/cloud/gkeconnect/README.md)
+
 ## v2.28.0 - 2024-08
 
 ### [OpenTelemetry](/google/cloud/opentelemetry/README.md)

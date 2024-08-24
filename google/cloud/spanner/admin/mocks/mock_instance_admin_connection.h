@@ -376,6 +376,49 @@ class MockInstanceAdminConnection
               (google::spanner::admin::instance::v1::
                    ListInstancePartitionOperationsRequest request),
               (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// MoveInstance(Matcher<google::spanner::admin::instance::v1::MoveInstanceRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<
+          StatusOr<google::spanner::admin::instance::v1::MoveInstanceResponse>>,
+      MoveInstance,
+      (google::spanner::admin::instance::v1::MoveInstanceRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, MoveInstance(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, MoveInstance,
+              (NoAwaitTag,
+               google::spanner::admin::instance::v1::MoveInstanceRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, MoveInstance(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<
+          StatusOr<google::spanner::admin::instance::v1::MoveInstanceResponse>>,
+      MoveInstance, (google::longrunning::Operation const& operation),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

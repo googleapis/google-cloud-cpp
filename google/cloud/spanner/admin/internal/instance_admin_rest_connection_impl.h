@@ -187,6 +187,18 @@ class InstanceAdminRestConnectionImpl
       google::spanner::admin::instance::v1::
           ListInstancePartitionOperationsRequest request) override;
 
+  future<StatusOr<google::spanner::admin::instance::v1::MoveInstanceResponse>>
+  MoveInstance(google::spanner::admin::instance::v1::MoveInstanceRequest const&
+                   request) override;
+
+  StatusOr<google::longrunning::Operation> MoveInstance(
+      NoAwaitTag,
+      google::spanner::admin::instance::v1::MoveInstanceRequest const& request)
+      override;
+
+  future<StatusOr<google::spanner::admin::instance::v1::MoveInstanceResponse>>
+  MoveInstance(google::longrunning::Operation const& operation) override;
+
  private:
   static std::unique_ptr<spanner_admin::InstanceAdminRetryPolicy> retry_policy(
       Options const& options) {

@@ -189,6 +189,18 @@ class InstanceAdminConnectionImpl
       google::spanner::admin::instance::v1::
           ListInstancePartitionOperationsRequest request) override;
 
+  future<StatusOr<google::spanner::admin::instance::v1::MoveInstanceResponse>>
+  MoveInstance(google::spanner::admin::instance::v1::MoveInstanceRequest const&
+                   request) override;
+
+  StatusOr<google::longrunning::Operation> MoveInstance(
+      NoAwaitTag,
+      google::spanner::admin::instance::v1::MoveInstanceRequest const& request)
+      override;
+
+  future<StatusOr<google::spanner::admin::instance::v1::MoveInstanceResponse>>
+  MoveInstance(google::longrunning::Operation const& operation) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<spanner_admin_internal::InstanceAdminStub> stub_;

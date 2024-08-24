@@ -110,8 +110,8 @@ class TextToSpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.texttospeech.v1.ListVoicesRequest]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L113}
-  /// [google.cloud.texttospeech.v1.ListVoicesResponse]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L126}
+  /// [google.cloud.texttospeech.v1.ListVoicesRequest]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L119}
+  /// [google.cloud.texttospeech.v1.ListVoicesResponse]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L132}
   ///
   // clang-format on
   StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse> ListVoices(
@@ -140,8 +140,8 @@ class TextToSpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.texttospeech.v1.ListVoicesRequest]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L113}
-  /// [google.cloud.texttospeech.v1.ListVoicesResponse]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L126}
+  /// [google.cloud.texttospeech.v1.ListVoicesRequest]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L119}
+  /// [google.cloud.texttospeech.v1.ListVoicesResponse]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L132}
   ///
   // clang-format on
   StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse> ListVoices(
@@ -169,8 +169,8 @@ class TextToSpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.texttospeech.v1.SynthesizeSpeechRequest]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L149}
-  /// [google.cloud.texttospeech.v1.SynthesizeSpeechResponse]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L297}
+  /// [google.cloud.texttospeech.v1.SynthesizeSpeechRequest]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L155}
+  /// [google.cloud.texttospeech.v1.SynthesizeSpeechResponse]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L304}
   ///
   // clang-format on
   StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
@@ -204,14 +204,45 @@ class TextToSpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.texttospeech.v1.SynthesizeSpeechRequest]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L149}
-  /// [google.cloud.texttospeech.v1.SynthesizeSpeechResponse]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L297}
+  /// [google.cloud.texttospeech.v1.SynthesizeSpeechRequest]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L155}
+  /// [google.cloud.texttospeech.v1.SynthesizeSpeechResponse]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L304}
   ///
   // clang-format on
   StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
   SynthesizeSpeech(
       google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request,
       Options opts = {});
+
+  // clang-format off
+  ///
+  /// Performs bidirectional streaming speech synthesis: receive audio while
+  /// sending text.
+  ///
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return An object representing the bidirectional streaming
+  ///     RPC. Applications can send multiple request messages and receive
+  ///     multiple response messages through this API. Bidirectional streaming
+  ///     RPCs can impose restrictions on the sequence of request and response
+  ///     messages. Please consult the service documentation for details.
+  ///     The request message type ([google.cloud.texttospeech.v1.StreamingSynthesizeRequest]) and response messages
+  ///     ([google.cloud.texttospeech.v1.StreamingSynthesizeResponse]) are mapped to C++ classes using the
+  ///     [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.texttospeech.v1.StreamingSynthesizeRequest]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L335}
+  /// [google.cloud.texttospeech.v1.StreamingSynthesizeResponse]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L352}
+  ///
+  // clang-format on
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::texttospeech::v1::StreamingSynthesizeRequest,
+      google::cloud::texttospeech::v1::StreamingSynthesizeResponse>>
+  AsyncStreamingSynthesize(Options opts = {});
 
  private:
   std::shared_ptr<TextToSpeechConnection> connection_;

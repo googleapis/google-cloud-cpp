@@ -272,6 +272,28 @@ InstanceAdminConnection::ListInstancePartitionOperations(
       StreamRange<google::longrunning::Operation>>();
 }
 
+future<StatusOr<google::spanner::admin::instance::v1::MoveInstanceResponse>>
+InstanceAdminConnection::MoveInstance(
+    google::spanner::admin::instance::v1::MoveInstanceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::spanner::admin::instance::v1::MoveInstanceResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> InstanceAdminConnection::MoveInstance(
+    NoAwaitTag,
+    google::spanner::admin::instance::v1::MoveInstanceRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::MoveInstanceResponse>>
+InstanceAdminConnection::MoveInstance(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::spanner::admin::instance::v1::MoveInstanceResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

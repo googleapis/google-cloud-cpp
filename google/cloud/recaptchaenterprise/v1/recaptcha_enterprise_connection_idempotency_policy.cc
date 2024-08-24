@@ -84,6 +84,12 @@ Idempotency RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::MigrateKey(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency
+RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::AddIpOverride(
+    google::cloud::recaptchaenterprise::v1::AddIpOverrideRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::GetMetrics(
     google::cloud::recaptchaenterprise::v1::GetMetricsRequest const&) {
   return Idempotency::kIdempotent;
