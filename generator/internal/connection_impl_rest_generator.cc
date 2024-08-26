@@ -87,8 +87,7 @@ class $connection_impl_rest_class_name$
   for (auto const& method : async_methods()) {
     if (IsStreaming(method)) continue;
     if (!HasHttpAnnotation(method)) continue;
-    HeaderPrintMethod(method, __FILE__, __LINE__,
-                      AsyncMethodDeclaration(method));
+    HeaderPrintMethod(method, __FILE__, __LINE__, AsyncMethodDeclaration());
   }
 
   // `CurrentOptions()` may not have the service default options because we
@@ -190,7 +189,7 @@ $connection_impl_rest_class_name$::$connection_impl_rest_class_name$(
   for (auto const& method : async_methods()) {
     if (IsStreaming(method)) continue;
     if (!HasHttpAnnotation(method)) continue;
-    CcPrintMethod(method, __FILE__, __LINE__, AsyncMethodDefinition(method));
+    CcPrintMethod(method, __FILE__, __LINE__, AsyncMethodDefinition());
   }
 
   CcCloseNamespaces();
@@ -236,29 +235,15 @@ std::string ConnectionImplRestGenerator::MethodDeclaration(
 )""");
   }
 
-  if (IsResponseTypeEmpty(method)) {
-    return R"""(
-  Status
-  $method_name$($request_type$ const& request) override;
-)""";
-  }
   return R"""(
-  StatusOr<$response_type$>
+  $return_type$
   $method_name$($request_type$ const& request) override;
 )""";
 }
 
-std::string ConnectionImplRestGenerator::AsyncMethodDeclaration(
-    google::protobuf::MethodDescriptor const& method) {
-  if (IsResponseTypeEmpty(method)) {
-    return R"""(
-  future<Status>
-  Async$method_name$($request_type$ const& request) override;
-)""";
-  }
-
+std::string ConnectionImplRestGenerator::AsyncMethodDeclaration() {
   return R"""(
-  future<StatusOr<$response_type$>>
+  future<$return_type$>
   Async$method_name$($request_type$ const& request) override;
 )""";
 }
@@ -512,11 +497,8 @@ $connection_impl_rest_class_name$::$method_name$(
                         await_function);
   }
 
-  return absl::StrCat(IsResponseTypeEmpty(method) ? R"""(
-Status)"""
-                                                  : R"""(
-StatusOr<$response_type$>)""",
-                      R"""(
+  return R"""(
+$return_type$
 $connection_impl_rest_class_name$::$method_name$($request_type$ const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
@@ -528,16 +510,12 @@ $connection_impl_rest_class_name$::$method_name$($request_type$ const& request) 
       },
       *current, request, __func__);
 }
-)""");
+)""";
 }
 
-std::string ConnectionImplRestGenerator::AsyncMethodDefinition(
-    google::protobuf::MethodDescriptor const& method) {
-  return absl::StrCat(IsResponseTypeEmpty(method) ? R"""(
-future<Status>)"""
-                                                  : R"""(
-future<StatusOr<$response_type$>>)""",
-                      R"""(
+std::string ConnectionImplRestGenerator::AsyncMethodDefinition() {
+  return R"""(
+future<$return_type$>
 $connection_impl_rest_class_name$::Async$method_name$($request_type$ const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto retry = retry_policy(*current);
@@ -554,7 +532,7 @@ $connection_impl_rest_class_name$::Async$method_name$($request_type$ const& requ
       },
       std::move(current), request, __func__);
 }
-)""");
+)""";
 }
 
 }  // namespace generator_internal

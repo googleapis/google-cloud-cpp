@@ -50,10 +50,8 @@ class ConnectionImplRestGenerator : public ServiceCodeGenerator {
       google::protobuf::MethodDescriptor const& method);
   static std::string MethodDefinition(
       google::protobuf::MethodDescriptor const& method);
-  static std::string AsyncMethodDeclaration(
-      google::protobuf::MethodDescriptor const& method);
-  static std::string AsyncMethodDefinition(
-      google::protobuf::MethodDescriptor const& method);
+  static std::string AsyncMethodDeclaration();
+  static std::string AsyncMethodDefinition();
 };
 
 }  // namespace generator_internal
