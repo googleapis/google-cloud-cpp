@@ -115,8 +115,7 @@ class $connection_class_name$Impl
   for (auto const& method : async_methods()) {
     if (IsStreamingRead(method)) continue;
     if (IsStreamingWrite(method)) continue;
-    HeaderPrintMethod(method, __FILE__, __LINE__,
-                      AsyncMethodDeclaration(method));
+    HeaderPrintMethod(method, __FILE__, __LINE__, AsyncMethodDeclaration());
   }
 
   HeaderPrint(R"""(
@@ -311,8 +310,7 @@ std::string ConnectionImplGenerator::MethodDeclaration(
 )""";
 }
 
-std::string ConnectionImplGenerator::AsyncMethodDeclaration(
-    google::protobuf::MethodDescriptor const& method) {
+std::string ConnectionImplGenerator::AsyncMethodDeclaration() {
   return R"""(
   future<$return_type$>
   Async$method_name$($request_type$ const& request) override;

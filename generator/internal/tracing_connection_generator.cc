@@ -78,8 +78,7 @@ class $tracing_connection_class_name$
   for (auto const& method : async_methods()) {
     if (IsStreamingRead(method)) continue;
     if (IsStreamingWrite(method)) continue;
-    HeaderPrintMethod(method, __FILE__, __LINE__,
-                      AsyncMethodDeclaration(method));
+    HeaderPrintMethod(method, __FILE__, __LINE__, AsyncMethodDeclaration());
   }
 
   HeaderPrint(R"""(
@@ -144,7 +143,7 @@ $tracing_connection_class_name$::$tracing_connection_class_name$(
   for (auto const& method : async_methods()) {
     if (IsStreamingRead(method)) continue;
     if (IsStreamingWrite(method)) continue;
-    CcPrintMethod(method, __FILE__, __LINE__, AsyncMethodDefinition(method));
+    CcPrintMethod(method, __FILE__, __LINE__, AsyncMethodDefinition());
   }
 
   CcPrint(R"""(
@@ -231,8 +230,7 @@ std::string TracingConnectionGenerator::MethodDeclaration(
 )""";
 }
 
-std::string TracingConnectionGenerator::AsyncMethodDeclaration(
-    google::protobuf::MethodDescriptor const& method) {
+std::string TracingConnectionGenerator::AsyncMethodDeclaration() {
   return R"""(
   future<$return_type$>
   Async$method_name$($request_type$ const& request) override;
@@ -341,8 +339,7 @@ $tracing_connection_class_name$::$method_name$($request_type$ const& request) {
 )""";
 }
 
-std::string TracingConnectionGenerator::AsyncMethodDefinition(
-    google::protobuf::MethodDescriptor const& method) {
+std::string TracingConnectionGenerator::AsyncMethodDefinition() {
   return R"""(
 future<$return_type$>
 $tracing_connection_class_name$::Async$method_name$($request_type$ const& request) {

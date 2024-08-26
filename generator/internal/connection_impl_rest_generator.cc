@@ -87,8 +87,7 @@ class $connection_impl_rest_class_name$
   for (auto const& method : async_methods()) {
     if (IsStreaming(method)) continue;
     if (!HasHttpAnnotation(method)) continue;
-    HeaderPrintMethod(method, __FILE__, __LINE__,
-                      AsyncMethodDeclaration(method));
+    HeaderPrintMethod(method, __FILE__, __LINE__, AsyncMethodDeclaration());
   }
 
   // `CurrentOptions()` may not have the service default options because we
@@ -190,7 +189,7 @@ $connection_impl_rest_class_name$::$connection_impl_rest_class_name$(
   for (auto const& method : async_methods()) {
     if (IsStreaming(method)) continue;
     if (!HasHttpAnnotation(method)) continue;
-    CcPrintMethod(method, __FILE__, __LINE__, AsyncMethodDefinition(method));
+    CcPrintMethod(method, __FILE__, __LINE__, AsyncMethodDefinition());
   }
 
   CcCloseNamespaces();
@@ -242,8 +241,7 @@ std::string ConnectionImplRestGenerator::MethodDeclaration(
 )""";
 }
 
-std::string ConnectionImplRestGenerator::AsyncMethodDeclaration(
-    google::protobuf::MethodDescriptor const& method) {
+std::string ConnectionImplRestGenerator::AsyncMethodDeclaration() {
   return R"""(
   future<$return_type$>
   Async$method_name$($request_type$ const& request) override;
@@ -515,8 +513,7 @@ $connection_impl_rest_class_name$::$method_name$($request_type$ const& request) 
 )""";
 }
 
-std::string ConnectionImplRestGenerator::AsyncMethodDefinition(
-    google::protobuf::MethodDescriptor const& method) {
+std::string ConnectionImplRestGenerator::AsyncMethodDefinition() {
   return R"""(
 future<$return_type$>
 $connection_impl_rest_class_name$::Async$method_name$($request_type$ const& request) {
