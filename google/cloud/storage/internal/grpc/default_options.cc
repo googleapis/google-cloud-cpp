@@ -15,12 +15,15 @@
 #include "google/cloud/storage/internal/grpc/default_options.h"
 #include "google/cloud/storage/client_options.h"
 #include "google/cloud/storage/grpc_plugin.h"
+#include "google/cloud/storage/internal/grpc/detect_gcp_options.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/detect_gcp.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/service_endpoint.h"
+#include "google/cloud/universe_domain_options.h"
 #include "absl/strings/match.h"
 #include <grpcpp/grpcpp.h>
 #include <algorithm>
@@ -72,6 +75,11 @@ Options DefaultOptionsGrpc(Options options) {
         google::cloud::MakeGoogleDefaultCredentials(
             google::cloud::internal::MakeAuthOptions(options)));
   }
+
+  if (!options.has<GcpDetectorOption>()) {
+    options.set<GcpDetectorOption>(google::cloud::internal::MakeGcpDetector());
+  }
+
   auto const testbench =
       GetEnv("CLOUD_STORAGE_EXPERIMENTAL_GRPC_TESTBENCH_ENDPOINT");
   if (testbench.has_value() && !testbench->empty()) {
@@ -87,8 +95,19 @@ Options DefaultOptionsGrpc(Options options) {
   auto const enable_grpc_metrics =
       !testbench.has_value() && GrpcEnableMetricsIsSafe();
 
-  auto const ep = google::cloud::internal::UniverseDomainEndpoint(
+  auto ep = google::cloud::internal::UniverseDomainEndpoint(
       "storage.googleapis.com", options);
+
+  // Try to default to direct path if we can detect we are running in GCP and
+  // there is not already a set endpoint or unviverse domain endpoint.
+  auto const gcp_detector = options.get<GcpDetectorOption>();
+  if ((!options.has<EndpointOption>() &&
+       !options.has<internal::UniverseDomainOption>()) &&
+      (gcp_detector->IsGoogleCloudBios() ||
+       gcp_detector->IsGoogleCloudServerless())) {
+    options.set<EndpointOption>("google-c2p:///storage.googleapis.com");
+  }
+
   options = google::cloud::internal::MergeOptions(
       std::move(options),
       Options{}
