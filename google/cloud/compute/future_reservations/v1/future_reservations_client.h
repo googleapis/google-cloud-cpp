@@ -121,7 +121,7 @@ class FutureReservationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.future_reservations.v1.AggregatedListFutureReservationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/future_reservations/v1/future_reservations.proto#L124}
-  /// [google.cloud.cpp.compute.v1.FutureReservationsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_043.proto#L530}
+  /// [google.cloud.cpp.compute.v1.FutureReservationsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_043.proto#L523}
   ///
   // clang-format on
   StreamRange<
@@ -166,7 +166,7 @@ class FutureReservationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.future_reservations.v1.AggregatedListFutureReservationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/future_reservations/v1/future_reservations.proto#L124}
-  /// [google.cloud.cpp.compute.v1.FutureReservationsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_043.proto#L530}
+  /// [google.cloud.cpp.compute.v1.FutureReservationsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_043.proto#L523}
   ///
   // clang-format on
   StreamRange<
