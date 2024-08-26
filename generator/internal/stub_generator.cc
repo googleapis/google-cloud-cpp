@@ -140,17 +140,8 @@ Status StubGenerator::GenerateHeader() {
 )""");
       continue;
     }
-    if (IsResponseTypeEmpty(method)) {
-      HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
-  virtual Status $method_name$(
-      grpc::ClientContext& context,
-      Options const& options,
-      $request_type$ const& request) = 0;
-)""");
-      continue;
-    }
     HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
-  virtual StatusOr<$response_type$> $method_name$(
+  virtual $return_type$ $method_name$(
       grpc::ClientContext& context,
       Options const& options,
       $request_type$ const& request) = 0;
@@ -185,19 +176,8 @@ Status StubGenerator::GenerateHeader() {
       HeaderPrintMethod(method, __FILE__, __LINE__, kDeclaration);
       continue;
     }
-    if (IsResponseTypeEmpty(method)) {
-      HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
-  virtual future<Status>
-  Async$method_name$(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    $request_type$ const& request) = 0;
-)""");
-      continue;
-    }
     HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
-  virtual future<StatusOr<$response_type$>>
+  virtual future<$return_type$>
   Async$method_name$(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

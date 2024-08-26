@@ -173,19 +173,8 @@ $round_robin_class_name$::$method_name$(
 
       continue;
     }
-    if (IsResponseTypeEmpty(method)) {
-      CcPrintMethod(method, __FILE__, __LINE__, R"""(
-Status $round_robin_class_name$::$method_name$(
-    grpc::ClientContext& context,
-    Options const& options,
-    $request_type$ const& request) {
-  return Child()->$method_name$(context, options, request);
-}
-)""");
-      continue;
-    }
     CcPrintMethod(method, __FILE__, __LINE__, R"""(
-StatusOr<$response_type$> $round_robin_class_name$::$method_name$(
+$return_type$ $round_robin_class_name$::$method_name$(
     grpc::ClientContext& context,
     Options const& options,
     $request_type$ const& request) {
@@ -227,10 +216,7 @@ $round_robin_class_name$::Async$method_name$(
 )""");
       continue;
     }
-    CcPrintMethod(method, __FILE__, __LINE__,
-                  IsResponseTypeEmpty(method)
-                      ? "\nfuture<Status>"
-                      : "\nfuture<StatusOr<$response_type$>>");
+    CcPrintMethod(method, __FILE__, __LINE__, "\nfuture<$return_type$>");
     CcPrintMethod(method, __FILE__, __LINE__, R"""(
 $round_robin_class_name$::Async$method_name$(
     google::cloud::CompletionQueue& cq,

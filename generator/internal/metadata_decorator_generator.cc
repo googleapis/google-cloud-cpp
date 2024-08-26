@@ -293,9 +293,7 @@ $metadata_class_name$::$method_name$(
 )""");
       continue;
     }
-    CcPrintMethod(method, __FILE__, __LINE__,
-                  IsResponseTypeEmpty(method) ? "\nStatus"
-                                              : "\nStatusOr<$response_type$>");
+    CcPrintMethod(method, __FILE__, __LINE__, "\n$return_type$");
     CcPrintMethod(method, __FILE__, __LINE__, R"""(
 $metadata_class_name$::$method_name$(
     grpc::ClientContext& context,
@@ -353,10 +351,7 @@ $metadata_class_name$::Async$method_name$(
       CcPrintMethod(method, __FILE__, __LINE__, definition);
       continue;
     }
-    CcPrintMethod(method, __FILE__, __LINE__,
-                  IsResponseTypeEmpty(method)
-                      ? "\nfuture<Status>"
-                      : "\nfuture<StatusOr<$response_type$>>");
+    CcPrintMethod(method, __FILE__, __LINE__, "\nfuture<$return_type$>");
     CcPrintMethod(method, __FILE__, __LINE__, R"""(
 $metadata_class_name$::Async$method_name$(
       google::cloud::CompletionQueue& cq,
