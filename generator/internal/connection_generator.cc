@@ -238,10 +238,8 @@ class $connection_class_name$ {
         method,
         {MethodPattern(
              {
-                 {IsResponseTypeEmpty,
-                  // clang-format off
-    "\n  virtual Status\n",
-    "\n  virtual StatusOr<$response_type$>\n"},
+                 {"\n  virtual $return_type$\n"},
+                 // clang-format off
    {"  $method_name$($request_type$ const& request);\n"}
                  // clang-format on
              },
@@ -298,10 +296,8 @@ class $connection_class_name$ {
         method,
         {MethodPattern(
             {
-                {IsResponseTypeEmpty,
-                 // clang-format off
-    "\n  virtual future<Status>\n",
-    "\n  virtual future<StatusOr<$response_type$>>\n"},
+                {"\n  virtual future<$return_type$>\n"},
+                // clang-format off
    {"  Async$method_name$($request_type$ const& request);\n"}
                 // clang-format on
             },
@@ -375,10 +371,8 @@ $connection_class_name$::Async$method_name$() {
         method,
         {MethodPattern(
              {
-                 {IsResponseTypeEmpty,
-                  // clang-format off
-    "\nStatus\n",
-    "\nStatusOr<$response_type$>\n"},
+                 {"\n$return_type$\n"},
+                 // clang-format off
    {"$connection_class_name$::$method_name$(\n"
     "    $request_type$ const&) {\n"
     "  return Status(StatusCode::kUnimplemented, \"not implemented\");\n"

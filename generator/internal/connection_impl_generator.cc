@@ -305,29 +305,16 @@ std::string ConnectionImplGenerator::MethodDeclaration(
 )""";
   }
 
-  if (IsResponseTypeEmpty(method)) {
-    return R"""(
-  Status
-  $method_name$($request_type$ const& request) override;
-)""";
-  }
   return R"""(
-  StatusOr<$response_type$>
+  $return_type$
   $method_name$($request_type$ const& request) override;
 )""";
 }
 
 std::string ConnectionImplGenerator::AsyncMethodDeclaration(
     google::protobuf::MethodDescriptor const& method) {
-  if (IsResponseTypeEmpty(method)) {
-    return R"""(
-  future<Status>
-  Async$method_name$($request_type$ const& request) override;
-)""";
-  }
-
   return R"""(
-  future<StatusOr<$response_type$>>
+  future<$return_type$>
   Async$method_name$($request_type$ const& request) override;
 )""";
 }
@@ -543,9 +530,7 @@ $connection_class_name$Impl::$method_name$(
                         await_function);
   }
 
-  auto const* return_fragment = IsResponseTypeEmpty(method)
-                                    ? R"""(Status)"""
-                                    : R"""(StatusOr<$response_type$>)""";
+  auto const* return_fragment = R"""($return_type$)""";
   if (HasRequestId(method)) {
     return absl::StrCat("\n", return_fragment, R"""(
 $connection_class_name$Impl::$method_name$($request_type$ const& request) {
@@ -584,9 +569,7 @@ $connection_class_name$Impl::$method_name$($request_type$ const& request) {
 
 std::string ConnectionImplGenerator::AsyncMethodDefinition(
     google::protobuf::MethodDescriptor const& method) {
-  auto const* return_fragment =
-      IsResponseTypeEmpty(method) ? R"""(future<Status>)"""
-                                  : R"""(future<StatusOr<$response_type$>>)""";
+  auto const* return_fragment = R"""(future<$return_type$>)""";
   auto const* request_id_fragment = HasRequestId(method) ?
                                                          R"""(
   if (request_copy.$request_id_field_name$().empty()) {

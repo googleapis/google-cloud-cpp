@@ -225,29 +225,16 @@ std::string TracingConnectionGenerator::MethodDeclaration(
 )""";
   }
 
-  if (IsResponseTypeEmpty(method)) {
-    return R"""(
-  Status
-  $method_name$($request_type$ const& request) override;
-)""";
-  }
   return R"""(
-  StatusOr<$response_type$>
+  $return_type$
   $method_name$($request_type$ const& request) override;
 )""";
 }
 
 std::string TracingConnectionGenerator::AsyncMethodDeclaration(
     google::protobuf::MethodDescriptor const& method) {
-  if (IsResponseTypeEmpty(method)) {
-    return R"""(
-  future<Status>
-  Async$method_name$($request_type$ const& request) override;
-)""";
-  }
-
   return R"""(
-  future<StatusOr<$response_type$>>
+  future<$return_type$>
   Async$method_name$($request_type$ const& request) override;
 )""";
 }
@@ -344,33 +331,27 @@ $tracing_connection_class_name$::$method_name$(
     )""");
   }
 
-  return absl::StrCat(IsResponseTypeEmpty(method) ? R"""(
-Status)"""
-                                                  : R"""(
-StatusOr<$response_type$>)""",
-                      R"""(
+  return R"""(
+$return_type$
 $tracing_connection_class_name$::$method_name$($request_type$ const& request) {
   auto span = internal::MakeSpan("$product_namespace$::$connection_class_name$::$method_name$");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->$method_name$(request));
 }
-)""");
+)""";
 }
 
 std::string TracingConnectionGenerator::AsyncMethodDefinition(
     google::protobuf::MethodDescriptor const& method) {
-  return absl::StrCat(IsResponseTypeEmpty(method) ? R"""(
-future<Status>)"""
-                                                  : R"""(
-future<StatusOr<$response_type$>>)""",
-                      R"""(
+  return R"""(
+future<$return_type$>
 $tracing_connection_class_name$::Async$method_name$($request_type$ const& request) {
   auto span = internal::MakeSpan(
       "$product_namespace$::$connection_class_name$::Async$method_name$");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->Async$method_name$(request));
 }
-)""");
+)""";
 }
 
 }  // namespace generator_internal

@@ -91,10 +91,8 @@ class $mock_connection_class_name$ : public $product_namespace$::$connection_cla
         method,
         {MethodPattern(
              {
-                 {IsResponseTypeEmpty,
-                  // clang-format off
-    "\n  MOCK_METHOD(Status,\n",
-    "\n  MOCK_METHOD(StatusOr<$response_type$>,\n"},
+                 {"\n  MOCK_METHOD($return_type$,\n"},
+                 // clang-format off
    {"  $method_name$,\n"
     "  ($request_type$ const& request), (override));\n",}
                  // clang-format on
@@ -179,10 +177,8 @@ class $mock_connection_class_name$ : public $product_namespace$::$connection_cla
         method,
         {MethodPattern(
             {
-                {IsResponseTypeEmpty,
-                 // clang-format off
-    "\n  MOCK_METHOD(future<Status>,\n",
-    "\n  MOCK_METHOD(future<StatusOr<$response_type$>>,\n"},
+                {"\n  MOCK_METHOD(future<$return_type$>,\n"},
+                // clang-format off
    {"  Async$method_name$,\n"
     "  ($request_type$ const& request), (override));\n",}
                 // clang-format on

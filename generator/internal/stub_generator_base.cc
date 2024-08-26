@@ -82,17 +82,8 @@ void StubGeneratorBase::HeaderPrintPublicMethods() {
 )""");
       continue;
     }
-    if (IsResponseTypeEmpty(method)) {
-      HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
-  Status $method_name$(
-      grpc::ClientContext& context,
-      Options const& options,
-      $request_type$ const& request) override;
-)""");
-      continue;
-    }
     HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
-  StatusOr<$response_type$> $method_name$(
+  $return_type$ $method_name$(
       grpc::ClientContext& context,
       Options const& options,
       $request_type$ const& request) override;
@@ -127,18 +118,8 @@ void StubGeneratorBase::HeaderPrintPublicMethods() {
       HeaderPrintMethod(method, __FILE__, __LINE__, kDeclaration);
       continue;
     }
-    if (IsResponseTypeEmpty(method)) {
-      HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
-  future<Status> Async$method_name$(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      $request_type$ const& request) override;
-)""");
-      continue;
-    }
     HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
-  future<StatusOr<$response_type$>> Async$method_name$(
+  future<$return_type$> Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,

@@ -364,10 +364,10 @@ GoldenThingAdminRestLogging::AsyncGetDatabase(
 
 future<Status>
 GoldenThingAdminRestLogging::AsyncDropDatabase(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      google::test::admin::database::v1::DropDatabaseRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::test::admin::database::v1::DropDatabaseRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
