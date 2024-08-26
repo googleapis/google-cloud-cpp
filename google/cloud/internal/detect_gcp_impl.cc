@@ -15,7 +15,8 @@
 #include "google/cloud/internal/detect_gcp_impl.h"
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/status.h"
+#include "google/cloud/internal/make_status.h"
+#include "google/cloud/log.h"
 #include "absl/strings/ascii.h"
 #include "absl/strings/string_view.h"
 #include <algorithm>
@@ -41,9 +42,13 @@ StatusOr<std::string> GcpDetectorImpl::GetBiosInformation() const {
                              config_.value_key.c_str(), RRF_RT_REG_SZ, nullptr,
                              nullptr, &size);
 
-  if (result != ERROR_SUCCESS)
-    return StatusOr<std::string>(
-        Status(StatusCode::kUnknown, "error querying registry value"));
+  if (result != ERROR_SUCCESS) {
+    return UnknownError("error querying registry",
+                        GCP_ERROR_INFO().WithMetadata("key", config_.key))
+        .WithMetadata("sub_key", config_.sub_key)
+        .WithMetadata("value_key", config_.value_key)
+        .WithMetadata("win32_error_code", std::to_string(result));
+  }
 
   std::string contents;
   contents.resize(size / sizeof(char));
@@ -51,9 +56,13 @@ StatusOr<std::string> GcpDetectorImpl::GetBiosInformation() const {
                         config_.value_key.c_str(), RRF_RT_REG_SZ, nullptr,
                         &contents[0], &size);
 
-  if (result != ERROR_SUCCESS)
-    return StatusOr<std::string>(
-        Status(StatusCode::kUnknown, "error querying registry value"));
+  if (result != ERROR_SUCCESS) {
+    return UnknownError("error querying registry",
+                        GCP_ERROR_INFO().WithMetadata("key", config_.key))
+        .WithMetadata("sub_key", config_.sub_key)
+        .WithMetadata("value_key", config_.value_key)
+        .WithMetadata("win32_error_code", std::to_string(result));
+  }
 
   DWORD content_length = size / sizeof(char);
   content_length--;  // Exclude NUL written by WIN32
@@ -62,15 +71,17 @@ StatusOr<std::string> GcpDetectorImpl::GetBiosInformation() const {
   return contents;
 #else  // _WIN32
   auto product_name_status = status(config_.path);
-  if (!exists(product_name_status))
-    return StatusOr<std::string>(
-        Status(StatusCode::kNotFound, "file does not exist"));
+  if (!exists(product_name_status)) {
+    return NotFoundError("file does not exist", GCP_ERROR_INFO().WithMetadata(
+                                                    "filename", config_.path));
+  }
 
   std::ifstream product_name_file(config_.path);
   std::string contents;
-  if (!product_name_file.is_open())
-    return StatusOr<std::string>(
-        Status(StatusCode::kUnknown, "unable to open file"));
+  if (!product_name_file.is_open()) {
+    return UnknownError("unable to open file", GCP_ERROR_INFO().WithMetadata(
+                                                   "filename", config_.path));
+  }
 
   std::getline(product_name_file, contents);
   product_name_file.close();
@@ -81,7 +92,10 @@ StatusOr<std::string> GcpDetectorImpl::GetBiosInformation() const {
 
 bool GcpDetectorImpl::IsGoogleCloudBios() {
   auto status = GetBiosInformation();
-  if (!status.ok()) return false;
+  if (!status.ok()) {
+    GCP_LOG(WARNING) << status.status();
+    return false;
+  }
 
   auto bios_information = status.value();
   absl::StripAsciiWhitespace(&bios_information);
