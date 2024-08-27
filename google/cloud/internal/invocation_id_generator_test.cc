@@ -59,10 +59,10 @@ TEST(InvocationIdGenerator, Unique) {
 TEST(InvocationIdGenerator, TwoGenerators) {
   InvocationIdGenerator a;
   InvocationIdGenerator b;
-  auto aout = GenerateTestIds(a);
-  auto bout = GenerateTestIds(b);
-  auto actual = aout;
-  actual.insert(actual.end(), bout.begin(), bout.end());
+  auto a_out = GenerateTestIds(a);
+  auto b_out = GenerateTestIds(b);
+  auto actual = a_out;
+  actual.insert(actual.end(), b_out.begin(), b_out.end());
   std::sort(actual.begin(), actual.end());
   auto f = std::adjacent_find(actual.begin(), actual.end());
   EXPECT_TRUE(f == actual.end()) << "Duplicate=" << *f;
