@@ -27,7 +27,7 @@ char const kRandomTableIdRE[] = R"re(^tbl-\d{4}-\d{2}-\d{2}-.*$)re";
 // Per google/bigtable/admin/v2/bigtable_table_admin.proto, backup names must
 // be between 1 and 50 characters such, [_a-zA-Z0-9][-_.a-zA-Z0-9]*.
 auto constexpr kMaxBackupIdLength = 50;
-char const kRandomBackupIdRE[] = R"re(^bck-\d{4}-\d{2}-\d{2}-.*$)re";
+char const kRandomBackupIdRE[] = R"re(^back-\d{4}-\d{2}-\d{2}-.*$)re";
 
 auto constexpr kMaxClusterIdLength = 30;
 char const kRandomClusterIdRE[] = R"re(^cl-\d{4}-\d{2}-\d{2}-.*$)re";
@@ -64,7 +64,7 @@ std::string RandomBackupId(google::cloud::internal::DefaultPRNG& generator,
 
 std::string RandomBackupId(std::chrono::system_clock::time_point tp) {
   std::string date = google::cloud::internal::FormatUtcDate(tp);
-  return "bck-" + date + "-";
+  return "back-" + date + "-";
 }
 
 std::string RandomBackupIdRegex() { return kRandomBackupIdRE; }
