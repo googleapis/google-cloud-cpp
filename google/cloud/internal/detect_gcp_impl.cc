@@ -43,11 +43,13 @@ StatusOr<std::string> GcpDetectorImpl::GetBiosInformation() const {
                              nullptr, &size);
 
   if (result != ERROR_SUCCESS) {
-    return UnknownError("error querying registry",
-                        GCP_ERROR_INFO().WithMetadata("key", std::to_string((ULONG_PTR)config_.key))
-        .WithMetadata("sub_key", config_.sub_key)
-        .WithMetadata("value_key", config_.value_key)
-        .WithMetadata("win32_error_code", std::to_string(result)));
+    return UnknownError(
+        "error querying registry",
+        GCP_ERROR_INFO()
+            .WithMetadata("key", std::to_string((ULONG_PTR)config_.key))
+            .WithMetadata("sub_key", config_.sub_key)
+            .WithMetadata("value_key", config_.value_key)
+            .WithMetadata("win32_error_code", std::to_string(result)));
   }
 
   std::string contents;
@@ -57,11 +59,13 @@ StatusOr<std::string> GcpDetectorImpl::GetBiosInformation() const {
                         &contents[0], &size);
 
   if (result != ERROR_SUCCESS) {
-    return UnknownError("error querying registry",
-                        GCP_ERROR_INFO().WithMetadata("key", std::to_string((ULONG_PTR)config_.key))
-        .WithMetadata("sub_key", config_.sub_key)
-        .WithMetadata("value_key", config_.value_key)
-        .WithMetadata("win32_error_code", std::to_string(result)));
+    return UnknownError(
+        "error querying registry",
+        GCP_ERROR_INFO()
+            .WithMetadata("key", std::to_string((ULONG_PTR)config_.key))
+            .WithMetadata("sub_key", config_.sub_key)
+            .WithMetadata("value_key", config_.value_key)
+            .WithMetadata("win32_error_code", std::to_string(result)));
   }
 
   DWORD content_length = size / sizeof(char);
