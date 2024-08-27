@@ -35,7 +35,7 @@ RUN dnf makecache && \
         python-pip \
         ShellCheck
 
-RUN cargo install typos-cli --version 1.16.1 --root /usr/local
+RUN cargo install typos-cli --version 1.24.1 --root /usr/local
 
 RUN curl -L -o /usr/bin/buildifier https://github.com/bazelbuild/buildtools/releases/download/v6.4.0/buildifier-linux-amd64 && \
     chmod 755 /usr/bin/buildifier

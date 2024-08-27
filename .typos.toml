@@ -11,6 +11,7 @@ extend-exclude = [
     "protos/google/cloud/bigquery/*/*/*.proto",
     "google/cloud/compute/*/*/*.h",
     # Truncates strings, which might not form valid words.
+    "google/cloud/bigquery/v2/minimal/internal/job_request_test.cc",
     "google/cloud/internal/debug_string_protobuf_test.cc",
     # Testing input file
     "google/cloud/testing_util/rest_testing_large_json.json",
@@ -26,6 +27,7 @@ extend-exclude = [
     "google/cloud/cloudbuild/v2/repository_manager_client.h",
     "google/cloud/managedidentities/v1/managed_identities_client.h",
     "google/cloud/monitoring/v3/uptime_check_client.h",
+    "google/cloud/networkconnectivity/v1/policy_based_routing_client.h",
     "google/cloud/rapidmigrationassessment/v1/rapid_migration_assessment_client.h",
     "google/cloud/resourcemanager/v3/projects_client.h",
     # The tool complains about `FIELDs` :shrug:
@@ -34,10 +36,11 @@ extend-exclude = [
     # keyfiles (or private keys) and contain character sequences that almost
     # look like words.
     "ci/etc/invalidated-keyfile.json",
-    "google/cloud/internal/rest_client_integration_test.cc",
+    "google/cloud/internal/curl_rest_client_integration_test.cc",
     "google/cloud/internal/grpc_service_account_authentication_test.cc",
     "google/cloud/internal/oauth2_google_credentials_test.cc",
     "google/cloud/internal/oauth2_service_account_credentials_test.cc",
+    "google/cloud/internal/rest_client_integration_test.cc",
     "google/cloud/testing_util/credentials_constants.h",
     "google/cloud/storage/client_options_test.cc",
     "google/cloud/storage/client_sign_policy_document_test.cc",
@@ -47,6 +50,7 @@ extend-exclude = [
     "google/cloud/storage/testing/constants.h",
     "google/cloud/storage/tests/unified_credentials_integration_test.cc",
     "google/cloud/storage/tools/make_jwt_assertion_for_test_data.py",
+    "google/cloud/universe_domain_test.cc",
     # Input data for DocFX tests. It contains many long hex strings that confuse
     # the spell checker.
     "docfx/testing/inputs.cc",

@@ -1313,7 +1313,7 @@ TEST(BucketMetadataPatchBuilder, ResetHierarchicalNamespace) {
   auto actual = builder.BuildPatch();
   auto json = nlohmann::json::parse(actual);
   ASSERT_EQ(1U, json.count("hierarchicalNamespace")) << json;
-  ASSERT_TRUE(json["hierarhicalNamespace"].is_null()) << json;
+  ASSERT_TRUE(json["hierarchicalNamespace"].is_null()) << json;
 }
 
 TEST(BucketMetadataPatchBuilder, SetEncryption) {
