@@ -95,7 +95,7 @@ Options DefaultOptionsGrpc(Options options) {
   auto const enable_grpc_metrics =
       !testbench.has_value() && GrpcEnableMetricsIsSafe();
 
-  auto ep = google::cloud::internal::UniverseDomainEndpoint(
+  auto const ep = google::cloud::internal::UniverseDomainEndpoint(
       "storage.googleapis.com", options);
 
   // Try to default to direct path if we can detect we are running in GCP and
