@@ -171,6 +171,9 @@ TEST(PredicateUtilsTest, HasLongRunningMethodOne) {
         name: "One"
         input_type: "google.protobuf.Bar"
         output_type: "google.longrunning.Operation"
+        options {
+          [google.longrunning.operation_info] {}
+        }
       }
       method {
         name: "Two"
@@ -224,11 +227,17 @@ TEST(PredicateUtilsTest, HasLongRunningMethodMoreThanOne) {
         name: "Two"
         input_type: "google.protobuf.Bar"
         output_type: "google.longrunning.Operation"
+        options {
+          [google.longrunning.operation_info] {}
+        }
       }
       method {
         name: "Three"
         input_type: "google.protobuf.Bar"
         output_type: "google.longrunning.Operation"
+        options {
+          [google.longrunning.operation_info] {}
+        }
       }
     }
   )pb";
