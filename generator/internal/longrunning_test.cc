@@ -46,12 +46,20 @@ TEST(LongrunningTest, IsGRPCLongrunningOperation) {
     service {
       name: "Service"
       method {
-        name: "Lro"
+        name: "GrpcLro"
+        input_type: "google.longrunning.Bar"
+        output_type: "google.longrunning.Operation"
+        options {
+          [google.longrunning.operation_info] {}
+        }
+      }
+      method {
+        name: "NonLro1"
         input_type: "google.longrunning.Bar"
         output_type: "google.longrunning.Operation"
       }
       method {
-        name: "NonLro"
+        name: "NonLro2"
         input_type: "google.longrunning.Bar"
         output_type: "google.longrunning.Bar"
       }
@@ -61,14 +69,20 @@ TEST(LongrunningTest, IsGRPCLongrunningOperation) {
   ASSERT_TRUE(TextFormat::ParseFromString(kServiceText, &service_file));
   DescriptorPool pool;
   FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
-  EXPECT_TRUE(
-      IsLongrunningOperation(*service_file_descriptor->service(0)->method(0)));
   EXPECT_TRUE(IsGRPCLongrunningOperation(
       *service_file_descriptor->service(0)->method(0)));
   EXPECT_FALSE(IsHttpLongrunningOperation(
       *service_file_descriptor->service(0)->method(0)));
+  EXPECT_FALSE(IsGRPCLongrunningOperation(
+      *service_file_descriptor->service(0)->method(1)));
+  EXPECT_FALSE(IsGRPCLongrunningOperation(
+      *service_file_descriptor->service(0)->method(2)));
+  EXPECT_TRUE(
+      IsLongrunningOperation(*service_file_descriptor->service(0)->method(0)));
   EXPECT_FALSE(
       IsLongrunningOperation(*service_file_descriptor->service(0)->method(1)));
+  EXPECT_FALSE(
+      IsLongrunningOperation(*service_file_descriptor->service(0)->method(2)));
 }
 
 TEST(LongrunningTest, IsLongrunningMetadataTypeUsedAsResponseEmptyResponse) {
