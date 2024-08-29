@@ -47,7 +47,6 @@ google::cloud::Options TestOptions() {
 
 TEST(DefaultOptionsGrpc, DefaultOptionsGrpcChannelCount) {
   using ::google::cloud::GrpcNumChannelsOption;
-
   struct TestCase {
     std::string endpoint;
     int lower_bound;
