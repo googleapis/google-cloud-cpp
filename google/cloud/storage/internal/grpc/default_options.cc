@@ -98,7 +98,7 @@ Options DefaultOptionsGrpc(Options options) {
   auto const ep = google::cloud::internal::UniverseDomainEndpoint(
       "storage.googleapis.com", options);
 
-  // Try to default to direct path if we can detect we are running in GCP and
+  // Set default to direct path if we can detect we are running in GCP and
   // there is not already a set endpoint or unviverse domain endpoint.
   auto const gcp_detector = options.get<GcpDetectorOption>();
   if ((!options.has<EndpointOption>() &&
