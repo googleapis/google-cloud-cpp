@@ -311,7 +311,6 @@ void QueryData(google::cloud::spanner::Client client) {
 }
 //! [END spanner_query_graph_data] [spanner-query-graph-data]
 
-
 //! [START spanner_query_graph_data_with_parameter]
 void QueryWithParameter(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
@@ -416,7 +415,7 @@ int RunOneCommand(std::vector<std::string> argv) {
   using CommandType = std::function<void(std::vector<std::string> const&)>;
   using CommandMap = std::map<std::string, CommandType>;
 
-  using SampleFunction = void (*)(google::cloud::spanner::Client);
+  using SampleFunction = std::function<void(google::cloud::spanner::Client)>;
   auto make_command_entry = [](std::string const& sample_name,
                                SampleFunction sample) {
     auto make_command = [](std::string const& sample_name,
@@ -434,8 +433,8 @@ int RunOneCommand(std::vector<std::string> argv) {
   };
 
   using DatabaseAdminSampleFunction =
-      void (*)(google::cloud::spanner_admin::DatabaseAdminClient,
-               std::string const&, std::string const&, std::string const&);
+      std::function<void(google::cloud::spanner_admin::DatabaseAdminClient,
+               std::string const&, std::string const&, std::string const&)>;
   auto make_database_command_entry = [](std::string const& sample_name,
                                         DatabaseAdminSampleFunction sample) {
     auto make_command = [](std::string const& sample_name,
