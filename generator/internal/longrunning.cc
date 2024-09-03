@@ -75,12 +75,8 @@ DeduceLongrunningOperationResponseType(
 }  // namespace
 
 bool IsLongrunningOperation(MethodDescriptor const& method) {
-  bool grpc_lro =
-      method.output_type()->full_name() == "google.longrunning.Operation";
-  auto operation_service_extension =
-      method.options().GetExtension(google::cloud::operation_service);
-  bool http_lro = !operation_service_extension.empty();
-  return grpc_lro || http_lro;
+  return IsGRPCLongrunningOperation(method) ||
+         IsHttpLongrunningOperation(method);
 }
 
 bool IsLongrunningMetadataTypeUsedAsResponse(MethodDescriptor const& method) {
@@ -95,10 +91,11 @@ bool IsLongrunningMetadataTypeUsedAsResponse(MethodDescriptor const& method) {
 void SetLongrunningOperationMethodVars(
     google::protobuf::MethodDescriptor const& method,
     VarsDictionary& method_vars) {
+  if (!IsLongrunningOperation(method)) return;
   method_vars["longrunning_operation_type"] =
       ProtoNameToCppName(method.output_type()->full_name());
 
-  if (method.output_type()->full_name() == "google.longrunning.Operation") {
+  if (IsGRPCLongrunningOperation(method)) {
     auto operation_info =
         method.options().GetExtension(google::longrunning::operation_info);
     method_vars["longrunning_metadata_type"] = ProtoNameToCppName(absl::visit(
@@ -118,9 +115,7 @@ void SetLongrunningOperationMethodVars(
     return;
   }
 
-  auto operation_service_extension =
-      method.options().GetExtension(google::cloud::operation_service);
-  if (!operation_service_extension.empty()) {
+  if (IsHttpLongrunningOperation(method)) {
     method_vars["longrunning_response_type"] = ProtoNameToCppName(absl::visit(
         FullyQualifiedMessageTypeVisitor(),
         FullyQualifyMessageType(method, method.output_type()->full_name())));
@@ -136,7 +131,8 @@ void SetLongrunningOperationMethodVars(
 }
 
 bool IsGRPCLongrunningOperation(MethodDescriptor const& method) {
-  return method.output_type()->full_name() == "google.longrunning.Operation";
+  return method.output_type()->full_name() == "google.longrunning.Operation" &&
+         method.options().HasExtension(google::longrunning::operation_info);
 }
 
 bool IsHttpLongrunningOperation(MethodDescriptor const& method) {
@@ -150,7 +146,7 @@ void SetLongrunningOperationServiceVars(
     VarsDictionary& service_vars) {
   for (int i = 0; i != service.method_count(); ++i) {
     auto const* method = service.method(i);
-    if (method->output_type()->full_name() == "google.longrunning.Operation") {
+    if (IsGRPCLongrunningOperation(*method)) {
       service_vars["longrunning_operation_include_header"] =
           "google/longrunning/operations.pb.h";
       service_vars["longrunning_response_type"] =
@@ -169,9 +165,7 @@ void SetLongrunningOperationServiceVars(
           R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", *options) ,"/", request.name(), ":cancel"))""";
       return;
     }
-    if (!method->options()
-             .GetExtension(google::cloud::operation_service)
-             .empty()) {
+    if (IsHttpLongrunningOperation(*method)) {
       service_vars["longrunning_response_type"] = ProtoNameToCppName(
           absl::visit(FullyQualifiedMessageTypeVisitor(),
                       FullyQualifyMessageType(
