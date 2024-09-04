@@ -109,7 +109,7 @@ class ScheduleServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.CreateScheduleRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L129}
-  /// [google.cloud.aiplatform.v1.Schedule]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L34}
+  /// [google.cloud.aiplatform.v1.Schedule]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L35}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::Schedule> CreateSchedule(
@@ -141,7 +141,7 @@ class ScheduleServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.CreateScheduleRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L129}
-  /// [google.cloud.aiplatform.v1.Schedule]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L34}
+  /// [google.cloud.aiplatform.v1.Schedule]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L35}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::Schedule> CreateSchedule(
@@ -285,7 +285,7 @@ class ScheduleServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.GetScheduleRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L145}
-  /// [google.cloud.aiplatform.v1.Schedule]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L34}
+  /// [google.cloud.aiplatform.v1.Schedule]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L35}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::Schedule> GetSchedule(
@@ -315,7 +315,7 @@ class ScheduleServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.GetScheduleRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L145}
-  /// [google.cloud.aiplatform.v1.Schedule]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L34}
+  /// [google.cloud.aiplatform.v1.Schedule]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L35}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::Schedule> GetSchedule(
@@ -351,7 +351,7 @@ class ScheduleServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.ListSchedulesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L159}
-  /// [google.cloud.aiplatform.v1.Schedule]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L34}
+  /// [google.cloud.aiplatform.v1.Schedule]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L35}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::Schedule> ListSchedules(
@@ -390,7 +390,7 @@ class ScheduleServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.ListSchedulesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L159}
-  /// [google.cloud.aiplatform.v1.Schedule]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L34}
+  /// [google.cloud.aiplatform.v1.Schedule]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L35}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::Schedule> ListSchedules(
@@ -419,7 +419,7 @@ class ScheduleServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.PauseScheduleRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L262}
-  /// [google.cloud.aiplatform.v1.Schedule.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L125}
+  /// [google.cloud.aiplatform.v1.Schedule.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L131}
   ///
   // clang-format on
   Status PauseSchedule(std::string const& name, Options opts = {});
@@ -449,7 +449,7 @@ class ScheduleServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.PauseScheduleRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L262}
-  /// [google.cloud.aiplatform.v1.Schedule.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L125}
+  /// [google.cloud.aiplatform.v1.Schedule.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L131}
   ///
   // clang-format on
   Status PauseSchedule(
@@ -482,7 +482,7 @@ class ScheduleServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.ResumeScheduleRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L276}
-  /// [google.cloud.aiplatform.v1.Schedule.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L125}
+  /// [google.cloud.aiplatform.v1.Schedule.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L131}
   ///
   // clang-format on
   Status ResumeSchedule(std::string const& name, Options opts = {});
@@ -518,8 +518,8 @@ class ScheduleServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.ResumeScheduleRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L276}
-  /// [google.cloud.aiplatform.v1.Schedule.catch_up]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L164}
-  /// [google.cloud.aiplatform.v1.Schedule.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L125}
+  /// [google.cloud.aiplatform.v1.Schedule.catch_up]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L170}
+  /// [google.cloud.aiplatform.v1.Schedule.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L131}
   ///
   // clang-format on
   Status ResumeSchedule(std::string const& name, bool catch_up,
@@ -554,7 +554,7 @@ class ScheduleServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.ResumeScheduleRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L276}
-  /// [google.cloud.aiplatform.v1.Schedule.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L125}
+  /// [google.cloud.aiplatform.v1.Schedule.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L131}
   ///
   // clang-format on
   Status ResumeSchedule(
@@ -592,7 +592,7 @@ class ScheduleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.Schedule]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L34}
+  /// [google.cloud.aiplatform.v1.Schedule]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L35}
   /// [google.cloud.aiplatform.v1.UpdateScheduleRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L297}
   /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L242}
   ///
@@ -630,7 +630,7 @@ class ScheduleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.Schedule]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L34}
+  /// [google.cloud.aiplatform.v1.Schedule]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L35}
   /// [google.cloud.aiplatform.v1.UpdateScheduleRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L297}
   ///
   // clang-format on

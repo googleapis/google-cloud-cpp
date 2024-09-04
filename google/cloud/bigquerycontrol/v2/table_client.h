@@ -114,7 +114,7 @@ class TableServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.GetTableRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L550}
+  /// [google.cloud.bigquery.v2.GetTableRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L553}
   /// [google.cloud.bigquery.v2.Table]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L282}
   ///
   // clang-format on
@@ -145,7 +145,7 @@ class TableServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.InsertTableRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L597}
+  /// [google.cloud.bigquery.v2.InsertTableRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L600}
   /// [google.cloud.bigquery.v2.Table]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L282}
   ///
   // clang-format on
@@ -180,7 +180,7 @@ class TableServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.v2.Table]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L282}
-  /// [google.cloud.bigquery.v2.UpdateOrPatchTableRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L608}
+  /// [google.cloud.bigquery.v2.UpdateOrPatchTableRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L611}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::Table> PatchTable(
@@ -213,7 +213,7 @@ class TableServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.v2.Table]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L282}
-  /// [google.cloud.bigquery.v2.UpdateOrPatchTableRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L608}
+  /// [google.cloud.bigquery.v2.UpdateOrPatchTableRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L611}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::Table> UpdateTable(
@@ -242,7 +242,7 @@ class TableServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.DeleteTableRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L626}
+  /// [google.cloud.bigquery.v2.DeleteTableRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L629}
   ///
   // clang-format on
   Status DeleteTable(
@@ -282,8 +282,8 @@ class TableServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.ListFormatTable]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L664}
-  /// [google.cloud.bigquery.v2.ListTablesRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L638}
+  /// [google.cloud.bigquery.v2.ListFormatTable]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L667}
+  /// [google.cloud.bigquery.v2.ListTablesRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L641}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::v2::ListFormatTable> ListTables(
