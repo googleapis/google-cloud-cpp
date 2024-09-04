@@ -40,7 +40,7 @@ jobs:
       matrix:
         exclude-from-full-trick: [ true ]
         os: [ macos-14 ]
-        shard: [ Core1, Core2, Compute, Shard1, Shard2, Shard3, Other ]
+        shard: [ Core1, Core2, Compute, Shard1, Shard2, Shard3, Shard4, Other ]
         exclude:
         # Only full builds include shards with generated code.
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
@@ -51,6 +51,8 @@ jobs:
           shard: Shard2
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
           shard: Shard3
+        - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
+          shard: Shard4
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
           shard: Other
     steps:
@@ -113,26 +115,6 @@ jobs:
           appengine
         )
         shard3_features=(
-          servicehealth
-          servicemanagement
-          serviceusage
-          shell
-          storagecontrol
-          storageinsights
-          storagetransfer
-          tasks
-          telcoautomation
-          texttospeech
-          timeseriesinsights
-          translate
-          videointelligence
-          vmmigration
-          vmwareengine
-          vpcaccess
-          webrisk
-          websecurityscanner
-          workstations
-          automl
           channel
           cloudbuild
           cloudcontrolspartner
@@ -163,6 +145,59 @@ jobs:
           notebooks
           osconfig
         )
+        shard4_features=(
+          domains
+          edgecontainer
+          edgenetwork
+          essentialcontacts
+          filestore
+          gkebackup
+          gkeconnect
+          gkehub
+          ids
+          managedidentities
+          managedkafka
+          memcache
+          migrationcenter
+          netapp
+          networkmanagement
+          networksecurity
+          optimization
+          orgpolicy
+          oslogin
+          policysimulator
+          privateca
+          privilegedaccessmanager
+          publicca
+          rapidmigrationassessment
+          recaptchaenterprise
+          recommender
+          resourcesettings
+          scheduler
+          secretmanager
+          securesourcemanager
+          securitycentermanagement
+          servicehealth
+          servicemanagement
+          serviceusage
+          shell
+          storagecontrol
+          storageinsights
+          storagetransfer
+          tasks
+          telcoautomation
+          texttospeech
+          timeseriesinsights
+          translate
+          videointelligence
+          vmmigration
+          vmwareengine
+          vpcaccess
+          webrisk
+          websecurityscanner
+          workstations
+          automl
+        )
         if [[ "${{ matrix.shard }}" == "Core1" ]]; then
           features="$(printf ",%s" "${core1_features[@]}")"
           echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
@@ -180,6 +215,9 @@ jobs:
         elif [[ "${{ matrix.shard }}" == "Shard3" ]]; then
           features="$(printf ",%s" "${shard3_features[@]}")"
           echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
+        elif [[ "${{ matrix.shard }}" == "Shard4" ]]; then
+          features="$(printf ",%s" "${shard4_features[@]}")"
+          echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
         else
           skipped_features=("${core1_features[@]}")
           skipped_features+=("${core2_features[@]}")
@@ -187,6 +225,7 @@ jobs:
           skipped_features+=("${shard1_features[@]}")
           skipped_features+=("${shard2_features[@]}")
           skipped_features+=("${shard3_features[@]}")
+          skipped_features+=("${shard4_features[@]}")
           skipped="$(printf ",-%s" "${skipped_features[@]}")"
           echo "features=__ga_libraries__,__experimental_libraries__,${skipped:1}" >> "${GITHUB_OUTPUT}"
         fi
