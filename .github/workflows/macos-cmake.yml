@@ -40,7 +40,7 @@ jobs:
       matrix:
         exclude-from-full-trick: [ true ]
         os: [ macos-14 ]
-        shard: [ Core1, Core2, Compute, Shard1, Shard2, Other ]
+        shard: [ Core1, Core2, Compute, Shard1, Shard2, Shard3, Other ]
         exclude:
         # Only full builds include shards with generated code.
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
@@ -49,6 +49,8 @@ jobs:
           shard: Shard1
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
           shard: Shard2
+        - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
+          shard: Shard3
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
           shard: Other
     steps:
@@ -79,13 +81,12 @@ jobs:
         # run something like this and find the midpoint:
         #
         # git grep -l 'class.*Client' 'google/cloud/**_client.h' |
-        #    egrep -v "(bigtable/|internal/|pubsub/|pubsublite/|spanner/|storage/)" |
+        #    egrep -v "(bigtable/|internal/|pubsub/|pubsublite/|spanner/|storage/|testing_util/)" |
         #    cut -f -3 -d/| sort | uniq -c | sort -n |
         #    awk '{ s += $1; print s, $0}'
         #
         shard1_features=(
           bigquerycontrol
-          appengine
           dataproc
           monitoring
           retail
@@ -96,6 +97,53 @@ jobs:
           aiplatform
         )
         shard2_features=(
+          servicecontrol
+          speech
+          support
+          video
+          datacatalog
+          iam
+          run
+          talent
+          contentwarehouse
+          dataplex
+          kms
+          bigquery
+          resourcemanager
+          appengine
+        )
+        shard3_features=(
+          servicehealth
+          servicemanagement
+          serviceusage
+          shell
+          storagecontrol
+          storageinsights
+          storagetransfer
+          tasks
+          telcoautomation
+          texttospeech
+          timeseriesinsights
+          translate
+          videointelligence
+          vmmigration
+          vmwareengine
+          vpcaccess
+          webrisk
+          websecurityscanner
+          workstations
+          automl
+          channel
+          cloudbuild
+          cloudcontrolspartner
+          composer
+          containeranalysis
+          datastore
+          eventarc
+          functions
+          iap
+          language
+          metastore
           networkconnectivity
           networkservices
           policytroubleshooter
@@ -114,19 +162,6 @@ jobs:
           logging
           notebooks
           osconfig
-          servicecontrol
-          speech
-          support
-          video
-          datacatalog
-          iam
-          run
-          talent
-          contentwarehouse
-          dataplex
-          kms
-          bigquery
-          resourcemanager
         )
         if [[ "${{ matrix.shard }}" == "Core1" ]]; then
           features="$(printf ",%s" "${core1_features[@]}")"
@@ -142,12 +177,16 @@ jobs:
         elif [[ "${{ matrix.shard }}" == "Shard2" ]]; then
           features="$(printf ",%s" "${shard2_features[@]}")"
           echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
+        elif [[ "${{ matrix.shard }}" == "Shard3" ]]; then
+          features="$(printf ",%s" "${shard3_features[@]}")"
+          echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
         else
           skipped_features=("${core1_features[@]}")
           skipped_features+=("${core2_features[@]}")
           skipped_features+=(compute)
           skipped_features+=("${shard1_features[@]}")
           skipped_features+=("${shard2_features[@]}")
+          skipped_features+=("${shard3_features[@]}")
           skipped="$(printf ",-%s" "${skipped_features[@]}")"
           echo "features=__ga_libraries__,__experimental_libraries__,${skipped:1}" >> "${GITHUB_OUTPUT}"
         fi
