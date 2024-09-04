@@ -84,6 +84,7 @@ jobs:
         #    awk '{ s += $1; print s, $0}'
         #
         shard1_features=(
+          bigquerycontrol
           appengine
           dataproc
           monitoring
@@ -125,7 +126,6 @@ jobs:
           dataplex
           kms
           bigquery
-          bigquerycontrol
           resourcemanager
         )
         if [[ "${{ matrix.shard }}" == "Core1" ]]; then
@@ -149,7 +149,7 @@ jobs:
           skipped_features+=("${shard1_features[@]}")
           skipped_features+=("${shard2_features[@]}")
           skipped="$(printf ",-%s" "${skipped_features[@]}")"
-          echo "features=__ga_libraries__,__experimental_libraries__,${skipped:2}" >> "${GITHUB_OUTPUT}"
+          echo "features=__ga_libraries__,__experimental_libraries__,${skipped:1}" >> "${GITHUB_OUTPUT}"
         fi
     - name: Install bash >= 5.x and Ninja
       run: brew install bash ninja
