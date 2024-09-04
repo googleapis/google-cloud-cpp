@@ -153,19 +153,11 @@ class $metadata_rest_class_name$ : public $stub_rest_class_name$ {
       Options const& options, $request_type$ const& request) override;
 )""");
     } else {
-      if (IsResponseTypeEmpty(method)) {
-        HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
-  Status $method_name$(
+      HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+  $return_type$ $method_name$(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options, $request_type$ const& request) override;
 )""");
-      } else {
-        HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
-  StatusOr<$response_type$> $method_name$(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, $request_type$ const& request) override;
-)""");
-      }
     }
   }
 
@@ -173,23 +165,13 @@ class $metadata_rest_class_name$ : public $stub_rest_class_name$ {
     // No streaming RPCs for REST, and Longrunning is already taken care of.
     if (IsStreaming(method) || IsLongrunningOperation(method)) continue;
     if (!HasHttpAnnotation(method)) continue;
-    if (IsResponseTypeEmpty(method)) {
-      HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
-  google::cloud::future<Status> Async$method_name$(
+    HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+  google::cloud::future<$return_type$> Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
       $request_type$ const& request) override;
 )""");
-    } else {
-      HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
-  google::cloud::future<StatusOr<$response_type$>> Async$method_name$(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      google::cloud::internal::ImmutableOptions options,
-      $request_type$ const& request) override;
-)""");
-    }
   }
 
   if (HasLongrunningMethod()) {
@@ -295,33 +277,18 @@ $metadata_rest_class_name$::$method_name$(
 )""");
 
     } else {
-      if (IsResponseTypeEmpty(method)) {
-        CcPrintMethod(method, __FILE__, __LINE__, R"""(
-Status
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+$return_type$
 $metadata_rest_class_name$::$method_name$(
     rest_internal::RestContext& rest_context,
     Options const& options, $request_type$ const& request) {
 )""");
-        CcPrintMethod(method, __FILE__, __LINE__,
-                      SetMetadataText(method, kReference, "options"));
-        CcPrintMethod(method, __FILE__, __LINE__, R"""(
+      CcPrintMethod(method, __FILE__, __LINE__,
+                    SetMetadataText(method, kReference, "options"));
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
   return child_->$method_name$(rest_context, options, request);
 }
 )""");
-      } else {
-        CcPrintMethod(method, __FILE__, __LINE__, R"""(
-StatusOr<$response_type$>
-$metadata_rest_class_name$::$method_name$(
-    rest_internal::RestContext& rest_context,
-    Options const& options, $request_type$ const& request) {
-)""");
-        CcPrintMethod(method, __FILE__, __LINE__,
-                      SetMetadataText(method, kReference, "options"));
-        CcPrintMethod(method, __FILE__, __LINE__, R"""(
-  return child_->$method_name$(rest_context, options, request);
-}
-)""");
-      }
     }
   }
 
@@ -329,39 +296,21 @@ $metadata_rest_class_name$::$method_name$(
     // No streaming RPCs for REST, and Longrunning is already taken care of.
     if (IsStreaming(method) || IsLongrunningOperation(method)) continue;
     if (!HasHttpAnnotation(method)) continue;
-    if (IsResponseTypeEmpty(method)) {
-      CcPrintMethod(method, __FILE__, __LINE__, R"""(
-future<Status>
+    CcPrintMethod(method, __FILE__, __LINE__, R"""(
+future<$return_type$>
 $metadata_rest_class_name$::Async$method_name$(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
     google::cloud::internal::ImmutableOptions options,
     $request_type$ const& request) {
 )""");
-      CcPrintMethod(method, __FILE__, __LINE__,
-                    SetMetadataText(method, kPointer, "*options"));
-      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+    CcPrintMethod(method, __FILE__, __LINE__,
+                  SetMetadataText(method, kPointer, "*options"));
+    CcPrintMethod(method, __FILE__, __LINE__, R"""(
   return child_->Async$method_name$(
       cq, std::move(rest_context), std::move(options), request);
 }
 )""");
-    } else {
-      CcPrintMethod(method, __FILE__, __LINE__, R"""(
-future<StatusOr<$response_type$>>
-$metadata_rest_class_name$::Async$method_name$(
-    google::cloud::CompletionQueue& cq,
-    std::unique_ptr<rest_internal::RestContext> rest_context,
-    google::cloud::internal::ImmutableOptions options,
-    $request_type$ const& request) {
-)""");
-      CcPrintMethod(method, __FILE__, __LINE__,
-                    SetMetadataText(method, kPointer, "*options"));
-      CcPrintMethod(method, __FILE__, __LINE__, R"""(
-  return child_->Async$method_name$(
-      cq, std::move(rest_context), std::move(options), request);
-}
-)""");
-    }
   }
 
   if (HasLongrunningMethod()) {

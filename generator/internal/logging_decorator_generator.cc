@@ -270,9 +270,7 @@ $logging_class_name$::$method_name$(
 )""");
       continue;
     }
-    CcPrintMethod(method, __FILE__, __LINE__,
-                  IsResponseTypeEmpty(method) ? "\nStatus"
-                                              : "\nStatusOr<$response_type$>");
+    CcPrintMethod(method, __FILE__, __LINE__, "\n$return_type$");
     CcPrintMethod(method, __FILE__, __LINE__,
                   R"""(
 $logging_class_name$::$method_name$(
@@ -346,10 +344,7 @@ $logging_class_name$::Async$method_name$(
       CcPrintMethod(method, __FILE__, __LINE__, kDefinition);
       continue;
     }
-    CcPrintMethod(method, __FILE__, __LINE__,
-                  IsResponseTypeEmpty(method)
-                      ? "\nfuture<Status>"
-                      : "\nfuture<StatusOr<$response_type$>>");
+    CcPrintMethod(method, __FILE__, __LINE__, "\nfuture<$return_type$>");
     CcPrintMethod(method, __FILE__, __LINE__, R"""(
 $logging_class_name$::Async$method_name$(
       google::cloud::CompletionQueue& cq,

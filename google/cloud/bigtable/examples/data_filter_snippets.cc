@@ -129,8 +129,8 @@ void FilterLimitCellsPerRow(google::cloud::bigtable::Table table,
   (std::move(table));
 }
 
-void FilterLimitCellsPerRowOfset(google::cloud::bigtable::Table table,
-                                 std::vector<std::string> const&) {
+void FilterLimitCellsPerRowOffset(google::cloud::bigtable::Table table,
+                                  std::vector<std::string> const&) {
   //! [START bigtable_filters_limit_cells_per_row_offset]
   namespace cbt = ::google::cloud::bigtable;
   using ::google::cloud::StatusOr;
@@ -594,7 +594,7 @@ void RunAll(std::vector<std::string> const& argv) {
   FilterLimitCellsPerRow(table, {});
   std::cout << "Running FilterLimitCellsPerRowOffset() example [5]"
             << std::endl;
-  FilterLimitCellsPerRowOfset(table, {});
+  FilterLimitCellsPerRowOffset(table, {});
   std::cout << "Running FilterLimitColFamilyRegex() example [6]" << std::endl;
   FilterLimitColFamilyRegex(table, {});
   std::cout << "Running FilterLimitColQualifierRegex() example [7]"
@@ -638,7 +638,7 @@ int main(int argc, char* argv[]) try {
       MakeCommandEntry("filter-limit-cells-per-row", {},
                        FilterLimitCellsPerRow),
       MakeCommandEntry("filter-limit-cells-per-row-offset", {},
-                       FilterLimitCellsPerRowOfset),
+                       FilterLimitCellsPerRowOffset),
       MakeCommandEntry("filters-limit-col-family-regex", {},
                        FilterLimitColFamilyRegex),
       MakeCommandEntry("filters-limit-col-qualifier-regex", {},

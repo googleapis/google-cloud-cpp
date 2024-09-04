@@ -18,17 +18,20 @@
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " name\n";
+  if (argc != 4) {
+    std::cerr << "Usage: " << argv[0]
+              << " project-id location-id membership-id\n";
     return 1;
   }
+
+  auto const location = google::cloud::Location(argv[1], argv[2]);
 
   namespace gkeconnect = ::google::cloud::gkeconnect_gateway_v1;
   auto client = gkeconnect::GatewayControlClient(
       gkeconnect::MakeGatewayControlConnection());
 
   google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest request;
-  request.set_name(argv[1]);
+  request.set_name(location.FullName() + "/memberships/" + argv[3]);
 
   auto response = client.GenerateCredentials(request);
   if (!response) throw std::move(response).status();

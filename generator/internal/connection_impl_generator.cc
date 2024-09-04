@@ -115,8 +115,7 @@ class $connection_class_name$Impl
   for (auto const& method : async_methods()) {
     if (IsStreamingRead(method)) continue;
     if (IsStreamingWrite(method)) continue;
-    HeaderPrintMethod(method, __FILE__, __LINE__,
-                      AsyncMethodDeclaration(method));
+    HeaderPrintMethod(method, __FILE__, __LINE__, AsyncMethodDeclaration());
   }
 
   HeaderPrint(R"""(
@@ -305,29 +304,15 @@ std::string ConnectionImplGenerator::MethodDeclaration(
 )""";
   }
 
-  if (IsResponseTypeEmpty(method)) {
-    return R"""(
-  Status
-  $method_name$($request_type$ const& request) override;
-)""";
-  }
   return R"""(
-  StatusOr<$response_type$>
+  $return_type$
   $method_name$($request_type$ const& request) override;
 )""";
 }
 
-std::string ConnectionImplGenerator::AsyncMethodDeclaration(
-    google::protobuf::MethodDescriptor const& method) {
-  if (IsResponseTypeEmpty(method)) {
-    return R"""(
-  future<Status>
-  Async$method_name$($request_type$ const& request) override;
-)""";
-  }
-
+std::string ConnectionImplGenerator::AsyncMethodDeclaration() {
   return R"""(
-  future<StatusOr<$response_type$>>
+  future<$return_type$>
   Async$method_name$($request_type$ const& request) override;
 )""";
 }
@@ -543,11 +528,9 @@ $connection_class_name$Impl::$method_name$(
                         await_function);
   }
 
-  auto const* return_fragment = IsResponseTypeEmpty(method)
-                                    ? R"""(Status)"""
-                                    : R"""(StatusOr<$response_type$>)""";
   if (HasRequestId(method)) {
-    return absl::StrCat("\n", return_fragment, R"""(
+    return R"""(
+$return_type$
 $connection_class_name$Impl::$method_name$($request_type$ const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
@@ -563,11 +546,11 @@ $connection_class_name$Impl::$method_name$($request_type$ const& request) {
       },
       *current, request_copy, __func__);
 }
-)""");
+)""";
   }
 
-  return absl::StrCat("\n", return_fragment,
-                      R"""(
+  return R"""(
+$return_type$
 $connection_class_name$Impl::$method_name$($request_type$ const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -579,14 +562,11 @@ $connection_class_name$Impl::$method_name$($request_type$ const& request) {
       },
       *current, request, __func__);
 }
-)""");
+)""";
 }
 
 std::string ConnectionImplGenerator::AsyncMethodDefinition(
     google::protobuf::MethodDescriptor const& method) {
-  auto const* return_fragment =
-      IsResponseTypeEmpty(method) ? R"""(future<Status>)"""
-                                  : R"""(future<StatusOr<$response_type$>>)""";
   auto const* request_id_fragment = HasRequestId(method) ?
                                                          R"""(
   if (request_copy.$request_id_field_name$().empty()) {
@@ -594,8 +574,8 @@ std::string ConnectionImplGenerator::AsyncMethodDefinition(
   })"""
                                                          : "";
 
-  return absl::StrCat("\n", return_fragment,
-                      R"""(
+  return absl::StrCat(R"""(
+future<$return_type$>
 $connection_class_name$Impl::Async$method_name$($request_type$ const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;)""",

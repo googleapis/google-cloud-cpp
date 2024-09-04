@@ -55,7 +55,7 @@ class PublisherConnectionImplTest : public ::testing::Test {
   }
   ~PublisherConnectionImplTest() override {
     // We must set a final value, or the program aborts when exceptions are
-    // disabled. Without a final value the promise is "abadoned", that sets
+    // disabled. Without a final value the promise is "abandoned", that sets
     // the future to throw an exception, and with exceptions disabled that is
     // a complicated way to call `std::abort()`. In non-test programs, the
     // completion queue does this automatically as part of its shutdown.

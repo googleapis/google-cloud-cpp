@@ -29,7 +29,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class RestClient;
 
 // This class is a regular type that contains the path, headers, and query
-// parameters for use in sending a request to a REST-ful service. It is intended
+// parameters for use in sending a request to a RESTful service. It is intended
 // to be passed to the appropriate HTTP method on RestClient, along with a
 // payload if required.
 class RestRequest {
