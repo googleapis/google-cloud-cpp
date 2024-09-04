@@ -154,7 +154,7 @@ void InsertData(google::cloud::spanner::Client client) {
   auto commit_result = client.Commit(spanner::Mutations{
       insert_accounts, insert_persons, insert_transfers, insert_ownerships});
   if (!commit_result) throw std::move(commit_result).status();
-  std::cout << "Insert was successful [spanner_insert_data]\n";
+  std::cout << "Insert was successful [spanner_insert_graph_data]\n";
 }
 //! [END spanner_insert_graph_data]
 
@@ -307,7 +307,8 @@ void QueryWithParameter(google::cloud::spanner::Client client) {
     std::cout << "transfer_at: " << std::get<3>(*row) << "\n";
   }
 
-  std::cout << "Query completed for [spanner_query_with_parameter]\n";
+  std::cout
+      << "Query completed for [spanner_query_graph_data_with_parameter]\n";
 }
 //! [END spanner_query_graph_data_with_parameter]
 
