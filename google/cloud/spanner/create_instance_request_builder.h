@@ -117,7 +117,9 @@ class CreateInstanceRequestBuilder {
     return std::move(*this);
   }
 
-  enum class Edition { kStandard = 0, kEnterprise, kEnterprisePlus };
+  // Available editions.
+  // https://cloud.google.com/spanner/docs/editions-overview
+  enum class Edition { kStandard, kEnterprise, kEnterprisePlus };
 
   CreateInstanceRequestBuilder& SetEdition(Edition edition) & {
     switch (edition) {
