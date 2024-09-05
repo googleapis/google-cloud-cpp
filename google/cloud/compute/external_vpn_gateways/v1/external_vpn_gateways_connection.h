@@ -23,7 +23,6 @@
 #include "google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways_connection_idempotency_policy.h"
 #include "google/cloud/compute/external_vpn_gateways/v1/internal/external_vpn_gateways_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"

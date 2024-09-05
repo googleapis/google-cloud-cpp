@@ -22,7 +22,6 @@
 #include "google/cloud/datastream/v1/datastream_connection_idempotency_policy.h"
 #include "google/cloud/datastream/v1/internal/datastream_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"

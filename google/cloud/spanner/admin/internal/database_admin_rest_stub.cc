@@ -678,13 +678,16 @@ DefaultDatabaseAdminRestStub::CreateBackupSchedule(
     Options const& options,
     google::spanner::admin::database::v1::CreateBackupScheduleRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"backup_schedule_id", request.backup_schedule_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<
       google::spanner::admin::database::v1::BackupSchedule>(
       *service_, rest_context, request.backup_schedule(), false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    request.parent(), "/", "backupSchedules"),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair(
-          "backup_schedule_id", request.backup_schedule_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::spanner::admin::database::v1::BackupSchedule>
@@ -693,11 +696,13 @@ DefaultDatabaseAdminRestStub::GetBackupSchedule(
     Options const& options,
     google::spanner::admin::database::v1::GetBackupScheduleRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<
       google::spanner::admin::database::v1::BackupSchedule>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name()));
+                   request.name()),
+      std::move(query_params));
 }
 
 StatusOr<google::spanner::admin::database::v1::BackupSchedule>
@@ -706,11 +711,13 @@ DefaultDatabaseAdminRestStub::UpdateBackupSchedule(
     Options const& options,
     google::spanner::admin::database::v1::UpdateBackupScheduleRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Patch<
       google::spanner::admin::database::v1::BackupSchedule>(
       *service_, rest_context, request.backup_schedule(), false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.backup_schedule().name()));
+                   request.backup_schedule().name()),
+      std::move(query_params));
 }
 
 Status DefaultDatabaseAdminRestStub::DeleteBackupSchedule(
@@ -718,10 +725,12 @@ Status DefaultDatabaseAdminRestStub::DeleteBackupSchedule(
     Options const& options,
     google::spanner::admin::database::v1::DeleteBackupScheduleRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Delete<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.name()));
+                   request.name()),
+      std::move(query_params));
 }
 
 StatusOr<google::spanner::admin::database::v1::ListBackupSchedulesResponse>
@@ -730,14 +739,17 @@ DefaultDatabaseAdminRestStub::ListBackupSchedules(
     Options const& options,
     google::spanner::admin::database::v1::ListBackupSchedulesRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"page_size", std::to_string(request.page_size())});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::spanner::admin::database::v1::ListBackupSchedulesResponse>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    request.parent(), "/", "backupSchedules"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("page_size", std::to_string(request.page_size())),
-           std::make_pair("page_token", request.page_token())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::longrunning::Operation>>

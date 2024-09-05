@@ -22,7 +22,6 @@
 #include "google/cloud/speech/v1/internal/speech_retry_traits.h"
 #include "google/cloud/speech/v1/speech_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/internal/retry_policy_impl.h"

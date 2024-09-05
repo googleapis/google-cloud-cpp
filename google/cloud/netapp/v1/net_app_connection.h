@@ -22,7 +22,6 @@
 #include "google/cloud/netapp/v1/internal/net_app_retry_traits.h"
 #include "google/cloud/netapp/v1/net_app_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"

@@ -162,15 +162,22 @@ class MockContactCenterInsightsConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateAnalysis,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateAnalysis(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>,
-      CreateAnalysis,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      CreateAnalysis, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -398,15 +405,22 @@ class MockContactCenterInsightsConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateIssueModel,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateIssueModel(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>,
-      CreateIssueModel,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      CreateIssueModel, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -486,21 +500,34 @@ class MockContactCenterInsightsConnection
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteIssueModel,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteIssueModel(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>,
-      DeleteIssueModel,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteIssueModel, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeployIssueModel)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeployIssueModel(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeployIssueModel(Matcher<google::cloud::contactcenterinsights::v1::DeployIssueModelRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>,

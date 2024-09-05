@@ -105,19 +105,31 @@ class MockDocumentsConnection : public dialogflow_es::DocumentsConnection {
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateDocument,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dialogflow::v2::CreateDocumentRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateDocument(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::v2::Document>>,
-              CreateDocument,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              CreateDocument, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ImportDocuments)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ImportDocuments(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ImportDocuments(Matcher<google::cloud::dialogflow::v2::ImportDocumentsRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::ImportDocumentsResponse>>,
       ImportDocuments,
@@ -160,19 +172,32 @@ class MockDocumentsConnection : public dialogflow_es::DocumentsConnection {
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ImportDocuments,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dialogflow::v2::ImportDocumentsRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, ImportDocuments(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::ImportDocumentsResponse>>,
-      ImportDocuments,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      ImportDocuments, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteDocument)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteDocument(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteDocument(Matcher<google::cloud::dialogflow::v2::DeleteDocumentRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::dialogflow::v2::KnowledgeOperationMetadata>>,
@@ -217,20 +242,33 @@ class MockDocumentsConnection : public dialogflow_es::DocumentsConnection {
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteDocument,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dialogflow::v2::DeleteDocumentRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteDocument(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::dialogflow::v2::KnowledgeOperationMetadata>>,
-      DeleteDocument,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteDocument, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateDocument)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateDocument(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateDocument(Matcher<google::cloud::dialogflow::v2::UpdateDocumentRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::Document>>, UpdateDocument,
       (google::cloud::dialogflow::v2::UpdateDocumentRequest const& request),
@@ -271,19 +309,31 @@ class MockDocumentsConnection : public dialogflow_es::DocumentsConnection {
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateDocument,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dialogflow::v2::UpdateDocumentRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateDocument(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::v2::Document>>,
-              UpdateDocument,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              UpdateDocument, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ReloadDocument)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ReloadDocument(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ReloadDocument(Matcher<google::cloud::dialogflow::v2::ReloadDocumentRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::Document>>, ReloadDocument,
       (google::cloud::dialogflow::v2::ReloadDocumentRequest const& request),
@@ -324,19 +374,31 @@ class MockDocumentsConnection : public dialogflow_es::DocumentsConnection {
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ReloadDocument,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dialogflow::v2::ReloadDocumentRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, ReloadDocument(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::v2::Document>>,
-              ReloadDocument,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              ReloadDocument, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ExportDocument)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ExportDocument(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ExportDocument(Matcher<google::cloud::dialogflow::v2::ExportDocumentRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::Document>>, ExportDocument,
       (google::cloud::dialogflow::v2::ExportDocumentRequest const& request),

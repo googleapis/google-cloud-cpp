@@ -806,14 +806,16 @@ message ManagedInstanceLastAttempt {
       optional string message = 4 [json_name = "message"];
     }
 
-    // [Output Only] The array of errors encountered while processing this
-    // operation.
-    repeated ErrorsItem errors = 1 [json_name = "errors"];
+    // [Output Only] Metadata about this warning in key: value format. For
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
+    repeated DataItem data = 2 [json_name = "data"];
+
+    // [Output Only] A human-readable description of the warning code.
+    optional string message = 3 [json_name = "message"];
   }
 
-  // [Output Only] Encountered errors during the last attempt to create or
-  // delete the instance.
-  optional Errors errors = 1 [json_name = "errors"];
+  // [Output Only] Informational warning message.
+  optional Warning warning = 7 [json_name = "warning"];
 }
 
 message ManagedInstancePropertiesFromFlexibilityPolicy {
@@ -826,16 +828,110 @@ message ManagedInstanceVersion {
   // when current_action is one of { DELETING, ABANDONING }.
   optional string instance_template = 1 [json_name = "instanceTemplate"];
 
-  // [Output Only] Name of the version.
-  optional string name = 2 [json_name = "name"];
+  // A list of DiskType resources.
+  repeated DiskType items = 2 [json_name = "items"];
+
+  // [Output Only] Type of resource. Always compute#diskTypeList for disk types.
+  optional string kind = 3 [json_name = "kind"];
+
+  // [Output Only] This token allows you to get the next page of results for
+  // list requests. If the number of results is larger than maxResults, use the
+  // nextPageToken as a value for the query parameter pageToken in the next list
+  // request. Subsequent list requests will have their own nextPageToken to
+  // continue paging through the results.
+  optional string next_page_token = 4 [json_name = "nextPageToken"];
+
+  // [Output Only] Server-defined URL for this resource.
+  optional string self_link = 5 [json_name = "selfLink"];
+
+  message Warning {
+    // [Output Only] A warning code, if applicable. For example, Compute Engine
+    // returns NO_RESULTS_ON_PAGE if there are no results in the response.
+    // CLEANUP_FAILED: Warning about failed cleanup of transient changes made by
+    // a failed operation.
+    // DEPRECATED_RESOURCE_USED: A link to a deprecated resource was created.
+    // DEPRECATED_TYPE_USED: When deploying and at least one of the resources
+    // has a type marked as deprecated
+    // DISK_SIZE_LARGER_THAN_IMAGE_SIZE: The user created a boot disk that is
+    // larger than image size.
+    // EXPERIMENTAL_TYPE_USED: When deploying and at least one of the resources
+    // has a type marked as experimental
+    // EXTERNAL_API_WARNING: Warning that is present in an external api call
+    // FIELD_VALUE_OVERRIDEN: Warning that value of a field has been overridden.
+    // Deprecated unused field.
+    // INJECTED_KERNELS_DEPRECATED: The operation involved use of an injected
+    // kernel, which is deprecated.
+    // INVALID_HEALTH_CHECK_FOR_DYNAMIC_WIEGHTED_LB: A WEIGHTED_MAGLEV backend
+    // service is associated with a health check that is not of type
+    // HTTP/HTTPS/HTTP2.
+    // LARGE_DEPLOYMENT_WARNING: When deploying a deployment with a exceedingly
+    // large number of resources
+    // LIST_OVERHEAD_QUOTA_EXCEED: Resource can't be retrieved due to list
+    // overhead quota exceed which captures the amount of resources filtered out
+    // by user-defined list filter.
+    // MISSING_TYPE_DEPENDENCY: A resource depends on a missing type
+    // NEXT_HOP_ADDRESS_NOT_ASSIGNED: The route's nextHopIp address is not
+    // assigned to an instance on the network.
+    // NEXT_HOP_CANNOT_IP_FORWARD: The route's next hop instance cannot ip
+    // forward.
+    // NEXT_HOP_INSTANCE_HAS_NO_IPV6_INTERFACE: The route's nextHopInstance URL
+    // refers to an instance that does not have an ipv6 interface on the same
+    // network as the route.
+    // NEXT_HOP_INSTANCE_NOT_FOUND: The route's nextHopInstance URL refers to an
+    // instance that does not exist.
+    // NEXT_HOP_INSTANCE_NOT_ON_NETWORK: The route's nextHopInstance URL refers
+    // to an instance that is not on the same network as the route.
+    // NEXT_HOP_NOT_RUNNING: The route's next hop instance does not have a
+    // status of RUNNING.
+    // NOT_CRITICAL_ERROR: Error which is not critical. We decided to continue
+    // the process despite the mentioned error.
+    // NO_RESULTS_ON_PAGE: No results are present on a particular list page.
+    // PARTIAL_SUCCESS: Success is reported, but some results may be missing due
+    // to errors
+    // REQUIRED_TOS_AGREEMENT: The user attempted to use a resource that
+    // requires a TOS they have not accepted.
+    // RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING: Warning that a resource is in
+    // use.
+    // RESOURCE_NOT_DELETED: One or more of the resources set to auto-delete
+    // could not be deleted because they were in use.
+    // SCHEMA_VALIDATION_IGNORED: When a resource schema validation is ignored.
+    // SINGLE_INSTANCE_PROPERTY_TEMPLATE: Instance template used in instance
+    // group manager is valid as such, but its application does not make a lot
+    // of sense, because it allows only single instance in instance group.
+    // UNDECLARED_PROPERTIES: When undeclared properties in the schema are
+    // present
+    // UNREACHABLE: A given scope cannot be reached.
+    optional string code = 1 [json_name = "code"];
+
+    message DataItem {
+      // [Output Only] A key that provides more detail on the warning being
+      // returned. For example, for warnings where there are no results in a
+      // list request for a particular zone, this key might be scope and the key
+      // value might be the zone name. Other examples might be a key indicating
+      // a deprecated resource and a suggested replacement, or a warning about
+      // invalid network settings (for example, if an instance attempts to
+      // perform IP forwarding but is not enabled for IP forwarding).
+      optional string key = 1 [json_name = "key"];
+
+      // [Output Only] A warning data value corresponding to the key.
+      optional string value = 2 [json_name = "value"];
+    }
+
+    // [Output Only] Metadata about this warning in key: value format. For
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
+    repeated DataItem data = 2 [json_name = "data"];
+
+    // [Output Only] A human-readable description of the warning code.
+    optional string message = 3 [json_name = "message"];
+  }
+
+  // [Output Only] Informational warning message.
+  optional Warning warning = 6 [json_name = "warning"];
 }
 
-message PerInstanceConfig {
-  // Fingerprint of this per-instance config. This field can be used in
-  // optimistic locking. It is ignored when inserting a per-instance config. An
-  // up-to-date fingerprint must be provided in order to update an existing
-  // per-instance configuration or the field needs to be unset.
-  optional string fingerprint = 1 [json_name = "fingerprint"];
+message DiskTypesScopedList {
+  // [Output Only] A list of disk types contained in this scope.
+  repeated DiskType disk_types = 1 [json_name = "diskTypes"];
 
   // The name of a per-instance configuration and its corresponding instance.
   // Serves as a merge key during UpdatePerInstanceConfigs operations, that is,
@@ -846,137 +942,29 @@ message PerInstanceConfig {
   // in an error.
   optional string name = 2 [json_name = "name"];
 
-  // The intended preserved state for the given instance. Does not contain
-  // preserved state generated from a stateful policy.
-  optional PreservedState preserved_state = 3 [json_name = "preservedState"];
+    message DataItem {
+      // [Output Only] A key that provides more detail on the warning being
+      // returned. For example, for warnings where there are no results in a
+      // list request for a particular zone, this key might be scope and the key
+      // value might be the zone name. Other examples might be a key indicating
+      // a deprecated resource and a suggested replacement, or a warning about
+      // invalid network settings (for example, if an instance attempts to
+      // perform IP forwarding but is not enabled for IP forwarding).
+      optional string key = 1 [json_name = "key"];
 
-  // The status of applying this per-instance configuration on the corresponding
-  // managed instance.
-  // APPLYING: The per-instance configuration is being applied to the instance,
-  // but is not yet effective, possibly waiting for the instance to, for
-  // example, REFRESH.
-  // DELETING: The per-instance configuration deletion is being applied on the
-  // instance, possibly waiting for the instance to, for example, REFRESH.
-  // EFFECTIVE: The per-instance configuration is effective on the instance,
-  // meaning that all disks, ips and metadata specified in this configuration
-  // are attached or set on the instance.
-  // NONE: *[Default]* The default status, when no per-instance configuration
-  // exists.
-  // UNAPPLIED: The per-instance configuration is set on an instance but not
-  // been applied yet.
-  // UNAPPLIED_DELETION: The per-instance configuration has been deleted, but
-  // the deletion is not yet applied.
-  optional string status = 4 [json_name = "status"];
-}
+      // [Output Only] A warning data value corresponding to the key.
+      optional string value = 2 [json_name = "value"];
+    }
 
-// Preserved state for a given instance.
-message PreservedState {
-  // Preserved disks defined for this instance. This map is keyed with the
-  // device names of the disks.
-  map<string, PreservedStatePreservedDisk> disks = 1 [json_name = "disks"];
+    // [Output Only] Metadata about this warning in key: value format. For
+    // example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
+    repeated DataItem data = 2 [json_name = "data"];
 
-  // Preserved external IPs defined for this instance. This map is keyed with
-  // the name of the network interface.
-  map<string, PreservedStatePreservedNetworkIp> external_i_ps = 3
-      [json_name = "externalIPs"];
+    // [Output Only] A human-readable description of the warning code.
+    optional string message = 3 [json_name = "message"];
+  }
 
-  // Preserved internal IPs defined for this instance. This map is keyed with
-  // the name of the network interface.
-  map<string, PreservedStatePreservedNetworkIp> internal_i_ps = 4
-      [json_name = "internalIPs"];
-
-  // Preserved metadata defined for this instance.
-  map<string, string> metadata = 2 [json_name = "metadata"];
-}
-
-message PreservedStatePreservedDisk {
-  // These stateful disks will never be deleted during autohealing, update,
-  // instance recreate operations. This flag is used to configure if the disk
-  // should be deleted after it is no longer used by the group, e.g. when the
-  // given instance or the whole MIG is deleted. Note: disks attached in
-  // READ_ONLY mode cannot be auto-deleted.
-  // NEVER:
-  // ON_PERMANENT_INSTANCE_DELETION:
-  optional string auto_delete = 1 [json_name = "autoDelete"];
-
-  // The mode in which to attach this disk, either READ_WRITE or READ_ONLY. If
-  // not specified, the default is to attach the disk in READ_WRITE mode.
-  // READ_ONLY: Attaches this disk in read-only mode. Multiple VM instances can
-  // use a disk in READ_ONLY mode at a time.
-  // READ_WRITE: *[Default]* Attaches this disk in READ_WRITE mode. Only one VM
-  // instance at a time can be attached to a disk in READ_WRITE mode.
-  optional string mode = 2 [json_name = "mode"];
-
-  // The URL of the disk resource that is stateful and should be attached to the
-  // VM instance.
-  optional string source = 3 [json_name = "source"];
-}
-
-message PreservedStatePreservedNetworkIp {
-  // These stateful IPs will never be released during autohealing, update or VM
-  // instance recreate operations. This flag is used to configure if the IP
-  // reservation should be deleted after it is no longer used by the group, e.g.
-  // when the given instance or the whole group is deleted.
-  // NEVER:
-  // ON_PERMANENT_INSTANCE_DELETION:
-  optional string auto_delete = 1 [json_name = "autoDelete"];
-
-  // Ip address representation
-  optional PreservedStatePreservedNetworkIpIpAddress ip_address = 2
-      [json_name = "ipAddress"];
-}
-
-message PreservedStatePreservedNetworkIpIpAddress {
-  // The URL of the reservation for this IP address.
-  optional string address = 1 [json_name = "address"];
-
-  // An IPv4 internal network address to assign to the instance for this network
-  // interface.
-  optional string literal = 2 [json_name = "literal"];
-}
-
-message StatefulPolicy {
-  optional StatefulPolicyPreservedState preserved_state = 1
-      [json_name = "preservedState"];
-}
-
-// Configuration of preserved resources.
-message StatefulPolicyPreservedState {
-  // Disks created on the instances that will be preserved on instance delete,
-  // update, etc. This map is keyed with the device names of the disks.
-  map<string, StatefulPolicyPreservedStateDiskDevice> disks = 1
-      [json_name = "disks"];
-
-  // External network IPs assigned to the instances that will be preserved on
-  // instance delete, update, etc. This map is keyed with the network interface
-  // name.
-  map<string, StatefulPolicyPreservedStateNetworkIp> external_i_ps = 2
-      [json_name = "externalIPs"];
-
-  // Internal network IPs assigned to the instances that will be preserved on
-  // instance delete, update, etc. This map is keyed with the network interface
-  // name.
-  map<string, StatefulPolicyPreservedStateNetworkIp> internal_i_ps = 3
-      [json_name = "internalIPs"];
-}
-
-message StatefulPolicyPreservedStateDiskDevice {
-  // These stateful disks will never be deleted during autohealing, update or VM
-  // instance recreate operations. This flag is used to configure if the disk
-  // should be deleted after it is no longer used by the group, e.g. when the
-  // given instance or the whole group is deleted. Note: disks attached in
-  // READ_ONLY mode cannot be auto-deleted.
-  // NEVER:
-  // ON_PERMANENT_INSTANCE_DELETION:
-  optional string auto_delete = 1 [json_name = "autoDelete"];
-}
-
-message StatefulPolicyPreservedStateNetworkIp {
-  // These stateful IPs will never be released during autohealing, update or VM
-  // instance recreate operations. This flag is used to configure if the IP
-  // reservation should be deleted after it is no longer used by the group, e.g.
-  // when the given instance or the whole group is deleted.
-  // NEVER:
-  // ON_PERMANENT_INSTANCE_DELETION:
-  optional string auto_delete = 1 [json_name = "autoDelete"];
+  // [Output Only] Informational warning which replaces the list of disk types
+  // when the list is empty.
+  optional Warning warning = 2 [json_name = "warning"];
 }

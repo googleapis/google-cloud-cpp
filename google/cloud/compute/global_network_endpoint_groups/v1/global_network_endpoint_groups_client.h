@@ -21,7 +21,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_GLOBAL_NETWORK_ENDPOINT_GROUPS_V1_GLOBAL_NETWORK_ENDPOINT_GROUPS_CLIENT_H
 
 #include "google/cloud/compute/global_network_endpoint_groups/v1/global_network_endpoint_groups_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"

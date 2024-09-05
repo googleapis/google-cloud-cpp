@@ -112,19 +112,31 @@ class MockTagKeysConnection : public resourcemanager_v3::TagKeysConnection {
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateTagKey,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateTagKey(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>,
-              CreateTagKey,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              CreateTagKey, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateTagKey)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateTagKey(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateTagKey(Matcher<google::cloud::resourcemanager::v3::UpdateTagKeyRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>,
       UpdateTagKey,
@@ -166,19 +178,31 @@ class MockTagKeysConnection : public resourcemanager_v3::TagKeysConnection {
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateTagKey,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateTagKey(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>,
-              UpdateTagKey,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              UpdateTagKey, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteTagKey)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteTagKey(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteTagKey(Matcher<google::cloud::resourcemanager::v3::DeleteTagKeyRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>,
       DeleteTagKey,

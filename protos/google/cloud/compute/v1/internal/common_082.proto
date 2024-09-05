@@ -25,7 +25,7 @@ import "google/cloud/compute/v1/internal/common_012.proto";
 
 message NetworkEndpointGroupAggregatedList {
   // [Output Only] Unique identifier for the resource; defined by the server.
-  optional string id = 1 [json_name = "id"];
+  optional string id = 2 [json_name = "id"];
 
   // A list of NetworkEndpointGroupsScopedList resources.
   map<string, NetworkEndpointGroupsScopedList> items = 2 [json_name = "items"];
@@ -40,13 +40,13 @@ message NetworkEndpointGroupAggregatedList {
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 4 [json_name = "nextPageToken"];
+  optional string next_page_token = 5 [json_name = "nextPageToken"];
 
   // [Output Only] Server-defined URL for this resource.
-  optional string self_link = 5 [json_name = "selfLink"];
+  optional string self_link = 6 [json_name = "selfLink"];
 
   // [Output Only] Unreachable resources.
-  repeated string unreachables = 6 [json_name = "unreachables"];
+  repeated string unreachables = 7 [json_name = "unreachables"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -132,7 +132,7 @@ message NetworkEndpointGroupAggregatedList {
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 7 [json_name = "warning"];
+  optional Warning warning = 8 [json_name = "warning"];
 }
 
 message NetworkEndpointGroupsAttachEndpointsRequest {
