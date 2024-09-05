@@ -222,7 +222,8 @@ TEST(PopulateCommonOptions, UserProject) {
 }
 
 TEST(PopulateCommonOptions, QuotaProjectEnvVar) {
-  ScopedEnvironment projects("GOOGLE_CLOUD_QUOTA_PROJECT", "env");
+  ScopedEnvironment e1("GOOGLE_CLOUD_CPP_USER_PROJECT", absl::nullopt);
+  ScopedEnvironment e2("GOOGLE_CLOUD_QUOTA_PROJECT", "env");
 
   auto opts = Options{}.set<UserProjectOption>("option");
   opts = PopulateCommonOptions(std::move(opts), {}, {}, {},
