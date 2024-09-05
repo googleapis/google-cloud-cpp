@@ -14,7 +14,6 @@
 
 #include "google/cloud/storage/internal/grpc/default_options.h"
 #include "google/cloud/storage/grpc_plugin.h"
-#include "google/cloud/storage/internal/grpc/detect_gcp_options.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -73,21 +72,24 @@ TEST(DefaultOptionsGrpc, DefaultOptionsGrpcChannelCount) {
 }
 
 TEST(DefaultOptionsGrpc, DefaultEndpointsCloudPath) {
-  auto mock = std::make_shared<MockGcpDetector>();
-  EXPECT_CALL(*mock, IsGoogleCloudBios()).WillRepeatedly(Return(false));
-  EXPECT_CALL(*mock, IsGoogleCloudServerless()).WillRepeatedly(Return(false));
+  auto mock_detector = std::make_shared<MockGcpDetector>();
+  EXPECT_CALL(*mock_detector, IsGoogleCloudBios())
+      .WillRepeatedly(Return(false));
+  EXPECT_CALL(*mock_detector, IsGoogleCloudServerless())
+      .WillRepeatedly(Return(false));
 
-  auto options = DefaultOptionsGrpc(Options{}.set<GcpDetectorOption>(mock));
+  auto options = DefaultOptionsGrpc(Options{}, mock_detector);
   EXPECT_EQ(options.get<EndpointOption>(), "storage.googleapis.com");
   EXPECT_EQ(options.get<AuthorityOption>(), "storage.googleapis.com");
 }
 
 TEST(DefaultOptionsGrpc, DefaultEndpointsDirectPath) {
-  auto mock = std::make_shared<MockGcpDetector>();
-  EXPECT_CALL(*mock, IsGoogleCloudBios()).WillRepeatedly(Return(true));
-  EXPECT_CALL(*mock, IsGoogleCloudServerless()).WillRepeatedly(Return(true));
+  auto mock_detector = std::make_shared<MockGcpDetector>();
+  EXPECT_CALL(*mock_detector, IsGoogleCloudBios()).WillRepeatedly(Return(true));
+  EXPECT_CALL(*mock_detector, IsGoogleCloudServerless())
+      .WillRepeatedly(Return(true));
 
-  auto options = DefaultOptionsGrpc(Options{}.set<GcpDetectorOption>(mock));
+  auto options = DefaultOptionsGrpc(Options{}, mock_detector);
   EXPECT_EQ(options.get<EndpointOption>(),
             "google-c2p:///storage.googleapis.com");
   EXPECT_EQ(options.get<AuthorityOption>(), "storage.googleapis.com");

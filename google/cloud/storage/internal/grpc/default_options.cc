@@ -15,7 +15,6 @@
 #include "google/cloud/storage/internal/grpc/default_options.h"
 #include "google/cloud/storage/client_options.h"
 #include "google/cloud/storage/grpc_plugin.h"
-#include "google/cloud/storage/internal/grpc/detect_gcp_options.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
@@ -59,7 +58,8 @@ int DefaultGrpcNumChannels(std::string const& endpoint) {
 
 }  // namespace
 
-Options DefaultOptionsGrpc(Options options) {
+Options DefaultOptionsGrpc(
+    Options options, std::shared_ptr<internal::GcpDetector> gcp_detector) {
   using ::google::cloud::internal::GetEnv;
   // Experiments show that gRPC gets better upload throughput when the upload
   // buffer is at least 32MiB.
@@ -74,10 +74,6 @@ Options DefaultOptionsGrpc(Options options) {
     options.set<UnifiedCredentialsOption>(
         google::cloud::MakeGoogleDefaultCredentials(
             google::cloud::internal::MakeAuthOptions(options)));
-  }
-
-  if (!options.has<GcpDetectorOption>()) {
-    options.set<GcpDetectorOption>(google::cloud::internal::MakeGcpDetector());
   }
 
   auto const testbench =
@@ -100,7 +96,6 @@ Options DefaultOptionsGrpc(Options options) {
 
   // Set default to direct path if we can detect we are running in GCP and
   // there is not already a set endpoint or unviverse domain endpoint.
-  auto const gcp_detector = options.get<GcpDetectorOption>();
   if ((!options.has<EndpointOption>() &&
        !options.has<internal::UniverseDomainOption>()) &&
       (gcp_detector->IsGoogleCloudBios() ||

@@ -64,7 +64,6 @@ google_cloud_cpp_storage_grpc_hdrs = [
     "internal/grpc/configure_client_context.h",
     "internal/grpc/ctype_cord_workaround.h",
     "internal/grpc/default_options.h",
-    "internal/grpc/detect_gcp_options.h",
     "internal/grpc/enable_metrics.h",
     "internal/grpc/hmac_key_metadata_parser.h",
     "internal/grpc/hmac_key_request_parser.h",
