@@ -487,7 +487,7 @@ TEST_F(DataConnectionTest, AsyncApplyRetryIdempotency) {
   EXPECT_CALL(*mock_i, clone).WillOnce([]() {
     auto clone = std::make_unique<MockIdempotentMutationPolicy>();
     EXPECT_CALL(*clone, is_idempotent(An<v2::Mutation const&>()))
-      .WillOnce(Return(false));
+        .WillOnce(Return(false));
     return clone;
   });
 
