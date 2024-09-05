@@ -59,7 +59,8 @@ int DefaultGrpcNumChannels(std::string const& endpoint) {
 }  // namespace
 
 Options DefaultOptionsGrpc(
-    Options options, std::shared_ptr<internal::GcpDetector> gcp_detector) {
+    Options options,
+    std::shared_ptr<internal::GcpDetector> const gcp_detector) {
   using ::google::cloud::internal::GetEnv;
   // Experiments show that gRPC gets better upload throughput when the upload
   // buffer is at least 32MiB.

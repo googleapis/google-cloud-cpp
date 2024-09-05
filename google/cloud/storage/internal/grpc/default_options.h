@@ -31,8 +31,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * This adds some additional defaults to the options for REST.
  */
 Options DefaultOptionsGrpc(Options = {},
-                           std::shared_ptr<internal::GcpDetector> gcp_detector =
-                               internal::MakeGcpDetector());
+                           std::shared_ptr<internal::GcpDetector> const
+                               gcp_detector = internal::MakeGcpDetector());
 
 bool GrpcEnableMetricsIsSafe(int major, int minor, int patch);
 bool GrpcEnableMetricsIsSafe();
