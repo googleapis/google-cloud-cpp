@@ -122,19 +122,32 @@ class MockAgentsConnection : public dialogflow_cx::AgentsConnection {
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ExportAgent,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, ExportAgent(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::cx::v3::ExportAgentResponse>>,
-      ExportAgent,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      ExportAgent, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, RestoreAgent)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, RestoreAgent(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RestoreAgent(Matcher<google::cloud::dialogflow::cx::v3::RestoreAgentRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::protobuf::Struct>>, RestoreAgent,
       (google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request),
@@ -165,14 +178,20 @@ class MockAgentsConnection : public dialogflow_cx::AgentsConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RestoreAgent,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, RestoreAgent(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, RestoreAgent,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>,

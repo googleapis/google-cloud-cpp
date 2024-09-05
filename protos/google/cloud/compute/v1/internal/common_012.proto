@@ -305,11 +305,10 @@ message NetworkEndpointGroupList {
   // [Output Only] Unique identifier for the resource; defined by the server.
   optional string id = 1 [json_name = "id"];
 
-  // A list of NetworkEndpointGroup resources.
-  repeated NetworkEndpointGroup items = 2 [json_name = "items"];
+  // A list of BackendServicesScopedList resources.
+  map<string, BackendServicesScopedList> items = 2 [json_name = "items"];
 
-  // [Output Only] The resource type, which is always
-  // compute#networkEndpointGroupList for network endpoint group lists.
+  // Type of resource.
   optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
@@ -542,7 +541,7 @@ message NetworkEndpointGroupsListNetworkEndpoints {
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 5 [json_name = "warning"];
+  optional Warning warning = 7 [json_name = "warning"];
 }
 
 message NetworkEndpointWithHealthStatus {

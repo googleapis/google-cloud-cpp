@@ -174,21 +174,34 @@ class MockTranslationServiceConnection
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, BatchTranslateDocument,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::translation::v3::BatchTranslateDocumentRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchTranslateDocument(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::translation::v3::BatchTranslateDocumentResponse>>,
-      BatchTranslateDocument,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      BatchTranslateDocument, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateGlossary)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateGlossary(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateGlossary(Matcher<google::cloud::translation::v3::CreateGlossaryRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::translation::v3::Glossary>>,
       CreateGlossary,
@@ -426,14 +439,137 @@ class MockTranslationServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteGlossary,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::translation::v3::DeleteGlossaryRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteGlossary(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>,
-      DeleteGlossary,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteGlossary, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::translation::v3::GlossaryEntry>, GetGlossaryEntry,
+      (google::cloud::translation::v3::GetGlossaryEntryRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::translation::v3::GlossaryEntry>),
+      ListGlossaryEntries,
+      (google::cloud::translation::v3::ListGlossaryEntriesRequest request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::translation::v3::GlossaryEntry>,
+              CreateGlossaryEntry,
+              (google::cloud::translation::v3::CreateGlossaryEntryRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::translation::v3::GlossaryEntry>,
+              UpdateGlossaryEntry,
+              (google::cloud::translation::v3::UpdateGlossaryEntryRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(Status, DeleteGlossaryEntry,
+              (google::cloud::translation::v3::DeleteGlossaryEntryRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateDataset(Matcher<google::cloud::translation::v3::CreateDatasetRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::translation::v3::Dataset>>, CreateDataset,
+      (google::cloud::translation::v3::CreateDatasetRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateDataset(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateDataset,
+      (NoAwaitTag,
+       google::cloud::translation::v3::CreateDatasetRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateDataset(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::translation::v3::Dataset>>,
+              CreateDataset, (google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::translation::v3::Dataset>, GetDataset,
+      (google::cloud::translation::v3::GetDatasetRequest const& request),
+      (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::translation::v3::Dataset>),
+              ListDatasets,
+              (google::cloud::translation::v3::ListDatasetsRequest request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteDataset(Matcher<google::cloud::translation::v3::DeleteDatasetRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::translation::v3::DeleteDatasetMetadata>>,
+      DeleteDataset,
+      (google::cloud::translation::v3::DeleteDatasetRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteDataset(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteDataset,
+      (NoAwaitTag,
+       google::cloud::translation::v3::DeleteDatasetRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteDataset(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::translation::v3::DeleteDatasetMetadata>>,
+      DeleteDataset, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

@@ -114,20 +114,34 @@ class MockWorkstationsConnection
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateWorkstationCluster,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::workstations::v1::CreateWorkstationClusterRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateWorkstationCluster(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>,
       CreateWorkstationCluster,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateWorkstationCluster)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateWorkstationCluster(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateWorkstationCluster(Matcher<google::cloud::workstations::v1::UpdateWorkstationClusterRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>,
       UpdateWorkstationCluster,
@@ -173,20 +187,34 @@ class MockWorkstationsConnection
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateWorkstationCluster,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateWorkstationCluster(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>,
       UpdateWorkstationCluster,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteWorkstationCluster)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteWorkstationCluster(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteWorkstationCluster(Matcher<google::cloud::workstations::v1::DeleteWorkstationClusterRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>,
       DeleteWorkstationCluster,
@@ -223,16 +251,24 @@ class MockWorkstationsConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteWorkstationCluster,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteWorkstationCluster(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>,
       DeleteWorkstationCluster,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::workstations::v1::WorkstationConfig>,
@@ -308,20 +344,34 @@ class MockWorkstationsConnection
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateWorkstationConfig,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateWorkstationConfig(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>,
       CreateWorkstationConfig,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateWorkstationConfig)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateWorkstationConfig(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateWorkstationConfig(Matcher<google::cloud::workstations::v1::UpdateWorkstationConfigRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>,
       UpdateWorkstationConfig,
@@ -367,20 +417,34 @@ class MockWorkstationsConnection
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateWorkstationConfig,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateWorkstationConfig(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>,
       UpdateWorkstationConfig,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteWorkstationConfig)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteWorkstationConfig(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteWorkstationConfig(Matcher<google::cloud::workstations::v1::DeleteWorkstationConfigRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>,
       DeleteWorkstationConfig,
@@ -417,16 +481,24 @@ class MockWorkstationsConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteWorkstationConfig,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteWorkstationConfig(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>,
       DeleteWorkstationConfig,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::workstations::v1::Workstation>, GetWorkstation,
@@ -612,19 +684,31 @@ class MockWorkstationsConnection
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, StartWorkstation,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::workstations::v1::StartWorkstationRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, StartWorkstation(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::workstations::v1::Workstation>>,
               StartWorkstation,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, StopWorkstation)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, StopWorkstation(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// StopWorkstation(Matcher<google::cloud::workstations::v1::StopWorkstationRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::workstations::v1::Workstation>>,
       StopWorkstation,
@@ -657,15 +741,21 @@ class MockWorkstationsConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, StopWorkstation,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::workstations::v1::StopWorkstationRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, StopWorkstation(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::workstations::v1::Workstation>>,
               StopWorkstation,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::workstations::v1::GenerateAccessTokenResponse>,

@@ -114,20 +114,33 @@ class MockInstanceAdminConnection
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateInstanceConfig,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateInstanceConfig(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>,
-      CreateInstanceConfig,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      CreateInstanceConfig, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateInstanceConfig)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateInstanceConfig(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateInstanceConfig(Matcher<google::spanner::admin::instance::v1::UpdateInstanceConfigRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>,
       UpdateInstanceConfig,
@@ -163,15 +176,22 @@ class MockInstanceAdminConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateInstanceConfig,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateInstanceConfig(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>,
-      UpdateInstanceConfig,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      UpdateInstanceConfig, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -257,20 +277,32 @@ class MockInstanceAdminConnection
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateInstance,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::spanner::admin::instance::v1::CreateInstanceRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateInstance(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::spanner::admin::instance::v1::Instance>>,
-              CreateInstance,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              CreateInstance, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateInstance)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateInstance(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateInstance(Matcher<google::spanner::admin::instance::v1::UpdateInstanceRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::spanner::admin::instance::v1::Instance>>,
       UpdateInstance,
@@ -305,15 +337,21 @@ class MockInstanceAdminConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateInstance,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::spanner::admin::instance::v1::UpdateInstanceRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateInstance(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::spanner::admin::instance::v1::Instance>>,
-              UpdateInstance,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              UpdateInstance, (google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(

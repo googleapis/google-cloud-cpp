@@ -106,19 +106,31 @@ class MockManagedKafkaConnection
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateCluster,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::managedkafka::v1::CreateClusterRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateCluster(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::managedkafka::v1::Cluster>>,
-              CreateCluster,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              CreateCluster, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateCluster)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateCluster(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateCluster(Matcher<google::cloud::managedkafka::v1::UpdateClusterRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::managedkafka::v1::Cluster>>, UpdateCluster,
       (google::cloud::managedkafka::v1::UpdateClusterRequest const& request),
@@ -159,19 +171,31 @@ class MockManagedKafkaConnection
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateCluster,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::managedkafka::v1::UpdateClusterRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateCluster(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::managedkafka::v1::Cluster>>,
-              UpdateCluster,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              UpdateCluster, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteCluster)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteCluster(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteCluster(Matcher<google::cloud::managedkafka::v1::DeleteClusterRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>,
       DeleteCluster,

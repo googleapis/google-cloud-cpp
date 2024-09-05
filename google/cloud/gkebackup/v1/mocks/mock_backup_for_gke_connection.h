@@ -145,19 +145,31 @@ class MockBackupForGKEConnection : public gkebackup_v1::BackupForGKEConnection {
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateBackupPlan,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::gkebackup::v1::UpdateBackupPlanRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateBackupPlan(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>>,
               UpdateBackupPlan,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteBackupPlan)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteBackupPlan(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteBackupPlan(Matcher<google::cloud::gkebackup::v1::DeleteBackupPlanRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>,
       DeleteBackupPlan,
@@ -199,19 +211,31 @@ class MockBackupForGKEConnection : public gkebackup_v1::BackupForGKEConnection {
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteBackupPlan,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteBackupPlan(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>,
               DeleteBackupPlan,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateBackup)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateBackup(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateBackup(Matcher<google::cloud::gkebackup::v1::CreateBackupRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkebackup::v1::Backup>>, CreateBackup,
       (google::cloud::gkebackup::v1::CreateBackupRequest const& request),
@@ -298,19 +322,31 @@ class MockBackupForGKEConnection : public gkebackup_v1::BackupForGKEConnection {
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateBackup,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::gkebackup::v1::UpdateBackupRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateBackup(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::gkebackup::v1::Backup>>,
-              UpdateBackup,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              UpdateBackup, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteBackup)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteBackup(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteBackup(Matcher<google::cloud::gkebackup::v1::DeleteBackupRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>,
       DeleteBackup,
@@ -450,19 +486,31 @@ class MockBackupForGKEConnection : public gkebackup_v1::BackupForGKEConnection {
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateRestorePlan,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::gkebackup::v1::UpdateRestorePlanRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateRestorePlan(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>>,
               UpdateRestorePlan,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteRestorePlan)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteRestorePlan(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteRestorePlan(Matcher<google::cloud::gkebackup::v1::DeleteRestorePlanRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>,
       DeleteRestorePlan,
@@ -504,19 +552,31 @@ class MockBackupForGKEConnection : public gkebackup_v1::BackupForGKEConnection {
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteRestorePlan,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteRestorePlan(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>,
               DeleteRestorePlan,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateRestore)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateRestore(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateRestore(Matcher<google::cloud::gkebackup::v1::CreateRestoreRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkebackup::v1::Restore>>, CreateRestore,
       (google::cloud::gkebackup::v1::CreateRestoreRequest const& request),
@@ -604,19 +664,31 @@ class MockBackupForGKEConnection : public gkebackup_v1::BackupForGKEConnection {
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateRestore,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::gkebackup::v1::UpdateRestoreRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateRestore(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::gkebackup::v1::Restore>>,
-              UpdateRestore,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              UpdateRestore, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteRestore)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteRestore(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteRestore(Matcher<google::cloud::gkebackup::v1::DeleteRestoreRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>,
       DeleteRestore,

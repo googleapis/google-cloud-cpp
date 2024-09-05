@@ -314,16 +314,23 @@ class MockAwsClustersConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RollbackAwsNodePoolUpdate,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RollbackAwsNodePoolUpdate(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>,
               RollbackAwsNodePoolUpdate,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>, GetAwsNodePool,

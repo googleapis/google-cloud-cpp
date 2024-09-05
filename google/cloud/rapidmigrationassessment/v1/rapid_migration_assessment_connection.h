@@ -23,7 +23,6 @@
 #include "google/cloud/rapidmigrationassessment/v1/internal/rapid_migration_assessment_retry_traits.h"
 #include "google/cloud/rapidmigrationassessment/v1/rapid_migration_assessment_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"

@@ -196,16 +196,22 @@ class MockNotebookServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, AssignNotebookRuntime,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// AssignNotebookRuntime(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>>,
               AssignNotebookRuntime,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>,
@@ -272,20 +278,33 @@ class MockNotebookServiceConnection
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteNotebookRuntime,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteNotebookRuntime(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-      DeleteNotebookRuntime,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteNotebookRuntime, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpgradeNotebookRuntime)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpgradeNotebookRuntime(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpgradeNotebookRuntime(Matcher<google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::aiplatform::v1::UpgradeNotebookRuntimeResponse>>,

@@ -31,38 +31,33 @@ message HttpHealthCheck {
   // seconds.
   optional int32 check_interval_sec = 1 [json_name = "checkIntervalSec"];
 
-  // [Output Only] Creation timestamp in RFC3339 text format.
-  optional string creation_timestamp = 2 [json_name = "creationTimestamp"];
+  // URL of the forwarding rule associated with the health status of the
+  // instance.
+  optional string forwarding_rule = 2 [json_name = "forwardingRule"];
 
-  // An optional description of this resource. Provide this property when you
-  // create the resource.
-  optional string description = 3 [json_name = "description"];
+  // A forwarding rule IP address assigned to this instance.
+  optional string forwarding_rule_ip = 3 [json_name = "forwardingRuleIp"];
 
-  // A so-far unhealthy instance will be marked healthy after this many
-  // consecutive successes. The default value is 2.
-  optional int32 healthy_threshold = 4 [json_name = "healthyThreshold"];
+  // Health state of the IPv4 address of the instance.
+  // HEALTHY:
+  // UNHEALTHY:
+  optional string health_state = 4 [json_name = "healthState"];
 
   // The value of the host header in the HTTP health check request. If left
   // empty (default value), the public IP on behalf of which this health check
   // is performed will be used.
   optional string host = 5 [json_name = "host"];
 
-  // [Output Only] The unique identifier for the resource. This identifier is
-  // defined by the server.
-  optional string id = 6 [json_name = "id"];
+  // For target pool based Network Load Balancing, it indicates the forwarding
+  // rule's IP address assigned to this instance. For other types of load
+  // balancing, the field indicates VM internal ip.
+  optional string ip_address = 6 [json_name = "ipAddress"];
 
   // [Output Only] Type of the resource. Always compute#httpHealthCheck for HTTP
   // health checks.
   optional string kind = 7 [json_name = "kind"];
 
-  // Name of the resource. Provided by the client when the resource is created.
-  // The name must be 1-63 characters long, and comply with RFC1035.
-  // Specifically, the name must be 1-63 characters long and match the regular
-  // expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character
-  // must be a lowercase letter, and all following characters must be a dash,
-  // lowercase letter, or digit, except the last character, which cannot be a
-  // dash.
-  optional string name = 8 [json_name = "name"];
+  optional string weight = 8 [json_name = "weight"];
 
   // The TCP port number for the HTTP health check request. The default value is
   // 80.

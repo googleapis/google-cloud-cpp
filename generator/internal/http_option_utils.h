@@ -114,6 +114,12 @@ std::string FormatRequestResource(google::protobuf::Descriptor const& request,
 absl::optional<std::string> FormatApiVersionFromUrlPattern(
     std::string const& url_pattern);
 
+/**
+ * Parses the url pattern of the method and returns its API version.
+ */
+std::string FormatApiVersionFromUrlPattern(std::string const& url_pattern,
+                                           std::string const& file_name);
+
 }  // namespace generator_internal
 }  // namespace cloud
 }  // namespace google

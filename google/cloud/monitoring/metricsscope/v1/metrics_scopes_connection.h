@@ -22,7 +22,6 @@
 #include "google/cloud/monitoring/metricsscope/v1/internal/metrics_scopes_retry_traits.h"
 #include "google/cloud/monitoring/metricsscope/v1/metrics_scopes_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"

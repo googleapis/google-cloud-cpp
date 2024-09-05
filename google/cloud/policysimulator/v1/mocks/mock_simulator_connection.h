@@ -92,14 +92,20 @@ class MockSimulatorConnection : public policysimulator_v1::SimulatorConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateReplay,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::policysimulator::v1::CreateReplayRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateReplay(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::policysimulator::v1::Replay>>,
-              CreateReplay,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              CreateReplay, (google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(

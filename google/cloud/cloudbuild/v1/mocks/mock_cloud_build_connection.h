@@ -86,14 +86,20 @@ class MockCloudBuildConnection : public cloudbuild_v1::CloudBuildConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateBuild,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::devtools::cloudbuild::v1::CreateBuildRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateBuild(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v1::Build>>,
-              CreateBuild,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              CreateBuild, (google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -160,19 +166,31 @@ class MockCloudBuildConnection : public cloudbuild_v1::CloudBuildConnection {
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RetryBuild,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::devtools::cloudbuild::v1::RetryBuildRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, RetryBuild(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v1::Build>>,
-              RetryBuild,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              RetryBuild, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ApproveBuild)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ApproveBuild(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ApproveBuild(Matcher<google::devtools::cloudbuild::v1::ApproveBuildRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::devtools::cloudbuild::v1::Build>>, ApproveBuild,
       (google::devtools::cloudbuild::v1::ApproveBuildRequest const& request),
@@ -204,14 +222,20 @@ class MockCloudBuildConnection : public cloudbuild_v1::CloudBuildConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ApproveBuild,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::devtools::cloudbuild::v1::ApproveBuildRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, ApproveBuild(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v1::Build>>,
-              ApproveBuild,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              ApproveBuild, (google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -286,15 +310,21 @@ class MockCloudBuildConnection : public cloudbuild_v1::CloudBuildConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RunBuildTrigger,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, RunBuildTrigger(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v1::Build>>,
               RunBuildTrigger,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse>,

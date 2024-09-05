@@ -22,7 +22,6 @@
 #include "google/cloud/backupdr/v1/backup_dr_connection_idempotency_policy.h"
 #include "google/cloud/backupdr/v1/internal/backup_dr_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"

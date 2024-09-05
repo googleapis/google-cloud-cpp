@@ -102,19 +102,32 @@ class MockCloudShellServiceConnection
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, StartEnvironment,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::shell::v1::StartEnvironmentRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, StartEnvironment(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>,
-      StartEnvironment,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      StartEnvironment, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, AuthorizeEnvironment)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, AuthorizeEnvironment(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// AuthorizeEnvironment(Matcher<google::cloud::shell::v1::AuthorizeEnvironmentRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>,
       AuthorizeEnvironment,

@@ -121,20 +121,39 @@ class MockProductServiceConnection
       (google::cloud::retail::v2::PurgeProductsRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, PurgeProducts(_, _))
+  /// @endcode
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, PurgeProducts,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::retail::v2::PurgeProductsRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, PurgeProducts(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::retail::v2::PurgeProductsResponse>>,
-      PurgeProducts,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      PurgeProducts, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ImportProducts)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ImportProducts(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ImportProducts(Matcher<google::cloud::retail::v2::ImportProductsRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>,
       ImportProducts,
@@ -253,19 +272,32 @@ class MockProductServiceConnection
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, AddFulfillmentPlaces,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// AddFulfillmentPlaces(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>,
-      AddFulfillmentPlaces,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      AddFulfillmentPlaces, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, RemoveFulfillmentPlaces)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, RemoveFulfillmentPlaces(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RemoveFulfillmentPlaces(Matcher<google::cloud::retail::v2::RemoveFulfillmentPlacesRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>,
@@ -352,19 +384,32 @@ class MockProductServiceConnection
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, AddLocalInventories,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::retail::v2::AddLocalInventoriesRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// AddLocalInventories(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>,
-      AddLocalInventories,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      AddLocalInventories, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, RemoveLocalInventories)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, RemoveLocalInventories(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RemoveLocalInventories(Matcher<google::cloud::retail::v2::RemoveLocalInventoriesRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>,
