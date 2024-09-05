@@ -22,7 +22,6 @@
 #include "google/cloud/pubsub/admin/internal/subscription_admin_retry_traits.h"
 #include "google/cloud/pubsub/admin/subscription_admin_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"

@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_DISKS_V1_DISKS_CLIENT_H
 
 #include "google/cloud/compute/disks/v1/disks_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -698,7 +697,7 @@ class DisksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.disks.v1.GetDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L507}
-  /// [google.cloud.cpp.compute.v1.Disk]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_014.proto#L49}
+  /// [google.cloud.cpp.compute.v1.Disk]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_015.proto#L49}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Disk> GetDisk(
@@ -730,7 +729,7 @@ class DisksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.disks.v1.GetDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L507}
-  /// [google.cloud.cpp.compute.v1.Disk]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_014.proto#L49}
+  /// [google.cloud.cpp.compute.v1.Disk]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_015.proto#L49}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Disk> GetDisk(
@@ -958,7 +957,7 @@ class DisksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.disks.v1.ListDisksRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L574}
-  /// [google.cloud.cpp.compute.v1.Disk]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_014.proto#L49}
+  /// [google.cloud.cpp.compute.v1.Disk]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_015.proto#L49}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Disk> ListDisks(
@@ -998,7 +997,7 @@ class DisksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.disks.v1.ListDisksRequest]: @cloud_cpp_reference_link{google/cloud/compute/disks/v1/disks.proto#L574}
-  /// [google.cloud.cpp.compute.v1.Disk]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_014.proto#L49}
+  /// [google.cloud.cpp.compute.v1.Disk]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_015.proto#L49}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Disk> ListDisks(

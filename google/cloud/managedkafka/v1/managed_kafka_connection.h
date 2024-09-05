@@ -22,7 +22,6 @@
 #include "google/cloud/managedkafka/v1/internal/managed_kafka_retry_traits.h"
 #include "google/cloud/managedkafka/v1/managed_kafka_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"

@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKCONNECTIVITY_V1_POLICY_BASED_ROUTING_CLIENT_H
 
 #include "google/cloud/networkconnectivity/v1/policy_based_routing_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"

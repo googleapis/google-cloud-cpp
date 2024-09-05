@@ -252,19 +252,31 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, PromoteCluster,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::alloydb::v1::PromoteClusterRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, PromoteCluster(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Cluster>>,
-              PromoteCluster,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              PromoteCluster, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, RestoreCluster)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, RestoreCluster(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RestoreCluster(Matcher<google::cloud::alloydb::v1::RestoreClusterRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::alloydb::v1::Cluster>>, RestoreCluster,
       (google::cloud::alloydb::v1::RestoreClusterRequest const& request),
@@ -473,20 +485,33 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, BatchCreateInstances,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::alloydb::v1::BatchCreateInstancesRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchCreateInstances(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::alloydb::v1::BatchCreateInstancesResponse>>,
-      BatchCreateInstances,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      BatchCreateInstances, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateInstance)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateInstance(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateInstance(Matcher<google::cloud::alloydb::v1::UpdateInstanceRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::alloydb::v1::Instance>>, UpdateInstance,
       (google::cloud::alloydb::v1::UpdateInstanceRequest const& request),
@@ -527,19 +552,31 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateInstance,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::alloydb::v1::UpdateInstanceRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateInstance(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Instance>>,
-              UpdateInstance,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              UpdateInstance, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteInstance)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteInstance(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteInstance(Matcher<google::cloud::alloydb::v1::DeleteInstanceRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>,
       DeleteInstance,
@@ -581,19 +618,31 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteInstance,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::alloydb::v1::DeleteInstanceRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteInstance(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>,
-              DeleteInstance,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              DeleteInstance, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, FailoverInstance)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, FailoverInstance(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// FailoverInstance(Matcher<google::cloud::alloydb::v1::FailoverInstanceRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::alloydb::v1::Instance>>, FailoverInstance,
       (google::cloud::alloydb::v1::FailoverInstanceRequest const& request),

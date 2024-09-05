@@ -144,19 +144,31 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateStoragePool,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::netapp::v1::UpdateStoragePoolRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateStoragePool(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::StoragePool>>,
               UpdateStoragePool,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteStoragePool)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteStoragePool(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteStoragePool(Matcher<google::cloud::netapp::v1::DeleteStoragePoolRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>,
       DeleteStoragePool,
@@ -597,19 +609,31 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateActiveDirectory,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::netapp::v1::CreateActiveDirectoryRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateActiveDirectory(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::ActiveDirectory>>,
               CreateActiveDirectory,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateActiveDirectory)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateActiveDirectory(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateActiveDirectory(Matcher<google::cloud::netapp::v1::UpdateActiveDirectoryRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::netapp::v1::ActiveDirectory>>,
       UpdateActiveDirectory,
@@ -651,19 +675,31 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateActiveDirectory,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::netapp::v1::UpdateActiveDirectoryRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateActiveDirectory(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::ActiveDirectory>>,
               UpdateActiveDirectory,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteActiveDirectory)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteActiveDirectory(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteActiveDirectory(Matcher<google::cloud::netapp::v1::DeleteActiveDirectoryRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>,
       DeleteActiveDirectory,
@@ -920,19 +956,31 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateReplication,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::netapp::v1::CreateReplicationRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateReplication(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::Replication>>,
               CreateReplication,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteReplication)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteReplication(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteReplication(Matcher<google::cloud::netapp::v1::DeleteReplicationRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>,
       DeleteReplication,
@@ -974,19 +1022,31 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteReplication,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::netapp::v1::DeleteReplicationRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteReplication(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>,
               DeleteReplication,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateReplication)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateReplication(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateReplication(Matcher<google::cloud::netapp::v1::UpdateReplicationRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::netapp::v1::Replication>>,
       UpdateReplication,
@@ -1028,19 +1088,31 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateReplication,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::netapp::v1::UpdateReplicationRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateReplication(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::Replication>>,
               UpdateReplication,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, StopReplication)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, StopReplication(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// StopReplication(Matcher<google::cloud::netapp::v1::StopReplicationRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::netapp::v1::Replication>>, StopReplication,
       (google::cloud::netapp::v1::StopReplicationRequest const& request),
@@ -1081,19 +1153,31 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, StopReplication,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::netapp::v1::StopReplicationRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, StopReplication(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::Replication>>,
               StopReplication,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ResumeReplication)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ResumeReplication(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ResumeReplication(Matcher<google::cloud::netapp::v1::ResumeReplicationRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::netapp::v1::Replication>>,
       ResumeReplication,
@@ -1135,19 +1219,31 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ResumeReplication,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::netapp::v1::ResumeReplicationRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ResumeReplication(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::Replication>>,
               ResumeReplication,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ReverseReplicationDirection)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ReverseReplicationDirection(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ReverseReplicationDirection(Matcher<google::cloud::netapp::v1::ReverseReplicationDirectionRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::netapp::v1::Replication>>,
       ReverseReplicationDirection,
@@ -1269,20 +1365,33 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ReverseReplicationDirection,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::netapp::v1::ReverseReplicationDirectionRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ReverseReplicationDirection(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::Replication>>,
               ReverseReplicationDirection,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, CreateBackupVault)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, CreateBackupVault(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateBackupVault(Matcher<google::cloud::netapp::v1::CreateBackupVaultRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::netapp::v1::BackupVault>>,
       CreateBackupVault,
@@ -1372,19 +1481,31 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateBackupVault,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::netapp::v1::UpdateBackupVaultRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateBackupVault(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::BackupVault>>,
               UpdateBackupVault,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteBackupVault)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteBackupVault(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteBackupVault(Matcher<google::cloud::netapp::v1::DeleteBackupVaultRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>,
       DeleteBackupVault,
@@ -1571,15 +1692,21 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateBackupPolicy,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::netapp::v1::CreateBackupPolicyRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateBackupPolicy(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::BackupPolicy>>,
               CreateBackupPolicy,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::netapp::v1::BackupPolicy>, GetBackupPolicy,
@@ -1641,19 +1768,31 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateBackupPolicy,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateBackupPolicy(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::BackupPolicy>>,
               UpdateBackupPolicy,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteBackupPolicy)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteBackupPolicy(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteBackupPolicy(Matcher<google::cloud::netapp::v1::DeleteBackupPolicyRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>,
       DeleteBackupPolicy,

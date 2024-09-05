@@ -198,7 +198,6 @@ std::string TracingConnectionGenerator::MethodDeclaration(
 
   if (IsLongrunningOperation(method)) {
     if (IsResponseTypeEmpty(method)) {
-      // TODO(#14344): Remove experimental tag.
       return R"""(
   future<Status>
   $method_name$($request_type$ const& request) override;
@@ -212,7 +211,6 @@ std::string TracingConnectionGenerator::MethodDeclaration(
       $longrunning_operation_type$ const& operation) override;
 )""";
     }
-    // TODO(#14344): Remove experimental tag.
     return R"""(
   future<StatusOr<$longrunning_deduced_response_type$>>
   $method_name$($request_type$ const& request) override;

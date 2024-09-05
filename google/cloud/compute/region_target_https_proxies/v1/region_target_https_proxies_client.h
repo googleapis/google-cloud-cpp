@@ -21,7 +21,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_TARGET_HTTPS_PROXIES_V1_REGION_TARGET_HTTPS_PROXIES_CLIENT_H
 
 #include "google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"

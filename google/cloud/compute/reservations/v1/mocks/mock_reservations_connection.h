@@ -200,15 +200,22 @@ class MockReservationsConnection
 
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>, Resize,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::cpp::compute::reservations::v1::ResizeRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// Resize(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               Resize,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(

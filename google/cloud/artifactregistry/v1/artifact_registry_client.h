@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ARTIFACTREGISTRY_V1_ARTIFACT_REGISTRY_CLIENT_H
 
 #include "google/cloud/artifactregistry/v1/artifact_registry_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"

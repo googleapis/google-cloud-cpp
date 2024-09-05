@@ -110,20 +110,32 @@ class MockEnvironmentsConnection
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateEnvironment,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateEnvironment(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>,
               CreateEnvironment,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateEnvironment)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateEnvironment(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateEnvironment(Matcher<google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>,
       UpdateEnvironment,
@@ -158,16 +170,22 @@ class MockEnvironmentsConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateEnvironment,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateEnvironment(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>,
               UpdateEnvironment,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       Status, DeleteEnvironment,
@@ -228,16 +246,23 @@ class MockEnvironmentsConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RunContinuousTest,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RunContinuousTest(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>,
-      RunContinuousTest,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      RunContinuousTest, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

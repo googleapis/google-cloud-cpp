@@ -92,16 +92,24 @@ class MockDeploymentResourcePoolServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateDeploymentResourcePool,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateDeploymentResourcePool(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>,
       CreateDeploymentResourcePool,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>,

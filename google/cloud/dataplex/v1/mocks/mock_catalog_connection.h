@@ -96,19 +96,31 @@ class MockCatalogServiceConnection
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateEntryType,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dataplex::v1::CreateEntryTypeRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateEntryType(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::EntryType>>,
               CreateEntryType,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateEntryType)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateEntryType(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateEntryType(Matcher<google::cloud::dataplex::v1::UpdateEntryTypeRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::dataplex::v1::EntryType>>, UpdateEntryType,
       (google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request),
@@ -149,19 +161,31 @@ class MockCatalogServiceConnection
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateEntryType,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateEntryType(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::EntryType>>,
               UpdateEntryType,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteEntryType)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteEntryType(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteEntryType(Matcher<google::cloud::dataplex::v1::DeleteEntryTypeRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
       DeleteEntryType,
@@ -251,19 +275,31 @@ class MockCatalogServiceConnection
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateAspectType,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dataplex::v1::CreateAspectTypeRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateAspectType(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::AspectType>>,
               CreateAspectType,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateAspectType)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateAspectType(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateAspectType(Matcher<google::cloud::dataplex::v1::UpdateAspectTypeRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::dataplex::v1::AspectType>>,
       UpdateAspectType,
@@ -305,19 +341,31 @@ class MockCatalogServiceConnection
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateAspectType,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateAspectType(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::AspectType>>,
               UpdateAspectType,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteAspectType)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteAspectType(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteAspectType(Matcher<google::cloud::dataplex::v1::DeleteAspectTypeRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
       DeleteAspectType,
@@ -408,19 +456,31 @@ class MockCatalogServiceConnection
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateEntryGroup,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dataplex::v1::CreateEntryGroupRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateEntryGroup(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>,
               CreateEntryGroup,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateEntryGroup)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateEntryGroup(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateEntryGroup(Matcher<google::cloud::dataplex::v1::UpdateEntryGroupRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>,
       UpdateEntryGroup,
@@ -462,19 +522,31 @@ class MockCatalogServiceConnection
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateEntryGroup,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateEntryGroup(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>,
               UpdateEntryGroup,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteEntryGroup)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteEntryGroup(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteEntryGroup(Matcher<google::cloud::dataplex::v1::DeleteEntryGroupRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
       DeleteEntryGroup,

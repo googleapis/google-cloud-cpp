@@ -26,9 +26,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_FIREWALLS_V1_FIREWALLS_PROTO_EXPORT_H
 
 // IWYU pragma: begin_exports
-#include <google/cloud/compute/v1/internal/common_016.pb.h>
-#include <google/cloud/compute/v1/internal/common_034.pb.h>
+#include <google/cloud/compute/v1/internal/common_017.pb.h>
 #include <google/cloud/compute/v1/internal/common_035.pb.h>
+#include <google/cloud/compute/v1/internal/common_036.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_FIREWALLS_V1_FIREWALLS_PROTO_EXPORT_H

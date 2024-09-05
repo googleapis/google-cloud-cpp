@@ -22,7 +22,6 @@
 #include "google/cloud/deploy/v1/cloud_deploy_connection_idempotency_policy.h"
 #include "google/cloud/deploy/v1/internal/cloud_deploy_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"

@@ -92,16 +92,24 @@ class MockPersistentResourceServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreatePersistentResource,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreatePersistentResource(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>,
       CreatePersistentResource,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::aiplatform::v1::PersistentResource>,
@@ -170,20 +178,34 @@ class MockPersistentResourceServiceConnection
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeletePersistentResource,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeletePersistentResource(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeletePersistentResource,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdatePersistentResource)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdatePersistentResource(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdatePersistentResource(Matcher<google::cloud::aiplatform::v1::UpdatePersistentResourceRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>,
       UpdatePersistentResource,
@@ -229,20 +251,34 @@ class MockPersistentResourceServiceConnection
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdatePersistentResource,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdatePersistentResource(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>,
       UpdatePersistentResource,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, RebootPersistentResource)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, RebootPersistentResource(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RebootPersistentResource(Matcher<google::cloud::aiplatform::v1::RebootPersistentResourceRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>,
       RebootPersistentResource,

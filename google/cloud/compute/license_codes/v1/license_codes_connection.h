@@ -22,7 +22,6 @@
 #include "google/cloud/compute/license_codes/v1/internal/license_codes_retry_traits.h"
 #include "google/cloud/compute/license_codes/v1/license_codes_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"

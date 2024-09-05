@@ -53,7 +53,6 @@ using ::google::cloud::bigtable::testing::MockPollingPolicy;
 using ::google::cloud::bigtable::testing::MockRetryPolicy;
 using ::google::cloud::bigtable_internal::InstanceAdminTester;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::_;
 using ::testing::An;
 using ::testing::Contains;
 using ::testing::ElementsAreArray;

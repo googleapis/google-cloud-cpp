@@ -21,7 +21,7 @@ syntax = "proto3";
 
 package google.cloud.cpp.compute.v1;
 
-import "google/cloud/compute/v1/internal/common_031.proto";
+import "google/cloud/compute/v1/internal/common_001.proto";
 
 // Specifies the audit configuration for a service. The configuration determines
 // which permission types are logged, and what identities, if any, are exempted

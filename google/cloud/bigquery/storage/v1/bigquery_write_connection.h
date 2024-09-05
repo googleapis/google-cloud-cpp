@@ -22,7 +22,6 @@
 #include "google/cloud/bigquery/storage/v1/bigquery_write_connection_idempotency_policy.h"
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_write_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"

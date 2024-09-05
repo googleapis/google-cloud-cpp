@@ -156,21 +156,34 @@ class MockArtifactRegistryConnection
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ImportAptArtifacts,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ImportAptArtifacts(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>,
-      ImportAptArtifacts,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      ImportAptArtifacts, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, ImportYumArtifacts)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, ImportYumArtifacts(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ImportYumArtifacts(Matcher<google::devtools::artifactregistry::v1::ImportYumArtifactsRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>,
@@ -208,16 +221,23 @@ class MockArtifactRegistryConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ImportYumArtifacts,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ImportYumArtifacts(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>,
-      ImportYumArtifacts,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      ImportYumArtifacts, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -277,15 +297,22 @@ class MockArtifactRegistryConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateRepository,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateRepository(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::devtools::artifactregistry::v1::Repository>>,
-      CreateRepository,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      CreateRepository, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -341,16 +368,23 @@ class MockArtifactRegistryConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteRepository,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteRepository(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>,
-      DeleteRepository,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteRepository, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -411,16 +445,23 @@ class MockArtifactRegistryConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeletePackage,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::devtools::artifactregistry::v1::DeletePackageRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeletePackage(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>,
-      DeletePackage,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeletePackage, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -490,21 +531,34 @@ class MockArtifactRegistryConnection
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteVersion,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::devtools::artifactregistry::v1::DeleteVersionRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteVersion(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>,
-      DeleteVersion,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteVersion, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, BatchDeleteVersions)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, BatchDeleteVersions(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchDeleteVersions(Matcher<google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>,
@@ -548,16 +602,23 @@ class MockArtifactRegistryConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, BatchDeleteVersions,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchDeleteVersions(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>,
-      BatchDeleteVersions,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      BatchDeleteVersions, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

@@ -22,7 +22,6 @@
 #include "google/cloud/compute/region_zones/v1/internal/region_zones_retry_traits.h"
 #include "google/cloud/compute/region_zones/v1/region_zones_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"

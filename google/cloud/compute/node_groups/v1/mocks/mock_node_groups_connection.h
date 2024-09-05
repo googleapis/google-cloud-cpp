@@ -90,15 +90,22 @@ class MockNodeGroupsConnection
 
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>, AddNodes,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::cpp::compute::node_groups::v1::AddNodesRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// AddNodes(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               AddNodes,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -195,15 +202,23 @@ class MockNodeGroupsConnection
 
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>, DeleteNodes,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteNodes(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteNodes,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(

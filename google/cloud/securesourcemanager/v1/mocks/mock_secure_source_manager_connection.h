@@ -112,20 +112,33 @@ class MockSecureSourceManagerConnection
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateInstance,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::securesourcemanager::v1::CreateInstanceRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateInstance(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::securesourcemanager::v1::Instance>>,
-      CreateInstance,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      CreateInstance, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteInstance)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteInstance(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteInstance(Matcher<google::cloud::securesourcemanager::v1::DeleteInstanceRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>,
@@ -163,16 +176,23 @@ class MockSecureSourceManagerConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteInstance,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteInstance(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>,
-      DeleteInstance,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteInstance, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -241,20 +261,33 @@ class MockSecureSourceManagerConnection
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateRepository,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateRepository(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>,
-      CreateRepository,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      CreateRepository, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteRepository)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteRepository(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteRepository(Matcher<google::cloud::securesourcemanager::v1::DeleteRepositoryRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>,

@@ -25,7 +25,6 @@ export CC=gcc
 export CXX=g++
 
 mapfile -t args < <(bazel::common_args)
-args+=(--noenable_bzlmod)
 for lib in $(quickstart::libraries); do
   io::log_h2 "Running Bazel quickstart for ${lib}"
   env -C "${PROJECT_ROOT}/google/cloud/${lib}/quickstart" \

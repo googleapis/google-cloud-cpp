@@ -189,15 +189,23 @@ class MockImagesConnection : public compute_images_v1::ImagesConnection {
 
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>, InsertImage,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::cpp::compute::images::v1::InsertImageRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InsertImage(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertImage,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(

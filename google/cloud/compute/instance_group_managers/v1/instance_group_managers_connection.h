@@ -23,7 +23,6 @@
 #include "google/cloud/compute/instance_group_managers/v1/instance_group_managers_connection_idempotency_policy.h"
 #include "google/cloud/compute/instance_group_managers/v1/internal/instance_group_managers_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"

@@ -142,19 +142,31 @@ class MockIndexServiceConnection
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateIndex,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::aiplatform::v1::UpdateIndexRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateIndex(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::Index>>,
-              UpdateIndex,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              UpdateIndex, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteIndex)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteIndex(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteIndex(Matcher<google::cloud::aiplatform::v1::DeleteIndexRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteIndex,
@@ -188,14 +200,21 @@ class MockIndexServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteIndex,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::aiplatform::v1::DeleteIndexRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteIndex(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-      DeleteIndex,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteIndex, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

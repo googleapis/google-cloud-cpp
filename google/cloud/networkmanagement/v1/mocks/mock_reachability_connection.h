@@ -194,20 +194,33 @@ class MockReachabilityServiceConnection
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RerunConnectivityTest,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RerunConnectivityTest(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>,
-      RerunConnectivityTest,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      RerunConnectivityTest, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteConnectivityTest)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteConnectivityTest(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteConnectivityTest(Matcher<google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>,
       DeleteConnectivityTest,

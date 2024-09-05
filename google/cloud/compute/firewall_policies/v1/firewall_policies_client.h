@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_FIREWALL_POLICIES_V1_FIREWALL_POLICIES_CLIENT_H
 
 #include "google/cloud/compute/firewall_policies/v1/firewall_policies_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -941,7 +940,7 @@ class FirewallPoliciesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.firewall_policies.v1.ListAssociationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/firewall_policies/v1/firewall_policies.proto#L409}
-  /// [google.cloud.cpp.compute.v1.FirewallPoliciesListAssociationsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_036.proto#L27}
+  /// [google.cloud.cpp.compute.v1.FirewallPoliciesListAssociationsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_037.proto#L27}
   ///
   // clang-format on
   StatusOr<

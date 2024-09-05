@@ -21,48 +21,67 @@ syntax = "proto3";
 
 package google.cloud.cpp.compute.v1;
 
-import "google/protobuf/any.proto";
+import "google/cloud/compute/v1/internal/common_003.proto";
 
-message BulkInsertOperationStatus {
-  // [Output Only] Count of VMs successfully created so far.
-  optional int32 created_vm_count = 1 [json_name = "createdVmCount"];
+// A transient resource used in compute.instances.bulkInsert and
+// compute.regionInstances.bulkInsert . This resource is not persisted anywhere,
+// it is used only for processing the requests.
+message BulkInsertInstanceResource {
+  // The maximum number of instances to create.
+  optional string count = 1 [json_name = "count"];
 
-  // [Output Only] Count of VMs that got deleted during rollback.
-  optional int32 deleted_vm_count = 2 [json_name = "deletedVmCount"];
+  // The instance properties defining the VM instances to be created. Required
+  // if sourceInstanceTemplate is not provided.
+  optional InstanceProperties instance_properties = 2
+      [json_name = "instanceProperties"];
 
-  // [Output Only] Count of VMs that started creating but encountered an error.
-  optional int32 failed_to_create_vm_count = 3
-      [json_name = "failedToCreateVmCount"];
+  // Policy for chosing target zone. For more information, see Create VMs in
+  // bulk .
+  optional LocationPolicy location_policy = 3 [json_name = "locationPolicy"];
 
-  // [Output Only] Creation status of BulkInsert operation - information if the
-  // flow is rolling forward or rolling back.
-  // CREATING: Rolling forward - creating VMs.
-  // DONE: Done
-  // ROLLING_BACK: Rolling back - cleaning up after an error.
-  // STATUS_UNSPECIFIED:
-  optional string status = 4 [json_name = "status"];
+  // The minimum number of instances to create. If no min_count is specified
+  // then count is used as the default value. If min_count instances cannot be
+  // created, then no instances will be created and instances already created
+  // will be deleted.
+  optional string min_count = 4 [json_name = "minCount"];
 
-  // [Output Only] Count of VMs originally planned to be created.
-  optional int32 target_vm_count = 5 [json_name = "targetVmCount"];
+  // The string pattern used for the names of the VMs. Either name_pattern or
+  // per_instance_properties must be set. The pattern must contain one
+  // continuous sequence of placeholder hash characters (#) with each character
+  // corresponding to one digit of the generated instance name. Example: a
+  // name_pattern of inst-#### generates instance names such as inst-0001 and
+  // inst-0002. If existing instances in the same project and zone have names
+  // that match the name pattern then the generated instance numbers start after
+  // the biggest existing number. For example, if there exists an instance with
+  // name inst-0050, then instance names generated using the pattern inst-####
+  // begin with inst-0051. The name pattern placeholder #...# can contain up to
+  // 18 characters.
+  optional string name_pattern = 5 [json_name = "namePattern"];
+
+  // Per-instance properties to be set on individual instances. Keys of this map
+  // specify requested instance names. Can be empty if name_pattern is used.
+  map<string, BulkInsertInstanceResourcePerInstanceProperties>
+      per_instance_properties = 6 [json_name = "perInstanceProperties"];
+
+  // Specifies the instance template from which to create instances. You may
+  // combine sourceInstanceTemplate with instanceProperties to override specific
+  // values from an existing instance template. Bulk API follows the semantics
+  // of JSON Merge Patch described by RFC 7396. It can be a full or partial URL.
+  // For example, the following are all valid URLs to an instance template: -
+  // https://www.googleapis.com/compute/v1/projects/project
+  // /global/instanceTemplates/instanceTemplate -
+  // projects/project/global/instanceTemplates/instanceTemplate -
+  // global/instanceTemplates/instanceTemplate This field is optional.
+  optional string source_instance_template = 7
+      [json_name = "sourceInstanceTemplate"];
 }
 
-// Describes the cause of the error with structured details. Example of an error
-// when contacting the "pubsub.googleapis.com" API when it is not enabled: {
-// "reason": "API_DISABLED" "domain": "googleapis.com" "metadata": { "resource":
-// "projects/123", "service": "pubsub.googleapis.com" } } This response
-// indicates that the pubsub.googleapis.com API is not enabled. Example of an
-// error that is returned when attempting to create a Spanner instance in a
-// region that is out of stock: { "reason": "STOCKOUT" "domain":
-// "spanner.googleapis.com", "metadata": { "availableRegions":
-// "us-central1,us-east2" } }
-message ErrorInfo {
-  // The logical grouping to which the "reason" belongs. The error domain is
-  // typically the registered service name of the tool or product that generates
-  // the error. Example: "pubsub.googleapis.com". If the error is generated by
-  // some common infrastructure, the error domain must be a globally unique
-  // value that identifies the infrastructure. For Google API infrastructure,
-  // the error domain is "googleapis.com".
-  optional string domain = 1 [json_name = "domain"];
+// Per-instance properties to be set on individual instances. To be extended in
+// the future.
+message BulkInsertInstanceResourcePerInstanceProperties {
+  // Specifies the hostname of the instance. More details in:
+  // https://cloud.google.com/compute/docs/instances/custom-hostname-vm#naming_convention
+  optional string hostname = 2 [json_name = "hostname"];
 
   // Additional structured details about this error. Keys must match a regular
   // expression of `a-z+` but should ideally be lowerCamelCase. Also, they must
@@ -80,22 +99,42 @@ message ErrorInfo {
   optional string reason = 3 [json_name = "reason"];
 }
 
-// Provides links to documentation or for performing an out of band action. For
-// example, if a quota check failed with an error indicating the calling project
-// hasn't enabled the accessed service, this can contain a URL pointing directly
-// to the right place in the developer console to flip the bit.
-message Help {
-  // URL(s) pointing to additional information on handling the current error.
-  repeated HelpLink links = 1 [json_name = "links"];
+// Configuration for location policy among multiple possible locations (e.g.
+// preferences for zone selection among zones in a single region).
+message LocationPolicy {
+  // Location configurations mapped by location name. Currently only zone names
+  // are supported and must be represented as valid internal URLs, such as
+  // zones/us-central1-a.
+  map<string, LocationPolicyLocation> locations = 1 [json_name = "locations"];
+
+  // Strategy for distributing VMs across zones in a region.
+  // ANY: GCE picks zones for creating VM instances to fulfill the requested
+  // number of VMs within present resource constraints and to maximize
+  // utilization of unused zonal reservations. Recommended for batch workloads
+  // that do not require high availability.
+  // ANY_SINGLE_ZONE: GCE always selects a single zone for all the VMs,
+  // optimizing for resource quotas, available reservations and general
+  // capacity. Recommended for batch workloads that cannot tollerate
+  // distribution over multiple zones. This the default shape in Bulk Insert and
+  // Capacity Advisor APIs.
+  // BALANCED: GCE prioritizes acquisition of resources, scheduling VMs in zones
+  // where resources are available while distributing VMs as evenly as possible
+  // across allowed zones to minimize the impact of zonal failure. Recommended
+  // for highly available serving workloads.
+  optional string target_shape = 2 [json_name = "targetShape"];
 }
 
-// Describes a URL link.
-message HelpLink {
-  // Describes what the link offers.
-  optional string description = 1 [json_name = "description"];
+message LocationPolicyLocation {
+  // Constraints that the caller requires on the result distribution in this
+  // zone.
+  optional LocationPolicyLocationConstraints constraints = 1
+      [json_name = "constraints"];
 
-  // The URL of the link.
-  optional string url = 2 [json_name = "url"];
+  // Preference for a given location. Set to either ALLOW or DENY.
+  // ALLOW: Location is allowed for use.
+  // DENY: Location is prohibited.
+  // PREFERENCE_UNSPECIFIED: Default value, unused.
+  optional string preference = 2 [json_name = "preference"];
 }
 
 message InstancesBulkInsertOperationMetadata {

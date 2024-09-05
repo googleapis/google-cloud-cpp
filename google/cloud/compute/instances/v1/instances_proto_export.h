@@ -28,14 +28,13 @@
 // IWYU pragma: begin_exports
 #include <google/cloud/compute/v1/internal/common_001.pb.h>
 #include <google/cloud/compute/v1/internal/common_003.pb.h>
-#include <google/cloud/compute/v1/internal/common_007.pb.h>
-#include <google/cloud/compute/v1/internal/common_015.pb.h>
+#include <google/cloud/compute/v1/internal/common_008.pb.h>
 #include <google/cloud/compute/v1/internal/common_016.pb.h>
-#include <google/cloud/compute/v1/internal/common_020.pb.h>
+#include <google/cloud/compute/v1/internal/common_017.pb.h>
 #include <google/cloud/compute/v1/internal/common_021.pb.h>
-#include <google/cloud/compute/v1/internal/common_029.pb.h>
-#include <google/cloud/compute/v1/internal/common_031.pb.h>
-#include <google/cloud/compute/v1/internal/common_033.pb.h>
+#include <google/cloud/compute/v1/internal/common_022.pb.h>
+#include <google/cloud/compute/v1/internal/common_030.pb.h>
+#include <google/cloud/compute/v1/internal/common_032.pb.h>
 #include <google/cloud/compute/v1/internal/common_034.pb.h>
 #include <google/cloud/compute/v1/internal/common_039.pb.h>
 #include <google/cloud/compute/v1/internal/common_077.pb.h>

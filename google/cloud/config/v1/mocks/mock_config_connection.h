@@ -104,19 +104,31 @@ class MockConfigConnection : public config_v1::ConfigConnection {
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateDeployment,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::config::v1::CreateDeploymentRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateDeployment(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::config::v1::Deployment>>,
               CreateDeployment,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateDeployment)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateDeployment(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateDeployment(Matcher<google::cloud::config::v1::UpdateDeploymentRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::config::v1::Deployment>>, UpdateDeployment,
       (google::cloud::config::v1::UpdateDeploymentRequest const& request),
@@ -157,19 +169,31 @@ class MockConfigConnection : public config_v1::ConfigConnection {
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateDeployment,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::config::v1::UpdateDeploymentRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateDeployment(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::config::v1::Deployment>>,
               UpdateDeployment,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteDeployment)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteDeployment(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteDeployment(Matcher<google::cloud::config::v1::DeleteDeploymentRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::config::v1::Deployment>>, DeleteDeployment,
       (google::cloud::config::v1::DeleteDeploymentRequest const& request),

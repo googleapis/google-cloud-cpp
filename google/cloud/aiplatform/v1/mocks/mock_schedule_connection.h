@@ -94,14 +94,21 @@ class MockScheduleServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteSchedule,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::aiplatform::v1::DeleteScheduleRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteSchedule(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-      DeleteSchedule,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteSchedule, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

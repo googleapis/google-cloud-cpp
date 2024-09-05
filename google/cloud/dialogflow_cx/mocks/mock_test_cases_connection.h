@@ -123,19 +123,32 @@ class MockTestCasesConnection : public dialogflow_cx::TestCasesConnection {
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RunTestCase,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, RunTestCase(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>,
-      RunTestCase,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      RunTestCase, (google::longrunning::Operation const& operation),
       (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, BatchRunTestCases)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, BatchRunTestCases(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchRunTestCases(Matcher<google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>,
@@ -173,16 +186,23 @@ class MockTestCasesConnection : public dialogflow_cx::TestCasesConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, BatchRunTestCases,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchRunTestCases(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>,
-      BatchRunTestCases,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      BatchRunTestCases, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

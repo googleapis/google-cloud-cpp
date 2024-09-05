@@ -64,7 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.dialogflow.cx.v3.Sessions.DetectIntent]:
-/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L73}
+/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L74}
 ///
 class SessionsClient {
  public:
@@ -297,8 +297,8 @@ class SessionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.AnswerFeedback]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L154}
-  /// [google.cloud.dialogflow.cx.v3.SubmitAnswerFeedbackRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L193}
+  /// [google.cloud.dialogflow.cx.v3.AnswerFeedback]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L155}
+  /// [google.cloud.dialogflow.cx.v3.SubmitAnswerFeedbackRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L194}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::AnswerFeedback>

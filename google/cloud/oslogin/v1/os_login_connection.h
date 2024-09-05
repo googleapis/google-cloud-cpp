@@ -22,7 +22,6 @@
 #include "google/cloud/oslogin/v1/internal/os_login_retry_traits.h"
 #include "google/cloud/oslogin/v1/os_login_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"

@@ -96,19 +96,31 @@ class MockDataScanServiceConnection
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateDataScan,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dataplex::v1::CreateDataScanRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateDataScan(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::DataScan>>,
-              CreateDataScan,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              CreateDataScan, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, UpdateDataScan)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, UpdateDataScan(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateDataScan(Matcher<google::cloud::dataplex::v1::UpdateDataScanRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::dataplex::v1::DataScan>>, UpdateDataScan,
       (google::cloud::dataplex::v1::UpdateDataScanRequest const& request),
@@ -149,19 +161,31 @@ class MockDataScanServiceConnection
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateDataScan,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dataplex::v1::UpdateDataScanRequest const& request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateDataScan(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::DataScan>>,
-              UpdateDataScan,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              UpdateDataScan, (google::longrunning::Operation const& operation),
               (override));
 
-  /// Due to additional overloads for this method
-  /// `EXPECT_CALL(*mock, DeleteDataScan)` is now ambiguous. Use
-  /// `EXPECT_CALL(*mock, DeleteDataScan(::testing::_))` instead.
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteDataScan(Matcher<google::cloud::dataplex::v1::DeleteDataScanRequest
+  /// const&>(_)))
+  /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
       DeleteDataScan,

@@ -54,6 +54,10 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeForwardingRulesConnection()`.
 
+- `GOOGLE_CLOUD_CPP_FUTURE_RESERVATIONS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeFutureReservationsConnection()`.
+
 - `GOOGLE_CLOUD_CPP_GLOBAL_ADDRESSES_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeGlobalAddressesConnection()`.

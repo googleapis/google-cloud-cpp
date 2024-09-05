@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BAREMETALSOLUTION_V2_BARE_METAL_SOLUTION_CLIENT_H
 
 #include "google/cloud/baremetalsolution/v2/bare_metal_solution_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
