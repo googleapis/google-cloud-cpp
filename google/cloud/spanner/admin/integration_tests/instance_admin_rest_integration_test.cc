@@ -153,6 +153,8 @@ class InstanceAdminClientRestTest
  protected:
   void SetUp() override {
     if (Emulator()) {
+      // TODO(#14679): Remove this GTEST_SKIP when emulator supports editions.
+      GTEST_SKIP();
       // We expect test instances to exist when running against real services,
       // but if we are running against the emulator we're happy to create one.
       Instance in(ProjectId(), InstanceId());

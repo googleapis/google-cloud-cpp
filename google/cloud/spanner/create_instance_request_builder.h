@@ -117,12 +117,60 @@ class CreateInstanceRequestBuilder {
     return std::move(*this);
   }
 
+  // Available editions.
+  // https://cloud.google.com/spanner/docs/editions-overview
+  enum class Edition { kStandard, kEnterprise, kEnterprisePlus };
+
+  CreateInstanceRequestBuilder& SetEdition(Edition edition) & {
+    switch (edition) {
+      case Edition::kStandard:
+        request_.mutable_instance()->set_edition(
+            google::spanner::admin::instance::v1::Instance_Edition_STANDARD);
+        break;
+      case Edition::kEnterprise:
+        request_.mutable_instance()->set_edition(
+            google::spanner::admin::instance::v1::Instance_Edition_ENTERPRISE);
+        break;
+      case Edition::kEnterprisePlus:
+        request_.mutable_instance()->set_edition(
+            google::spanner::admin::instance::v1::
+                Instance_Edition_ENTERPRISE_PLUS);
+        break;
+    }
+    return *this;
+  }
+
+  CreateInstanceRequestBuilder&& SetEdition(Edition edition) && {
+    switch (edition) {
+      case Edition::kStandard:
+        request_.mutable_instance()->set_edition(
+            google::spanner::admin::instance::v1::Instance_Edition_STANDARD);
+        break;
+      case Edition::kEnterprise:
+        request_.mutable_instance()->set_edition(
+            google::spanner::admin::instance::v1::Instance_Edition_ENTERPRISE);
+        break;
+      case Edition::kEnterprisePlus:
+        request_.mutable_instance()->set_edition(
+            google::spanner::admin::instance::v1::
+                Instance_Edition_ENTERPRISE_PLUS);
+        break;
+    }
+    return std::move(*this);
+  }
+
   google::spanner::admin::instance::v1::CreateInstanceRequest& Build() & {
     // Preserve original behavior of defaulting node_count to 1.
     if (request_.instance().processing_units() == 0) {
       if (request_.instance().node_count() == 0) {
         request_.mutable_instance()->set_node_count(1);
       }
+    }
+    if (request_.instance().edition() ==
+        google::spanner::admin::instance::v1::
+            Instance_Edition_EDITION_UNSPECIFIED) {
+      request_.mutable_instance()->set_edition(
+          google::spanner::admin::instance::v1::Instance_Edition_STANDARD);
     }
     return request_;
   }
@@ -132,6 +180,12 @@ class CreateInstanceRequestBuilder {
       if (request_.instance().node_count() == 0) {
         request_.mutable_instance()->set_node_count(1);
       }
+    }
+    if (request_.instance().edition() ==
+        google::spanner::admin::instance::v1::
+            Instance_Edition_EDITION_UNSPECIFIED) {
+      request_.mutable_instance()->set_edition(
+          google::spanner::admin::instance::v1::Instance_Edition_STANDARD);
     }
     return std::move(request_);
   }
