@@ -210,10 +210,7 @@ jobs:
           features="$(printf ",%s" "${shard3_features[@]}")"
           echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
         else
-          # The "-" before the first element gets consumed somewhere, so pad
-          # it out.
-          skipped_features=(null)
-          skipped_features+=("${core1_features[@]}")
+          skipped_features=("${core1_features[@]}")
           skipped_features+=("${core2_features[@]}")
           skipped_features+=(compute)
           skipped_features+=("${shard1_features[@]}")
@@ -224,7 +221,7 @@ jobs:
           # Windows.
           skipped_features+=(asset channel)
           skipped="$(printf ",-%s" "${skipped_features[@]}")"
-          echo "features=__ga_libraries__,__experimental_libraries__,${skipped:2}" >> "${GITHUB_OUTPUT}"
+          echo "features=__ga_libraries__,__experimental_libraries__,${skipped:1}" >> "${GITHUB_OUTPUT}"
         fi
     - name: Download and Install CMake
       shell: bash
