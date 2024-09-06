@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -euo pipefail
+set -eo pipefail
 BOLD_ON_GREY=$(tput bold && tput setab 252)
 TURN_OFF_ATTR=$(tput sgr0)
 SEPARATOR=
@@ -27,8 +27,15 @@ function banner() {
 banner "Determining googleapis HEAD commit and tarball checksum"
 REPO="googleapis/googleapis"
 BRANCH="master"
-COMMIT=$(curl -fsSL -H "Accept: application/vnd.github.VERSION.sha" \
-  "https://api.github.com/repos/${REPO}/commits/${BRANCH}")
+if [[ -z "${COMMIT}" ]]; then
+  COMMIT=$(curl -fsSL -H "Accept: application/vnd.github.VERSION.sha" \
+    "https://api.github.com/repos/${REPO}/commits/${BRANCH}")
+fi
+
+if [[ -z "$COMMIT_DATE" ]]; then
+  COMMIT_DATE=$(date +%Y-%m-%d)
+fi
+
 DOWNLOAD="$(mktemp)"
 curl -fsSL "https://github.com/${REPO}/archive/${COMMIT}.tar.gz" -o "${DOWNLOAD}"
 gsutil -q cp "${DOWNLOAD}" "gs://cloud-cpp-community-archive/com_google_googleapis/${COMMIT}.tar.gz"
@@ -86,7 +93,7 @@ TRIGGER_TYPE='pr' ci/cloudbuild/build.sh \
   --docker --trigger=generate-libraries-pr || true
 
 banner "Creating commits"
-git commit -m"chore: update googleapis SHA circa $(date +%Y-%m-%d)" \
+git commit -m"chore: update googleapis SHA circa ${COMMIT_DATE}" \
   ${PIPERORIGIN_REVID:+-m "${PIPERORIGIN_REVID}"} \
   bazel/workspace0.bzl cmake/GoogleapisConfig.cmake MODULE.bazel
 if ! git diff --quiet external/googleapis/protodeps \
