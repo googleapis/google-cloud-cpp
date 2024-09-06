@@ -29,6 +29,9 @@ git checkout -b chore-update-googleapis-sha-circa-$(date +%Y-%m-%d)
 
 ## Run the "renovate.sh" script
 
+By default `renovate.sh` uses the most recent commit SHA and the current date.
+To override these values use environment variables `COMMIT` and `COMMIT_DATE`.
+
 ```shell
 external/googleapis/renovate.sh
 ```
