@@ -70,12 +70,12 @@ Options MetricsExporterOptions(
   labels["api"] = "GRPC";
 
   return Options{}
-      .set<ServiceTimeSeriesOption>(true)
-      .set<MetricNameFormatterOption>([](std::string s) {
+      .set<otel::ServiceTimeSeriesOption>(true)
+      .set<otel::MetricNameFormatterOption>([](std::string s) {
         std::replace(s.begin(), s.end(), '.', '/');
         return "storage.googleapis.com/client/" + std::move(s);
       })
-      .set<MonitoredResourceOption>(std::move(monitored_resource));
+      .set<otel::MonitoredResourceOption>(std::move(monitored_resource));
 }
 
 Options MetricsExporterConnectionOptions(Options const& options) {

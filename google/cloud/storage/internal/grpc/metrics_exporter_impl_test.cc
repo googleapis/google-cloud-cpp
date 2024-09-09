@@ -70,9 +70,9 @@ TEST(GrpcMetricsExporter, EnabledResourceProject) {
   auto config = MakeMeterProviderConfig(FullResource(), TestOptions());
   ASSERT_TRUE(config.has_value());
   EXPECT_EQ(config->project, Project("project-id-resource"));
-  EXPECT_TRUE(config->exporter_options.has<MonitoredResourceOption>());
-  EXPECT_TRUE(config->exporter_options.has<MetricNameFormatterOption>());
-  EXPECT_TRUE(config->exporter_options.get<ServiceTimeSeriesOption>());
+  EXPECT_TRUE(config->exporter_options.has<otel::MonitoredResourceOption>());
+  EXPECT_TRUE(config->exporter_options.has<otel::MetricNameFormatterOption>());
+  EXPECT_TRUE(config->exporter_options.get<otel::ServiceTimeSeriesOption>());
   EXPECT_GT(config->reader_options.export_interval_millis,
             std::chrono::milliseconds(0));
   EXPECT_GT(config->reader_options.export_timeout_millis,
@@ -85,9 +85,9 @@ TEST(GrpcMetricsExporter, EnabledOptionsProject) {
       TestOptions().set<storage::ProjectIdOption>("project-id-option"));
   ASSERT_TRUE(config.has_value());
   EXPECT_EQ(config->project, Project("project-id-option"));
-  EXPECT_TRUE(config->exporter_options.has<MonitoredResourceOption>());
-  EXPECT_TRUE(config->exporter_options.has<MetricNameFormatterOption>());
-  EXPECT_TRUE(config->exporter_options.get<ServiceTimeSeriesOption>());
+  EXPECT_TRUE(config->exporter_options.has<otel::MonitoredResourceOption>());
+  EXPECT_TRUE(config->exporter_options.has<otel::MetricNameFormatterOption>());
+  EXPECT_TRUE(config->exporter_options.get<otel::ServiceTimeSeriesOption>());
   EXPECT_GT(config->reader_options.export_interval_millis,
             std::chrono::milliseconds(0));
   EXPECT_GT(config->reader_options.export_timeout_millis,
@@ -101,9 +101,9 @@ TEST(GrpcMetricsExporter, EnabledWithTimeout) {
           std::chrono::seconds(45)));
   ASSERT_TRUE(config.has_value());
   EXPECT_EQ(config->project, Project("project-id-resource"));
-  EXPECT_TRUE(config->exporter_options.has<MonitoredResourceOption>());
-  EXPECT_TRUE(config->exporter_options.has<MetricNameFormatterOption>());
-  EXPECT_TRUE(config->exporter_options.get<ServiceTimeSeriesOption>());
+  EXPECT_TRUE(config->exporter_options.has<otel::MonitoredResourceOption>());
+  EXPECT_TRUE(config->exporter_options.has<otel::MetricNameFormatterOption>());
+  EXPECT_TRUE(config->exporter_options.get<otel::ServiceTimeSeriesOption>());
   EXPECT_EQ(config->reader_options.export_interval_millis,
             std::chrono::seconds(45));
   EXPECT_GT(config->reader_options.export_timeout_millis,
