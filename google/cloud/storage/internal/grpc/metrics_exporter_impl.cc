@@ -101,11 +101,11 @@ absl::optional<ExporterConfig> MakeMeterProviderConfig(
 void EnableGrpcMetricsImpl(ExporterConfig config) {
   if (!ExporterRegistry::Singleton().Register(config.authority)) return;
 
-  auto exporter = otel_internal::MakeMonitoringExporter(
-      std::move(config.project),
-      monitoring_v3::MakeMetricServiceConnection(
-          std::move(config.exporter_connection_options)),
-      config.exporter_options);
+  auto exporter =
+      MakeMonitoringExporter(std::move(config.project),
+                             monitoring_v3::MakeMetricServiceConnection(
+                                 std::move(config.exporter_connection_options)),
+                             config.exporter_options);
 
   auto provider = MakeGrpcMeterProvider(std::move(exporter),
                                         std::move(config.reader_options));
