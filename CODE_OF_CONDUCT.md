@@ -69,7 +69,7 @@ dispute. If you are unable to resolve the matter for any reason, or if the
 behavior is threatening or harassing, report it. We are dedicated to providing
 an environment where participants feel welcome and safe.
 
-Reports should be directed to *Carlos O'Ryan (coryan@google.com)*, the Project
+Reports should be directed to *Scott Hart (sdhart@google.com)*, the Project
 Steward(s) for *Google Cloud Platform C++ Client Libraries*. It is the Project
 Steward’s duty to receive and address reported violations of the code of
 conduct. They will then work with a committee consisting of representatives from

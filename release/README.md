@@ -15,7 +15,8 @@ the project itself, [git][git-docs], [GitHub][github-guides], and
 In order to ensure that our released version includes a SHA of the service proto
 definitions that is both current and stable ([googleapis-sha-update-policy]),
 aim for a commit SHA from 5-7 days ago (TODO(#13062): automate this update
-process).
+process). Specifying `COMMIT` and `COMMIT_DATE` when running `renovate.sh` can
+be used to achieve this.
 
 ## 1. Preparing for a release
 
