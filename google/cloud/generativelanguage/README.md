@@ -24,23 +24,21 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/generativelanguage/v1/ EDIT HERE _client.h"
+#include "google/cloud/generativelanguage/v1/model_client.h"
 #include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 3) {
-    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
+  if (argc != 1) {
+    std::cerr << "Usage: " << argv[0] << "\n";
     return 1;
   }
 
-  auto const location = google::cloud::Location(argv[1], argv[2]);
-
   namespace generativelanguage = ::google::cloud::generativelanguage_v1;
-  auto client = generativelanguage::ServiceClient(
-      generativelanguage::MakeServiceConnection());  // EDIT HERE
+  auto client = generativelanguage::ModelServiceClient(
+      generativelanguage::MakeModelServiceConnection());
 
-  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
+  for (auto r : client.ListModels({})) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }

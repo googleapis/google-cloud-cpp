@@ -26,11 +26,10 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     google_cloud_cpp_add_common_options(generativelanguage_quickstart)
     add_test(
         NAME generativelanguage_quickstart
-        COMMAND
-            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
-            $<TARGET_FILE:generativelanguage_quickstart> GOOGLE_CLOUD_PROJECT
-            GOOGLE_CLOUD_CPP_TEST_REGION # EDIT HERE
-    )
-    set_tests_properties(generativelanguage_quickstart
-                         PROPERTIES LABELS "integration-test;quickstart")
+        COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+                $<TARGET_FILE:generativelanguage_quickstart>)
+    set_tests_properties(
+        generativelanguage_quickstart
+        PROPERTIES LABELS "integration-test;quickstart" PASS_REGULAR_EXPRESSION
+                   "Request had insufficient authentication scopes")
 endif ()
