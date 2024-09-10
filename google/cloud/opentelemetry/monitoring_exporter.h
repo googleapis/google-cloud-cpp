@@ -26,7 +26,7 @@
 
 namespace google {
 namespace cloud {
-namespace otel_internal {
+namespace otel {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
@@ -82,7 +82,7 @@ MakeMonitoringExporter(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace otel_internal
+}  // namespace otel
 }  // namespace cloud
 }  // namespace google
 

@@ -114,8 +114,7 @@ TEST(MonitoringExporter, Basic) {
   auto project = Project(project_id);
   auto conn = monitoring_v3::MakeMetricServiceConnection();
   auto client = monitoring_v3::MetricServiceClient(conn);
-  auto exporter =
-      otel_internal::MakeMonitoringExporter(project, std::move(conn));
+  auto exporter = MakeMonitoringExporter(project, std::move(conn));
   InstallExporter(std::move(exporter), task_id);
 
   // Perform work which creates telemetry. An export should happen.
