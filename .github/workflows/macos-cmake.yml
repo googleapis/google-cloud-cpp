@@ -40,7 +40,7 @@ jobs:
       matrix:
         exclude-from-full-trick: [ true ]
         os: [ macos-14 ]
-        shard: [ Core1, Core2, Compute, Shard1, Shard2, Shard3, Shard4, Other ]
+        shard: [ Core1, Core2, Compute, Shard1, Shard2, Shard3, Shard4, Shard5, Other ]
         exclude:
         # Only full builds include shards with generated code.
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
@@ -53,6 +53,8 @@ jobs:
           shard: Shard3
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
           shard: Shard4
+        - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
+          shard: Shard5
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
           shard: Other
     steps:
@@ -88,14 +90,10 @@ jobs:
         #    awk '{ s += $1; print s, $0}'
         #
         shard1_features=(
-          bigquerycontrol
           dataproc
           monitoring
           retail
           discoveryengine
-          sql
-          dialogflow_cx
-          dialogflow_es
           aiplatform
         )
         shard2_features=(
@@ -151,9 +149,6 @@ jobs:
           edgenetwork
           essentialcontacts
           filestore
-          gkebackup
-          gkeconnect
-          gkehub
           ids
           managedidentities
           managedkafka
@@ -198,6 +193,15 @@ jobs:
           workstations
           automl
         )
+        shard5_features=(
+          bigquerycontrol
+          dialogflow_cx
+          dialogflow_es
+          gkebackup
+          gkeconnect
+          gkehub
+          sql
+        )
         if [[ "${{ matrix.shard }}" == "Core1" ]]; then
           features="$(printf ",%s" "${core1_features[@]}")"
           echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
@@ -218,6 +222,9 @@ jobs:
         elif [[ "${{ matrix.shard }}" == "Shard4" ]]; then
           features="$(printf ",%s" "${shard4_features[@]}")"
           echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
+        elif [[ "${{ matrix.shard }}" == "Shard5" ]]; then
+          features="$(printf ",%s" "${shard5_features[@]}")"
+          echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
         else
           skipped_features=("${core1_features[@]}")
           skipped_features+=("${core2_features[@]}")
@@ -226,11 +233,14 @@ jobs:
           skipped_features+=("${shard2_features[@]}")
           skipped_features+=("${shard3_features[@]}")
           skipped_features+=("${shard4_features[@]}")
+          skipped_features+=("${shard5_features[@]}")
           skipped="$(printf ",-%s" "${skipped_features[@]}")"
           echo "features=__ga_libraries__,__experimental_libraries__,${skipped:1}" >> "${GITHUB_OUTPUT}"
         fi
     - name: Install bash >= 5.x and Ninja
       run: brew install bash ninja
+    - name: Pre Tests Disk Space
+      run: df -m
     - name: Install CMake==3.27.2
       working-directory: "${{runner.temp}}"
       run: |
@@ -259,6 +269,8 @@ jobs:
         export VCPKG_ROOT="${{ runner.temp }}/vcpkg"
         export EXECUTE_INTEGRATION_TESTS=${{ inputs.execute-integration-tests }}
         /opt/homebrew/bin/bash ci/gha/builds/macos-cmake.sh ${{ steps.dynamic.outputs.features }}
+    - name: Post Tests Disk Space
+      run: df -m
     env:
       SCCACHE_GCS_BUCKET: cloud-cpp-community-gha-cache
       SCCACHE_GCS_KEY_PREFIX: sccache/${{ matrix.os }}
