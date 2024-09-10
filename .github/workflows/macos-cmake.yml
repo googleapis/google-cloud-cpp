@@ -231,6 +231,8 @@ jobs:
         fi
     - name: Install bash >= 5.x and Ninja
       run: brew install bash ninja
+    - name: Disk Space
+      run: df
     - name: Install CMake==3.27.2
       working-directory: "${{runner.temp}}"
       run: |

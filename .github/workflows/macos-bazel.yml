@@ -196,6 +196,8 @@ jobs:
         credentials_json: ${{ secrets.BUILD_CACHE_KEY }}
     - name: Install bash >= 5.x
       run: brew install bash
+    - name: Disk Space
+      run: df
     - name: Build google-cloud-cpp
       run: |
         export BAZEL_REMOTE_CACHE_RW_MODE=${{ inputs.bazel-cache-mode }}
