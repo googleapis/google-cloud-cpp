@@ -196,13 +196,15 @@ jobs:
         credentials_json: ${{ secrets.BUILD_CACHE_KEY }}
     - name: Install bash >= 5.x
       run: brew install bash
-    - name: Disk Space
-      run: df
+    - name: Pre Tests Disk Space
+      run: df -g
     - name: Build google-cloud-cpp
       run: |
         export BAZEL_REMOTE_CACHE_RW_MODE=${{ inputs.bazel-cache-mode }}
         export EXECUTE_INTEGRATION_TESTS=${{ inputs.execute-integration-tests }}
         ci/gha/builds/macos-bazel.sh ${{ join(matrix.targets, ' ') }}
+    - name: Post Tests Disk Space
+      run: df -g
     env:
       BAZEL_REMOTE_CACHE: https://storage.googleapis.com/cloud-cpp-community-gha-cache/bazel-cache/${{ matrix.os }}
       GHA_TEST_BUCKET: "gcs-grpc-team-cloud-cpp-testing-bucket"

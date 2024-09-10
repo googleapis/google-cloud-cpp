@@ -231,8 +231,8 @@ jobs:
         fi
     - name: Install bash >= 5.x and Ninja
       run: brew install bash ninja
-    - name: Disk Space
-      run: df
+    - name: Pre Tests Disk Space
+      run: df -g
     - name: Install CMake==3.27.2
       working-directory: "${{runner.temp}}"
       run: |
@@ -261,6 +261,8 @@ jobs:
         export VCPKG_ROOT="${{ runner.temp }}/vcpkg"
         export EXECUTE_INTEGRATION_TESTS=${{ inputs.execute-integration-tests }}
         /opt/homebrew/bin/bash ci/gha/builds/macos-cmake.sh ${{ steps.dynamic.outputs.features }}
+    - name: Post Tests Disk Space
+      run: df -g
     env:
       SCCACHE_GCS_BUCKET: cloud-cpp-community-gha-cache
       SCCACHE_GCS_KEY_PREFIX: sccache/${{ matrix.os }}
