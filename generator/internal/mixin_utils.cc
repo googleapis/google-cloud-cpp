@@ -1,7 +1,22 @@
+// Copyright 2024 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #include "generator/internal/mixin_utils.h"
 #include "generator/internal/codegen_utils.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/log.h"
+#include "absl/base/no_destructor.h"
 #include "absl/strings/ascii.h"
 #include "absl/types/optional.h"
 #include <google/protobuf/compiler/code_generator.h>
@@ -22,17 +37,29 @@ namespace cloud {
 namespace generator_internal {
 namespace {
 
-std::unordered_map<std::string, std::string> const kMixinProtoPathMap = {
-    {"google.cloud.location.Locations",
-     "google/cloud/location/locations.proto"},
-    {"google.iam.v1.IAMPolicy", "google/iam/v1/iam_policy.proto"},
-    {"google.longrunning.Operations", "google/longrunning/operations.proto"},
-};
+std::unordered_map<std::string, std::string> const& GetMixinProtoPathMap() {
+  static absl::NoDestructor<std::unordered_map<std::string, std::string>> const
+      kMixinProtoPathMap{{
+          {"google.cloud.location.Locations",
+           "google/cloud/location/locations.proto"},
+          {"google.iam.v1.IAMPolicy", "google/iam/v1/iam_policy.proto"},
+          {"google.longrunning.Operations",
+           "google/longrunning/operations.proto"},
+      }};
+  return *kMixinProtoPathMap;
+}
 
-std::unordered_map<std::string, std::string> const kHttpVerbs = {
-    {"get", "Get"},     {"post", "Post"},     {"put", "Put"},
-    {"patch", "Patch"}, {"delete", "Delete"},
-};
+std::unordered_map<std::string, std::string> const& GetHttpVerbs() {
+  static absl::NoDestructor<std::unordered_map<std::string, std::string>> const
+      kHttpVerbs{{
+          {"get", "Get"},
+          {"post", "Post"},
+          {"put", "Put"},
+          {"patch", "Patch"},
+          {"delete", "Delete"},
+      }};
+  return *kHttpVerbs;
+}
 
 /**
  * Extract Mixin methods from the YAML file, together with the overwritten http
@@ -53,7 +80,7 @@ std::unordered_map<std::string, MixinMethodOverride> GetMixinMethodOverrides(
 
     auto const& selector = rule["selector"];
     if (selector.Type() != YAML::NodeType::Scalar) continue;
-    std::string const& method_full_name = selector.as<std::string>();
+    std::string const method_full_name = selector.as<std::string>();
 
     for (auto const& kv : rule) {
       if (kv.first.Type() != YAML::NodeType::Scalar ||
@@ -62,8 +89,10 @@ std::unordered_map<std::string, MixinMethodOverride> GetMixinMethodOverrides(
 
       std::string const& http_verb_lower =
           absl::AsciiStrToLower(kv.first.as<std::string>());
-      if (kHttpVerbs.find(http_verb_lower) == kHttpVerbs.end()) continue;
-      std::string const& http_verb = kHttpVerbs.at(http_verb_lower);
+      auto const& http_verbs = GetHttpVerbs();
+      auto const it = http_verbs.find(http_verb_lower);
+      if (it == http_verbs.end()) continue;
+      std::string const& http_verb = it->second;
       std::string const& http_path = kv.second.as<std::string>();
       absl::optional<std::string> http_body;
       if (rule["body"]) {
@@ -102,9 +131,10 @@ std::vector<std::string> GetMixinProtoPaths(YAML::Node const& service_config) {
     auto const& name = api["name"];
     if (name.Type() != YAML::NodeType::Scalar) continue;
     std::string const& package_path = name.as<std::string>();
-    if (kMixinProtoPathMap.find(package_path) == kMixinProtoPathMap.end())
-      continue;
-    proto_paths.push_back(kMixinProtoPathMap.at(package_path));
+    auto const& mixin_proto_path_map = GetMixinProtoPathMap();
+    auto const it = mixin_proto_path_map.find(package_path);
+    if (it == mixin_proto_path_map.end()) continue;
+    proto_paths.push_back(it->second);
   }
   return proto_paths;
 }
@@ -140,9 +170,8 @@ std::vector<MixinMethod> GetMixinMethods(YAML::Node const& service_config,
       for (int j = 0; j < mixin_service->method_count(); ++j) {
         MethodDescriptor const* mixin_method = mixin_service->method(j);
         auto mixin_method_full_name = mixin_method->full_name();
-        if (mixin_method_overrides.find(mixin_method_full_name) ==
-            mixin_method_overrides.end())
-          continue;
+        auto const it = mixin_method_overrides.find(mixin_method_full_name);
+        if (it == mixin_method_overrides.end()) continue;
 
         // if the mixin method name required from YAML appears in the original
         // service proto, ignore the mixin.
@@ -152,7 +181,7 @@ std::vector<MixinMethod> GetMixinMethods(YAML::Node const& service_config,
         mixin_methods.push_back(
             {absl::AsciiStrToLower(mixin_service->name()) + "_stub",
              ProtoNameToCppName(mixin_service->full_name()), *mixin_method,
-             mixin_method_overrides.at(mixin_method_full_name)});
+             it->second});
       }
     }
   }
