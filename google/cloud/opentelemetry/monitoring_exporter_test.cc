@@ -106,8 +106,8 @@ TEST(MonitoringExporter, ExportSuccess) {
             return Status();
           });
 
-  auto exporter = otel_internal::MakeMonitoringExporter(Project("test-project"),
-                                                        std::move(mock));
+  auto exporter =
+      MakeMonitoringExporter(Project("test-project"), std::move(mock));
   auto const expected_time_series_count = kMaxTimeSeriesPerRequest + 1;
   auto data = MakeResourceMetrics(expected_time_series_count);
   auto result = exporter->Export(data);
@@ -121,8 +121,8 @@ TEST(MonitoringExporter, ExportSkippedIfNoTimeSeries) {
       std::make_shared<monitoring_v3_mocks::MockMetricServiceConnection>();
   EXPECT_CALL(*mock, CreateTimeSeries).Times(0);
 
-  auto exporter = otel_internal::MakeMonitoringExporter(Project("test-project"),
-                                                        std::move(mock));
+  auto exporter =
+      MakeMonitoringExporter(Project("test-project"), std::move(mock));
   auto data = MakeResourceMetrics(/*expected_time_series_count=*/0);
   auto result = exporter->Export(data);
   EXPECT_EQ(result, opentelemetry::sdk::common::ExportResult::kSuccess);
@@ -161,8 +161,8 @@ TEST(MonitoringExporter, ExportFailure) {
             return internal::PermissionDeniedError("nope");
           });
 
-  auto exporter = otel_internal::MakeMonitoringExporter(Project("test-project"),
-                                                        std::move(mock));
+  auto exporter =
+      MakeMonitoringExporter(Project("test-project"), std::move(mock));
   auto const expected_time_series_count = 2 * kMaxTimeSeriesPerRequest + 1;
   auto data = MakeResourceMetrics(expected_time_series_count);
   auto result = exporter->Export(data);
@@ -203,8 +203,8 @@ TEST(MonitoringExporter, ExportFailureWithInvalidArgument) {
             return Status();
           });
 
-  auto exporter = otel_internal::MakeMonitoringExporter(Project("test-project"),
-                                                        std::move(mock));
+  auto exporter =
+      MakeMonitoringExporter(Project("test-project"), std::move(mock));
   auto const expected_time_series_count = 2 * kMaxTimeSeriesPerRequest + 1;
   auto data = MakeResourceMetrics(expected_time_series_count);
   auto result = exporter->Export(data);
@@ -230,10 +230,10 @@ TEST(MonitoringExporter, CustomFormatter) {
             return Status();
           });
 
-  auto options = Options{}.set<otel_internal::MetricNameFormatterOption>(
+  auto options = Options{}.set<MetricNameFormatterOption>(
       [](std::string const& s) { return "custom.googleapis.com/" + s; });
-  auto exporter = otel_internal::MakeMonitoringExporter(
-      Project("test-project"), std::move(mock), options);
+  auto exporter =
+      MakeMonitoringExporter(Project("test-project"), std::move(mock), options);
   auto data = MakeResourceMetrics(/*expected_time_series_count=*/2);
   auto result = exporter->Export(data);
   EXPECT_EQ(result, opentelemetry::sdk::common::ExportResult::kSuccess);
@@ -256,9 +256,9 @@ TEST(MonitoringExporter, CustomMonitoredResource) {
   google::api::MonitoredResource custom;
   custom.set_type("gcs_client");
 
-  auto options = Options{}.set<otel_internal::MonitoredResourceOption>(custom);
-  auto exporter = otel_internal::MakeMonitoringExporter(
-      Project("test-project"), std::move(mock), options);
+  auto options = Options{}.set<MonitoredResourceOption>(custom);
+  auto exporter =
+      MakeMonitoringExporter(Project("test-project"), std::move(mock), options);
   auto data = MakeResourceMetrics(/*expected_time_series_count=*/2);
   auto result = exporter->Export(data);
   EXPECT_EQ(result, opentelemetry::sdk::common::ExportResult::kSuccess);
@@ -275,9 +275,9 @@ TEST(MonitoringExporter, CreateServiceTimeSeries) {
             return Status();
           });
 
-  auto options = Options{}.set<otel_internal::ServiceTimeSeriesOption>(true);
-  auto exporter = otel_internal::MakeMonitoringExporter(
-      Project("test-project"), std::move(mock), options);
+  auto options = Options{}.set<ServiceTimeSeriesOption>(true);
+  auto exporter =
+      MakeMonitoringExporter(Project("test-project"), std::move(mock), options);
   auto data = MakeResourceMetrics(/*expected_time_series_count=*/2);
   auto result = exporter->Export(data);
   EXPECT_EQ(result, opentelemetry::sdk::common::ExportResult::kSuccess);

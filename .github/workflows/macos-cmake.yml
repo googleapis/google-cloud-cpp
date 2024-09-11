@@ -40,13 +40,21 @@ jobs:
       matrix:
         exclude-from-full-trick: [ true ]
         os: [ macos-14 ]
-        shard: [ Core, Compute, Shard1, Other ]
+        shard: [ Core1, Core2, Compute, Shard1, Shard2, Shard3, Shard4, Shard5, Other ]
         exclude:
         # Only full builds include shards with generated code.
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
           shard: Compute
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
           shard: Shard1
+        - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
+          shard: Shard2
+        - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
+          shard: Shard3
+        - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
+          shard: Shard4
+        - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
+          shard: Shard5
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
           shard: Other
     steps:
@@ -64,58 +72,175 @@ jobs:
       shell: bash
       run: |
         echo "vcpkg-version=$(cat ci/etc/vcpkg-version.txt)" >> "${GITHUB_OUTPUT}"
-        core_features=(
+        core1_features=(
           bigtable
+          spanner
+        )
+        core2_features=(
           pubsub
           pubsublite
-          spanner
           storage
         )
         # These are the libraries with the most "clients". To build the list
         # run something like this and find the midpoint:
         #
         # git grep -l 'class.*Client' 'google/cloud/**_client.h' |
-        #    egrep -v "(bigtable/|internal/|pubsub/|spanner/|storage/)" |
+        #    egrep -v "(bigtable/|internal/|pubsub/|pubsublite/|spanner/|storage/|testing_util/)" |
         #    cut -f -3 -d/| sort | uniq -c | sort -n |
         #    awk '{ s += $1; print s, $0}'
         #
         shard1_features=(
+          dataproc
+          monitoring
+          retail
+          discoveryengine
+          aiplatform
+        )
+        shard2_features=(
           servicecontrol
+          speech
           support
           video
           datacatalog
           iam
-          kms
-          beyondcorp
-          contentwarehouse
-          dataproc
+          run
           talent
-          retail
+          contentwarehouse
+          dataplex
+          kms
           bigquery
+          resourcemanager
           appengine
-          monitoring
-          sql
-          dialogflow_cx
-          aiplatform
-          dialogflow_es
         )
-        if [[ "${{ matrix.shard }}" == "Core" ]]; then
-          features="$(printf ",%s" "${core_features[@]}")"
+        shard3_features=(
+          channel
+          cloudbuild
+          cloudcontrolspartner
+          composer
+          containeranalysis
+          datastore
+          eventarc
+          functions
+          iap
+          language
+          metastore
+          networkconnectivity
+          networkservices
+          policytroubleshooter
+          profiler
+          redis
+          securitycenter
+          servicedirectory
+          tpu
+          trace
+          vision
+          workflows
+          beyondcorp
+          billing
+          binaryauthorization
+          gkemulticloud
+          logging
+          notebooks
+          osconfig
+        )
+        shard4_features=(
+          domains
+          edgecontainer
+          edgenetwork
+          essentialcontacts
+          filestore
+          ids
+          managedidentities
+          managedkafka
+          memcache
+          migrationcenter
+          netapp
+          networkmanagement
+          networksecurity
+          optimization
+          orgpolicy
+          oslogin
+          policysimulator
+          privateca
+          privilegedaccessmanager
+          publicca
+          rapidmigrationassessment
+          recaptchaenterprise
+          recommender
+          resourcesettings
+          scheduler
+          secretmanager
+          securesourcemanager
+          securitycentermanagement
+          servicehealth
+          servicemanagement
+          serviceusage
+          shell
+          storagecontrol
+          storageinsights
+          storagetransfer
+          tasks
+          telcoautomation
+          texttospeech
+          timeseriesinsights
+          translate
+          videointelligence
+          vmmigration
+          vmwareengine
+          vpcaccess
+          webrisk
+          websecurityscanner
+          workstations
+          automl
+        )
+        shard5_features=(
+          bigquerycontrol
+          dialogflow_cx
+          dialogflow_es
+          gkebackup
+          gkeconnect
+          gkehub
+          sql
+        )
+        if [[ "${{ matrix.shard }}" == "Core1" ]]; then
+          features="$(printf ",%s" "${core1_features[@]}")"
+          echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
+        elif [[ "${{ matrix.shard }}" == "Core2" ]]; then
+          features="$(printf ",%s" "${core2_features[@]}")"
           echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
         elif [[ "${{matrix.shard}}" == "Compute" ]]; then
           echo "features=compute" >> "${GITHUB_OUTPUT}"
         elif [[ "${{ matrix.shard }}" == "Shard1" ]]; then
           features="$(printf ",%s" "${shard1_features[@]}")"
           echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
+        elif [[ "${{ matrix.shard }}" == "Shard2" ]]; then
+          features="$(printf ",%s" "${shard2_features[@]}")"
+          echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
+        elif [[ "${{ matrix.shard }}" == "Shard3" ]]; then
+          features="$(printf ",%s" "${shard3_features[@]}")"
+          echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
+        elif [[ "${{ matrix.shard }}" == "Shard4" ]]; then
+          features="$(printf ",%s" "${shard4_features[@]}")"
+          echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
+        elif [[ "${{ matrix.shard }}" == "Shard5" ]]; then
+          features="$(printf ",%s" "${shard5_features[@]}")"
+          echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
         else
-          skipped_features=("${core_features[@]}")
+          skipped_features=("${core1_features[@]}")
+          skipped_features+=("${core2_features[@]}")
           skipped_features+=(compute)
           skipped_features+=("${shard1_features[@]}")
+          skipped_features+=("${shard2_features[@]}")
+          skipped_features+=("${shard3_features[@]}")
+          skipped_features+=("${shard4_features[@]}")
+          skipped_features+=("${shard5_features[@]}")
           skipped="$(printf ",-%s" "${skipped_features[@]}")"
-          echo "features=__ga_libraries__,__experimental_libraries__,${skipped:2}" >> "${GITHUB_OUTPUT}"
+          echo "features=__ga_libraries__,__experimental_libraries__,${skipped:1}" >> "${GITHUB_OUTPUT}"
         fi
     - name: Install bash >= 5.x and Ninja
       run: brew install bash ninja
+    - name: Pre Tests Disk Space
+      run: df -m
     - name: Install CMake==3.27.2
       working-directory: "${{runner.temp}}"
       run: |
@@ -144,6 +269,8 @@ jobs:
         export VCPKG_ROOT="${{ runner.temp }}/vcpkg"
         export EXECUTE_INTEGRATION_TESTS=${{ inputs.execute-integration-tests }}
         /opt/homebrew/bin/bash ci/gha/builds/macos-cmake.sh ${{ steps.dynamic.outputs.features }}
+    - name: Post Tests Disk Space
+      run: df -m
     env:
       SCCACHE_GCS_BUCKET: cloud-cpp-community-gha-cache
       SCCACHE_GCS_KEY_PREFIX: sccache/${{ matrix.os }}

@@ -1,0 +1,14 @@
+{
+    "api_id": "generativelanguage.googleapis.com",
+    "api_shortname": "generativelanguage",
+    "client_documentation": "https://cloud.google.com/cpp/docs/reference/generativelanguage/latest",
+    "distribution_name": "google-cloud-cpp",
+    "issue_tracker": "https://github.com/google/generative-ai-python/issues/new",
+    "language": "cpp",
+    "library_type": "GAPIC_AUTO",
+    "name_pretty": "Generative Language API",
+    "product_documentation": "https://ai.google.dev/docs",
+    "release_level": "stable",
+    "repo": "googleapis/google-cloud-cpp",
+    "requires_billing": true
+}

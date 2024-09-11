@@ -22,7 +22,7 @@
 
 namespace google {
 namespace cloud {
-namespace otel_internal {
+namespace otel {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
@@ -73,14 +73,15 @@ class MonitoringExporter final
       opentelemetry::sdk::metrics::ResourceMetrics const& data) {
     auto result = opentelemetry::sdk::common::ExportResult::kSuccess;
 
-    auto tss = ToTimeSeries(data, formatter_);
+    auto tss = otel_internal::ToTimeSeries(data, formatter_);
     if (tss.empty()) {
       GCP_LOG(INFO) << "Cloud Monitoring Export skipped. No data.";
       // Return early to save the littlest bit of processing.
       return result;
     }
-    auto mr = ToMonitoredResource(data, mr_proto_);
-    auto requests = ToRequests(project_.FullName(), mr, std::move(tss));
+    auto mr = otel_internal::ToMonitoredResource(data, mr_proto_);
+    auto requests =
+        otel_internal::ToRequests(project_.FullName(), mr, std::move(tss));
     for (auto& request : requests) {
       auto status = use_service_time_series_
                         ? client_.CreateServiceTimeSeries(request)
@@ -121,6 +122,6 @@ MakeMonitoringExporter(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace otel_internal
+}  // namespace otel
 }  // namespace cloud
 }  // namespace google

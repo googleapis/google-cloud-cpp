@@ -101,7 +101,7 @@ absl::optional<ExporterConfig> MakeMeterProviderConfig(
 void EnableGrpcMetricsImpl(ExporterConfig config) {
   if (!ExporterRegistry::Singleton().Register(config.authority)) return;
 
-  auto exporter = otel_internal::MakeMonitoringExporter(
+  auto exporter = otel::MakeMonitoringExporter(
       std::move(config.project),
       monitoring_v3::MakeMetricServiceConnection(
           std::move(config.exporter_connection_options)),

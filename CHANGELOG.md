@@ -4,7 +4,16 @@
 breaking changes in the upcoming 3.x release. This release is scheduled for
 2024-12 or 2025-01.
 
-## v2.29.0 - TBD
+## v2.30.0 - TBD
+
+### New Libraries
+
+We are happy to announce the following GA libraries. Unless specifically noted,
+the APIs in these libraries are stable, and are ready for production use.
+
+- [Gemini API](/google/cloud/generativelanguage/README.md)
+
+## v2.29.0 - 2024-09
 
 ### New Libraries
 
@@ -12,6 +21,28 @@ We are happy to announce the following GA libraries. Unless specifically noted,
 the APIs in these libraries are stable, and are ready for production use.
 
 - [GKE Connect API](/google/cloud/gkeconnect/README.md)
+
+### [Bigtable](/google/cloud/bigtable/README.md)
+
+- fix(bigtable): sanitize RowRange proto input ([#14651](https://github.com/googleapis/google-cloud-cpp/pull/14651))
+
+### [Compute](/google/cloud/compute/README.md)
+
+- feat(compute): add missing services instant_snapshots and region_instant_snapshots ([#14647](https://github.com/googleapis/google-cloud-cpp/pull/14647))
+
+### [Spanner](/google/cloud/spanner/README.md)
+
+- feat(spanner): support instance edition ([#14678](https://github.com/googleapis/google-cloud-cpp/pull/14678))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- fix: do not persist the keys loaded from PKCS#12 on Windows ([#14645](https://github.com/googleapis/google-cloud-cpp/pull/14645))
+- fix: no need to link gmock_main in mocks ([#14640](https://github.com/googleapis/google-cloud-cpp/pull/14640))
+- fix: quickstarts build with bazel ([#14633](https://github.com/googleapis/google-cloud-cpp/pull/14633))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2024-08-30T10:45:43-07:00](https://github.com/googleapis/googleapis/tree/6a474b31c53cc1797710206824a17b364a835d2d)
 
 ## v2.28.0 - 2024-08
 

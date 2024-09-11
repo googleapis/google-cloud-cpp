@@ -221,6 +221,16 @@ TEST(PopulateCommonOptions, UserProject) {
   }
 }
 
+TEST(PopulateCommonOptions, QuotaProjectEnvVar) {
+  ScopedEnvironment e1("GOOGLE_CLOUD_CPP_USER_PROJECT", absl::nullopt);
+  ScopedEnvironment e2("GOOGLE_CLOUD_QUOTA_PROJECT", "env");
+
+  auto opts = Options{}.set<UserProjectOption>("option");
+  opts = PopulateCommonOptions(std::move(opts), {}, {}, {},
+                               "default.googleapis.com");
+  EXPECT_EQ(opts.get<UserProjectOption>(), "env");
+}
+
 TEST(PopulateCommonOptions, OpenTelemetryTracing) {
   struct TestCase {
     absl::optional<std::string> env;

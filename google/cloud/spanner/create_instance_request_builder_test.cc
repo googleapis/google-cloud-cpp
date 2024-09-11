@@ -46,6 +46,8 @@ TEST(CreateInstanceRequestBuilder, DefaultValues) {
   EXPECT_EQ(1, req.instance().node_count());
   EXPECT_EQ(0, req.instance().labels_size());
   EXPECT_EQ(expected_display_name, req.instance().display_name());
+  EXPECT_EQ(google::spanner::admin::instance::v1::Instance_Edition_STANDARD,
+            req.instance().edition());
 }
 
 TEST(CreateInstanceRequestBuilder, RvalueReference) {
@@ -58,6 +60,7 @@ TEST(CreateInstanceRequestBuilder, RvalueReference) {
                  .SetDisplayName(expected_display_name)
                  .SetNodeCount(1)
                  .SetLabels({{"key", "value"}})
+                 .SetEdition(CreateInstanceRequestBuilder::Edition::kEnterprise)
                  .Build();
   EXPECT_EQ(in.project().FullName(), req.parent());
   EXPECT_EQ(in.instance_id(), req.instance_id());
@@ -67,6 +70,8 @@ TEST(CreateInstanceRequestBuilder, RvalueReference) {
   EXPECT_EQ(1, req.instance().labels_size());
   EXPECT_EQ("value", req.instance().labels().at("key"));
   EXPECT_EQ(expected_display_name, req.instance().display_name());
+  EXPECT_EQ(google::spanner::admin::instance::v1::Instance_Edition_ENTERPRISE,
+            req.instance().edition());
 }
 
 TEST(CreateInstanceRequestBuilder, Lvalue) {
@@ -76,10 +81,12 @@ TEST(CreateInstanceRequestBuilder, Lvalue) {
   std::string expected_display_name = "test-display-name";
 
   auto builder = CreateInstanceRequestBuilder(in, expected_config);
-  auto req = builder.SetDisplayName(expected_display_name)
-                 .SetProcessingUnits(500)
-                 .SetLabels({{"key", "value"}})
-                 .Build();
+  auto req =
+      builder.SetDisplayName(expected_display_name)
+          .SetProcessingUnits(500)
+          .SetLabels({{"key", "value"}})
+          .SetEdition(CreateInstanceRequestBuilder::Edition::kEnterprisePlus)
+          .Build();
   EXPECT_EQ(in.project().FullName(), req.parent());
   EXPECT_EQ(in.instance_id(), req.instance_id());
   EXPECT_EQ(in.FullName(), req.instance().name());
@@ -88,6 +95,9 @@ TEST(CreateInstanceRequestBuilder, Lvalue) {
   EXPECT_EQ(1, req.instance().labels_size());
   EXPECT_EQ("value", req.instance().labels().at("key"));
   EXPECT_EQ(expected_display_name, req.instance().display_name());
+  EXPECT_EQ(
+      google::spanner::admin::instance::v1::Instance_Edition_ENTERPRISE_PLUS,
+      req.instance().edition());
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

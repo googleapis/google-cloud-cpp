@@ -1,0 +1,6 @@
+@com_google_googleapis//google/ai/generativelanguage/v1:citation.proto
+@com_google_googleapis//google/ai/generativelanguage/v1:content.proto
+@com_google_googleapis//google/ai/generativelanguage/v1:generative_service.proto
+@com_google_googleapis//google/ai/generativelanguage/v1:model.proto
+@com_google_googleapis//google/ai/generativelanguage/v1:model_service.proto
+@com_google_googleapis//google/ai/generativelanguage/v1:safety.proto

@@ -139,8 +139,8 @@ TEST(MetricsExporterOptions, MonitoredResource) {
                                    {"host.id", "test-host-id"},
                                }));
 
-  EXPECT_TRUE(actual.has<otel_internal::MonitoredResourceOption>());
-  auto mr = actual.get<otel_internal::MonitoredResourceOption>();
+  EXPECT_TRUE(actual.has<otel::MonitoredResourceOption>());
+  auto mr = actual.get<otel::MonitoredResourceOption>();
   auto labels = mr.labels();
   // The `instance_id` label has unpredictable values,
   EXPECT_THAT(labels, Contains(Pair("instance_id", MatchesInstanceId())));
@@ -164,8 +164,8 @@ TEST(MetricsExporterOptions, DefaultMonitoredResource) {
       Project("test-project"),
       opentelemetry::sdk::resource::Resource::Create({}));
 
-  EXPECT_TRUE(actual.has<otel_internal::MonitoredResourceOption>());
-  auto mr = actual.get<otel_internal::MonitoredResourceOption>();
+  EXPECT_TRUE(actual.has<otel::MonitoredResourceOption>());
+  auto mr = actual.get<otel::MonitoredResourceOption>();
   auto labels = mr.labels();
   // The `instance_id` label has unpredictable values,
   EXPECT_THAT(labels, Contains(Pair("instance_id", MatchesInstanceId())));
