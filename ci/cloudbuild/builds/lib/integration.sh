@@ -177,9 +177,9 @@ function integration::bazel_with_emulators() {
     "google/cloud:internal_unified_rest_credentials_integration_test"
   )
 
-  production_tests_tag_filters="integration-test"
+  production_tests_tag_filters="integration-test,-integration-quota-project-test"
   if echo "${args[@]}" | grep -w -q -- "--config=msan"; then
-    production_tests_tag_filters="integration-test,-no-msan"
+    production_tests_tag_filters="integration-test,-integration-quota-project-test,-no-msan"
   fi
 
   io::log_h2 "Running Pub/Sub integration tests (with emulator)"
@@ -211,6 +211,19 @@ function integration::bazel_with_emulators() {
   bazel "${verb}" "${args[@]}" \
     --test_tag_filters="${production_tests_tag_filters}" \
     "${production_integration_tests[@]}"
+
+  production_quota_project_integration_tests=(
+    # generative language samples
+    "google/cloud/generativelanguage/samples/..."
+  )
+
+  #  TODO(#14702): Enable this when authentication scope configuration is
+  #   resolved.
+  #  io::log_h2 "Running integration tests that require production access and quota project"
+  #  bazel "${verb}" "${args[@]}" \
+  #    --test_env=GOOGLE_CLOUD_QUOTA_PROJECT="${GOOGLE_CLOUD_PROJECT}" \
+  #    --test_tag_filters="integration-quota-project-test" \
+  #    "${production_quota_project_integration_tests[@]}"
 
   # This test is run separately because the access token changes every time and
   # that would mess up bazel's test cache for all the other tests.

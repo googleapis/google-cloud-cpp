@@ -40,5 +40,14 @@ excluded_rules=(
 io::log_h2 "Running the integration tests against prod"
 mapfile -t integration_args < <(integration::bazel_args)
 io::run bazel test "${args[@]}" "${integration_args[@]}" \
-  --cache_test_results="auto" --test_tag_filters="integration-test" \
+  --cache_test_results="auto" --test_tag_filters="integration-test,-integration-quota-project-test" \
   -- "${BAZEL_TARGETS[@]}" "${excluded_rules[@]}"
+
+#  TODO(#14702): Enable this when authentication scope configuration is
+#   resolved.
+#io::log_h2 "Running the integration tests that require quota project against prod"
+#mapfile -t integration_args < <(integration::bazel_args)
+#io::run bazel test "${args[@]}" "${integration_args[@]}" \
+#  --test_env=GOOGLE_CLOUD_QUOTA_PROJECT="${GOOGLE_CLOUD_PROJECT}" \
+#  --cache_test_results="auto" --test_tag_filters="integration-quota-project-test" \
+#  -- "${BAZEL_TARGETS[@]}" "${excluded_rules[@]}"
