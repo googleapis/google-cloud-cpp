@@ -149,6 +149,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/functions/v1:functions_cc_grpc" \
       "@com_google_googleapis//google/cloud/functions/v2:functions_cc_grpc"
   )"
+  ["generativelanguage"]="@com_google_googleapis//google/ai/generativelanguage/v1:generativelanguage_cc_grpc"
   ["gkebackup"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/cloud/gkebackup/logging/v1:logging_cc_grpc" \
