@@ -16,7 +16,10 @@
 #include "google/cloud/spanner/admin/database_admin_options.h"
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/row.h"
+#include "google/cloud/spanner/testing/pick_random_instance.h"
+#include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/spanner/timestamp.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
 #include <string>
 #include <tuple>
@@ -24,19 +27,7 @@
 #include <vector>
 
 namespace {
-
-google::cloud::spanner::Client MakeSampleClient(
-    std::string const& project_id, std::string const& instance_id,
-    std::string const& database_id) {
-  return google::cloud::spanner::Client(google::cloud::spanner::MakeConnection(
-      google::cloud::spanner::Database(project_id, instance_id, database_id)));
-}
-
-std::string Basename(absl::string_view name) {
-  auto last_sep = name.find_last_of("/\\");
-  if (last_sep != absl::string_view::npos) name.remove_prefix(last_sep + 1);
-  return std::string(name);
-}
+namespace graph_samples {
 
 //! [START spanner_create_database_with_property_graph]
 void CreateDatabaseWithPropertyGraph(
@@ -284,7 +275,7 @@ void QueryData(google::cloud::spanner::Client client) {
 //! [END spanner_query_graph_data] [spanner-query-graph-data]
 
 //! [START spanner_query_graph_data_with_parameter]
-void QueryWithParameter(google::cloud::spanner::Client client) {
+void QueryDataWithParameter(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
 
   spanner::SqlStatement select(R"""(
@@ -381,6 +372,32 @@ void DeleteData(google::cloud::spanner::Client client) {
 }
 //! [END spanner_delete_graph_data]
 
+}  // namespace graph_samples
+
+namespace helpers {
+
+void DropDatabase(google::cloud::spanner_admin::DatabaseAdminClient client,
+                  google::cloud::spanner::Database const& database) {
+  auto status = client.DropDatabase(database.FullName());
+  if (!status.ok()) throw std::move(status);
+  std::cout << "Database " << database << " dropped.\n";
+}
+
+}  // namespace helpers
+
+google::cloud::spanner::Client MakeSampleClient(
+    std::string const& project_id, std::string const& instance_id,
+    std::string const& database_id) {
+  return google::cloud::spanner::Client(google::cloud::spanner::MakeConnection(
+      google::cloud::spanner::Database(project_id, instance_id, database_id)));
+}
+
+std::string Basename(absl::string_view name) {
+  auto last_sep = name.find_last_of("/\\");
+  if (last_sep != absl::string_view::npos) name.remove_prefix(last_sep + 1);
+  return std::string(name);
+}
+
 int RunOneCommand(std::vector<std::string> argv) {
   using CommandType = std::function<void(std::vector<std::string> const&)>;
   using CommandMap = std::map<std::string, CommandType>;
@@ -424,17 +441,22 @@ int RunOneCommand(std::vector<std::string> argv) {
   };
 
   CommandMap commands = {
-      make_database_command_entry("create-database-with-property-graph",
-                                  CreateDatabaseWithPropertyGraph),
-      make_command_entry("insert-data", InsertData),
-      make_command_entry("insert-data-with-dml", InsertDataWithDml),
-      make_command_entry("update-data-with-dml", UpdateDataWithDml),
+      make_database_command_entry(
+          "create-database-with-property-graph",
+          graph_samples::CreateDatabaseWithPropertyGraph),
+      make_command_entry("insert-data", graph_samples::InsertData),
+      make_command_entry("insert-data-with-dml",
+                         graph_samples::InsertDataWithDml),
+      make_command_entry("update-data-with-dml",
+                         graph_samples::UpdateDataWithDml),
       make_command_entry("update-data-with-graph-query-in-dml",
-                         UpdateDataWithGraphQueryInDml),
-      make_command_entry("query-data", QueryData),
-      make_command_entry("query-data-with-parameter", QueryWithParameter),
-      make_command_entry("delete-data-with-dml", DeleteDataWithDml),
-      make_command_entry("delete-data", DeleteData),
+                         graph_samples::UpdateDataWithGraphQueryInDml),
+      make_command_entry("query-data", graph_samples::QueryData),
+      make_command_entry("query-data-with-parameter",
+                         graph_samples::QueryDataWithParameter),
+      make_command_entry("delete-data-with-dml",
+                         graph_samples::DeleteDataWithDml),
+      make_command_entry("delete-data", graph_samples::DeleteData),
   };
 
   static std::string usage_msg = [&argv, &commands] {
@@ -475,9 +497,106 @@ int RunOneCommand(std::vector<std::string> argv) {
   return 0;
 }
 
+void SampleBanner(std::string const& name) {
+  std::cout << "\nRunning " << name << " sample at "
+            << absl::FormatTime("%Y-%m-%dT%H:%M:%SZ", absl::Now(),
+                                absl::UTCTimeZone())
+            << std::endl;
+  GCP_LOG(DEBUG) << "Running " << name << " sample";
+}
+
+int RunAll(bool emulator) {
+  if (emulator) {
+    // Graph queries are not supported on emulators
+    return 0;
+  }
+
+  auto generator = google::cloud::internal::MakeDefaultPRNG();
+
+  auto const project_id =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+  if (project_id.empty()) {
+    throw std::runtime_error("GOOGLE_CLOUD_PROJECT is not set or is empty");
+  }
+
+  auto random_instance = google::cloud::spanner_testing::PickRandomInstance(
+      generator, project_id,
+      "labels.samples:yes AND NOT name:/instances/test-instance-mr-");
+  if (!random_instance) {
+    throw std::runtime_error("Cannot find an instance to run the samples: " +
+                             random_instance.status().message());
+  }
+
+  auto const instance_id = *std::move(random_instance);
+  std::cout << "Running samples on " << instance_id << std::endl;
+
+  auto const database_id =
+      google::cloud::spanner_testing::RandomDatabaseName(generator);
+
+  google::cloud::spanner::Instance instance(project_id, instance_id);
+  google::cloud::spanner::Database database(instance, database_id);
+
+  google::cloud::spanner_admin::DatabaseAdminClient database_admin_client(
+      google::cloud::spanner_admin::MakeDatabaseAdminConnection());
+
+  SampleBanner("spanner_create_database_with_property_graph");
+  graph_samples::CreateDatabaseWithPropertyGraph(
+      database_admin_client, project_id, instance_id, database_id);
+
+  try {
+    google::cloud::spanner::Client client(
+        google::cloud::spanner::MakeConnection(database));
+
+    SampleBanner("spanner_insert_graph_data");
+    graph_samples::InsertData(client);
+
+    SampleBanner("spanner_insert_graph_data_with_dml");
+    graph_samples::InsertDataWithDml(client);
+
+    SampleBanner("spanner_query_graph_data");
+    graph_samples::QueryData(client);
+
+    SampleBanner("spanner_query_graph_data_with_parameter");
+    graph_samples::QueryDataWithParameter(client);
+
+    SampleBanner("spanner_update_graph_data_with_dml");
+    graph_samples::UpdateDataWithDml(client);
+
+    SampleBanner("spanner_update_graph_data_with_graph_query_in_dml");
+    graph_samples::UpdateDataWithGraphQueryInDml(client);
+
+    SampleBanner("spanner_delete_graph_data_with_dml");
+    graph_samples::DeleteDataWithDml(client);
+
+    SampleBanner("spanner_delete_graph_data");
+    graph_samples::DeleteData(client);
+  } catch (...) {
+    // Try to clean up after a failure.
+    helpers::DropDatabase(database_admin_client, database);
+    throw;
+  }
+
+  SampleBanner("spanner_drop_database");
+  helpers::DropDatabase(database_admin_client, database);
+
+  return 0;
+}
+
+bool AutoRun() {
+  return google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES")
+             .value_or("") == "yes";
+}
+
+bool Emulator() {
+  return google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST").has_value();
+}
+
 }  // namespace
 
 int main(int ac, char* av[]) try {
+  if (AutoRun()) {
+    return RunAll(Emulator());
+  }
   return RunOneCommand({av, av + ac});
 } catch (google::cloud::Status const& status) {
   std::cerr << status << "\n";
