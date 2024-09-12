@@ -87,13 +87,13 @@ std::unordered_map<std::string, MixinMethodOverride> GetMixinMethodOverrides(
           kv.second.Type() != YAML::NodeType::Scalar)
         continue;
 
-      std::string const& http_verb_lower =
+      std::string const http_verb_lower =
           absl::AsciiStrToLower(kv.first.as<std::string>());
       auto const& http_verbs = GetHttpVerbs();
       auto const it = http_verbs.find(http_verb_lower);
       if (it == http_verbs.end()) continue;
       std::string const& http_verb = it->second;
-      std::string const& http_path = kv.second.as<std::string>();
+      std::string const http_path = kv.second.as<std::string>();
       absl::optional<std::string> http_body;
       if (rule["body"]) {
         http_body = rule["body"].as<std::string>();
@@ -130,7 +130,7 @@ std::vector<std::string> GetMixinProtoPaths(YAML::Node const& service_config) {
     if (api.Type() != YAML::NodeType::Map) continue;
     auto const& name = api["name"];
     if (name.Type() != YAML::NodeType::Scalar) continue;
-    std::string const& package_path = name.as<std::string>();
+    std::string const package_path = name.as<std::string>();
     auto const& mixin_proto_path_map = GetMixinProtoPathMap();
     auto const it = mixin_proto_path_map.find(package_path);
     if (it == mixin_proto_path_map.end()) continue;
