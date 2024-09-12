@@ -21,7 +21,7 @@
 namespace {
 
 void GeminiTextGenTextOnlyPrompt(std::vector<std::string> const& argv) {
-  if (argv.size() != 2) {
+  if (argv.size() < 2) {
     throw google::cloud::testing_util::Usage(
         "gemini-text-gen-text-only-prompt <model-name> [<content>]+");
   }
