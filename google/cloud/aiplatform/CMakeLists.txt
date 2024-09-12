@@ -33,3 +33,5 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     set_tests_properties(aiplatform_quickstart
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()
+
+add_subdirectory(samples)
