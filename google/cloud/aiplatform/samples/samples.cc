@@ -77,7 +77,7 @@ void GeminiGenerateWithImage(std::vector<std::string> const& argv) {
     request.set_model(location.FullName() + "/publishers/google/models/" +
                       model);
     auto generation_config = request.mutable_generation_config();
-    generation_config->set_temperature(0.4);
+    generation_config->set_temperature(0.4f);
     generation_config->set_top_k(32);
     generation_config->set_top_p(1);
     generation_config->set_max_output_tokens(2048);
