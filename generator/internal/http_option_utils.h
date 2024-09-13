@@ -16,7 +16,9 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_HTTP_OPTION_UTILS_H
 
 #include "generator/internal/http_annotation_parser.h"
+#include "generator/internal/mixin_utils.h"
 #include "generator/internal/printer.h"
+#include "absl/types/optional.h"
 #include <google/protobuf/descriptor.h>
 #include <string>
 
@@ -41,7 +43,10 @@ struct HttpExtensionInfo {
  * transcoding and REST transport.
  */
 HttpExtensionInfo ParseHttpExtension(
-    google::protobuf::MethodDescriptor const& method);
+    google::protobuf::MethodDescriptor const& method,
+    absl::optional<std::string> package_name_override = absl::nullopt,
+    absl::optional<std::string> file_name_override = absl::nullopt,
+    absl::optional<MixinMethodOverride> method_override = absl::nullopt);
 
 /**
  * Sets the following method_vars based on the provided parsed_http_info:
@@ -115,8 +120,8 @@ std::string FormatApiVersionFromPackageName(
 /**
  * Parses the url pattern of the method and returns its API version.
  */
-std::string FormatApiVersionFromUrlPattern(std::string const& url_pattern,
-                                           std::string const& file_name);
+absl::optional<std::string> FormatApiVersionFromUrlPattern(
+    std::string const& url_pattern, std::string const& file_name);
 
 }  // namespace generator_internal
 }  // namespace cloud
