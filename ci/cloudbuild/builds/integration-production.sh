@@ -32,6 +32,8 @@ io::run bazel test "${args[@]}" --test_tag_filters=-integration-test "${BAZEL_TA
 excluded_rules=(
   "-//examples:grpc_credential_types"
   "-//google/cloud/bigtable/examples:bigtable_grpc_credentials"
+  # TODO(#14702): Enable this when auth scope configuration is resolved.
+  "-//google/cloud/generativelanguage/samples:samples"
   # This sample uses HMAC keys, which are very limited in production (at most
   # 5 per service account). Disabled for now.
   "-//google/cloud/storage/examples:storage_service_account_samples"
@@ -40,14 +42,5 @@ excluded_rules=(
 io::log_h2 "Running the integration tests against prod"
 mapfile -t integration_args < <(integration::bazel_args)
 io::run bazel test "${args[@]}" "${integration_args[@]}" \
-  --cache_test_results="auto" --test_tag_filters="integration-test,-integration-quota-project-test" \
+  --cache_test_results="auto" --test_tag_filters="integration-test" \
   -- "${BAZEL_TARGETS[@]}" "${excluded_rules[@]}"
-
-#  TODO(#14702): Enable this when authentication scope configuration is
-#   resolved.
-#io::log_h2 "Running the integration tests that require quota project against prod"
-#mapfile -t integration_args < <(integration::bazel_args)
-#io::run bazel test "${args[@]}" "${integration_args[@]}" \
-#  --test_env=GOOGLE_CLOUD_QUOTA_PROJECT="${GOOGLE_CLOUD_PROJECT}" \
-#  --cache_test_results="auto" --test_tag_filters="integration-quota-project-test" \
-#  -- "${BAZEL_TARGETS[@]}" "${excluded_rules[@]}"

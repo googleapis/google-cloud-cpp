@@ -14,6 +14,7 @@
 
 #include "google/cloud/generativelanguage/v1/generative_client.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/example_driver.h"
 #include <string>
 #include <vector>
@@ -21,16 +22,21 @@
 namespace {
 
 void GeminiTextGenTextOnlyPrompt(std::vector<std::string> const& argv) {
-  if (argv.size() < 2) {
+  if (argv.size() < 3) {
     throw google::cloud::testing_util::Usage(
-        "gemini-text-gen-text-only-prompt <model-name> [<content>]+");
+        "gemini-text-gen-text-only-prompt <quota-project-id> <model-name> "
+        "[<content>]+");
   }
   // [START text_gen_text_only_prompt]
   namespace gemini = ::google::cloud::generativelanguage_v1;
   namespace gemini_proto = ::google::ai::generativelanguage::v1;
-  [](std::string const& model, std::vector<std::string> const& content) {
+  [](std::string const& quota_project_id, std::string const& model,
+     std::vector<std::string> const& content) {
+    auto options =
+        google::cloud::Options{}.set<google::cloud::UserProjectOption>(
+            quota_project_id);
     gemini::GenerativeServiceClient client(
-        gemini::MakeGenerativeServiceConnection());
+        gemini::MakeGenerativeServiceConnection(options));
     std::vector<gemini_proto::Content> contents;
     for (auto const& c : content) {
       gemini_proto::Content content;
@@ -48,18 +54,20 @@ void GeminiTextGenTextOnlyPrompt(std::vector<std::string> const& argv) {
     }
   }
   // [END text_gen_text_only_prompt]
-  (argv.at(0), {argv.begin() + 1, argv.end()});
+  (argv.at(0), argv.at(1), {argv.begin() + 2, argv.end()});
 }
 
 void AutoRun(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
   if (!argv.empty()) throw examples::Usage{"auto"};
   examples::CheckEnvironmentVariablesAreSet({
-      "GOOGLE_CLOUD_QUOTA_PROJECT",
+      "GOOGLE_CLOUD_PROJECT",
   });
+  auto const project_id =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
 
-  GeminiTextGenTextOnlyPrompt(
-      {"models/gemini-1.5-flash", "Write a story about a magic backpack."});
+  GeminiTextGenTextOnlyPrompt({project_id, "models/gemini-1.5-flash",
+                               "Write a story about a magic backpack."});
 
   std::cout << "\nAutoRun done" << std::endl;
 }

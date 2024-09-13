@@ -20,7 +20,6 @@ licenses(["notice"])  # Apache 2.0
     name = sample.replace(".cc", ""),
     srcs = [sample],
     tags = [
-        "integration-quota-project-test",
         "integration-test",
     ],
     deps = [
