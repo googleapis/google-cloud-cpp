@@ -32,6 +32,8 @@ io::run bazel test "${args[@]}" --test_tag_filters=-integration-test "${BAZEL_TA
 excluded_rules=(
   "-//examples:grpc_credential_types"
   "-//google/cloud/bigtable/examples:bigtable_grpc_credentials"
+  # TODO(#14702): Enable this when auth scope configuration is resolved.
+  "-//google/cloud/generativelanguage/samples:samples"
   # This sample uses HMAC keys, which are very limited in production (at most
   # 5 per service account). Disabled for now.
   "-//google/cloud/storage/examples:storage_service_account_samples"
