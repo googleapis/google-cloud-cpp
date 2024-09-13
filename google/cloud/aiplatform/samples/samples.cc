@@ -60,7 +60,7 @@ void GeminiGenerateFromTextInput(std::vector<std::string> const& argv) {
 void GeminiGenerateWithImage(std::vector<std::string> const& argv) {
   if (argv.size() != 6) {
     throw google::cloud::testing_util::Usage(
-        "gemini-generate-from-text-input <project> <location> <model-name> "
+        "gemini-generate-with-image <project> <location> <model-name> "
         "<prompt> <mime-type> <file-uri>");
   }
   // [START generativeaionvertexai_gemini_get_started]
@@ -105,7 +105,7 @@ void GeminiGenerateWithImage(std::vector<std::string> const& argv) {
 void GeminiVideoWithAudio(std::vector<std::string> const& argv) {
   if (argv.size() != 6) {
     throw google::cloud::testing_util::Usage(
-        "gemini-generate-from-text-input <project> <location> <model-name> "
+        "gemini-video-with-audio <project> <location> <model-name> "
         "<prompt> <mime-type> <file-uri>");
   }
   // [START generativeaionvertexai_gemini_video_with_audio]
