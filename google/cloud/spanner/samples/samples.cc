@@ -1628,6 +1628,36 @@ void ListDatabaseOperationsCommand(std::vector<std::string> argv) {
   ListDatabaseOperations(std::move(client), argv[0], argv[1]);
 }
 
+//! [create-backup-schedule] [START spanner_create_backup_schedule]
+void CreateBackupSchedule(google::cloud::spanner_admin::DatabaseAdminClient client,
+                          std::string const& project_id,
+                          std::string const& instance_id,
+                          std::string const& database_id,
+                          std::string const& backup_schedule_id) {
+  google::cloud::spanner::Database db(project_id, instance_id, database_id);
+
+  google::spanner::admin::database::v1::CreateBackupScheduleRequest request;
+  request.set_parent(db.FullName());
+  request.set_backup_schedule_id(backup_schedule_id);
+
+  auto backup_schedule = client.CreateBackupSchedule(request);
+  if (!backup_schedule) throw std::move(backup_schedule).status();
+  std::cout << "Backup schedule " << backup_schedule->name() << " created at "
+            << google::cloud::spanner::MakeTimestamp(backup_schedule->update_time()).value();
+}
+//! [create-backup-schedule] [END spanner_create_backup_schedule]
+
+void CreateBackupScheduleCommand(std::vector<std::string> argv) {
+  if (argv.size() != 4) {
+    throw std::runtime_error("create-backup-schedule <project-id> "
+                             "<instance-id> <database-id> <backup-schedule-id>"
+                            );
+  }
+  google::cloud::spanner_admin::DatabaseAdminClient client(
+      google::cloud::spanner_admin::MakeDatabaseAdminConnection());
+  CreateBackupSchedule(std::move(client), argv[0], argv[1], argv[2], argv[3]);
+}
+
 //! [update-database] [START spanner_update_database]
 void UpdateDatabase(google::cloud::spanner_admin::DatabaseAdminClient client,
                     std::string const& project_id,
@@ -4610,6 +4640,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"list-backup-operations", ListBackupOperationsCommand},
       {"list-database-operations", ListDatabaseOperationsCommand},
       {"update-database", UpdateDatabaseCommand},
+      {"create-backup-schedule", CreateBackupScheduleCommand},
       make_database_command_entry("drop-database", DropDatabase),
       make_database_command_entry("database-get-iam-policy",
                                   DatabaseGetIamPolicy),
