@@ -47,6 +47,30 @@ StatusOr<google::api::HttpBody> UserEventServiceClient::CollectUserEvent(
   return connection_->CollectUserEvent(request);
 }
 
+future<StatusOr<google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>
+UserEventServiceClient::PurgeUserEvents(
+    google::cloud::discoveryengine::v1::PurgeUserEventsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PurgeUserEvents(request);
+}
+
+StatusOr<google::longrunning::Operation>
+UserEventServiceClient::PurgeUserEvents(
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::PurgeUserEventsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PurgeUserEvents(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>
+UserEventServiceClient::PurgeUserEvents(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PurgeUserEvents(operation);
+}
+
 future<StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>
 UserEventServiceClient::ImportUserEvents(
     google::cloud::discoveryengine::v1::ImportUserEventsRequest const& request,

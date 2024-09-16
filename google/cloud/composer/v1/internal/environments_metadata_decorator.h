@@ -111,6 +111,18 @@ class EnvironmentsMetadata : public EnvironmentsStub {
                 google::cloud::orchestration::airflow::service::v1::
                     ListWorkloadsRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncCheckUpgrade(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::orchestration::airflow::service::v1::
+          CheckUpgradeRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> CheckUpgrade(
+      grpc::ClientContext& context, Options options,
+      google::cloud::orchestration::airflow::service::v1::
+          CheckUpgradeRequest const& request) override;
+
   StatusOr<
       google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
   CreateUserWorkloadsSecret(

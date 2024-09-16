@@ -44,6 +44,11 @@ Idempotency UserEventServiceConnectionIdempotencyPolicy::CollectUserEvent(
   return Idempotency::kIdempotent;
 }
 
+Idempotency UserEventServiceConnectionIdempotencyPolicy::PurgeUserEvents(
+    google::cloud::discoveryengine::v1::PurgeUserEventsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency UserEventServiceConnectionIdempotencyPolicy::ImportUserEvents(
     google::cloud::discoveryengine::v1::ImportUserEventsRequest const&) {
   return Idempotency::kNonIdempotent;

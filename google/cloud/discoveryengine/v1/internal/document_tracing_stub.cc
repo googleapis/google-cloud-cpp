@@ -145,6 +145,21 @@ DocumentServiceTracingStub::PurgeDocuments(
                            child_->PurgeDocuments(context, options, request));
 }
 
+StatusOr<google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse>
+DocumentServiceTracingStub::BatchGetDocumentsMetadata(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.discoveryengine.v1.DocumentService",
+                             "BatchGetDocumentsMetadata");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->BatchGetDocumentsMetadata(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DocumentServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

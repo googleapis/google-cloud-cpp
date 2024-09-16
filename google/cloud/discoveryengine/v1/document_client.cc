@@ -165,6 +165,24 @@ DocumentServiceClient::PurgeDocuments(
   return connection_->PurgeDocuments(operation);
 }
 
+StatusOr<google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse>
+DocumentServiceClient::BatchGetDocumentsMetadata(std::string const& parent,
+                                                 Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataRequest request;
+  request.set_parent(parent);
+  return connection_->BatchGetDocumentsMetadata(request);
+}
+
+StatusOr<google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse>
+DocumentServiceClient::BatchGetDocumentsMetadata(
+    google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BatchGetDocumentsMetadata(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace discoveryengine_v1
 }  // namespace cloud

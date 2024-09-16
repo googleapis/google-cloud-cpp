@@ -118,7 +118,7 @@ class BatchControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.Batch]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L187}
+  /// [google.cloud.dataproc.v1.Batch]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L192}
   /// [google.cloud.dataproc.v1.CreateBatchRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L79}
   ///
   // clang-format on
@@ -173,7 +173,7 @@ class BatchControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.Batch]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L187}
+  /// [google.cloud.dataproc.v1.Batch]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L192}
   /// [google.cloud.dataproc.v1.CreateBatchRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L79}
   ///
   // clang-format on
@@ -229,7 +229,7 @@ class BatchControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.Batch]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L187}
+  /// [google.cloud.dataproc.v1.Batch]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L192}
   /// [google.cloud.dataproc.v1.GetBatchRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L113}
   ///
   // clang-format on
@@ -259,7 +259,7 @@ class BatchControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.Batch]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L187}
+  /// [google.cloud.dataproc.v1.Batch]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L192}
   /// [google.cloud.dataproc.v1.GetBatchRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L113}
   ///
   // clang-format on
@@ -294,7 +294,7 @@ class BatchControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.Batch]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L187}
+  /// [google.cloud.dataproc.v1.Batch]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L192}
   /// [google.cloud.dataproc.v1.ListBatchesRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L124}
   ///
   // clang-format on
@@ -333,7 +333,7 @@ class BatchControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.Batch]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L187}
+  /// [google.cloud.dataproc.v1.Batch]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L192}
   /// [google.cloud.dataproc.v1.ListBatchesRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L124}
   ///
   // clang-format on
@@ -360,7 +360,7 @@ class BatchControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.DeleteBatchRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L176}
+  /// [google.cloud.dataproc.v1.DeleteBatchRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L181}
   ///
   // clang-format on
   Status DeleteBatch(std::string const& name, Options opts = {});
@@ -387,7 +387,7 @@ class BatchControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.DeleteBatchRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L176}
+  /// [google.cloud.dataproc.v1.DeleteBatchRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L181}
   ///
   // clang-format on
   Status DeleteBatch(

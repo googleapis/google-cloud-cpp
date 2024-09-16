@@ -214,6 +214,46 @@ class MockEnvironmentsConnection : public composer_v1::EnvironmentsConnection {
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CheckUpgrade(Matcher<google::cloud::orchestration::airflow::service::v1::CheckUpgradeRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::orchestration::airflow::service::
+                                  v1::CheckUpgradeResponse>>,
+              CheckUpgrade,
+              (google::cloud::orchestration::airflow::service::v1::
+                   CheckUpgradeRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CheckUpgrade(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CheckUpgrade,
+              (NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
+                               CheckUpgradeRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CheckUpgrade(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::orchestration::airflow::service::
+                                  v1::CheckUpgradeResponse>>,
+              CheckUpgrade, (google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(StatusOr<google::cloud::orchestration::airflow::service::v1::
                            UserWorkloadsSecret>,
               CreateUserWorkloadsSecret,

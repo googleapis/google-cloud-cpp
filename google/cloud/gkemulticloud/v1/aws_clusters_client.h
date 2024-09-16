@@ -1444,7 +1444,7 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AwsOpenIdConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L627}
+  /// [google.cloud.gkemulticloud.v1.AwsOpenIdConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L631}
   /// [google.cloud.gkemulticloud.v1.GetAwsOpenIdConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L657}
   ///
   // clang-format on
@@ -1478,7 +1478,7 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AwsJsonWebKeys]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L651}
+  /// [google.cloud.gkemulticloud.v1.AwsJsonWebKeys]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L655}
   /// [google.cloud.gkemulticloud.v1.GetAwsJsonWebKeysRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L673}
   ///
   // clang-format on
@@ -1513,7 +1513,7 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AwsServerConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L658}
+  /// [google.cloud.gkemulticloud.v1.AwsServerConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L662}
   /// [google.cloud.gkemulticloud.v1.GetAwsServerConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L686}
   ///
   // clang-format on
@@ -1544,7 +1544,7 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AwsServerConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L658}
+  /// [google.cloud.gkemulticloud.v1.AwsServerConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L662}
   /// [google.cloud.gkemulticloud.v1.GetAwsServerConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L686}
   ///
   // clang-format on

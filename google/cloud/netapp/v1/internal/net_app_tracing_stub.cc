@@ -133,6 +133,34 @@ StatusOr<google::longrunning::Operation> NetAppTracingStub::DeleteStoragePool(
       context, *span, child_->DeleteStoragePool(context, options, request));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+NetAppTracingStub::AsyncSwitchActiveReplicaZone(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp",
+                                     "SwitchActiveReplicaZone");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncSwitchActiveReplicaZone(cq, context, std::move(options),
+                                                request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+NetAppTracingStub::SwitchActiveReplicaZone(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.netapp.v1.NetApp",
+                                     "SwitchActiveReplicaZone");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->SwitchActiveReplicaZone(context, options, request));
+}
+
 StatusOr<google::cloud::netapp::v1::ListVolumesResponse>
 NetAppTracingStub::ListVolumes(
     grpc::ClientContext& context, Options const& options,

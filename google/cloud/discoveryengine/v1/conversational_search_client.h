@@ -519,7 +519,7 @@ class ConversationalSearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.AnswerQueryRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L471}
-  /// [google.cloud.discoveryengine.v1.AnswerQueryResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L820}
+  /// [google.cloud.discoveryengine.v1.AnswerQueryResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/conversational_search_service.proto#L818}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::AnswerQueryResponse> AnswerQuery(

@@ -120,7 +120,7 @@ class WorkflowTemplateServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.CreateWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L639}
+  /// [google.cloud.dataproc.v1.CreateWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L688}
   /// [google.cloud.dataproc.v1.WorkflowTemplate]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L193}
   ///
   // clang-format on
@@ -153,7 +153,7 @@ class WorkflowTemplateServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.CreateWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L639}
+  /// [google.cloud.dataproc.v1.CreateWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L688}
   /// [google.cloud.dataproc.v1.WorkflowTemplate]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L193}
   ///
   // clang-format on
@@ -192,7 +192,7 @@ class WorkflowTemplateServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.GetWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L662}
+  /// [google.cloud.dataproc.v1.GetWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L711}
   /// [google.cloud.dataproc.v1.WorkflowTemplate]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L193}
   ///
   // clang-format on
@@ -225,7 +225,7 @@ class WorkflowTemplateServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.GetWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L662}
+  /// [google.cloud.dataproc.v1.GetWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L711}
   /// [google.cloud.dataproc.v1.WorkflowTemplate]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L193}
   ///
   // clang-format on
@@ -286,8 +286,8 @@ class WorkflowTemplateServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.InstantiateWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L688}
-  /// [google.cloud.dataproc.v1.WorkflowMetadata]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L497}
+  /// [google.cloud.dataproc.v1.InstantiateWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L737}
+  /// [google.cloud.dataproc.v1.WorkflowMetadata]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L546}
   /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
   /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
   /// [google.longrunning.Operations.CancelOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L105}
@@ -367,8 +367,8 @@ class WorkflowTemplateServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.InstantiateWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L688}
-  /// [google.cloud.dataproc.v1.WorkflowMetadata]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L497}
+  /// [google.cloud.dataproc.v1.InstantiateWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L737}
+  /// [google.cloud.dataproc.v1.WorkflowMetadata]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L546}
   /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
   /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
   /// [google.longrunning.Operations.CancelOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L105}
@@ -445,8 +445,8 @@ class WorkflowTemplateServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.InstantiateWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L688}
-  /// [google.cloud.dataproc.v1.WorkflowMetadata]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L497}
+  /// [google.cloud.dataproc.v1.InstantiateWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L737}
+  /// [google.cloud.dataproc.v1.WorkflowMetadata]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L546}
   /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
   /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
   /// [google.longrunning.Operations.CancelOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L105}
@@ -549,8 +549,8 @@ class WorkflowTemplateServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.InstantiateInlineWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L731}
-  /// [google.cloud.dataproc.v1.WorkflowMetadata]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L497}
+  /// [google.cloud.dataproc.v1.InstantiateInlineWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L780}
+  /// [google.cloud.dataproc.v1.WorkflowMetadata]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L546}
   /// [google.cloud.dataproc.v1.WorkflowTemplateService.CreateWorkflowTemplate]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L43}
   /// [google.cloud.dataproc.v1.WorkflowTemplateService.DeleteWorkflowTemplate]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L180}
   /// [google.cloud.dataproc.v1.WorkflowTemplateService.InstantiateWorkflowTemplate]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L91}
@@ -637,8 +637,8 @@ class WorkflowTemplateServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.InstantiateInlineWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L731}
-  /// [google.cloud.dataproc.v1.WorkflowMetadata]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L497}
+  /// [google.cloud.dataproc.v1.InstantiateInlineWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L780}
+  /// [google.cloud.dataproc.v1.WorkflowMetadata]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L546}
   /// [google.cloud.dataproc.v1.WorkflowTemplateService.CreateWorkflowTemplate]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L43}
   /// [google.cloud.dataproc.v1.WorkflowTemplateService.DeleteWorkflowTemplate]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L180}
   /// [google.cloud.dataproc.v1.WorkflowTemplateService.InstantiateWorkflowTemplate]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L91}
@@ -706,7 +706,7 @@ class WorkflowTemplateServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.UpdateWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L765}
+  /// [google.cloud.dataproc.v1.UpdateWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L814}
   /// [google.cloud.dataproc.v1.WorkflowTemplate]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L193}
   ///
   // clang-format on
@@ -739,7 +739,7 @@ class WorkflowTemplateServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.UpdateWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L765}
+  /// [google.cloud.dataproc.v1.UpdateWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L814}
   /// [google.cloud.dataproc.v1.WorkflowTemplate]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L193}
   ///
   // clang-format on
@@ -784,7 +784,7 @@ class WorkflowTemplateServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.ListWorkflowTemplatesRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L773}
+  /// [google.cloud.dataproc.v1.ListWorkflowTemplatesRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L822}
   /// [google.cloud.dataproc.v1.WorkflowTemplate]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L193}
   ///
   // clang-format on
@@ -823,7 +823,7 @@ class WorkflowTemplateServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.ListWorkflowTemplatesRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L773}
+  /// [google.cloud.dataproc.v1.ListWorkflowTemplatesRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L822}
   /// [google.cloud.dataproc.v1.WorkflowTemplate]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L193}
   ///
   // clang-format on
@@ -857,7 +857,7 @@ class WorkflowTemplateServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.DeleteWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L814}
+  /// [google.cloud.dataproc.v1.DeleteWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L868}
   ///
   // clang-format on
   Status DeleteWorkflowTemplate(std::string const& name, Options opts = {});
@@ -883,7 +883,7 @@ class WorkflowTemplateServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.DeleteWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L814}
+  /// [google.cloud.dataproc.v1.DeleteWorkflowTemplateRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/workflow_templates.proto#L868}
   ///
   // clang-format on
   Status DeleteWorkflowTemplate(

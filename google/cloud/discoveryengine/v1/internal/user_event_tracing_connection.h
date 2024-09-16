@@ -48,6 +48,19 @@ class UserEventServiceTracingConnection
       google::cloud::discoveryengine::v1::CollectUserEventRequest const&
           request) override;
 
+  future<StatusOr<google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>
+  PurgeUserEvents(
+      google::cloud::discoveryengine::v1::PurgeUserEventsRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> PurgeUserEvents(
+      NoAwaitTag,
+      google::cloud::discoveryengine::v1::PurgeUserEventsRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>
+  PurgeUserEvents(google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>
   ImportUserEvents(
       google::cloud::discoveryengine::v1::ImportUserEventsRequest const&

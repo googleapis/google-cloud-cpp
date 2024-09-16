@@ -88,6 +88,13 @@ class DocumentServiceTracingStub : public DocumentServiceStub {
       google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request)
       override;
 
+  StatusOr<
+      google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse>
+  BatchGetDocumentsMetadata(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::
+          BatchGetDocumentsMetadataRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

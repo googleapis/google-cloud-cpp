@@ -49,6 +49,18 @@ class UserEventServiceStub {
       google::cloud::discoveryengine::v1::CollectUserEventRequest const&
           request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncPurgeUserEvents(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::PurgeUserEventsRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> PurgeUserEvents(
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::PurgeUserEventsRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncImportUserEvents(
       google::cloud::CompletionQueue& cq,
@@ -94,6 +106,18 @@ class DefaultUserEventServiceStub : public UserEventServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::CollectUserEventRequest const&
           request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncPurgeUserEvents(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::PurgeUserEventsRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> PurgeUserEvents(
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::PurgeUserEventsRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportUserEvents(
       google::cloud::CompletionQueue& cq,

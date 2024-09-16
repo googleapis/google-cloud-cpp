@@ -384,6 +384,98 @@ NetAppConnectionImpl::DeleteStoragePool(
       polling_policy(*current), __func__);
 }
 
+future<StatusOr<google::cloud::netapp::v1::StoragePool>>
+NetAppConnectionImpl::SwitchActiveReplicaZone(
+    google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->SwitchActiveReplicaZone(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::netapp::v1::StoragePool>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const&
+              request) {
+        return stub->AsyncSwitchActiveReplicaZone(cq, std::move(context),
+                                                  std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::netapp::v1::StoragePool>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+NetAppConnectionImpl::SwitchActiveReplicaZone(
+    NoAwaitTag,
+    google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SwitchActiveReplicaZone(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const&
+                 request) {
+        return stub_->SwitchActiveReplicaZone(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::StoragePool>>
+NetAppConnectionImpl::SwitchActiveReplicaZone(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::netapp::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::netapp::v1::StoragePool>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to SwitchActiveReplicaZone",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::netapp::v1::StoragePool>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::netapp::v1::StoragePool>,
+      polling_policy(*current), __func__);
+}
+
 StreamRange<google::cloud::netapp::v1::Volume>
 NetAppConnectionImpl::ListVolumes(
     google::cloud::netapp::v1::ListVolumesRequest request) {
