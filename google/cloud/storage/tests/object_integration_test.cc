@@ -846,11 +846,12 @@ TEST_F(ObjectIntegrationTest, RestoreObject) {
                                Generation(metadata.value().generation()));
   ASSERT_STATUS_OK(sd_object_metadata);
 
-  auto restore =
-      client.RestoreObject(bucket_name_, object_name, sd_object_metadata.value().generation());
+  auto restore = client.RestoreObject(bucket_name_, object_name,
+                                      sd_object_metadata.value().generation());
   ASSERT_STATUS_OK(restore);
 
-  EXPECT_NE(sd_object_metadata.value().generation(), restore.value().generation());
+  EXPECT_NE(sd_object_metadata.value().generation(),
+            restore.value().generation());
 }
 
 }  // anonymous namespace
