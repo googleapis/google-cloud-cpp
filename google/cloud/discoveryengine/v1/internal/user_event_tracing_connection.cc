@@ -51,6 +51,35 @@ UserEventServiceTracingConnection::CollectUserEvent(
   return internal::EndSpan(*span, child_->CollectUserEvent(request));
 }
 
+future<StatusOr<google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>
+UserEventServiceTracingConnection::PurgeUserEvents(
+    google::cloud::discoveryengine::v1::PurgeUserEventsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::UserEventServiceConnection::PurgeUserEvents");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->PurgeUserEvents(request));
+}
+
+StatusOr<google::longrunning::Operation>
+UserEventServiceTracingConnection::PurgeUserEvents(
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::PurgeUserEventsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::UserEventServiceConnection::PurgeUserEvents");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->PurgeUserEvents(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>
+UserEventServiceTracingConnection::PurgeUserEvents(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::UserEventServiceConnection::PurgeUserEvents");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->PurgeUserEvents(operation));
+}
+
 future<StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>
 UserEventServiceTracingConnection::ImportUserEvents(
     google::cloud::discoveryengine::v1::ImportUserEventsRequest const&

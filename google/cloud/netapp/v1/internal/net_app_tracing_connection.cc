@@ -142,6 +142,37 @@ NetAppTracingConnection::DeleteStoragePool(
                            child_->DeleteStoragePool(operation));
 }
 
+future<StatusOr<google::cloud::netapp::v1::StoragePool>>
+NetAppTracingConnection::SwitchActiveReplicaZone(
+    google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request) {
+  auto span = internal::MakeSpan(
+      "netapp_v1::NetAppConnection::SwitchActiveReplicaZone");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->SwitchActiveReplicaZone(request));
+}
+
+StatusOr<google::longrunning::Operation>
+NetAppTracingConnection::SwitchActiveReplicaZone(
+    NoAwaitTag,
+    google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request) {
+  auto span = internal::MakeSpan(
+      "netapp_v1::NetAppConnection::SwitchActiveReplicaZone");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->SwitchActiveReplicaZone(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::netapp::v1::StoragePool>>
+NetAppTracingConnection::SwitchActiveReplicaZone(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "netapp_v1::NetAppConnection::SwitchActiveReplicaZone");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->SwitchActiveReplicaZone(operation));
+}
+
 StreamRange<google::cloud::netapp::v1::Volume>
 NetAppTracingConnection::ListVolumes(
     google::cloud::netapp::v1::ListVolumesRequest request) {

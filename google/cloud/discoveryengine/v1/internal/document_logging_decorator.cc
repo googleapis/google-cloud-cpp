@@ -162,6 +162,20 @@ StatusOr<google::longrunning::Operation> DocumentServiceLogging::PurgeDocuments(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse>
+DocumentServiceLogging::BatchGetDocumentsMetadata(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::
+                 BatchGetDocumentsMetadataRequest const& request) {
+        return child_->BatchGetDocumentsMetadata(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DocumentServiceLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

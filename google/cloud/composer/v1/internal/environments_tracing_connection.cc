@@ -203,6 +203,37 @@ EnvironmentsTracingConnection::ListWorkloads(
                                                    std::move(sr));
 }
 
+future<StatusOr<
+    google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>>
+EnvironmentsTracingConnection::CheckUpgrade(
+    google::cloud::orchestration::airflow::service::v1::
+        CheckUpgradeRequest const& request) {
+  auto span =
+      internal::MakeSpan("composer_v1::EnvironmentsConnection::CheckUpgrade");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CheckUpgrade(request));
+}
+
+StatusOr<google::longrunning::Operation>
+EnvironmentsTracingConnection::CheckUpgrade(
+    NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
+                    CheckUpgradeRequest const& request) {
+  auto span =
+      internal::MakeSpan("composer_v1::EnvironmentsConnection::CheckUpgrade");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->CheckUpgrade(NoAwaitTag{}, request));
+}
+
+future<StatusOr<
+    google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>>
+EnvironmentsTracingConnection::CheckUpgrade(
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("composer_v1::EnvironmentsConnection::CheckUpgrade");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CheckUpgrade(operation));
+}
+
 StatusOr<
     google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
 EnvironmentsTracingConnection::CreateUserWorkloadsSecret(

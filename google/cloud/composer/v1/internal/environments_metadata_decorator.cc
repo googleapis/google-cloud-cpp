@@ -181,6 +181,30 @@ EnvironmentsMetadata::ListWorkloads(
   return child_->ListWorkloads(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+EnvironmentsMetadata::AsyncCheckUpgrade(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::orchestration::airflow::service::v1::
+        CheckUpgradeRequest const& request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("environment=", internal::UrlEncode(request.environment())));
+  return child_->AsyncCheckUpgrade(cq, std::move(context), std::move(options),
+                                   request);
+}
+
+StatusOr<google::longrunning::Operation> EnvironmentsMetadata::CheckUpgrade(
+    grpc::ClientContext& context, Options options,
+    google::cloud::orchestration::airflow::service::v1::
+        CheckUpgradeRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("environment=", internal::UrlEncode(request.environment())));
+  return child_->CheckUpgrade(context, options, request);
+}
+
 StatusOr<
     google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
 EnvironmentsMetadata::CreateUserWorkloadsSecret(

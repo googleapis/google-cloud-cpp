@@ -262,7 +262,7 @@ class DataStoreServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L36}
-  /// [google.cloud.discoveryengine.v1.GetDataStoreRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L160}
+  /// [google.cloud.discoveryengine.v1.GetDataStoreRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L170}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::DataStore> GetDataStore(
@@ -292,7 +292,7 @@ class DataStoreServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L36}
-  /// [google.cloud.discoveryengine.v1.GetDataStoreRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L160}
+  /// [google.cloud.discoveryengine.v1.GetDataStoreRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L170}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::DataStore> GetDataStore(
@@ -334,7 +334,7 @@ class DataStoreServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L36}
-  /// [google.cloud.discoveryengine.v1.ListDataStoresRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L195}
+  /// [google.cloud.discoveryengine.v1.ListDataStoresRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L205}
   ///
   // clang-format on
   StreamRange<google::cloud::discoveryengine::v1::DataStore> ListDataStores(
@@ -374,7 +374,7 @@ class DataStoreServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L36}
-  /// [google.cloud.discoveryengine.v1.ListDataStoresRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L195}
+  /// [google.cloud.discoveryengine.v1.ListDataStoresRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L205}
   ///
   // clang-format on
   StreamRange<google::cloud::discoveryengine::v1::DataStore> ListDataStores(
@@ -416,8 +416,8 @@ class DataStoreServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L36}
-  /// [google.cloud.discoveryengine.v1.DeleteDataStoreMetadata]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L297}
-  /// [google.cloud.discoveryengine.v1.DeleteDataStoreRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L251}
+  /// [google.cloud.discoveryengine.v1.DeleteDataStoreMetadata]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L307}
+  /// [google.cloud.discoveryengine.v1.DeleteDataStoreRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L261}
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteDataStoreMetadata>>
@@ -468,8 +468,8 @@ class DataStoreServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L36}
-  /// [google.cloud.discoveryengine.v1.DeleteDataStoreMetadata]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L297}
-  /// [google.cloud.discoveryengine.v1.DeleteDataStoreRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L251}
+  /// [google.cloud.discoveryengine.v1.DeleteDataStoreMetadata]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L307}
+  /// [google.cloud.discoveryengine.v1.DeleteDataStoreRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L261}
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteDataStoreMetadata>>
@@ -538,7 +538,7 @@ class DataStoreServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L36}
-  /// [google.cloud.discoveryengine.v1.UpdateDataStoreRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L273}
+  /// [google.cloud.discoveryengine.v1.UpdateDataStoreRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L283}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::DataStore> UpdateDataStore(
@@ -569,7 +569,7 @@ class DataStoreServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.DataStore]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store.proto#L36}
-  /// [google.cloud.discoveryengine.v1.UpdateDataStoreRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L273}
+  /// [google.cloud.discoveryengine.v1.UpdateDataStoreRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/data_store_service.proto#L283}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::DataStore> UpdateDataStore(

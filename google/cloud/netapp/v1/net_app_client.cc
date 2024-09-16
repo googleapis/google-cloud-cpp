@@ -193,6 +193,29 @@ NetAppClient::DeleteStoragePool(google::longrunning::Operation const& operation,
   return connection_->DeleteStoragePool(operation);
 }
 
+future<StatusOr<google::cloud::netapp::v1::StoragePool>>
+NetAppClient::SwitchActiveReplicaZone(
+    google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SwitchActiveReplicaZone(request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppClient::SwitchActiveReplicaZone(
+    NoAwaitTag,
+    google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SwitchActiveReplicaZone(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::StoragePool>>
+NetAppClient::SwitchActiveReplicaZone(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SwitchActiveReplicaZone(operation);
+}
+
 StreamRange<google::cloud::netapp::v1::Volume> NetAppClient::ListVolumes(
     std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

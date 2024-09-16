@@ -172,6 +172,46 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
               DeleteStoragePool,
               (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// SwitchActiveReplicaZone(Matcher<google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::StoragePool>>,
+              SwitchActiveReplicaZone,
+              (google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, SwitchActiveReplicaZone(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, SwitchActiveReplicaZone,
+              (NoAwaitTag,
+               google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// SwitchActiveReplicaZone(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::StoragePool>>,
+              SwitchActiveReplicaZone,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD((StreamRange<google::cloud::netapp::v1::Volume>), ListVolumes,
               (google::cloud::netapp::v1::ListVolumesRequest request),
               (override));

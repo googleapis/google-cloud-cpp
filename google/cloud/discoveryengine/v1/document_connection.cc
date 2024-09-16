@@ -117,6 +117,13 @@ DocumentServiceConnection::PurgeDocuments(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse>
+DocumentServiceConnection::BatchGetDocumentsMetadata(
+    google::cloud::discoveryengine::v1::
+        BatchGetDocumentsMetadataRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<DocumentServiceConnection> MakeDocumentServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

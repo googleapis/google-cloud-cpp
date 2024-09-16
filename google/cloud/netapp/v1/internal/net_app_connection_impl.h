@@ -92,6 +92,20 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
   DeleteStoragePool(google::longrunning::Operation const& operation) override;
 
+  future<StatusOr<google::cloud::netapp::v1::StoragePool>>
+  SwitchActiveReplicaZone(
+      google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> SwitchActiveReplicaZone(
+      NoAwaitTag,
+      google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::netapp::v1::StoragePool>>
+  SwitchActiveReplicaZone(
+      google::longrunning::Operation const& operation) override;
+
   StreamRange<google::cloud::netapp::v1::Volume> ListVolumes(
       google::cloud::netapp::v1::ListVolumesRequest request) override;
 

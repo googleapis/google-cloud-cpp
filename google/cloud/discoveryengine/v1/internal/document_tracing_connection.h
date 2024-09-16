@@ -86,6 +86,12 @@ class DocumentServiceTracingConnection
   future<StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>
   PurgeDocuments(google::longrunning::Operation const& operation) override;
 
+  StatusOr<
+      google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse>
+  BatchGetDocumentsMetadata(
+      google::cloud::discoveryengine::v1::
+          BatchGetDocumentsMetadataRequest const& request) override;
+
  private:
   std::shared_ptr<discoveryengine_v1::DocumentServiceConnection> child_;
 };

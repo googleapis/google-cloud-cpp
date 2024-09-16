@@ -276,6 +276,33 @@ EnvironmentsClient::ListWorkloads(
   return connection_->ListWorkloads(std::move(request));
 }
 
+future<StatusOr<
+    google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>>
+EnvironmentsClient::CheckUpgrade(
+    google::cloud::orchestration::airflow::service::v1::
+        CheckUpgradeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CheckUpgrade(request);
+}
+
+StatusOr<google::longrunning::Operation> EnvironmentsClient::CheckUpgrade(
+    NoAwaitTag,
+    google::cloud::orchestration::airflow::service::v1::
+        CheckUpgradeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CheckUpgrade(NoAwaitTag{}, request);
+}
+
+future<StatusOr<
+    google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>>
+EnvironmentsClient::CheckUpgrade(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CheckUpgrade(operation);
+}
+
 StatusOr<
     google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
 EnvironmentsClient::CreateUserWorkloadsSecret(

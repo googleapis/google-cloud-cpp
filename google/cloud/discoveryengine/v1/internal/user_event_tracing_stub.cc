@@ -57,6 +57,33 @@ StatusOr<google::api::HttpBody> UserEventServiceTracingStub::CollectUserEvent(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+UserEventServiceTracingStub::AsyncPurgeUserEvents(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::discoveryengine::v1::PurgeUserEventsRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.UserEventService", "PurgeUserEvents");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncPurgeUserEvents(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+UserEventServiceTracingStub::PurgeUserEvents(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::PurgeUserEventsRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.UserEventService", "PurgeUserEvents");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->PurgeUserEvents(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
 UserEventServiceTracingStub::AsyncImportUserEvents(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

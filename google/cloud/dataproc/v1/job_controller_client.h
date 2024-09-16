@@ -109,8 +109,8 @@ class JobControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.Job]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L686}
-  /// [google.cloud.dataproc.v1.SubmitJobRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L821}
+  /// [google.cloud.dataproc.v1.Job]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L729}
+  /// [google.cloud.dataproc.v1.SubmitJobRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L867}
   ///
   // clang-format on
   StatusOr<google::cloud::dataproc::v1::Job> SubmitJob(
@@ -140,8 +140,8 @@ class JobControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.Job]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L686}
-  /// [google.cloud.dataproc.v1.SubmitJobRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L821}
+  /// [google.cloud.dataproc.v1.Job]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L729}
+  /// [google.cloud.dataproc.v1.SubmitJobRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L867}
   ///
   // clang-format on
   StatusOr<google::cloud::dataproc::v1::Job> SubmitJob(
@@ -176,8 +176,8 @@ class JobControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.Job]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L686}
-  /// [google.cloud.dataproc.v1.SubmitJobRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L821}
+  /// [google.cloud.dataproc.v1.Job]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L729}
+  /// [google.cloud.dataproc.v1.SubmitJobRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L867}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::Job>> SubmitJobAsOperation(
@@ -229,8 +229,8 @@ class JobControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.Job]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L686}
-  /// [google.cloud.dataproc.v1.SubmitJobRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L821}
+  /// [google.cloud.dataproc.v1.Job]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L729}
+  /// [google.cloud.dataproc.v1.SubmitJobRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L867}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::Job>> SubmitJobAsOperation(
@@ -285,8 +285,8 @@ class JobControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.GetJobRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L864}
-  /// [google.cloud.dataproc.v1.Job]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L686}
+  /// [google.cloud.dataproc.v1.GetJobRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L910}
+  /// [google.cloud.dataproc.v1.Job]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L729}
   ///
   // clang-format on
   StatusOr<google::cloud::dataproc::v1::Job> GetJob(
@@ -316,8 +316,8 @@ class JobControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.GetJobRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L864}
-  /// [google.cloud.dataproc.v1.Job]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L686}
+  /// [google.cloud.dataproc.v1.GetJobRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L910}
+  /// [google.cloud.dataproc.v1.Job]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L729}
   ///
   // clang-format on
   StatusOr<google::cloud::dataproc::v1::Job> GetJob(
@@ -353,8 +353,8 @@ class JobControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.Job]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L686}
-  /// [google.cloud.dataproc.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L877}
+  /// [google.cloud.dataproc.v1.Job]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L729}
+  /// [google.cloud.dataproc.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L923}
   ///
   // clang-format on
   StreamRange<google::cloud::dataproc::v1::Job> ListJobs(
@@ -404,8 +404,8 @@ class JobControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.Job]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L686}
-  /// [google.cloud.dataproc.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L877}
+  /// [google.cloud.dataproc.v1.Job]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L729}
+  /// [google.cloud.dataproc.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L923}
   ///
   // clang-format on
   StreamRange<google::cloud::dataproc::v1::Job> ListJobs(
@@ -444,8 +444,8 @@ class JobControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.Job]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L686}
-  /// [google.cloud.dataproc.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L877}
+  /// [google.cloud.dataproc.v1.Job]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L729}
+  /// [google.cloud.dataproc.v1.ListJobsRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L923}
   ///
   // clang-format on
   StreamRange<google::cloud::dataproc::v1::Job> ListJobs(
@@ -474,8 +474,8 @@ class JobControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.Job]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L686}
-  /// [google.cloud.dataproc.v1.UpdateJobRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L934}
+  /// [google.cloud.dataproc.v1.Job]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L729}
+  /// [google.cloud.dataproc.v1.UpdateJobRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L980}
   ///
   // clang-format on
   StatusOr<google::cloud::dataproc::v1::Job> UpdateJob(
@@ -507,8 +507,8 @@ class JobControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.CancelJobRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L970}
-  /// [google.cloud.dataproc.v1.Job]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L686}
+  /// [google.cloud.dataproc.v1.CancelJobRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L1022}
+  /// [google.cloud.dataproc.v1.Job]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L729}
   ///
   // clang-format on
   StatusOr<google::cloud::dataproc::v1::Job> CancelJob(
@@ -542,8 +542,8 @@ class JobControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.CancelJobRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L970}
-  /// [google.cloud.dataproc.v1.Job]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L686}
+  /// [google.cloud.dataproc.v1.CancelJobRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L1022}
+  /// [google.cloud.dataproc.v1.Job]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L729}
   ///
   // clang-format on
   StatusOr<google::cloud::dataproc::v1::Job> CancelJob(
@@ -570,7 +570,7 @@ class JobControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.DeleteJobRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L983}
+  /// [google.cloud.dataproc.v1.DeleteJobRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L1035}
   ///
   // clang-format on
   Status DeleteJob(std::string const& project_id, std::string const& region,
@@ -598,7 +598,7 @@ class JobControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.DeleteJobRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L983}
+  /// [google.cloud.dataproc.v1.DeleteJobRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L1035}
   ///
   // clang-format on
   Status DeleteJob(google::cloud::dataproc::v1::DeleteJobRequest const& request,

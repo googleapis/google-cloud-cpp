@@ -267,6 +267,7 @@ class AttachedClustersClient {
   ///   *   `platform_version`.
   ///   *   `proxy_config.kubernetes_secret.name`.
   ///   *   `proxy_config.kubernetes_secret.namespace`.
+  ///   *   `security_posture_config.vulnerability_mode`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -557,7 +558,7 @@ class AttachedClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AttachedCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.GetAttachedClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L331}
+  /// [google.cloud.gkemulticloud.v1.GetAttachedClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L332}
   ///
   // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>
@@ -588,7 +589,7 @@ class AttachedClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AttachedCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.GetAttachedClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L331}
+  /// [google.cloud.gkemulticloud.v1.GetAttachedClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L332}
   ///
   // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>
@@ -632,7 +633,7 @@ class AttachedClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AttachedCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.ListAttachedClustersRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L350}
+  /// [google.cloud.gkemulticloud.v1.ListAttachedClustersRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L351}
   ///
   // clang-format on
   StreamRange<google::cloud::gkemulticloud::v1::AttachedCluster>
@@ -672,7 +673,7 @@ class AttachedClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AttachedCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.ListAttachedClustersRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L350}
+  /// [google.cloud.gkemulticloud.v1.ListAttachedClustersRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L351}
   ///
   // clang-format on
   StreamRange<google::cloud::gkemulticloud::v1::AttachedCluster>
@@ -718,7 +719,7 @@ class AttachedClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AttachedCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.DeleteAttachedClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L392}
+  /// [google.cloud.gkemulticloud.v1.DeleteAttachedClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L393}
   /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L80}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
@@ -776,7 +777,7 @@ class AttachedClustersClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AttachedCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
-  /// [google.cloud.gkemulticloud.v1.DeleteAttachedClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L392}
+  /// [google.cloud.gkemulticloud.v1.DeleteAttachedClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L393}
   /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L80}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
@@ -844,8 +845,8 @@ class AttachedClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AttachedServerConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L230}
-  /// [google.cloud.gkemulticloud.v1.GetAttachedServerConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L438}
+  /// [google.cloud.gkemulticloud.v1.AttachedServerConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L234}
+  /// [google.cloud.gkemulticloud.v1.GetAttachedServerConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L439}
   ///
   // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AttachedServerConfig>
@@ -875,8 +876,8 @@ class AttachedClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.AttachedServerConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L230}
-  /// [google.cloud.gkemulticloud.v1.GetAttachedServerConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L438}
+  /// [google.cloud.gkemulticloud.v1.AttachedServerConfig]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L234}
+  /// [google.cloud.gkemulticloud.v1.GetAttachedServerConfigRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L439}
   ///
   // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AttachedServerConfig>
@@ -993,8 +994,8 @@ class AttachedClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.gkemulticloud.v1.GenerateAttachedClusterAgentTokenRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L456}
-  /// [google.cloud.gkemulticloud.v1.GenerateAttachedClusterAgentTokenResponse]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L490}
+  /// [google.cloud.gkemulticloud.v1.GenerateAttachedClusterAgentTokenRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L457}
+  /// [google.cloud.gkemulticloud.v1.GenerateAttachedClusterAgentTokenResponse]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L491}
   ///
   // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::

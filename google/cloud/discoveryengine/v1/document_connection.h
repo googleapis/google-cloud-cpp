@@ -230,6 +230,12 @@ class DocumentServiceConnection {
   virtual future<
       StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>
   PurgeDocuments(google::longrunning::Operation const& operation);
+
+  virtual StatusOr<
+      google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse>
+  BatchGetDocumentsMetadata(
+      google::cloud::discoveryengine::v1::
+          BatchGetDocumentsMetadataRequest const& request);
 };
 
 /**

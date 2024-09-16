@@ -195,6 +195,21 @@ class UserEventServiceConnection {
           request);
 
   virtual future<
+      StatusOr<google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>
+  PurgeUserEvents(
+      google::cloud::discoveryengine::v1::PurgeUserEventsRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> PurgeUserEvents(
+      NoAwaitTag,
+      google::cloud::discoveryengine::v1::PurgeUserEventsRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>
+  PurgeUserEvents(google::longrunning::Operation const& operation);
+
+  virtual future<
       StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>
   ImportUserEvents(
       google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
