@@ -15,6 +15,7 @@
 #include "generator/internal/http_option_utils.h"
 #include "generator/internal/http_annotation_parser.h"
 #include "generator/internal/longrunning.h"
+#include "generator/internal/mixin_utils.h"
 #include "generator/internal/printer.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
@@ -143,6 +144,15 @@ std::string FormatQueryParameterCode(
   return code;
 }
 
+std::string FormatApiVersionFromPackageNameString(
+    std::string const& package_name, std::string const& file_name) {
+  std::vector<std::string> parts = absl::StrSplit(package_name, '.');
+  if (absl::StartsWith(parts.back(), "v")) return parts.back();
+  GCP_LOG(FATAL) << "Unrecognized API version in file: " << file_name
+                 << ", package: " << package_name;
+  return {};  // Suppress clang-tidy warnings
+}
+
 }  // namespace
 
 void SetHttpDerivedMethodVars(HttpExtensionInfo const& info,
@@ -263,7 +273,10 @@ void SetHttpQueryParameters(HttpExtensionInfo const& info,
 }
 
 HttpExtensionInfo ParseHttpExtension(
-    google::protobuf::MethodDescriptor const& method) {
+    google::protobuf::MethodDescriptor const& method,
+    absl::optional<std::string> package_name_override,
+    absl::optional<std::string> file_name_override,
+    absl::optional<MixinMethodOverride> method_override) {
   if (!method.options().HasExtension(google::api::http)) return {};
 
   HttpExtensionInfo info;
@@ -271,30 +284,37 @@ HttpExtensionInfo ParseHttpExtension(
       method.options().GetExtension(google::api::http);
 
   std::string url_pattern;
-  switch (http_rule.pattern_case()) {
-    case google::api::HttpRule::kGet:
-      info.http_verb = "Get";
-      url_pattern = http_rule.get();
-      break;
-    case google::api::HttpRule::kPut:
-      info.http_verb = "Put";
-      url_pattern = http_rule.put();
-      break;
-    case google::api::HttpRule::kPost:
-      info.http_verb = "Post";
-      url_pattern = http_rule.post();
-      break;
-    case google::api::HttpRule::kDelete:
-      info.http_verb = "Delete";
-      url_pattern = http_rule.delete_();
-      break;
-    case google::api::HttpRule::kPatch:
-      info.http_verb = "Patch";
-      url_pattern = http_rule.patch();
-      break;
-    default:
-      GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__
-                     << ": google::api::HttpRule not handled";
+  if (method_override) {
+    url_pattern = method_override->http_path;
+    info.http_verb = method_override->http_verb;
+    info.body = method_override->http_body ? *method_override->http_body : "";
+  } else {
+    switch (http_rule.pattern_case()) {
+      case google::api::HttpRule::kGet:
+        info.http_verb = "Get";
+        url_pattern = http_rule.get();
+        break;
+      case google::api::HttpRule::kPut:
+        info.http_verb = "Put";
+        url_pattern = http_rule.put();
+        break;
+      case google::api::HttpRule::kPost:
+        info.http_verb = "Post";
+        url_pattern = http_rule.post();
+        break;
+      case google::api::HttpRule::kDelete:
+        info.http_verb = "Delete";
+        url_pattern = http_rule.delete_();
+        break;
+      case google::api::HttpRule::kPatch:
+        info.http_verb = "Patch";
+        url_pattern = http_rule.patch();
+        break;
+      default:
+        GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__
+                       << ": google::api::HttpRule not handled";
+    }
+    info.body = http_rule.body();
   }
 
   auto parsed_http_rule = ParsePathTemplate(url_pattern);
@@ -304,7 +324,6 @@ HttpExtensionInfo ParseHttpExtension(
                    << parsed_http_rule.status();
   }
 
-  info.body = http_rule.body();
   info.url_path = url_pattern;
 
   struct SegmentAsStringVisitor {
@@ -322,8 +341,23 @@ HttpExtensionInfo ParseHttpExtension(
     out->append(absl::visit(SegmentAsStringVisitor{}, s->value));
   };
 
-  auto api_version =
-      FormatApiVersionFromUrlPattern(url_pattern, method.file()->name());
+  // parse api version from url, if url doesn't include version info,
+  // parse api version from package name, if package name doesn't include
+  // version info, raise fatal error. For non-mixin method, package name is its
+  // package's name. For mixin method, package name is the target service's
+  // package's name.
+  auto file_name =
+      file_name_override ? *file_name_override : method.file()->name();
+  auto api_version_opt = FormatApiVersionFromUrlPattern(url_pattern, file_name);
+  std::string api_version;
+  if (api_version_opt) {
+    api_version = *api_version_opt;
+  } else {
+    api_version = package_name_override
+                      ? FormatApiVersionFromPackageNameString(
+                            *package_name_override, file_name)
+                      : FormatApiVersionFromPackageName(method);
+  }
 
   auto rest_path_visitor = RestPathVisitor(api_version, info.rest_path);
   for (auto const& s : parsed_http_rule->segments) {
@@ -386,29 +420,24 @@ std::string FormatRequestResource(google::protobuf::Descriptor const& request,
 // that mirror their directory path, which ends in the api version as well.
 std::string FormatApiVersionFromPackageName(
     google::protobuf::MethodDescriptor const& method) {
-  std::vector<std::string> parts =
-      absl::StrSplit(method.file()->package(), '.');
-  if (absl::StartsWith(parts.back(), "v")) return parts.back();
-  GCP_LOG(FATAL) << "Unrecognized API version in file: "
-                 << method.file()->name()
-                 << ", package: " << method.file()->package();
-  return {};  // Suppress clang-tidy warnings
+  return FormatApiVersionFromPackageNameString(method.file()->package(),
+                                               method.file()->name());
 }
 
 // Generate api version by extracting the version from the url pattern.
 // In some cases(i.e. location), there is no version in the package name.
-std::string FormatApiVersionFromUrlPattern(std::string const& url_pattern,
-                                           std::string const& file_name) {
-  std::vector<std::string> parts = absl::StrSplit(url_pattern, '/');
+absl::optional<std::string> FormatApiVersionFromUrlPattern(
+    std::string const& url_pattern, std::string const& file_name) {
+  std::vector<std::string> const parts = absl::StrSplit(url_pattern, '/');
   static auto const* const kVersion = new std::regex{R"(v\d+)"};
   for (auto const& part : parts) {
     if (std::regex_match(part, *kVersion)) {
       return part;
     }
   }
-  GCP_LOG(FATAL) << "Unrecognized API version in file: " << file_name
-                 << ", url pattern: " << url_pattern;
-  return {};  // Suppress clang-tidy warnings
+  GCP_LOG(WARNING) << "Unrecognized API version in file: " << file_name
+                   << ", url pattern: " << url_pattern;
+  return absl::nullopt;
 }
 
 }  // namespace generator_internal
