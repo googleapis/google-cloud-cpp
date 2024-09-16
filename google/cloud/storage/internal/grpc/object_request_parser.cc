@@ -676,11 +676,6 @@ StatusOr<google::storage::v2::RestoreObjectRequest> ToProto(
   result.set_generation(request.generation());
   SetGenerationConditions(result, request);
   SetMetagenerationConditions(result, request);
-
-  auto projection = request.GetOption<storage::Projection>().value_or("");
-  if (projection == "full") {
-    // TODO: Figure out if mutable_read_paths is missing or is even what we want
-  }
   result.set_copy_source_acl(
       request.GetOption<storage::CopySourceAcl>().value_or(false));
 
