@@ -499,6 +499,23 @@ StatusOr<RewriteObjectResponse> StorageConnectionImpl::RewriteObject(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
+StatusOr<ObjectMetadata> StorageConnectionImpl::RestoreObject(
+    RestoreObjectRequest const& request) {
+  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
+                               ? Idempotency::kIdempotent
+                               : Idempotency::kNonIdempotent;
+
+  return RestRetryLoop(
+      current_retry_policy(), current_backoff_policy(), idempotency,
+      [token = MakeIdempotencyToken(), this](
+          rest_internal::RestContext& context, Options const& options,
+          auto const& request) {
+        context.AddHeader(kIdempotencyTokenHeader, token);
+        return stub_->RestoreObject(context, options, request);
+      },
+      google::cloud::internal::CurrentOptions(), request, __func__);
+}
+
 StatusOr<CreateResumableUploadResponse>
 StorageConnectionImpl::CreateResumableUpload(
     ResumableUploadRequest const& request) {

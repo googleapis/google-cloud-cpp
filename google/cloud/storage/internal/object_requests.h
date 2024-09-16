@@ -379,6 +379,35 @@ struct RewriteObjectResponse {
 std::ostream& operator<<(std::ostream& os, RewriteObjectResponse const& r);
 
 /**
+ * Represents a request to the `Objects: restore` API
+ */
+class RestoreObjectRequest
+    : public GenericObjectRequest<
+          RestoreObjectRequest, Generation, CopySourceAcl, EncryptionKey,
+          IfGenerationMatch, IfGenerationNotMatch, IfMetagenerationMatch,
+          IfMetagenerationNotMatch, Projection, UserProject> {
+ public:
+  RestoreObjectRequest() = default;
+  explicit RestoreObjectRequest(std::string bucket_name,
+                                std::string object_name,
+                                std::int64_t generation)
+      : bucket_name_(std::move(bucket_name)),
+        object_name_(std::move(object_name)),
+        generation_(std::move(generation)) {}
+
+  std::string const& bucket_name() const { return bucket_name_; }
+  std::string const& object_name() const { return object_name_; }
+  std::int64_t const& generation() const { return generation_; }
+
+ private:
+  std::string bucket_name_;
+  std::string object_name_;
+  std::int64_t generation_;
+};
+
+std::ostream& operator<<(std::ostream& os, RestoreObjectRequest const& r);
+
+/**
  * Represents a request to start a resumable upload in `Objects: insert`.
  *
  * This request type is used to start resumable uploads. A resumable upload is

@@ -98,6 +98,8 @@ class StorageConnection {
       ComposeObjectRequest const&) = 0;
   virtual StatusOr<RewriteObjectResponse> RewriteObject(
       RewriteObjectRequest const&) = 0;
+  virtual StatusOr<ObjectMetadata> RestoreObject(
+      RestoreObjectRequest const&) = 0;
 
   virtual StatusOr<CreateResumableUploadResponse> CreateResumableUpload(
       ResumableUploadRequest const& request) = 0;

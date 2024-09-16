@@ -522,6 +522,19 @@ StatusOr<storage::internal::RewriteObjectResponse> GrpcStub::RewriteObject(
   return FromProto(*response, options);
 }
 
+StatusOr<storage::ObjectMetadata> GrpcStub::RestoreObject(
+    rest_internal::RestContext& context, Options const& options,
+    storage::internal::RestoreObjectRequest const& request) {
+  auto proto = ToProto(request);
+  if (!proto) return std::move(proto).status();
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(ctx, options, request);
+  AddIdempotencyToken(ctx, context);
+  auto response = stub_->RestoreObject(ctx, options, *proto);
+  if (!response) return std::move(response).status();
+  return FromProto(*response, options);
+}
+
 StatusOr<storage::internal::CreateResumableUploadResponse>
 GrpcStub::CreateResumableUpload(
     rest_internal::RestContext& context, Options const& options,

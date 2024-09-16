@@ -83,6 +83,8 @@ class TracingConnection : public storage::internal::StorageConnection {
       storage::internal::ComposeObjectRequest const& request) override;
   StatusOr<storage::internal::RewriteObjectResponse> RewriteObject(
       storage::internal::RewriteObjectRequest const& request) override;
+  StatusOr<storage::ObjectMetadata> RestoreObject(
+      storage::internal::RestoreObjectRequest const& request) override;
 
   StatusOr<storage::internal::CreateResumableUploadResponse>
   CreateResumableUpload(

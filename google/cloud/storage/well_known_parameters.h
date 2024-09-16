@@ -335,6 +335,20 @@ struct DestinationPredefinedAcl
 };
 
 /**
+ * Applicable only for buckets the don't have uniform bucket-level access
+ * enabled.
+ *
+ * If true, copies the soft-deleted object's ACL and applies it to the restored
+ * object. If false or not specified, the restored object inherits the bucket's
+ * default object ACL.
+ */
+struct CopySourceAcl
+    : public internal::WellKnownParameter<CopySourceAcl, bool> {
+  using WellKnownParameter<CopySourceAcl, bool>::WellKnownParameter;
+  static char const* well_known_parameter_name() { return "copySourceAcl"; }
+};
+
+/**
  * Set the default object ACL to a predefined value in a Bucket.
  *
  * Every bucket has a default object ACL, and this ACL is applied to all objects

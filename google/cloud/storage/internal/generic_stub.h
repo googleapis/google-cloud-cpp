@@ -130,6 +130,9 @@ class GenericStub {
   virtual StatusOr<storage::internal::RewriteObjectResponse> RewriteObject(
       rest_internal::RestContext&, Options const&,
       storage::internal::RewriteObjectRequest const&) = 0;
+  virtual StatusOr<storage::ObjectMetadata> RestoreObject(
+      rest_internal::RestContext&, Options const&,
+      storage::internal::RestoreObjectRequest const&) = 0;
 
   virtual StatusOr<storage::internal::CreateResumableUploadResponse>
   CreateResumableUpload(rest_internal::RestContext&, Options const&,

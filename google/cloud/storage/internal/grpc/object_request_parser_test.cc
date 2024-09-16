@@ -1046,6 +1046,50 @@ TEST(GrpcObjectRequestParser, RewriteObjectResponse) {
   EXPECT_EQ(actual.resource.name(), "object-name");
 }
 
+TEST(GrpcObjectRequestParser, RestoreObjectSimpleRequest) {
+  google::storage::v2::RestoreObjectRequest expected;
+  EXPECT_TRUE(
+      TextFormat::ParseFromString(R"pb(
+                                    bucket: "projects/_/buckets/test-bucket"
+                                    object: "test-object",
+                                    generation: 1234678,
+                                    copy_source_acl: false,
+                                  )pb",
+                                  &expected));
+
+  storage::internal::RestoreObjectRequest req("test-bucket", "test-object",
+                                              1234678);
+
+  auto actual = ToProto(req).value();
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcObjectRequestParser, RestoreObjectRequestAllFields) {
+  google::storage::v2::RestoreObjectRequest expected;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        bucket: "projects/_/buckets/test-bucket"
+        object: "test-object",
+        generation: 1234678,
+        if_generation_match: 1
+        if_generation_not_match: 2
+        if_metageneration_match: 3
+        if_metageneration_not_match: 4
+        copy_source_acl: true
+      )pb",
+      &expected));
+
+  storage::internal::RestoreObjectRequest req("test-bucket", "test-object",
+                                              1234678);
+  req.set_multiple_options(
+      storage::IfGenerationMatch(1), storage::IfGenerationNotMatch(2),
+      storage::IfMetagenerationMatch(3), storage::IfMetagenerationNotMatch(4),
+      storage::CopySourceAcl(true));
+  auto const actual = ToProto(req);
+  ASSERT_STATUS_OK(actual);
+  EXPECT_THAT(*actual, IsProtoEqual(expected));
+}
+
 TEST(GrpcObjectRequestParser, CopyObjectRequestAllOptions) {
   auto constexpr kTextProto = R"pb(
     destination_bucket: "projects/_/buckets/destination-bucket"
