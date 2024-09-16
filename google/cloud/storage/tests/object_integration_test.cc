@@ -841,17 +841,12 @@ TEST_F(ObjectIntegrationTest, RestoreObject) {
   auto delete_obj = client.DeleteObject(bucket_name_, object_name);
   ASSERT_STATUS_OK(delete_obj);
 
-  auto sd_object_metadata =
-      client.GetObjectMetadata(bucket_name_, object_name, SoftDeleted(true),
-                               Generation(metadata.value().generation()));
-  ASSERT_STATUS_OK(sd_object_metadata);
-
   auto restore = client.RestoreObject(bucket_name_, object_name,
-                                      sd_object_metadata.value().generation());
+                                      metadata.value().generation());
   ASSERT_STATUS_OK(restore);
 
-  EXPECT_NE(sd_object_metadata.value().generation(),
-            restore.value().generation());
+  EXPECT_NE(metadata.value().generation(), restore.value().generation());
+  EXPECT_EQ(restore.value().metageneration(), 1);
 }
 
 }  // anonymous namespace
