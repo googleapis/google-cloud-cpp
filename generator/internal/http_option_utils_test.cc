@@ -288,7 +288,7 @@ char const* const kServiceProto =
     "  }\n"
     "}\n";
 
-char const* const kServiceProtoWithoutVersion =
+char const* const kServiceProtoWithoutVersionInPackage =
     "syntax = \"proto3\";\n"
     "package my.service;\n"
     "import \"google/api/annotations.proto\";\n"
@@ -390,6 +390,42 @@ service Locations {
 }
 )""";
 
+auto constexpr kServiceProtoWithoutVersionInUrl = R"""(
+syntax = "proto3";
+package my.package.v1;
+import "google/api/annotations.proto";
+import "google/api/http.proto";
+
+message Request {}
+message Response {}
+
+service Foo {
+  rpc Bar(Request) returns (Response) {
+    option (google.api.http) = {
+      get: "/no/version/id/in/url"
+    };
+  }
+}
+)""";
+
+auto constexpr kServiceProtoWithoutVersionInPackageAndUrl = R"""(
+syntax = "proto3";
+package no.version.in.package;
+import "google/api/annotations.proto";
+import "google/api/http.proto";
+
+message Request {}
+message Response {}
+
+service Foo {
+  rpc Bar(Request) returns (Response) {
+    option (google.api.http) = {
+      get: "/no/version/id/in/url"
+    };
+  }
+}
+)""";
+
 struct MethodVarsTestValues {
   MethodVarsTestValues(std::string m, std::string k, std::string v)
       : method(std::move(m)),
@@ -412,10 +448,16 @@ class HttpOptionUtilsTest
              kLongrunningOperationsProto},
             {std::string("google/protobuf/well_known.proto"), kWellKnownProto},
             {std::string("google/foo/v1/service.proto"), kServiceProto},
-            {std::string("google/foo/v1/service_without_version.proto"),
-             kServiceProtoWithoutVersion},
+            {std::string(
+                 "google/foo/v1/service_without_version_in_package.proto"),
+             kServiceProtoWithoutVersionInPackage},
             {std::string("google/foo/v1/big_query_service.proto"),
              kBigQueryServiceProto},
+            {std::string("google/foo/v1/service_without_version_in_url.proto"),
+             kServiceProtoWithoutVersionInUrl},
+            {std::string("google/foo/v1/"
+                         "service_without_version_in_package_and_url.proto"),
+             kServiceProtoWithoutVersionInPackageAndUrl},
             {std::string("google/cloud/location/locations.proto"),
              kMixinLocationProto}}),
         source_tree_db_(&source_tree_),
@@ -532,6 +574,33 @@ TEST_F(HttpOptionUtilsTest,
                  "databases"));
   EXPECT_THAT(info.body, Eq("*"));
   EXPECT_THAT(info.http_verb, Eq("Post"));
+}
+
+TEST_F(HttpOptionUtilsTest, ParseHttpExtensionWithoutVersionInPackage) {
+  FileDescriptor const* service_file = pool_.FindFileByName(
+      "google/foo/v1/service_without_version_in_package.proto");
+  MethodDescriptor const* method = service_file->service(0)->method(0);
+  auto info = ParseHttpExtension(*method);
+  EXPECT_THAT(info.url_path, Eq("/v1/simple"));
+}
+
+TEST_F(HttpOptionUtilsTest, ParseHttpExtensionWithoutVersionInUrl) {
+  FileDescriptor const* service_file = pool_.FindFileByName(
+      "google/foo/v1/service_without_version_in_url.proto");
+  MethodDescriptor const* method = service_file->service(0)->method(0);
+  auto info = ParseHttpExtension(*method);
+  EXPECT_THAT(info.url_path, Eq("/no/version/id/in/url"));
+}
+
+TEST_F(HttpOptionUtilsTest, ParseHttpExtensionWithoutVersionInPackageAndUrl) {
+  FileDescriptor const* service_file = pool_.FindFileByName(
+      "google/foo/v1/service_without_version_in_package_and_url.proto");
+  MethodDescriptor const* method = service_file->service(0)->method(0);
+  EXPECT_DEATH_IF_SUPPORTED(
+      ParseHttpExtension(*method),
+      "Unrecognized API version in file: "
+      "google/foo/v1/service_without_version_in_package_and_url.proto, "
+      "package: no.version.in.package");
 }
 
 TEST_F(HttpOptionUtilsTest, ParseHttpExtensionWithMixinOverrides) {
@@ -804,14 +873,15 @@ TEST_F(HttpOptionUtilsTest, FormatApiVersionFromPackageName) {
 }
 
 TEST_F(HttpOptionUtilsTest, FormatApiVersionFromPackageNameError) {
-  FileDescriptor const* service_file_descriptor =
-      pool_.FindFileByName("google/foo/v1/service_without_version.proto");
+  FileDescriptor const* service_file_descriptor = pool_.FindFileByName(
+      "google/foo/v1/service_without_version_in_package.proto");
   MethodDescriptor const* method =
       service_file_descriptor->service(0)->method(0);
   EXPECT_DEATH_IF_SUPPORTED(
       FormatApiVersionFromPackageName(*method),
       "Unrecognized API version in file: "
-      "google/foo/v1/service_without_version.proto, package: my.service");
+      "google/foo/v1/service_without_version_in_package.proto, package: "
+      "my.service");
 }
 
 TEST_F(HttpOptionUtilsTest, FormatApiVersionFromUrlPattern) {
