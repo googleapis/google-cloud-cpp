@@ -794,7 +794,7 @@ have been using this library to make calls to Cloud Speech using raw gRPC), add
 you build with `vcpkg`, include `speech` in your install command.
 
 Note that `google_cloud_cpp_storage_protos` are associated with the
-`experimental-storage_grpc` feature, not the `storage` feature.
+`storage_grpc` feature, not the `storage` feature.
 
 ## v2.14.0 - 2023-08
 
