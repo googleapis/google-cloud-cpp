@@ -277,7 +277,7 @@ if ((TARGET gRPC::grpcpp_otel_plugin)
 endif ()
 set_target_properties(
     google_cloud_cpp_storage_grpc
-    PROPERTIES EXPORT_NAME "google-cloud-cpp::experimental-storage_grpc"
+    PROPERTIES EXPORT_NAME "google-cloud-cpp::storage_grpc"
                VERSION ${PROJECT_VERSION}
                SOVERSION ${PROJECT_VERSION_MAJOR})
 
