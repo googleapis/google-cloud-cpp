@@ -132,7 +132,7 @@ time env -C google-cloud-cpp ci/cloudbuild/build.sh -t checkers-pr
 
 ```sh
 (
-echo ENABLED_FEATURES=storage,experimental-storage_grpc,opentelemetry
+echo ENABLED_FEATURES=storage,storage_grpc,opentelemetry
 echo RUN_CLANG_TIDY_FIX=NO
 ) >$HOME/.cloudcxxrc
 time env -C google-cloud-cpp ci/cloudbuild/build.sh --distro fedora-latest-cmake --build development
