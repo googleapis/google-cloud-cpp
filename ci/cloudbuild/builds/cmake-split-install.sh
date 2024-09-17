@@ -50,7 +50,7 @@ io::log_h2 "Building and installing popular libraries"
 mapfile -t core_cmake_args < <(cmake::common_args cmake-out/popular-libraries)
 io::run cmake "${core_cmake_args[@]}" "${install_args[@]}" \
   -DCMAKE_PREFIX_PATH="${INSTALL_PREFIX}" \
-  -DGOOGLE_CLOUD_CPP_ENABLE="bigtable,pubsub,spanner,storage,storage_grpc,.iam,policytroubleshooter" \
+  -DGOOGLE_CLOUD_CPP_ENABLE="bigtable,pubsub,spanner,storage,storage_grpc,iam,policytroubleshooter" \
   -DGOOGLE_CLOUD_CPP_USE_INSTALLED_COMMON=ON
 io::run cmake --build cmake-out/popular-libraries
 io::run cmake --install cmake-out/popular-libraries --prefix "${INSTALL_PREFIX}"
