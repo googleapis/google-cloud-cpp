@@ -71,7 +71,7 @@ used as before:
 
 If you are using CMake to compile your application, then you need to change the
 `target_link_libraries()` command to use
-`google-cloud-cpp::%experimental-storage_grpc` instead
+`google-cloud-cpp::%storage_grpc` instead
 of `google-cloud-cpp::%storage`. For example, our quickstart program for gRPC
 uses:
 

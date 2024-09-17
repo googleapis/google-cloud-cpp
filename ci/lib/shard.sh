@@ -56,7 +56,7 @@ readonly PUBSUB_SHARD=(
 readonly STORAGE_SHARD=(
   storage
   storagecontrol
-  experimental-storage_grpc
+  storage_grpc
   # oauth2 and universe_domain are included because their deps are already built
   # by storage.
   oauth2
