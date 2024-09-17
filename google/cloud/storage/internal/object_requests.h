@@ -388,9 +388,8 @@ class RestoreObjectRequest
           IfMetagenerationNotMatch, Projection, UserProject> {
  public:
   RestoreObjectRequest() = default;
-  explicit RestoreObjectRequest(std::string bucket_name,
-                                std::string object_name,
-                                std::int64_t generation)
+  RestoreObjectRequest(std::string bucket_name, std::string object_name,
+                       std::int64_t generation)
       : bucket_name_(std::move(bucket_name)),
         object_name_(std::move(object_name)),
         generation_(std::move(generation)) {}

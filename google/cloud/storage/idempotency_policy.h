@@ -108,8 +108,7 @@ class IdempotencyPolicy {
       internal::ComposeObjectRequest const& request) const = 0;
   virtual bool IsIdempotent(
       internal::RewriteObjectRequest const& request) const = 0;
-  virtual bool IsIdempotent(
-      internal::RestoreObjectRequest const&) const {
+  virtual bool IsIdempotent(internal::RestoreObjectRequest const&) const {
     return false;
   };
   virtual bool IsIdempotent(
