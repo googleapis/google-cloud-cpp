@@ -109,7 +109,9 @@ class IdempotencyPolicy {
   virtual bool IsIdempotent(
       internal::RewriteObjectRequest const& request) const = 0;
   virtual bool IsIdempotent(
-      internal::RestoreObjectRequest const& request) const = 0;
+      internal::RestoreObjectRequest const&) const {
+    return false;
+  };
   virtual bool IsIdempotent(
       internal::ResumableUploadRequest const& request) const = 0;
   virtual bool IsIdempotent(
