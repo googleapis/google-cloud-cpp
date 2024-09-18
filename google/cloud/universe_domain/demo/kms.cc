@@ -18,34 +18,47 @@
 #include "google/cloud/location.h"
 #include "google/cloud/universe_domain.h"
 #include "google/cloud/universe_domain_options.h"
+#include <fstream>
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 3) {
-    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
+  if (argc < 3) {
+    std::cerr << "Usage: " << argv[0]
+              << " project-id location-id [sa-key-file]\n";
     return 1;
   }
   namespace gc = ::google::cloud;
   namespace kms = ::google::cloud::kms_v1;
   auto const location = gc::Location(argv[1], argv[2]);
 
+  gc::Options options;
+  if (argc == 4) {
+    auto is = std::ifstream(argv[3]);
+    is.exceptions(std::ios::badbit);
+    auto contents = std::string(std::istreambuf_iterator<char>(is.rdbuf()), {});
+    options.set<google::cloud::UnifiedCredentialsOption>(
+        google::cloud::MakeServiceAccountCredentials(contents));
+  }
+
   // Interrogate credentials for universe_domain and add the value to returned
   // options.
-  auto options = gc::AddUniverseDomainOption(gc::ExperimentalTag{});
-  if (!options.ok()) throw std::move(options).status();
+  auto ud_options = gc::AddUniverseDomainOption(gc::ExperimentalTag{}, options);
+  if (!ud_options.ok()) throw std::move(ud_options).status();
 
   // Override retry policy to quickly exit if there's a failure.
-  options->set<kms::KeyManagementServiceRetryPolicyOption>(
+  ud_options->set<kms::KeyManagementServiceRetryPolicyOption>(
       std::make_shared<kms::KeyManagementServiceLimitedErrorCountRetryPolicy>(
           3));
 
   auto client = kms::KeyManagementServiceClient(
-      kms::MakeKeyManagementServiceConnection(*options));
+      kms::MakeKeyManagementServiceConnection(*ud_options));
 
   std::cout << "kms.ListKeyRings:\n";
   for (auto kr : client.ListKeyRings(location.FullName())) {
     if (!kr) throw std::move(kr).status();
-    std::cout << kr->DebugString() << "\n";
+    std::string name = kr->name();
+    std::cout << "short_key_name: " << name.substr(name.rfind('/') + 1) << "\n";
+    std::cout << kr->create_time().DebugString() << "\n";
   }
 
   return 0;
