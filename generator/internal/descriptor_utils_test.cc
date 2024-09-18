@@ -123,6 +123,32 @@ char const* const kFrobberServiceProto =
     "  }\n"
     "}\n";
 
+auto constexpr kMixinLocationProto = R"""(
+syntax = "proto3";
+package google.cloud.location;
+import "google/api/annotations.proto";
+import "google/api/http.proto";
+
+message Request {
+  string name = 1;
+}
+message Response {}
+
+service Locations {
+  rpc GetLocation(Request) returns (Response) {
+    option (google.api.http) = {
+      get: "ToBeOverwrittenPath"
+    };
+  }
+
+  rpc ListLocations(Request) returns (Response) {
+    option (google.api.http) = {
+      get: "ToBeOverwrittenPath"
+    };
+  }
+}
+)""";
+
 class CreateServiceVarsTest
     : public testing::TestWithParam<std::pair<std::string, std::string>> {
  public:
@@ -131,6 +157,8 @@ class CreateServiceVarsTest
             {std::string("google/api/client.proto"), kClientProto},
             {std::string("google/api/http.proto"), kHttpProto},
             {std::string("google/api/annotations.proto"), kAnnotationsProto},
+            {std::string("google/cloud/location/locations.proto"),
+             kMixinLocationProto},
             {std::string("google/cloud/frobber/v1/frobber.proto"),
              kFrobberServiceProto}}),
         source_tree_db_(&source_tree_),
@@ -161,6 +189,8 @@ TEST_F(CreateServiceVarsTest, FilesParseSuccessfully) {
   EXPECT_NE(nullptr, pool_.FindFileByName("google/api/annotations.proto"));
   EXPECT_NE(nullptr,
             pool_.FindFileByName("google/cloud/frobber/v1/frobber.proto"));
+  EXPECT_NE(nullptr,
+            pool_.FindFileByName("google/cloud/location/locations.proto"));
 }
 
 TEST_F(CreateServiceVarsTest, RetryStatusCodeExpressionNotFound) {
@@ -214,6 +244,34 @@ TEST_F(CreateServiceVarsTest, ForwardingHeaderPaths) {
                 "google/cloud/frobber/v1/mocks/mock_frobber_connection.h")),
             Contains(Pair("options_header_path",
                           "google/cloud/frobber/v1/frobber_options.h"))));
+}
+
+TEST_F(CreateServiceVarsTest, MixinProtoHeaderPaths) {
+  FileDescriptor const* file =
+      pool_.FindFileByName("google/cloud/frobber/v1/frobber.proto");
+  FileDescriptor const* mixin_file =
+      pool_.FindFileByName("google/cloud/location/locations.proto");
+
+  std::vector<MixinMethod> mixin_methods{
+      {"",
+       "",
+       *mixin_file->service(0)->method(0),
+       {"Get", "/v1/{name=projects/*/locations/*}", absl::nullopt}},
+      {"",
+       "",
+       *mixin_file->service(0)->method(1),
+       {"Get", "/v1/{name=projects/*/locations}", absl::nullopt}}};
+  service_vars_ = CreateServiceVars(
+      *file->service(0),
+      {std::make_pair("product_path", "google/cloud/frobber/"),
+       std::make_pair("additional_proto_files",
+                      "google/cloud/add1.proto,google/cloud/add2.proto")},
+      mixin_methods);
+
+  EXPECT_EQ(service_vars_["mixin_proto_grpc_header_paths"],
+            "google/cloud/location/locations.grpc.pb.h");
+  EXPECT_EQ(service_vars_["mixin_proto_header_paths"],
+            "google/cloud/location/locations.pb.h");
 }
 
 TEST_P(CreateServiceVarsTest, KeySetCorrectly) {
@@ -975,6 +1033,8 @@ class CreateMethodVarsTest
             {std::string("test/test.proto"), kSourceLocationTestInput},
             {std::string("google/protobuf/well_known.proto"), kWellKnownProto},
             {std::string("google/foo/v1/service.proto"), kServiceProto},
+            {std::string("google/cloud/location/locations.proto"),
+             kMixinLocationProto},
             {std::string("google/foo/v1/http_service.proto"),
              kHttpServiceProto}}),
         source_tree_db_(&source_tree_),
@@ -1009,6 +1069,8 @@ TEST_F(CreateMethodVarsTest, FilesParseSuccessfully) {
             pool_.FindFileByName("google/longrunning/operation.proto"));
   EXPECT_NE(nullptr, pool_.FindFileByName("test/test.proto"));
   EXPECT_NE(nullptr, pool_.FindFileByName("google/foo/v1/service.proto"));
+  EXPECT_NE(nullptr,
+            pool_.FindFileByName("google/cloud/location/locations.proto"));
 }
 
 TEST_F(CreateMethodVarsTest, FormatMethodCommentsProtobufRequest) {
@@ -1223,6 +1285,89 @@ TEST_F(CreateMethodVarsTest, WithRequestId) {
   auto mv1 = vars_.find("my.service.v1.Service.WithoutRequestId");
   ASSERT_NE(mv1, vars_.end());
   EXPECT_THAT(mv1->second, Not(Contains(Pair("request_id_field_name", _))));
+}
+
+TEST_F(CreateMethodVarsTest, CreateMixinMethodsVars) {
+  FileDescriptor const* service_file_descriptor =
+      pool_.FindFileByName("google/foo/v1/service.proto");
+  FileDescriptor const* mixin_file =
+      pool_.FindFileByName("google/cloud/location/locations.proto");
+
+  std::vector<MixinMethod> mixin_methods{
+      {"",
+       "",
+       *mixin_file->service(0)->method(0),
+       {"Get", "/v1/{name=projects/*/locations/*}", absl::nullopt}},
+      {"",
+       "",
+       *mixin_file->service(0)->method(1),
+       {"Put", "/v2/{name=projects/*/locations}", "*"}}};
+
+  service_vars_ = CreateServiceVars(
+      *service_file_descriptor->service(0),
+      {std::make_pair(
+          "omitted_rpcs",
+          absl::StrCat(SafeReplaceAll(kMethod6Deprecated1, ",", "@"), ",",
+                       SafeReplaceAll(kMethod6Deprecated2, ",", "@")))},
+      mixin_methods);
+  vars_ = CreateMethodVars(*service_file_descriptor->service(0), YAML::Node{},
+                           service_vars_, mixin_methods);
+  auto get_location = vars_.find("google.cloud.location.Locations.GetLocation");
+  auto list_locations =
+      vars_.find("google.cloud.location.Locations.ListLocations");
+  ASSERT_NE(get_location, vars_.end());
+  ASSERT_NE(list_locations, vars_.end());
+
+  EXPECT_EQ(get_location->first, "google.cloud.location.Locations.GetLocation");
+  EXPECT_EQ(get_location->second["idempotency"], "kNonIdempotent");
+  EXPECT_EQ(get_location->second["method_http_query_parameters"], "");
+  EXPECT_EQ(get_location->second["method_http_verb"], "Get");
+  EXPECT_EQ(get_location->second["method_name"], "GetLocation");
+  EXPECT_EQ(get_location->second["method_name_snake"], "get_location");
+  EXPECT_EQ(get_location->second["method_request_body"], "");
+  EXPECT_EQ(get_location->second["method_request_params"],
+            "\"name=\", internal::UrlEncode(request.name())");
+  EXPECT_EQ(get_location->second["method_rest_path"],
+            "absl::StrCat(\"/\", rest_internal::DetermineApiVersion(\"v1\", "
+            "options), \"/\", request.name())");
+  EXPECT_EQ(get_location->second["method_rest_path_async"],
+            "absl::StrCat(\"/\", rest_internal::DetermineApiVersion(\"v1\", "
+            "*options), \"/\", request.name())");
+  EXPECT_EQ(get_location->second["request_resource"], "request");
+  EXPECT_EQ(get_location->second["request_type"],
+            "google::cloud::location::Request");
+  EXPECT_EQ(get_location->second["response_message_type"],
+            "google.cloud.location.Response");
+  EXPECT_EQ(get_location->second["response_type"],
+            "google::cloud::location::Response");
+  EXPECT_EQ(get_location->second["return_type"],
+            "StatusOr<google::cloud::location::Response>");
+
+  EXPECT_EQ(list_locations->first,
+            "google.cloud.location.Locations.ListLocations");
+  EXPECT_EQ(list_locations->second["idempotency"], "kIdempotent");
+  EXPECT_EQ(list_locations->second["method_http_query_parameters"], "");
+  EXPECT_EQ(list_locations->second["method_http_verb"], "Put");
+  EXPECT_EQ(list_locations->second["method_name"], "ListLocations");
+  EXPECT_EQ(list_locations->second["method_name_snake"], "list_locations");
+  EXPECT_EQ(list_locations->second["method_request_body"], "*");
+  EXPECT_EQ(list_locations->second["method_request_params"],
+            "\"name=\", internal::UrlEncode(request.name())");
+  EXPECT_EQ(list_locations->second["method_rest_path"],
+            "absl::StrCat(\"/\", rest_internal::DetermineApiVersion(\"v2\", "
+            "options), \"/\", request.name())");
+  EXPECT_EQ(list_locations->second["method_rest_path_async"],
+            "absl::StrCat(\"/\", rest_internal::DetermineApiVersion(\"v2\", "
+            "*options), \"/\", request.name())");
+  EXPECT_EQ(list_locations->second["request_resource"], "request");
+  EXPECT_EQ(list_locations->second["request_type"],
+            "google::cloud::location::Request");
+  EXPECT_EQ(list_locations->second["response_message_type"],
+            "google.cloud.location.Response");
+  EXPECT_EQ(list_locations->second["response_type"],
+            "google::cloud::location::Response");
+  EXPECT_EQ(list_locations->second["return_type"],
+            "StatusOr<google::cloud::location::Response>");
 }
 
 TEST_P(CreateMethodVarsTest, KeySetCorrectly) {

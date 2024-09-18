@@ -172,6 +172,14 @@ std::string DefaultIdempotencyFromHttpOperation(
   return "kNonIdempotent";
 }
 
+std::string DefaultIdempotencyFromHttpOperation(
+    google::protobuf::MethodDescriptor const& method,
+    MixinMethodOverride const& method_override) {
+  if (IsKnownIdempotentMethod(method)) return "kIdempotent";
+  if (method_override.http_verb == "Put") return "kIdempotent";
+  return "kNonIdempotent";
+}
+
 std::string ChompByValue(std::string const& s) {
   return (!s.empty() && s.back() == '\n') ? s.substr(0, s.size() - 1) : s;
 }
@@ -455,6 +463,17 @@ std::string FormatAdditionalPbHeaderPaths(VarsDictionary& vars) {
   return absl::StrJoin(additional_pb_header_paths, ",");
 }
 
+std::string FormatMixinPbHeaderPaths(
+    std::vector<MixinMethod> const& mixin_methods, std::string const& suffix) {
+  std::unordered_set<std::string> mixin_header_paths;
+  for (auto const& mixin_method : mixin_methods) {
+    mixin_header_paths.insert(absl::StrCat(
+        absl::StripSuffix(mixin_method.method.get().file()->name(), ".proto"),
+        suffix));
+  }
+  return absl::StrJoin(mixin_header_paths, ",");
+}
+
 // If a service name mapping exists, return the new name.
 // Parses a command line argument in the form:
 // {"service_name_mappings": "service_a=new_service_a,service=new_service"}.
@@ -489,6 +508,54 @@ absl::optional<std::string> GetReplacementComment(VarsDictionary const& vars,
     if (p.first == name) return std::string(p.second.data(), p.second.size());
   }
   return absl::nullopt;
+}
+
+void GetMethodVarsByMethod(
+    VarsDictionary& method_vars,
+    google::protobuf::ServiceDescriptor const& service,
+    YAML::Node const& service_config,
+    google::protobuf::MethodDescriptor const& method,
+    VarsDictionary const& idempotency_overrides,
+    std::set<std::string> const& omitted_rpcs,
+    absl::optional<MixinMethodOverride> method_override = absl::nullopt) {
+  method_vars["idempotency"] =
+      method_override
+          ? DefaultIdempotencyFromHttpOperation(method, *method_override)
+          : DefaultIdempotencyFromHttpOperation(method);
+  if (!idempotency_overrides.empty()) {
+    auto iter = idempotency_overrides.find(
+        absl::StrCat(service.name(), ".", method.name()));
+    if (iter != idempotency_overrides.end()) {
+      method_vars["idempotency"] = iter->second;
+    }
+  }
+  method_vars["method_name"] = method.name();
+  method_vars["method_name_snake"] = CamelCaseToSnakeCase(method.name());
+  method_vars["request_type"] =
+      ProtoNameToCppName(method.input_type()->full_name());
+  method_vars["response_message_type"] = method.output_type()->full_name();
+  method_vars["response_type"] =
+      ProtoNameToCppName(method.output_type()->full_name());
+  method_vars["return_type"] =
+      IsResponseTypeEmpty(method)
+          ? "Status"
+          : absl::StrFormat("StatusOr<%s>", method_vars.at("response_type"));
+  auto request_id_field_name = RequestIdFieldName(service_config, method);
+  if (!request_id_field_name.empty()) {
+    method_vars["request_id_field_name"] = std::move(request_id_field_name);
+  }
+  SetLongrunningOperationMethodVars(method, method_vars);
+  AssignPaginationMethodVars(method, method_vars);
+  SetMethodSignatureMethodVars(service, method, omitted_rpcs, method_vars);
+  auto parsed_http_info =
+      method_override
+          ? ParseHttpExtension(method, service.file()->package(),
+                               service.file()->name(), *method_override)
+          : ParseHttpExtension(method);
+  method_vars["request_resource"] =
+      FormatRequestResource(*method.input_type(), parsed_http_info);
+  SetHttpDerivedMethodVars(parsed_http_info, method, method_vars);
+  SetHttpQueryParameters(parsed_http_info, method, method_vars);
 }
 
 }  // namespace
@@ -559,7 +626,8 @@ bool CheckParameterCommentSubstitutions() {
 
 VarsDictionary CreateServiceVars(
     google::protobuf::ServiceDescriptor const& descriptor,
-    std::vector<std::pair<std::string, std::string>> const& initial_values) {
+    std::vector<std::pair<std::string, std::string>> const& initial_values,
+    std::vector<MixinMethod> const& mixin_methods) {
   VarsDictionary vars(initial_values.begin(), initial_values.end());
   auto const& service_name = GetEffectiveServiceName(vars, descriptor.name());
   vars["product_options_page"] = OptionsGroup(vars["product_path"]);
@@ -692,6 +760,10 @@ VarsDictionary CreateServiceVars(
       absl::StripSuffix(descriptor.file()->name(), ".proto"), ".grpc.pb.h");
   vars["proto_header_path"] = absl::StrCat(
       absl::StripSuffix(descriptor.file()->name(), ".proto"), ".pb.h");
+  vars["mixin_proto_grpc_header_paths"] =
+      FormatMixinPbHeaderPaths(mixin_methods, ".grpc.pb.h");
+  vars["mixin_proto_header_paths"] =
+      FormatMixinPbHeaderPaths(mixin_methods, ".pb.h");
   vars["retry_policy_name"] = absl::StrCat(service_name, "RetryPolicy");
   vars["retry_traits_name"] = absl::StrCat(service_name, "RetryTraits");
   vars["retry_traits_header_path"] =
@@ -802,7 +874,8 @@ std::map<std::string, std::string> ParseIdempotencyOverrides(
 
 std::map<std::string, VarsDictionary> CreateMethodVars(
     google::protobuf::ServiceDescriptor const& service,
-    YAML::Node const& service_config, VarsDictionary const& vars) {
+    YAML::Node const& service_config, VarsDictionary const& vars,
+    std::vector<MixinMethod> const& mixin_methods) {
   auto split_arg = [&vars](std::string const& arg) -> std::set<std::string> {
     auto l = vars.find(arg);
     if (l == vars.end()) return {};
@@ -816,37 +889,16 @@ std::map<std::string, VarsDictionary> CreateMethodVars(
   for (int i = 0; i < service.method_count(); i++) {
     auto const& method = *service.method(i);
     VarsDictionary method_vars;
-    method_vars["idempotency"] = DefaultIdempotencyFromHttpOperation(method);
-    if (!idempotency_overrides.empty()) {
-      auto iter = idempotency_overrides.find(
-          absl::StrCat(service.name(), ".", method.name()));
-      if (iter != idempotency_overrides.end()) {
-        method_vars["idempotency"] = iter->second;
-      }
-    }
-    method_vars["method_name"] = method.name();
-    method_vars["method_name_snake"] = CamelCaseToSnakeCase(method.name());
-    method_vars["request_type"] =
-        ProtoNameToCppName(method.input_type()->full_name());
-    method_vars["response_message_type"] = method.output_type()->full_name();
-    method_vars["response_type"] =
-        ProtoNameToCppName(method.output_type()->full_name());
-    method_vars["return_type"] =
-        IsResponseTypeEmpty(method)
-            ? "Status"
-            : absl::StrFormat("StatusOr<%s>", method_vars.at("response_type"));
-    auto request_id_field_name = RequestIdFieldName(service_config, method);
-    if (!request_id_field_name.empty()) {
-      method_vars["request_id_field_name"] = std::move(request_id_field_name);
-    }
-    SetLongrunningOperationMethodVars(method, method_vars);
-    AssignPaginationMethodVars(method, method_vars);
-    SetMethodSignatureMethodVars(service, method, omitted_rpcs, method_vars);
-    auto parsed_http_info = ParseHttpExtension(method);
-    method_vars["request_resource"] =
-        FormatRequestResource(*method.input_type(), parsed_http_info);
-    SetHttpDerivedMethodVars(parsed_http_info, method, method_vars);
-    SetHttpQueryParameters(parsed_http_info, method, method_vars);
+    GetMethodVarsByMethod(method_vars, service, service_config, method,
+                          idempotency_overrides, omitted_rpcs);
+    service_methods_vars[method.full_name()] = method_vars;
+  }
+  for (auto const& mixin_method : mixin_methods) {
+    auto const& method = mixin_method.method.get();
+    VarsDictionary method_vars;
+    GetMethodVarsByMethod(method_vars, service, service_config, method,
+                          idempotency_overrides, omitted_rpcs,
+                          mixin_method.method_override);
     service_methods_vars[method.full_name()] = method_vars;
   }
   return service_methods_vars;
