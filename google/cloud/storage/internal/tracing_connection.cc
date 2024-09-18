@@ -184,6 +184,13 @@ TracingConnection::RewriteObject(
   return internal::EndSpan(*span, impl_->RewriteObject(request));
 }
 
+StatusOr<storage::ObjectMetadata> TracingConnection::RestoreObject(
+    storage::internal::RestoreObjectRequest const& request) {
+  auto span = internal::MakeSpan("storage::Client::RestoreObject");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, impl_->RestoreObject(request));
+}
+
 StatusOr<storage::internal::CreateResumableUploadResponse>
 TracingConnection::CreateResumableUpload(
     storage::internal::ResumableUploadRequest const& request) {

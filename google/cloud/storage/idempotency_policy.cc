@@ -105,6 +105,10 @@ bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
   return true;
 }
 bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
+    internal::RestoreObjectRequest const&) const {
+  return true;
+}
+bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
     internal::ResumableUploadRequest const&) const {
   return true;
 }
@@ -358,6 +362,11 @@ bool StrictIdempotencyPolicy::IsIdempotent(
   // is possible for the request to succeed more than once, even if the source
   // pre-conditions are set. If they are set, the operation can only succeed
   // once, but the results may be different.
+  return request.HasOption<IfGenerationMatch>();
+}
+
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::RestoreObjectRequest const& request) const {
   return request.HasOption<IfGenerationMatch>();
 }
 

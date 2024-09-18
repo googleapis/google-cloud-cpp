@@ -744,6 +744,34 @@ TEST_F(GrpcClientTest, RewriteObject) {
   EXPECT_EQ(response.status(), PermanentError());
 }
 
+TEST_F(GrpcClientTest, RestoreObject) {
+  auto mock = std::make_shared<MockStorageStub>();
+  EXPECT_CALL(*mock, RestoreObject)
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
+                       v2::RestoreObjectRequest const& request) {
+        auto metadata = GetMetadata(context);
+        EXPECT_THAT(metadata,
+                    UnorderedElementsAre(
+                        Pair(kIdempotencyTokenHeader, "test-token-1234"),
+                        Pair("x-goog-quota-user", "test-quota-user"),
+                        Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(request.bucket(), "projects/_/buckets/test-bucket");
+        EXPECT_THAT(request.object(), "test-object");
+        EXPECT_THAT(request.generation(), 1234);
+        EXPECT_THAT(request.copy_source_acl(), false);
+        return PermanentError();
+      });
+  auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto response = client->RestoreObject(
+      context, TestOptions(),
+      storage::internal::RestoreObjectRequest("test-bucket", "test-object",
+                                              1234)
+          .set_multiple_options(Fields("field1,field2"),
+                                QuotaUser("test-quota-user")));
+  EXPECT_EQ(response.status(), PermanentError());
+}
+
 TEST_F(GrpcClientTest, CreateResumableUpload) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, StartResumableWrite)

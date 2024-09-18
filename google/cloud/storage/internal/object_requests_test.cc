@@ -518,6 +518,30 @@ TEST(ObjectRequestsTest, RewriteObjectResponseFailureInResource) {
   EXPECT_THAT(actual, Not(IsOk()));
 }
 
+TEST(ObjectRequestsTest, RestoreObject) {
+  RestoreObjectRequest request("test-bucket", "test-object", 1234);
+  EXPECT_EQ("test-bucket", request.bucket_name());
+  EXPECT_EQ("test-object", request.object_name());
+  EXPECT_EQ(1234, request.generation());
+  request.set_multiple_options(IfGenerationMatch(7), IfGenerationNotMatch(8),
+                               IfMetagenerationMatch(9),
+                               IfMetagenerationNotMatch(10),
+                               UserProject("my-project"), CopySourceAcl(true));
+
+  std::ostringstream os;
+  os << request;
+  std::string actual = os.str();
+  EXPECT_THAT(actual, HasSubstr("test-bucket"));
+  EXPECT_THAT(actual, HasSubstr("test-object"));
+  EXPECT_THAT(actual, HasSubstr("generation=1234"));
+  EXPECT_THAT(actual, HasSubstr("ifGenerationMatch=7"));
+  EXPECT_THAT(actual, HasSubstr("ifGenerationNotMatch=8"));
+  EXPECT_THAT(actual, HasSubstr("ifMetagenerationMatch=9"));
+  EXPECT_THAT(actual, HasSubstr("ifMetagenerationNotMatch=10"));
+  EXPECT_THAT(actual, HasSubstr("userProject=my-project"));
+  EXPECT_THAT(actual, HasSubstr("copySourceAcl=true"));
+}
+
 TEST(ObjectRequestsTest, ResumableUpload) {
   ResumableUploadRequest request("source-bucket", "source-object");
   EXPECT_EQ("source-bucket", request.bucket_name());

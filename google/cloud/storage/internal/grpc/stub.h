@@ -116,6 +116,9 @@ class GrpcStub : public GenericStub {
   StatusOr<storage::internal::RewriteObjectResponse> RewriteObject(
       rest_internal::RestContext& context, Options const& options,
       storage::internal::RewriteObjectRequest const& request) override;
+  StatusOr<storage::ObjectMetadata> RestoreObject(
+      rest_internal::RestContext& context, Options const& options,
+      storage::internal::RestoreObjectRequest const& request) override;
 
   StatusOr<storage::internal::CreateResumableUploadResponse>
   CreateResumableUpload(
