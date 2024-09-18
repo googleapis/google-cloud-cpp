@@ -33,5 +33,3 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
         PROPERTIES LABELS "integration-test;quickstart" PASS_REGULAR_EXPRESSION
                    "Request had insufficient authentication scopes")
 endif ()
-
-add_subdirectory(samples)
