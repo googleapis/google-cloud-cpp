@@ -22,7 +22,7 @@
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 3 || argc != 4) {
+  if (argc != 3 && argc != 4) {
     std::cerr << "Usage: " << argv[0]
               << " project-id location-id [sa-key-file]\n";
     return 1;
