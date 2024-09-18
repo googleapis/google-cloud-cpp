@@ -20,6 +20,7 @@
 #include "google/cloud/storage/internal/async/object_descriptor_reader.h"
 #include "google/cloud/storage/internal/async/open_stream.h"
 #include "google/cloud/storage/internal/async/read_range.h"
+#include "google/cloud/storage/options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
@@ -42,7 +43,7 @@ class ObjectDescriptorImpl
       std::unique_ptr<storage_experimental::ResumePolicy> resume_policy,
       OpenStreamFactory make_stream,
       google::storage::v2::BidiReadObjectSpec read_object_spec,
-      std::shared_ptr<OpenStream> stream);
+      std::shared_ptr<OpenStream> stream, Options options = {});
   ~ObjectDescriptorImpl() override;
 
   // Start the read loop.
@@ -50,6 +51,8 @@ class ObjectDescriptorImpl
 
   // Cancel the underlying RPC and stop the resume loop.
   void Cancel();
+
+  Options options() const override { return options_; }
 
   // Return the object metadata. This is only available after the first `Read()`
   // returns.
@@ -101,6 +104,7 @@ class ObjectDescriptorImpl
   google::storage::v2::BidiReadObjectRequest next_request_;
 
   std::unordered_map<std::int64_t, std::shared_ptr<ReadRange>> active_ranges_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
