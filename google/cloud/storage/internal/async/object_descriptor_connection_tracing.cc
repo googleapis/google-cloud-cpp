@@ -44,6 +44,8 @@ class AsyncObjectDescriptorConnectionTracing
     internal::EndSpan(*span_);
   }
 
+  Options options() const override { return impl_->options(); }
+
   absl::optional<google::storage::v2::Object> metadata() const override {
     return impl_->metadata();
   }
