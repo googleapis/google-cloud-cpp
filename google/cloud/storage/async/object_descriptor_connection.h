@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_ASYNC_OBJECT_DESCRIPTOR_CONNECTION_H
 
 #include "google/cloud/storage/async/reader_connection.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
 #include <google/storage/v2/storage.pb.h>
@@ -36,6 +37,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ObjectDescriptorConnection {
  public:
   virtual ~ObjectDescriptorConnection() = default;
+
+  virtual Options options() const = 0;
 
   /// Returns, if available, the object metadata associated with this
   /// descriptor.

@@ -27,11 +27,12 @@ ObjectDescriptorImpl::ObjectDescriptorImpl(
     std::unique_ptr<storage_experimental::ResumePolicy> resume_policy,
     OpenStreamFactory make_stream,
     google::storage::v2::BidiReadObjectSpec read_object_spec,
-    std::shared_ptr<OpenStream> stream)
+    std::shared_ptr<OpenStream> stream, Options options)
     : resume_policy_(std::move(resume_policy)),
       make_stream_(std::move(make_stream)),
       read_object_spec_(std::move(read_object_spec)),
-      stream_(std::move(stream)) {}
+      stream_(std::move(stream)),
+      options_(std::move(options)) {}
 
 ObjectDescriptorImpl::~ObjectDescriptorImpl() { stream_->Cancel(); }
 

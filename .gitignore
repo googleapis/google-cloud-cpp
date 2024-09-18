@@ -1,6 +1,7 @@
 # Common build output directory names
 .build/
 _build/
+build/
 build-output/
 build-out/
 cmake-out/
@@ -9,6 +10,7 @@ cmake-out/
 /bazel-*
 /google/cloud/*/quickstart/bazel-*
 !bazel-*.cfg
+vcpkg_installed/
 
 # Used by some IDEs and LSP plugins
 compile_commands.json
