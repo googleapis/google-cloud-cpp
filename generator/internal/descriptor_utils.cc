@@ -551,7 +551,7 @@ void GetMethodVarsByMethod(
   auto parsed_http_info =
       method_override
           ? ParseHttpExtension(method, service.file()->package(),
-                               service.file()->name(), *method_override)
+                               service.file()->name(), method_override)
           : ParseHttpExtension(method);
   method_vars["request_resource"] =
       FormatRequestResource(*method.input_type(), parsed_http_info);
