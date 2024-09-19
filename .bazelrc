@@ -17,9 +17,6 @@
 
 # Use host-OS-specific config lines from bazelrc files.
 build --enable_platform_specific_config=true
-# gRPC fails to compile with Clang 16 if layering check is enabled:
-#   https://github.com/grpc/grpc/issues/34482
-build --features=-layering_check
 
 # The project requires C++ >= 14. By default Bazel adds `-std=c++0x` which
 # disables C++14 features, even if the compilers defaults to C++ >= 14
