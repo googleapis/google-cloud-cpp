@@ -548,11 +548,7 @@ void GetMethodVarsByMethod(
   SetLongrunningOperationMethodVars(method, method_vars);
   AssignPaginationMethodVars(method, method_vars);
   SetMethodSignatureMethodVars(service, method, omitted_rpcs, method_vars);
-  auto parsed_http_info =
-      method_override
-          ? ParseHttpExtension(method, service.file()->package(),
-                               service.file()->name(), method_override)
-          : ParseHttpExtension(method);
+  auto parsed_http_info = ParseHttpExtension(method, method_override);
   method_vars["request_resource"] =
       FormatRequestResource(*method.input_type(), parsed_http_info);
   SetHttpDerivedMethodVars(parsed_http_info, method, method_vars);

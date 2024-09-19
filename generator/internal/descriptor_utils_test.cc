@@ -1301,7 +1301,7 @@ TEST_F(CreateMethodVarsTest, CreateMixinMethodsVars) {
       {"",
        "",
        *mixin_file->service(0)->method(1),
-       {"Put", "/v2/{name=projects/*/locations}", "*"}}};
+       {"Put", "/{name=projects/*/locations}", "*"}}};
 
   service_vars_ = CreateServiceVars(
       *service_file_descriptor->service(0),
@@ -1354,11 +1354,9 @@ TEST_F(CreateMethodVarsTest, CreateMixinMethodsVars) {
   EXPECT_EQ(list_locations->second["method_request_params"],
             "\"name=\", internal::UrlEncode(request.name())");
   EXPECT_EQ(list_locations->second["method_rest_path"],
-            "absl::StrCat(\"/\", rest_internal::DetermineApiVersion(\"v2\", "
-            "options), \"/\", request.name())");
+            "absl::StrCat(\"/\", request.name())");
   EXPECT_EQ(list_locations->second["method_rest_path_async"],
-            "absl::StrCat(\"/\", rest_internal::DetermineApiVersion(\"v2\", "
-            "*options), \"/\", request.name())");
+            "absl::StrCat(\"/\", request.name())");
   EXPECT_EQ(list_locations->second["request_resource"], "request");
   EXPECT_EQ(list_locations->second["request_type"],
             "google::cloud::location::Request");
