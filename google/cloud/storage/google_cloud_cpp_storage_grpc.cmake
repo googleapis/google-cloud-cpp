@@ -18,9 +18,8 @@ if (NOT GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
     # If disabled, defined an empty library so the tests can have a simpler
     # link-line
     add_library(google_cloud_cpp_storage_grpc INTERFACE)
-    set_target_properties(
-        google_cloud_cpp_storage_grpc
-        PROPERTIES EXPORT_NAME "google-cloud-cpp::storage_grpc")
+    add_library(google-cloud-cpp::storage_grpc ALIAS
+                google_cloud_cpp_storage_grpc)
     add_library(google_cloud_cpp_storage_protos INTERFACE)
     add_library(google-cloud-cpp::storage_protos ALIAS
                 google_cloud_cpp_storage_protos)
@@ -242,38 +241,10 @@ if ((TARGET gRPC::grpcpp_otel_plugin)
         PRIVATE GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS)
     target_link_libraries(
         google_cloud_cpp_storage_grpc
-        PUBLIC google-cloud-cpp::storage
-               google-cloud-cpp::storage_protos
-               google-cloud-cpp::opentelemetry
-               google-cloud-cpp::grpc_utils
-               google-cloud-cpp::common
-               nlohmann_json::nlohmann_json
-               gRPC::grpc++
-               absl::optional
-               absl::strings
-               absl::time
-               Threads::Threads)
-    google_cloud_cpp_add_common_options(google_cloud_cpp_storage_grpc)
-    target_include_directories(
-        google_cloud_cpp_storage_grpc
-        PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-               $<INSTALL_INTERFACE:include>)
-    target_compile_options(google_cloud_cpp_storage_grpc
-                           PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
-    target_compile_definitions(google_cloud_cpp_storage_grpc
-                               PUBLIC GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC)
-    if (GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND)
-        target_compile_definitions(
-            google_cloud_cpp_storage_grpc
-            PRIVATE GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND)
-    endif ()
-    set_target_properties(
-        google_cloud_cpp_storage_grpc
-        PROPERTIES EXPORT_NAME "google-cloud-cpp::storage_grpc"
-                   VERSION ${PROJECT_VERSION}
-                   SOVERSION ${PROJECT_VERSION_MAJOR})
-
-    create_bazel_config(google_cloud_cpp_storage_grpc)
+        PUBLIC google-cloud-cpp::opentelemetry gRPC::grpcpp_otel_plugin
+               opentelemetry-cpp::metrics)
+    set(EXTRA_MODULES "google_cloud_cpp_opentelemetry" "grpcpp_otel_plugin"
+                      "opentelemetry_metrics")
 endif ()
 set_target_properties(
     google_cloud_cpp_storage_grpc
@@ -421,96 +392,112 @@ if (GOOGLE_CLOUD_CPP_WITH_MOCKS)
         COMPONENT google_cloud_cpp_development)
 endif ()
 
-if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
-    # This is a bit weird, we add an additional link library to
-    # `storage_client_testing`
-    target_link_libraries(storage_client_testing
-                          PUBLIC google-cloud-cpp::storage_grpc)
-
-    set(storage_client_grpc_unit_tests
-        # cmake-format: sort
-        async/bucket_name_test.cc
-        async/client_test.cc
-        async/idempotency_policy_test.cc
-        async/reader_test.cc
-        async/resume_policy_test.cc
-        async/rewriter_test.cc
-        async/token_test.cc
-        async/writer_test.cc
-        grpc_plugin_test.cc
-        internal/async/connection_impl_insert_test.cc
-        internal/async/connection_impl_read_test.cc
-        internal/async/connection_impl_test.cc
-        internal/async/connection_impl_upload_hash_test.cc
-        internal/async/connection_impl_upload_test.cc
-        internal/async/connection_tracing_test.cc
-        internal/async/default_options_test.cc
-        internal/async/insert_object_test.cc
-        internal/async/partial_upload_test.cc
-        internal/async/read_payload_impl_test.cc
-        internal/async/reader_connection_factory_test.cc
-        internal/async/reader_connection_impl_test.cc
-        internal/async/reader_connection_resume_test.cc
-        internal/async/reader_connection_tracing_test.cc
-        internal/async/rewriter_connection_impl_test.cc
-        internal/async/rewriter_connection_tracing_test.cc
-        internal/async/write_payload_impl_test.cc
-        internal/async/writer_connection_buffered_test.cc
-        internal/async/writer_connection_finalized_test.cc
-        internal/async/writer_connection_impl_test.cc
-        internal/async/writer_connection_tracing_test.cc
-        internal/grpc/bucket_access_control_parser_test.cc
-        internal/grpc/bucket_metadata_parser_test.cc
-        internal/grpc/bucket_name_test.cc
-        internal/grpc/bucket_request_parser_test.cc
-        internal/grpc/buffer_read_object_data_test.cc
-        internal/grpc/configure_client_context_test.cc
-        internal/grpc/hmac_key_metadata_parser_test.cc
-        internal/grpc/hmac_key_request_parser_test.cc
-        internal/grpc/make_cord_test.cc
-        internal/grpc/notification_metadata_parser_test.cc
-        internal/grpc/notification_request_parser_test.cc
-        internal/grpc/object_access_control_parser_test.cc
-        internal/grpc/object_metadata_parser_test.cc
-        internal/grpc/object_read_source_test.cc
-        internal/grpc/object_request_parser_test.cc
-        internal/grpc/owner_parser_test.cc
-        internal/grpc/scale_stall_timeout_test.cc
-        internal/grpc/service_account_parser_test.cc
-        internal/grpc/sign_blob_request_parser_test.cc
-        internal/grpc/split_write_object_data_test.cc
-        internal/grpc/stub_acl_test.cc
-        internal/grpc/stub_insert_object_media_test.cc
-        internal/grpc/stub_read_object_test.cc
-        internal/grpc/stub_test.cc
-        internal/grpc/stub_upload_chunk_test.cc
-        internal/grpc/synthetic_self_link_test.cc
-        internal/storage_stub_factory_test.cc)
-
-    foreach (fname ${storage_client_grpc_unit_tests})
-        google_cloud_cpp_add_executable(target "storage" "${fname}")
-        if (GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND)
-            target_compile_definitions(
-                ${target} PRIVATE GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND)
-        endif ()
-        target_link_libraries(
-            ${target}
-            PRIVATE storage_client_testing
-                    google_cloud_cpp_testing
-                    google_cloud_cpp_testing_grpc
-                    google-cloud-cpp::storage_grpc
-                    google-cloud-cpp::storage_grpc_mocks
-                    google-cloud-cpp::storage
-                    GTest::gmock_main
-                    GTest::gmock
-                    GTest::gtest
-                    CURL::libcurl
-                    nlohmann_json::nlohmann_json)
-        google_cloud_cpp_add_common_options(${target})
-        add_test(NAME ${target} COMMAND ${target})
-    endforeach ()
-
-    # Export the list of unit tests so the Bazel BUILD file can pick it up.
-    export_list_to_bazel("storage_client_grpc_unit_tests.bzl"
-                         "storage_client_grpc_unit_tests" YEAR "2018")
+if (NOT BUILD_TESTING)
+    return()
 endif ()
+
+# This is a bit weird, we add an additional link library to
+# `storage_client_testing`
+target_link_libraries(storage_client_testing
+                      PUBLIC google-cloud-cpp::storage_grpc)
+
+set(storage_client_grpc_unit_tests
+    # cmake-format: sort
+    async/bucket_name_test.cc
+    async/client_test.cc
+    async/idempotency_policy_test.cc
+    async/read_all_test.cc
+    async/reader_test.cc
+    async/resume_policy_test.cc
+    async/rewriter_test.cc
+    async/token_test.cc
+    async/writer_test.cc
+    grpc_plugin_test.cc
+    internal/async/connection_impl_insert_test.cc
+    internal/async/connection_impl_read_hash_test.cc
+    internal/async/connection_impl_read_test.cc
+    internal/async/connection_impl_test.cc
+    internal/async/connection_impl_upload_hash_test.cc
+    internal/async/connection_impl_upload_test.cc
+    internal/async/connection_tracing_test.cc
+    internal/async/default_options_test.cc
+    internal/async/insert_object_test.cc
+    internal/async/partial_upload_test.cc
+    internal/async/read_payload_impl_test.cc
+    internal/async/reader_connection_factory_test.cc
+    internal/async/reader_connection_impl_test.cc
+    internal/async/reader_connection_resume_test.cc
+    internal/async/reader_connection_tracing_test.cc
+    internal/async/rewriter_connection_impl_test.cc
+    internal/async/rewriter_connection_tracing_test.cc
+    internal/async/write_payload_impl_test.cc
+    internal/async/writer_connection_buffered_test.cc
+    internal/async/writer_connection_finalized_test.cc
+    internal/async/writer_connection_impl_test.cc
+    internal/async/writer_connection_tracing_test.cc
+    internal/grpc/bucket_access_control_parser_test.cc
+    internal/grpc/bucket_metadata_parser_test.cc
+    internal/grpc/bucket_name_test.cc
+    internal/grpc/bucket_request_parser_test.cc
+    internal/grpc/buffer_read_object_data_test.cc
+    internal/grpc/configure_client_context_test.cc
+    internal/grpc/default_options_test.cc
+    internal/grpc/hmac_key_metadata_parser_test.cc
+    internal/grpc/hmac_key_request_parser_test.cc
+    internal/grpc/make_cord_test.cc
+    internal/grpc/metrics_exporter_impl_test.cc
+    internal/grpc/metrics_exporter_options_test.cc
+    internal/grpc/metrics_histograms_test.cc
+    internal/grpc/metrics_meter_provider_test.cc
+    internal/grpc/monitoring_project_test.cc
+    internal/grpc/notification_metadata_parser_test.cc
+    internal/grpc/notification_request_parser_test.cc
+    internal/grpc/object_access_control_parser_test.cc
+    internal/grpc/object_metadata_parser_test.cc
+    internal/grpc/object_read_source_test.cc
+    internal/grpc/object_request_parser_test.cc
+    internal/grpc/owner_parser_test.cc
+    internal/grpc/scale_stall_timeout_test.cc
+    internal/grpc/service_account_parser_test.cc
+    internal/grpc/sign_blob_request_parser_test.cc
+    internal/grpc/split_write_object_data_test.cc
+    internal/grpc/stub_acl_test.cc
+    internal/grpc/stub_insert_object_media_test.cc
+    internal/grpc/stub_read_object_test.cc
+    internal/grpc/stub_test.cc
+    internal/grpc/stub_upload_chunk_test.cc
+    internal/grpc/synthetic_self_link_test.cc
+    internal/storage_stub_factory_test.cc)
+
+foreach (fname ${storage_client_grpc_unit_tests})
+    google_cloud_cpp_add_executable(target "storage" "${fname}")
+    if (GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND)
+        target_compile_definitions(
+            ${target} PRIVATE GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND)
+    endif ()
+    target_link_libraries(
+        ${target}
+        PRIVATE storage_client_testing
+                google_cloud_cpp_testing
+                google_cloud_cpp_testing_grpc
+                google-cloud-cpp::storage_grpc
+                google-cloud-cpp::storage_grpc_mocks
+                google-cloud-cpp::storage
+                GTest::gmock_main
+                GTest::gmock
+                GTest::gtest
+                CURL::libcurl
+                nlohmann_json::nlohmann_json)
+    google_cloud_cpp_add_common_options(${target})
+    if ((TARGET gRPC::grpcpp_otel_plugin)
+        AND (TARGET google-cloud-cpp::opentelemetry)
+        AND (TARGET opentelemetry-cpp::metrics))
+        target_compile_definitions(
+            ${target} PRIVATE GOOGLE_CLOUD_CPP_STORAGE_WITH_OTEL_METRICS)
+    endif ()
+    add_test(NAME ${target} COMMAND ${target})
+endforeach ()
+
+# Export the list of unit tests so the Bazel BUILD file can pick it up.
+export_list_to_bazel("storage_client_grpc_unit_tests.bzl"
+                     "storage_client_grpc_unit_tests" YEAR "2018")
