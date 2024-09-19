@@ -30,7 +30,6 @@ using ::google::protobuf::DescriptorPool;
 using ::google::protobuf::FileDescriptor;
 using ::google::protobuf::FileDescriptorProto;
 using ::google::protobuf::MethodDescriptor;
-using ::google::protobuf::ServiceDescriptor;
 using ::testing::AllOf;
 using ::testing::Contains;
 using ::testing::ElementsAre;
@@ -592,22 +591,7 @@ TEST_F(HttpOptionUtilsTest, ParseHttpExtensionWithoutVersionInUrl) {
   EXPECT_THAT(info.url_path, Eq("/no/version/id/in/url"));
 }
 
-TEST_F(HttpOptionUtilsTest, ParseHttpExtensionWithoutVersionInPackageAndUrl) {
-  FileDescriptor const* service_file = pool_.FindFileByName(
-      "google/foo/v1/service_without_version_in_package_and_url.proto");
-  MethodDescriptor const* method = service_file->service(0)->method(0);
-  EXPECT_DEATH_IF_SUPPORTED(
-      ParseHttpExtension(*method),
-      "Unrecognized API version in file: "
-      "google/foo/v1/service_without_version_in_package_and_url.proto, "
-      "package: no.version.in.package");
-}
-
 TEST_F(HttpOptionUtilsTest, ParseHttpExtensionWithMixinOverrides) {
-  FileDescriptor const* service_file =
-      pool_.FindFileByName("google/foo/v1/service.proto");
-  ServiceDescriptor const* service = service_file->service(0);
-
   FileDescriptor const* mixin_file =
       pool_.FindFileByName("google/cloud/location/locations.proto");
   MethodDescriptor const* mixin_method = mixin_file->service(0)->method(0);
@@ -615,9 +599,7 @@ TEST_F(HttpOptionUtilsTest, ParseHttpExtensionWithMixinOverrides) {
   auto mixin_method_override =
       MixinMethodOverride{"Post", "/v1/{name=projects/*/locations/*}", "*"};
 
-  auto info =
-      ParseHttpExtension(*mixin_method, service->file()->package(),
-                         service->file()->name(), mixin_method_override);
+  auto info = ParseHttpExtension(*mixin_method, mixin_method_override);
   EXPECT_THAT(info.url_path, Eq("/v1/{name=projects/*/locations/*}"));
   EXPECT_THAT(info.body, Eq("*"));
   EXPECT_THAT(info.http_verb, Eq("Post"));
@@ -864,41 +846,18 @@ TEST_F(HttpOptionUtilsTest, FormatRequestResourceAnnotatedRequestField) {
   EXPECT_THAT(result, Eq("request.namespace_()"));
 }
 
-TEST_F(HttpOptionUtilsTest, FormatApiVersionFromPackageName) {
-  FileDescriptor const* service_file_descriptor =
-      pool_.FindFileByName("google/foo/v1/service.proto");
-  MethodDescriptor const* method =
-      service_file_descriptor->service(0)->method(8);
-  EXPECT_THAT(FormatApiVersionFromPackageName(*method), Eq("v1"));
-}
-
-TEST_F(HttpOptionUtilsTest, FormatApiVersionFromPackageNameError) {
-  FileDescriptor const* service_file_descriptor = pool_.FindFileByName(
-      "google/foo/v1/service_without_version_in_package.proto");
-  MethodDescriptor const* method =
-      service_file_descriptor->service(0)->method(0);
-  EXPECT_DEATH_IF_SUPPORTED(
-      FormatApiVersionFromPackageName(*method),
-      "Unrecognized API version in file: "
-      "google/foo/v1/service_without_version_in_package.proto, package: "
-      "my.service");
-}
-
 TEST_F(HttpOptionUtilsTest, FormatApiVersionFromUrlPattern) {
-  std::string file_name = "google/foo/v1/service.proto";
   std::string url_pattern_v1 = "/v1/foo/bar";
-  EXPECT_THAT(FormatApiVersionFromUrlPattern(url_pattern_v1, file_name),
+  EXPECT_THAT(FormatApiVersionFromUrlPattern(url_pattern_v1),
               Optional(std::string("v1")));
   std::string url_pattern_v2 = "/foo/v2/bar";
-  EXPECT_THAT(FormatApiVersionFromUrlPattern(url_pattern_v2, file_name),
+  EXPECT_THAT(FormatApiVersionFromUrlPattern(url_pattern_v2),
               Optional(std::string("v2")));
 }
 
 TEST_F(HttpOptionUtilsTest, FormatApiVersionFromUrlPatternNonExist) {
-  std::string file_name = "google/foo/v1/service.proto";
   std::string url_pattern = "/foo/bar";
-  EXPECT_THAT(FormatApiVersionFromUrlPattern(url_pattern, file_name),
-              Eq(absl::nullopt));
+  EXPECT_THAT(FormatApiVersionFromUrlPattern(url_pattern), Eq(absl::nullopt));
 }
 
 }  // namespace
