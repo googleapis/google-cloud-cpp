@@ -121,10 +121,10 @@ https://cloud.google.com/docs/authentication/production
 
 ## The gRPC plugin
 
-The Google Cloud Storage client library includes an plugin to use
-gRPC as the transport to access GCS. For the most part, only applications with
-very large workloads (several Tbits/s of upload and/or download bandwidth)
-benefit from GCS+gRPC.
+The Google Cloud Storage client library includes an plugin to use gRPC as the
+transport to access GCS. For the most part, only applications with very large
+workloads (several Tbits/s of upload and/or download bandwidth) benefit from
+GCS+gRPC.
 
 To enable the GCS+gRPC plugin you need to (a) link your application with an
 additional library, and (b) use a different function to initialize the
