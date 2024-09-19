@@ -54,12 +54,12 @@ std::string FormatFieldAccessorCall(
   return absl::StrJoin(chunks, "().");
 }
 
-void RestPathVisitorHelper(std::string const& api_version,
+void RestPathVisitorHelper(absl::optional<std::string> api_version,
                            PathTemplate::Segment const& s,
                            std::vector<HttpExtensionInfo::RestPathPiece>& path);
 
 struct RestPathVisitor {
-  explicit RestPathVisitor(std::string api_version,
+  explicit RestPathVisitor(absl::optional<std::string> api_version,
                            std::vector<HttpExtensionInfo::RestPathPiece>& path)
       : api_version(std::move(api_version)), path(path) {}
   void operator()(PathTemplate::Match const&) {}
@@ -68,13 +68,13 @@ struct RestPathVisitor {
     path.emplace_back(
         [piece = s, api = api_version](
             google::protobuf::MethodDescriptor const&, bool is_async) {
-          if (piece != api) return absl::StrFormat("\"%s\"", piece);
+          if (!api || piece != *api) return absl::StrFormat("\"%s\"", piece);
           if (is_async) {
             return absl::StrFormat(
-                "rest_internal::DetermineApiVersion(\"%s\", *options)", api);
+                "rest_internal::DetermineApiVersion(\"%s\", *options)", *api);
           }
           return absl::StrFormat(
-              "rest_internal::DetermineApiVersion(\"%s\", options)", api);
+              "rest_internal::DetermineApiVersion(\"%s\", options)", *api);
         });
   }
   void operator()(PathTemplate::Variable const& v) {
@@ -89,14 +89,14 @@ struct RestPathVisitor {
     RestPathVisitorHelper(api_version, s, path);
   }
 
-  std::string api_version;
+  absl::optional<std::string> api_version;
   std::vector<HttpExtensionInfo::RestPathPiece>& path;
 };
 
 void RestPathVisitorHelper(
-    std::string const& api_version, PathTemplate::Segment const& s,
+    absl::optional<std::string> api_version, PathTemplate::Segment const& s,
     std::vector<HttpExtensionInfo::RestPathPiece>& path) {
-  absl::visit(RestPathVisitor{api_version, path}, s.value);
+  absl::visit(RestPathVisitor{std::move(api_version), path}, s.value);
 }
 
 std::string FormatQueryParameterCode(
@@ -142,15 +142,6 @@ std::string FormatQueryParameterCode(
   query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));)""";
   }
   return code;
-}
-
-std::string FormatApiVersionFromPackageNameString(
-    std::string const& package_name, std::string const& file_name) {
-  std::vector<std::string> parts = absl::StrSplit(package_name, '.');
-  if (absl::StartsWith(parts.back(), "v")) return parts.back();
-  GCP_LOG(FATAL) << "Unrecognized API version in file: " << file_name
-                 << ", package: " << package_name;
-  return {};  // Suppress clang-tidy warnings
 }
 
 }  // namespace
@@ -274,8 +265,6 @@ void SetHttpQueryParameters(HttpExtensionInfo const& info,
 
 HttpExtensionInfo ParseHttpExtension(
     google::protobuf::MethodDescriptor const& method,
-    absl::optional<std::string> package_name_override,
-    absl::optional<std::string> file_name_override,
     absl::optional<MixinMethodOverride> method_override) {
   if (!method.options().HasExtension(google::api::http)) return {};
 
@@ -341,25 +330,9 @@ HttpExtensionInfo ParseHttpExtension(
     out->append(absl::visit(SegmentAsStringVisitor{}, s->value));
   };
 
-  // parse api version from url, if url doesn't include version info,
-  // parse api version from package name, if package name doesn't include
-  // version info, raise fatal error. For non-mixin method, package name is its
-  // package's name. For mixin method, package name is the target service's
-  // package's name.
-  auto file_name =
-      file_name_override ? *file_name_override : method.file()->name();
-  auto api_version_opt = FormatApiVersionFromUrlPattern(url_pattern, file_name);
-  std::string api_version;
-  if (api_version_opt) {
-    api_version = *api_version_opt;
-  } else {
-    api_version = package_name_override
-                      ? FormatApiVersionFromPackageNameString(
-                            *package_name_override, file_name)
-                      : FormatApiVersionFromPackageName(method);
-  }
-
-  auto rest_path_visitor = RestPathVisitor(api_version, info.rest_path);
+  auto api_version = FormatApiVersionFromUrlPattern(url_pattern);
+  auto rest_path_visitor =
+      RestPathVisitor(std::move(api_version), info.rest_path);
   for (auto const& s : parsed_http_rule->segments) {
     if (absl::holds_alternative<PathTemplate::Variable>(s->value)) {
       auto v = absl::get<PathTemplate::Variable>(s->value);
@@ -415,19 +388,10 @@ std::string FormatRequestResource(google::protobuf::Descriptor const& request,
   return absl::StrCat("request.", field_name, "()");
 }
 
-// For protos we generate from Discovery Documents the api version is always the
-// last part of the package name. Protos found in googleapis have package names
-// that mirror their directory path, which ends in the api version as well.
-std::string FormatApiVersionFromPackageName(
-    google::protobuf::MethodDescriptor const& method) {
-  return FormatApiVersionFromPackageNameString(method.file()->package(),
-                                               method.file()->name());
-}
-
 // Generate api version by extracting the version from the url pattern.
 // In some cases(i.e. location), there is no version in the package name.
 absl::optional<std::string> FormatApiVersionFromUrlPattern(
-    std::string const& url_pattern, std::string const& file_name) {
+    std::string const& url_pattern) {
   std::vector<std::string> const parts = absl::StrSplit(url_pattern, '/');
   static auto const* const kVersion = new std::regex{R"(v\d+)"};
   for (auto const& part : parts) {
@@ -435,8 +399,6 @@ absl::optional<std::string> FormatApiVersionFromUrlPattern(
       return part;
     }
   }
-  GCP_LOG(WARNING) << "Unrecognized API version in file: " << file_name
-                   << ", url pattern: " << url_pattern;
   return absl::nullopt;
 }
 

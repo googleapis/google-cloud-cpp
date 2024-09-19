@@ -172,7 +172,6 @@ void SetLongrunningOperationServiceVars(
                           *method, method->output_type()->full_name())));
       auto operation_service_extension =
           method->options().GetExtension(google::cloud::operation_service);
-      auto api_version = FormatApiVersionFromPackageName(*method);
 
       if (operation_service_extension == "GlobalOperations") {
         service_vars["longrunning_operation_include_header"] =
@@ -191,12 +190,11 @@ void SetLongrunningOperationServiceVars(
       r.set_project(info.project);
       r.set_operation(info.operation);
 )""";
-        auto global_lro_path = absl::StrFormat(
+        std::string global_lro_path =
             R"""(absl::StrCat("/compute/",
-                              rest_internal::DetermineApiVersion("%s", *options),
+                              rest_internal::DetermineApiVersion("v1", *options),
                               "/projects/", request.project(),
-                              "/global/operations/", request.operation()))""",
-            api_version);
+                              "/global/operations/", request.operation()))""";
         service_vars["longrunning_get_operation_path_rest"] = global_lro_path;
         service_vars["longrunning_cancel_operation_path_rest"] =
             global_lro_path;
@@ -217,11 +215,10 @@ void SetLongrunningOperationServiceVars(
         service_vars["longrunning_await_set_operation_fields"] = R"""(
       r.set_operation(info.operation);
 )""";
-        auto global_org_lro_path = absl::StrFormat(
+        std::string global_org_lro_path =
             R"""(absl::StrCat("/compute/",
-                              rest_internal::DetermineApiVersion("%s", *options),
-                              "/locations/global/operations/", request.operation()))""",
-            api_version);
+                              rest_internal::DetermineApiVersion("v1", *options),
+                              "/locations/global/operations/", request.operation()))""";
         service_vars["longrunning_get_operation_path_rest"] =
             global_org_lro_path;
         service_vars["longrunning_cancel_operation_path_rest"] =
@@ -245,13 +242,12 @@ void SetLongrunningOperationServiceVars(
       r.set_region(info.region);
       r.set_operation(info.operation);
 )""";
-        auto region_lro_path = absl::StrFormat(
+        std::string region_lro_path =
             R"""(absl::StrCat("/compute/",
-                              rest_internal::DetermineApiVersion("%s", *options),
+                              rest_internal::DetermineApiVersion("v1", *options),
                               "/projects/", request.project(),
                               "/regions/", request.region(),
-                              "/operations/", request.operation()))""",
-            api_version);
+                              "/operations/", request.operation()))""";
         service_vars["longrunning_get_operation_path_rest"] = region_lro_path;
         service_vars["longrunning_cancel_operation_path_rest"] =
             region_lro_path;
@@ -274,13 +270,11 @@ void SetLongrunningOperationServiceVars(
       r.set_zone(info.zone);
       r.set_operation(info.operation);
 )""";
-        auto zone_lro_path = absl::StrFormat(
-            R"""(absl::StrCat("/compute/",
-                              rest_internal::DetermineApiVersion("%s", *options),
+        std::string zone_lro_path = R"""(absl::StrCat("/compute/",
+                              rest_internal::DetermineApiVersion("v1", *options),
                               "/projects/", request.project(),
                               "/zones/", request.zone(),
-                              "/operations/", request.operation()))""",
-            api_version);
+                              "/operations/", request.operation()))""";
         service_vars["longrunning_get_operation_path_rest"] = zone_lro_path;
         service_vars["longrunning_cancel_operation_path_rest"] = zone_lro_path;
       } else {
