@@ -87,7 +87,7 @@ RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20240722.0.tar.gz | 
 
 # ```bash
 WORKDIR /var/tmp/build/protobuf
-RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v28.1.tar.gz | \
+RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v28.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
