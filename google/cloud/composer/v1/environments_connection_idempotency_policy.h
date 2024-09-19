@@ -73,6 +73,10 @@ class EnvironmentsConnectionIdempotencyPolicy {
       google::cloud::orchestration::airflow::service::v1::ListWorkloadsRequest
           request);
 
+  virtual google::cloud::Idempotency CheckUpgrade(
+      google::cloud::orchestration::airflow::service::v1::
+          CheckUpgradeRequest const& request);
+
   virtual google::cloud::Idempotency CreateUserWorkloadsSecret(
       google::cloud::orchestration::airflow::service::v1::
           CreateUserWorkloadsSecretRequest const& request);

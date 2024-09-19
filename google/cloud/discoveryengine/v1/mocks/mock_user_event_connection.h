@@ -65,6 +65,47 @@ class MockUserEventServiceConnection
   /// using ::testing::_;
   /// using ::testing::Matcher;
   /// EXPECT_CALL(*mock,
+  /// PurgeUserEvents(Matcher<google::cloud::discoveryengine::v1::PurgeUserEventsRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<
+                  google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>,
+              PurgeUserEvents,
+              (google::cloud::discoveryengine::v1::PurgeUserEventsRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, PurgeUserEvents(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, PurgeUserEvents,
+              (NoAwaitTag,
+               google::cloud::discoveryengine::v1::PurgeUserEventsRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, PurgeUserEvents(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<
+                  google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>,
+              PurgeUserEvents,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
   /// ImportUserEvents(Matcher<google::cloud::discoveryengine::v1::ImportUserEventsRequest
   /// const&>(_)))
   /// @endcode

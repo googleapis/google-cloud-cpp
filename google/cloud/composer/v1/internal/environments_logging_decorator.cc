@@ -223,6 +223,39 @@ EnvironmentsLogging::ListWorkloads(
       context, options, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+EnvironmentsLogging::AsyncCheckUpgrade(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::orchestration::airflow::service::v1::
+        CheckUpgradeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::orchestration::airflow::service::v1::
+                 CheckUpgradeRequest const& request) {
+        return child_->AsyncCheckUpgrade(cq, std::move(context),
+                                         std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> EnvironmentsLogging::CheckUpgrade(
+    grpc::ClientContext& context, Options options,
+    google::cloud::orchestration::airflow::service::v1::
+        CheckUpgradeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::orchestration::airflow::service::v1::
+                 CheckUpgradeRequest const& request) {
+        return child_->CheckUpgrade(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<
     google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
 EnvironmentsLogging::CreateUserWorkloadsSecret(

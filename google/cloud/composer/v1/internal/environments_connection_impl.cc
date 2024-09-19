@@ -499,6 +499,104 @@ EnvironmentsConnectionImpl::ListWorkloads(
       });
 }
 
+future<StatusOr<
+    google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>>
+EnvironmentsConnectionImpl::CheckUpgrade(
+    google::cloud::orchestration::airflow::service::v1::
+        CheckUpgradeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CheckUpgrade(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::orchestration::airflow::service::v1::
+                         CheckUpgradeRequest const& request) {
+        return stub->AsyncCheckUpgrade(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::orchestration::airflow::service::v1::
+              CheckUpgradeResponse>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+EnvironmentsConnectionImpl::CheckUpgrade(
+    NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
+                    CheckUpgradeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CheckUpgrade(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::orchestration::airflow::service::v1::
+                 CheckUpgradeRequest const& request) {
+        return stub_->CheckUpgrade(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<
+    google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>>
+EnvironmentsConnectionImpl::CheckUpgrade(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::orchestration::airflow::service::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::orchestration::airflow::
+                                          service::v1::CheckUpgradeResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CheckUpgrade",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::orchestration::airflow::service::v1::
+              CheckUpgradeResponse>,
+      polling_policy(*current), __func__);
+}
+
 StatusOr<
     google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
 EnvironmentsConnectionImpl::CreateUserWorkloadsSecret(

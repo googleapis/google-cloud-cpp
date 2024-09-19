@@ -7,6 +7,7 @@
 @com_google_googleapis//google/cloud/discoveryengine/v1:control_service.proto
 @com_google_googleapis//google/cloud/discoveryengine/v1:conversation.proto
 @com_google_googleapis//google/cloud/discoveryengine/v1:conversational_search_service.proto
+@com_google_googleapis//google/cloud/discoveryengine/v1:custom_tuning_model.proto
 @com_google_googleapis//google/cloud/discoveryengine/v1:data_store.proto
 @com_google_googleapis//google/cloud/discoveryengine/v1:data_store_service.proto
 @com_google_googleapis//google/cloud/discoveryengine/v1:document.proto
@@ -25,6 +26,7 @@
 @com_google_googleapis//google/cloud/discoveryengine/v1:schema.proto
 @com_google_googleapis//google/cloud/discoveryengine/v1:schema_service.proto
 @com_google_googleapis//google/cloud/discoveryengine/v1:search_service.proto
+@com_google_googleapis//google/cloud/discoveryengine/v1:search_tuning_service.proto
 @com_google_googleapis//google/cloud/discoveryengine/v1:session.proto
 @com_google_googleapis//google/cloud/discoveryengine/v1:site_search_engine.proto
 @com_google_googleapis//google/cloud/discoveryengine/v1:site_search_engine_service.proto

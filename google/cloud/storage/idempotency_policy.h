@@ -108,6 +108,9 @@ class IdempotencyPolicy {
       internal::ComposeObjectRequest const& request) const = 0;
   virtual bool IsIdempotent(
       internal::RewriteObjectRequest const& request) const = 0;
+  virtual bool IsIdempotent(internal::RestoreObjectRequest const&) const {
+    return false;
+  };
   virtual bool IsIdempotent(
       internal::ResumableUploadRequest const& request) const = 0;
   virtual bool IsIdempotent(
@@ -241,6 +244,8 @@ class AlwaysRetryIdempotencyPolicy : public IdempotencyPolicy {
   bool IsIdempotent(
       internal::RewriteObjectRequest const& request) const override;
   bool IsIdempotent(
+      internal::RestoreObjectRequest const& request) const override;
+  bool IsIdempotent(
       internal::ResumableUploadRequest const& request) const override;
   bool IsIdempotent(internal::UploadChunkRequest const& request) const override;
   ///@}
@@ -370,6 +375,8 @@ class StrictIdempotencyPolicy : public IdempotencyPolicy {
       internal::ComposeObjectRequest const& request) const override;
   bool IsIdempotent(
       internal::RewriteObjectRequest const& request) const override;
+  bool IsIdempotent(
+      internal::RestoreObjectRequest const& request) const override;
   bool IsIdempotent(
       internal::ResumableUploadRequest const& request) const override;
   bool IsIdempotent(internal::UploadChunkRequest const& request) const override;

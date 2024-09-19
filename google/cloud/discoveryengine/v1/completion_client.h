@@ -152,8 +152,8 @@ class CompletionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.ImportSuggestionDenyListEntriesRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L641}
-  /// [google.cloud.discoveryengine.v1.ImportSuggestionDenyListEntriesResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L678}
+  /// [google.cloud.discoveryengine.v1.ImportSuggestionDenyListEntriesRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L647}
+  /// [google.cloud.discoveryengine.v1.ImportSuggestionDenyListEntriesResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L684}
   /// [google.cloud.discoveryengine.v1.SuggestionDenyListEntry]: @googleapis_reference_link{google/cloud/discoveryengine/v1/completion.proto#L32}
   ///
   // clang-format on
@@ -227,8 +227,8 @@ class CompletionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.PurgeSuggestionDenyListEntriesRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/purge_config.proto#L95}
-  /// [google.cloud.discoveryengine.v1.PurgeSuggestionDenyListEntriesResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/purge_config.proto#L109}
+  /// [google.cloud.discoveryengine.v1.PurgeSuggestionDenyListEntriesRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/purge_config.proto#L212}
+  /// [google.cloud.discoveryengine.v1.PurgeSuggestionDenyListEntriesResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/purge_config.proto#L226}
   /// [google.cloud.discoveryengine.v1.SuggestionDenyListEntry]: @googleapis_reference_link{google/cloud/discoveryengine/v1/completion.proto#L32}
   ///
   // clang-format on
@@ -303,8 +303,8 @@ class CompletionServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.CompletionSuggestion]: @googleapis_reference_link{google/cloud/discoveryengine/v1/completion.proto#L55}
-  /// [google.cloud.discoveryengine.v1.ImportCompletionSuggestionsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L704}
-  /// [google.cloud.discoveryengine.v1.ImportCompletionSuggestionsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L744}
+  /// [google.cloud.discoveryengine.v1.ImportCompletionSuggestionsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L710}
+  /// [google.cloud.discoveryengine.v1.ImportCompletionSuggestionsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L750}
   ///
   // clang-format on
   future<StatusOr<
@@ -378,8 +378,8 @@ class CompletionServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.CompletionSuggestion]: @googleapis_reference_link{google/cloud/discoveryengine/v1/completion.proto#L55}
-  /// [google.cloud.discoveryengine.v1.PurgeCompletionSuggestionsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/purge_config.proto#L132}
-  /// [google.cloud.discoveryengine.v1.PurgeCompletionSuggestionsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/purge_config.proto#L147}
+  /// [google.cloud.discoveryengine.v1.PurgeCompletionSuggestionsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/purge_config.proto#L249}
+  /// [google.cloud.discoveryengine.v1.PurgeCompletionSuggestionsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/purge_config.proto#L264}
   ///
   // clang-format on
   future<StatusOr<

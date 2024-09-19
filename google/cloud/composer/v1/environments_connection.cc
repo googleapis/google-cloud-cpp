@@ -168,6 +168,33 @@ EnvironmentsConnection::ListWorkloads(
                       ListWorkloadsResponse::ComposerWorkload>>();
 }
 
+future<StatusOr<
+    google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>>
+EnvironmentsConnection::CheckUpgrade(
+    google::cloud::orchestration::airflow::service::v1::
+        CheckUpgradeRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::orchestration::airflow::service::v1::
+                   CheckUpgradeResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> EnvironmentsConnection::CheckUpgrade(
+    NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
+                    CheckUpgradeRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<
+    google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>>
+EnvironmentsConnection::CheckUpgrade(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::orchestration::airflow::service::v1::
+                   CheckUpgradeResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<
     google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
 EnvironmentsConnection::CreateUserWorkloadsSecret(

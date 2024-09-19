@@ -58,6 +58,10 @@ class DocumentServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency PurgeDocuments(
       google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request);
+
+  virtual google::cloud::Idempotency BatchGetDocumentsMetadata(
+      google::cloud::discoveryengine::v1::
+          BatchGetDocumentsMetadataRequest const& request);
 };
 
 std::unique_ptr<DocumentServiceConnectionIdempotencyPolicy>

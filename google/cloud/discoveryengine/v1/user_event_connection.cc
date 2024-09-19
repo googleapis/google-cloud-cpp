@@ -48,6 +48,30 @@ StatusOr<google::api::HttpBody> UserEventServiceConnection::CollectUserEvent(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+future<StatusOr<google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>
+UserEventServiceConnection::PurgeUserEvents(
+    google::cloud::discoveryengine::v1::PurgeUserEventsRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+UserEventServiceConnection::PurgeUserEvents(
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::PurgeUserEventsRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>
+UserEventServiceConnection::PurgeUserEvents(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>
 UserEventServiceConnection::ImportUserEvents(
     google::cloud::discoveryengine::v1::ImportUserEventsRequest const&) {

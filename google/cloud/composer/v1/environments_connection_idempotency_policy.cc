@@ -88,6 +88,12 @@ Idempotency EnvironmentsConnectionIdempotencyPolicy::ListWorkloads(
   return Idempotency::kIdempotent;
 }
 
+Idempotency EnvironmentsConnectionIdempotencyPolicy::CheckUpgrade(
+    google::cloud::orchestration::airflow::service::v1::
+        CheckUpgradeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency EnvironmentsConnectionIdempotencyPolicy::CreateUserWorkloadsSecret(
     google::cloud::orchestration::airflow::service::v1::
         CreateUserWorkloadsSecretRequest const&) {

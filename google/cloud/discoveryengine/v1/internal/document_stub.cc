@@ -152,6 +152,21 @@ DefaultDocumentServiceStub::PurgeDocuments(
   return response;
 }
 
+StatusOr<google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse>
+DefaultDocumentServiceStub::BatchGetDocumentsMetadata(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataRequest const&
+        request) {
+  google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse
+      response;
+  auto status =
+      grpc_stub_->BatchGetDocumentsMetadata(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

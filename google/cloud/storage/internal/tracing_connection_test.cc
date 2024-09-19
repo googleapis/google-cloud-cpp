@@ -556,6 +556,29 @@ TEST(TracingClientTest, RewriteObject) {
                       "gl-cpp.status_code", code_str)))));
 }
 
+TEST(TracingClientTest, RestoreObject) {
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_shared<MockClient>();
+  EXPECT_CALL(*mock, RestoreObject).WillOnce([](auto const&) {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    return PermanentError();
+  });
+  auto under_test = TracingConnection(mock);
+  auto actual =
+      under_test.RestoreObject(storage::internal::RestoreObjectRequest());
+  auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
+  auto const msg = PermanentError().message();
+  EXPECT_THAT(actual, StatusIs(code));
+  EXPECT_THAT(span_catcher->GetSpans(),
+              ElementsAre(AllOf(
+                  SpanNamed("storage::Client::RestoreObject"),
+                  SpanHasInstrumentationScope(), SpanKindIsClient(),
+                  SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
+}
+
 TEST(TracingClientTest, CreateResumableUpload) {
   auto span_catcher = InstallSpanCatcher();
   auto mock = std::make_shared<MockClient>();

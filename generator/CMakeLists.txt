@@ -96,6 +96,8 @@ add_library(
     internal/metadata_decorator_generator.h
     internal/metadata_decorator_rest_generator.cc
     internal/metadata_decorator_rest_generator.h
+    internal/mixin_utils.cc
+    internal/mixin_utils.h
     internal/mock_connection_generator.cc
     internal/mock_connection_generator.h
     internal/option_defaults_generator.cc
@@ -251,6 +253,7 @@ function (google_cloud_cpp_generator_define_tests)
         internal/http_option_utils_test.cc
         internal/longrunning_test.cc
         internal/make_generators_test.cc
+        internal/mixin_utils_test.cc
         internal/pagination_test.cc
         internal/predicate_utils_test.cc
         internal/printer_test.cc

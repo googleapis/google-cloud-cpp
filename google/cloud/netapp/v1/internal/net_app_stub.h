@@ -80,6 +80,19 @@ class NetAppStub {
       grpc::ClientContext& context, Options options,
       google::cloud::netapp::v1::DeleteStoragePoolRequest const& request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncSwitchActiveReplicaZone(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> SwitchActiveReplicaZone(
+      grpc::ClientContext& context, Options options,
+      google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const&
+          request) = 0;
+
   virtual StatusOr<google::cloud::netapp::v1::ListVolumesResponse> ListVolumes(
       grpc::ClientContext& context, Options const& options,
       google::cloud::netapp::v1::ListVolumesRequest const& request) = 0;
@@ -534,6 +547,18 @@ class DefaultNetAppStub : public NetAppStub {
   StatusOr<google::longrunning::Operation> DeleteStoragePool(
       grpc::ClientContext& context, Options options,
       google::cloud::netapp::v1::DeleteStoragePoolRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncSwitchActiveReplicaZone(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> SwitchActiveReplicaZone(
+      grpc::ClientContext& context, Options options,
+      google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request)
       override;
 
   StatusOr<google::cloud::netapp::v1::ListVolumesResponse> ListVolumes(

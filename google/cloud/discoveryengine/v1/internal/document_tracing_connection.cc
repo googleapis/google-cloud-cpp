@@ -138,6 +138,17 @@ DocumentServiceTracingConnection::PurgeDocuments(
   return internal::EndSpan(std::move(span), child_->PurgeDocuments(operation));
 }
 
+StatusOr<google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse>
+DocumentServiceTracingConnection::BatchGetDocumentsMetadata(
+    google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::DocumentServiceConnection::"
+      "BatchGetDocumentsMetadata");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->BatchGetDocumentsMetadata(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<discoveryengine_v1::DocumentServiceConnection>

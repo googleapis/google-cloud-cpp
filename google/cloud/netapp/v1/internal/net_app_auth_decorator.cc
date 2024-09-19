@@ -132,6 +132,34 @@ StatusOr<google::longrunning::Operation> NetAppAuth::DeleteStoragePool(
   return child_->DeleteStoragePool(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+NetAppAuth::AsyncSwitchActiveReplicaZone(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncSwitchActiveReplicaZone(cq, *std::move(context),
+                                                   std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> NetAppAuth::SwitchActiveReplicaZone(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->SwitchActiveReplicaZone(context, options, request);
+}
+
 StatusOr<google::cloud::netapp::v1::ListVolumesResponse>
 NetAppAuth::ListVolumes(
     grpc::ClientContext& context, Options const& options,

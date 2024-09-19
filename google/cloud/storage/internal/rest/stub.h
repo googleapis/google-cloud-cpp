@@ -166,6 +166,9 @@ class RestStub : public storage_internal::GenericStub {
   StatusOr<RewriteObjectResponse> RewriteObject(
       rest_internal::RestContext& context, Options const& options,
       RewriteObjectRequest const& request) override;
+  StatusOr<ObjectMetadata> RestoreObject(
+      rest_internal::RestContext& context, Options const& options,
+      RestoreObjectRequest const& request) override;
 
   StatusOr<ListDefaultObjectAclResponse> ListDefaultObjectAcl(
       rest_internal::RestContext& context, Options const& options,

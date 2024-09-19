@@ -87,6 +87,13 @@ class DocumentServiceStub {
       google::cloud::discoveryengine::v1::PurgeDocumentsRequest const&
           request) = 0;
 
+  virtual StatusOr<
+      google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse>
+  BatchGetDocumentsMetadata(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::
+          BatchGetDocumentsMetadataRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -158,6 +165,13 @@ class DefaultDocumentServiceStub : public DocumentServiceStub {
       grpc::ClientContext& context, Options options,
       google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request)
       override;
+
+  StatusOr<
+      google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse>
+  BatchGetDocumentsMetadata(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::
+          BatchGetDocumentsMetadataRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

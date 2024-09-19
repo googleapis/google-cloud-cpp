@@ -69,6 +69,13 @@ Idempotency DocumentServiceConnectionIdempotencyPolicy::PurgeDocuments(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency
+DocumentServiceConnectionIdempotencyPolicy::BatchGetDocumentsMetadata(
+    google::cloud::discoveryengine::v1::
+        BatchGetDocumentsMetadataRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<DocumentServiceConnectionIdempotencyPolicy>
 MakeDefaultDocumentServiceConnectionIdempotencyPolicy() {
   return std::make_unique<DocumentServiceConnectionIdempotencyPolicy>();

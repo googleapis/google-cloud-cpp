@@ -218,6 +218,38 @@ DefaultEnvironmentsStub::ListWorkloads(
   return response;
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultEnvironmentsStub::AsyncCheckUpgrade(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::orchestration::airflow::service::v1::
+        CheckUpgradeRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::orchestration::airflow::service::v1::CheckUpgradeRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::orchestration::airflow::service::v1::
+                 CheckUpgradeRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCheckUpgrade(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultEnvironmentsStub::CheckUpgrade(
+    grpc::ClientContext& context, Options,
+    google::cloud::orchestration::airflow::service::v1::
+        CheckUpgradeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CheckUpgrade(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<
     google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
 DefaultEnvironmentsStub::CreateUserWorkloadsSecret(

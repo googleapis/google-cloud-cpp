@@ -186,6 +186,36 @@ EnvironmentsAuth::ListWorkloads(grpc::ClientContext& context,
   return child_->ListWorkloads(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+EnvironmentsAuth::AsyncCheckUpgrade(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::orchestration::airflow::service::v1::
+        CheckUpgradeRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCheckUpgrade(cq, *std::move(context),
+                                        std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> EnvironmentsAuth::CheckUpgrade(
+    grpc::ClientContext& context, Options options,
+    google::cloud::orchestration::airflow::service::v1::
+        CheckUpgradeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CheckUpgrade(context, options, request);
+}
+
 StatusOr<
     google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
 EnvironmentsAuth::CreateUserWorkloadsSecret(

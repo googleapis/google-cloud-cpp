@@ -29,6 +29,7 @@ using ::google::cloud::bigquery_v2_minimal_internal::ConnectionProperty;
 using ::google::cloud::bigquery_v2_minimal_internal::DataFormatOptions;
 using ::google::cloud::bigquery_v2_minimal_internal::GetQueryResults;
 using ::google::cloud::bigquery_v2_minimal_internal::GetQueryResultsRequest;
+using ::google::cloud::bigquery_v2_minimal_internal::JobCreationMode;
 using ::google::cloud::bigquery_v2_minimal_internal::PostQueryRequest;
 using ::google::cloud::bigquery_v2_minimal_internal::PostQueryResults;
 using ::google::cloud::bigquery_v2_minimal_internal::QueryParameter;
@@ -76,6 +77,7 @@ QueryRequest MakeQueryRequest() {
       .set_query_parameters(qp)
       .set_labels(labels)
       .set_format_options(dfo)
+      .set_job_creation_mode(JobCreationMode::UnSpecified())
       .set_default_dataset(MakeDatasetReference());
 
   return expected;

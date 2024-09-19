@@ -608,6 +608,19 @@ TEST(RestStubTest, RewriteObject) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
+TEST(RestStubTest, RestoreObject) {
+  auto mock = std::make_shared<MockRestClient>();
+  EXPECT_CALL(*mock,
+              Post(ExpectedContext(), ExpectedRequest(), ExpectedPayload()))
+      .WillOnce(Return(PermanentError()));
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
+  auto context = TestContext();
+  auto status =
+      tested->RestoreObject(context, TestOptions(), RestoreObjectRequest());
+  EXPECT_THAT(status,
+              StatusIs(PermanentError().code(), PermanentError().message()));
+}
+
 TEST(RestStubTest, ListDefaultObjectAcl) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Get(ExpectedContext(), ExpectedRequest()))

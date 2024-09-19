@@ -141,6 +141,11 @@ class GenericStubAdapter : public GenericStub {
       storage::internal::RewriteObjectRequest const& request) override {
     return impl_->RewriteObject(request);
   }
+  StatusOr<storage::ObjectMetadata> RestoreObject(
+      rest_internal::RestContext&, Options const&,
+      storage::internal::RestoreObjectRequest const& request) override {
+    return impl_->RestoreObject(request);
+  }
 
   StatusOr<storage::internal::CreateResumableUploadResponse>
   CreateResumableUpload(

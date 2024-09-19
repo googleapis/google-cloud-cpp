@@ -44,6 +44,10 @@ class UserEventServiceConnectionIdempotencyPolicy {
       google::cloud::discoveryengine::v1::CollectUserEventRequest const&
           request);
 
+  virtual google::cloud::Idempotency PurgeUserEvents(
+      google::cloud::discoveryengine::v1::PurgeUserEventsRequest const&
+          request);
+
   virtual google::cloud::Idempotency ImportUserEvents(
       google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
           request);

@@ -115,6 +115,30 @@ NetAppConnection::DeleteStoragePool(google::longrunning::Operation const&) {
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::netapp::v1::StoragePool>>
+NetAppConnection::SwitchActiveReplicaZone(
+    google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::netapp::v1::StoragePool>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+NetAppConnection::SwitchActiveReplicaZone(
+    NoAwaitTag,
+    google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::netapp::v1::StoragePool>>
+NetAppConnection::SwitchActiveReplicaZone(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::netapp::v1::StoragePool>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StreamRange<google::cloud::netapp::v1::Volume> NetAppConnection::ListVolumes(
     google::cloud::netapp::v1::
         ListVolumesRequest) {  // NOLINT(performance-unnecessary-value-param)

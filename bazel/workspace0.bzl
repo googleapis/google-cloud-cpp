@@ -115,10 +115,10 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_google_googleapis",
         urls = [
-            "https://github.com/googleapis/googleapis/archive/6a474b31c53cc1797710206824a17b364a835d2d.tar.gz",
+            "https://github.com/googleapis/googleapis/archive/38d33ad1da5ece4874e4b7b7921df7299835b253.tar.gz",
         ],
-        sha256 = "435ae615a71ab2718d5e4b348b2442d896a03f9c1ea98182dc2ea927f383acd2",
-        strip_prefix = "googleapis-6a474b31c53cc1797710206824a17b364a835d2d",
+        sha256 = "202ed6e3b807a079d600e04a30035dd0fe7e0a7d223736970601ae15bbb006dc",
+        strip_prefix = "googleapis-38d33ad1da5ece4874e4b7b7921df7299835b253",
         build_file = Label("//bazel:googleapis.BUILD"),
         # Scaffolding for patching googleapis after download. For example:
         #   patches = ["googleapis.patch"]
@@ -135,10 +135,10 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_google_protobuf",
         urls = [
-            "https://github.com/protocolbuffers/protobuf/archive/v27.4.tar.gz",
+            "https://github.com/protocolbuffers/protobuf/archive/v28.1.tar.gz",
         ],
-        sha256 = "023e2bb164b234af644c5049c6dac1d9c9f6dd2acb133b960d9009105b4226bd",
-        strip_prefix = "protobuf-27.4",
+        sha256 = "3b8bf6e96499a744bd014c60b58f797715a758093abf859f1d902194b8e1f8c9",
+        strip_prefix = "protobuf-28.1",
     )
 
     # Load BoringSSL. This could be automatically loaded by gRPC. But as of

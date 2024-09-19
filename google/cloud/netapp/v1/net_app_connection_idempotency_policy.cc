@@ -59,6 +59,11 @@ Idempotency NetAppConnectionIdempotencyPolicy::DeleteStoragePool(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency NetAppConnectionIdempotencyPolicy::SwitchActiveReplicaZone(
+    google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency NetAppConnectionIdempotencyPolicy::ListVolumes(
     google::cloud::netapp::v1::ListVolumesRequest) {  // NOLINT
   return Idempotency::kIdempotent;

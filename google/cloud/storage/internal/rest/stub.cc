@@ -618,6 +618,24 @@ StatusOr<RewriteObjectResponse> RestStub::RewriteObject(
                                  {absl::MakeConstSpan(json_payload)}));
 }
 
+StatusOr<ObjectMetadata> RestStub::RestoreObject(
+    rest_internal::RestContext& context, Options const& options,
+    RestoreObjectRequest const& request) {
+  RestRequestBuilder builder(absl::StrCat(
+      "storage/", options.get<TargetApiVersionOption>(), "/b/",
+      request.bucket_name(), "/o/", UrlEncode(request.object_name()),
+      "/restore?generation=", request.generation()));
+  auto auth = AddAuthorizationHeader(options, builder);
+  if (!auth.ok()) return auth;
+  request.AddOptionsToHttpRequest(builder);
+  builder.AddHeader("Content-Type", "application/json");
+  std::string json_payload("{}");
+
+  return CheckedFromString<ObjectMetadataParser>(
+      storage_rest_client_->Post(context, std::move(builder).BuildRequest(),
+                                 {absl::MakeConstSpan(json_payload)}));
+}
+
 StatusOr<CreateResumableUploadResponse> RestStub::CreateResumableUpload(
     rest_internal::RestContext& context, Options const& options,
     ResumableUploadRequest const& request) {

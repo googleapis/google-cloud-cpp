@@ -254,6 +254,16 @@ StatusOr<RewriteObjectResponse> LoggingStub::RewriteObject(
       context, options, request, __func__);
 }
 
+StatusOr<ObjectMetadata> LoggingStub::RestoreObject(
+    rest_internal::RestContext& context, Options const& options,
+    RestoreObjectRequest const& request) {
+  return LogWrapper(
+      [this](auto& context, auto const& options, auto& request) {
+        return stub_->RestoreObject(context, options, request);
+      },
+      context, options, request, __func__);
+}
+
 StatusOr<CreateResumableUploadResponse> LoggingStub::CreateResumableUpload(
     rest_internal::RestContext& context, Options const& options,
     ResumableUploadRequest const& request) {

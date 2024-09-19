@@ -131,6 +131,16 @@ DocumentServiceMetadata::PurgeDocuments(
   return child_->PurgeDocuments(context, options, request);
 }
 
+StatusOr<google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse>
+DocumentServiceMetadata::BatchGetDocumentsMetadata(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->BatchGetDocumentsMetadata(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DocumentServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

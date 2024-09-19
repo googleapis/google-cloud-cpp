@@ -98,6 +98,12 @@ class DocumentServiceConnectionImpl
   future<StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>
   PurgeDocuments(google::longrunning::Operation const& operation) override;
 
+  StatusOr<
+      google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse>
+  BatchGetDocumentsMetadata(
+      google::cloud::discoveryengine::v1::
+          BatchGetDocumentsMetadataRequest const& request) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<discoveryengine_v1_internal::DocumentServiceStub> stub_;

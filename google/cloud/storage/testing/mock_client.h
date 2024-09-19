@@ -86,6 +86,8 @@ class MockClient : public google::cloud::storage::internal::StorageConnection {
               (internal::ComposeObjectRequest const&), (override));
   MOCK_METHOD(StatusOr<internal::RewriteObjectResponse>, RewriteObject,
               (internal::RewriteObjectRequest const&), (override));
+  MOCK_METHOD(StatusOr<storage::ObjectMetadata>, RestoreObject,
+              (internal::RestoreObjectRequest const&), (override));
 
   MOCK_METHOD(StatusOr<internal::CreateResumableUploadResponse>,
               CreateResumableUpload, (internal::ResumableUploadRequest const&),

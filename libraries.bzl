@@ -159,6 +159,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "eventarc",
     "filestore",
     "functions",
+    "generativelanguage",
     "gkebackup",
     "gkeconnect",
     "gkehub",

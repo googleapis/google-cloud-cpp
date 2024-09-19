@@ -1646,6 +1646,52 @@ class Client {
                                std::string{}, std::forward<Options>(options)...)
         .Result();
   }
+
+  /**
+   * Restores a soft-deleted object.
+   *
+   * When a soft-deleted object is restored, a new copy of that object is
+   * created in the same bucket and inherits the same metadata as the
+   * soft-deleted object. The inherited metadata is the metadata that existed
+   * when the original object became soft deleted, with the following
+   * exceptions:
+   *
+   * 1. The createTime of the new object is set to the time at which the
+   * soft-deleted object was restored.
+   * 2. The softDeleteTime and hardDeleteTime values are cleared.
+   * 3. A new generation is assigned and the metageneration is reset to 1.
+   * 4. If the soft-deleted object was in a bucket that had Autoclass enabled,
+   *    the new object is restored to Standard storage.
+   *
+   * @param bucket_name name of the bucket in which the new object will be
+   * created. Must be the same bucket that contained the soft-deleted object
+   * being restored.
+   * @param object_name name of the soft-deleted object to restore.
+   * @param generation specifies the version of the soft-deleted object to
+   * restore.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `DestinationKmsKeyName`,
+   *      `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
+   *      `IfMetagenerationNotMatch`, `Projection`, `CopySourceAcl`
+   *
+   * @return The metadata of the restored object.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfGenerationMatch`.
+   */
+  template <typename... Options>
+  StatusOr<ObjectMetadata> RestoreObject(std::string bucket_name,
+                                         std::string object_name,
+                                         std::int64_t generation,
+                                         Options&&... options) {
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
+    internal::RestoreObjectRequest request(
+        std::move(bucket_name), std::move(object_name), std::move(generation));
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return connection_->RestoreObject(request);
+  }
   ///@}
 
   /**
