@@ -1629,33 +1629,270 @@ void ListDatabaseOperationsCommand(std::vector<std::string> argv) {
 }
 
 //! [create-backup-schedule] [START spanner_create_backup_schedule]
-void CreateBackupSchedule(google::cloud::spanner_admin::DatabaseAdminClient client,
-                          std::string const& project_id,
-                          std::string const& instance_id,
-                          std::string const& database_id,
-                          std::string const& backup_schedule_id) {
-  google::cloud::spanner::Database db(project_id, instance_id, database_id);
+void CreateBackupSchedule(
+    google::cloud::spanner_admin::DatabaseAdminClient client,
+    std::string const& project_id, std::string const& instance_id,
+    std::string const& database_id, std::string const& backup_schedule_id) {
+  google::spanner::admin::database::v1::BackupSchedule backup_schedule;
+  *backup_schedule.mutable_full_backup_spec() = {};
+  backup_schedule.mutable_spec()->mutable_cron_spec()->set_text("0 0 * * *");
+  backup_schedule.mutable_retention_duration()->set_seconds(3600 * 24 * 7);
 
+  google::cloud::spanner::Database db(project_id, instance_id, database_id);
   google::spanner::admin::database::v1::CreateBackupScheduleRequest request;
   request.set_parent(db.FullName());
   request.set_backup_schedule_id(backup_schedule_id);
+  *request.mutable_backup_schedule() = std::move(backup_schedule);
 
-  auto backup_schedule = client.CreateBackupSchedule(request);
-  if (!backup_schedule) throw std::move(backup_schedule).status();
-  std::cout << "Backup schedule " << backup_schedule->name() << " created at "
-            << google::cloud::spanner::MakeTimestamp(backup_schedule->update_time()).value();
+  auto created_backup_schedule = client.CreateBackupSchedule(request);
+  if (!created_backup_schedule)
+    throw std::move(created_backup_schedule).status();
+  std::cout << "Backup schedule " << created_backup_schedule->name()
+            << " created at "
+            << *google::cloud::spanner::MakeTimestamp(
+                   created_backup_schedule->update_time());
 }
 //! [create-backup-schedule] [END spanner_create_backup_schedule]
 
 void CreateBackupScheduleCommand(std::vector<std::string> argv) {
   if (argv.size() != 4) {
-    throw std::runtime_error("create-backup-schedule <project-id> "
-                             "<instance-id> <database-id> <backup-schedule-id>"
-                            );
+    throw std::runtime_error(
+        "create-backup-schedule <project-id> "
+        "<instance-id> <database-id> <backup-schedule-id>");
   }
   google::cloud::spanner_admin::DatabaseAdminClient client(
       google::cloud::spanner_admin::MakeDatabaseAdminConnection());
   CreateBackupSchedule(std::move(client), argv[0], argv[1], argv[2], argv[3]);
+}
+
+//! [create-incremental-backup-schedule] [START
+//! spanner_create_incremental_backup_schedule]
+void CreateIncrementalBackupSchedule(
+    google::cloud::spanner_admin::DatabaseAdminClient client,
+    std::string const& project_id, std::string const& instance_id,
+    std::string const& database_id, std::string const& backup_schedule_id) {
+  google::spanner::admin::database::v1::BackupSchedule backup_schedule;
+  *backup_schedule.mutable_incremental_backup_spec() = {};
+  backup_schedule.mutable_spec()->mutable_cron_spec()->set_text("0 */6 * * *");
+  backup_schedule.mutable_retention_duration()->set_seconds(3600 * 24 * 3);
+
+  google::cloud::spanner::Database db(project_id, instance_id, database_id);
+  google::spanner::admin::database::v1::CreateBackupScheduleRequest request;
+  request.set_parent(db.FullName());
+  request.set_backup_schedule_id(backup_schedule_id);
+  *request.mutable_backup_schedule() = std::move(backup_schedule);
+
+  auto created_backup_schedule = client.CreateBackupSchedule(request);
+  if (!created_backup_schedule)
+    throw std::move(created_backup_schedule).status();
+  std::cout << "Incremental backup schedule " << created_backup_schedule->name()
+            << " created at "
+            << *google::cloud::spanner::MakeTimestamp(
+                   created_backup_schedule->update_time());
+}
+//! [create-incremental-backup-schedule] [END
+//! spanner_create_incremental_backup_schedule]
+
+void CreateIncrementalBackupScheduleCommand(std::vector<std::string> argv) {
+  if (argv.size() != 4) {
+    throw std::runtime_error(
+        "create-incremental-backup-schedule <project-id> "
+        "<instance-id> <database-id> <backup-schedule-id>");
+  }
+  google::cloud::spanner_admin::DatabaseAdminClient client(
+      google::cloud::spanner_admin::MakeDatabaseAdminConnection());
+  CreateIncrementalBackupSchedule(std::move(client), argv[0], argv[1], argv[2],
+                                  argv[3]);
+}
+
+//! [create-backup-schedule-with-encryption] [START
+//! spanner_create_backup_schedule_with_encryption]
+void CreateBackupScheduleWithEncryption(
+    google::cloud::spanner_admin::DatabaseAdminClient client,
+    std::string const& project_id, std::string const& instance_id,
+    std::string const& database_id, std::string const& backup_schedule_id,
+    google::cloud::KmsKeyName const& encryption_key) {
+  google::spanner::admin::database::v1::BackupSchedule backup_schedule;
+  *backup_schedule.mutable_full_backup_spec() = {};
+  backup_schedule.mutable_spec()->mutable_cron_spec()->set_text("0 0 * * *");
+  backup_schedule.mutable_retention_duration()->set_seconds(3600 * 24 * 7);
+
+  google::spanner::admin::database::v1::CreateBackupEncryptionConfig
+      encryption_config;
+  encryption_config.set_encryption_type(
+      google::spanner::admin::database::v1::CreateBackupEncryptionConfig::
+          CUSTOMER_MANAGED_ENCRYPTION);
+  encryption_config.set_kms_key_name(encryption_key.FullName());
+  *backup_schedule.mutable_encryption_config() = std::move(encryption_config);
+
+  google::cloud::spanner::Database db(project_id, instance_id, database_id);
+  google::spanner::admin::database::v1::CreateBackupScheduleRequest request;
+  request.set_parent(db.FullName());
+  request.set_backup_schedule_id(backup_schedule_id);
+  *request.mutable_backup_schedule() = std::move(backup_schedule);
+
+  auto created_backup_schedule = client.CreateBackupSchedule(request);
+  if (!created_backup_schedule)
+    throw std::move(created_backup_schedule).status();
+  std::cout << "Backup schedule " << created_backup_schedule->name()
+            << " with encryption key " << encryption_key.FullName()
+            << " created at "
+            << *google::cloud::spanner::MakeTimestamp(
+                   created_backup_schedule->update_time());
+}
+//! [create-backup-schedule-with-encryption] [END
+//! spanner_create_backup_schedule_with_encryption]
+
+void CreateBackupScheduleWithEncryptionCommand(std::vector<std::string> argv) {
+  if (argv.size() != 7) {
+    throw std::runtime_error(
+        "create-backup-schedule-with-encryption <project-id> "
+        "<instance-id> <database-id> <backup-schedule-id> <location> "
+        "<key-ring> <key-name>");
+  }
+  google::cloud::spanner_admin::DatabaseAdminClient client(
+      google::cloud::spanner_admin::MakeDatabaseAdminConnection());
+  google::cloud::KmsKeyName encryption_key(/*project_id=*/argv[0],
+                                           /*location=*/argv[4],
+                                           /*key_ring=*/argv[5],
+                                           /*kms_key_name=*/argv[6]);
+  CreateBackupScheduleWithEncryption(std::move(client), argv[0], argv[1],
+                                     argv[2], argv[3], encryption_key);
+}
+
+//! [delete-backup-schedule] [START spanner_delete_backup_schedule]
+void DeleteBackupSchedule(
+    google::cloud::spanner_admin::DatabaseAdminClient client,
+    std::string const& project_id, std::string const& instance_id,
+    std::string const& database_id, std::string const& backup_schedule_id) {
+  google::cloud::spanner::Database db(project_id, instance_id, database_id);
+  std::string backup_schedule_name =
+      db.FullName() + "/backupSchedules/" + backup_schedule_id;
+
+  google::spanner::admin::database::v1::DeleteBackupScheduleRequest request;
+  request.set_name(backup_schedule_name);
+
+  auto status = client.DeleteBackupSchedule(request);
+  if (!status.ok()) throw std::move(status);
+  std::cout << "Backup schedule " << backup_schedule_name << " deleted";
+}
+//! [delete-backup-schedule] [END spanner_delete_backup_schedule]
+
+void DeleteBackupScheduleCommand(std::vector<std::string> argv) {
+  if (argv.size() != 4) {
+    throw std::runtime_error(
+        "delete-backup-schedule <project-id> "
+        "<instance-id> <database-id> <backup-schedule-id>");
+  }
+  google::cloud::spanner_admin::DatabaseAdminClient client(
+      google::cloud::spanner_admin::MakeDatabaseAdminConnection());
+  DeleteBackupSchedule(std::move(client), argv[0], argv[1], argv[2], argv[3]);
+}
+
+//! [update-backup-schedule] [START spanner_update_backup_schedule]
+void UpdateBackupSchedule(
+    google::cloud::spanner_admin::DatabaseAdminClient client,
+    std::string const& project_id, std::string const& instance_id,
+    std::string const& database_id, std::string const& backup_schedule_id) {
+  google::cloud::spanner::Database db(project_id, instance_id, database_id);
+  std::string backup_schedule_name =
+      db.FullName() + "/backupSchedules/" + backup_schedule_id;
+
+  google::spanner::admin::database::v1::BackupSchedule backup_schedule;
+  backup_schedule.set_name(backup_schedule_name);
+  backup_schedule.mutable_spec()->mutable_cron_spec()->set_text("0 12 * * *");
+  backup_schedule.mutable_retention_duration()->set_seconds(3600 * 24 * 14);
+
+  google::protobuf::FieldMask update_mask;
+  update_mask.add_paths("spec.cron_spec.text");
+  update_mask.add_paths("retention_duration");
+
+  google::spanner::admin::database::v1::UpdateBackupScheduleRequest request;
+  *request.mutable_backup_schedule() = std::move(backup_schedule);
+  *request.mutable_update_mask() = std::move(update_mask);
+
+  auto updated_backup_schedule = client.UpdateBackupSchedule(request);
+  if (!updated_backup_schedule)
+    throw std::move(updated_backup_schedule).status();
+  std::cout << "Backup schedule " << updated_backup_schedule->name()
+            << " updated at "
+            << *google::cloud::spanner::MakeTimestamp(
+                   updated_backup_schedule->update_time());
+}
+//! [update-backup-schedule] [END spanner_update_backup_schedule]
+
+void UpdateBackupScheduleCommand(std::vector<std::string> argv) {
+  if (argv.size() != 4) {
+    throw std::runtime_error(
+        "update-backup-schedule <project-id> "
+        "<instance-id> <database-id> <backup-schedule-id>");
+  }
+  google::cloud::spanner_admin::DatabaseAdminClient client(
+      google::cloud::spanner_admin::MakeDatabaseAdminConnection());
+  UpdateBackupSchedule(std::move(client), argv[0], argv[1], argv[2], argv[3]);
+}
+
+//! [get-backup-schedule] [START spanner_get_backup_schedule]
+void GetBackupSchedule(google::cloud::spanner_admin::DatabaseAdminClient client,
+                       std::string const& project_id,
+                       std::string const& instance_id,
+                       std::string const& database_id,
+                       std::string const& backup_schedule_id) {
+  google::cloud::spanner::Database db(project_id, instance_id, database_id);
+  std::string backup_schedule_name =
+      db.FullName() + "/backupSchedules/" + backup_schedule_id;
+
+  google::spanner::admin::database::v1::GetBackupScheduleRequest request;
+  request.set_name(backup_schedule_name);
+
+  auto backup_schedule = client.GetBackupSchedule(request);
+  if (!backup_schedule) throw std::move(backup_schedule).status();
+  std::cout << "Retrieved backup schedule:\n" << backup_schedule->DebugString();
+}
+//! [get-backup-schedule] [END spanner_get_backup_schedule]
+
+void GetBackupScheduleCommand(std::vector<std::string> argv) {
+  if (argv.size() != 4) {
+    throw std::runtime_error(
+        "get-backup-schedule <project-id> "
+        "<instance-id> <database-id> <backup-schedule-id>");
+  }
+  google::cloud::spanner_admin::DatabaseAdminClient client(
+      google::cloud::spanner_admin::MakeDatabaseAdminConnection());
+  GetBackupSchedule(std::move(client), argv[0], argv[1], argv[2], argv[3]);
+}
+
+//! [list-backup-schedules] [START spanner_list_backup_schedules]
+void ListBackupSchedules(
+    google::cloud::spanner_admin::DatabaseAdminClient client,
+    std::string const& project_id, std::string const& instance_id,
+    std::string const& database_id) {
+  google::cloud::spanner::Database db(project_id, instance_id, database_id);
+  google::spanner::admin::database::v1::ListBackupSchedulesRequest request;
+  request.set_parent(db.FullName());
+
+  int count = 0;
+  for (auto& backup_schedule : client.ListBackupSchedules(request)) {
+    if (!backup_schedule) throw std::move(backup_schedule).status();
+    count++;
+
+    std::cout << "Backup Schedule [" << count << "]:\n"
+              << backup_schedule->DebugString();
+  }
+  if (count == 0) {
+    std::cout << "No backup schedules found for database " << db.FullName();
+  }
+}
+//! [list-backup-schedules] [END spanner_list_backup_schedules]
+
+void ListBackupSchedulesCommand(std::vector<std::string> argv) {
+  if (argv.size() != 3) {
+    throw std::runtime_error(
+        "list-backup-schedules <project-id> <instance-id> <database-id>");
+  }
+  google::cloud::spanner_admin::DatabaseAdminClient client(
+      google::cloud::spanner_admin::MakeDatabaseAdminConnection());
+  ListBackupSchedules(std::move(client), argv[0], argv[1], argv[2]);
 }
 
 //! [update-database] [START spanner_update_database]
@@ -4641,6 +4878,12 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"list-database-operations", ListDatabaseOperationsCommand},
       {"update-database", UpdateDatabaseCommand},
       {"create-backup-schedule", CreateBackupScheduleCommand},
+      {"create-incremental-backup-schedule", CreateIncrementalBackupScheduleCommand},
+      {"create-backup-schedule-with-encryption", CreateBackupScheduleWithEncryptionCommand},
+      {"delete-backup-schedule", DeleteBackupScheduleCommand},
+      {"update-backup-schedule", UpdateBackupScheduleCommand},
+      {"get-backup-schedule", GetBackupScheduleCommand},
+      {"list-backup-schedules", ListBackupSchedulesCommand},
       make_database_command_entry("drop-database", DropDatabase),
       make_database_command_entry("database-get-iam-policy",
                                   DatabaseGetIamPolicy),
