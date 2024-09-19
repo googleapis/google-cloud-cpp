@@ -29,13 +29,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * @param opts the configuration parameters for the Client.
  *
- * @warning At present, GCS gRPC is GA with Allowlist. To access this API,
- *   kindly contact the Google Cloud Storage gRPC team at
- *   gcs-grpc-contact@google.com with a list of GCS buckets you would like to
- *   Allowlist. Please note that while the **service** is GA (with Allowlist),
- *   the client library features remain experimental and subject to change
- *   without notice.
- *
  * @par Example
  * @snippet storage_grpc_samples.cc grpc-read-write
  */

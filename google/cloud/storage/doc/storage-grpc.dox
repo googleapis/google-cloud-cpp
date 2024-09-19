@@ -7,13 +7,6 @@ When using GCS from Google Compute Engine (GCE) this plugin can enable higher
 total throughput across large workloads that run on hundreds or thousands of
 VMs.
 
-@warning At present, GCS gRPC is GA with Allowlist. To access this API,
-  kindly contact the Google Cloud Storage gRPC team at
-  gcs-grpc-contact@google.com with a list of GCS buckets you would like to
-  Allowlist. Please note that while the **service** is GA (with Allowlist),
-  the client library features remain experimental and subject to change
-  without notice.
-
 ## Release Notes
 
 There are some features that the gRPC plugin does not implement or implements
