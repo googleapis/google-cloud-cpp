@@ -54,7 +54,7 @@ std::string FormatFieldAccessorCall(
   return absl::StrJoin(chunks, "().");
 }
 
-void RestPathVisitorHelper(absl::optional<std::string> const& api_version,
+void RestPathVisitorHelper(absl::optional<std::string> api_version,
                            PathTemplate::Segment const& s,
                            std::vector<HttpExtensionInfo::RestPathPiece>& path);
 
@@ -94,10 +94,9 @@ struct RestPathVisitor {
 };
 
 void RestPathVisitorHelper(
-    absl::optional<std::string> const& api_version,
-    PathTemplate::Segment const& s,
+    absl::optional<std::string> api_version, PathTemplate::Segment const& s,
     std::vector<HttpExtensionInfo::RestPathPiece>& path) {
-  absl::visit(RestPathVisitor{api_version, path}, s.value);
+  absl::visit(RestPathVisitor{std::move(api_version), path}, s.value);
 }
 
 std::string FormatQueryParameterCode(
@@ -332,7 +331,8 @@ HttpExtensionInfo ParseHttpExtension(
   };
 
   auto api_version = FormatApiVersionFromUrlPattern(url_pattern);
-  auto rest_path_visitor = RestPathVisitor(api_version, info.rest_path);
+  auto rest_path_visitor =
+      RestPathVisitor(std::move(api_version), info.rest_path);
   for (auto const& s : parsed_http_rule->segments) {
     if (absl::holds_alternative<PathTemplate::Variable>(s->value)) {
       auto v = absl::get<PathTemplate::Variable>(s->value);
