@@ -263,7 +263,7 @@ void SetHttpQueryParameters(HttpExtensionInfo const& info,
       FormatQueryParameterCode(method, std::move(param_field_names));
 }
 
-HttpExtensionInfo ParseHttpExtension(google::api::HttpRule http_rule) {
+HttpExtensionInfo ParseHttpExtension(google::api::HttpRule const& http_rule) {
   HttpExtensionInfo info;
   switch (http_rule.pattern_case()) {
     case google::api::HttpRule::kGet:

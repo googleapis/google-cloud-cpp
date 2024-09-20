@@ -42,12 +42,8 @@ struct HttpExtensionInfo {
  * Parses the http extension providing resource routing info, if present,
  * for the provided method per AIP-4222. Output is also used for gRPC/HTTP
  * transcoding and REST transport.
- * Mixin method should use the target service's package and file names instead
- * of its own.
- * Mixin method' url, verb and body are overridden by the definition in target
- * service's YAML.
  */
-HttpExtensionInfo ParseHttpExtension(google::api::HttpRule http_rule);
+HttpExtensionInfo ParseHttpExtension(google::api::HttpRule const& http_rule);
 
 /**
  * Sets the following method_vars based on the provided parsed_http_info:

@@ -120,7 +120,6 @@ std::unordered_map<std::string, google::api::HttpRule> GetMixinHttpOverrides(
       }
     }
 
-    // std::cout << http_rule.DebugString() << std::endl;
     http_rules[method_full_name] = std::move(http_rule);
   }
   return http_rules;

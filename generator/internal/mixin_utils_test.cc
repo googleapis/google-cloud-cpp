@@ -26,9 +26,7 @@ using ::google::protobuf::FileDescriptor;
 using ::google::protobuf::ServiceDescriptor;
 using ::testing::AllOf;
 using ::testing::Contains;
-using ::testing::Eq;
 using ::testing::NotNull;
-using ::testing::Optional;
 
 auto constexpr kServiceConfigYaml = R"""(
 apis:
