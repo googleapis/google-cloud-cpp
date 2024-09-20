@@ -263,57 +263,42 @@ void SetHttpQueryParameters(HttpExtensionInfo const& info,
       FormatQueryParameterCode(method, std::move(param_field_names));
 }
 
-HttpExtensionInfo ParseHttpExtension(
-    google::protobuf::MethodDescriptor const& method,
-    absl::optional<MixinMethodOverride> method_override) {
-  if (!method.options().HasExtension(google::api::http)) return {};
-
+HttpExtensionInfo ParseHttpExtension(google::api::HttpRule http_rule) {
   HttpExtensionInfo info;
-  google::api::HttpRule http_rule =
-      method.options().GetExtension(google::api::http);
-
-  std::string url_pattern;
-  if (method_override) {
-    url_pattern = method_override->http_path;
-    info.http_verb = method_override->http_verb;
-    info.body = method_override->http_body ? *method_override->http_body : "";
-  } else {
-    switch (http_rule.pattern_case()) {
-      case google::api::HttpRule::kGet:
-        info.http_verb = "Get";
-        url_pattern = http_rule.get();
-        break;
-      case google::api::HttpRule::kPut:
-        info.http_verb = "Put";
-        url_pattern = http_rule.put();
-        break;
-      case google::api::HttpRule::kPost:
-        info.http_verb = "Post";
-        url_pattern = http_rule.post();
-        break;
-      case google::api::HttpRule::kDelete:
-        info.http_verb = "Delete";
-        url_pattern = http_rule.delete_();
-        break;
-      case google::api::HttpRule::kPatch:
-        info.http_verb = "Patch";
-        url_pattern = http_rule.patch();
-        break;
-      default:
-        GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__
-                       << ": google::api::HttpRule not handled";
-    }
-    info.body = http_rule.body();
+  switch (http_rule.pattern_case()) {
+    case google::api::HttpRule::kGet:
+      info.http_verb = "Get";
+      info.url_path = http_rule.get();
+      break;
+    case google::api::HttpRule::kPut:
+      info.http_verb = "Put";
+      info.url_path = http_rule.put();
+      break;
+    case google::api::HttpRule::kPost:
+      info.http_verb = "Post";
+      info.url_path = http_rule.post();
+      break;
+    case google::api::HttpRule::kDelete:
+      info.http_verb = "Delete";
+      info.url_path = http_rule.delete_();
+      break;
+    case google::api::HttpRule::kPatch:
+      info.http_verb = "Patch";
+      info.url_path = http_rule.patch();
+      break;
+    default:
+      GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__
+                     << ": google::api::HttpRule not handled";
   }
 
-  auto parsed_http_rule = ParsePathTemplate(url_pattern);
+  auto parsed_http_rule = ParsePathTemplate(info.url_path);
   if (!parsed_http_rule) {
     GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__
                    << " failure in ParsePathTemplate: "
                    << parsed_http_rule.status();
   }
 
-  info.url_path = url_pattern;
+  info.body = http_rule.body();
 
   struct SegmentAsStringVisitor {
     std::string operator()(PathTemplate::Match const&) { return "*"; }
@@ -330,7 +315,7 @@ HttpExtensionInfo ParseHttpExtension(
     out->append(absl::visit(SegmentAsStringVisitor{}, s->value));
   };
 
-  auto api_version = FormatApiVersionFromUrlPattern(url_pattern);
+  auto api_version = FormatApiVersionFromUrlPattern(info.url_path);
   auto rest_path_visitor =
       RestPathVisitor(std::move(api_version), info.rest_path);
   for (auto const& s : parsed_http_rule->segments) {
@@ -352,7 +337,9 @@ HttpExtensionInfo ParseHttpExtension(
 }
 
 bool HasHttpRoutingHeader(MethodDescriptor const& method) {
-  auto result = ParseHttpExtension(method);
+  if (!method.options().HasExtension(google::api::http)) return false;
+  auto result =
+      ParseHttpExtension(method.options().GetExtension(google::api::http));
   return !result.field_substitutions.empty();
 }
 

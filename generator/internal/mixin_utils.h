@@ -16,10 +16,10 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_MIXIN_UTILS_H
 
 #include "absl/types/optional.h"
+#include <google/api/http.pb.h>
 #include <google/protobuf/compiler/code_generator.h>
 #include <yaml-cpp/yaml.h>
 #include <string>
-#include <google/api/http.pb.h>
 #include <vector>
 
 namespace google {

@@ -14,6 +14,7 @@
 
 #include "generator/internal/mixin_utils.h"
 #include "generator/testing/descriptor_pool_fixture.h"
+#include <google/api/annotations.pb.h>
 #include <gmock/gmock.h>
 
 namespace google {
@@ -44,6 +45,10 @@ http:
   - selector: google.iam.v1.IAMPolicy.SetIamPolicy
     post: 'OverwriteSetIamPolicyPath'
     body: '*'
+    additional_bindings:
+    - post: 'OverwriteSetIamPolicyPath0'
+      body: '*'
+    - get: 'OverwriteSetIamPolicyPath1'
 )""";
 
 auto constexpr kServiceConfigRedundantRulesYaml = R"""(
@@ -219,28 +224,39 @@ TEST_F(MixinUtilsTest, GetMixinMethods) {
             "google.cloud.location.Locations.GetLocation");
   EXPECT_EQ(get_location.grpc_stub_name, "locations_stub");
   EXPECT_EQ(get_location.grpc_stub_fqn, "google::cloud::location::Locations");
-  EXPECT_THAT(get_location.method_override.http_body, Eq(absl::nullopt));
-  EXPECT_EQ(get_location.method_override.http_path, "OverwriteGetLocationPath");
-  EXPECT_EQ(get_location.method_override.http_verb, "Get");
+  EXPECT_EQ(get_location.http_override.body(), "");
+  EXPECT_EQ(get_location.http_override.get(), "OverwriteGetLocationPath");
+  EXPECT_EQ(get_location.http_override.pattern_case(),
+            google::api::HttpRule::kGet);
 
   EXPECT_EQ(list_locations.method.get().full_name(),
             "google.cloud.location.Locations.ListLocations");
   EXPECT_EQ(list_locations.grpc_stub_name, "locations_stub");
   EXPECT_EQ(list_locations.grpc_stub_fqn, "google::cloud::location::Locations");
-  EXPECT_THAT(list_locations.method_override.http_body, Eq(absl::nullopt));
-  EXPECT_EQ(list_locations.method_override.http_path,
-            "OverwriteListLocationPath");
-  EXPECT_EQ(list_locations.method_override.http_verb, "Get");
+  EXPECT_EQ(list_locations.http_override.body(), "");
+  EXPECT_EQ(list_locations.http_override.get(), "OverwriteListLocationPath");
+  EXPECT_EQ(list_locations.http_override.pattern_case(),
+            google::api::HttpRule::kGet);
 
   EXPECT_EQ(set_iam_policy.method.get().full_name(),
             "google.iam.v1.IAMPolicy.SetIamPolicy");
   EXPECT_EQ(set_iam_policy.grpc_stub_name, "iampolicy_stub");
   EXPECT_EQ(set_iam_policy.grpc_stub_fqn, "google::iam::v1::IAMPolicy");
-  EXPECT_THAT(set_iam_policy.method_override.http_body,
-              Optional(std::string("*")));
-  EXPECT_EQ(set_iam_policy.method_override.http_path,
-            "OverwriteSetIamPolicyPath");
-  EXPECT_EQ(set_iam_policy.method_override.http_verb, "Post");
+  EXPECT_THAT(set_iam_policy.http_override.body(), "*");
+  EXPECT_EQ(set_iam_policy.http_override.post(), "OverwriteSetIamPolicyPath");
+  EXPECT_EQ(set_iam_policy.http_override.pattern_case(),
+            google::api::HttpRule::kPost);
+  EXPECT_EQ(set_iam_policy.http_override.additional_bindings().size(), 2);
+  EXPECT_EQ(set_iam_policy.http_override.additional_bindings(0).pattern_case(),
+            google::api::HttpRule::kPost);
+  EXPECT_EQ(set_iam_policy.http_override.additional_bindings(0).post(),
+            "OverwriteSetIamPolicyPath0");
+  EXPECT_EQ(set_iam_policy.http_override.additional_bindings(0).body(), "*");
+  EXPECT_EQ(set_iam_policy.http_override.additional_bindings(1).pattern_case(),
+            google::api::HttpRule::kGet);
+  EXPECT_EQ(set_iam_policy.http_override.additional_bindings(1).get(),
+            "OverwriteSetIamPolicyPath1");
+  EXPECT_EQ(set_iam_policy.http_override.additional_bindings(1).body(), "");
 }
 
 TEST_F(MixinUtilsTest, GetMixinMethodsWithDuplicatedMixinNames) {

@@ -35,6 +35,7 @@
 #include "absl/strings/str_split.h"
 #include "absl/strings/strip.h"
 #include "absl/types/variant.h"
+#include <google/api/annotations.pb.h>
 #include <google/api/routing.pb.h>
 #include <google/longrunning/operations.pb.h>
 #include <google/protobuf/compiler/code_generator.h>
@@ -842,7 +843,11 @@ std::map<std::string, VarsDictionary> CreateMethodVars(
     SetLongrunningOperationMethodVars(method, method_vars);
     AssignPaginationMethodVars(method, method_vars);
     SetMethodSignatureMethodVars(service, method, omitted_rpcs, method_vars);
-    auto parsed_http_info = ParseHttpExtension(method);
+    HttpExtensionInfo parsed_http_info;
+    if (method.options().HasExtension(google::api::http)) {
+      parsed_http_info =
+          ParseHttpExtension(method.options().GetExtension(google::api::http));
+    }
     method_vars["request_resource"] =
         FormatRequestResource(*method.input_type(), parsed_http_info);
     SetHttpDerivedMethodVars(parsed_http_info, method, method_vars);

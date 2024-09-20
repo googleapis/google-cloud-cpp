@@ -21,7 +21,6 @@
 #include "absl/types/optional.h"
 #include <google/protobuf/compiler/code_generator.h>
 #include <yaml-cpp/yaml.h>
-#include <google/api/http.pb.h>
 #include <iostream>
 #include <string>
 #include <unordered_map>
@@ -50,19 +49,9 @@ std::unordered_map<std::string, std::string> const& GetMixinProtoPathMap() {
   return *kMixinProtoPathMap;
 }
 
-std::unordered_map<std::string, std::string> const& GetHttpVerbs() {
-  static absl::NoDestructor<std::unordered_map<std::string, std::string>> const
-      kHttpVerbs{{
-          {"get", "Get"},
-          {"post", "Post"},
-          {"put", "Put"},
-          {"patch", "Patch"},
-          {"delete", "Delete"},
-      }};
-  return *kHttpVerbs;
-}
-
-void ParseHttpRule(std::string const& selector, YAML::detail::iterator_value const& rule, google::api::HttpRule& http_rule) {
+void ParseHttpRule(std::string const& selector,
+                   YAML::detail::iterator_value const& rule,
+                   google::api::HttpRule& http_rule) {
   http_rule.set_selector(selector);
   if (rule["body"]) {
     http_rule.set_body(rule["body"].as<std::string>());
@@ -74,19 +63,19 @@ void ParseHttpRule(std::string const& selector, YAML::detail::iterator_value con
       continue;
 
     std::string const rule_key =
-          absl::AsciiStrToLower(kv.first.as<std::string>());
+        absl::AsciiStrToLower(kv.first.as<std::string>());
     std::string const rule_value = kv.second.as<std::string>();
 
     if (rule_key == "get") {
-        http_rule.set_get(rule_value);
+      http_rule.set_get(rule_value);
     } else if (rule_key == "post") {
-        http_rule.set_post(rule_value);
+      http_rule.set_post(rule_value);
     } else if (rule_key == "put") {
-        http_rule.set_put(rule_value);
+      http_rule.set_put(rule_value);
     } else if (rule_key == "patch") {
-        http_rule.set_patch(rule_value);
+      http_rule.set_patch(rule_value);
     } else if (rule_key == "delete") {
-        http_rule.set_delete_(rule_value);
+      http_rule.set_delete_(rule_value);
     }
   }
 }
@@ -99,8 +88,7 @@ std::unordered_map<std::string, google::api::HttpRule> GetMixinHttpOverrides(
     YAML::Node const& service_config) {
   std::unordered_map<std::string, google::api::HttpRule> http_rules;
 
-  if (service_config.Type() != YAML::NodeType::Map)
-    return http_rules;
+  if (service_config.Type() != YAML::NodeType::Map) return http_rules;
   if (!service_config["http"]) return http_rules;
 
   auto const& http = service_config["http"];
@@ -120,12 +108,14 @@ std::unordered_map<std::string, google::api::HttpRule> GetMixinHttpOverrides(
     ParseHttpRule(method_full_name, rule, http_rule);
 
     if (rule["additional_bindings"]) {
-      google::api::HttpRule& additional_http_rule = *http_rule.add_additional_bindings();
       auto const& additional_bindings = rule["additional_bindings"];
       if (additional_bindings.Type() == YAML::NodeType::Sequence) {
         for (auto const& additional_binding : additional_bindings) {
+          google::api::HttpRule& additional_http_rule =
+              *http_rule.add_additional_bindings();
           if (additional_binding.Type() != YAML::NodeType::Map) continue;
-          ParseHttpRule(method_full_name, additional_binding, additional_http_rule);
+          ParseHttpRule(method_full_name, additional_binding,
+                        additional_http_rule);
         }
       }
     }
