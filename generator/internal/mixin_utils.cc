@@ -189,10 +189,11 @@ std::vector<MixinMethod> GetMixinMethods(YAML::Node const& service_config,
       for (int j = 0; j < mixin_service->method_count(); ++j) {
         MethodDescriptor const* mixin_method = mixin_service->method(j);
         auto mixin_method_full_name = mixin_method->full_name();
+        // Add the mixin method only if it appears in the http field of YAML
         auto const it = mixin_http_overrides.find(mixin_method_full_name);
         if (it == mixin_http_overrides.end()) continue;
 
-        // if the mixin method name required from YAML appears in the original
+        // If the mixin method name required from YAML appears in the original
         // service proto, ignore the mixin.
         if (method_names.find(mixin_method->name()) != method_names.end())
           continue;
