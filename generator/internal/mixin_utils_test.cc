@@ -24,6 +24,7 @@ namespace cloud {
 namespace generator_internal {
 namespace {
 
+using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::protobuf::FileDescriptor;
 using ::google::protobuf::ServiceDescriptor;
 using ::testing::AllOf;
@@ -35,18 +36,6 @@ using ::testing::NotNull;
 
 MATCHER_P(HasMethod, expected, "has method full name") {
   return arg.get().full_name() == expected;
-}
-
-MATCHER_P3(HasHttpRuleBinding, body, path, pattern_case,
-           "has http rule binding") {
-  return is_http_rule_expected(arg, body, path, pattern_case);
-}
-
-MATCHER_P4(HasAdditionalBinding, idx, body, path, pattern_case,
-           "has additional binding") {
-  if (idx >= arg.additional_bindings().size()) return false;
-  return is_http_rule_expected(arg.additional_bindings(idx), body, path,
-                               pattern_case);
 }
 
 auto constexpr kServiceConfigYaml = R"""(
@@ -272,8 +261,7 @@ TEST_F(MixinUtilsTest, GetMixinMethods) {
     return AllOf(Field(&MixinMethod::method, HasMethod(full_name)),
                  Field(&MixinMethod::grpc_stub_name, Eq(stub_name)),
                  Field(&MixinMethod::grpc_stub_fqn, Eq(stub_fqn)),
-                 Field(&MixinMethod::http_override,
-                       google::cloud::testing_util::IsProtoEqual(http_rule)));
+                 Field(&MixinMethod::http_override, IsProtoEqual(http_rule)));
   };
 
   EXPECT_THAT(
