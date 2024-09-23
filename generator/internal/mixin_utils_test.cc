@@ -26,7 +26,40 @@ using ::google::protobuf::FileDescriptor;
 using ::google::protobuf::ServiceDescriptor;
 using ::testing::AllOf;
 using ::testing::Contains;
+using ::testing::ElementsAre;
+using ::testing::Eq;
+using ::testing::Field;
 using ::testing::NotNull;
+
+bool is_http_rule_expected(google::api::HttpRule const& http_rule,
+                           std::string const& body, std::string const& path,
+                           google::api::HttpRule::PatternCase pattern_case) {
+  if (http_rule.body() != body) return false;
+  if (http_rule.pattern_case() != pattern_case) return false;
+  if (pattern_case == google::api::HttpRule::kGet) {
+    return http_rule.get() == path;
+  }
+  if (pattern_case == google::api::HttpRule::kPost) {
+    return http_rule.post() == path;
+  }
+  return false;
+}
+
+MATCHER_P(HasMethodFullName, expected, "has method full name") {
+  return arg.get().full_name() == expected;
+}
+
+MATCHER_P3(HasHttpRuleBinding, body, path, pattern_case,
+           "has http rule binding") {
+  return is_http_rule_expected(arg, body, path, pattern_case);
+}
+
+MATCHER_P4(HasAdditionalBinding, idx, body, path, pattern_case,
+           "has additional binding") {
+  if (idx >= arg.additional_bindings().size()) return false;
+  return is_http_rule_expected(arg.additional_bindings(idx), body, path,
+                               pattern_case);
+}
 
 auto constexpr kServiceConfigYaml = R"""(
 apis:
@@ -206,63 +239,58 @@ TEST_F(MixinUtilsTest, ExtractMixinProtoPathsFromYaml) {
 
 TEST_F(MixinUtilsTest, GetMixinMethods) {
   FileDescriptor const* file = FindFile("test/v1/service1.proto");
-  EXPECT_THAT(file, NotNull());
+  ASSERT_THAT(file, NotNull());
 
   ServiceDescriptor const* service = file->service(0);
-  EXPECT_THAT(service, NotNull());
+  ASSERT_THAT(service, NotNull());
 
   auto const& mixin_methods = GetMixinMethods(service_config_, *service);
   EXPECT_EQ(mixin_methods.size(), 3);
 
-  MixinMethod const& get_location = mixin_methods[0];
-  MixinMethod const& list_locations = mixin_methods[1];
-  MixinMethod const& set_iam_policy = mixin_methods[2];
-
-  EXPECT_EQ(get_location.method.get().full_name(),
-            "google.cloud.location.Locations.GetLocation");
-  EXPECT_EQ(get_location.grpc_stub_name, "locations_stub");
-  EXPECT_EQ(get_location.grpc_stub_fqn, "google::cloud::location::Locations");
-  EXPECT_EQ(get_location.http_override.body(), "");
-  EXPECT_EQ(get_location.http_override.get(), "OverwriteGetLocationPath");
-  EXPECT_EQ(get_location.http_override.pattern_case(),
-            google::api::HttpRule::kGet);
-
-  EXPECT_EQ(list_locations.method.get().full_name(),
-            "google.cloud.location.Locations.ListLocations");
-  EXPECT_EQ(list_locations.grpc_stub_name, "locations_stub");
-  EXPECT_EQ(list_locations.grpc_stub_fqn, "google::cloud::location::Locations");
-  EXPECT_EQ(list_locations.http_override.body(), "");
-  EXPECT_EQ(list_locations.http_override.get(), "OverwriteListLocationPath");
-  EXPECT_EQ(list_locations.http_override.pattern_case(),
-            google::api::HttpRule::kGet);
-
-  EXPECT_EQ(set_iam_policy.method.get().full_name(),
-            "google.iam.v1.IAMPolicy.SetIamPolicy");
-  EXPECT_EQ(set_iam_policy.grpc_stub_name, "iampolicy_stub");
-  EXPECT_EQ(set_iam_policy.grpc_stub_fqn, "google::iam::v1::IAMPolicy");
-  EXPECT_THAT(set_iam_policy.http_override.body(), "*");
-  EXPECT_EQ(set_iam_policy.http_override.post(), "OverwriteSetIamPolicyPath");
-  EXPECT_EQ(set_iam_policy.http_override.pattern_case(),
-            google::api::HttpRule::kPost);
-  EXPECT_EQ(set_iam_policy.http_override.additional_bindings().size(), 2);
-  EXPECT_EQ(set_iam_policy.http_override.additional_bindings(0).pattern_case(),
-            google::api::HttpRule::kPost);
-  EXPECT_EQ(set_iam_policy.http_override.additional_bindings(0).post(),
-            "OverwriteSetIamPolicyPath0");
-  EXPECT_EQ(set_iam_policy.http_override.additional_bindings(0).body(), "*");
-  EXPECT_EQ(set_iam_policy.http_override.additional_bindings(1).pattern_case(),
-            google::api::HttpRule::kGet);
-  EXPECT_EQ(set_iam_policy.http_override.additional_bindings(1).get(),
-            "OverwriteSetIamPolicyPath1");
-  EXPECT_EQ(set_iam_policy.http_override.additional_bindings(1).body(), "");
+  EXPECT_THAT(
+      mixin_methods,
+      ElementsAre(
+          AllOf(Field(&MixinMethod::method,
+                      HasMethodFullName(
+                          "google.cloud.location.Locations.GetLocation")),
+                Field(&MixinMethod::grpc_stub_name, Eq("locations_stub")),
+                Field(&MixinMethod::grpc_stub_fqn,
+                      Eq("google::cloud::location::Locations")),
+                Field(&MixinMethod::http_override,
+                      HasHttpRuleBinding("", "OverwriteGetLocationPath",
+                                         google::api::HttpRule::kGet))),
+          AllOf(Field(&MixinMethod::method,
+                      HasMethodFullName(
+                          "google.cloud.location.Locations.ListLocations")),
+                Field(&MixinMethod::grpc_stub_name, Eq("locations_stub")),
+                Field(&MixinMethod::grpc_stub_fqn,
+                      Eq("google::cloud::location::Locations")),
+                Field(&MixinMethod::http_override,
+                      HasHttpRuleBinding("", "OverwriteListLocationPath",
+                                         google::api::HttpRule::kGet))),
+          AllOf(
+              Field(&MixinMethod::method,
+                    HasMethodFullName("google.iam.v1.IAMPolicy.SetIamPolicy")),
+              Field(&MixinMethod::grpc_stub_name, Eq("iampolicy_stub")),
+              Field(&MixinMethod::grpc_stub_fqn,
+                    Eq("google::iam::v1::IAMPolicy")),
+              Field(
+                  &MixinMethod::http_override,
+                  AllOf(
+                      HasHttpRuleBinding("*", "OverwriteSetIamPolicyPath",
+                                         google::api::HttpRule::kPost),
+                      HasAdditionalBinding(0, "*", "OverwriteSetIamPolicyPath0",
+                                           google::api::HttpRule::kPost),
+                      HasAdditionalBinding(1, "", "OverwriteSetIamPolicyPath1",
+                                           google::api::HttpRule::kGet))))));
 }
 
 TEST_F(MixinUtilsTest, GetMixinMethodsWithDuplicatedMixinNames) {
   FileDescriptor const* file = FindFile("test/v1/service2.proto");
-  EXPECT_THAT(file, NotNull());
+  ASSERT_THAT(file, NotNull());
 
   ServiceDescriptor const* service = file->service(0);
-  EXPECT_THAT(service, NotNull());
+  ASSERT_THAT(service, NotNull());
 
   auto const& mixin_methods = GetMixinMethods(service_config_, *service);
   EXPECT_EQ(mixin_methods.size(), 1);
@@ -272,10 +300,10 @@ TEST_F(MixinUtilsTest, GetMixinMethodsWithDuplicatedMixinNames) {
 
 TEST_F(MixinUtilsTest, GetMixinMethodsWithRedundantRules) {
   FileDescriptor const* file = FindFile("test/v1/service1.proto");
-  EXPECT_THAT(file, NotNull());
+  ASSERT_THAT(file, NotNull());
 
   ServiceDescriptor const* service = file->service(0);
-  EXPECT_THAT(service, NotNull());
+  ASSERT_THAT(service, NotNull());
 
   auto const& mixin_methods =
       GetMixinMethods(service_config_redundant_, *service);

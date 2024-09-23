@@ -49,10 +49,8 @@ std::unordered_map<std::string, std::string> const& GetMixinProtoPathMap() {
   return *kMixinProtoPathMap;
 }
 
-void ParseHttpRule(std::string const& selector,
-                   YAML::detail::iterator_value const& rule,
-                   google::api::HttpRule& http_rule) {
-  http_rule.set_selector(selector);
+google::api::HttpRule ParseHttpRule(YAML::detail::iterator_value const& rule) {
+  google::api::HttpRule http_rule;
   if (rule["body"]) {
     http_rule.set_body(rule["body"].as<std::string>());
   }
@@ -78,6 +76,7 @@ void ParseHttpRule(std::string const& selector,
       http_rule.set_delete_(rule_value);
     }
   }
+  return http_rule;
 }
 
 /**
@@ -104,18 +103,15 @@ std::unordered_map<std::string, google::api::HttpRule> GetMixinHttpOverrides(
     if (selector.Type() != YAML::NodeType::Scalar) continue;
 
     std::string const method_full_name = selector.as<std::string>();
-    google::api::HttpRule http_rule;
-    ParseHttpRule(method_full_name, rule, http_rule);
+    google::api::HttpRule http_rule = ParseHttpRule(rule);
 
     if (rule["additional_bindings"]) {
       auto const& additional_bindings = rule["additional_bindings"];
       if (additional_bindings.Type() == YAML::NodeType::Sequence) {
         for (auto const& additional_binding : additional_bindings) {
-          google::api::HttpRule& additional_http_rule =
-              *http_rule.add_additional_bindings();
           if (additional_binding.Type() != YAML::NodeType::Map) continue;
-          ParseHttpRule(method_full_name, additional_binding,
-                        additional_http_rule);
+          *http_rule.add_additional_bindings() =
+              ParseHttpRule(additional_binding);
         }
       }
     }
