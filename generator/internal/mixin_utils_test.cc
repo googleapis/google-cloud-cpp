@@ -14,6 +14,9 @@
 
 #include "generator/internal/mixin_utils.h"
 #include "generator/testing/descriptor_pool_fixture.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
+#include <google/api/annotations.pb.h>
+#include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
 namespace google {
@@ -21,13 +24,19 @@ namespace cloud {
 namespace generator_internal {
 namespace {
 
+using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::protobuf::FileDescriptor;
 using ::google::protobuf::ServiceDescriptor;
 using ::testing::AllOf;
 using ::testing::Contains;
+using ::testing::ElementsAre;
 using ::testing::Eq;
+using ::testing::Field;
 using ::testing::NotNull;
-using ::testing::Optional;
+
+MATCHER_P(HasMethod, expected, "has method full name") {
+  return arg.get().full_name() == expected;
+}
 
 auto constexpr kServiceConfigYaml = R"""(
 apis:
@@ -44,6 +53,10 @@ http:
   - selector: google.iam.v1.IAMPolicy.SetIamPolicy
     post: 'OverwriteSetIamPolicyPath'
     body: '*'
+    additional_bindings:
+    - post: 'OverwriteSetIamPolicyPath0'
+      body: '*'
+    - get: 'OverwriteSetIamPolicyPath1'
 )""";
 
 auto constexpr kServiceConfigRedundantRulesYaml = R"""(
@@ -203,52 +216,74 @@ TEST_F(MixinUtilsTest, ExtractMixinProtoPathsFromYaml) {
 
 TEST_F(MixinUtilsTest, GetMixinMethods) {
   FileDescriptor const* file = FindFile("test/v1/service1.proto");
-  EXPECT_THAT(file, NotNull());
+  ASSERT_THAT(file, NotNull());
 
   ServiceDescriptor const* service = file->service(0);
-  EXPECT_THAT(service, NotNull());
+  ASSERT_THAT(service, NotNull());
 
   auto const& mixin_methods = GetMixinMethods(service_config_, *service);
-  EXPECT_EQ(mixin_methods.size(), 3);
 
-  MixinMethod const& get_location = mixin_methods[0];
-  MixinMethod const& list_locations = mixin_methods[1];
-  MixinMethod const& set_iam_policy = mixin_methods[2];
+  auto constexpr kText0 = R"pb(
+    selector: "google.cloud.location.Locations.GetLocation"
+    get: "OverwriteGetLocationPath"
+    body: ""
+  )pb";
 
-  EXPECT_EQ(get_location.method.get().full_name(),
-            "google.cloud.location.Locations.GetLocation");
-  EXPECT_EQ(get_location.grpc_stub_name, "locations_stub");
-  EXPECT_EQ(get_location.grpc_stub_fqn, "google::cloud::location::Locations");
-  EXPECT_THAT(get_location.method_override.http_body, Eq(absl::nullopt));
-  EXPECT_EQ(get_location.method_override.http_path, "OverwriteGetLocationPath");
-  EXPECT_EQ(get_location.method_override.http_verb, "Get");
+  auto constexpr kText1 = R"pb(
+    selector: "google.cloud.location.Locations.ListLocations"
+    get: "OverwriteListLocationPath"
+    body: ""
+  )pb";
 
-  EXPECT_EQ(list_locations.method.get().full_name(),
-            "google.cloud.location.Locations.ListLocations");
-  EXPECT_EQ(list_locations.grpc_stub_name, "locations_stub");
-  EXPECT_EQ(list_locations.grpc_stub_fqn, "google::cloud::location::Locations");
-  EXPECT_THAT(list_locations.method_override.http_body, Eq(absl::nullopt));
-  EXPECT_EQ(list_locations.method_override.http_path,
-            "OverwriteListLocationPath");
-  EXPECT_EQ(list_locations.method_override.http_verb, "Get");
+  auto constexpr kText2 = R"pb(
+    selector: "google.iam.v1.IAMPolicy.SetIamPolicy"
+    post: "OverwriteSetIamPolicyPath"
+    body: "*"
+    additional_bindings:
+    [ { post: "OverwriteSetIamPolicyPath0", body: "*" }
+      , { get: "OverwriteSetIamPolicyPath1", body: "" }]
+  )pb";
 
-  EXPECT_EQ(set_iam_policy.method.get().full_name(),
-            "google.iam.v1.IAMPolicy.SetIamPolicy");
-  EXPECT_EQ(set_iam_policy.grpc_stub_name, "iampolicy_stub");
-  EXPECT_EQ(set_iam_policy.grpc_stub_fqn, "google::iam::v1::IAMPolicy");
-  EXPECT_THAT(set_iam_policy.method_override.http_body,
-              Optional(std::string("*")));
-  EXPECT_EQ(set_iam_policy.method_override.http_path,
-            "OverwriteSetIamPolicyPath");
-  EXPECT_EQ(set_iam_policy.method_override.http_verb, "Post");
+  google::api::HttpRule http_rule0;
+  ASSERT_TRUE(
+      google::protobuf::TextFormat::ParseFromString(kText0, &http_rule0));
+
+  google::api::HttpRule http_rule1;
+  ASSERT_TRUE(
+      google::protobuf::TextFormat::ParseFromString(kText1, &http_rule1));
+
+  google::api::HttpRule http_rule2;
+  ASSERT_TRUE(
+      google::protobuf::TextFormat::ParseFromString(kText2, &http_rule2));
+
+  auto mixin_matcher = [](auto full_name, auto stub_name, auto stub_fqn,
+                          auto http_rule) {
+    return AllOf(Field(&MixinMethod::method, HasMethod(full_name)),
+                 Field(&MixinMethod::grpc_stub_name, Eq(stub_name)),
+                 Field(&MixinMethod::grpc_stub_fqn, Eq(stub_fqn)),
+                 Field(&MixinMethod::http_override, IsProtoEqual(http_rule)));
+  };
+
+  EXPECT_THAT(
+      mixin_methods,
+      ElementsAre(
+          mixin_matcher("google.cloud.location.Locations.GetLocation",
+                        "locations_stub", "google::cloud::location::Locations",
+                        http_rule0),
+          mixin_matcher("google.cloud.location.Locations.ListLocations",
+                        "locations_stub", "google::cloud::location::Locations",
+                        http_rule1),
+          mixin_matcher("google.iam.v1.IAMPolicy.SetIamPolicy",
+                        "iampolicy_stub", "google::iam::v1::IAMPolicy",
+                        http_rule2)));
 }
 
 TEST_F(MixinUtilsTest, GetMixinMethodsWithDuplicatedMixinNames) {
   FileDescriptor const* file = FindFile("test/v1/service2.proto");
-  EXPECT_THAT(file, NotNull());
+  ASSERT_THAT(file, NotNull());
 
   ServiceDescriptor const* service = file->service(0);
-  EXPECT_THAT(service, NotNull());
+  ASSERT_THAT(service, NotNull());
 
   auto const& mixin_methods = GetMixinMethods(service_config_, *service);
   EXPECT_EQ(mixin_methods.size(), 1);
@@ -258,10 +293,10 @@ TEST_F(MixinUtilsTest, GetMixinMethodsWithDuplicatedMixinNames) {
 
 TEST_F(MixinUtilsTest, GetMixinMethodsWithRedundantRules) {
   FileDescriptor const* file = FindFile("test/v1/service1.proto");
-  EXPECT_THAT(file, NotNull());
+  ASSERT_THAT(file, NotNull());
 
   ServiceDescriptor const* service = file->service(0);
-  EXPECT_THAT(service, NotNull());
+  ASSERT_THAT(service, NotNull());
 
   auto const& mixin_methods =
       GetMixinMethods(service_config_redundant_, *service);

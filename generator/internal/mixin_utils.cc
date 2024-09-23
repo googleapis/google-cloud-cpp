@@ -49,61 +49,81 @@ std::unordered_map<std::string, std::string> const& GetMixinProtoPathMap() {
   return *kMixinProtoPathMap;
 }
 
-std::unordered_map<std::string, std::string> const& GetHttpVerbs() {
-  static absl::NoDestructor<std::unordered_map<std::string, std::string>> const
-      kHttpVerbs{{
-          {"get", "Get"},
-          {"post", "Post"},
-          {"put", "Put"},
-          {"patch", "Patch"},
-          {"delete", "Delete"},
-      }};
-  return *kHttpVerbs;
+google::api::HttpRule ParseHttpRule(YAML::detail::iterator_value const& rule) {
+  google::api::HttpRule http_rule;
+  auto const& body = rule["body"];
+  if (body) {
+    http_rule.set_body(body.as<std::string>());
+  }
+  auto const& selector = rule["selector"];
+  if (selector) {
+    http_rule.set_selector(selector.as<std::string>());
+  }
+
+  for (auto const& kv : rule) {
+    if (kv.first.Type() != YAML::NodeType::Scalar ||
+        kv.second.Type() != YAML::NodeType::Scalar)
+      continue;
+
+    std::string const rule_key =
+        absl::AsciiStrToLower(kv.first.as<std::string>());
+    std::string const rule_value = kv.second.as<std::string>();
+
+    if (rule_key == "get") {
+      http_rule.set_get(rule_value);
+    } else if (rule_key == "post") {
+      http_rule.set_post(rule_value);
+    } else if (rule_key == "put") {
+      http_rule.set_put(rule_value);
+    } else if (rule_key == "patch") {
+      http_rule.set_patch(rule_value);
+    } else if (rule_key == "delete") {
+      http_rule.set_delete_(rule_value);
+    }
+  }
+  return http_rule;
 }
 
 /**
  * Extract Mixin methods from the YAML file, together with the overwritten http
  * info.
  */
-std::unordered_map<std::string, MixinMethodOverride> GetMixinMethodOverrides(
+std::unordered_map<std::string, google::api::HttpRule> GetMixinHttpOverrides(
     YAML::Node const& service_config) {
-  std::unordered_map<std::string, MixinMethodOverride> mixin_method_overrides;
-  if (service_config.Type() != YAML::NodeType::Map)
-    return mixin_method_overrides;
-  if (!service_config["http"]) return mixin_method_overrides;
+  std::unordered_map<std::string, google::api::HttpRule> http_rules;
+
+  if (service_config.Type() != YAML::NodeType::Map) return http_rules;
+  if (!service_config["http"]) return http_rules;
+
   auto const& http = service_config["http"];
-  if (http.Type() != YAML::NodeType::Map) return mixin_method_overrides;
+  if (http.Type() != YAML::NodeType::Map) return http_rules;
+
   auto const& rules = http["rules"];
-  if (rules.Type() != YAML::NodeType::Sequence) return mixin_method_overrides;
+  if (rules.Type() != YAML::NodeType::Sequence) return http_rules;
+
   for (auto const& rule : rules) {
     if (rule.Type() != YAML::NodeType::Map) continue;
 
     auto const& selector = rule["selector"];
     if (selector.Type() != YAML::NodeType::Scalar) continue;
+
     std::string const method_full_name = selector.as<std::string>();
+    google::api::HttpRule http_rule = ParseHttpRule(rule);
 
-    for (auto const& kv : rule) {
-      if (kv.first.Type() != YAML::NodeType::Scalar ||
-          kv.second.Type() != YAML::NodeType::Scalar)
-        continue;
-
-      std::string const http_verb_lower =
-          absl::AsciiStrToLower(kv.first.as<std::string>());
-      auto const& http_verbs = GetHttpVerbs();
-      auto const it = http_verbs.find(http_verb_lower);
-      if (it == http_verbs.end()) continue;
-      std::string const& http_verb = it->second;
-      std::string const http_path = kv.second.as<std::string>();
-      absl::optional<std::string> http_body;
-      if (rule["body"]) {
-        http_body = rule["body"].as<std::string>();
+    if (rule["additional_bindings"]) {
+      auto const& additional_bindings = rule["additional_bindings"];
+      if (additional_bindings.Type() == YAML::NodeType::Sequence) {
+        for (auto const& additional_binding : additional_bindings) {
+          if (additional_binding.Type() != YAML::NodeType::Map) continue;
+          *http_rule.add_additional_bindings() =
+              ParseHttpRule(additional_binding);
+        }
       }
-
-      mixin_method_overrides[method_full_name] =
-          MixinMethodOverride{http_verb, http_path, http_body};
     }
+
+    http_rules[method_full_name] = std::move(http_rule);
   }
-  return mixin_method_overrides;
+  return http_rules;
 }
 
 /**
@@ -155,7 +175,7 @@ std::vector<MixinMethod> GetMixinMethods(YAML::Node const& service_config,
   }
   std::unordered_set<std::string> const method_names = GetMethodNames(service);
   auto const mixin_proto_paths = GetMixinProtoPaths(service_config);
-  auto const mixin_method_overrides = GetMixinMethodOverrides(service_config);
+  auto const mixin_http_overrides = GetMixinHttpOverrides(service_config);
 
   for (auto const& mixin_proto_path : mixin_proto_paths) {
     FileDescriptor const* mixin_file = pool->FindFileByName(mixin_proto_path);
@@ -170,10 +190,11 @@ std::vector<MixinMethod> GetMixinMethods(YAML::Node const& service_config,
       for (int j = 0; j < mixin_service->method_count(); ++j) {
         MethodDescriptor const* mixin_method = mixin_service->method(j);
         auto mixin_method_full_name = mixin_method->full_name();
-        auto const it = mixin_method_overrides.find(mixin_method_full_name);
-        if (it == mixin_method_overrides.end()) continue;
+        // Add the mixin method only if it appears in the http field of YAML
+        auto const it = mixin_http_overrides.find(mixin_method_full_name);
+        if (it == mixin_http_overrides.end()) continue;
 
-        // if the mixin method name required from YAML appears in the original
+        // If the mixin method name required from YAML appears in the original
         // service proto, ignore the mixin.
         if (method_names.find(mixin_method->name()) != method_names.end())
           continue;

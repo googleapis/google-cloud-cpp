@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_MIXIN_UTILS_H
 
 #include "absl/types/optional.h"
+#include <google/api/http.pb.h>
 #include <google/protobuf/compiler/code_generator.h>
 #include <yaml-cpp/yaml.h>
 #include <string>
@@ -26,15 +27,6 @@ namespace cloud {
 namespace generator_internal {
 
 /**
- * Override of http info of a mixin method.
- */
-struct MixinMethodOverride {
-  std::string http_verb;
-  std::string http_path;
-  absl::optional<std::string> http_body;
-};
-
-/**
  * All required info for a mixin method
  * including grpc stub name, grpc stub full qualified name,
  * method descriptor and method http overrides.
@@ -43,7 +35,7 @@ struct MixinMethod {
   std::string grpc_stub_name;
   std::string grpc_stub_fqn;
   std::reference_wrapper<google::protobuf::MethodDescriptor const> method;
-  MixinMethodOverride method_override;
+  google::api::HttpRule http_override;
 };
 
 /**
