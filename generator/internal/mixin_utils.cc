@@ -51,8 +51,13 @@ std::unordered_map<std::string, std::string> const& GetMixinProtoPathMap() {
 
 google::api::HttpRule ParseHttpRule(YAML::detail::iterator_value const& rule) {
   google::api::HttpRule http_rule;
-  if (rule["body"]) {
-    http_rule.set_body(rule["body"].as<std::string>());
+  auto const& body = rule["body"];
+  if (body) {
+    http_rule.set_body(body.as<std::string>());
+  }
+  auto const& selector = rule["selector"];
+  if (selector) {
+    http_rule.set_selector(selector.as<std::string>());
   }
 
   for (auto const& kv : rule) {
