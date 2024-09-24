@@ -16,6 +16,10 @@ load(
     ":storage_client_integration_tests.bzl",
     "storage_client_integration_tests",
 )
+load (
+    ":storage_client_universe_domain_tests.bzl",
+    "storage_client_universe_domain_tests",
+)
 
 package(default_visibility = ["//visibility:private"])
 
@@ -54,3 +58,28 @@ VARIATIONS = {
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in storage_client_integration_tests for v_label, v_env in VARIATIONS.items()]
+
+[cc_test(
+    name = test.replace("/", "_").replace(".cc", ""),
+    timeout = "long",
+    srcs = [test],
+    linkopts = select({
+        "@platforms//os:windows": [],
+        "//conditions:default": [
+            "-lpthread",
+            "-ldl",
+        ],
+    }),
+    deps = [
+        "//:common",
+        "//:storage",
+        "//google/cloud/storage:storage_client_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+        "//protos:system_includes",
+        "//protos/google/cloud/storage/tests:storage_conformance_tests_cc_proto",
+        "@com_google_absl//absl/strings",
+        "@com_google_googletest//:gtest_main",
+        "//:experimental-universe_domain",
+    ],
+) for test in storage_client_universe_domain_tests]
