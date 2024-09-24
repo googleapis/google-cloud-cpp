@@ -70,6 +70,9 @@ VARIATIONS = {
             "-ldl",
         ],
     }),
+    tags = [
+        "integration-test",
+    ],
     deps = [
         "//:common",
         "//:experimental-universe_domain",

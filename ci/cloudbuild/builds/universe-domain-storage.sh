@@ -26,5 +26,5 @@ export CC=clang
 export CXX=clang++
 
 if [[ -n "${UD_SA_KEY_FILE}" ]]; then
-  ud::bazel_run //google/cloud/storage/tests:universe_domain_integration_test
+  bazel test //google/cloud/storage/tests:universe_domain_integration_test
 fi
