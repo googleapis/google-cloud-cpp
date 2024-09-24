@@ -70,6 +70,9 @@ auto TestOptions() {
 }
 
 TEST_F(UniverseDomainIntegrationTest, BucketAndObjectCRUD) {
+  ASSERT_THAT(GetEnv("UD_SA_KEY_FILE").value_or(""), Not(IsEmpty())) << "UD_SA_KEY_FILE is not set";
+  ASSERT_THAT(GetEnv("UD_PROJECT").value_or(""), Not(IsEmpty())) << "UD_PROJECT is not set";
+
   auto region = GetEnv("UD_REGION").value_or("");
   ASSERT_THAT(region, Not(IsEmpty())) << "UD_REGION is not set";
 
