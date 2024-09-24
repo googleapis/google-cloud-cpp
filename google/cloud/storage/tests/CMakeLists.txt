@@ -70,7 +70,8 @@ set(storage_client_integration_tests
     smoke_test_rest.cc
     storage_include_test.cc
     thread_integration_test.cc
-    tracing_integration_test.cc)
+    tracing_integration_test.cc
+    universe_domain_integration_test.cc)
 set(storage_client_integration_tests_production
     # cmake-format: sort
     alternative_endpoint_integration_test.cc key_file_integration_test.cc
@@ -92,6 +93,7 @@ foreach (fname IN LISTS storage_client_integration_tests)
                 google_cloud_cpp_testing
                 google-cloud-cpp::storage
                 google-cloud-cpp::common
+                google-cloud-cpp::universe_domain
                 GTest::gmock_main
                 GTest::gmock
                 GTest::gtest
