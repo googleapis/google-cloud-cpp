@@ -66,6 +66,45 @@ class MockGenAiTuningServiceConnection
       Status, CancelTuningJob,
       (google::cloud::aiplatform::v1::CancelTuningJobRequest const& request),
       (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RebaseTunedModel(Matcher<google::cloud::aiplatform::v1::RebaseTunedModelRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::TuningJob>>,
+      RebaseTunedModel,
+      (google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, RebaseTunedModel(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, RebaseTunedModel,
+      (NoAwaitTag,
+       google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, RebaseTunedModel(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::TuningJob>>,
+              RebaseTunedModel,
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

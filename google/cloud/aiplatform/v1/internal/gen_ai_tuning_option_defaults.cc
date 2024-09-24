@@ -54,6 +54,18 @@ Options GenAiTuningServiceDefaultOptions(std::string const& location,
             std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
             .clone());
   }
+  if (!options.has<aiplatform_v1::GenAiTuningServicePollingPolicyOption>()) {
+    options.set<aiplatform_v1::GenAiTuningServicePollingPolicyOption>(
+        GenericPollingPolicy<
+            aiplatform_v1::GenAiTuningServiceRetryPolicyOption::Type,
+            aiplatform_v1::GenAiTuningServiceBackoffPolicyOption::Type>(
+            options.get<aiplatform_v1::GenAiTuningServiceRetryPolicyOption>()
+                ->clone(),
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone())
+            .clone());
+  }
   if (!options.has<aiplatform_v1::
                        GenAiTuningServiceConnectionIdempotencyPolicyOption>()) {
     options.set<

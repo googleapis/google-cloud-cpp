@@ -59,6 +59,30 @@ class GenAiTuningServiceTracingStub : public GenAiTuningServiceStub {
       google::cloud::aiplatform::v1::CancelTuningJobRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncRebaseTunedModel(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> RebaseTunedModel(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::longrunning::CancelOperationRequest const& request) override;
+
  private:
   std::shared_ptr<GenAiTuningServiceStub> child_;
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>

@@ -46,7 +46,8 @@ std::shared_ptr<GenAiTuningServiceStub> CreateDefaultGenAiTuningServiceStub(
       google::cloud::aiplatform::v1::GenAiTuningService::NewStub(channel);
   std::shared_ptr<GenAiTuningServiceStub> stub =
       std::make_shared<DefaultGenAiTuningServiceStub>(
-          std::move(service_grpc_stub));
+          std::move(service_grpc_stub),
+          google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<GenAiTuningServiceAuth>(std::move(auth),

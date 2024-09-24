@@ -28,6 +28,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <google/cloud/kms/v1/autokey.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
@@ -195,8 +196,8 @@ class AutokeyConnection {
   virtual StatusOr<google::cloud::kms::v1::KeyHandle> GetKeyHandle(
       google::cloud::kms::v1::GetKeyHandleRequest const& request);
 
-  virtual StatusOr<google::cloud::kms::v1::ListKeyHandlesResponse>
-  ListKeyHandles(google::cloud::kms::v1::ListKeyHandlesRequest const& request);
+  virtual StreamRange<google::cloud::kms::v1::KeyHandle> ListKeyHandles(
+      google::cloud::kms::v1::ListKeyHandlesRequest request);
 };
 
 /**

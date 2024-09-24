@@ -52,8 +52,8 @@ class AutokeyTracingConnection : public kms_v1::AutokeyConnection {
   StatusOr<google::cloud::kms::v1::KeyHandle> GetKeyHandle(
       google::cloud::kms::v1::GetKeyHandleRequest const& request) override;
 
-  StatusOr<google::cloud::kms::v1::ListKeyHandlesResponse> ListKeyHandles(
-      google::cloud::kms::v1::ListKeyHandlesRequest const& request) override;
+  StreamRange<google::cloud::kms::v1::KeyHandle> ListKeyHandles(
+      google::cloud::kms::v1::ListKeyHandlesRequest request) override;
 
  private:
   std::shared_ptr<kms_v1::AutokeyConnection> child_;

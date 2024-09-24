@@ -54,6 +54,11 @@ Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::CancelTuningJob(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::RebaseTunedModel(
+    google::cloud::aiplatform::v1::RebaseTunedModelRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<GenAiTuningServiceConnectionIdempotencyPolicy>
 MakeDefaultGenAiTuningServiceConnectionIdempotencyPolicy() {
   return std::make_unique<GenAiTuningServiceConnectionIdempotencyPolicy>();

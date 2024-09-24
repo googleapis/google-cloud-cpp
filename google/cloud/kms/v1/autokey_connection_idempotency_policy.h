@@ -43,7 +43,7 @@ class AutokeyConnectionIdempotencyPolicy {
       google::cloud::kms::v1::GetKeyHandleRequest const& request);
 
   virtual google::cloud::Idempotency ListKeyHandles(
-      google::cloud::kms::v1::ListKeyHandlesRequest const& request);
+      google::cloud::kms::v1::ListKeyHandlesRequest request);
 };
 
 std::unique_ptr<AutokeyConnectionIdempotencyPolicy>

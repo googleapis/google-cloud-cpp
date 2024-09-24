@@ -30,6 +30,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -62,8 +63,8 @@ class AutokeyConnectionImpl : public kms_v1::AutokeyConnection {
   StatusOr<google::cloud::kms::v1::KeyHandle> GetKeyHandle(
       google::cloud::kms::v1::GetKeyHandleRequest const& request) override;
 
-  StatusOr<google::cloud::kms::v1::ListKeyHandlesResponse> ListKeyHandles(
-      google::cloud::kms::v1::ListKeyHandlesRequest const& request) override;
+  StreamRange<google::cloud::kms::v1::KeyHandle> ListKeyHandles(
+      google::cloud::kms::v1::ListKeyHandlesRequest request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

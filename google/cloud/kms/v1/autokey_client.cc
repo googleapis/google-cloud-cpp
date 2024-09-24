@@ -93,20 +93,18 @@ StatusOr<google::cloud::kms::v1::KeyHandle> AutokeyClient::GetKeyHandle(
   return connection_->GetKeyHandle(request);
 }
 
-StatusOr<google::cloud::kms::v1::ListKeyHandlesResponse>
-AutokeyClient::ListKeyHandles(std::string const& parent, Options opts) {
+StreamRange<google::cloud::kms::v1::KeyHandle> AutokeyClient::ListKeyHandles(
+    std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::kms::v1::ListKeyHandlesRequest request;
   request.set_parent(parent);
   return connection_->ListKeyHandles(request);
 }
 
-StatusOr<google::cloud::kms::v1::ListKeyHandlesResponse>
-AutokeyClient::ListKeyHandles(
-    google::cloud::kms::v1::ListKeyHandlesRequest const& request,
-    Options opts) {
+StreamRange<google::cloud::kms::v1::KeyHandle> AutokeyClient::ListKeyHandles(
+    google::cloud::kms::v1::ListKeyHandlesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ListKeyHandles(request);
+  return connection_->ListKeyHandles(std::move(request));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

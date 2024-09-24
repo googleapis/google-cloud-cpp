@@ -18,6 +18,7 @@
 
 #include "google/cloud/kms/v1/internal/autokey_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 #include <utility>
 
@@ -65,12 +66,14 @@ AutokeyTracingConnection::GetKeyHandle(
   return internal::EndSpan(*span, child_->GetKeyHandle(request));
 }
 
-StatusOr<google::cloud::kms::v1::ListKeyHandlesResponse>
+StreamRange<google::cloud::kms::v1::KeyHandle>
 AutokeyTracingConnection::ListKeyHandles(
-    google::cloud::kms::v1::ListKeyHandlesRequest const& request) {
+    google::cloud::kms::v1::ListKeyHandlesRequest request) {
   auto span = internal::MakeSpan("kms_v1::AutokeyConnection::ListKeyHandles");
-  auto scope = opentelemetry::trace::Scope(span);
-  return internal::EndSpan(*span, child_->ListKeyHandles(request));
+  internal::OTelScope scope(span);
+  auto sr = child_->ListKeyHandles(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::kms::v1::KeyHandle>(
+      std::move(span), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

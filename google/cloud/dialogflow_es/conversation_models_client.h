@@ -126,8 +126,8 @@ class ConversationModelsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.v2.ConversationModel]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L218}
-  /// [google.cloud.dialogflow.v2.CreateConversationModelOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L587}
-  /// [google.cloud.dialogflow.v2.CreateConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L463}
+  /// [google.cloud.dialogflow.v2.CreateConversationModelOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L595}
+  /// [google.cloud.dialogflow.v2.CreateConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L471}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ConversationModel>>
@@ -194,8 +194,8 @@ class ConversationModelsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.v2.ConversationModel]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L218}
-  /// [google.cloud.dialogflow.v2.CreateConversationModelOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L587}
-  /// [google.cloud.dialogflow.v2.CreateConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L463}
+  /// [google.cloud.dialogflow.v2.CreateConversationModelOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L595}
+  /// [google.cloud.dialogflow.v2.CreateConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L471}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ConversationModel>>
@@ -254,7 +254,7 @@ class ConversationModelsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.v2.ConversationModel]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L218}
-  /// [google.cloud.dialogflow.v2.GetConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L475}
+  /// [google.cloud.dialogflow.v2.GetConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L483}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::ConversationModel>
@@ -284,7 +284,7 @@ class ConversationModelsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.v2.ConversationModel]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L218}
-  /// [google.cloud.dialogflow.v2.GetConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L475}
+  /// [google.cloud.dialogflow.v2.GetConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L483}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::ConversationModel>
@@ -321,7 +321,7 @@ class ConversationModelsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.v2.ConversationModel]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L218}
-  /// [google.cloud.dialogflow.v2.ListConversationModelsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L483}
+  /// [google.cloud.dialogflow.v2.ListConversationModelsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L491}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::v2::ConversationModel>
@@ -360,7 +360,7 @@ class ConversationModelsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.v2.ConversationModel]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L218}
-  /// [google.cloud.dialogflow.v2.ListConversationModelsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L483}
+  /// [google.cloud.dialogflow.v2.ListConversationModelsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L491}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::v2::ConversationModel>
@@ -403,8 +403,8 @@ class ConversationModelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.DeleteConversationModelOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L655}
-  /// [google.cloud.dialogflow.v2.DeleteConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L509}
+  /// [google.cloud.dialogflow.v2.DeleteConversationModelOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L663}
+  /// [google.cloud.dialogflow.v2.DeleteConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L517}
   ///
   // clang-format on
   future<StatusOr<
@@ -464,8 +464,8 @@ class ConversationModelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.DeleteConversationModelOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L655}
-  /// [google.cloud.dialogflow.v2.DeleteConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L509}
+  /// [google.cloud.dialogflow.v2.DeleteConversationModelOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L663}
+  /// [google.cloud.dialogflow.v2.DeleteConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L517}
   ///
   // clang-format on
   future<StatusOr<
@@ -548,8 +548,8 @@ class ConversationModelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.DeployConversationModelOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L629}
-  /// [google.cloud.dialogflow.v2.DeployConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L517}
+  /// [google.cloud.dialogflow.v2.DeployConversationModelOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L637}
+  /// [google.cloud.dialogflow.v2.DeployConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L525}
   ///
   // clang-format on
   future<StatusOr<
@@ -632,8 +632,8 @@ class ConversationModelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.UndeployConversationModelOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L642}
-  /// [google.cloud.dialogflow.v2.UndeployConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L525}
+  /// [google.cloud.dialogflow.v2.UndeployConversationModelOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L650}
+  /// [google.cloud.dialogflow.v2.UndeployConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L533}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::
@@ -693,8 +693,8 @@ class ConversationModelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L307}
-  /// [google.cloud.dialogflow.v2.GetConversationModelEvaluationRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L533}
+  /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L315}
+  /// [google.cloud.dialogflow.v2.GetConversationModelEvaluationRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L541}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>
@@ -723,8 +723,8 @@ class ConversationModelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L307}
-  /// [google.cloud.dialogflow.v2.GetConversationModelEvaluationRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L533}
+  /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L315}
+  /// [google.cloud.dialogflow.v2.GetConversationModelEvaluationRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L541}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>
@@ -761,8 +761,8 @@ class ConversationModelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L307}
-  /// [google.cloud.dialogflow.v2.ListConversationModelEvaluationsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L542}
+  /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L315}
+  /// [google.cloud.dialogflow.v2.ListConversationModelEvaluationsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L550}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::v2::ConversationModelEvaluation>
@@ -801,8 +801,8 @@ class ConversationModelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L307}
-  /// [google.cloud.dialogflow.v2.ListConversationModelEvaluationsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L542}
+  /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L315}
+  /// [google.cloud.dialogflow.v2.ListConversationModelEvaluationsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L550}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::v2::ConversationModelEvaluation>
@@ -838,8 +838,8 @@ class ConversationModelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L307}
-  /// [google.cloud.dialogflow.v2.CreateConversationModelEvaluationRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L568}
+  /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L315}
+  /// [google.cloud.dialogflow.v2.CreateConversationModelEvaluationRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L576}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>>
@@ -896,8 +896,8 @@ class ConversationModelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L307}
-  /// [google.cloud.dialogflow.v2.CreateConversationModelEvaluationRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L568}
+  /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L315}
+  /// [google.cloud.dialogflow.v2.CreateConversationModelEvaluationRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L576}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>>

@@ -48,6 +48,9 @@ class GenAiTuningServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency CancelTuningJob(
       google::cloud::aiplatform::v1::CancelTuningJobRequest const& request);
+
+  virtual google::cloud::Idempotency RebaseTunedModel(
+      google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request);
 };
 
 std::unique_ptr<GenAiTuningServiceConnectionIdempotencyPolicy>

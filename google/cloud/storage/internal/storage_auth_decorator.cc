@@ -108,41 +108,6 @@ StatusOr<google::storage::v2::Bucket> StorageAuth::UpdateBucket(
   return child_->UpdateBucket(context, options, request);
 }
 
-Status StorageAuth::DeleteNotificationConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::storage::v2::DeleteNotificationConfigRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->DeleteNotificationConfig(context, options, request);
-}
-
-StatusOr<google::storage::v2::NotificationConfig>
-StorageAuth::GetNotificationConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::storage::v2::GetNotificationConfigRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->GetNotificationConfig(context, options, request);
-}
-
-StatusOr<google::storage::v2::NotificationConfig>
-StorageAuth::CreateNotificationConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::storage::v2::CreateNotificationConfigRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->CreateNotificationConfig(context, options, request);
-}
-
-StatusOr<google::storage::v2::ListNotificationConfigsResponse>
-StorageAuth::ListNotificationConfigs(
-    grpc::ClientContext& context, Options const& options,
-    google::storage::v2::ListNotificationConfigsRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->ListNotificationConfigs(context, options, request);
-}
-
 StatusOr<google::storage::v2::Object> StorageAuth::ComposeObject(
     grpc::ClientContext& context, Options const& options,
     google::storage::v2::ComposeObjectRequest const& request) {
@@ -316,6 +281,41 @@ StatusOr<google::storage::v2::HmacKeyMetadata> StorageAuth::UpdateHmacKey(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateHmacKey(context, options, request);
+}
+
+Status StorageAuth::DeleteNotificationConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::v2::DeleteNotificationConfigRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteNotificationConfig(context, options, request);
+}
+
+StatusOr<google::storage::v2::NotificationConfig>
+StorageAuth::GetNotificationConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::v2::GetNotificationConfigRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetNotificationConfig(context, options, request);
+}
+
+StatusOr<google::storage::v2::NotificationConfig>
+StorageAuth::CreateNotificationConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::v2::CreateNotificationConfigRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateNotificationConfig(context, options, request);
+}
+
+StatusOr<google::storage::v2::ListNotificationConfigsResponse>
+StorageAuth::ListNotificationConfigs(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::v2::ListNotificationConfigsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListNotificationConfigs(context, options, request);
 }
 
 future<StatusOr<google::storage::v2::Object>> StorageAuth::AsyncComposeObject(

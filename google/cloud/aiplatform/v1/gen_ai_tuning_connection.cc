@@ -63,6 +63,29 @@ Status GenAiTuningServiceConnection::CancelTuningJob(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+future<StatusOr<google::cloud::aiplatform::v1::TuningJob>>
+GenAiTuningServiceConnection::RebaseTunedModel(
+    google::cloud::aiplatform::v1::RebaseTunedModelRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::aiplatform::v1::TuningJob>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+GenAiTuningServiceConnection::RebaseTunedModel(
+    NoAwaitTag, google::cloud::aiplatform::v1::RebaseTunedModelRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::TuningJob>>
+GenAiTuningServiceConnection::RebaseTunedModel(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::aiplatform::v1::TuningJob>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 std::shared_ptr<GenAiTuningServiceConnection> MakeGenAiTuningServiceConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

@@ -36,7 +36,8 @@ namespace kms_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ///
-/// Provides interfaces for using Cloud KMS Autokey to provision new
+/// Provides interfaces for using [Cloud KMS
+/// Autokey](https://cloud.google.com/kms/help/autokey) to provision new
 /// [CryptoKeys][google.cloud.kms.v1.CryptoKey], ready for Customer Managed
 /// Encryption Key (CMEK) use, on-demand. To support certain client tooling,
 /// this feature is modeled around a [KeyHandle][google.cloud.kms.v1.KeyHandle]
@@ -78,7 +79,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.kms.v1.KeyHandle]:
-/// @googleapis_reference_link{google/cloud/kms/v1/autokey.proto#L127}
+/// @googleapis_reference_link{google/cloud/kms/v1/autokey.proto#L128}
 ///
 class AutokeyClient {
  public:
@@ -141,8 +142,8 @@ class AutokeyClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.v1.CreateKeyHandleRequest]: @googleapis_reference_link{google/cloud/kms/v1/autokey.proto#L92}
-  /// [google.cloud.kms.v1.KeyHandle]: @googleapis_reference_link{google/cloud/kms/v1/autokey.proto#L127}
+  /// [google.cloud.kms.v1.CreateKeyHandleRequest]: @googleapis_reference_link{google/cloud/kms/v1/autokey.proto#L93}
+  /// [google.cloud.kms.v1.KeyHandle]: @googleapis_reference_link{google/cloud/kms/v1/autokey.proto#L128}
   ///
   // clang-format on
   future<StatusOr<google::cloud::kms::v1::KeyHandle>> CreateKeyHandle(
@@ -202,8 +203,8 @@ class AutokeyClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.v1.CreateKeyHandleRequest]: @googleapis_reference_link{google/cloud/kms/v1/autokey.proto#L92}
-  /// [google.cloud.kms.v1.KeyHandle]: @googleapis_reference_link{google/cloud/kms/v1/autokey.proto#L127}
+  /// [google.cloud.kms.v1.CreateKeyHandleRequest]: @googleapis_reference_link{google/cloud/kms/v1/autokey.proto#L93}
+  /// [google.cloud.kms.v1.KeyHandle]: @googleapis_reference_link{google/cloud/kms/v1/autokey.proto#L128}
   ///
   // clang-format on
   future<StatusOr<google::cloud::kms::v1::KeyHandle>> CreateKeyHandle(
@@ -257,8 +258,8 @@ class AutokeyClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.v1.GetKeyHandleRequest]: @googleapis_reference_link{google/cloud/kms/v1/autokey.proto#L113}
-  /// [google.cloud.kms.v1.KeyHandle]: @googleapis_reference_link{google/cloud/kms/v1/autokey.proto#L127}
+  /// [google.cloud.kms.v1.GetKeyHandleRequest]: @googleapis_reference_link{google/cloud/kms/v1/autokey.proto#L114}
+  /// [google.cloud.kms.v1.KeyHandle]: @googleapis_reference_link{google/cloud/kms/v1/autokey.proto#L128}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::KeyHandle> GetKeyHandle(
@@ -287,8 +288,8 @@ class AutokeyClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.v1.GetKeyHandleRequest]: @googleapis_reference_link{google/cloud/kms/v1/autokey.proto#L113}
-  /// [google.cloud.kms.v1.KeyHandle]: @googleapis_reference_link{google/cloud/kms/v1/autokey.proto#L127}
+  /// [google.cloud.kms.v1.GetKeyHandleRequest]: @googleapis_reference_link{google/cloud/kms/v1/autokey.proto#L114}
+  /// [google.cloud.kms.v1.KeyHandle]: @googleapis_reference_link{google/cloud/kms/v1/autokey.proto#L128}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::KeyHandle> GetKeyHandle(
@@ -304,10 +305,19 @@ class AutokeyClient {
   ///  `projects/{PROJECT_ID}/locations/{LOCATION}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return the result of the RPC. The response message type
-  ///     ([google.cloud.kms.v1.ListKeyHandlesResponse])
-  ///     is mapped to a C++ class using the [Protobuf mapping rules].
-  ///     If the request fails, the [`StatusOr`] contains the error details.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.kms.v1.KeyHandle], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
@@ -315,12 +325,11 @@ class AutokeyClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.v1.KeyHandle]: @googleapis_reference_link{google/cloud/kms/v1/autokey.proto#L127}
-  /// [google.cloud.kms.v1.ListKeyHandlesRequest]: @googleapis_reference_link{google/cloud/kms/v1/autokey.proto#L172}
-  /// [google.cloud.kms.v1.ListKeyHandlesResponse]: @googleapis_reference_link{google/cloud/kms/v1/autokey.proto#L191}
+  /// [google.cloud.kms.v1.KeyHandle]: @googleapis_reference_link{google/cloud/kms/v1/autokey.proto#L128}
+  /// [google.cloud.kms.v1.ListKeyHandlesRequest]: @googleapis_reference_link{google/cloud/kms/v1/autokey.proto#L173}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::ListKeyHandlesResponse> ListKeyHandles(
+  StreamRange<google::cloud::kms::v1::KeyHandle> ListKeyHandles(
       std::string const& parent, Options opts = {});
 
   // clang-format off
@@ -335,10 +344,19 @@ class AutokeyClient {
   ///     [Protobuf mapping rules].
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return the result of the RPC. The response message type
-  ///     ([google.cloud.kms.v1.ListKeyHandlesResponse])
-  ///     is mapped to a C++ class using the [Protobuf mapping rules].
-  ///     If the request fails, the [`StatusOr`] contains the error details.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.kms.v1.KeyHandle], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
   ///
   /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
   /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
@@ -346,14 +364,12 @@ class AutokeyClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.v1.KeyHandle]: @googleapis_reference_link{google/cloud/kms/v1/autokey.proto#L127}
-  /// [google.cloud.kms.v1.ListKeyHandlesRequest]: @googleapis_reference_link{google/cloud/kms/v1/autokey.proto#L172}
-  /// [google.cloud.kms.v1.ListKeyHandlesResponse]: @googleapis_reference_link{google/cloud/kms/v1/autokey.proto#L191}
+  /// [google.cloud.kms.v1.KeyHandle]: @googleapis_reference_link{google/cloud/kms/v1/autokey.proto#L128}
+  /// [google.cloud.kms.v1.ListKeyHandlesRequest]: @googleapis_reference_link{google/cloud/kms/v1/autokey.proto#L173}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::ListKeyHandlesResponse> ListKeyHandles(
-      google::cloud::kms::v1::ListKeyHandlesRequest const& request,
-      Options opts = {});
+  StreamRange<google::cloud::kms::v1::KeyHandle> ListKeyHandles(
+      google::cloud::kms::v1::ListKeyHandlesRequest request, Options opts = {});
 
  private:
   std::shared_ptr<AutokeyConnection> connection_;

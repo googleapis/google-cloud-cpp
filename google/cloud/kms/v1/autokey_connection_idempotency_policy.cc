@@ -45,7 +45,7 @@ Idempotency AutokeyConnectionIdempotencyPolicy::GetKeyHandle(
 }
 
 Idempotency AutokeyConnectionIdempotencyPolicy::ListKeyHandles(
-    google::cloud::kms::v1::ListKeyHandlesRequest const&) {
+    google::cloud::kms::v1::ListKeyHandlesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

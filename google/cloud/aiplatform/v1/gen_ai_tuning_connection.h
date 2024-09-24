@@ -22,12 +22,16 @@
 #include "google/cloud/aiplatform/v1/gen_ai_tuning_connection_idempotency_policy.h"
 #include "google/cloud/aiplatform/v1/internal/gen_ai_tuning_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
+#include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <google/cloud/aiplatform/v1/genai_tuning_service.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
 
@@ -197,6 +201,17 @@ class GenAiTuningServiceConnection {
 
   virtual Status CancelTuningJob(
       google::cloud::aiplatform::v1::CancelTuningJobRequest const& request);
+
+  virtual future<StatusOr<google::cloud::aiplatform::v1::TuningJob>>
+  RebaseTunedModel(
+      google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> RebaseTunedModel(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request);
+
+  virtual future<StatusOr<google::cloud::aiplatform::v1::TuningJob>>
+  RebaseTunedModel(google::longrunning::Operation const& operation);
 };
 
 /**
