@@ -35,6 +35,7 @@ application.
 - [\c aiplatform_v1::DatasetServiceClient](@ref google::cloud::aiplatform_v1::DatasetServiceClient)
 - [\c aiplatform_v1::DeploymentResourcePoolServiceClient](@ref google::cloud::aiplatform_v1::DeploymentResourcePoolServiceClient)
 - [\c aiplatform_v1::EndpointServiceClient](@ref google::cloud::aiplatform_v1::EndpointServiceClient)
+- [\c aiplatform_v1::EvaluationServiceClient](@ref google::cloud::aiplatform_v1::EvaluationServiceClient)
 - [\c aiplatform_v1::FeatureOnlineStoreAdminServiceClient](@ref google::cloud::aiplatform_v1::FeatureOnlineStoreAdminServiceClient)
 - [\c aiplatform_v1::FeatureOnlineStoreServiceClient](@ref google::cloud::aiplatform_v1::FeatureOnlineStoreServiceClient)
 - [\c aiplatform_v1::FeatureRegistryServiceClient](@ref google::cloud::aiplatform_v1::FeatureRegistryServiceClient)

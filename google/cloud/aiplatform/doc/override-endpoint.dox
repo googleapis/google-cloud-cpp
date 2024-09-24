@@ -16,6 +16,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c aiplatform_v1::DatasetServiceClient](@ref aiplatform_v1::DatasetServiceClient-endpoint-snippet)
 - [\c aiplatform_v1::DeploymentResourcePoolServiceClient](@ref aiplatform_v1::DeploymentResourcePoolServiceClient-endpoint-snippet)
 - [\c aiplatform_v1::EndpointServiceClient](@ref aiplatform_v1::EndpointServiceClient-endpoint-snippet)
+- [\c aiplatform_v1::EvaluationServiceClient](@ref aiplatform_v1::EvaluationServiceClient-endpoint-snippet)
 - [\c aiplatform_v1::FeatureOnlineStoreAdminServiceClient](@ref aiplatform_v1::FeatureOnlineStoreAdminServiceClient-endpoint-snippet)
 - [\c aiplatform_v1::FeatureOnlineStoreServiceClient](@ref aiplatform_v1::FeatureOnlineStoreServiceClient-endpoint-snippet)
 - [\c aiplatform_v1::FeatureRegistryServiceClient](@ref aiplatform_v1::FeatureRegistryServiceClient-endpoint-snippet)
@@ -61,6 +62,12 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page aiplatform_v1::EndpointServiceClient-endpoint-snippet Override aiplatform_v1::EndpointServiceClient Endpoint Configuration
 
 @snippet google/cloud/aiplatform/v1/samples/endpoint_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page aiplatform_v1::EvaluationServiceClient-endpoint-snippet Override aiplatform_v1::EvaluationServiceClient Endpoint Configuration
+
+@snippet google/cloud/aiplatform/v1/samples/evaluation_client_samples.cc set-client-endpoint
 
 */
 

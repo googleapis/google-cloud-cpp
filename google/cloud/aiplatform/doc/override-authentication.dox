@@ -16,6 +16,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c aiplatform_v1::DatasetServiceClient](@ref aiplatform_v1::DatasetServiceClient-service-account-snippet)
 - [\c aiplatform_v1::DeploymentResourcePoolServiceClient](@ref aiplatform_v1::DeploymentResourcePoolServiceClient-service-account-snippet)
 - [\c aiplatform_v1::EndpointServiceClient](@ref aiplatform_v1::EndpointServiceClient-service-account-snippet)
+- [\c aiplatform_v1::EvaluationServiceClient](@ref aiplatform_v1::EvaluationServiceClient-service-account-snippet)
 - [\c aiplatform_v1::FeatureOnlineStoreAdminServiceClient](@ref aiplatform_v1::FeatureOnlineStoreAdminServiceClient-service-account-snippet)
 - [\c aiplatform_v1::FeatureOnlineStoreServiceClient](@ref aiplatform_v1::FeatureOnlineStoreServiceClient-service-account-snippet)
 - [\c aiplatform_v1::FeatureRegistryServiceClient](@ref aiplatform_v1::FeatureRegistryServiceClient-service-account-snippet)
@@ -71,6 +72,12 @@ guide for more details.
 /*! @page aiplatform_v1::EndpointServiceClient-service-account-snippet Override aiplatform_v1::EndpointServiceClient Authentication Defaults
 
 @snippet google/cloud/aiplatform/v1/samples/endpoint_client_samples.cc with-service-account
+
+*/
+
+/*! @page aiplatform_v1::EvaluationServiceClient-service-account-snippet Override aiplatform_v1::EvaluationServiceClient Authentication Defaults
+
+@snippet google/cloud/aiplatform/v1/samples/evaluation_client_samples.cc with-service-account
 
 */
 
