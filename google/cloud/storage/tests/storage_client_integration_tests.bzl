@@ -76,6 +76,7 @@ storage_client_integration_tests = [
     "thread_integration_test.cc",
     "tracing_integration_test.cc",
     "unified_credentials_integration_test.cc",
+    "universe_domain_integration_test.cc",
 ]
 
 storage_client_integration_tests_production = [
