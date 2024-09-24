@@ -53,9 +53,7 @@ class UniverseDomainIntegrationTest
 
 auto TestOptions() {
   auto sa_key_file = GetEnv("UD_SA_KEY_FILE").value_or("");
-  ASSERT_THAT(sa_key_file, Not(IsEmpty())) << "UD_SA_KEY_FILE is not set";
   auto projectId = GetEnv("UD_PROJECT").value_or("");
-  ASSERT_THAT(projectId, Not(IsEmpty())) << "UD_PROJECT is not set";
   Options options;
 
   auto is = std::ifstream(sa_key_file);
