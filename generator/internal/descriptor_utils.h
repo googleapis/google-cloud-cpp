@@ -40,7 +40,7 @@ namespace generator_internal {
 VarsDictionary CreateServiceVars(
     google::protobuf::ServiceDescriptor const& descriptor,
     std::vector<std::pair<std::string, std::string>> const& initial_values,
-    std::vector<MixinMethod> const& mixin_methods = std::vector<MixinMethod>());
+    std::vector<MixinMethod> const& mixin_methods = {});
 
 /**
  * Extracts method specific substitution data for each method in the service.
@@ -48,7 +48,7 @@ VarsDictionary CreateServiceVars(
 std::map<std::string, VarsDictionary> CreateMethodVars(
     google::protobuf::ServiceDescriptor const& service,
     YAML::Node const& service_config, VarsDictionary const& service_vars,
-    std::vector<MixinMethod> const& mixin_methods = std::vector<MixinMethod>());
+    std::vector<MixinMethod> const& mixin_methods = {});
 
 /**
  * Determines which `MethodPattern` to use from patterns for the given method

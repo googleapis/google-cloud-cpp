@@ -149,6 +149,18 @@ service Locations {
 }
 )""";
 
+auto constexpr kGetLocationHttpRule = R"pb(
+  selector: "google.cloud.location.Locations.GetLocation"
+  get: "/v1/{name=projects/*/locations/*}"
+  body: ""
+)pb";
+
+auto constexpr kListLocationsHttpRule = R"pb(
+  selector: "google.cloud.location.Locations.ListLocations"
+  post: "/{name=projects/*/locations}"
+  body: "*"
+)pb";
+
 class CreateServiceVarsTest
     : public testing::TestWithParam<std::pair<std::string, std::string>> {
  public:
@@ -252,15 +264,18 @@ TEST_F(CreateServiceVarsTest, MixinProtoHeaderPaths) {
   FileDescriptor const* mixin_file =
       pool_.FindFileByName("google/cloud/location/locations.proto");
 
+  google::api::HttpRule http_rule0;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      kGetLocationHttpRule, &http_rule0));
+
+  google::api::HttpRule http_rule1;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      kListLocationsHttpRule, &http_rule1));
+
   std::vector<MixinMethod> mixin_methods{
-      {"",
-       "",
-       *mixin_file->service(0)->method(0),
-       {"Get", "/v1/{name=projects/*/locations/*}", absl::nullopt}},
-      {"",
-       "",
-       *mixin_file->service(0)->method(1),
-       {"Get", "/v1/{name=projects/*/locations}", absl::nullopt}}};
+      {"", "", *mixin_file->service(0)->method(0), http_rule0},
+      {"", "", *mixin_file->service(0)->method(1), http_rule1}};
+
   service_vars_ = CreateServiceVars(
       *file->service(0),
       {std::make_pair("product_path", "google/cloud/frobber/"),
@@ -268,10 +283,11 @@ TEST_F(CreateServiceVarsTest, MixinProtoHeaderPaths) {
                       "google/cloud/add1.proto,google/cloud/add2.proto")},
       mixin_methods);
 
-  EXPECT_EQ(service_vars_["mixin_proto_grpc_header_paths"],
-            "google/cloud/location/locations.grpc.pb.h");
-  EXPECT_EQ(service_vars_["mixin_proto_header_paths"],
-            "google/cloud/location/locations.pb.h");
+  EXPECT_THAT(service_vars_,
+              AllOf(Contains(Pair("mixin_proto_grpc_header_paths",
+                                  "google/cloud/location/locations.grpc.pb.h")),
+                    Contains(Pair("mixin_proto_header_paths",
+                                  "google/cloud/location/locations.pb.h"))));
 }
 
 TEST_P(CreateServiceVarsTest, KeySetCorrectly) {
@@ -1293,15 +1309,17 @@ TEST_F(CreateMethodVarsTest, CreateMixinMethodsVars) {
   FileDescriptor const* mixin_file =
       pool_.FindFileByName("google/cloud/location/locations.proto");
 
+  google::api::HttpRule http_rule0;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      kGetLocationHttpRule, &http_rule0));
+
+  google::api::HttpRule http_rule1;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      kListLocationsHttpRule, &http_rule1));
+
   std::vector<MixinMethod> mixin_methods{
-      {"",
-       "",
-       *mixin_file->service(0)->method(0),
-       {"Get", "/v1/{name=projects/*/locations/*}", absl::nullopt}},
-      {"",
-       "",
-       *mixin_file->service(0)->method(1),
-       {"Put", "/{name=projects/*/locations}", "*"}}};
+      {"", "", *mixin_file->service(0)->method(0), http_rule0},
+      {"", "", *mixin_file->service(0)->method(1), http_rule1}};
 
   service_vars_ = CreateServiceVars(
       *service_file_descriptor->service(0),
@@ -1319,53 +1337,57 @@ TEST_F(CreateMethodVarsTest, CreateMixinMethodsVars) {
   ASSERT_NE(list_locations, vars_.end());
 
   EXPECT_EQ(get_location->first, "google.cloud.location.Locations.GetLocation");
-  EXPECT_EQ(get_location->second["idempotency"], "kNonIdempotent");
-  EXPECT_EQ(get_location->second["method_http_query_parameters"], "");
-  EXPECT_EQ(get_location->second["method_http_verb"], "Get");
-  EXPECT_EQ(get_location->second["method_name"], "GetLocation");
-  EXPECT_EQ(get_location->second["method_name_snake"], "get_location");
-  EXPECT_EQ(get_location->second["method_request_body"], "");
-  EXPECT_EQ(get_location->second["method_request_params"],
-            "\"name=\", internal::UrlEncode(request.name())");
-  EXPECT_EQ(get_location->second["method_rest_path"],
-            "absl::StrCat(\"/\", rest_internal::DetermineApiVersion(\"v1\", "
-            "options), \"/\", request.name())");
-  EXPECT_EQ(get_location->second["method_rest_path_async"],
-            "absl::StrCat(\"/\", rest_internal::DetermineApiVersion(\"v1\", "
-            "*options), \"/\", request.name())");
-  EXPECT_EQ(get_location->second["request_resource"], "request");
-  EXPECT_EQ(get_location->second["request_type"],
-            "google::cloud::location::Request");
-  EXPECT_EQ(get_location->second["response_message_type"],
-            "google.cloud.location.Response");
-  EXPECT_EQ(get_location->second["response_type"],
-            "google::cloud::location::Response");
-  EXPECT_EQ(get_location->second["return_type"],
-            "StatusOr<google::cloud::location::Response>");
+  EXPECT_THAT(
+      get_location->second,
+      AllOf(
+          Contains(Pair("idempotency", "kIdempotent")),
+          Contains(Pair("method_http_query_parameters", "")),
+          Contains(Pair("method_http_verb", "Get")),
+          Contains(Pair("method_name", "GetLocation")),
+          Contains(Pair("method_name_snake", "get_location")),
+          Contains(Pair("method_request_body", "")),
+          Contains(Pair("method_request_params",
+                        "\"name=\", internal::UrlEncode(request.name())")),
+          Contains(Pair(
+              "method_rest_path",
+              "absl::StrCat(\"/\", rest_internal::DetermineApiVersion(\"v1\", "
+              "options), \"/\", request.name())")),
+          Contains(Pair(
+              "method_rest_path_async",
+              "absl::StrCat(\"/\", rest_internal::DetermineApiVersion(\"v1\", "
+              "*options), \"/\", request.name())")),
+          Contains(Pair("request_resource", "request")),
+          Contains(Pair("request_type", "google::cloud::location::Request")),
+          Contains(
+              Pair("response_message_type", "google.cloud.location.Response")),
+          Contains(Pair("response_type", "google::cloud::location::Response")),
+          Contains(Pair("return_type",
+                        "StatusOr<google::cloud::location::Response>"))));
 
   EXPECT_EQ(list_locations->first,
             "google.cloud.location.Locations.ListLocations");
-  EXPECT_EQ(list_locations->second["idempotency"], "kIdempotent");
-  EXPECT_EQ(list_locations->second["method_http_query_parameters"], "");
-  EXPECT_EQ(list_locations->second["method_http_verb"], "Put");
-  EXPECT_EQ(list_locations->second["method_name"], "ListLocations");
-  EXPECT_EQ(list_locations->second["method_name_snake"], "list_locations");
-  EXPECT_EQ(list_locations->second["method_request_body"], "*");
-  EXPECT_EQ(list_locations->second["method_request_params"],
-            "\"name=\", internal::UrlEncode(request.name())");
-  EXPECT_EQ(list_locations->second["method_rest_path"],
-            "absl::StrCat(\"/\", request.name())");
-  EXPECT_EQ(list_locations->second["method_rest_path_async"],
-            "absl::StrCat(\"/\", request.name())");
-  EXPECT_EQ(list_locations->second["request_resource"], "request");
-  EXPECT_EQ(list_locations->second["request_type"],
-            "google::cloud::location::Request");
-  EXPECT_EQ(list_locations->second["response_message_type"],
-            "google.cloud.location.Response");
-  EXPECT_EQ(list_locations->second["response_type"],
-            "google::cloud::location::Response");
-  EXPECT_EQ(list_locations->second["return_type"],
-            "StatusOr<google::cloud::location::Response>");
+  EXPECT_THAT(
+      list_locations->second,
+      AllOf(
+          Contains(Pair("idempotency", "kNonIdempotent")),
+          Contains(Pair("method_http_query_parameters", "")),
+          Contains(Pair("method_http_verb", "Post")),
+          Contains(Pair("method_name", "ListLocations")),
+          Contains(Pair("method_name_snake", "list_locations")),
+          Contains(Pair("method_request_body", "*")),
+          Contains(Pair("method_request_params",
+                        "\"name=\", internal::UrlEncode(request.name())")),
+          Contains(
+              Pair("method_rest_path", "absl::StrCat(\"/\", request.name())")),
+          Contains(Pair("method_rest_path_async",
+                        "absl::StrCat(\"/\", request.name())")),
+          Contains(Pair("request_resource", "request")),
+          Contains(Pair("request_type", "google::cloud::location::Request")),
+          Contains(
+              Pair("response_message_type", "google.cloud.location.Response")),
+          Contains(Pair("response_type", "google::cloud::location::Response")),
+          Contains(Pair("return_type",
+                        "StatusOr<google::cloud::location::Response>"))));
 }
 
 TEST_P(CreateMethodVarsTest, KeySetCorrectly) {
