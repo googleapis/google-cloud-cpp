@@ -139,6 +139,11 @@ foreach (fname IN LISTS storage_client_universe_domain_tests)
                 Threads::Threads
                 absl::strings
                 nlohmann_json)
+    add_test(NAME ${target} COMMAND ${target})
+    set_tests_properties(
+        ${target} PROPERTIES LABELS
+                             "integration-test;integration-test-production")
+    google_cloud_cpp_add_common_options(${target})
 endforeach ()
 
 # We just know that these tests need to be run against production.

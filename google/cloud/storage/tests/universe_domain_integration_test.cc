@@ -32,6 +32,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::internal::GetEnv;
+using ::testing::IsEmpty;
+using ::testing::Not;
 
 class UniverseDomainIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
@@ -49,7 +51,11 @@ class UniverseDomainIntegrationTest
   std::string object_name_;
 };
 
-auto TestOptions(std::string const& sa_key_file, std::string const& projectId) {
+auto TestOptions() {
+  auto sa_key_file = GetEnv("UD_SA_KEY_FILE").value_or("");
+  ASSERT_THAT(sa_key_file, Not(IsEmpty())) << "UD_SA_KEY_FILE is not set";
+  auto projectId = GetEnv("UD_PROJECT").value_or("");
+  ASSERT_THAT(projectId, Not(IsEmpty())) << "UD_PROJECT is not set";
   Options options;
 
   auto is = std::ifstream(sa_key_file);
@@ -66,13 +72,10 @@ auto TestOptions(std::string const& sa_key_file, std::string const& projectId) {
 }
 
 TEST_F(UniverseDomainIntegrationTest, BucketAndObjectCRUD) {
-  auto sa_key_file = GetEnv("UD_SA_KEY_FILE").value_or("");
   auto region = GetEnv("UD_REGION").value_or("");
-  auto projectId = GetEnv("UD_PROJECT").value_or("");
+  ASSERT_THAT(region, Not(IsEmpty())) << "UD_REGION is not set";
 
-  if (sa_key_file.empty() || region.empty() || projectId.empty()) GTEST_SKIP();
-
-  auto client = Client(TestOptions(sa_key_file, projectId));
+  auto client = Client(TestOptions());
   auto bucket =
       client.CreateBucket(bucket_name(), BucketMetadata{}.set_location(region));
   ASSERT_STATUS_OK(bucket);
