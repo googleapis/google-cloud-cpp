@@ -13,6 +13,11 @@ the APIs in these libraries are stable, and are ready for production use.
 
 - [Gemini API](/google/cloud/generativelanguage/README.md)
 
+### Updated Libraries
+
+- [AI Platform API](/google/cloud/aiplatform/README.md) - new
+  `EvaluationServiceClient`
+
 ### [KMS](/google/cloud/kms/README.md)
 
 - `AutokeyClient::ListKeyHandles(...)` signature has changed to return an
