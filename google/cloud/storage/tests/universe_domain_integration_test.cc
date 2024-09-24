@@ -54,13 +54,15 @@ auto TestOptions() {
   auto sa_key_file = GetEnv("UD_SA_KEY_FILE").value_or("");
   Options options;
 
-  if (!sa_key_file.empty()) {
-    auto is = std::ifstream(sa_key_file);
-    is.exceptions(std::ios::badbit);
-    auto contents = std::string(std::istreambuf_iterator<char>(is.rdbuf()), {});
-    options.set<UnifiedCredentialsOption>(
-        MakeServiceAccountCredentials(contents));
+  if (sa_key_file.empty()) {
+    GTEST_SKIP();
   }
+
+  auto is = std::ifstream(sa_key_file);
+  is.exceptions(std::ios::badbit);
+  auto contents = std::string(std::istreambuf_iterator<char>(is.rdbuf()), {});
+  options.set<UnifiedCredentialsOption>(
+      MakeServiceAccountCredentials(contents));
 
   auto ud_options = AddUniverseDomainOption(
       ExperimentalTag{}, options.set<ProjectIdOption>(projectId));
@@ -76,9 +78,11 @@ TEST_F(UniverseDomainIntegrationTest, BucketAndObjectCRUD) {
   auto bucket =
       client.CreateBucket(bucket_name(), BucketMetadata{}.set_location(region));
   ASSERT_STATUS_OK(bucket);
+  ScheduleForDelete(*bucket);
 
   auto insert = client.InsertObject(bucket_name(), object_name(), LoremIpsum());
   ASSERT_STATUS_OK(insert);
+  ScheduleForDelete(*insert);
 
   auto read = client.ReadObject(bucket_name(), object_name());
   std::string buffer{std::istream_iterator<char>(read),
