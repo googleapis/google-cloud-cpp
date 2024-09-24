@@ -49,14 +49,8 @@ class UniverseDomainIntegrationTest
   std::string object_name_;
 };
 
-auto TestOptions() {
-  auto projectId = GetEnv("UD_PROJECT").value_or("");
-  auto sa_key_file = GetEnv("UD_SA_KEY_FILE").value_or("");
+auto TestOptions(std::string const& sa_key_file, std::string const& projectId) {  
   Options options;
-
-  if (sa_key_file.empty()) {
-    GTEST_SKIP();
-  }
 
   auto is = std::ifstream(sa_key_file);
   is.exceptions(std::ios::badbit);
@@ -68,13 +62,17 @@ auto TestOptions() {
       ExperimentalTag{}, options.set<ProjectIdOption>(projectId));
   if (!ud_options.ok()) throw std::move(ud_options).status();
 
-  return ud_options.value();
+  return *ud_options;
 }
 
 TEST_F(UniverseDomainIntegrationTest, BucketAndObjectCRUD) {
-  auto client = Client(TestOptions());
+  auto sa_key_file = GetEnv("UD_SA_KEY_FILE").value_or("");
   auto region = GetEnv("UD_REGION").value_or("");
+  auto projectId = GetEnv("UD_PROJECT").value_or("");
 
+  if (sa_key_file.empty() || region.empty() || projectId.empty()) GTEST_SKIP();
+  
+  auto client = Client(TestOptions(sa_key_file, projectId));
   auto bucket =
       client.CreateBucket(bucket_name(), BucketMetadata{}.set_location(region));
   ASSERT_STATUS_OK(bucket);
