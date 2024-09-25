@@ -58,17 +58,6 @@ void GrpcReadWrite(std::string const& bucket_name) {
 }
 //! [grpc-read-write] [END storage_grpc_quickstart]
 
-//! [grpc-with-dp] [START storage_grpc_quickstart_dp]
-void GrpcClientWithDP() {
-  namespace g = ::google::cloud;
-
-  auto client = google::cloud::storage::MakeGrpcClient(
-      g::Options{}.set<g::EndpointOption>(
-          "google-c2p:///storage.googleapis.com"));
-  // Use `client` as usual.
-}
-//! [grpc-with-dp] [END storage_grpc_quickstart_dp]
-
 //! [grpc-client-with-project]
 void GrpcClientWithProject(std::string project_id) {
   namespace gcs = ::google::cloud::storage;
@@ -82,7 +71,6 @@ void GrpcClientWithProject(std::string project_id) {
 #else
 
 void GrpcReadWrite(std::string const&) {}
-void GrpcClientWithDP() {}
 void GrpcClientWithProject(std::string const&) {}
 
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
@@ -92,11 +80,6 @@ void GrpcReadWriteCommand(std::vector<std::string> argv) {
     throw examples::Usage("grpc-read-write <bucket-name>");
   }
   GrpcReadWrite(argv[0]);
-}
-
-void GrpcClientWithDPCommand(std::vector<std::string> const& argv) {
-  if (!argv.empty()) throw examples::Usage("grpc-client-with-dp");
-  return GrpcClientWithDP();
 }
 
 void GrpcClientWithProjectCommand(std::vector<std::string> argv) {
@@ -117,8 +100,8 @@ void GrpcReportTransportCommand(std::vector<std::string> argv) {
     if (argv[0] == "GRPC") {
       return google::cloud::storage::MakeGrpcClient();
     }
-    if (argv[0] == "DP") {
-      // Some documentation calls this `DirectPath`
+    if (argv[0] == "DC") {
+      // Some documentation calls this `Direct Connectivity`
       return google::cloud::storage::MakeGrpcClient(
           g::Options{}.set<g::EndpointOption>(
               "google-c2p:///storage.googleapis.com"));
@@ -136,8 +119,8 @@ void GrpcReportTransportCommand(std::vector<std::string> argv) {
 
     // Reports the transport used for a transfer. This can be useful when
     // troubleshooting the application and VM config. One may want to verify
-    // that the client library is using DirectPath instead of falling back to
-    // plain gRPC.
+    // that the client library is using Direct Connectivity instead of falling
+    // back to plain gRPC.
     auto transport = [](std::multimap<std::string, std::string> const& headers)
         -> std::string {
       auto l = headers.find(":curl-peer");
@@ -184,10 +167,6 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "Running GrpcReadWrite() example" << std::endl;
   GrpcReadWriteCommand({bucket_name});
 
-  // The DP example requires running on a GCE instance with DP enabled.
-  std::cout << "Running GrpcClientWithDP() example" << std::endl;
-  GrpcClientWithDPCommand({});
-
   std::cout << "Running GrpcClientWithProject() example" << std::endl;
   GrpcClientWithProjectCommand({project_id});
 
@@ -203,7 +182,6 @@ void AutoRun(std::vector<std::string> const& argv) {
 int main(int argc, char* argv[]) {
   examples::Example example({
       {"grpc-read-write", GrpcReadWriteCommand},
-      {"grpc-client-with-dp", GrpcClientWithDPCommand},
       {"grpc-client-with-project", GrpcClientWithProjectCommand},
       {"grpc-report-transport", GrpcReportTransportCommand},
       {"auto", AutoRun},
