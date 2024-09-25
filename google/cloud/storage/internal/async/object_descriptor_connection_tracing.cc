@@ -54,7 +54,6 @@ class AsyncObjectDescriptorConnectionTracing
       ReadParams p) override {
     internal::OTelScope scope(span_);
     auto result = impl_->Read(p);
-    // #TODO(#62) - decorate the Read operation.
     span_->AddEvent("gl-cpp.open.read",
                     {{sc::kThreadId, internal::CurrentThreadId()},
                      {"read-start", p.start},

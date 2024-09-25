@@ -42,6 +42,7 @@ storage_client_grpc_unit_tests = [
     "internal/async/object_descriptor_connection_tracing_test.cc",
     "internal/async/object_descriptor_impl_test.cc",
     "internal/async/object_descriptor_reader_test.cc",
+    "internal/async/object_descriptor_reader_tracing_test.cc",
     "internal/async/open_object_test.cc",
     "internal/async/open_stream_test.cc",
     "internal/async/partial_upload_test.cc",

@@ -192,7 +192,7 @@ future<
 AsyncConnectionImpl::Open(OpenParams p) {
   auto initial_request = google::storage::v2::BidiReadObjectRequest{};
   *initial_request.mutable_read_object_spec() = p.read_spec;
-  auto current = internal::MakeImmutableOptions(std::move(p.options));
+  auto current = internal::MakeImmutableOptions(p.options);
   // Get the policy factory and immediately create a policy.
   auto resume_policy =
       current->get<storage_experimental::ResumePolicyOption>()();
@@ -233,16 +233,19 @@ AsyncConnectionImpl::Open(OpenParams p) {
   auto pending = factory(std::move(initial_request));
   using ReturnType =
       std::shared_ptr<storage_experimental::ObjectDescriptorConnection>;
-  return pending.then([rp = std::move(resume_policy), fa = std::move(factory),
-                       rs = std::move(p.read_spec)](
-                          auto f) mutable -> StatusOr<ReturnType> {
-    auto result = f.get();
-    if (!result) return std::move(result).status();
-    auto impl = std::make_shared<ObjectDescriptorImpl>(
-        std::move(rp), std::move(fa), std::move(rs), std::move(result->stream));
-    impl->Start(std::move(result->first_response));
-    return ReturnType(impl);
-  });
+  return pending.then(
+      [rp = std::move(resume_policy), fa = std::move(factory),
+       rs = std::move(p.read_spec),
+       options = std::move(p.options)](auto f) mutable -> StatusOr<ReturnType> {
+        auto result = f.get();
+        if (!result) return std::move(result).status();
+
+        auto impl = std::make_shared<ObjectDescriptorImpl>(
+            std::move(rp), std::move(fa), std::move(rs),
+            std::move(result->stream), std::move(options));
+        impl->Start(std::move(result->first_response));
+        return ReturnType(impl);
+      });
 }
 
 future<StatusOr<std::unique_ptr<storage_experimental::AsyncReaderConnection>>>
