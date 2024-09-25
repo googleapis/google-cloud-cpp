@@ -14,7 +14,9 @@
 
 #include "google/cloud/storage/internal/async/object_descriptor_impl.h"
 #include "google/cloud/storage/internal/async/handle_redirect_error.h"
+#include "google/cloud/storage/internal/async/object_descriptor_reader_tracing.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include <google/rpc/status.pb.h>
 #include <utility>
 
@@ -61,8 +63,12 @@ ObjectDescriptorImpl::Read(ReadParams p) {
   read_range.set_read_offset(p.start);
   read_range.set_read_limit(p.limit);
   Flush(std::move(lk));
-  return std::unique_ptr<storage_experimental::AsyncReaderConnection>(
-      std::make_unique<ObjectDescriptorReader>(std::move(range)));
+
+  if (!internal::TracingEnabled(options_)) {
+    return std::unique_ptr<storage_experimental::AsyncReaderConnection>(
+        std::make_unique<ObjectDescriptorReader>(std::move(range)));
+  } else
+    return MakeTracingObjectDescriptorReader(std::move(range));
 }
 
 void ObjectDescriptorImpl::Flush(std::unique_lock<std::mutex> lk) {
