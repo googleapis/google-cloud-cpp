@@ -2,8 +2,6 @@
 ./include
 ./include/google
 ./include/google/ai
-./include/google/ai/generativelanguage
-./include/google/ai/generativelanguage/v1
 ./include/google/api
 ./include/google/api/apikeys
 ./include/google/api/apikeys/v2
@@ -764,10 +762,6 @@
 ./include/google/cloud/functions/v2
 ./include/google/cloud/functions/v2/internal
 ./include/google/cloud/functions/v2/mocks
-./include/google/cloud/generativelanguage
-./include/google/cloud/generativelanguage/v1
-./include/google/cloud/generativelanguage/v1/internal
-./include/google/cloud/generativelanguage/v1/mocks
 ./include/google/cloud/gkebackup
 ./include/google/cloud/gkebackup/v1
 ./include/google/cloud/gkebackup/v1/internal
@@ -1388,8 +1382,6 @@
 ./lib64/cmake/google_cloud_cpp_filestore_mocks
 ./lib64/cmake/google_cloud_cpp_functions
 ./lib64/cmake/google_cloud_cpp_functions_mocks
-./lib64/cmake/google_cloud_cpp_generativelanguage
-./lib64/cmake/google_cloud_cpp_generativelanguage_mocks
 ./lib64/cmake/google_cloud_cpp_gkebackup
 ./lib64/cmake/google_cloud_cpp_gkebackup_mocks
 ./lib64/cmake/google_cloud_cpp_gkeconnect
