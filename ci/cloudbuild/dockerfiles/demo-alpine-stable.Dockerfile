@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM alpine:3.19
+FROM alpine:3.20
 ARG NCPU=4
 
 ## [BEGIN packaging.md]
