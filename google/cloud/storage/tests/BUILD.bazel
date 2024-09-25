@@ -16,10 +16,6 @@ load(
     ":storage_client_integration_tests.bzl",
     "storage_client_integration_tests",
 )
-load(
-    ":storage_client_universe_domain_tests.bzl",
-    "storage_client_universe_domain_tests",
-)
 
 package(default_visibility = ["//visibility:private"])
 
@@ -85,4 +81,4 @@ VARIATIONS = {
         "@com_google_absl//absl/strings",
         "@com_google_googletest//:gtest_main",
     ],
-) for test in storage_client_universe_domain_tests]
+) for test in ["universe_domain_integration_test.cc"]]

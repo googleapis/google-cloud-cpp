@@ -75,19 +75,14 @@ set(storage_client_integration_tests_production
     # cmake-format: sort
     alternative_endpoint_integration_test.cc key_file_integration_test.cc
     signed_url_integration_test.cc unified_credentials_integration_test.cc)
-set(storage_client_universe_domain_tests # cmake-format: sort
-                                         universe_domain_integration_test.cc)
 list(APPEND storage_client_integration_tests
      ${storage_client_integration_tests_production})
 list(SORT storage_client_integration_tests)
-list(SORT storage_client_universe_domain_tests)
 
 include(CreateBazelConfig)
 export_list_to_bazel(
     "storage_client_integration_tests.bzl" "storage_client_integration_tests"
     "storage_client_integration_tests_production" YEAR "2018")
-export_list_to_bazel("storage_client_universe_domain_tests.bzl"
-                     "storage_client_universe_domain_tests" YEAR "2024")
 
 foreach (fname IN LISTS storage_client_integration_tests)
     google_cloud_cpp_add_executable(target "storage" "${fname}")
@@ -123,27 +118,6 @@ foreach (target IN ITEMS storage_smoke_test_async storage_smoke_test_grpc
         PROPERTIES
             LABELS
             "integration-test;integration-test-emulator;integration-test-gha")
-endforeach ()
-foreach (fname IN LISTS storage_client_universe_domain_tests)
-    google_cloud_cpp_add_executable(target "storage" "${fname}")
-    target_link_libraries(
-        ${target}
-        PRIVATE storage_client_testing
-                google_cloud_cpp_testing
-                google-cloud-cpp::storage
-                google-cloud-cpp::common
-                google-cloud-cpp::universe_domain
-                GTest::gmock_main
-                GTest::gmock
-                GTest::gtest
-                Threads::Threads
-                absl::strings
-                nlohmann_json)
-    add_test(NAME ${target} COMMAND ${target})
-    set_tests_properties(
-        ${target} PROPERTIES LABELS
-                             "integration-test;integration-test-production")
-    google_cloud_cpp_add_common_options(${target})
 endforeach ()
 
 # We just know that these tests need to be run against production.
