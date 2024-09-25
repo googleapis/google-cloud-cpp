@@ -197,11 +197,11 @@ class CreateServiceVarsTest
 };
 
 TEST_F(CreateServiceVarsTest, FilesParseSuccessfully) {
-  EXPECT_NE(nullptr, pool_.FindFileByName("google/api/http.proto"));
-  EXPECT_NE(nullptr, pool_.FindFileByName("google/api/annotations.proto"));
-  EXPECT_NE(nullptr,
+  ASSERT_NE(nullptr, pool_.FindFileByName("google/api/http.proto"));
+  ASSERT_NE(nullptr, pool_.FindFileByName("google/api/annotations.proto"));
+  ASSERT_NE(nullptr,
             pool_.FindFileByName("google/cloud/frobber/v1/frobber.proto"));
-  EXPECT_NE(nullptr,
+  ASSERT_NE(nullptr,
             pool_.FindFileByName("google/cloud/location/locations.proto"));
 }
 
@@ -1078,14 +1078,14 @@ class CreateMethodVarsTest
 };
 
 TEST_F(CreateMethodVarsTest, FilesParseSuccessfully) {
-  EXPECT_NE(nullptr, pool_.FindFileByName("google/api/client.proto"));
-  EXPECT_NE(nullptr, pool_.FindFileByName("google/api/http.proto"));
-  EXPECT_NE(nullptr, pool_.FindFileByName("google/api/annotations.proto"));
-  EXPECT_NE(nullptr,
+  ASSERT_NE(nullptr, pool_.FindFileByName("google/api/client.proto"));
+  ASSERT_NE(nullptr, pool_.FindFileByName("google/api/http.proto"));
+  ASSERT_NE(nullptr, pool_.FindFileByName("google/api/annotations.proto"));
+  ASSERT_NE(nullptr,
             pool_.FindFileByName("google/longrunning/operation.proto"));
-  EXPECT_NE(nullptr, pool_.FindFileByName("test/test.proto"));
-  EXPECT_NE(nullptr, pool_.FindFileByName("google/foo/v1/service.proto"));
-  EXPECT_NE(nullptr,
+  ASSERT_NE(nullptr, pool_.FindFileByName("test/test.proto"));
+  ASSERT_NE(nullptr, pool_.FindFileByName("google/foo/v1/service.proto"));
+  ASSERT_NE(nullptr,
             pool_.FindFileByName("google/cloud/location/locations.proto"));
 }
 
