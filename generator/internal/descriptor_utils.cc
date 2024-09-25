@@ -36,6 +36,7 @@
 #include "absl/strings/strip.h"
 #include "absl/types/variant.h"
 #include <google/api/annotations.pb.h>
+#include <google/api/http.pb.h>
 #include <google/api/routing.pb.h>
 #include <google/longrunning/operations.pb.h>
 #include <google/protobuf/compiler/code_generator.h>
@@ -152,12 +153,11 @@ bool IsKnownIdempotentMethod(google::protobuf::MethodDescriptor const& m) {
 }
 
 std::string DefaultIdempotencyFromHttpOperation(
-    google::protobuf::MethodDescriptor const& method) {
+    google::protobuf::MethodDescriptor const& method,
+    absl::optional<google::api::HttpRule> http_rule) {
   if (IsKnownIdempotentMethod(method)) return "kIdempotent";
-  if (method.options().HasExtension(google::api::http)) {
-    google::api::HttpRule http_rule =
-        method.options().GetExtension(google::api::http);
-    switch (http_rule.pattern_case()) {
+  if (http_rule) {
+    switch (http_rule->pattern_case()) {
       case google::api::HttpRule::kGet:
       case google::api::HttpRule::kPut:
         return "kIdempotent";
@@ -456,6 +456,17 @@ std::string FormatAdditionalPbHeaderPaths(VarsDictionary& vars) {
   return absl::StrJoin(additional_pb_header_paths, ",");
 }
 
+std::string FormatMixinPbHeaderPaths(
+    std::vector<MixinMethod> const& mixin_methods, std::string const& suffix) {
+  std::unordered_set<std::string> mixin_header_paths;
+  for (auto const& mixin_method : mixin_methods) {
+    mixin_header_paths.insert(absl::StrCat(
+        absl::StripSuffix(mixin_method.method.get().file()->name(), ".proto"),
+        suffix));
+  }
+  return absl::StrJoin(mixin_header_paths, ",");
+}
+
 // If a service name mapping exists, return the new name.
 // Parses a command line argument in the form:
 // {"service_name_mappings": "service_a=new_service_a,service=new_service"}.
@@ -490,6 +501,52 @@ absl::optional<std::string> GetReplacementComment(VarsDictionary const& vars,
     if (p.first == name) return std::string(p.second.data(), p.second.size());
   }
   return absl::nullopt;
+}
+
+VarsDictionary GetMethodVars(
+    google::protobuf::ServiceDescriptor const& service,
+    YAML::Node const& service_config,
+    google::protobuf::MethodDescriptor const& method,
+    absl::optional<google::api::HttpRule> const& http_rule,
+    VarsDictionary const& idempotency_overrides,
+    std::set<std::string> const& omitted_rpcs) {
+  VarsDictionary method_vars;
+  method_vars["idempotency"] =
+      DefaultIdempotencyFromHttpOperation(method, http_rule);
+  if (!idempotency_overrides.empty()) {
+    auto iter = idempotency_overrides.find(
+        absl::StrCat(service.name(), ".", method.name()));
+    if (iter != idempotency_overrides.end()) {
+      method_vars["idempotency"] = iter->second;
+    }
+  }
+  method_vars["method_name"] = method.name();
+  method_vars["method_name_snake"] = CamelCaseToSnakeCase(method.name());
+  method_vars["request_type"] =
+      ProtoNameToCppName(method.input_type()->full_name());
+  method_vars["response_message_type"] = method.output_type()->full_name();
+  method_vars["response_type"] =
+      ProtoNameToCppName(method.output_type()->full_name());
+  method_vars["return_type"] =
+      IsResponseTypeEmpty(method)
+          ? "Status"
+          : absl::StrFormat("StatusOr<%s>", method_vars.at("response_type"));
+  auto request_id_field_name = RequestIdFieldName(service_config, method);
+  if (!request_id_field_name.empty()) {
+    method_vars["request_id_field_name"] = std::move(request_id_field_name);
+  }
+  SetLongrunningOperationMethodVars(method, method_vars);
+  AssignPaginationMethodVars(method, method_vars);
+  SetMethodSignatureMethodVars(service, method, omitted_rpcs, method_vars);
+  HttpExtensionInfo parsed_http_info;
+  if (http_rule) {
+    parsed_http_info = ParseHttpExtension(*http_rule);
+  }
+  method_vars["request_resource"] =
+      FormatRequestResource(*method.input_type(), parsed_http_info);
+  SetHttpDerivedMethodVars(parsed_http_info, method, method_vars);
+  SetHttpQueryParameters(parsed_http_info, method, method_vars);
+  return method_vars;
 }
 
 }  // namespace
@@ -560,7 +617,8 @@ bool CheckParameterCommentSubstitutions() {
 
 VarsDictionary CreateServiceVars(
     google::protobuf::ServiceDescriptor const& descriptor,
-    std::vector<std::pair<std::string, std::string>> const& initial_values) {
+    std::vector<std::pair<std::string, std::string>> const& initial_values,
+    std::vector<MixinMethod> const& mixin_methods) {
   VarsDictionary vars(initial_values.begin(), initial_values.end());
   auto const& service_name = GetEffectiveServiceName(vars, descriptor.name());
   vars["product_options_page"] = OptionsGroup(vars["product_path"]);
@@ -693,6 +751,10 @@ VarsDictionary CreateServiceVars(
       absl::StripSuffix(descriptor.file()->name(), ".proto"), ".grpc.pb.h");
   vars["proto_header_path"] = absl::StrCat(
       absl::StripSuffix(descriptor.file()->name(), ".proto"), ".pb.h");
+  vars["mixin_proto_grpc_header_paths"] =
+      FormatMixinPbHeaderPaths(mixin_methods, ".grpc.pb.h");
+  vars["mixin_proto_header_paths"] =
+      FormatMixinPbHeaderPaths(mixin_methods, ".pb.h");
   vars["retry_policy_name"] = absl::StrCat(service_name, "RetryPolicy");
   vars["retry_traits_name"] = absl::StrCat(service_name, "RetryTraits");
   vars["retry_traits_header_path"] =
@@ -803,7 +865,8 @@ std::map<std::string, std::string> ParseIdempotencyOverrides(
 
 std::map<std::string, VarsDictionary> CreateMethodVars(
     google::protobuf::ServiceDescriptor const& service,
-    YAML::Node const& service_config, VarsDictionary const& vars) {
+    YAML::Node const& service_config, VarsDictionary const& vars,
+    std::vector<MixinMethod> const& mixin_methods) {
   auto split_arg = [&vars](std::string const& arg) -> std::set<std::string> {
     auto l = vars.find(arg);
     if (l == vars.end()) return {};
@@ -816,43 +879,19 @@ std::map<std::string, VarsDictionary> CreateMethodVars(
   std::map<std::string, VarsDictionary> service_methods_vars;
   for (int i = 0; i < service.method_count(); i++) {
     auto const& method = *service.method(i);
-    VarsDictionary method_vars;
-    method_vars["idempotency"] = DefaultIdempotencyFromHttpOperation(method);
-    if (!idempotency_overrides.empty()) {
-      auto iter = idempotency_overrides.find(
-          absl::StrCat(service.name(), ".", method.name()));
-      if (iter != idempotency_overrides.end()) {
-        method_vars["idempotency"] = iter->second;
-      }
-    }
-    method_vars["method_name"] = method.name();
-    method_vars["method_name_snake"] = CamelCaseToSnakeCase(method.name());
-    method_vars["request_type"] =
-        ProtoNameToCppName(method.input_type()->full_name());
-    method_vars["response_message_type"] = method.output_type()->full_name();
-    method_vars["response_type"] =
-        ProtoNameToCppName(method.output_type()->full_name());
-    method_vars["return_type"] =
-        IsResponseTypeEmpty(method)
-            ? "Status"
-            : absl::StrFormat("StatusOr<%s>", method_vars.at("response_type"));
-    auto request_id_field_name = RequestIdFieldName(service_config, method);
-    if (!request_id_field_name.empty()) {
-      method_vars["request_id_field_name"] = std::move(request_id_field_name);
-    }
-    SetLongrunningOperationMethodVars(method, method_vars);
-    AssignPaginationMethodVars(method, method_vars);
-    SetMethodSignatureMethodVars(service, method, omitted_rpcs, method_vars);
-    HttpExtensionInfo parsed_http_info;
+    absl::optional<google::api::HttpRule> http_rule;
     if (method.options().HasExtension(google::api::http)) {
-      parsed_http_info =
-          ParseHttpExtension(method.options().GetExtension(google::api::http));
+      http_rule = method.options().GetExtension(google::api::http);
     }
-    method_vars["request_resource"] =
-        FormatRequestResource(*method.input_type(), parsed_http_info);
-    SetHttpDerivedMethodVars(parsed_http_info, method, method_vars);
-    SetHttpQueryParameters(parsed_http_info, method, method_vars);
-    service_methods_vars[method.full_name()] = method_vars;
+    service_methods_vars[method.full_name()] =
+        GetMethodVars(service, service_config, method, http_rule,
+                      idempotency_overrides, omitted_rpcs);
+  }
+  for (auto const& mixin_method : mixin_methods) {
+    auto const& method = mixin_method.method.get();
+    service_methods_vars[method.full_name()] = GetMethodVars(
+        service, service_config, method, mixin_method.http_override,
+        idempotency_overrides, omitted_rpcs);
   }
   return service_methods_vars;
 }
