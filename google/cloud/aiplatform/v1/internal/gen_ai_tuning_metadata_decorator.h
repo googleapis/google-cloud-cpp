@@ -22,6 +22,7 @@
 #include "google/cloud/aiplatform/v1/internal/gen_ai_tuning_stub.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
+#include <google/longrunning/operations.grpc.pb.h>
 #include <map>
 #include <memory>
 #include <string>
@@ -58,6 +59,30 @@ class GenAiTuningServiceMetadata : public GenAiTuningServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CancelTuningJobRequest const& request)
       override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncRebaseTunedModel(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> RebaseTunedModel(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   void SetMetadata(grpc::ClientContext& context, Options const& options,

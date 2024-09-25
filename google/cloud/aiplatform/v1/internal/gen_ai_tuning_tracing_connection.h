@@ -55,6 +55,18 @@ class GenAiTuningServiceTracingConnection
       google::cloud::aiplatform::v1::CancelTuningJobRequest const& request)
       override;
 
+  future<StatusOr<google::cloud::aiplatform::v1::TuningJob>> RebaseTunedModel(
+      google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> RebaseTunedModel(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::TuningJob>> RebaseTunedModel(
+      google::longrunning::Operation const& operation) override;
+
  private:
   std::shared_ptr<aiplatform_v1::GenAiTuningServiceConnection> child_;
 };

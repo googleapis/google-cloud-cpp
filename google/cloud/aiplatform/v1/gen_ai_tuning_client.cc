@@ -99,6 +99,54 @@ Status GenAiTuningServiceClient::CancelTuningJob(
   return connection_->CancelTuningJob(request);
 }
 
+future<StatusOr<google::cloud::aiplatform::v1::TuningJob>>
+GenAiTuningServiceClient::RebaseTunedModel(
+    std::string const& parent,
+    google::cloud::aiplatform::v1::TunedModelRef const& tuned_model_ref,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::RebaseTunedModelRequest request;
+  request.set_parent(parent);
+  *request.mutable_tuned_model_ref() = tuned_model_ref;
+  return connection_->RebaseTunedModel(request);
+}
+
+StatusOr<google::longrunning::Operation>
+GenAiTuningServiceClient::RebaseTunedModel(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::aiplatform::v1::TunedModelRef const& tuned_model_ref,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::RebaseTunedModelRequest request;
+  request.set_parent(parent);
+  *request.mutable_tuned_model_ref() = tuned_model_ref;
+  return connection_->RebaseTunedModel(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::TuningJob>>
+GenAiTuningServiceClient::RebaseTunedModel(
+    google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RebaseTunedModel(request);
+}
+
+StatusOr<google::longrunning::Operation>
+GenAiTuningServiceClient::RebaseTunedModel(
+    NoAwaitTag,
+    google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RebaseTunedModel(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::TuningJob>>
+GenAiTuningServiceClient::RebaseTunedModel(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RebaseTunedModel(operation);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace aiplatform_v1
 }  // namespace cloud

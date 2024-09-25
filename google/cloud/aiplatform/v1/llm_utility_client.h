@@ -109,7 +109,7 @@ class LlmUtilityServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.CountTokensRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L619}
-  /// [google.cloud.aiplatform.v1.CountTokensResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L659}
+  /// [google.cloud.aiplatform.v1.CountTokensResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L664}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::CountTokensResponse> CountTokens(
@@ -140,7 +140,7 @@ class LlmUtilityServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.CountTokensRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L619}
-  /// [google.cloud.aiplatform.v1.CountTokensResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L659}
+  /// [google.cloud.aiplatform.v1.CountTokensResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L664}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::CountTokensResponse> CountTokens(

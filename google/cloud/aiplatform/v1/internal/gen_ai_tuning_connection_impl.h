@@ -26,10 +26,13 @@
 #include "google/cloud/aiplatform/v1/internal/gen_ai_tuning_stub.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
+#include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -63,6 +66,18 @@ class GenAiTuningServiceConnectionImpl
   Status CancelTuningJob(
       google::cloud::aiplatform::v1::CancelTuningJobRequest const& request)
       override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::TuningJob>> RebaseTunedModel(
+      google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> RebaseTunedModel(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::TuningJob>> RebaseTunedModel(
+      google::longrunning::Operation const& operation) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

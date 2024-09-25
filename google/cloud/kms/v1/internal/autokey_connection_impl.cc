@@ -22,6 +22,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
+#include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
 #include <utility>
@@ -162,18 +163,38 @@ StatusOr<google::cloud::kms::v1::KeyHandle> AutokeyConnectionImpl::GetKeyHandle(
       *current, request, __func__);
 }
 
-StatusOr<google::cloud::kms::v1::ListKeyHandlesResponse>
+StreamRange<google::cloud::kms::v1::KeyHandle>
 AutokeyConnectionImpl::ListKeyHandles(
-    google::cloud::kms::v1::ListKeyHandlesRequest const& request) {
+    google::cloud::kms::v1::ListKeyHandlesRequest request) {
+  request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
-  return google::cloud::internal::RetryLoop(
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ListKeyHandles(request),
-      [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::kms::v1::ListKeyHandlesRequest const& request) {
-        return stub_->ListKeyHandles(context, options, request);
+  auto idempotency = idempotency_policy(*current)->ListKeyHandles(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::kms::v1::KeyHandle>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry =
+           std::shared_ptr<kms_v1::AutokeyRetryPolicy>(retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::kms::v1::ListKeyHandlesRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::kms::v1::ListKeyHandlesRequest const& request) {
+              return stub->ListKeyHandles(context, options, request);
+            },
+            options, r, function_name);
       },
-      *current, request, __func__);
+      [](google::cloud::kms::v1::ListKeyHandlesResponse r) {
+        std::vector<google::cloud::kms::v1::KeyHandle> result(
+            r.key_handles().size());
+        auto& messages = *r.mutable_key_handles();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

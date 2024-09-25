@@ -19,10 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_INTERNAL_GEN_AI_TUNING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_INTERNAL_GEN_AI_TUNING_STUB_H
 
+#include "google/cloud/completion_queue.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/aiplatform/v1/genai_tuning_service.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -51,15 +54,42 @@ class GenAiTuningServiceStub {
   virtual Status CancelTuningJob(
       grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CancelTuningJobRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncRebaseTunedModel(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::RebaseTunedModelRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> RebaseTunedModel(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::RebaseTunedModelRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::longrunning::GetOperationRequest const& request) = 0;
+
+  virtual future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
 class DefaultGenAiTuningServiceStub : public GenAiTuningServiceStub {
  public:
-  explicit DefaultGenAiTuningServiceStub(
+  DefaultGenAiTuningServiceStub(
       std::unique_ptr<
           google::cloud::aiplatform::v1::GenAiTuningService::StubInterface>
-          grpc_stub)
-      : grpc_stub_(std::move(grpc_stub)) {}
+          grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations)
+      : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::aiplatform::v1::TuningJob> CreateTuningJob(
       grpc::ClientContext& context, Options const& options,
@@ -81,10 +111,35 @@ class DefaultGenAiTuningServiceStub : public GenAiTuningServiceStub {
       google::cloud::aiplatform::v1::CancelTuningJobRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncRebaseTunedModel(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> RebaseTunedModel(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::longrunning::CancelOperationRequest const& request) override;
+
  private:
   std::unique_ptr<
       google::cloud::aiplatform::v1::GenAiTuningService::StubInterface>
       grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

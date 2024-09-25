@@ -70,6 +70,36 @@ Status GenAiTuningServiceTracingConnection::CancelTuningJob(
   return internal::EndSpan(*span, child_->CancelTuningJob(request));
 }
 
+future<StatusOr<google::cloud::aiplatform::v1::TuningJob>>
+GenAiTuningServiceTracingConnection::RebaseTunedModel(
+    google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::GenAiTuningServiceConnection::RebaseTunedModel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->RebaseTunedModel(request));
+}
+
+StatusOr<google::longrunning::Operation>
+GenAiTuningServiceTracingConnection::RebaseTunedModel(
+    NoAwaitTag,
+    google::cloud::aiplatform::v1::RebaseTunedModelRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::GenAiTuningServiceConnection::RebaseTunedModel");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->RebaseTunedModel(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::TuningJob>>
+GenAiTuningServiceTracingConnection::RebaseTunedModel(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::GenAiTuningServiceConnection::RebaseTunedModel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->RebaseTunedModel(operation));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<aiplatform_v1::GenAiTuningServiceConnection>

@@ -13,6 +13,13 @@ the APIs in these libraries are stable, and are ready for production use.
 
 - [Gemini API](/google/cloud/generativelanguage/README.md)
 
+### [KMS](/google/cloud/kms/README.md)
+
+- `AutokeyClient::ListKeyHandles(...)` signature has changed to return an
+  iterable type. Our telemetry indicates that there are no C++ applications
+  using this API, and therefore we do not consider this a breaking change.
+  ([#14726](https://github.com/googleapis/google-cloud-cpp/pull/14726))
+
 ## v2.29.0 - 2024-09
 
 ### New Libraries

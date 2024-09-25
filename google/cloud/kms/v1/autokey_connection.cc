@@ -26,6 +26,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 #include <utility>
@@ -63,10 +64,12 @@ StatusOr<google::cloud::kms::v1::KeyHandle> AutokeyConnection::GetKeyHandle(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::kms::v1::ListKeyHandlesResponse>
+StreamRange<google::cloud::kms::v1::KeyHandle>
 AutokeyConnection::ListKeyHandles(
-    google::cloud::kms::v1::ListKeyHandlesRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+    google::cloud::kms::v1::
+        ListKeyHandlesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::kms::v1::KeyHandle>>();
 }
 
 std::shared_ptr<AutokeyConnection> MakeAutokeyConnection(Options options) {

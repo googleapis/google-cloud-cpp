@@ -120,7 +120,7 @@ class GenerativeServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.ai.generativelanguage.v1.GenerateContentRequest]: @googleapis_reference_link{google/ai/generativelanguage/v1/generative_service.proto#L132}
-  /// [google.ai.generativelanguage.v1.GenerateContentResponse]: @googleapis_reference_link{google/ai/generativelanguage/v1/generative_service.proto#L244}
+  /// [google.ai.generativelanguage.v1.GenerateContentResponse]: @googleapis_reference_link{google/ai/generativelanguage/v1/generative_service.proto#L287}
   ///
   // clang-format on
   StatusOr<google::ai::generativelanguage::v1::GenerateContentResponse>
@@ -159,7 +159,7 @@ class GenerativeServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.ai.generativelanguage.v1.GenerateContentRequest]: @googleapis_reference_link{google/ai/generativelanguage/v1/generative_service.proto#L132}
-  /// [google.ai.generativelanguage.v1.GenerateContentResponse]: @googleapis_reference_link{google/ai/generativelanguage/v1/generative_service.proto#L244}
+  /// [google.ai.generativelanguage.v1.GenerateContentResponse]: @googleapis_reference_link{google/ai/generativelanguage/v1/generative_service.proto#L287}
   ///
   // clang-format on
   StatusOr<google::ai::generativelanguage::v1::GenerateContentResponse>
@@ -196,7 +196,7 @@ class GenerativeServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.ai.generativelanguage.v1.GenerateContentRequest]: @googleapis_reference_link{google/ai/generativelanguage/v1/generative_service.proto#L132}
-  /// [google.ai.generativelanguage.v1.GenerateContentResponse]: @googleapis_reference_link{google/ai/generativelanguage/v1/generative_service.proto#L244}
+  /// [google.ai.generativelanguage.v1.GenerateContentResponse]: @googleapis_reference_link{google/ai/generativelanguage/v1/generative_service.proto#L287}
   ///
   // clang-format on
   StreamRange<google::ai::generativelanguage::v1::GenerateContentResponse>
@@ -231,7 +231,7 @@ class GenerativeServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.ai.generativelanguage.v1.GenerateContentRequest]: @googleapis_reference_link{google/ai/generativelanguage/v1/generative_service.proto#L132}
-  /// [google.ai.generativelanguage.v1.GenerateContentResponse]: @googleapis_reference_link{google/ai/generativelanguage/v1/generative_service.proto#L244}
+  /// [google.ai.generativelanguage.v1.GenerateContentResponse]: @googleapis_reference_link{google/ai/generativelanguage/v1/generative_service.proto#L287}
   ///
   // clang-format on
   StreamRange<google::ai::generativelanguage::v1::GenerateContentResponse>
@@ -266,8 +266,8 @@ class GenerativeServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.ai.generativelanguage.v1.EmbedContentRequest]: @googleapis_reference_link{google/ai/generativelanguage/v1/generative_service.proto#L374}
-  /// [google.ai.generativelanguage.v1.EmbedContentResponse]: @googleapis_reference_link{google/ai/generativelanguage/v1/generative_service.proto#L418}
+  /// [google.ai.generativelanguage.v1.EmbedContentRequest]: @googleapis_reference_link{google/ai/generativelanguage/v1/generative_service.proto#L452}
+  /// [google.ai.generativelanguage.v1.EmbedContentResponse]: @googleapis_reference_link{google/ai/generativelanguage/v1/generative_service.proto#L496}
   ///
   // clang-format on
   StatusOr<google::ai::generativelanguage::v1::EmbedContentResponse>
@@ -300,8 +300,8 @@ class GenerativeServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.ai.generativelanguage.v1.EmbedContentRequest]: @googleapis_reference_link{google/ai/generativelanguage/v1/generative_service.proto#L374}
-  /// [google.ai.generativelanguage.v1.EmbedContentResponse]: @googleapis_reference_link{google/ai/generativelanguage/v1/generative_service.proto#L418}
+  /// [google.ai.generativelanguage.v1.EmbedContentRequest]: @googleapis_reference_link{google/ai/generativelanguage/v1/generative_service.proto#L452}
+  /// [google.ai.generativelanguage.v1.EmbedContentResponse]: @googleapis_reference_link{google/ai/generativelanguage/v1/generative_service.proto#L496}
   ///
   // clang-format on
   StatusOr<google::ai::generativelanguage::v1::EmbedContentResponse>
@@ -336,8 +336,8 @@ class GenerativeServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.ai.generativelanguage.v1.BatchEmbedContentsRequest]: @googleapis_reference_link{google/ai/generativelanguage/v1/generative_service.proto#L424}
-  /// [google.ai.generativelanguage.v1.BatchEmbedContentsResponse]: @googleapis_reference_link{google/ai/generativelanguage/v1/generative_service.proto#L445}
+  /// [google.ai.generativelanguage.v1.BatchEmbedContentsRequest]: @googleapis_reference_link{google/ai/generativelanguage/v1/generative_service.proto#L502}
+  /// [google.ai.generativelanguage.v1.BatchEmbedContentsResponse]: @googleapis_reference_link{google/ai/generativelanguage/v1/generative_service.proto#L523}
   ///
   // clang-format on
   StatusOr<google::ai::generativelanguage::v1::BatchEmbedContentsResponse>
@@ -373,8 +373,8 @@ class GenerativeServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.ai.generativelanguage.v1.BatchEmbedContentsRequest]: @googleapis_reference_link{google/ai/generativelanguage/v1/generative_service.proto#L424}
-  /// [google.ai.generativelanguage.v1.BatchEmbedContentsResponse]: @googleapis_reference_link{google/ai/generativelanguage/v1/generative_service.proto#L445}
+  /// [google.ai.generativelanguage.v1.BatchEmbedContentsRequest]: @googleapis_reference_link{google/ai/generativelanguage/v1/generative_service.proto#L502}
+  /// [google.ai.generativelanguage.v1.BatchEmbedContentsResponse]: @googleapis_reference_link{google/ai/generativelanguage/v1/generative_service.proto#L523}
   ///
   // clang-format on
   StatusOr<google::ai::generativelanguage::v1::BatchEmbedContentsResponse>
@@ -410,8 +410,8 @@ class GenerativeServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.ai.generativelanguage.v1.CountTokensRequest]: @googleapis_reference_link{google/ai/generativelanguage/v1/generative_service.proto#L456}
-  /// [google.ai.generativelanguage.v1.CountTokensResponse]: @googleapis_reference_link{google/ai/generativelanguage/v1/generative_service.proto#L489}
+  /// [google.ai.generativelanguage.v1.CountTokensRequest]: @googleapis_reference_link{google/ai/generativelanguage/v1/generative_service.proto#L534}
+  /// [google.ai.generativelanguage.v1.CountTokensResponse]: @googleapis_reference_link{google/ai/generativelanguage/v1/generative_service.proto#L567}
   ///
   // clang-format on
   StatusOr<google::ai::generativelanguage::v1::CountTokensResponse> CountTokens(
@@ -444,8 +444,8 @@ class GenerativeServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.ai.generativelanguage.v1.CountTokensRequest]: @googleapis_reference_link{google/ai/generativelanguage/v1/generative_service.proto#L456}
-  /// [google.ai.generativelanguage.v1.CountTokensResponse]: @googleapis_reference_link{google/ai/generativelanguage/v1/generative_service.proto#L489}
+  /// [google.ai.generativelanguage.v1.CountTokensRequest]: @googleapis_reference_link{google/ai/generativelanguage/v1/generative_service.proto#L534}
+  /// [google.ai.generativelanguage.v1.CountTokensResponse]: @googleapis_reference_link{google/ai/generativelanguage/v1/generative_service.proto#L567}
   ///
   // clang-format on
   StatusOr<google::ai::generativelanguage::v1::CountTokensResponse> CountTokens(

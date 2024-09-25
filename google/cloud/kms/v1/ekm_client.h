@@ -371,8 +371,8 @@ class EkmServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.v1.EkmConfig]: @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L414}
-  /// [google.cloud.kms.v1.EkmConfig.name]: @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L423}
+  /// [google.cloud.kms.v1.EkmConfig]: @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L415}
+  /// [google.cloud.kms.v1.EkmConfig.name]: @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L424}
   /// [google.cloud.kms.v1.GetEkmConfigRequest]: @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L224}
   ///
   // clang-format on
@@ -403,7 +403,7 @@ class EkmServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.v1.EkmConfig]: @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L414}
+  /// [google.cloud.kms.v1.EkmConfig]: @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L415}
   /// [google.cloud.kms.v1.GetEkmConfigRequest]: @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L224}
   ///
   // clang-format on
@@ -431,7 +431,7 @@ class EkmServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.v1.EkmConfig]: @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L414}
+  /// [google.cloud.kms.v1.EkmConfig]: @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L415}
   /// [google.cloud.kms.v1.UpdateEkmConfigRequest]: @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L237}
   ///
   // clang-format on
@@ -463,7 +463,7 @@ class EkmServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.v1.EkmConfig]: @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L414}
+  /// [google.cloud.kms.v1.EkmConfig]: @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L415}
   /// [google.cloud.kms.v1.UpdateEkmConfigRequest]: @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L237}
   ///
   // clang-format on
@@ -496,8 +496,8 @@ class EkmServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.kms.v1.EkmConnection]: @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L295}
   /// [google.cloud.kms.v1.EkmConnection.name]: @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L374}
-  /// [google.cloud.kms.v1.VerifyConnectivityRequest]: @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L438}
-  /// [google.cloud.kms.v1.VerifyConnectivityResponse]: @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L451}
+  /// [google.cloud.kms.v1.VerifyConnectivityRequest]: @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L439}
+  /// [google.cloud.kms.v1.VerifyConnectivityResponse]: @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L452}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse>
@@ -531,8 +531,8 @@ class EkmServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.kms.v1.EkmConnection]: @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L295}
-  /// [google.cloud.kms.v1.VerifyConnectivityRequest]: @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L438}
-  /// [google.cloud.kms.v1.VerifyConnectivityResponse]: @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L451}
+  /// [google.cloud.kms.v1.VerifyConnectivityRequest]: @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L439}
+  /// [google.cloud.kms.v1.VerifyConnectivityResponse]: @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L452}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse>

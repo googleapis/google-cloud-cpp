@@ -75,27 +75,6 @@ class StorageAuth : public StorageStub {
       grpc::ClientContext& context, Options const& options,
       google::storage::v2::UpdateBucketRequest const& request) override;
 
-  Status DeleteNotificationConfig(
-      grpc::ClientContext& context, Options const& options,
-      google::storage::v2::DeleteNotificationConfigRequest const& request)
-      override;
-
-  StatusOr<google::storage::v2::NotificationConfig> GetNotificationConfig(
-      grpc::ClientContext& context, Options const& options,
-      google::storage::v2::GetNotificationConfigRequest const& request)
-      override;
-
-  StatusOr<google::storage::v2::NotificationConfig> CreateNotificationConfig(
-      grpc::ClientContext& context, Options const& options,
-      google::storage::v2::CreateNotificationConfigRequest const& request)
-      override;
-
-  StatusOr<google::storage::v2::ListNotificationConfigsResponse>
-  ListNotificationConfigs(
-      grpc::ClientContext& context, Options const& options,
-      google::storage::v2::ListNotificationConfigsRequest const& request)
-      override;
-
   StatusOr<google::storage::v2::Object> ComposeObject(
       grpc::ClientContext& context, Options const& options,
       google::storage::v2::ComposeObjectRequest const& request) override;
@@ -181,6 +160,27 @@ class StorageAuth : public StorageStub {
   StatusOr<google::storage::v2::HmacKeyMetadata> UpdateHmacKey(
       grpc::ClientContext& context, Options const& options,
       google::storage::v2::UpdateHmacKeyRequest const& request) override;
+
+  Status DeleteNotificationConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::v2::DeleteNotificationConfigRequest const& request)
+      override;
+
+  StatusOr<google::storage::v2::NotificationConfig> GetNotificationConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::v2::GetNotificationConfigRequest const& request)
+      override;
+
+  StatusOr<google::storage::v2::NotificationConfig> CreateNotificationConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::v2::CreateNotificationConfigRequest const& request)
+      override;
+
+  StatusOr<google::storage::v2::ListNotificationConfigsResponse>
+  ListNotificationConfigs(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::v2::ListNotificationConfigsRequest const& request)
+      override;
 
   future<StatusOr<google::storage::v2::Object>> AsyncComposeObject(
       google::cloud::CompletionQueue& cq,
