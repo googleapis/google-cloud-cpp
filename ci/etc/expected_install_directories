@@ -1,7 +1,6 @@
 .
 ./include
 ./include/google
-./include/google/ai
 ./include/google/api
 ./include/google/api/apikeys
 ./include/google/api/apikeys/v2
