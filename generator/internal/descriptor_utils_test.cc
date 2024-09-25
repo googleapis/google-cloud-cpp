@@ -1330,64 +1330,64 @@ TEST_F(CreateMethodVarsTest, CreateMixinMethodsVars) {
       mixin_methods);
   vars_ = CreateMethodVars(*service_file_descriptor->service(0), YAML::Node{},
                            service_vars_, mixin_methods);
-  auto get_location = vars_.find("google.cloud.location.Locations.GetLocation");
-  auto list_locations =
-      vars_.find("google.cloud.location.Locations.ListLocations");
-  ASSERT_NE(get_location, vars_.end());
-  ASSERT_NE(list_locations, vars_.end());
 
-  EXPECT_EQ(get_location->first, "google.cloud.location.Locations.GetLocation");
   EXPECT_THAT(
-      get_location->second,
+      vars_,
       AllOf(
-          Contains(Pair("idempotency", "kIdempotent")),
-          Contains(Pair("method_http_query_parameters", "")),
-          Contains(Pair("method_http_verb", "Get")),
-          Contains(Pair("method_name", "GetLocation")),
-          Contains(Pair("method_name_snake", "get_location")),
-          Contains(Pair("method_request_body", "")),
-          Contains(Pair("method_request_params",
-                        "\"name=\", internal::UrlEncode(request.name())")),
           Contains(Pair(
-              "method_rest_path",
-              "absl::StrCat(\"/\", rest_internal::DetermineApiVersion(\"v1\", "
-              "options), \"/\", request.name())")),
+              "google.cloud.location.Locations.GetLocation",
+              AllOf(Contains(Pair("idempotency", "kIdempotent")),
+                    Contains(Pair("method_http_query_parameters", "")),
+                    Contains(Pair("method_http_verb", "Get")),
+                    Contains(Pair("method_name", "GetLocation")),
+                    Contains(Pair("method_name_snake", "get_location")),
+                    Contains(Pair("method_request_body", "")),
+                    Contains(
+                        Pair("method_request_params",
+                             "\"name=\", internal::UrlEncode(request.name())")),
+                    Contains(Pair("method_rest_path",
+                                  "absl::StrCat(\"/\", "
+                                  "rest_internal::DetermineApiVersion(\"v1\", "
+                                  "options), \"/\", request.name())")),
+                    Contains(Pair("method_rest_path_async",
+                                  "absl::StrCat(\"/\", "
+                                  "rest_internal::DetermineApiVersion(\"v1\", "
+                                  "*options), \"/\", request.name())")),
+                    Contains(Pair("request_resource", "request")),
+                    Contains(Pair("request_type",
+                                  "google::cloud::location::Request")),
+                    Contains(Pair("response_message_type",
+                                  "google.cloud.location.Response")),
+                    Contains(Pair("response_type",
+                                  "google::cloud::location::Response")),
+                    Contains(
+                        Pair("return_type",
+                             "StatusOr<google::cloud::location::Response>"))))),
           Contains(Pair(
-              "method_rest_path_async",
-              "absl::StrCat(\"/\", rest_internal::DetermineApiVersion(\"v1\", "
-              "*options), \"/\", request.name())")),
-          Contains(Pair("request_resource", "request")),
-          Contains(Pair("request_type", "google::cloud::location::Request")),
-          Contains(
-              Pair("response_message_type", "google.cloud.location.Response")),
-          Contains(Pair("response_type", "google::cloud::location::Response")),
-          Contains(Pair("return_type",
-                        "StatusOr<google::cloud::location::Response>"))));
-
-  EXPECT_EQ(list_locations->first,
-            "google.cloud.location.Locations.ListLocations");
-  EXPECT_THAT(
-      list_locations->second,
-      AllOf(
-          Contains(Pair("idempotency", "kNonIdempotent")),
-          Contains(Pair("method_http_query_parameters", "")),
-          Contains(Pair("method_http_verb", "Post")),
-          Contains(Pair("method_name", "ListLocations")),
-          Contains(Pair("method_name_snake", "list_locations")),
-          Contains(Pair("method_request_body", "*")),
-          Contains(Pair("method_request_params",
-                        "\"name=\", internal::UrlEncode(request.name())")),
-          Contains(
-              Pair("method_rest_path", "absl::StrCat(\"/\", request.name())")),
-          Contains(Pair("method_rest_path_async",
-                        "absl::StrCat(\"/\", request.name())")),
-          Contains(Pair("request_resource", "request")),
-          Contains(Pair("request_type", "google::cloud::location::Request")),
-          Contains(
-              Pair("response_message_type", "google.cloud.location.Response")),
-          Contains(Pair("response_type", "google::cloud::location::Response")),
-          Contains(Pair("return_type",
-                        "StatusOr<google::cloud::location::Response>"))));
+              "google.cloud.location.Locations.ListLocations",
+              AllOf(Contains(Pair("idempotency", "kNonIdempotent")),
+                    Contains(Pair("method_http_query_parameters", "")),
+                    Contains(Pair("method_http_verb", "Post")),
+                    Contains(Pair("method_name", "ListLocations")),
+                    Contains(Pair("method_name_snake", "list_locations")),
+                    Contains(Pair("method_request_body", "*")),
+                    Contains(
+                        Pair("method_request_params",
+                             "\"name=\", internal::UrlEncode(request.name())")),
+                    Contains(Pair("method_rest_path",
+                                  "absl::StrCat(\"/\", request.name())")),
+                    Contains(Pair("method_rest_path_async",
+                                  "absl::StrCat(\"/\", request.name())")),
+                    Contains(Pair("request_resource", "request")),
+                    Contains(Pair("request_type",
+                                  "google::cloud::location::Request")),
+                    Contains(Pair("response_message_type",
+                                  "google.cloud.location.Response")),
+                    Contains(Pair("response_type",
+                                  "google::cloud::location::Response")),
+                    Contains(Pair(
+                        "return_type",
+                        "StatusOr<google::cloud::location::Response>")))))));
 }
 
 TEST_P(CreateMethodVarsTest, KeySetCorrectly) {
