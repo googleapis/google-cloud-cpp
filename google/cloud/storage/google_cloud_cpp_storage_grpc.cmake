@@ -115,6 +115,8 @@ add_library(
     internal/async/object_descriptor_impl.h
     internal/async/object_descriptor_reader.cc
     internal/async/object_descriptor_reader.h
+    internal/async/object_descriptor_reader_tracing.cc
+    internal/async/object_descriptor_reader_tracing.h
     internal/async/open_object.cc
     internal/async/open_object.h
     internal/async/open_stream.cc
@@ -436,6 +438,7 @@ set(storage_client_grpc_unit_tests
     internal/async/object_descriptor_connection_tracing_test.cc
     internal/async/object_descriptor_impl_test.cc
     internal/async/object_descriptor_reader_test.cc
+    internal/async/object_descriptor_reader_tracing_test.cc
     internal/async/open_object_test.cc
     internal/async/open_stream_test.cc
     internal/async/partial_upload_test.cc
