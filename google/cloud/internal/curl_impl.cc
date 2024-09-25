@@ -114,12 +114,6 @@ static std::size_t ReadFunction(  // NOLINT(misc-use-anonymous-namespace)
   return writev->MoveTo(absl::MakeSpan(buffer, size * nitems));
 }
 
-// Instead of trying to send any more bytes from userdata, aborts.
-static std::size_t ReadFunctionAbort(  // NOLINT(misc-use-anonymous-namespace)
-    char*, std::size_t, std::size_t, void*) {
-  return CURL_READFUNC_ABORT;
-}
-
 static int SeekFunction(  // NOLINT(misc-use-anonymous-namespace)
     void* userdata, curl_off_t offset, int origin) {
   auto* const writev = reinterpret_cast<WriteVector*>(userdata);
@@ -366,8 +360,8 @@ Status CurlImpl::MakeRequest(HttpMethod method, RestContext& context,
   }
 
   if (method == HttpMethod::kPost) {
-    WriteVector writev{std::move(request)};
-    curl_off_t const size = writev.size();
+    writev_ = WriteVector{std::move(request)};
+    curl_off_t const size = writev_.size();
     status = handle_.SetOption(CURLOPT_POSTFIELDS, nullptr);
     if (!status.ok()) return OnTransferError(context, std::move(status));
     status = handle_.SetOption(CURLOPT_POST, 1L);
@@ -376,26 +370,26 @@ Status CurlImpl::MakeRequest(HttpMethod method, RestContext& context,
     if (!status.ok()) return OnTransferError(context, std::move(status));
     status = handle_.SetOption(CURLOPT_READFUNCTION, &ReadFunction);
     if (!status.ok()) return OnTransferError(context, std::move(status));
-    status = handle_.SetOption(CURLOPT_READDATA, &writev);
+    status = handle_.SetOption(CURLOPT_READDATA, &writev_);
     if (!status.ok()) return OnTransferError(context, std::move(status));
     status = handle_.SetOption(CURLOPT_SEEKFUNCTION, &SeekFunction);
     if (!status.ok()) return OnTransferError(context, std::move(status));
-    status = handle_.SetOption(CURLOPT_SEEKDATA, &writev);
+    status = handle_.SetOption(CURLOPT_SEEKDATA, &writev_);
     if (!status.ok()) return OnTransferError(context, std::move(status));
     SetHeader("Expect:");
     return MakeRequestImpl(context);
   }
 
   if (method == HttpMethod::kPut || method == HttpMethod::kPatch) {
-    WriteVector writev{std::move(request)};
-    curl_off_t const size = writev.size();
+    writev_ = WriteVector{std::move(request)};
+    curl_off_t const size = writev_.size();
     status = handle_.SetOption(CURLOPT_READFUNCTION, &ReadFunction);
     if (!status.ok()) return OnTransferError(context, std::move(status));
-    status = handle_.SetOption(CURLOPT_READDATA, &writev);
+    status = handle_.SetOption(CURLOPT_READDATA, &writev_);
     if (!status.ok()) return OnTransferError(context, std::move(status));
     status = handle_.SetOption(CURLOPT_SEEKFUNCTION, &SeekFunction);
     if (!status.ok()) return OnTransferError(context, std::move(status));
-    status = handle_.SetOption(CURLOPT_SEEKDATA, &writev);
+    status = handle_.SetOption(CURLOPT_SEEKDATA, &writev_);
     if (!status.ok()) return OnTransferError(context, std::move(status));
     status = handle_.SetOption(CURLOPT_UPLOAD, 1L);
     if (!status.ok()) return OnTransferError(context, std::move(status));
@@ -487,22 +481,6 @@ std::size_t CurlImpl::HeaderCallback(absl::Span<char> response) {
                               response.size());
 }
 
-class CurlImpl::ReadFunctionAbortGuard {
- public:
-  explicit ReadFunctionAbortGuard(CurlImpl& impl) : impl_(impl) {}
-  ~ReadFunctionAbortGuard() {
-    // If curl_closed_ is true, then the handle has already been recycled and
-    // attempting to set an option on it will error.
-    if (!impl_.curl_closed_) {
-      impl_.handle_.SetOptionUnchecked(CURLOPT_READFUNCTION,
-                                       &ReadFunctionAbort);
-    }
-  }
-
- private:
-  CurlImpl& impl_;
-};
-
 Status CurlImpl::MakeRequestImpl(RestContext& context) {
   TRACE_STATE() << ", url_=" << url_;
 
@@ -525,11 +503,6 @@ Status CurlImpl::MakeRequestImpl(RestContext& context) {
   handle_.SetOptionUnchecked(CURLOPT_HTTP_VERSION,
                              VersionToCurlCode(http_version_));
 
-  // All data in the WriteVector should be written after ReadImpl returns unless
-  // an error, typically a timeout, has occurred. Use ReadFunctionAbortGuard to
-  // leverage RAII to instruct curl to not attempt to send anymore data on this
-  // handle regardless if an error or exception is encountered.
-  ReadFunctionAbortGuard guard(*this);
   auto error = curl_multi_add_handle(multi_.get(), handle_.handle_.get());
 
   // This indicates that we are using the API incorrectly. The application

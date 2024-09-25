@@ -28,6 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 // Vector of data chunks to satisfy requests from libcurl.
 class WriteVector {
  public:
+  WriteVector() = default;
   explicit WriteVector(std::vector<absl::Span<char const>> v)
       : original_(std::move(v)), writev_(original_.begin(), original_.end()) {}
 
