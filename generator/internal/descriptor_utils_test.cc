@@ -123,6 +123,44 @@ char const* const kFrobberServiceProto =
     "  }\n"
     "}\n";
 
+auto constexpr kMixinLocationProto = R"""(
+syntax = "proto3";
+package google.cloud.location;
+import "google/api/annotations.proto";
+import "google/api/http.proto";
+
+message Request {
+  string name = 1;
+}
+message Response {}
+
+service Locations {
+  rpc GetLocation(Request) returns (Response) {
+    option (google.api.http) = {
+      get: "ToBeOverwrittenPath"
+    };
+  }
+
+  rpc ListLocations(Request) returns (Response) {
+    option (google.api.http) = {
+      get: "ToBeOverwrittenPath"
+    };
+  }
+}
+)""";
+
+auto constexpr kGetLocationHttpRule = R"pb(
+  selector: "google.cloud.location.Locations.GetLocation"
+  get: "/v1/{name=projects/*/locations/*}"
+  body: ""
+)pb";
+
+auto constexpr kListLocationsHttpRule = R"pb(
+  selector: "google.cloud.location.Locations.ListLocations"
+  post: "/{name=projects/*/locations}"
+  body: "*"
+)pb";
+
 class CreateServiceVarsTest
     : public testing::TestWithParam<std::pair<std::string, std::string>> {
  public:
@@ -131,6 +169,8 @@ class CreateServiceVarsTest
             {std::string("google/api/client.proto"), kClientProto},
             {std::string("google/api/http.proto"), kHttpProto},
             {std::string("google/api/annotations.proto"), kAnnotationsProto},
+            {std::string("google/cloud/location/locations.proto"),
+             kMixinLocationProto},
             {std::string("google/cloud/frobber/v1/frobber.proto"),
              kFrobberServiceProto}}),
         source_tree_db_(&source_tree_),
@@ -157,10 +197,12 @@ class CreateServiceVarsTest
 };
 
 TEST_F(CreateServiceVarsTest, FilesParseSuccessfully) {
-  EXPECT_NE(nullptr, pool_.FindFileByName("google/api/http.proto"));
-  EXPECT_NE(nullptr, pool_.FindFileByName("google/api/annotations.proto"));
-  EXPECT_NE(nullptr,
+  ASSERT_NE(nullptr, pool_.FindFileByName("google/api/http.proto"));
+  ASSERT_NE(nullptr, pool_.FindFileByName("google/api/annotations.proto"));
+  ASSERT_NE(nullptr,
             pool_.FindFileByName("google/cloud/frobber/v1/frobber.proto"));
+  ASSERT_NE(nullptr,
+            pool_.FindFileByName("google/cloud/location/locations.proto"));
 }
 
 TEST_F(CreateServiceVarsTest, RetryStatusCodeExpressionNotFound) {
@@ -214,6 +256,38 @@ TEST_F(CreateServiceVarsTest, ForwardingHeaderPaths) {
                 "google/cloud/frobber/v1/mocks/mock_frobber_connection.h")),
             Contains(Pair("options_header_path",
                           "google/cloud/frobber/v1/frobber_options.h"))));
+}
+
+TEST_F(CreateServiceVarsTest, MixinProtoHeaderPaths) {
+  FileDescriptor const* file =
+      pool_.FindFileByName("google/cloud/frobber/v1/frobber.proto");
+  FileDescriptor const* mixin_file =
+      pool_.FindFileByName("google/cloud/location/locations.proto");
+
+  google::api::HttpRule http_rule0;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      kGetLocationHttpRule, &http_rule0));
+
+  google::api::HttpRule http_rule1;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      kListLocationsHttpRule, &http_rule1));
+
+  std::vector<MixinMethod> mixin_methods{
+      {"", "", *mixin_file->service(0)->method(0), http_rule0},
+      {"", "", *mixin_file->service(0)->method(1), http_rule1}};
+
+  service_vars_ = CreateServiceVars(
+      *file->service(0),
+      {std::make_pair("product_path", "google/cloud/frobber/"),
+       std::make_pair("additional_proto_files",
+                      "google/cloud/add1.proto,google/cloud/add2.proto")},
+      mixin_methods);
+
+  EXPECT_THAT(service_vars_,
+              AllOf(Contains(Pair("mixin_proto_grpc_header_paths",
+                                  "google/cloud/location/locations.grpc.pb.h")),
+                    Contains(Pair("mixin_proto_header_paths",
+                                  "google/cloud/location/locations.pb.h"))));
 }
 
 TEST_P(CreateServiceVarsTest, KeySetCorrectly) {
@@ -975,6 +1049,8 @@ class CreateMethodVarsTest
             {std::string("test/test.proto"), kSourceLocationTestInput},
             {std::string("google/protobuf/well_known.proto"), kWellKnownProto},
             {std::string("google/foo/v1/service.proto"), kServiceProto},
+            {std::string("google/cloud/location/locations.proto"),
+             kMixinLocationProto},
             {std::string("google/foo/v1/http_service.proto"),
              kHttpServiceProto}}),
         source_tree_db_(&source_tree_),
@@ -1002,13 +1078,15 @@ class CreateMethodVarsTest
 };
 
 TEST_F(CreateMethodVarsTest, FilesParseSuccessfully) {
-  EXPECT_NE(nullptr, pool_.FindFileByName("google/api/client.proto"));
-  EXPECT_NE(nullptr, pool_.FindFileByName("google/api/http.proto"));
-  EXPECT_NE(nullptr, pool_.FindFileByName("google/api/annotations.proto"));
-  EXPECT_NE(nullptr,
+  ASSERT_NE(nullptr, pool_.FindFileByName("google/api/client.proto"));
+  ASSERT_NE(nullptr, pool_.FindFileByName("google/api/http.proto"));
+  ASSERT_NE(nullptr, pool_.FindFileByName("google/api/annotations.proto"));
+  ASSERT_NE(nullptr,
             pool_.FindFileByName("google/longrunning/operation.proto"));
-  EXPECT_NE(nullptr, pool_.FindFileByName("test/test.proto"));
-  EXPECT_NE(nullptr, pool_.FindFileByName("google/foo/v1/service.proto"));
+  ASSERT_NE(nullptr, pool_.FindFileByName("test/test.proto"));
+  ASSERT_NE(nullptr, pool_.FindFileByName("google/foo/v1/service.proto"));
+  ASSERT_NE(nullptr,
+            pool_.FindFileByName("google/cloud/location/locations.proto"));
 }
 
 TEST_F(CreateMethodVarsTest, FormatMethodCommentsProtobufRequest) {
@@ -1223,6 +1301,93 @@ TEST_F(CreateMethodVarsTest, WithRequestId) {
   auto mv1 = vars_.find("my.service.v1.Service.WithoutRequestId");
   ASSERT_NE(mv1, vars_.end());
   EXPECT_THAT(mv1->second, Not(Contains(Pair("request_id_field_name", _))));
+}
+
+TEST_F(CreateMethodVarsTest, CreateMixinMethodsVars) {
+  FileDescriptor const* service_file_descriptor =
+      pool_.FindFileByName("google/foo/v1/service.proto");
+  FileDescriptor const* mixin_file =
+      pool_.FindFileByName("google/cloud/location/locations.proto");
+
+  google::api::HttpRule http_rule0;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      kGetLocationHttpRule, &http_rule0));
+
+  google::api::HttpRule http_rule1;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      kListLocationsHttpRule, &http_rule1));
+
+  std::vector<MixinMethod> mixin_methods{
+      {"", "", *mixin_file->service(0)->method(0), http_rule0},
+      {"", "", *mixin_file->service(0)->method(1), http_rule1}};
+
+  service_vars_ = CreateServiceVars(
+      *service_file_descriptor->service(0),
+      {std::make_pair(
+          "omitted_rpcs",
+          absl::StrCat(SafeReplaceAll(kMethod6Deprecated1, ",", "@"), ",",
+                       SafeReplaceAll(kMethod6Deprecated2, ",", "@")))},
+      mixin_methods);
+  vars_ = CreateMethodVars(*service_file_descriptor->service(0), YAML::Node{},
+                           service_vars_, mixin_methods);
+
+  EXPECT_THAT(
+      vars_,
+      AllOf(
+          Contains(Pair(
+              "google.cloud.location.Locations.GetLocation",
+              AllOf(Contains(Pair("idempotency", "kIdempotent")),
+                    Contains(Pair("method_http_query_parameters", "")),
+                    Contains(Pair("method_http_verb", "Get")),
+                    Contains(Pair("method_name", "GetLocation")),
+                    Contains(Pair("method_name_snake", "get_location")),
+                    Contains(Pair("method_request_body", "")),
+                    Contains(
+                        Pair("method_request_params",
+                             "\"name=\", internal::UrlEncode(request.name())")),
+                    Contains(Pair("method_rest_path",
+                                  "absl::StrCat(\"/\", "
+                                  "rest_internal::DetermineApiVersion(\"v1\", "
+                                  "options), \"/\", request.name())")),
+                    Contains(Pair("method_rest_path_async",
+                                  "absl::StrCat(\"/\", "
+                                  "rest_internal::DetermineApiVersion(\"v1\", "
+                                  "*options), \"/\", request.name())")),
+                    Contains(Pair("request_resource", "request")),
+                    Contains(Pair("request_type",
+                                  "google::cloud::location::Request")),
+                    Contains(Pair("response_message_type",
+                                  "google.cloud.location.Response")),
+                    Contains(Pair("response_type",
+                                  "google::cloud::location::Response")),
+                    Contains(
+                        Pair("return_type",
+                             "StatusOr<google::cloud::location::Response>"))))),
+          Contains(Pair(
+              "google.cloud.location.Locations.ListLocations",
+              AllOf(Contains(Pair("idempotency", "kNonIdempotent")),
+                    Contains(Pair("method_http_query_parameters", "")),
+                    Contains(Pair("method_http_verb", "Post")),
+                    Contains(Pair("method_name", "ListLocations")),
+                    Contains(Pair("method_name_snake", "list_locations")),
+                    Contains(Pair("method_request_body", "*")),
+                    Contains(
+                        Pair("method_request_params",
+                             "\"name=\", internal::UrlEncode(request.name())")),
+                    Contains(Pair("method_rest_path",
+                                  "absl::StrCat(\"/\", request.name())")),
+                    Contains(Pair("method_rest_path_async",
+                                  "absl::StrCat(\"/\", request.name())")),
+                    Contains(Pair("request_resource", "request")),
+                    Contains(Pair("request_type",
+                                  "google::cloud::location::Request")),
+                    Contains(Pair("response_message_type",
+                                  "google.cloud.location.Response")),
+                    Contains(Pair("response_type",
+                                  "google::cloud::location::Response")),
+                    Contains(Pair(
+                        "return_type",
+                        "StatusOr<google::cloud::location::Response>")))))));
 }
 
 TEST_P(CreateMethodVarsTest, KeySetCorrectly) {

@@ -2479,21 +2479,6 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
-# Generative Language
-service {
-  service_proto_path: "google/ai/generativelanguage/v1/generative_service.proto"
-  product_path: "google/cloud/generativelanguage/v1"
-  initial_copyright_year: "2024"
-  retryable_status_codes: ["kUnavailable"]
-}
-
-service {
-  service_proto_path: "google/ai/generativelanguage/v1/model_service.proto"
-  product_path: "google/cloud/generativelanguage/v1"
-  initial_copyright_year: "2024"
-  retryable_status_codes: ["kUnavailable"]
-}
-
 # GKE Backup
 service {
   service_proto_path: "google/cloud/gkebackup/v1/gkebackup.proto"
