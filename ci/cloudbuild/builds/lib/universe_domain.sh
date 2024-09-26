@@ -33,3 +33,10 @@ function ud::bazel_run() {
   io::log "Executing bazel run $1 with obscured arguments:"
   bazel run --ui_event_filters=-info -- "$@"
 }
+
+function ud::bazel_test() {
+  io::log "Executing bazel test $1 with obscured arguments:"
+  bazel test --test_env=UD_SA_KEY_FILE="${UD_SA_KEY_FILE}" \
+    --test_env=UD_REGION="${UD_REGION}" \
+    --test_env=UD_PROJECT="${UD_PROJECT}" -- "$@"
+}
