@@ -6,6 +6,11 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
 
 ## v2.30.0 - TBD
 
+### Updated Libraries
+
+- [AI Platform API](/google/cloud/aiplatform/README.md) - new
+  `EvaluationServiceClient`
+
 ### [KMS](/google/cloud/kms/README.md)
 
 - `AutokeyClient::ListKeyHandles(...)` signature has changed to return an
