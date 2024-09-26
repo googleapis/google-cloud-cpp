@@ -20,8 +20,10 @@
 #include "google/cloud/universe_domain.h"
 #include "google/cloud/universe_domain_options.h"
 #include "google/cloud/version.h"
+#include "tools/cpp/runfiles/runfiles.h"
 #include <gmock/gmock.h>
 #include <fstream>
+#include <memory>
 #include <string>
 #include <utility>
 
@@ -31,6 +33,7 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using bazel::tools::cpp::runfiles::Runfiles;
 using ::google::cloud::internal::GetEnv;
 
 class UniverseDomainIntegrationTest
@@ -54,7 +57,12 @@ auto TestOptions() {
   auto projectId = GetEnv("UD_PROJECT").value_or("");
   Options options;
 
-  auto is = std::ifstream(sa_key_file);
+  std::string error;
+  std::unique_ptr<Runfiles> runfiles(Runfiles::CreateForTest(&error));
+  if (runfiles == nullptr) throw error;
+  auto sa_key_file_path = runfiles->Rlocation(sa_key_file);
+
+  auto is = std::ifstream(sa_key_file_path);
   is.exceptions(std::ios::badbit);
   auto contents = std::string(std::istreambuf_iterator<char>(is.rdbuf()), {});
   options.set<UnifiedCredentialsOption>(
@@ -83,12 +91,13 @@ TEST_F(UniverseDomainIntegrationTest, BucketAndObjectCRUD) {
   ASSERT_STATUS_OK(insert);
   ScheduleForDelete(*insert);
 
-  auto read = client.ReadObject(bucket_name(), object_name());
-  std::string buffer{std::istream_iterator<char>(read),
-                     std::istream_iterator<char>()};
+  auto reader = client.ReadObject(bucket_name(), object_name());
+  ASSERT_TRUE(reader.good());
+  ASSERT_STATUS_OK(reader.status());
 
-  ASSERT_FALSE(read.bad());
-  ASSERT_EQ(buffer, LoremIpsum());
+  auto const actual =
+      std::string{std::istreambuf_iterator<char>{reader.rdbuf()}, {}};
+  EXPECT_EQ(LoremIpsum(), actual);
 }
 
 }  // namespace

@@ -78,6 +78,7 @@ VARIATIONS = {
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "//protos:system_includes",
         "//protos/google/cloud/storage/tests:storage_conformance_tests_cc_proto",
+        "@bazel_tools//tools/cpp/runfiles",
         "@com_google_absl//absl/strings",
         "@com_google_googletest//:gtest_main",
     ],
