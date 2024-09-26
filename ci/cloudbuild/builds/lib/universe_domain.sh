@@ -20,6 +20,8 @@ if ((CI_CLOUDBUILD_BUILDS_LIB_UNIVERSE_DOMAIN_SH__++ != 0)); then
   return 0
 fi # include guard
 
+source module ci/cloudbuild/builds/lib/bazel.sh
+
 # Only create the SA key file if the secret is available.
 if [[ -n "${UD_SERVICE_ACCOUNT}" ]]; then
   ORIG_UMASK=$(umask)
@@ -35,8 +37,9 @@ function ud::bazel_run() {
 }
 
 function ud::bazel_test() {
+  mapfile -t args < <(bazel::common_args)
   io::log "Executing bazel test $1 with obscured arguments:"
-  bazel test --test_env=UD_SA_KEY_FILE="${UD_SA_KEY_FILE}" \
+  bazel test "${args[@]}" --test_env=UD_SA_KEY_FILE="${UD_SA_KEY_FILE}" \
     --test_env=UD_REGION="${UD_REGION}" \
     --test_env=UD_PROJECT="${UD_PROJECT}" -- "$@"
 }
