@@ -18,6 +18,7 @@
 #include "google/cloud/internal/curl_handle.h"
 #include "google/cloud/internal/curl_handle_factory.h"
 #include "google/cloud/internal/curl_wrappers.h"
+#include "google/cloud/internal/curl_writev.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/internal/rest_request.h"
 #include "google/cloud/internal/rest_response.h"
@@ -170,6 +171,10 @@ class CurlImpl {
 
   // Track when status and headers from the response are received.
   bool all_headers_received_ = false;
+
+  // writev_ is a member variable in order to ensure that its lifetime remains
+  // valid even if libcurl is interrupted when trying to send data.
+  WriteVector writev_;
 
   // Track the unused portion of the output buffer provided to Read().
   absl::Span<char> avail_;
