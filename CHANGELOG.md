@@ -6,13 +6,6 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
 
 ## v2.30.0 - TBD
 
-### New Libraries
-
-We are happy to announce the following GA libraries. Unless specifically noted,
-the APIs in these libraries are stable, and are ready for production use.
-
-- [Gemini API](/google/cloud/generativelanguage/README.md)
-
 ### [KMS](/google/cloud/kms/README.md)
 
 - `AutokeyClient::ListKeyHandles(...)` signature has changed to return an
