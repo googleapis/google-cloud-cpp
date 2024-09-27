@@ -50,7 +50,6 @@ class StubFactoryGenerator : public ServiceCodeGenerator {
  private:
   Status GenerateHeader() override;
   Status GenerateCc() override;
-  std::vector<MixinMethod> mixin_methods_;
 };
 
 }  // namespace generator_internal

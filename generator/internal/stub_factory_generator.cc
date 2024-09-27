@@ -31,8 +31,7 @@ StubFactoryGenerator::StubFactoryGenerator(
     : ServiceCodeGenerator("stub_factory_header_path", "stub_factory_cc_path",
                            service_descriptor, std::move(service_vars),
                            std::move(service_method_vars), context,
-                           mixin_methods),
-      mixin_methods_(mixin_methods) {}
+                           mixin_methods) {}
 
 Status StubFactoryGenerator::GenerateHeader() {
   HeaderPrint(CopyrightLicenseFileHeader());
@@ -99,7 +98,7 @@ Status StubFactoryGenerator::GenerateCc() {
   if (!result.ok()) return result;
 
   std::unordered_map<std::string, std::string> mixin_grpc_stubs;
-  for (auto const& mixin_method : mixin_methods_) {
+  for (auto const& mixin_method : MixinMethods()) {
     mixin_grpc_stubs[mixin_method.grpc_stub_name] = mixin_method.grpc_stub_fqn;
   }
   std::string mixin_stub_inits;

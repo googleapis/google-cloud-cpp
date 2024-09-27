@@ -235,6 +235,8 @@ class ServiceCodeGenerator : public GeneratorInterface {
    */
   bool IsDiscoveryDocumentProto() const;
 
+  std::vector<MixinMethod> const& MixinMethods() const;
+
  private:
   void SetMethods();
 

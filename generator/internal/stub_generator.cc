@@ -35,8 +35,7 @@ StubGenerator::StubGenerator(
     std::vector<MixinMethod> const& mixin_methods)
     : StubGeneratorBase("stub_header_path", "stub_cc_path", service_descriptor,
                         std::move(service_vars), std::move(service_method_vars),
-                        context, mixin_methods),
-      mixin_methods_(mixin_methods) {}
+                        context, mixin_methods) {}
 
 Status StubGenerator::GenerateHeader() {
   HeaderPrint(CopyrightLicenseFileHeader());
@@ -218,7 +217,7 @@ Status StubGenerator::GenerateHeader() {
     "class Default$stub_class_name$ : public $stub_class_name$ {\n"
     " public:");
   std::unordered_map<std::string, std::string> mixin_grpc_stubs;
-  for (auto const& mixin_method : mixin_methods_) {
+  for (auto const& mixin_method : MixinMethods()) {
     mixin_grpc_stubs[mixin_method.grpc_stub_name] = mixin_method.grpc_stub_fqn;
   }
 
@@ -326,7 +325,7 @@ Status StubGenerator::GenerateCc() {
   // clang-format on
 
   std::unordered_map<std::string, std::string> mixin_grpc_stubs;
-  for (auto const& mixin_method : mixin_methods_) {
+  for (auto const& mixin_method : MixinMethods()) {
     mixin_grpc_stubs[mixin_method.method.get().name()] =
         mixin_method.grpc_stub_name;
   }

@@ -503,6 +503,10 @@ bool ServiceCodeGenerator::IsDiscoveryDocumentProto() const {
   return (iter != service_vars_.end() && iter->second == "discovery_document");
 }
 
+std::vector<MixinMethod> const& ServiceCodeGenerator::MixinMethods() const {
+  return mixin_methods_;
+}
+
 }  // namespace generator_internal
 }  // namespace cloud
 }  // namespace google
