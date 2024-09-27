@@ -23,6 +23,7 @@
 #include "tools/cpp/runfiles/runfiles.h"
 #include <gmock/gmock.h>
 #include <fstream>
+#include <iostream>
 #include <memory>
 #include <string>
 #include <utility>
@@ -59,8 +60,10 @@ auto TestOptions() {
 
   std::string error;
   std::unique_ptr<Runfiles> runfiles(Runfiles::CreateForTest(&error));
+  std::cout << "Error is: " << error << std::endl;
   if (runfiles == nullptr) throw error;
   auto sa_key_file_path = runfiles->Rlocation(sa_key_file);
+  std::cout << "Path is: " << sa_key_file_path << std::endl;
 
   auto is = std::ifstream(sa_key_file_path);
   is.exceptions(std::ios::badbit);
