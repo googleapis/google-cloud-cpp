@@ -247,7 +247,7 @@ Status StubGenerator::GenerateHeader() {
 R"""(    std::unique_ptr<google::longrunning::Operations::StubInterface> operations)
       : grpc_stub_(std::move(grpc_stub)),
 )"""
-      , mixin_stub_members_init, !mixin_stub_members_init_list.empty() ? "" : ",\n",
+      , mixin_stub_members_init, mixin_stub_members_init_list.empty() ? "" : ",\n",
 R"""(        operations_(std::move(operations)) {}
 )"""));
     // clang-format on
@@ -256,10 +256,10 @@ R"""(        operations_(std::move(operations)) {}
     absl::StrCat(R"""(
   explicit Default$stub_class_name$(
       std::unique_ptr<$grpc_stub_fqn$::StubInterface> grpc_stub)"""
-      , !mixin_stub_inputs_list.empty() ? "" : ",\n", mixin_stub_inputs,
+      , mixin_stub_inputs_list.empty() ? "" : ",\n", mixin_stub_inputs,
       R"""()
       : grpc_stub_(std::move(grpc_stub)))"""
-      , !mixin_stub_members_init_list.empty() ? "" : ",\n", mixin_stub_members_init,
+      , mixin_stub_members_init_list.empty() ? "" : ",\n", mixin_stub_members_init,
       R"""( {}
 )"""));
     // clang-format on
