@@ -162,7 +162,7 @@ class GeneratorsClient {
   /// Retrieves a generator.
   ///
   /// @param name  Required. The generator resource name to retrieve. Format:
-  ///  `projects/<Project ID>/locations/<Location ID>`/generators/<Generator ID>`
+  ///  `projects/<Project ID>/locations/<Location ID>/generators/<Generator ID>`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
