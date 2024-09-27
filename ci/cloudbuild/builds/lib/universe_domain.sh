@@ -29,7 +29,7 @@ if [[ -n "${UD_SERVICE_ACCOUNT}" ]]; then
   UD_SA_KEY_FILE=$(mktemp)
   echo "${UD_SERVICE_ACCOUNT}" >"${UD_SA_KEY_FILE}"
   umask "${ORIG_UMASK}"
-  ln -sf "${UD_SA_KEY_FILE}" "${PROJECT_ROOT}/ci/data/$(basename ${UD_SA_KEY_FILE})"
+  ln -sf "${UD_SA_KEY_FILE}" "${PROJECT_ROOT}/ci/data/$(basename "${UD_SA_KEY_FILE}")"
 fi
 
 function ud::bazel_run() {
@@ -40,7 +40,7 @@ function ud::bazel_run() {
 function ud::bazel_test() {
   mapfile -t args < <(bazel::common_args)
   io::log "Executing bazel test $1 with obscured arguments:"
-  bazel test "${args[@]}" --test_env=UD_SA_KEY_FILE="${PROJECT_ROOT}/ci/data/$(basename ${UD_SA_KEY_FILE})" \
+  bazel test "${args[@]}" --test_env=UD_SA_KEY_FILE="${PROJECT_ROOT}/ci/data/$(basename "${UD_SA_KEY_FILE}")" \
     --test_env=UD_REGION="${UD_REGION}" \
     --test_env=UD_PROJECT="${UD_PROJECT}" -- "$@"
 }

@@ -21,7 +21,6 @@
 #include "google/cloud/universe_domain.h"
 #include "google/cloud/universe_domain_options.h"
 #include "google/cloud/version.h"
-#include "tools/cpp/runfiles/runfiles.h"
 #include <gmock/gmock.h>
 #include <fstream>
 #include <iostream>
@@ -35,7 +34,6 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using bazel::tools::cpp::runfiles::Runfiles;
 using ::google::cloud::internal::GetEnv;
 
 class UniverseDomainIntegrationTest
@@ -59,20 +57,15 @@ auto TestOptions() {
   auto projectId = GetEnv("UD_PROJECT").value_or("");
   Options options;
 
-  std::string error;
-  std::unique_ptr<Runfiles> runfiles(Runfiles::CreateForTest(&error));
-  std::cout << "Error is: " << error << std::endl;
-  if (runfiles == nullptr) throw error;
-  auto sa_key_file_path = runfiles->Rlocation(sa_key_file);
-  std::cout << "Path is: " << sa_key_file_path << std::endl;
-  auto status = google::cloud::internal::status(sa_key_file_path);
+  std::cout << "Path is: " << sa_key_file << std::endl;
+  auto status = google::cloud::internal::status(sa_key_file);
   if (!exists(status)) {
     std::cout << "File does not exist" << std::endl;
   } else {
     std::cout << "File exists" << std::endl;
   }
 
-  auto is = std::ifstream(sa_key_file_path);
+  auto is = std::ifstream(sa_key_file);
   is.exceptions(std::ios::badbit);
   auto contents = std::string(std::istreambuf_iterator<char>(is.rdbuf()), {});
   options.set<UnifiedCredentialsOption>(
