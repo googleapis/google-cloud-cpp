@@ -37,7 +37,8 @@ class StubFactoryGenerator : public ServiceCodeGenerator {
       google::protobuf::ServiceDescriptor const* service_descriptor,
       VarsDictionary service_vars,
       std::map<std::string, VarsDictionary> service_method_vars,
-      google::protobuf::compiler::GeneratorContext* context);
+      google::protobuf::compiler::GeneratorContext* context,
+      std::vector<MixinMethod> const& mixin_methods);
 
   ~StubFactoryGenerator() override = default;
 
@@ -49,6 +50,7 @@ class StubFactoryGenerator : public ServiceCodeGenerator {
  private:
   Status GenerateHeader() override;
   Status GenerateCc() override;
+  std::vector<MixinMethod> mixin_methods_;
 };
 
 }  // namespace generator_internal

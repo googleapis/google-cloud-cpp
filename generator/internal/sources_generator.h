@@ -47,7 +47,8 @@ class SourcesGenerator : public ServiceCodeGenerator {
       VarsDictionary service_vars,
       std::map<std::string, VarsDictionary> service_method_vars,
       google::protobuf::compiler::GeneratorContext* context,
-      std::vector<std::string> sources);
+      std::vector<std::string> sources,
+      std::vector<MixinMethod> const& mixin_methods);
 
   ~SourcesGenerator() override = default;
 
