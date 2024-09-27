@@ -50,6 +50,10 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "<location>-dialogflow.googleapis.com")
   used by `MakeDocumentsConnection()`.
 
+- `GOOGLE_CLOUD_CPP_ENCRYPTION_SPEC_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "<location>-dialogflow.googleapis.com")
+  used by `MakeEncryptionSpecServiceConnection()`.
+
 - `GOOGLE_CLOUD_CPP_ENTITY_TYPES_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "<location>-dialogflow.googleapis.com")
   used by `MakeEntityTypesConnection()`.
@@ -57,6 +61,10 @@ environment variables are convenient when troubleshooting problems.
 - `GOOGLE_CLOUD_CPP_FULFILLMENTS_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "<location>-dialogflow.googleapis.com")
   used by `MakeFulfillmentsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_GENERATORS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "<location>-dialogflow.googleapis.com")
+  used by `MakeGeneratorsConnection()`.
 
 - `GOOGLE_CLOUD_CPP_INTENTS_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "<location>-dialogflow.googleapis.com")
