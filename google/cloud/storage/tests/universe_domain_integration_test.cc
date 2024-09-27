@@ -15,6 +15,7 @@
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
+#include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/universe_domain.h"
@@ -64,6 +65,12 @@ auto TestOptions() {
   if (runfiles == nullptr) throw error;
   auto sa_key_file_path = runfiles->Rlocation(sa_key_file);
   std::cout << "Path is: " << sa_key_file_path << std::endl;
+  auto status = google::cloud::internal::status(sa_key_file_path);
+  if (!exists(status)) {
+    std::cout << "File does not exist" << std::endl;
+  } else {
+    std::cout << "File exists" << std::endl;
+  }
 
   auto is = std::ifstream(sa_key_file_path);
   is.exceptions(std::ios::badbit);
