@@ -2294,6 +2294,22 @@ service {
   endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
+service {
+  service_proto_path: "google/cloud/dialogflow/v2/encryption_spec.proto"
+  product_path: "google/cloud/dialogflow_es"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT_COMPAT
+}
+
+service {
+  service_proto_path: "google/cloud/dialogflow/v2/generator.proto"
+  product_path: "google/cloud/dialogflow_es"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT_COMPAT
+}
+
 # Discovery Engine
 service {
   service_proto_path: "google/cloud/discoveryengine/v1/completion_service.proto"
