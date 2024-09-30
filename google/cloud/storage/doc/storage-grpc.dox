@@ -18,9 +18,9 @@ differently from the REST-based implementation.
 1. To override the default endpoint you should use
    [`EndpointOption`](@ref google::cloud::EndpointOption) instead of
    [`RestEndpointOption`](@ref google::cloud::storage::RestEndpointOption).
-1. The default endpoint (`storage.googleapis.com`) works from any hosting
+1. The cloud path endpoint (`storage.googleapis.com`) works from any hosting
    environment (on-prem, GKE, GCE, other cloud providers, etc.). For best
-   performance on GCE or GKE consider using
+   performance on GCE or GKE consider we default to the direct connectivity endpoint
    `google-c2p:///storage.googleapis.com`.
 1. The [`Fields`](@ref google::cloud::storage::Fields) request parameter is
    passed verbatim to the backend. Some fields have different names in gRPC, and

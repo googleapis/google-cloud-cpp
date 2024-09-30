@@ -20,6 +20,13 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
   using this API, and therefore we do not consider this a breaking change.
   ([#14726](https://github.com/googleapis/google-cloud-cpp/pull/14726))
 
+### [Google Cloud Storage](/google/cloud/storage/README.md)
+
+- The gRPC plugin is now GA. The [Using the gRPC plugin][storage-grpc]
+  guide describes this feature in more detail. When using GCS from Google
+  Compute Engine (GCE) this plugin can enable higher total throughput.
+
+
 ## v2.29.0 - 2024-09
 
 ### New Libraries
@@ -173,12 +180,6 @@ We are happy to announce the following GA libraries. Unless specifically noted,
 the APIs in these libraries are stable, and are ready for production use.
 
 - [Managed Kafka API](/google/cloud/managedkafka/README.md)
-
-### New Libraries
-
-- [Google Cloud Storage](/google/cloud/storage/README.md) - the gRPC plugin is
-  now GA. The [Using the gRPC plugin][storage-grpc] guide describe this feature
-  in more detail.
 
 ### Updated Libraries
 
@@ -794,7 +795,7 @@ have been using this library to make calls to Cloud Speech using raw gRPC), add
 you build with `vcpkg`, include `speech` in your install command.
 
 Note that `google_cloud_cpp_storage_protos` are associated with the
-`storage_grpc` feature, not the `storage` feature.
+`experimental-storage_grpc` feature, not the `storage` feature.
 
 ## v2.14.0 - 2023-08
 
