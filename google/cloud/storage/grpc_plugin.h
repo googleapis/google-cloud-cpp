@@ -60,11 +60,9 @@ struct [[deprecated(
  * @deprecated Please use `google::cloud::storage::MakeGrpcClient`.
  */
 [[deprecated(
-    "use ::google::cloud::storage::MakeGrpcClient() instead")]] inline google::
-    cloud::storage::Client
-    DefaultGrpcClient(Options opts = {}) {
-  return ::google::cloud::storage::MakeGrpcClient(std::move(opts));
-}
+    "use ::google::cloud::storage::MakeGrpcClient() instead")]] google::cloud::
+    storage::Client
+    DefaultGrpcClient(Options opts = {});
 
 /**
  * Enable gRPC telemetry for GCS RPCs.
