@@ -27,7 +27,7 @@ set(storage_client_integration_tests
     bucket_acl_integration_test.cc
     grpc_bucket_metadata_integration_test.cc
     default_object_acl_integration_test.cc
-    grpc_hmac_key_integration_test.cc
+    hmac_key_integration_test.cc
     grpc_integration_test.cc
     notification_integration_test.cc
     grpc_object_acl_integration_test.cc

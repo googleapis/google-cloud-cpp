@@ -198,36 +198,36 @@ class GrpcStub : public GenericStub {
       storage::internal::GetProjectServiceAccountRequest const& request)
       override;
   StatusOr<storage::internal::ListHmacKeysResponse> ListHmacKeys(
-      rest_internal::RestContext& context, Options const& options,
-      storage::internal::ListHmacKeysRequest const& request) override;
+      rest_internal::RestContext&, Options const&,
+      storage::internal::ListHmacKeysRequest const&) override;
   StatusOr<storage::internal::CreateHmacKeyResponse> CreateHmacKey(
-      rest_internal::RestContext& context, Options const& options,
-      storage::internal::CreateHmacKeyRequest const& request) override;
+      rest_internal::RestContext&, Options const&,
+      storage::internal::CreateHmacKeyRequest const&) override;
   StatusOr<storage::internal::EmptyResponse> DeleteHmacKey(
-      rest_internal::RestContext& context, Options const& options,
-      storage::internal::DeleteHmacKeyRequest const& request) override;
+      rest_internal::RestContext&, Options const&,
+      storage::internal::DeleteHmacKeyRequest const&) override;
   StatusOr<storage::HmacKeyMetadata> GetHmacKey(
-      rest_internal::RestContext& context, Options const& options,
-      storage::internal::GetHmacKeyRequest const& request) override;
+      rest_internal::RestContext&, Options const&,
+      storage::internal::GetHmacKeyRequest const&) override;
   StatusOr<storage::HmacKeyMetadata> UpdateHmacKey(
-      rest_internal::RestContext& context, Options const& options,
-      storage::internal::UpdateHmacKeyRequest const& request) override;
+      rest_internal::RestContext&, Options const&,
+      storage::internal::UpdateHmacKeyRequest const&) override;
   StatusOr<storage::internal::SignBlobResponse> SignBlob(
       rest_internal::RestContext& context, Options const& options,
       storage::internal::SignBlobRequest const& request) override;
 
   StatusOr<storage::internal::ListNotificationsResponse> ListNotifications(
-      rest_internal::RestContext& context, Options const& options,
-      storage::internal::ListNotificationsRequest const& request) override;
+      rest_internal::RestContext&, Options const&,
+      storage::internal::ListNotificationsRequest const&) override;
   StatusOr<storage::NotificationMetadata> CreateNotification(
-      rest_internal::RestContext& context, Options const& options,
-      storage::internal::CreateNotificationRequest const& request) override;
+      rest_internal::RestContext&, Options const&,
+      storage::internal::CreateNotificationRequest const&) override;
   StatusOr<storage::NotificationMetadata> GetNotification(
-      rest_internal::RestContext& context, Options const& options,
-      storage::internal::GetNotificationRequest const& request) override;
+      rest_internal::RestContext&, Options const&,
+      storage::internal::GetNotificationRequest const&) override;
   StatusOr<storage::internal::EmptyResponse> DeleteNotification(
-      rest_internal::RestContext& context, Options const& options,
-      storage::internal::DeleteNotificationRequest const& request) override;
+      rest_internal::RestContext&, Options const&,
+      storage::internal::DeleteNotificationRequest const&) override;
 
   std::vector<std::string> InspectStackStructure() const override;
 
