@@ -60,7 +60,7 @@ struct GrpcCompressionAlgorithmOption {
  * - `pubsub::MakePublisherConnection()`
  * - `pubsub::MakeSubscriberConnection()`
  * - `spanner::MakeConnection()`
- * - `storage_experimental::DefaultGrpcClient()`
+ * - `storage::MakeGrpcClient()`
  *
  * @ingroup options
  */
