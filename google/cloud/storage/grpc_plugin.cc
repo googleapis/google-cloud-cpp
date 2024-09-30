@@ -42,7 +42,7 @@ bool UseRest(Options const& options) {
 }  // namespace
 
 google::cloud::storage::Client DefaultGrpcClient(Options opts) {
-  return ::google::cloud::storage::MakeGrpcClient(std::move(opts));
+  return MakeGrpcClient(std::move(opts));
 }
 
 google::cloud::storage::Client MakeGrpcClient(Options opts) {
