@@ -41,10 +41,6 @@ bool UseRest(Options const& options) {
 
 }  // namespace
 
-google::cloud::storage::Client DefaultGrpcClient(Options opts) {
-  return MakeGrpcClient(std::move(opts));
-}
-
 google::cloud::storage::Client MakeGrpcClient(Options opts) {
   if (UseRest(opts)) return google::cloud::storage::Client(std::move(opts));
   opts = google::cloud::storage_internal::DefaultOptionsGrpc(std::move(opts));
@@ -56,5 +52,16 @@ google::cloud::storage::Client MakeGrpcClient(Options opts) {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
+
+namespace storage_experimental {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+google::cloud::storage::Client DefaultGrpcClient(Options opts) {
+  return google::cloud::storage::MakeGrpcClient(std::move(opts));
+}
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace storage_experimental
+
 }  // namespace cloud
 }  // namespace google
