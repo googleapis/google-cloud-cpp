@@ -989,13 +989,13 @@ StatusOr<storage::internal::ListHmacKeysResponse> GrpcStub::ListHmacKeys(
 StatusOr<storage::internal::CreateHmacKeyResponse> GrpcStub::CreateHmacKey(
     rest_internal::RestContext&, Options const&,
     storage::internal::CreateHmacKeyRequest const&) {
- return Status(StatusCode::kUnimplemented, "");
+  return Status(StatusCode::kUnimplemented, "");
 }
 
 StatusOr<storage::internal::EmptyResponse> GrpcStub::DeleteHmacKey(
     rest_internal::RestContext&, Options const&,
     storage::internal::DeleteHmacKeyRequest const&) {
- return Status(StatusCode::kUnimplemented, "");
+  return Status(StatusCode::kUnimplemented, "");
 }
 
 StatusOr<storage::HmacKeyMetadata> GrpcStub::GetHmacKey(
@@ -1007,7 +1007,7 @@ StatusOr<storage::HmacKeyMetadata> GrpcStub::GetHmacKey(
 StatusOr<storage::HmacKeyMetadata> GrpcStub::UpdateHmacKey(
     rest_internal::RestContext&, Options const&,
     storage::internal::UpdateHmacKeyRequest const&) {
- return Status(StatusCode::kUnimplemented, "");
+  return Status(StatusCode::kUnimplemented, "");
 }
 
 StatusOr<storage::internal::SignBlobResponse> GrpcStub::SignBlob(

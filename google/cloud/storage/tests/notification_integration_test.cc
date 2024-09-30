@@ -46,8 +46,10 @@ TEST_F(NotificationIntegrationTest, NotificationCRUD) {
   ASSERT_THAT(topic_name, Not(IsEmpty()));
 
   std::string bucket_name = MakeRandomBucketName();
-  // Notification operations are unimplemented in gRPC, so force the test to use JSON.
-  auto client = MakeIntegrationTestClient(/*use_grpc=*/false, MakeBucketTestOptions());
+  // Notification operations are unimplemented in gRPC, so force the test to use
+  // JSON.
+  auto client =
+      MakeIntegrationTestClient(/*use_grpc=*/false, MakeBucketTestOptions());
 
   auto metadata =
       client.CreateBucketForProject(bucket_name, project_id, BucketMetadata());
