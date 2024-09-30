@@ -16,7 +16,7 @@
 // the reference documentation. We want to highlight what includes are needed.
 // [START apikeys_create_api_key]
 #include "google/cloud/apikeys/v2/api_keys_client.h"
-#include "google/cloud/project.h"
+#include "google/cloud/location.h"
 
 // [END apikeys_create_api_key]
 // [START apikeys_authenticate_api_key]
@@ -34,6 +34,7 @@
 #include <chrono>
 #include <iostream>
 #include <string>
+#include <thread>
 #include <vector>
 
 namespace {
@@ -41,10 +42,12 @@ namespace {
 // [START apikeys_create_api_key]
 google::api::apikeys::v2::Key CreateApiKey(
     google::cloud::apikeys_v2::ApiKeysClient client,
-    google::cloud::Project project, std::string display_name) {
+    google::cloud::Location location, std::string display_name) {
   google::api::apikeys::v2::CreateKeyRequest request;
-  request.set_parent(project.FullName() + "/locations/global");
+  request.set_parent(location.FullName());
   request.mutable_key()->set_display_name(std::move(display_name));
+  request.mutable_key()->mutable_restrictions()->add_api_targets()->set_service(
+      "language.googleapis.com");
 
   // Create the key, blocking on the result.
   auto key = client.CreateKey(request).get();
@@ -64,7 +67,8 @@ void CreateApiKeyCommand(std::vector<std::string> const& argv) {
   auto client = google::cloud::apikeys_v2::ApiKeysClient(
       google::cloud::apikeys_v2::MakeApiKeysConnection());
 
-  (void)CreateApiKey(client, google::cloud::Project(argv.at(0)), argv.at(1));
+  (void)CreateApiKey(client, google::cloud::Location(argv.at(0), "global"),
+                     argv.at(1));
 }
 
 // [START apikeys_authenticate_api_key]
@@ -103,7 +107,7 @@ void AutoRun(std::vector<std::string> const& argv) {
       "GOOGLE_CLOUD_PROJECT",
   });
   auto const project_id = GetEnv("GOOGLE_CLOUD_PROJECT").value();
-  auto const project = gc::Project(project_id);
+  auto const location = gc::Location(project_id, "global");
 
   auto constexpr kKeyPrefix = "examples/api_key.cc ";
   char delimiter = '@';
@@ -114,13 +118,12 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "Cleaning up leaked keys\n";
   auto stale = gc::internal::FormatUtcDate(std::chrono::system_clock::now() -
                                            std::chrono::hours(48));
-  for (auto key : client.ListKeys(project.FullName() + "/locations/global")) {
+  for (auto key : client.ListKeys(location.FullName())) {
     if (!key) throw std::move(key.status());
     std::vector<std::string> parts =
         absl::StrSplit(key->display_name(), delimiter);
     if (parts.size() == 2 && parts[0] == kKeyPrefix && parts[1] <= stale) {
-      std::cout << "Deleting stale API Key: " << key->display_name()
-                << std::endl;
+      std::cout << "Deleting stale API Key: " << key->display_name() << "\n";
       (void)client.DeleteKey(key->name()).get();
     }
   }
@@ -128,16 +131,26 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "Running CreateApiKey\n";
   auto suffix = gc::internal::FormatUtcDate(std::chrono::system_clock::now());
   auto display_name = std::string(kKeyPrefix) + delimiter + suffix;
-  auto key = CreateApiKey(client, project, std::move(display_name));
+  auto key = CreateApiKey(client, location, std::move(display_name));
 
   std::cout << "Running AuthenticateWithApiKey\n";
-  {
+  for (auto backoff : {60, 60, 60, 0}) {
+    // API keys are not always usable immediately after they are created. To
+    // give the API key some time to propagate, we implement a retry loop around
+    // the RPC that attempts to authenticate with the newly created API key.
+
     // When we authenticate with an API key, we do not have (or need)
     // credentials. Using a quota project requires credentials, so disable it.
     google::cloud::testing_util::ScopedEnvironment overlay(
         "GOOGLE_CLOUD_CPP_USER_PROJECT", absl::nullopt);
 
-    AuthenticateWithApiKey({project_id, key.key_string()});
+    try {
+      AuthenticateWithApiKey({project_id, key.key_string()});
+    } catch (gc::Status const& s) {
+      if (backoff == 0) throw(s);
+      std::cout << "Sleeping for " << backoff << " seconds\n";
+      std::this_thread::sleep_for(std::chrono::seconds(backoff));
+    }
   }
 
   std::cout << "Deleting API Key\n";
