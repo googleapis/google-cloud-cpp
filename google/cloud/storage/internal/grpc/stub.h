@@ -194,9 +194,8 @@ class GrpcStub : public GenericStub {
       storage::internal::PatchDefaultObjectAclRequest const& request) override;
 
   StatusOr<storage::ServiceAccount> GetServiceAccount(
-      rest_internal::RestContext& context, Options const& options,
-      storage::internal::GetProjectServiceAccountRequest const& request)
-      override;
+      rest_internal::RestContext&, Options const&,
+      storage::internal::GetProjectServiceAccountRequest const&) override;
   StatusOr<storage::internal::ListHmacKeysResponse> ListHmacKeys(
       rest_internal::RestContext&, Options const&,
       storage::internal::ListHmacKeysRequest const&) override;

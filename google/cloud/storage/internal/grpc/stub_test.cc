@@ -799,30 +799,6 @@ TEST_F(GrpcClientTest, CreateResumableUpload) {
   EXPECT_EQ(response.status(), PermanentError());
 }
 
-TEST_F(GrpcClientTest, GetServiceAccount) {
-  auto mock = std::make_shared<MockStorageStub>();
-  EXPECT_CALL(*mock, GetServiceAccount)
-      .WillOnce([this](grpc::ClientContext& context, Options const&,
-                       v2::GetServiceAccountRequest const& request) {
-        auto metadata = GetMetadata(context);
-        EXPECT_THAT(metadata,
-                    UnorderedElementsAre(
-                        Pair(kIdempotencyTokenHeader, "test-token-1234"),
-                        Pair("x-goog-quota-user", "test-quota-user"),
-                        Pair("x-goog-fieldmask", "field1,field2")));
-        EXPECT_THAT(request.project(), "projects/test-project-id");
-        return PermanentError();
-      });
-  auto client = CreateTestClient(mock);
-  auto context = TestContext();
-  auto response = client->GetServiceAccount(
-      context, TestOptions(),
-      storage::internal::GetProjectServiceAccountRequest("test-project-id")
-          .set_multiple_options(Fields("field1,field2"),
-                                QuotaUser("test-quota-user")));
-  EXPECT_EQ(response.status(), PermanentError());
-}
-
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

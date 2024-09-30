@@ -69,7 +69,6 @@ storage_client_grpc_unit_tests = [
     "internal/grpc/object_request_parser_test.cc",
     "internal/grpc/owner_parser_test.cc",
     "internal/grpc/scale_stall_timeout_test.cc",
-    "internal/grpc/service_account_parser_test.cc",
     "internal/grpc/sign_blob_request_parser_test.cc",
     "internal/grpc/split_write_object_data_test.cc",
     "internal/grpc/stub_acl_test.cc",

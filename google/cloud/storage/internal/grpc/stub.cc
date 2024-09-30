@@ -27,7 +27,6 @@
 #include "google/cloud/storage/internal/grpc/object_read_source.h"
 #include "google/cloud/storage/internal/grpc/object_request_parser.h"
 #include "google/cloud/storage/internal/grpc/scale_stall_timeout.h"
-#include "google/cloud/storage/internal/grpc/service_account_parser.h"
 #include "google/cloud/storage/internal/grpc/sign_blob_request_parser.h"
 #include "google/cloud/storage/internal/grpc/split_write_object_data.h"
 #include "google/cloud/storage/internal/grpc/synthetic_self_link.h"
@@ -969,15 +968,9 @@ StatusOr<storage::ObjectAccessControl> GrpcStub::PatchDefaultObjectAcl(
 }
 
 StatusOr<storage::ServiceAccount> GrpcStub::GetServiceAccount(
-    rest_internal::RestContext& context, Options const& options,
-    storage::internal::GetProjectServiceAccountRequest const& request) {
-  auto proto = ToProto(request);
-  grpc::ClientContext ctx;
-  ApplyQueryParameters(ctx, options, request);
-  AddIdempotencyToken(ctx, context);
-  auto response = stub_->GetServiceAccount(ctx, options, proto);
-  if (!response) return std::move(response).status();
-  return FromProto(*response);
+    rest_internal::RestContext&, Options const&,
+    storage::internal::GetProjectServiceAccountRequest const&) {
+  return Status(StatusCode::kUnimplemented, "");
 }
 
 StatusOr<storage::internal::ListHmacKeysResponse> GrpcStub::ListHmacKeys(
