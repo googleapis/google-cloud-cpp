@@ -33,7 +33,6 @@ set(storage_client_integration_tests
     grpc_object_acl_integration_test.cc
     grpc_object_media_integration_test.cc
     grpc_object_metadata_integration_test.cc
-    grpc_service_account_integration_test.cc
     object_basic_crud_integration_test.cc
     object_checksum_integration_test.cc
     object_compose_many_integration_test.cc
