@@ -26,7 +26,6 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
   guide describes this feature in more detail. When using GCS from Google
   Compute Engine (GCE) this plugin can enable higher total throughput.
 
-
 ## v2.29.0 - 2024-09
 
 ### New Libraries
