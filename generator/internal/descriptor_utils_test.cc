@@ -1318,8 +1318,8 @@ TEST_F(CreateMethodVarsTest, CreateMixinMethodsVars) {
       kListLocationsHttpRule, &http_rule1));
 
   std::vector<MixinMethod> mixin_methods{
-      {"", "", *mixin_file->service(0)->method(0), http_rule0},
-      {"", "", *mixin_file->service(0)->method(1), http_rule1}};
+      {"stub1", "", *mixin_file->service(0)->method(0), http_rule0},
+      {"stub2", "", *mixin_file->service(0)->method(1), http_rule1}};
 
   service_vars_ = CreateServiceVars(
       *service_file_descriptor->service(0),
@@ -1339,6 +1339,7 @@ TEST_F(CreateMethodVarsTest, CreateMixinMethodsVars) {
               AllOf(Contains(Pair("idempotency", "kIdempotent")),
                     Contains(Pair("method_http_query_parameters", "")),
                     Contains(Pair("method_http_verb", "Get")),
+                    Contains(Pair("grpc_stub", "stub1_")),
                     Contains(Pair("method_name", "GetLocation")),
                     Contains(Pair("method_name_snake", "get_location")),
                     Contains(Pair("method_request_body", "")),
@@ -1368,6 +1369,7 @@ TEST_F(CreateMethodVarsTest, CreateMixinMethodsVars) {
               AllOf(Contains(Pair("idempotency", "kNonIdempotent")),
                     Contains(Pair("method_http_query_parameters", "")),
                     Contains(Pair("method_http_verb", "Post")),
+                    Contains(Pair("grpc_stub", "stub2_")),
                     Contains(Pair("method_name", "ListLocations")),
                     Contains(Pair("method_name_snake", "list_locations")),
                     Contains(Pair("method_request_body", "*")),
@@ -1415,6 +1417,8 @@ INSTANTIATE_TEST_SUITE_P(
                              "Method0"),
         MethodVarsTestValues("my.service.v1.Service.Method0",
                              "method_name_snake", "method0"),
+        MethodVarsTestValues("my.service.v1.Service.Method0", "grpc_stub",
+                             "grpc_stub_"),
         MethodVarsTestValues("my.service.v1.Service.Method0", "request_type",
                              "my::service::v1::Bar"),
         MethodVarsTestValues("my.service.v1.Service.Method0",

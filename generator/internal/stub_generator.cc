@@ -221,58 +221,61 @@ Status StubGenerator::GenerateHeader() {
     mixin_grpc_stubs[mixin_method.grpc_stub_name] = mixin_method.grpc_stub_fqn;
   }
 
-  std::vector<std::string> mixin_stub_inputs_list;
-  std::vector<std::string> mixin_stub_members_init_list;
-  std::vector<std::string> mixin_stub_members_list;
-  for (auto const& mixin_grpc_stub : mixin_grpc_stubs) {
-    mixin_stub_inputs_list.push_back(absl::StrFormat(
-      "std::unique_ptr<%s::StubInterface> %s", mixin_grpc_stub.second, mixin_grpc_stub.first));
-    mixin_stub_members_init_list.push_back(absl::StrFormat(
-      "%s_(std::move(%s))", mixin_grpc_stub.first, mixin_grpc_stub.first));
-    mixin_stub_members_list.push_back(absl::StrFormat(
-      "std::unique_ptr<%s::StubInterface> %s_;", mixin_grpc_stub.second, mixin_grpc_stub.first));
-  }
-  std::string const mixin_stub_inputs = absl::StrJoin(mixin_stub_inputs_list, ",\n");
-  std::string const mixin_stub_members_init = absl::StrJoin(mixin_stub_members_init_list, ",\n");
-  std::string const mixin_stub_members = absl::StrJoin(mixin_stub_members_list, "\n");
-
   if (HasLongrunningMethod()) {
-    HeaderPrint(  // clang-format off
-    absl::StrCat(R"""(
+    HeaderPrint(R"""(
   Default$stub_class_name$(
       std::unique_ptr<$grpc_stub_fqn$::StubInterface> grpc_stub,
-  )"""
-      , mixin_stub_inputs, mixin_stub_inputs_list.empty() ? "" : ",\n",
-R"""(    std::unique_ptr<google::longrunning::Operations::StubInterface> operations)
+    )""");
+    for (auto const& mixin_grpc_stub : mixin_grpc_stubs) {
+      HeaderPrint(absl::StrFormat(
+      R"""(      std::unique_ptr<%s::StubInterface> %s,
+)""", mixin_grpc_stub.second, mixin_grpc_stub.first));
+    }
+    HeaderPrint(R"""(      std::unique_ptr<google::longrunning::Operations::StubInterface> operations)
       : grpc_stub_(std::move(grpc_stub)),
-)"""
-      , mixin_stub_members_init, mixin_stub_members_init_list.empty() ? "" : ",\n",
-R"""(        operations_(std::move(operations)) {}
-)"""));
-    // clang-format on
+)""");
+    for (auto const& mixin_grpc_stub : mixin_grpc_stubs) {
+      HeaderPrint(absl::StrFormat(
+      R"""(        %s_(std::move(%s)),
+)""", mixin_grpc_stub.first, mixin_grpc_stub.first));
+    }
+    HeaderPrint(R"""(        operations_(std::move(operations)) {}
+)""");
+
   } else {
-    HeaderPrint(  // clang-format off
-    absl::StrCat(R"""(
+    HeaderPrint(R"""(
   explicit Default$stub_class_name$(
-      std::unique_ptr<$grpc_stub_fqn$::StubInterface> grpc_stub)"""
-      , mixin_stub_inputs_list.empty() ? "" : ",\n", mixin_stub_inputs,
-      R"""()
-      : grpc_stub_(std::move(grpc_stub)))"""
-      , mixin_stub_members_init_list.empty() ? "" : ",\n", mixin_stub_members_init,
-      R"""( {}
-)"""));
-    // clang-format on
+      std::unique_ptr<$grpc_stub_fqn$::StubInterface> grpc_stub)""");
+    for (auto const& mixin_grpc_stub : mixin_grpc_stubs) {
+      HeaderPrint(absl::StrFormat(R"""(,
+      std::unique_ptr<%s::StubInterface> %s
+)""", mixin_grpc_stub.second, mixin_grpc_stub.first));
+    }
+    HeaderPrint(R"""()
+      : grpc_stub_(std::move(grpc_stub)))""");
+    for (auto const& mixin_grpc_stub : mixin_grpc_stubs) {
+      HeaderPrint(absl::StrFormat(R"""(,
+        %s_(std::move(%s)))""", mixin_grpc_stub.first, mixin_grpc_stub.first));
+    }
+    HeaderPrint(R"""( {}
+)""");
   }
 
   HeaderPrintPublicMethods();
 
   // private members and close default stub class definition
-  HeaderPrint(absl::StrCat(R"""(
+  HeaderPrint(R"""(
  private:
   std::unique_ptr<$grpc_stub_fqn$::StubInterface> grpc_stub_;
-)""",
-                           mixin_stub_members));
+)""");
+
+  for (auto const& mixin_grpc_stub : mixin_grpc_stubs) {
+    HeaderPrint(absl::StrFormat(R"""(  std::unique_ptr<%s::StubInterface> %s_;
+)""", mixin_grpc_stub.second, mixin_grpc_stub.first));
+  }
+
   if (HasLongrunningMethod()) {
+    // TODO(#14746) - clean up operation stubs
     HeaderPrint(  // clang-format off
     "  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;\n");
     // clang-format on
@@ -324,21 +327,11 @@ Status StubGenerator::GenerateCc() {
     "$stub_class_name$::~$stub_class_name$() = default;\n");
   // clang-format on
 
-  std::unordered_map<std::string, std::string> mixin_grpc_stubs;
-  for (auto const& mixin_method : MixinMethods()) {
-    mixin_grpc_stubs[mixin_method.method.get().name()] =
-        mixin_method.grpc_stub_name;
-  }
-
   // default stub class member methods
   for (auto const& method : methods()) {
-    std::string const grpc_stub =
-        mixin_grpc_stubs.find(method.get().name()) == mixin_grpc_stubs.end()
-            ? "grpc_stub_"
-            : mixin_grpc_stubs[method.get().name()] + "_";
     if (IsStreamingWrite(method)) {
       CcPrintMethod(method, __FILE__, __LINE__,
-                    absl::StrFormat(R"""(
+                    R"""(
 std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
     $request_type$,
     $response_type$>>
@@ -346,18 +339,17 @@ Default$stub_class_name$::$method_name$(
     std::shared_ptr<grpc::ClientContext> context,
     Options const&) {
   auto response = std::make_unique<$response_type$>();
-  auto stream = %s->$method_name$(context.get(), response.get());
+  auto stream = $grpc_stub$->$method_name$(context.get(), response.get());
   return std::make_unique<::google::cloud::internal::StreamingWriteRpcImpl<
       $request_type$, $response_type$>>(
     std::move(context), std::move(response), std::move(stream));
 }
-)""",
-                                    grpc_stub));
+)""");
       continue;
     }
     if (IsBidirStreaming(method)) {
       CcPrintMethod(method, __FILE__, __LINE__,
-                    absl::StrFormat(R"""(
+                    R"""(
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     $request_type$,
     $response_type$>>
@@ -368,16 +360,15 @@ Default$stub_class_name$::Async$method_name$(
   return google::cloud::internal::MakeStreamingReadWriteRpc<$request_type$, $response_type$>(
       cq, std::move(context), std::move(options),
       [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
-        return %s->PrepareAsync$method_name$(context, cq);
+        return $grpc_stub$->PrepareAsync$method_name$(context, cq);
       });
 }
-)""",
-                                    grpc_stub));
+)""");
       continue;
     }
     if (IsLongrunningOperation(method)) {
       CcPrintMethod(method, __FILE__, __LINE__,
-                    absl::StrFormat(R"""(
+                    R"""(
 future<StatusOr<google::longrunning::Operation>>
 Default$stub_class_name$::Async$method_name$(
       google::cloud::CompletionQueue& cq,
@@ -390,15 +381,14 @@ Default$stub_class_name$::Async$method_name$(
       [this](grpc::ClientContext* context,
              $request_type$ const& request,
              grpc::CompletionQueue* cq) {
-        return %s->Async$method_name$(context, request, cq);
+        return $grpc_stub$->Async$method_name$(context, request, cq);
       },
       request, std::move(context));
 }
-)""",
-                                    grpc_stub));
+)""");
 
       CcPrintMethod(method, __FILE__, __LINE__,
-                    absl::StrFormat(R"""(
+                    R"""(
 StatusOr<google::longrunning::Operation>
 Default$stub_class_name$::$method_name$(
       grpc::ClientContext& context,
@@ -406,83 +396,74 @@ Default$stub_class_name$::$method_name$(
       $request_type$ const& request) {
     $response_type$ response;
     auto status =
-        %s->$method_name$(&context, request, &response);
+        $grpc_stub$->$method_name$(&context, request, &response);
     if (!status.ok()) {
       return google::cloud::MakeStatusFromRpcError(status);
     }
     return response;
 }
-)""",
-                                    grpc_stub));
+)""");
 
       continue;
     }
     if (IsStreamingRead(method)) {
       CcPrintMethod(method, __FILE__, __LINE__,
-                    absl::StrFormat(R"""(
+                    R"""(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<$response_type$>>
 Default$stub_class_name$::$method_name$(
     std::shared_ptr<grpc::ClientContext> context,
     Options const&,
     $request_type$ const& request) {
-  auto stream = %s->$method_name$(context.get(), request);
+  auto stream = $grpc_stub$->$method_name$(context.get(), request);
   return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
       $response_type$>>(
       std::move(context), std::move(stream));
 }
-)""",
-                                    grpc_stub));
+)""");
       continue;
     }
 
     if (IsResponseTypeEmpty(method)) {
       CcPrintMethod(method, __FILE__, __LINE__,
-                    absl::StrFormat(R"""(
+                    R"""(
 Status
 Default$stub_class_name$::$method_name$(
   grpc::ClientContext& context, Options const&,
   $request_type$ const& request) {
     $response_type$ response;
     auto status =
-        %s->$method_name$(&context, request, &response);
+        $grpc_stub$->$method_name$(&context, request, &response);
     if (!status.ok()) {
       return google::cloud::MakeStatusFromRpcError(status);
     }
     return google::cloud::Status();
 }
-)""",
-                                    grpc_stub));
+)""");
       continue;
     }
     CcPrintMethod(method, __FILE__, __LINE__,
-                  absl::StrFormat(R"""(
+                  R"""(
 StatusOr<$response_type$>
 Default$stub_class_name$::$method_name$(
   grpc::ClientContext& context, Options const&,
   $request_type$ const& request) {
     $response_type$ response;
     auto status =
-        %s->$method_name$(&context, request, &response);
+        $grpc_stub$->$method_name$(&context, request, &response);
     if (!status.ok()) {
       return google::cloud::MakeStatusFromRpcError(status);
     }
     return response;
 }
-)""",
-                                  grpc_stub));
+)""");
   }
 
   for (auto const& method : async_methods()) {
     // Nothing to do, these are always asynchronous.
     if (IsBidirStreaming(method) || IsLongrunningOperation(method)) continue;
 
-    std::string const grpc_stub =
-        mixin_grpc_stubs.find(method.get().name()) == mixin_grpc_stubs.end()
-            ? "grpc_stub_"
-            : mixin_grpc_stubs[method.get().name()] + "_";
-
     if (IsStreamingRead(method)) {
-      auto const definition = absl::StrFormat(R"""(
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
     $response_type$>>
 Default$stub_class_name$::Async$method_name$(
@@ -493,16 +474,14 @@ Default$stub_class_name$::Async$method_name$(
   return google::cloud::internal::MakeStreamingReadRpc<$request_type$, $response_type$>(
     cq, std::move(context), std::move(options), request,
     [this](grpc::ClientContext* context, $request_type$ const& request, grpc::CompletionQueue* cq) {
-      return %s->PrepareAsync$method_name$(context, request, cq);
+      return $grpc_stub$->PrepareAsync$method_name$(context, request, cq);
     });
 }
-)""",
-                                              grpc_stub);
-      CcPrintMethod(method, __FILE__, __LINE__, definition);
+)""");
       continue;
     }
     if (IsStreamingWrite(method)) {
-      auto const definition = absl::StrFormat(R"""(
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
 std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
     $request_type$, $response_type$>>
 Default$stub_class_name$::Async$method_name$(
@@ -512,17 +491,15 @@ Default$stub_class_name$::Async$method_name$(
   return google::cloud::internal::MakeStreamingWriteRpc<$request_type$, $response_type$>(
     cq, std::move(context), std::move(options),
     [this](grpc::ClientContext* context, $response_type$* response, grpc::CompletionQueue* cq) {
-      return %s->PrepareAsync$method_name$(context, response, cq);
+      return $grpc_stub$->PrepareAsync$method_name$(context, response, cq);
     });
 }
-)""",
-                                              grpc_stub);
-      CcPrintMethod(method, __FILE__, __LINE__, definition);
+)""");
       continue;
     }
     if (IsResponseTypeEmpty(method)) {
       CcPrintMethod(method, __FILE__, __LINE__,
-                    absl::StrFormat(R"""(
+                    R"""(
 future<Status>
 Default$stub_class_name$::Async$method_name$(
     google::cloud::CompletionQueue& cq,
@@ -536,19 +513,18 @@ Default$stub_class_name$::Async$method_name$(
       [this](grpc::ClientContext* context,
              $request_type$ const& request,
              grpc::CompletionQueue* cq) {
-        return %s->Async$method_name$(context, request, cq);
+        return $grpc_stub$->Async$method_name$(context, request, cq);
       },
       request, std::move(context))
           .then([](future<StatusOr<google::protobuf::Empty>> f) {
             return f.get().status();
           });
 }
-)""",
-                                    grpc_stub));
+)""");
       continue;
     }
     CcPrintMethod(method, __FILE__, __LINE__,
-                  absl::StrFormat(R"""(
+                  R"""(
 future<StatusOr<$response_type$>>
 Default$stub_class_name$::Async$method_name$(
     google::cloud::CompletionQueue& cq,
@@ -562,12 +538,11 @@ Default$stub_class_name$::Async$method_name$(
       [this](grpc::ClientContext* context,
              $request_type$ const& request,
              grpc::CompletionQueue* cq) {
-        return %s->Async$method_name$(context, request, cq);
+        return $grpc_stub$->Async$method_name$(context, request, cq);
       },
       request, std::move(context));
 }
-)""",
-                                  grpc_stub));
+)""");
   }
 
   if (HasLongrunningMethod()) {

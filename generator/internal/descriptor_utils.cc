@@ -508,6 +508,7 @@ VarsDictionary GetMethodVars(
     YAML::Node const& service_config,
     google::protobuf::MethodDescriptor const& method,
     absl::optional<google::api::HttpRule> const& http_rule,
+    std::string const& grpc_stub_name,
     VarsDictionary const& idempotency_overrides,
     std::set<std::string> const& omitted_rpcs) {
   VarsDictionary method_vars;
@@ -520,6 +521,7 @@ VarsDictionary GetMethodVars(
       method_vars["idempotency"] = iter->second;
     }
   }
+  method_vars["grpc_stub"] = grpc_stub_name + "_";
   method_vars["method_name"] = method.name();
   method_vars["method_name_snake"] = CamelCaseToSnakeCase(method.name());
   method_vars["request_type"] =
@@ -884,14 +886,14 @@ std::map<std::string, VarsDictionary> CreateMethodVars(
       http_rule = method.options().GetExtension(google::api::http);
     }
     service_methods_vars[method.full_name()] =
-        GetMethodVars(service, service_config, method, http_rule,
+        GetMethodVars(service, service_config, method, http_rule, "grpc_stub",
                       idempotency_overrides, omitted_rpcs);
   }
   for (auto const& mixin_method : mixin_methods) {
     auto const& method = mixin_method.method.get();
     service_methods_vars[method.full_name()] = GetMethodVars(
         service, service_config, method, mixin_method.http_override,
-        idempotency_overrides, omitted_rpcs);
+        mixin_method.grpc_stub_name, idempotency_overrides, omitted_rpcs);
   }
   return service_methods_vars;
 }
