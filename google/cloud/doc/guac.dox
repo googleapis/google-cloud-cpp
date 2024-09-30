@@ -58,6 +58,10 @@ The client libraries automatically refresh access tokens, that is, create new
 tokens before they expire. The only exception is `MakeAccessTokenCredentials()`,
 where the application provides the access token.
 
+The client libraries also support authentication without a principal via API
+keys. Note that while the client libraries support sending the API key, not all
+Google Cloud Platform services support this method of authentication.
+
 ## Development Workstations
 
 We find that developers typically use Application Default Credentials to test
