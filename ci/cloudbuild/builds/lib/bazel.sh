@@ -56,7 +56,7 @@ function bazel::common_args() {
     esac
   }
   local args=(
-    "--test_output=all"
+    "--test_output=errors"
     "--verbose_failures=true"
     "--keep_going"
     "--experimental_convenience_symlinks=ignore"

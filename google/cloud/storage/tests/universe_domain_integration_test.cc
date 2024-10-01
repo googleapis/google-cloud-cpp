@@ -23,7 +23,6 @@
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
 #include <fstream>
-#include <iostream>
 #include <memory>
 #include <string>
 #include <utility>
@@ -72,20 +71,15 @@ auto TestOptions() {
 
 TEST_F(UniverseDomainIntegrationTest, BucketAndObjectCRUD) {
   auto region = GetEnv("UD_REGION").value_or("");
-  std::cout << "Region: " << region << std::endl;
   if (GetEnv("UD_SA_KEY_FILE").value_or("").empty() ||
       GetEnv("UD_PROJECT").value_or("").empty() || region.empty())
     GTEST_SKIP();
-
-  std::cout << "Did not skip" << std::endl;
 
   auto client = Client(TestOptions());
   auto bucket =
       client.CreateBucket(bucket_name(), BucketMetadata{}.set_location(region));
   ASSERT_STATUS_OK(bucket);
   ScheduleForDelete(*bucket);
-
-  std::cout << "After bucket" << std::endl;
 
   auto insert = client.InsertObject(bucket_name(), object_name(), LoremIpsum());
   ASSERT_STATUS_OK(insert);
@@ -95,11 +89,8 @@ TEST_F(UniverseDomainIntegrationTest, BucketAndObjectCRUD) {
   ASSERT_TRUE(reader.good());
   ASSERT_STATUS_OK(reader.status());
 
-  std::cout << "After Read" << std::endl;
-
   auto const actual =
       std::string{std::istreambuf_iterator<char>{reader.rdbuf()}, {}};
-  std::cout << actual << std::endl;
   EXPECT_EQ(LoremIpsum(), actual);
 }
 
