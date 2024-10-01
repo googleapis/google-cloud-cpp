@@ -25,6 +25,7 @@ extend-exclude = [
     "google/cloud/baremetalsolution/v2/bare_metal_solution_client.h",
     "google/cloud/channel/v1/cloud_channel_client.h",
     "google/cloud/cloudbuild/v2/repository_manager_client.h",
+    "google/cloud/dialogflow_es/generators_client.h",
     "google/cloud/managedidentities/v1/managed_identities_client.h",
     "google/cloud/monitoring/v3/uptime_check_client.h",
     "google/cloud/networkconnectivity/v1/policy_based_routing_client.h",
