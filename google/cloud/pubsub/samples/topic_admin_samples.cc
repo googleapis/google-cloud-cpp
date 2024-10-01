@@ -22,9 +22,9 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/project.h"
 #include "google/cloud/testing_util/example_driver.h"
-#include <google/protobuf/util/time_util.h>
-#include <google/protobuf/timestamp.pb.h>
 #include "absl/strings/match.h"
+#include <google/protobuf/timestamp.pb.h>
+#include <google/protobuf/util/time_util.h>
 #include <sstream>
 
 using google::cloud::pubsub::examples::Cleanup;
@@ -248,7 +248,8 @@ void CreateTopicWithCloudStorageIngestion(
     if (!minimum_object_create_time.empty()) {
       google::protobuf::Timestamp timestamp;
       if (!google::protobuf::util::TimeUtil::FromString(
-              minimum_object_create_time, cloud_storage->mutable_minimum_object_create_time())) {
+              minimum_object_create_time,
+              cloud_storage->mutable_minimum_object_create_time())) {
         std::cout << "Invalid minimum object create time: "
                   << minimum_object_create_time << std::endl;
       }
@@ -624,7 +625,8 @@ void AutoRun(std::vector<std::string> const& argv) {
       "fake-service-account@fake-gcp-project.iam.gserviceaccount.com";
   auto const* const kinesis_updated_gcp_service_account =
       "fake-update-service-account@fake-gcp-project.iam.gserviceaccount.com";
-  auto const cloud_storage_topic_id = "cloud-storage-" + RandomTopicId(generator) + "_ingestion_topic";
+  auto const cloud_storage_topic_id =
+      "cloud-storage-" + RandomTopicId(generator) + "_ingestion_topic";
 
   using ::google::cloud::StatusCode;
   auto ignore_emulator_failures =
