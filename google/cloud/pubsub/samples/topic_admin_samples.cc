@@ -627,6 +627,7 @@ void AutoRun(std::vector<std::string> const& argv) {
       "fake-update-service-account@fake-gcp-project.iam.gserviceaccount.com";
   auto const cloud_storage_topic_id =
       "cloud-storage-" + RandomTopicId(generator) + "_ingestion_topic";
+  auto const cloud_storage_bucket = project_id + "-pubsub-bucket";
 
   using ::google::cloud::StatusCode;
   auto ignore_emulator_failures =
@@ -676,9 +677,15 @@ void AutoRun(std::vector<std::string> const& argv) {
     DeleteTopic(topic_admin_client, {project_id, kinesis_topic_id});
   });
 
+  std::cout << "\nRunning CreateTopicWithCloudStorage() sample"
+            << std::endl;
+
   CreateTopicWithCloudStorageIngestion(
-      topic_admin_client, {project_id, cloud_storage_topic_id, "my-bucket",
-                           "text", "\n", "**.txt", "2024-09-26T00:00:00Z"});
+      topic_admin_client,
+      {project_id, cloud_storage_topic_id, cloud_storage_bucket, "text", "\n",
+       "**.txt", "2024-09-26T00:00:00Z"});
+  std::cout << "\nAfter Running CreateTopicWithCloudStorage() sample"
+            << std::endl;
   cleanup.Defer(
       [topic_admin_client, project_id, cloud_storage_topic_id]() mutable {
         std::cout << "\nRunning DeleteTopic() sample" << std::endl;
