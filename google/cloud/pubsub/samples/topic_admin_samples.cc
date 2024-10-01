@@ -677,8 +677,7 @@ void AutoRun(std::vector<std::string> const& argv) {
     DeleteTopic(topic_admin_client, {project_id, kinesis_topic_id});
   });
 
-  std::cout << "\nRunning CreateTopicWithCloudStorage() sample"
-            << std::endl;
+  std::cout << "\nRunning CreateTopicWithCloudStorage() sample" << std::endl;
 
   ignore_emulator_failures(
       [&] {
