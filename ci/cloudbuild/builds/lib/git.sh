@@ -32,12 +32,9 @@ if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
 else
   # This repository is thrown away at the end of the build.
   io::log "Creating a git repository"
-  git config --global --add safe.directory /workspace
   git init --initial-branch=ephemeral-branch
-  # git config --local user.email "ephemeral@fake"
-  # git config --local user.name "ephemeral"
-  git config --global user.email "ephemeral@fake"
-  git config --global user.name "ephemeral"
+  git config --local user.email "ephemeral@fake"
+  git config --local user.name "ephemeral"
   git add .
   git commit --quiet -m "ephemeral: added all files"
 fi
