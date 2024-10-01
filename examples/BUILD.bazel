@@ -98,3 +98,19 @@ cc_test(
         "@com_github_curl_curl//:curl",
     ],
 )
+
+cc_test(
+    name = "api_key",
+    srcs = ["api_key.cc"],
+    tags = [
+        "integration-test",
+        "integration-test-production",
+    ],
+    deps = [
+        "//:apikeys",
+        "//:common",
+        "//:language",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+    ],
+)
