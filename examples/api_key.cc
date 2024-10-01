@@ -46,6 +46,7 @@ google::api::apikeys::v2::Key CreateApiKey(
   google::api::apikeys::v2::CreateKeyRequest request;
   request.set_parent(location.FullName());
   request.mutable_key()->set_display_name(std::move(display_name));
+  // As an example, restrict the API key's scope to the Natural Language API.
   request.mutable_key()->mutable_restrictions()->add_api_targets()->set_service(
       "language.googleapis.com");
 
