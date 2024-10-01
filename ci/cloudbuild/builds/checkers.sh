@@ -211,6 +211,9 @@ time {
 
   mapfile -t libraries < <(features::libraries)
   for library in "${libraries[@]}" opentelemetry; do
+    if [[ "${library}" == "storage_grpc" ]]; then
+      continue
+    fi
     ci/generate-markdown/update-library-readme.sh "${library}"
   done
 }

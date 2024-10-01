@@ -43,7 +43,7 @@ TEST(GrpcPluginTest, DefaultCreatesGrpc) {
       ScopedEnvironment("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
   auto config =
       ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", absl::nullopt);
-  auto client = storage_experimental::DefaultGrpcClient(TestOptions());
+  auto client = MakeGrpcClient(TestOptions());
   auto impl = ClientImplDetails::GetConnection(client);
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
@@ -59,7 +59,7 @@ TEST(GrpcPluginTest, MostConfigValuesCreatesGrpc) {
       ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", absl::nullopt);
   // Unless the config is set to "none" we want to create the gRPC stub.
   for (auto const* config : {"", "metadata", "media", "anything-but-none"}) {
-    auto client = storage_experimental::DefaultGrpcClient(
+    auto client = MakeGrpcClient(
         TestOptions().set<storage_experimental::GrpcPluginOption>(config));
     auto impl = ClientImplDetails::GetConnection(client);
     ASSERT_THAT(impl, NotNull());
@@ -74,7 +74,7 @@ TEST(GrpcPluginTest, EnvironmentOverrides) {
       ScopedEnvironment("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
   auto config =
       ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", "none");
-  auto client = storage_experimental::DefaultGrpcClient(
+  auto client = MakeGrpcClient(
       TestOptions().set<storage_experimental::GrpcPluginOption>("metadata"));
   auto impl = ClientImplDetails::GetConnection(client);
   ASSERT_THAT(impl, NotNull());
@@ -88,7 +88,7 @@ TEST(GrpcPluginTest, UnsetConfigCreatesMetadata) {
       ScopedEnvironment("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
   auto config =
       ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", absl::nullopt);
-  auto client = storage_experimental::DefaultGrpcClient(TestOptions());
+  auto client = MakeGrpcClient(TestOptions());
   auto impl = ClientImplDetails::GetConnection(client);
   ASSERT_THAT(impl, NotNull());
   EXPECT_THAT(impl->InspectStackStructure(),
@@ -101,7 +101,7 @@ TEST(GrpcPluginTest, NoneConfigCreatesCurl) {
       ScopedEnvironment("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
   auto config =
       ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", absl::nullopt);
-  auto client = storage_experimental::DefaultGrpcClient(
+  auto client = MakeGrpcClient(
       TestOptions().set<storage_experimental::GrpcPluginOption>("none"));
   auto impl = ClientImplDetails::GetConnection(client);
   ASSERT_THAT(impl, NotNull());
@@ -115,7 +115,7 @@ TEST(GrpcPluginTest, HybridUsesGrpcBufferOptions) {
       ScopedEnvironment("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
   auto config =
       ScopedEnvironment("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", absl::nullopt);
-  auto client = storage_experimental::DefaultGrpcClient(
+  auto client = MakeGrpcClient(
       TestOptions().set<storage_experimental::GrpcPluginOption>("media"));
   EXPECT_GE(
       client.raw_client()->options().get<storage::UploadBufferSizeOption>(),

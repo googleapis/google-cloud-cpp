@@ -66,7 +66,7 @@ endif ()
 
 add_executable(storage_quickstart_grpc "quickstart/quickstart_grpc.cc")
 target_link_libraries(storage_quickstart_grpc
-                      PRIVATE google-cloud-cpp::experimental-storage_grpc)
+                      PRIVATE google-cloud-cpp::storage_grpc)
 google_cloud_cpp_add_common_options(storage_quickstart_grpc)
 add_test(
     NAME storage_quickstart_grpc
@@ -79,7 +79,7 @@ set_tests_properties(storage_quickstart_grpc
 
 add_executable(storage_quickstart_async "quickstart/quickstart_async.cc")
 target_link_libraries(storage_quickstart_async
-                      PRIVATE google-cloud-cpp::experimental-storage_grpc)
+                      PRIVATE google-cloud-cpp::storage_grpc)
 google_cloud_cpp_add_common_options(storage_quickstart_async)
 add_test(
     NAME storage_quickstart_async
