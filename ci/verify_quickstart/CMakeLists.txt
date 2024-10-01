@@ -56,7 +56,7 @@ function (add_cmake_quickstart_target feature library target)
         PREFIX "${PROJECT_BINARY_DIR}/cmake-${library}-prefix"
         SOURCE_DIR
             "${PROJECT_SOURCE_DIR}/../../google/cloud/${library}/quickstart"
-        BINARY_DIR "${PROJECT_BINARY_DIR}/cmake-${library}"
+        BINARY_DIR "${PROJECT_BINARY_DIR}/cmake-${feature}"
         CMAKE_ARGS ${COMMON_CMAKE_ARGS}
         BUILD_COMMAND "${CMAKE_COMMAND}" "--build" "<BINARY_DIR>" "--target"
                       "${target}"
@@ -79,7 +79,7 @@ function (add_make_quickstart_target feature library target)
         PREFIX "${PROJECT_BINARY_DIR}/makefile-${library}-prefix"
         SOURCE_DIR
             "${PROJECT_SOURCE_DIR}/../../google/cloud/${library}/quickstart"
-        BINARY_DIR "${PROJECT_BINARY_DIR}/makefile-${library}"
+        BINARY_DIR "${PROJECT_BINARY_DIR}/makefile-${feature}"
         CONFIGURE_COMMAND ""
         BUILD_COMMAND
             "env"
@@ -100,7 +100,7 @@ function (add_make_quickstart_target feature library target)
 endfunction ()
 
 foreach (feature IN LISTS FEATURES)
-    if ("${feature}" STREQUAL "experimental-storage_grpc")
+    if ("${feature}" STREQUAL "storage_grpc")
         add_cmake_quickstart_target("${feature}" storage quickstart_grpc)
         add_make_quickstart_target("${feature}" storage quickstart_grpc)
         continue()
