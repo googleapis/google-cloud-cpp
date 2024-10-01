@@ -53,8 +53,11 @@ google::api::apikeys::v2::Key CreateApiKey(
   auto key = client.CreateKey(request).get();
   if (!key) throw std::move(key.status());
   std::cout << "Successfully created an API key: " << key->name() << "\n";
+
   // For authenticating with the API key, use the value in `key->key_string()`.
-  // To restrict the usage of this API key, use the value in `key->name()`.
+
+  // The API key's resource name is the value in `key->name()`. Use this to
+  // refer to the specific key in a `GetKey()` or `DeleteKey()` RPC.
   return *key;
 }
 // [END apikeys_create_api_key]
@@ -115,7 +118,7 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto client = gc::apikeys_v2::ApiKeysClient(
       gc::apikeys_v2::MakeApiKeysConnection(options));
 
-  std::cout << "Cleaning up leaked keys\n";
+  std::cout << "Cleaning up stale keys\n";
   auto stale = gc::internal::FormatUtcDate(std::chrono::system_clock::now() -
                                            std::chrono::hours(48));
   for (auto key : client.ListKeys(location.FullName())) {
