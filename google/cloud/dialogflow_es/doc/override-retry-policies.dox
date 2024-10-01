@@ -91,9 +91,11 @@ Follow these links to find examples for other \c *Client classes:
 - [\c dialogflow_es::ConversationProfilesClient](@ref dialogflow_es::ConversationProfilesClient-retry-snippet)
 - [\c dialogflow_es::ConversationsClient](@ref dialogflow_es::ConversationsClient-retry-snippet)
 - [\c dialogflow_es::DocumentsClient](@ref dialogflow_es::DocumentsClient-retry-snippet)
+- [\c dialogflow_es::EncryptionSpecServiceClient](@ref dialogflow_es::EncryptionSpecServiceClient-retry-snippet)
 - [\c dialogflow_es::EntityTypesClient](@ref dialogflow_es::EntityTypesClient-retry-snippet)
 - [\c dialogflow_es::EnvironmentsClient](@ref dialogflow_es::EnvironmentsClient-retry-snippet)
 - [\c dialogflow_es::FulfillmentsClient](@ref dialogflow_es::FulfillmentsClient-retry-snippet)
+- [\c dialogflow_es::GeneratorsClient](@ref dialogflow_es::GeneratorsClient-retry-snippet)
 - [\c dialogflow_es::IntentsClient](@ref dialogflow_es::IntentsClient-retry-snippet)
 - [\c dialogflow_es::KnowledgeBasesClient](@ref dialogflow_es::KnowledgeBasesClient-retry-snippet)
 - [\c dialogflow_es::ParticipantsClient](@ref dialogflow_es::ParticipantsClient-retry-snippet)
@@ -211,6 +213,18 @@ Assuming you have created a custom idempotency policy. Such as:
 
 */
 
+/*! @page dialogflow_es::EncryptionSpecServiceClient-retry-snippet Override dialogflow_es::EncryptionSpecServiceClient Retry Policies
+
+This shows how to override the retry policies for dialogflow_es::EncryptionSpecServiceClient:
+
+@snippet google/cloud/dialogflow_es/samples/encryption_spec_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/dialogflow_es/samples/encryption_spec_client_samples.cc custom-idempotency-policy
+
+*/
+
 /*! @page dialogflow_es::EntityTypesClient-retry-snippet Override dialogflow_es::EntityTypesClient Retry Policies
 
 This shows how to override the retry policies for dialogflow_es::EntityTypesClient:
@@ -244,6 +258,18 @@ This shows how to override the retry policies for dialogflow_es::FulfillmentsCli
 Assuming you have created a custom idempotency policy. Such as:
 
 @snippet google/cloud/dialogflow_es/samples/fulfillments_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page dialogflow_es::GeneratorsClient-retry-snippet Override dialogflow_es::GeneratorsClient Retry Policies
+
+This shows how to override the retry policies for dialogflow_es::GeneratorsClient:
+
+@snippet google/cloud/dialogflow_es/samples/generators_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/dialogflow_es/samples/generators_client_samples.cc custom-idempotency-policy
 
 */
 
