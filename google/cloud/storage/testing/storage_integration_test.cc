@@ -112,7 +112,7 @@ StorageIntegrationTest::MakeIntegrationTestClient(bool use_grpc, Options opts) {
   if (use_grpc) {
     testing_util::ScopedEnvironment env("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
                                         "metadata");
-    return storage_experimental::DefaultGrpcClient(std::move(opts));
+    return MakeGrpcClient(std::move(opts));
   }
 #else
   (void)use_grpc;
