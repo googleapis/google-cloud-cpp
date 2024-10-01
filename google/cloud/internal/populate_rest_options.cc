@@ -15,6 +15,8 @@
 #include "google/cloud/internal/populate_rest_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/credentials_impl.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/rest_options.h"
 #include "google/cloud/rest_options.h"
@@ -27,7 +29,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 Options PopulateRestOptions(Options opts) {
-  if (!opts.has<UnifiedCredentialsOption>()) {
+  if (opts.has<ApiKeyOption>() && opts.has<UnifiedCredentialsOption>()) {
+    opts.set<UnifiedCredentialsOption>(
+        internal::MakeErrorCredentials(internal::InvalidArgumentError(
+            "API Keys and Credentials are mutually exclusive authentication "
+            "methods and cannot be used together.")));
+  }
+  if (!opts.has<UnifiedCredentialsOption>() && !opts.has<ApiKeyOption>()) {
     opts.set<UnifiedCredentialsOption>(
         MakeGoogleDefaultCredentials(internal::MakeAuthOptions(opts)));
   }
