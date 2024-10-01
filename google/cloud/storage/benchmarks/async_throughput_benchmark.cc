@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/port_platform.h"
+// TODO(#14750): Remove this guard once vcpkg has a newer version of grpc
 #if GRPC_CPP_VERSION_MAJOR >= 1 && GRPC_CPP_VERSION_MINOR >= 65 &&       \
     GRPC_CPP_VERSION_PATCH >= 4 && GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC && \
     GOOGLE_CLOUD_CPP_HAVE_COROUTINES
