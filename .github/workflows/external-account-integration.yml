@@ -19,7 +19,7 @@ jobs:
   # usable in this case.
   identity-federation-integration-test:
     name: external-account-integration-test
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     # Add "id-token" with the intended permissions.
     permissions:
       contents: read
