@@ -21,9 +21,11 @@ Follow these links to find examples for other \c *Client classes:
 - [\c dialogflow_es::ConversationProfilesClient](@ref dialogflow_es::ConversationProfilesClient-endpoint-snippet)
 - [\c dialogflow_es::ConversationsClient](@ref dialogflow_es::ConversationsClient-endpoint-snippet)
 - [\c dialogflow_es::DocumentsClient](@ref dialogflow_es::DocumentsClient-endpoint-snippet)
+- [\c dialogflow_es::EncryptionSpecServiceClient](@ref dialogflow_es::EncryptionSpecServiceClient-endpoint-snippet)
 - [\c dialogflow_es::EntityTypesClient](@ref dialogflow_es::EntityTypesClient-endpoint-snippet)
 - [\c dialogflow_es::EnvironmentsClient](@ref dialogflow_es::EnvironmentsClient-endpoint-snippet)
 - [\c dialogflow_es::FulfillmentsClient](@ref dialogflow_es::FulfillmentsClient-endpoint-snippet)
+- [\c dialogflow_es::GeneratorsClient](@ref dialogflow_es::GeneratorsClient-endpoint-snippet)
 - [\c dialogflow_es::IntentsClient](@ref dialogflow_es::IntentsClient-endpoint-snippet)
 - [\c dialogflow_es::KnowledgeBasesClient](@ref dialogflow_es::KnowledgeBasesClient-endpoint-snippet)
 - [\c dialogflow_es::ParticipantsClient](@ref dialogflow_es::ParticipantsClient-endpoint-snippet)
@@ -85,6 +87,12 @@ Follow these links to find examples for other \c *Client classes:
 
 */
 
+/*! @page dialogflow_es::EncryptionSpecServiceClient-endpoint-snippet Override dialogflow_es::EncryptionSpecServiceClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_es/samples/encryption_spec_client_samples.cc set-client-endpoint
+
+*/
+
 /*! @page dialogflow_es::EntityTypesClient-endpoint-snippet Override dialogflow_es::EntityTypesClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_es/samples/entity_types_client_samples.cc set-client-endpoint
@@ -100,6 +108,12 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page dialogflow_es::FulfillmentsClient-endpoint-snippet Override dialogflow_es::FulfillmentsClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_es/samples/fulfillments_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dialogflow_es::GeneratorsClient-endpoint-snippet Override dialogflow_es::GeneratorsClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_es/samples/generators_client_samples.cc set-client-endpoint
 
 */
 

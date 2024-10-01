@@ -257,6 +257,10 @@ ParameterCommentSubstitution substitutions[] = {
     // Missing closed quote in dialogflow
     {"<Agent ID>.", "<Agent ID>`."},
 
+    // Extra closed quote in dialogflow
+    {R"""(`projects/<Project ID>/locations/<Location ID>`/generators/<Generator ID>`)""",
+     R"""(`projects/<Project ID>/locations/<Location ID>/generators/<Generator ID>`)"""},
+
     // From logging/v2.
     {kLoggingConfigClientProto1, kLoggingConfigClientCpp1},
     {kLoggingConfigClientProto2, kLoggingConfigClientCpp2},
