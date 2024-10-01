@@ -34,10 +34,10 @@ using ::testing::Not;
 
 // When GOOGLE_CLOUD_CPP_HAVE_GRPC is not set these tests compile, but they
 // actually just run against the regular GCS REST API. That is fine.
-class GrpcHmacKeyMetadataIntegrationTest
+class HmacKeyMetadataIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {};
 
-TEST_F(GrpcHmacKeyMetadataIntegrationTest, HmacKeyCRUD) {
+TEST_F(HmacKeyMetadataIntegrationTest, HmacKeyCRUD) {
   // We do not run the REST or gRPC integration tests in production because
   // quota is extremely restricted for this type of resource.
   if (!UsingEmulator()) GTEST_SKIP();
@@ -51,7 +51,7 @@ TEST_F(GrpcHmacKeyMetadataIntegrationTest, HmacKeyCRUD) {
           .value_or("");
   ASSERT_THAT(service_account, Not(IsEmpty()));
 
-  auto client = MakeIntegrationTestClient(/*use_grpc=*/true);
+  auto client = MakeIntegrationTestClient(/*use_grpc=*/false);
 
   auto get_ids = [&] {
     std::vector<std::string> ids;

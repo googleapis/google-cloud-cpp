@@ -21,16 +21,12 @@
 #include "google/cloud/storage/internal/grpc/configure_client_context.h"
 #include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
 #include "google/cloud/storage/internal/grpc/default_options.h"
-#include "google/cloud/storage/internal/grpc/hmac_key_metadata_parser.h"
-#include "google/cloud/storage/internal/grpc/hmac_key_request_parser.h"
 #include "google/cloud/storage/internal/grpc/notification_metadata_parser.h"
-#include "google/cloud/storage/internal/grpc/notification_request_parser.h"
 #include "google/cloud/storage/internal/grpc/object_access_control_parser.h"
 #include "google/cloud/storage/internal/grpc/object_metadata_parser.h"
 #include "google/cloud/storage/internal/grpc/object_read_source.h"
 #include "google/cloud/storage/internal/grpc/object_request_parser.h"
 #include "google/cloud/storage/internal/grpc/scale_stall_timeout.h"
-#include "google/cloud/storage/internal/grpc/service_account_parser.h"
 #include "google/cloud/storage/internal/grpc/sign_blob_request_parser.h"
 #include "google/cloud/storage/internal/grpc/split_write_object_data.h"
 #include "google/cloud/storage/internal/grpc/synthetic_self_link.h"
@@ -972,75 +968,39 @@ StatusOr<storage::ObjectAccessControl> GrpcStub::PatchDefaultObjectAcl(
 }
 
 StatusOr<storage::ServiceAccount> GrpcStub::GetServiceAccount(
-    rest_internal::RestContext& context, Options const& options,
-    storage::internal::GetProjectServiceAccountRequest const& request) {
-  auto proto = ToProto(request);
-  grpc::ClientContext ctx;
-  ApplyQueryParameters(ctx, options, request);
-  AddIdempotencyToken(ctx, context);
-  auto response = stub_->GetServiceAccount(ctx, options, proto);
-  if (!response) return std::move(response).status();
-  return FromProto(*response);
+    rest_internal::RestContext&, Options const&,
+    storage::internal::GetProjectServiceAccountRequest const&) {
+  return Status(StatusCode::kUnimplemented, "");
 }
 
 StatusOr<storage::internal::ListHmacKeysResponse> GrpcStub::ListHmacKeys(
-    rest_internal::RestContext& context, Options const& options,
-    storage::internal::ListHmacKeysRequest const& request) {
-  auto proto = ToProto(request);
-  grpc::ClientContext ctx;
-  ApplyQueryParameters(ctx, options, request);
-  AddIdempotencyToken(ctx, context);
-  auto response = stub_->ListHmacKeys(ctx, options, proto);
-  if (!response) return std::move(response).status();
-  return FromProto(*response);
+    rest_internal::RestContext&, Options const&,
+    storage::internal::ListHmacKeysRequest const&) {
+  return Status(StatusCode::kUnimplemented, "");
 }
 
 StatusOr<storage::internal::CreateHmacKeyResponse> GrpcStub::CreateHmacKey(
-    rest_internal::RestContext& context, Options const& options,
-    storage::internal::CreateHmacKeyRequest const& request) {
-  auto proto = ToProto(request);
-  grpc::ClientContext ctx;
-  ApplyQueryParameters(ctx, options, request);
-  AddIdempotencyToken(ctx, context);
-  auto response = stub_->CreateHmacKey(ctx, options, proto);
-  if (!response) return std::move(response).status();
-  return FromProto(*response);
+    rest_internal::RestContext&, Options const&,
+    storage::internal::CreateHmacKeyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "");
 }
 
 StatusOr<storage::internal::EmptyResponse> GrpcStub::DeleteHmacKey(
-    rest_internal::RestContext& context, Options const& options,
-    storage::internal::DeleteHmacKeyRequest const& request) {
-  auto proto = ToProto(request);
-  grpc::ClientContext ctx;
-  ApplyQueryParameters(ctx, options, request);
-  AddIdempotencyToken(ctx, context);
-  auto response = stub_->DeleteHmacKey(ctx, options, proto);
-  if (!response.ok()) return response;
-  return storage::internal::EmptyResponse{};
+    rest_internal::RestContext&, Options const&,
+    storage::internal::DeleteHmacKeyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "");
 }
 
 StatusOr<storage::HmacKeyMetadata> GrpcStub::GetHmacKey(
-    rest_internal::RestContext& context, Options const& options,
-    storage::internal::GetHmacKeyRequest const& request) {
-  auto proto = ToProto(request);
-  grpc::ClientContext ctx;
-  ApplyQueryParameters(ctx, options, request);
-  AddIdempotencyToken(ctx, context);
-  auto response = stub_->GetHmacKey(ctx, options, proto);
-  if (!response) return std::move(response).status();
-  return FromProto(*response);
+    rest_internal::RestContext&, Options const&,
+    storage::internal::GetHmacKeyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "");
 }
 
 StatusOr<storage::HmacKeyMetadata> GrpcStub::UpdateHmacKey(
-    rest_internal::RestContext& context, Options const& options,
-    storage::internal::UpdateHmacKeyRequest const& request) {
-  auto proto = ToProto(request);
-  grpc::ClientContext ctx;
-  ApplyQueryParameters(ctx, options, request);
-  AddIdempotencyToken(ctx, context);
-  auto response = stub_->UpdateHmacKey(ctx, options, proto);
-  if (!response) return std::move(response).status();
-  return FromProto(*response);
+    rest_internal::RestContext&, Options const&,
+    storage::internal::UpdateHmacKeyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "");
 }
 
 StatusOr<storage::internal::SignBlobResponse> GrpcStub::SignBlob(
@@ -1058,51 +1018,27 @@ StatusOr<storage::internal::SignBlobResponse> GrpcStub::SignBlob(
 
 StatusOr<storage::internal::ListNotificationsResponse>
 GrpcStub::ListNotifications(
-    rest_internal::RestContext& context, Options const& options,
-    storage::internal::ListNotificationsRequest const& request) {
-  auto proto = ToProto(request);
-  grpc::ClientContext ctx;
-  ApplyQueryParameters(ctx, options, request);
-  AddIdempotencyToken(ctx, context);
-  auto response = stub_->ListNotificationConfigs(ctx, options, proto);
-  if (!response) return std::move(response).status();
-  return FromProto(*response);
+    rest_internal::RestContext&, Options const&,
+    storage::internal::ListNotificationsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "");
 }
 
 StatusOr<storage::NotificationMetadata> GrpcStub::CreateNotification(
-    rest_internal::RestContext& context, Options const& options,
-    storage::internal::CreateNotificationRequest const& request) {
-  auto proto = ToProto(request);
-  grpc::ClientContext ctx;
-  ApplyQueryParameters(ctx, options, request);
-  AddIdempotencyToken(ctx, context);
-  auto response = stub_->CreateNotificationConfig(ctx, options, proto);
-  if (!response) return std::move(response).status();
-  return FromProto(*response);
+    rest_internal::RestContext&, Options const&,
+    storage::internal::CreateNotificationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "");
 }
 
 StatusOr<storage::NotificationMetadata> GrpcStub::GetNotification(
-    rest_internal::RestContext& context, Options const& options,
-    storage::internal::GetNotificationRequest const& request) {
-  auto proto = ToProto(request);
-  grpc::ClientContext ctx;
-  ApplyQueryParameters(ctx, options, request);
-  AddIdempotencyToken(ctx, context);
-  auto response = stub_->GetNotificationConfig(ctx, options, proto);
-  if (!response) return std::move(response).status();
-  return FromProto(*response);
+    rest_internal::RestContext&, Options const&,
+    storage::internal::GetNotificationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "");
 }
 
 StatusOr<storage::internal::EmptyResponse> GrpcStub::DeleteNotification(
-    rest_internal::RestContext& context, Options const& options,
-    storage::internal::DeleteNotificationRequest const& request) {
-  auto proto = ToProto(request);
-  grpc::ClientContext ctx;
-  ApplyQueryParameters(ctx, options, request);
-  AddIdempotencyToken(ctx, context);
-  auto response = stub_->DeleteNotificationConfig(ctx, options, proto);
-  if (!response.ok()) return response;
-  return storage::internal::EmptyResponse{};
+    rest_internal::RestContext&, Options const&,
+    storage::internal::DeleteNotificationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "");
 }
 
 std::vector<std::string> GrpcStub::InspectStackStructure() const {

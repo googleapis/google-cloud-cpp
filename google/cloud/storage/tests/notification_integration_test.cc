@@ -34,13 +34,10 @@ using ::testing::Pair;
 
 // When GOOGLE_CLOUD_CPP_HAVE_GRPC is not set these tests compile, but they
 // actually just run against the regular GCS REST API. That is fine.
-class GrpcNotificationIntegrationTest
+class NotificationIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {};
 
-TEST_F(GrpcNotificationIntegrationTest, NotificationCRUD) {
-  // TODO(#14396) - figure out what to do with the Notifications and gRPC
-  if (!UsingEmulator() && UsingGrpc()) GTEST_SKIP();
-
+TEST_F(NotificationIntegrationTest, NotificationCRUD) {
   auto const project_id = GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
   ASSERT_THAT(project_id, Not(IsEmpty())) << "GOOGLE_CLOUD_PROJECT is not set";
   auto const topic_name = google::cloud::internal::GetEnv(
@@ -49,7 +46,10 @@ TEST_F(GrpcNotificationIntegrationTest, NotificationCRUD) {
   ASSERT_THAT(topic_name, Not(IsEmpty()));
 
   std::string bucket_name = MakeRandomBucketName();
-  auto client = MakeIntegrationTestClient(MakeBucketTestOptions());
+  // Notification operations are unimplemented in gRPC, so force the test to use
+  // JSON.
+  auto client =
+      MakeIntegrationTestClient(/*use_grpc=*/false, MakeBucketTestOptions());
 
   auto metadata =
       client.CreateBucketForProject(bucket_name, project_id, BucketMetadata());
