@@ -261,7 +261,11 @@ void CreateTopicWithCloudStorageIngestion(
       std::cout << "The topic already exists\n";
       return;
     }
-    if (!topic) throw std::move(topic).status();
+    if (!topic) {
+      std::cout << "Failed to create GCS topic: " << topic.status()
+                << std::endl;
+      throw std::move(topic).status();
+    }
 
     std::cout << "The topic was successfully created: " << topic->DebugString()
               << "\n";
@@ -668,21 +672,20 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning CreateTopicWithKinesisIngestion() sample"
             << std::endl;
 
-  CreateTopicWithKinesisIngestion(
-      topic_admin_client,
-      {project_id, kinesis_topic_id, kinesis_stream_arn, kinesis_consumer_arn,
-       kinesis_aws_role_arn, kinesis_gcp_service_account});
-  cleanup.Defer([topic_admin_client, project_id, kinesis_topic_id]() mutable {
-    std::cout << "\nRunning DeleteTopic() sample" << std::endl;
-    DeleteTopic(topic_admin_client, {project_id, kinesis_topic_id});
-  });
+  // CreateTopicWithKinesisIngestion(
+  //     topic_admin_client,
+  //     {project_id, kinesis_topic_id, kinesis_stream_arn, kinesis_consumer_arn,
+  //      kinesis_aws_role_arn, kinesis_gcp_service_account});
+  // cleanup.Defer([topic_admin_client, project_id, kinesis_topic_id]() mutable {
+  //   std::cout << "\nRunning DeleteTopic() sample" << std::endl;
+  //   DeleteTopic(topic_admin_client, {project_id, kinesis_topic_id});
+  // });
 
-  std::cout << "\nRunning CreateTopicWithCloudStorage() sample"
-            << std::endl;
+  std::cout << "\nRunning CreateTopicWithCloudStorage() sample" << std::endl;
 
   CreateTopicWithCloudStorageIngestion(
       topic_admin_client,
-      {project_id, cloud_storage_topic_id, cloud_storage_bucket, "text", "\n",
+      {project_id, cloud_storage_topic_id, "mikeprieto-bucket", "text", "\n",
        "**.txt", "2024-09-26T00:00:00Z"});
   std::cout << "\nAfter Running CreateTopicWithCloudStorage() sample"
             << std::endl;
@@ -694,12 +697,12 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   std::cout << "\nRunning UpdateTopicType() sample" << std::endl;
 
-  UpdateTopicType(
-      topic_admin_client,
-      {project_id, kinesis_topic_id, kinesis_stream_arn, kinesis_consumer_arn,
-       kinesis_aws_role_arn, kinesis_updated_gcp_service_account});
+  // UpdateTopicType(
+  //     topic_admin_client,
+  //     {project_id, kinesis_topic_id, kinesis_stream_arn, kinesis_consumer_arn,
+  //      kinesis_aws_role_arn, kinesis_updated_gcp_service_account});
 
-  std::cout << "\nRunning GetTopic() sample" << std::endl;
+  // std::cout << "\nRunning GetTopic() sample" << std::endl;
   GetTopic(topic_admin_client, {project_id, topic_id});
 
   std::cout << "\nRunning UpdateTopic() sample" << std::endl;
