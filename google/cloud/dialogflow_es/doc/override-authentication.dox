@@ -21,9 +21,11 @@ Follow these links to find examples for other \c *Client classes:
 - [\c dialogflow_es::ConversationProfilesClient](@ref dialogflow_es::ConversationProfilesClient-service-account-snippet)
 - [\c dialogflow_es::ConversationsClient](@ref dialogflow_es::ConversationsClient-service-account-snippet)
 - [\c dialogflow_es::DocumentsClient](@ref dialogflow_es::DocumentsClient-service-account-snippet)
+- [\c dialogflow_es::EncryptionSpecServiceClient](@ref dialogflow_es::EncryptionSpecServiceClient-service-account-snippet)
 - [\c dialogflow_es::EntityTypesClient](@ref dialogflow_es::EntityTypesClient-service-account-snippet)
 - [\c dialogflow_es::EnvironmentsClient](@ref dialogflow_es::EnvironmentsClient-service-account-snippet)
 - [\c dialogflow_es::FulfillmentsClient](@ref dialogflow_es::FulfillmentsClient-service-account-snippet)
+- [\c dialogflow_es::GeneratorsClient](@ref dialogflow_es::GeneratorsClient-service-account-snippet)
 - [\c dialogflow_es::IntentsClient](@ref dialogflow_es::IntentsClient-service-account-snippet)
 - [\c dialogflow_es::KnowledgeBasesClient](@ref dialogflow_es::KnowledgeBasesClient-service-account-snippet)
 - [\c dialogflow_es::ParticipantsClient](@ref dialogflow_es::ParticipantsClient-service-account-snippet)
@@ -95,6 +97,12 @@ guide for more details.
 
 */
 
+/*! @page dialogflow_es::EncryptionSpecServiceClient-service-account-snippet Override dialogflow_es::EncryptionSpecServiceClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_es/samples/encryption_spec_client_samples.cc with-service-account
+
+*/
+
 /*! @page dialogflow_es::EntityTypesClient-service-account-snippet Override dialogflow_es::EntityTypesClient Authentication Defaults
 
 @snippet google/cloud/dialogflow_es/samples/entity_types_client_samples.cc with-service-account
@@ -110,6 +118,12 @@ guide for more details.
 /*! @page dialogflow_es::FulfillmentsClient-service-account-snippet Override dialogflow_es::FulfillmentsClient Authentication Defaults
 
 @snippet google/cloud/dialogflow_es/samples/fulfillments_client_samples.cc with-service-account
+
+*/
+
+/*! @page dialogflow_es::GeneratorsClient-service-account-snippet Override dialogflow_es::GeneratorsClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_es/samples/generators_client_samples.cc with-service-account
 
 */
 
