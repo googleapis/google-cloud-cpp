@@ -261,11 +261,7 @@ void CreateTopicWithCloudStorageIngestion(
       std::cout << "The topic already exists\n";
       return;
     }
-    if (!topic) {
-      std::cout << "Failed to create GCS topic: " << topic.status()
-                << std::endl;
-      throw std::move(topic).status();
-    }
+    if (!topic) throw std::move(topic).status();
 
     std::cout << "The topic was successfully created: " << topic->DebugString()
               << "\n";
@@ -681,7 +677,8 @@ void AutoRun(std::vector<std::string> const& argv) {
     DeleteTopic(topic_admin_client, {project_id, kinesis_topic_id});
   });
 
-  std::cout << "\nRunning CreateTopicWithCloudStorage() sample" << std::endl;
+  std::cout << "\nRunning CreateTopicWithCloudStorage() sample"
+            << std::endl;
 
   ignore_emulator_failures(
       [&] {

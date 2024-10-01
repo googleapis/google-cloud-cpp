@@ -33,11 +33,8 @@ else
   # This repository is thrown away at the end of the build.
   io::log "Creating a git repository"
   git init --initial-branch=ephemeral-branch
-  git config --global --add safe.directory /workspace
-  git config --global user.email "mikeprieto@google.com"
-  git config --global user.name "Mike Prieto"
-   ## git config --local user.email "ephemeral@fake"
-  # git config --local user.name "ephemeral"
+  git config --local user.email "ephemeral@fake"
+  git config --local user.name "ephemeral"
   git add .
   git commit --quiet -m "ephemeral: added all files"
 fi
