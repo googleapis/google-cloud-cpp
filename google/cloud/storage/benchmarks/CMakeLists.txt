@@ -39,7 +39,7 @@ target_link_libraries(
     storage_benchmarks
     PUBLIC storage_client_testing
            google_cloud_cpp_testing
-           google-cloud-cpp::experimental-storage_grpc
+           google-cloud-cpp::storage_grpc
            google-cloud-cpp::storage
            google-cloud-cpp::grpc_utils
            google-cloud-cpp::storage_protos
@@ -136,6 +136,5 @@ target_compile_features(async_throughput_benchmark PRIVATE cxx_std_20)
 # `google/cloud/*`. We cannot apply those recommendations because the headers
 # are also used with C++14.
 set_target_properties(async_throughput_benchmark PROPERTIES CXX_CLANG_TIDY "")
-target_link_libraries(
-    async_throughput_benchmark
-    PRIVATE storage_benchmarks google-cloud-cpp::experimental-storage_grpc)
+target_link_libraries(async_throughput_benchmark
+                      PRIVATE storage_benchmarks google-cloud-cpp::storage_grpc)

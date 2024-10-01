@@ -38,16 +38,16 @@ auto constexpr kMinMetricsPeriod = std::chrono::seconds(5);
 auto constexpr kDefaultMetricsPeriod = std::chrono::seconds(60);
 
 int DefaultGrpcNumChannels(std::string const& endpoint) {
-  // When using DirectPath the gRPC library already does load balancing across
-  // multiple sockets, it makes little sense to perform additional load
+  // When using Direct Connectivity the gRPC library already does load balancing
+  // across multiple sockets, it makes little sense to perform additional load
   // balancing in the client library.
   if (absl::StartsWith(endpoint, "google-c2p:///") ||
       absl::StartsWith(endpoint, "google-c2p-experimental:///")) {
     return 1;
   }
-  // When not using DirectPath, there are limits to the bandwidth per channel,
-  // we want to create more channels to avoid hitting said limits.  The value
-  // here is mostly a guess: we know 1 channel is too little for most
+  // When not using Direct Connectivity, there are limits to the bandwidth per
+  // channel, we want to create more channels to avoid hitting said limits.  The
+  // value here is mostly a guess: we know 1 channel is too little for most
   // applications, but the ideal number depends on the workload.  The
   // application can always override this default, so it is not important to
   // have it exactly right.
@@ -95,8 +95,8 @@ Options DefaultOptionsGrpc(
   auto const ep = google::cloud::internal::UniverseDomainEndpoint(
       "storage.googleapis.com", options);
 
-  // Set default to direct path if we can detect we are running in GCP and
-  // there is not already a set endpoint or unviverse domain endpoint.
+  // Set default to direct connectivity if we can detect we are running in GCP
+  // and there is not already a set endpoint or unviverse domain endpoint.
   if ((!options.has<EndpointOption>() &&
        !options.has<internal::UniverseDomainOption>()) &&
       (gcp_detector->IsGoogleCloudBios() ||

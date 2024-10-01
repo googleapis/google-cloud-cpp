@@ -7,13 +7,6 @@ When using GCS from Google Compute Engine (GCE) this plugin can enable higher
 total throughput across large workloads that run on hundreds or thousands of
 VMs.
 
-@warning At present, GCS gRPC is GA with Allowlist. To access this API,
-  kindly contact the Google Cloud Storage gRPC team at
-  gcs-grpc-contact@google.com with a list of GCS buckets you would like to
-  Allowlist. Please note that while the **service** is GA (with Allowlist),
-  the client library features remain experimental and subject to change
-  without notice.
-
 ## Release Notes
 
 There are some features that the gRPC plugin does not implement or implements
@@ -25,9 +18,9 @@ differently from the REST-based implementation.
 1. To override the default endpoint you should use
    [`EndpointOption`](@ref google::cloud::EndpointOption) instead of
    [`RestEndpointOption`](@ref google::cloud::storage::RestEndpointOption).
-1. The default endpoint (`storage.googleapis.com`) works from any hosting
+1. The cloud path endpoint (`storage.googleapis.com`) works from any hosting
    environment (on-prem, GKE, GCE, other cloud providers, etc.). For best
-   performance on GCE or GKE consider using
+   performance on GCE or GKE consider we default to the direct connectivity endpoint
    `google-c2p:///storage.googleapis.com`.
 1. The [`Fields`](@ref google::cloud::storage::Fields) request parameter is
    passed verbatim to the backend. Some fields have different names in gRPC, and
@@ -71,18 +64,18 @@ used as before:
 
 If you are using CMake to compile your application, then you need to change the
 `target_link_libraries()` command to use
-`google-cloud-cpp::%experimental-storage_grpc` instead
+`google-cloud-cpp::%storage_grpc` instead
 of `google-cloud-cpp::%storage`. For example, our quickstart program for gRPC
 uses:
 
 ```{.cmake}
 add_executable(quickstart_grpc quickstart_grpc.cc)
-target_link_libraries(quickstart_grpc google-cloud-cpp::experimental-storage_grpc)
+target_link_libraries(quickstart_grpc google-cloud-cpp::storage_grpc)
 ```
 
 If you are using Bazel to compile your application, then you need to change
 the dependencies from `@google_cloud_cpp//:storage`
-to `@google_cloud_cpp//:experimental-storage_grpc`.
+to `@google_cloud_cpp//:storage_grpc`.
 For example, our `grpc/quickstart uses:
 
 ```{.py}
@@ -92,7 +85,7 @@ cc_binary(
         "quickstart_grpc.cc",
     ],
     deps = [
-        "@google_cloud_cpp//:experimental-storage_grpc",
+        "@google_cloud_cpp//:storage_grpc",
     ],
 )
 ```

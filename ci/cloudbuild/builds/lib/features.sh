@@ -41,7 +41,7 @@ function features::always_build() {
     # library instrumentation, and the GCP exporters.
     opentelemetry
     # Enable storage_grpc in most builds.
-    experimental-storage_grpc
+    storage_grpc
   )
   printf "%s\n" "${list[@]}" | sort -u
 }
@@ -62,7 +62,6 @@ function features::libraries() {
 function features::_internal_extra() {
   local list=(
     experimental-bigquery_rest
-    experimental-storage_grpc
     opentelemetry
   )
   printf "%s\n" "${list[@]}"
