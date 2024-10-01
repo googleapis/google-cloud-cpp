@@ -18,7 +18,7 @@
 ALWAYS_RESET_CMAKE_CACHE=NO
 
 # By default compile most features.
-ENABLED_FEATURES=__ga_libraries__,__experimental_libraries__,opentelemetry,experimental-storage_grpc
+ENABLED_FEATURES=__ga_libraries__,__experimental_libraries__,opentelemetry
 
 # By default compile all the code.
 BAZEL_TARGETS=("...")
