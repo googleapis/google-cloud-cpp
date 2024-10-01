@@ -28,6 +28,7 @@ export CXX=clang++
 if [[ -n "${UD_SA_KEY_FILE}" ]]; then
   ud::bazel_run //google/cloud/universe_domain/demo:kms_demo \
     "${UD_PROJECT}" "${UD_REGION}" "${UD_SA_KEY_FILE}"
+  ud::bazel_test //google/cloud/storage/tests:universe_domain_integration_test
 else
   source module ci/etc/integration-tests-config.sh
   bazel run -- //google/cloud/universe_domain/demo:kms_demo \
