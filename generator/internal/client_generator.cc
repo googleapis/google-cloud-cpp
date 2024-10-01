@@ -32,10 +32,12 @@ ClientGenerator::ClientGenerator(
     google::protobuf::ServiceDescriptor const* service_descriptor,
     VarsDictionary service_vars,
     std::map<std::string, VarsDictionary> service_method_vars,
-    google::protobuf::compiler::GeneratorContext* context)
+    google::protobuf::compiler::GeneratorContext* context,
+    std::vector<MixinMethod> const& mixin_methods)
     : ServiceCodeGenerator("client_header_path", "client_cc_path",
                            service_descriptor, std::move(service_vars),
-                           std::move(service_method_vars), context) {
+                           std::move(service_method_vars), context,
+                           mixin_methods) {
   // Remember if there are methods from google.iam.v1.GetIamPolicyRequest and
   // google.iam.v1.SetIamPolicyRequest to google.iam.v1.Policy with signature
   // extensions. If so, we'll generate a "set" wrapper method to help prevent

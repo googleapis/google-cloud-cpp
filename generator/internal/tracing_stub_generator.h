@@ -36,7 +36,8 @@ class TracingStubGenerator : public StubGeneratorBase {
       google::protobuf::ServiceDescriptor const* service_descriptor,
       VarsDictionary service_vars,
       std::map<std::string, VarsDictionary> service_method_vars,
-      google::protobuf::compiler::GeneratorContext* context);
+      google::protobuf::compiler::GeneratorContext* context,
+      std::vector<MixinMethod> const& mixin_methods);
 
   ~TracingStubGenerator() override = default;
 

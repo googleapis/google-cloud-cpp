@@ -59,12 +59,14 @@ ServiceCodeGenerator::ServiceCodeGenerator(
     google::protobuf::ServiceDescriptor const* service_descriptor,
     VarsDictionary service_vars,
     std::map<std::string, VarsDictionary> service_method_vars,
-    google::protobuf::compiler::GeneratorContext* context)
+    google::protobuf::compiler::GeneratorContext* context,
+    std::vector<MixinMethod> const& mixin_methods)
     : service_descriptor_(service_descriptor),
       service_vars_(std::move(service_vars)),
       service_method_vars_(std::move(service_method_vars)),
       header_(context, service_vars_[header_path_key]),
-      cc_(context, service_vars_[cc_path_key]) {
+      cc_(context, service_vars_[cc_path_key]),
+      mixin_methods_(mixin_methods) {
   assert(service_descriptor != nullptr);
   assert(context != nullptr);
   SetVars(service_vars_[header_path_key]);
@@ -79,11 +81,13 @@ ServiceCodeGenerator::ServiceCodeGenerator(
     google::protobuf::ServiceDescriptor const* service_descriptor,
     VarsDictionary service_vars,
     std::map<std::string, VarsDictionary> service_method_vars,
-    google::protobuf::compiler::GeneratorContext* context)
+    google::protobuf::compiler::GeneratorContext* context,
+    std::vector<MixinMethod> const& mixin_methods)
     : service_descriptor_(service_descriptor),
       service_vars_(std::move(service_vars)),
       service_method_vars_(std::move(service_method_vars)),
-      header_(context, service_vars_[header_path_key]) {
+      header_(context, service_vars_[header_path_key]),
+      mixin_methods_(mixin_methods) {
   assert(service_descriptor != nullptr);
   assert(context != nullptr);
   SetVars(service_vars_[header_path_key]);
@@ -474,6 +478,10 @@ void ServiceCodeGenerator::SetMethods() {
       async_methods_.emplace_back(*method);
     }
   }
+
+  for (auto const& mixin_method : mixin_methods_) {
+    methods_.emplace_back(mixin_method.method.get());
+  }
 }
 
 std::string ServiceCodeGenerator::GetPbIncludeByTransport() const {
@@ -481,9 +489,22 @@ std::string ServiceCodeGenerator::GetPbIncludeByTransport() const {
   return vars("proto_header_path");
 }
 
+std::vector<std::string> ServiceCodeGenerator::GetMixinPbIncludeByTransport()
+    const {
+  std::string const& mixin_pb_header_paths =
+      HasGenerateGrpcTransport() ? vars("mixin_proto_grpc_header_paths")
+                                 : vars("mixin_proto_header_paths");
+
+  return absl::StrSplit(mixin_pb_header_paths, ',');
+}
+
 bool ServiceCodeGenerator::IsDiscoveryDocumentProto() const {
   auto iter = service_vars_.find("proto_file_source");
   return (iter != service_vars_.end() && iter->second == "discovery_document");
+}
+
+std::vector<MixinMethod> const& ServiceCodeGenerator::MixinMethods() const {
+  return mixin_methods_;
 }
 
 }  // namespace generator_internal
