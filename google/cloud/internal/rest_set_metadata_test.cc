@@ -25,6 +25,7 @@ namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::Pair;
 using ::testing::UnorderedElementsAre;
@@ -69,6 +70,14 @@ TEST(RestContextTest, SetMetadataFull) {
                   Pair("x-server-timeout", ElementsAre("1.050")),
                   Pair("custom-header-1", ElementsAre("v1")),
                   Pair("custom-header-2", ElementsAre("v2"))));
+}
+
+TEST(RestContextTest, Regression14745) {
+  RestContext lhs;
+  SetMetadata(lhs, Options{}.set<ApiKeyOption>("api-key"), {},
+              "api-client-header");
+  EXPECT_THAT(lhs.headers(),
+              Contains(Pair("x-goog-api-key", ElementsAre("api-key"))));
 }
 
 }  // namespace
