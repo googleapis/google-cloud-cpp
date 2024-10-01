@@ -73,7 +73,6 @@ auto TestOptions() {
 TEST_F(UniverseDomainIntegrationTest, BucketAndObjectCRUD) {
   auto region = GetEnv("UD_REGION").value_or("");
   std::cout << "Region: " << region << std::endl;
-  std::cout << "File Name: " << GetEnv("UD_SA_KEY_FILE").value_or("").empty() << std::endl;
   if (GetEnv("UD_SA_KEY_FILE").value_or("").empty() ||
       GetEnv("UD_PROJECT").value_or("").empty() || region.empty())
     GTEST_SKIP();
