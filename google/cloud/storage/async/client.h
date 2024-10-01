@@ -35,6 +35,12 @@
 
 namespace google {
 namespace cloud {
+/**
+ * Contains experimental features for the GCS C++ Client Library.
+ *
+ * @warning The types, functions, aliases, and objects in this namespace are
+ *   subject to change without notice.
+ */
 namespace storage_experimental {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
