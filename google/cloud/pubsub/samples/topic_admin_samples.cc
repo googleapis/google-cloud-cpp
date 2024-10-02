@@ -219,9 +219,9 @@ void CreateTopicWithCloudStorageIngestion(
   namespace pubsub = ::google::cloud::pubsub;
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   [](pubsub_admin::TopicAdminClient client, std::string project_id,
-     std::string topic_id, std::string bucket, std::string input_format,
+     std::string topic_id, std::string bucket, std::string const& input_format,
      std::string text_delimiter, std::string match_glob,
-     std::string minimum_object_create_time) {
+     std::string const& minimum_object_create_time) {
     google::pubsub::v1::Topic request;
     request.set_name(
         pubsub::Topic(std::move(project_id), std::move(topic_id)).FullName());

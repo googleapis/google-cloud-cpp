@@ -13,10 +13,10 @@
 // limitations under the License.
 
 #include "google/cloud/iam/iam_policy_client.h"
+#include "google/cloud/pubsub/admin/subscription_admin_client.h"
+#include "google/cloud/pubsub/admin/topic_admin_client.h"
 #include "google/cloud/pubsub/samples/pubsub_samples_common.h"
-#include "google/cloud/pubsub/subscription_admin_client.h"
 #include "google/cloud/pubsub/subscription_builder.h"
-#include "google/cloud/pubsub/topic_admin_client.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/example_driver.h"
@@ -201,6 +201,7 @@ void TestSubscriptionPermissions(std::vector<std::string> const& argv) {
 void AutoRun(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
   namespace pubsub = ::google::cloud::pubsub;
+  namespace pubsub_admin = ::google::cloud::pubsub_admin;
   using ::google::cloud::pubsub::examples::RandomSubscriptionId;
   using ::google::cloud::pubsub::examples::RandomTopicId;
 
@@ -219,21 +220,22 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto const topic_id = RandomTopicId(generator);
   auto const subscription_id = RandomSubscriptionId(generator);
   auto topic_admin_client =
-      pubsub::TopicAdminClient(pubsub::MakeTopicAdminConnection());
-  auto subscription_admin_client = pubsub::SubscriptionAdminClient(
-      pubsub::MakeSubscriptionAdminConnection());
+      pubsub_admin::TopicAdminClient(pubsub_admin::MakeTopicAdminConnection());
+  auto subscription_admin_client = pubsub_admin::SubscriptionAdminClient(
+      pubsub_admin::MakeSubscriptionAdminConnection());
 
   std::cout << "\nCreate topic (" << topic_id << ")" << std::endl;
   auto topic = topic_admin_client
-                   .CreateTopic(pubsub::TopicBuilder(
-                       pubsub::Topic(project_id, topic_id)))
+                   .CreateTopic(pubsub::Topic(project_id, topic_id).FullName())
                    .value();
 
   std::cout << "\nCreate subscription (" << subscription_id << ")" << std::endl;
   auto subscription =
       subscription_admin_client
-          .CreateSubscription(pubsub::Topic(project_id, topic_id),
-                              pubsub::Subscription(project_id, subscription_id))
+          .CreateSubscription(
+              pubsub::Topic(project_id, topic_id).FullName(),
+              pubsub::Subscription(project_id, subscription_id).FullName(), {},
+              {})
           .value();
 
   std::cout << "\nRunning GetTopicPolicy() sample" << std::endl;
@@ -266,10 +268,11 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   std::cout << "\nCleanup subscription" << std::endl;
   (void)subscription_admin_client.DeleteSubscription(
-      pubsub::Subscription(project_id, subscription_id));
+      pubsub::Subscription(project_id, subscription_id).FullName());
 
   std::cout << "\nCleanup topic" << std::endl;
-  (void)topic_admin_client.DeleteTopic(pubsub::Topic(project_id, topic_id));
+  (void)topic_admin_client.DeleteTopic(
+      pubsub::Topic(project_id, topic_id).FullName());
 
   std::cout << "\nAutoRun done" << std::endl;
 }
