@@ -68,6 +68,10 @@ StatusOr<std::unique_ptr<RestResponse>> EndResponseSpan(
       span->SetAttribute(name, kv.second.front().substr(0, 32));
       continue;
     }
+    if (absl::EqualsIgnoreCase(kv.first, "x-goog-api-key")) {
+      span->SetAttribute(name, kv.second.front().substr(0, 16) + "...");
+      continue;
+    }
     span->SetAttribute(name, kv.second.front());
   }
   if (!request_result || !(*request_result)) {

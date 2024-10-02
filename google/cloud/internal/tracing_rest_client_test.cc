@@ -278,6 +278,48 @@ TEST(TracingRestClient, WithRestContextDetails) {
                               EventNamed("gl-cpp.curl.ssl.handshake")))));
 }
 
+TEST(TracingRestClient, CensorsAuthFields) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto impl = std::make_unique<MockRestClient>();
+  EXPECT_CALL(*impl, Delete).WillOnce([](RestContext&, RestRequest const&) {
+    auto response = std::make_unique<MockRestResponse>();
+    EXPECT_CALL(*response, StatusCode)
+        .WillRepeatedly(Return(HttpStatusCode::kOk));
+    EXPECT_CALL(*response, Headers).WillRepeatedly(Return(MockHeaders()));
+    EXPECT_CALL(std::move(*response), ExtractPayload).WillOnce([] {
+      return MakeMockHttpPayloadSuccess(MockContents());
+    });
+    return std::unique_ptr<RestResponse>(std::move(response));
+  });
+
+  auto constexpr kUrl = "https://storage.googleapis.com/storage/v1/b/my-bucket";
+  RestRequest request(kUrl);
+
+  auto client = MakeTracingRestClient(std::move(impl));
+  rest_internal::RestContext context;
+  context.AddHeader("authorization", "bearer: ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+  context.AddHeader("x-goog-api-key", "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+
+  auto r = client->Delete(context, request);
+  ASSERT_STATUS_OK(r);
+  auto response = *std::move(r);
+  ASSERT_THAT(response, NotNull());
+  EXPECT_THAT(response->StatusCode(), Eq(HttpStatusCode::kOk));
+  EXPECT_THAT(response->Headers(), ElementsAreArray(MockHeaders()));
+  auto contents = ReadAll(std::move(*response).ExtractPayload());
+  EXPECT_THAT(contents, IsOkAndHolds(MockContents()));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      Contains(SpanHasAttributes(
+          OTelAttribute<std::string>("http.request.header.authorization",
+                                     "bearer: ABCDEFGHIJKLMNOPQRSTUVWX"),
+          OTelAttribute<std::string>("http.request.header.x-goog-api-key",
+                                     "ABCDEFGHIJKLMNOP..."))));
+}
+
 TEST(TracingRestClient, CachedConnection) {
   auto span_catcher = InstallSpanCatcher();
 
