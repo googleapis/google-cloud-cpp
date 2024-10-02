@@ -521,8 +521,7 @@ int RunAll(bool emulator) {
   }
 
   auto random_instance = google::cloud::spanner_testing::PickRandomInstance(
-      generator, project_id,
-      "labels.samples:yes AND NOT name:/instances/test-instance-mr-");
+      generator, project_id, "labels.edition:enterprise");
   if (!random_instance) {
     throw std::runtime_error("Cannot find an instance to run the samples: " +
                              random_instance.status().message());
