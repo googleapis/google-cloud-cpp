@@ -59,8 +59,8 @@ std::shared_ptr<grpc::Channel> CreateGrpcChannel(
 std::shared_ptr<SubscriberStub> CreateDefaultSubscriberStub(
     std::shared_ptr<grpc::Channel> channel) {
   return std::make_shared<DefaultSubscriberStub>(
-      google::pubsub::v1::Subscriber::NewStub(std::move(channel)),
-      google::iam::v1::IAMPolicy::NewStub(std::move(channel)));
+      google::pubsub::v1::Subscriber::NewStub(channel),
+      google::iam::v1::IAMPolicy::NewStub(channel));
 }
 
 std::shared_ptr<SubscriberStub> MakeRoundRobinSubscriberStub(
