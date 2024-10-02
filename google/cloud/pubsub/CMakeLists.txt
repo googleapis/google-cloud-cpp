@@ -27,7 +27,8 @@ set(DOXYGEN_EXCLUDE_SYMBOLS
 
 include(GoogleCloudCppDoxygen)
 google_cloud_cpp_doxygen_targets("pubsub" DEPENDS cloud-docs
-                                 google-cloud-cpp::pubsub_protos)
+                                 google-cloud-cpp::pubsub_protos
+                                 google-cloud-cpp::iam_protos)
 if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES AND TARGET pubsub-docs)
     add_dependencies(pubsub-docs pubsub_samples_protos)
 endif ()
@@ -294,7 +295,7 @@ target_include_directories(
 target_link_libraries(
     google_cloud_cpp_pubsub
     PUBLIC google-cloud-cpp::grpc_utils google-cloud-cpp::common
-           google-cloud-cpp::pubsub_protos)
+           google-cloud-cpp::pubsub_protos google-cloud-cpp::iam_protos)
 google_cloud_cpp_add_common_options(google_cloud_cpp_pubsub)
 set_target_properties(
     google_cloud_cpp_pubsub
@@ -324,6 +325,7 @@ install(
 # GNUInstallDirs
 install(
     TARGETS google_cloud_cpp_pubsub google_cloud_cpp_pubsub_protos
+            google_cloud_cpp_iam_protos
     EXPORT pubsub-targets
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             COMPONENT google_cloud_cpp_runtime
@@ -343,6 +345,7 @@ google_cloud_cpp_add_pkgconfig(
     "google_cloud_cpp_grpc_utils"
     "google_cloud_cpp_common"
     "google_cloud_cpp_pubsub_protos"
+    "google_cloud_cpp_iam_protos"
     "absl_str_format")
 
 # Create and install the CMake configuration files.
@@ -441,6 +444,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         pubsub_client_testing
         PUBLIC google-cloud-cpp::pubsub google-cloud-cpp::grpc_utils
                google-cloud-cpp::common google-cloud-cpp::pubsub_protos
+               google-cloud-cpp::iam_protos
                GTest::gmock GTest::gtest)
     google_cloud_cpp_add_common_options(pubsub_client_testing)
     target_compile_options(pubsub_client_testing
