@@ -21,6 +21,7 @@
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
+#include <google/iam/v1/iam_policy.grpc.pb.h>
 #include <google/pubsub/v1/pubsub.grpc.pb.h>
 #include <memory>
 
@@ -72,6 +73,15 @@ class SubscriptionAdminConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency Seek(
       google::pubsub::v1::SeekRequest const& request);
+
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request);
 };
 
 std::unique_ptr<SubscriptionAdminConnectionIdempotencyPolicy>

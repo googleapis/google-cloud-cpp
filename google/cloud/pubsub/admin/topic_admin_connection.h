@@ -205,6 +205,15 @@ class TopicAdminConnection {
   virtual StatusOr<google::pubsub::v1::DetachSubscriptionResponse>
   DetachSubscription(
       google::pubsub::v1::DetachSubscriptionRequest const& request);
+
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
+
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
+
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 };
 
 /**

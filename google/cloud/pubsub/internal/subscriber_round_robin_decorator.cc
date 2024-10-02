@@ -124,6 +124,25 @@ StatusOr<google::pubsub::v1::SeekResponse> SubscriberRoundRobin::Seek(
   return Child()->Seek(context, options, request);
 }
 
+StatusOr<google::iam::v1::Policy> SubscriberRoundRobin::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return Child()->SetIamPolicy(context, options, request);
+}
+
+StatusOr<google::iam::v1::Policy> SubscriberRoundRobin::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  return Child()->GetIamPolicy(context, options, request);
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+SubscriberRoundRobin::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  return Child()->TestIamPermissions(context, options, request);
+}
+
 future<Status> SubscriberRoundRobin::AsyncModifyAckDeadline(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

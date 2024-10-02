@@ -25,6 +25,8 @@
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
+#include <google/iam/v1/iam_policy.grpc.pb.h>
+#include <google/pubsub/v1/pubsub.grpc.pb.h>
 
 namespace google {
 namespace cloud {
@@ -57,16 +59,18 @@ std::shared_ptr<grpc::Channel> CreateGrpcChannel(
 std::shared_ptr<SubscriberStub> CreateDefaultSubscriberStub(
     std::shared_ptr<grpc::Channel> channel) {
   return std::make_shared<DefaultSubscriberStub>(
-      google::pubsub::v1::Subscriber::NewStub(std::move(channel)));
+      google::pubsub::v1::Subscriber::NewStub(std::move(channel)),
+      google::iam::v1::IAMPolicy::NewStub(std::move(channel)));
 }
 
 std::shared_ptr<SubscriberStub> MakeRoundRobinSubscriberStub(
     google::cloud::CompletionQueue cq, Options const& options) {
-  return CreateDecoratedStubs(
-      std::move(cq), options, [](std::shared_ptr<grpc::Channel> c) {
-        return std::make_shared<DefaultSubscriberStub>(
-            google::pubsub::v1::Subscriber::NewStub(std::move(c)));
-      });
+  return CreateDecoratedStubs(std::move(cq), options,
+                              [](std::shared_ptr<grpc::Channel> c) {
+                                return std::make_shared<DefaultSubscriberStub>(
+                                    google::pubsub::v1::Subscriber::NewStub(c),
+                                    google::iam::v1::IAMPolicy::NewStub(c));
+                              });
 }
 
 std::shared_ptr<SubscriberStub> MakeTestSubscriberStub(

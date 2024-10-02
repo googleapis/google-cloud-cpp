@@ -121,6 +121,22 @@ class MockSubscriberStub : public pubsub_internal::SubscriberStub {
               (grpc::ClientContext&, Options const&,
                google::pubsub::v1::SeekRequest const&),
               (override));
+
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+              (grpc::ClientContext&, Options const&,
+               google::iam::v1::SetIamPolicyRequest const&),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+              (grpc::ClientContext&, Options const&,
+               google::iam::v1::GetIamPolicyRequest const&),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
+              TestIamPermissions,
+              (grpc::ClientContext&, Options const&,
+               google::iam::v1::TestIamPermissionsRequest const&),
+              (override));
 };
 
 class MockAsyncPullStream : public MockSubscriberStub::StreamingPullStream {
