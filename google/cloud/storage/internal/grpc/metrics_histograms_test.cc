@@ -34,7 +34,7 @@ TEST(GrpcMetricsExporter, MakeLatencyHistogramBoundaries) {
   // First verify the histogram meets the size constraints imposed by GCM
   // (Google Cloud Monitoring)
   ASSERT_THAT(boundaries, Not(IsEmpty()));
-  ASSERT_THAT(boundaries, SizeIs(Le(200)));
+  ASSERT_THAT(boundaries, SizeIs(Le(200U)));
   // The boundaries should be sorted in increasing value.
   auto sorted = boundaries;
   std::sort(sorted.begin(), sorted.end());
@@ -55,7 +55,7 @@ TEST(GrpcMetricsExporter, MakeSizeHistogramBoundaries) {
   // First verify the histogram meets the size constraints imposed by GCM
   // (Google Cloud Monitoring)
   ASSERT_THAT(boundaries, Not(IsEmpty()));
-  ASSERT_THAT(boundaries, SizeIs(Le(200)));
+  ASSERT_THAT(boundaries, SizeIs(Le(200U)));
   // The boundaries should be sorted in increasing value.
   auto sorted = boundaries;
   std::sort(sorted.begin(), sorted.end());

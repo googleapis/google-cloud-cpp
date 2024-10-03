@@ -23,6 +23,8 @@
 #include "google/cloud/project.h"
 #include "google/cloud/testing_util/example_driver.h"
 #include "absl/strings/match.h"
+#include <google/protobuf/timestamp.pb.h>
+#include <google/protobuf/util/time_util.h>
 #include <sstream>
 
 using google::cloud::pubsub::examples::Cleanup;
@@ -208,6 +210,65 @@ void CreateTopicWithKinesisIngestion(
   // [END pubsub_create_topic_with_kinesis_ingestion]
   (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3),
    argv.at(4), argv.at(5));
+}
+
+void CreateTopicWithCloudStorageIngestion(
+    google::cloud::pubsub_admin::TopicAdminClient client,
+    std::vector<std::string> const& argv) {
+  //! [pubsub_create_topic_with_cloud_storage_ingestion]
+  namespace pubsub = ::google::cloud::pubsub;
+  namespace pubsub_admin = ::google::cloud::pubsub_admin;
+  [](pubsub_admin::TopicAdminClient client, std::string project_id,
+     std::string topic_id, std::string bucket, std::string input_format,
+     std::string text_delimiter, std::string match_glob,
+     std::string minimum_object_create_time) {
+    google::pubsub::v1::Topic request;
+    request.set_name(
+        pubsub::Topic(std::move(project_id), std::move(topic_id)).FullName());
+    auto* cloud_storage = request.mutable_ingestion_data_source_settings()
+                              ->mutable_cloud_storage();
+    cloud_storage->set_bucket(bucket);
+    if (input_format == "text") {
+      cloud_storage->mutable_text_format()->set_delimiter(text_delimiter);
+    } else if (input_format == "avro") {
+      cloud_storage->mutable_avro_format();
+    } else if (input_format == "pubsub_avro") {
+      cloud_storage->mutable_pubsub_avro_format();
+    } else {
+      std::cout << "input_format must be in ('text', 'avro', 'pubsub_avro'); "
+                   "got value: "
+                << input_format << std::endl;
+      return;
+    }
+
+    if (!match_glob.empty()) {
+      cloud_storage->set_match_glob(match_glob);
+    }
+
+    if (!minimum_object_create_time.empty()) {
+      google::protobuf::Timestamp timestamp;
+      if (!google::protobuf::util::TimeUtil::FromString(
+              minimum_object_create_time,
+              cloud_storage->mutable_minimum_object_create_time())) {
+        std::cout << "Invalid minimum object create time: "
+                  << minimum_object_create_time << std::endl;
+      }
+    }
+
+    auto topic = client.CreateTopic(request);
+    // Note that kAlreadyExists is a possible error when the library retries.
+    if (topic.status().code() == google::cloud::StatusCode::kAlreadyExists) {
+      std::cout << "The topic already exists\n";
+      return;
+    }
+    if (!topic) throw std::move(topic).status();
+
+    std::cout << "The topic was successfully created: " << topic->DebugString()
+              << "\n";
+  }
+  //! [pubsub_create_topic_with_cloud_storage_ingestion]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3),
+   argv.at(4), argv.at(5), argv.at(6));
 }
 
 void GetTopic(google::cloud::pubsub_admin::TopicAdminClient client,
@@ -564,6 +625,9 @@ void AutoRun(std::vector<std::string> const& argv) {
       "fake-service-account@fake-gcp-project.iam.gserviceaccount.com";
   auto const* const kinesis_updated_gcp_service_account =
       "fake-update-service-account@fake-gcp-project.iam.gserviceaccount.com";
+  auto const cloud_storage_topic_id =
+      "cloud-storage-" + RandomTopicId(generator) + "_ingestion_topic";
+  auto const cloud_storage_bucket = project_id + "-pubsub-bucket";
 
   using ::google::cloud::StatusCode;
   auto ignore_emulator_failures =
@@ -613,7 +677,26 @@ void AutoRun(std::vector<std::string> const& argv) {
     DeleteTopic(topic_admin_client, {project_id, kinesis_topic_id});
   });
 
+  std::cout << "\nRunning CreateTopicWithCloudStorage() sample" << std::endl;
+
+  ignore_emulator_failures(
+      [&] {
+        CreateTopicWithCloudStorageIngestion(
+            topic_admin_client,
+            {project_id, cloud_storage_topic_id, "mikeprieto-bucket", "text",
+             "\n", "**.txt", "2024-09-26T00:00:00Z"});
+        std::cout << "\nAfter Running CreateTopicWithCloudStorage() sample"
+                  << std::endl;
+        cleanup.Defer([topic_admin_client, project_id,
+                       cloud_storage_topic_id]() mutable {
+          std::cout << "\nRunning DeleteTopic() sample" << std::endl;
+          DeleteTopic(topic_admin_client, {project_id, cloud_storage_topic_id});
+        });
+      },
+      StatusCode::kInvalidArgument);
+
   std::cout << "\nRunning UpdateTopicType() sample" << std::endl;
+
   UpdateTopicType(
       topic_admin_client,
       {project_id, kinesis_topic_id, kinesis_stream_arn, kinesis_consumer_arn,
@@ -679,6 +762,11 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
           {"project-id", "topic-id", "stream-arn", "consumer-arn",
            "aws-role-arn", "gcp-service-account"},
           CreateTopicWithKinesisIngestion),
+      CreateTopicAdminCommand(
+          "create-topic-with-cloud-storage-ingestion",
+          {"project-id", "topic-id", "bucket", "input-format", "text-delimiter",
+           "match-glob", "minimum-object-create-time"},
+          CreateTopicWithCloudStorageIngestion),
       CreateTopicAdminCommand(
           "create-topic-with-schema",
           {"project-id", "topic-id", "schema-id", "encoding"},

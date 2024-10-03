@@ -48,7 +48,8 @@ void DatabaseIntegrationTest::SetUpTestSuite() {
 
   auto project_id = internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
   ASSERT_FALSE(project_id.empty());
-  auto instance_id = PickRandomInstance(*generator_, project_id);
+  auto instance_id = PickRandomInstance(*generator_, project_id,
+                                        "NOT labels.edition:enterprise");
   ASSERT_THAT(instance_id, IsOk());
   auto database_id = RandomDatabaseName(*generator_);
   db_ = new spanner::Database(project_id, *instance_id, database_id);
@@ -198,7 +199,8 @@ void PgDatabaseIntegrationTest::SetUpTestSuite() {
 
   auto project_id = internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
   ASSERT_FALSE(project_id.empty());
-  auto instance_id = PickRandomInstance(*generator_, project_id);
+  auto instance_id = PickRandomInstance(*generator_, project_id,
+                                        "NOT labels.edition:enterprise");
   ASSERT_THAT(instance_id, IsOk());
   auto database_id = RandomDatabaseName(*generator_);
   db_ = new spanner::Database(project_id, *instance_id, database_id);

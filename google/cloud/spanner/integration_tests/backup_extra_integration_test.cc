@@ -236,8 +236,8 @@ TEST_F(BackupExtraIntegrationTest, BackupRestoreWithVersionTime) {
 
 /// @test Verify creating a backup with an expired version_time fails.
 TEST_F(BackupExtraIntegrationTest, BackupWithExpiredVersionTime) {
-  auto instance_id =
-      spanner_testing::PickRandomInstance(generator_, ProjectId());
+  auto instance_id = spanner_testing::PickRandomInstance(
+      generator_, ProjectId(), "NOT labels.edition:enterprise");
   ASSERT_THAT(instance_id, IsOk());
   Instance in(ProjectId(), *instance_id);
   Database db(in, spanner_testing::RandomDatabaseName(generator_));
@@ -273,8 +273,8 @@ TEST_F(BackupExtraIntegrationTest, BackupWithExpiredVersionTime) {
 
 /// @test Verify creating a backup with a future version_time fails.
 TEST_F(BackupExtraIntegrationTest, BackupWithFutureVersionTime) {
-  auto instance_id =
-      spanner_testing::PickRandomInstance(generator_, ProjectId());
+  auto instance_id = spanner_testing::PickRandomInstance(
+      generator_, ProjectId(), "NOT labels.edition:enterprise");
   ASSERT_THAT(instance_id, IsOk());
   Instance in(ProjectId(), *instance_id);
   Database db(in, spanner_testing::RandomDatabaseName(generator_));
