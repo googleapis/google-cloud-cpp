@@ -4,7 +4,7 @@
 breaking changes in the upcoming 3.x release. This release is scheduled for
 2024-12 or 2025-01.
 
-## v2.30.0 - TBD
+## v2.30.0 - 2024-10
 
 ### Updated Libraries
 
@@ -13,6 +13,10 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
 - [Dialogflow ES API](/google/cloud/dialogflow_es/README.md) - new
   `EncryptionSpecServiceClient` and `GeneratorsClient`
 
+### [AI Platform](/google/cloud/aiplatform/README.md)
+
+- docs(aiplatform): add Vertex AI samples ([#14703](https://github.com/googleapis/google-cloud-cpp/pull/14703))
+
 ### [KMS](/google/cloud/kms/README.md)
 
 - `AutokeyClient::ListKeyHandles(...)` signature has changed to return an
@@ -20,11 +24,35 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
   using this API, and therefore we do not consider this a breaking change.
   ([#14726](https://github.com/googleapis/google-cloud-cpp/pull/14726))
 
-### [Google Cloud Storage](/google/cloud/storage/README.md)
+### [OpenTelemetry](/google/cloud/opentelemetry/README.md)
+
+- feat(otel): release GCM exporter ([#14693](https://github.com/googleapis/google-cloud-cpp/pull/14693))
+
+### [Pub/Sub](/google/cloud/pubsub/README.md)
+
+- docs(pubsub): Add ingestion from GCS topic creation sample ([#14749](https://github.com/googleapis/google-cloud-cpp/pull/14749))
+
+### [Spanner](/google/cloud/spanner/README.md)
+
+- docs(spanner): Add samples for backup schedule feature APIs ([#14720](https://github.com/googleapis/google-cloud-cpp/pull/14720))
+- docs(spanner): create examples for using Spanner Graph ([#14660](https://github.com/googleapis/google-cloud-cpp/pull/14660))
+
+### [Storage](/google/cloud/storage/README.md)
 
 - The gRPC plugin is now GA. The [Using the gRPC plugin][storage-grpc]
   guide describes this feature in more detail. When using GCS from Google
   Compute Engine (GCE) this plugin can enable higher total throughput.
+
+- feat(storage): Add ability to restore soft deleted objects ([#14710](https://github.com/googleapis/google-cloud-cpp/pull/14710))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- fix(rest): promote buffer curl reads from to member variable ([#14732](https://github.com/googleapis/google-cloud-cpp/pull/14732))
+- fix: respect `GOOGLE_CLOUD_QUOTA_PROJECT` ([#14684](https://github.com/googleapis/google-cloud-cpp/pull/14684))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2024-09-24T10:34:24-07:00](https://github.com/googleapis/googleapis/tree/69e9dff10df4fa1e338712d38dc26b46791a6e94)
 
 ## v2.29.0 - 2024-09
 
