@@ -86,6 +86,22 @@ class MockPublisherStub : public pubsub_internal::PublisherStub {
               (grpc::ClientContext&, Options const&,
                google::pubsub::v1::PublishRequest const&),
               (override));
+
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+              (grpc::ClientContext&, Options const&,
+               google::iam::v1::SetIamPolicyRequest const&),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+              (grpc::ClientContext&, Options const&,
+               google::iam::v1::GetIamPolicyRequest const&),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
+              TestIamPermissions,
+              (grpc::ClientContext&, Options const&,
+               google::iam::v1::TestIamPermissionsRequest const&),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

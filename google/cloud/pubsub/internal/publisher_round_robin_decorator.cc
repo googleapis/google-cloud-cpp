@@ -88,6 +88,25 @@ PublisherRoundRobin::DetachSubscription(
   return Child()->DetachSubscription(context, options, request);
 }
 
+StatusOr<google::iam::v1::Policy> PublisherRoundRobin::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return Child()->SetIamPolicy(context, options, request);
+}
+
+StatusOr<google::iam::v1::Policy> PublisherRoundRobin::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  return Child()->GetIamPolicy(context, options, request);
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+PublisherRoundRobin::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  return Child()->TestIamPermissions(context, options, request);
+}
+
 future<StatusOr<google::pubsub::v1::PublishResponse>>
 PublisherRoundRobin::AsyncPublish(
     google::cloud::CompletionQueue& cq,

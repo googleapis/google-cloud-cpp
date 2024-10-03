@@ -117,6 +117,7 @@ target_link_libraries(
            google-cloud-cpp::iam_credentials_v1_iamcredentials_protos
            google-cloud-cpp::iam_v1_policy_protos
            google-cloud-cpp::longrunning_operations_protos
+           google-cloud-cpp::iam_v1_iam_policy_protos
            google-cloud-cpp::rpc_error_details_protos
            google-cloud-cpp::rpc_status_protos
            google-cloud-cpp::common
@@ -174,6 +175,7 @@ google_cloud_cpp_add_pkgconfig(
     "google_cloud_cpp_common"
     "google_cloud_cpp_iam_credentials_v1_iamcredentials_protos"
     "google_cloud_cpp_iam_v1_policy_protos"
+    "google_cloud_cpp_iam_v1_iam_policy_protos"
     "google_cloud_cpp_longrunning_operations_protos"
     "google_cloud_cpp_rpc_status_protos"
     "absl_function_ref"
