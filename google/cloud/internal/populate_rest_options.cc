@@ -29,13 +29,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 Options PopulateRestOptions(Options opts) {
-  if (opts.has<ApiKeyOption>() && opts.has<UnifiedCredentialsOption>()) {
-    opts.set<UnifiedCredentialsOption>(
-        internal::MakeErrorCredentials(internal::InvalidArgumentError(
-            "API Keys and Credentials are mutually exclusive authentication "
-            "methods and cannot be used together.")));
-  }
-  if (!opts.has<UnifiedCredentialsOption>() && !opts.has<ApiKeyOption>()) {
+  if (!opts.has<UnifiedCredentialsOption>()) {
     opts.set<UnifiedCredentialsOption>(
         MakeGoogleDefaultCredentials(internal::MakeAuthOptions(opts)));
   }

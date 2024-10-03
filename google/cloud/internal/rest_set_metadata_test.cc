@@ -53,7 +53,6 @@ TEST(RestContextTest, SetMetadataFull) {
               Options{}
                   .set<UserProjectOption>("user-project")
                   .set<QuotaUserOption>("quota-user")
-                  .set<ApiKeyOption>("api-key")
                   .set<FieldMaskOption>("items.name,token")
                   .set<ServerTimeoutOption>(std::chrono::milliseconds(1050))
                   .set<CustomHeadersOption>(
@@ -65,19 +64,10 @@ TEST(RestContextTest, SetMetadataFull) {
                   Pair("x-goog-request-params", ElementsAre("p1=v1&p2=v2")),
                   Pair("x-goog-user-project", ElementsAre("user-project")),
                   Pair("x-goog-quota-user", ElementsAre("quota-user")),
-                  Pair("x-goog-api-key", ElementsAre("api-key")),
                   Pair("x-goog-fieldmask", ElementsAre("items.name,token")),
                   Pair("x-server-timeout", ElementsAre("1.050")),
                   Pair("custom-header-1", ElementsAre("v1")),
                   Pair("custom-header-2", ElementsAre("v2"))));
-}
-
-TEST(RestContextTest, Regression14745) {
-  RestContext lhs;
-  SetMetadata(lhs, Options{}.set<ApiKeyOption>("api-key"), {},
-              "api-client-header");
-  EXPECT_THAT(lhs.headers(),
-              Contains(Pair("x-goog-api-key", ElementsAre("api-key"))));
 }
 
 }  // namespace
