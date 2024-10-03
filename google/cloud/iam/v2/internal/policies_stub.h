@@ -76,6 +76,10 @@ class PoliciesStub {
       grpc::ClientContext& context, Options options,
       google::iam::v2::DeletePolicyRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -94,8 +98,12 @@ class DefaultPoliciesStub : public PoliciesStub {
   DefaultPoliciesStub(
       std::unique_ptr<google::iam::v2::Policies::StubInterface> grpc_stub,
       std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
           operations)
-      : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
+      : grpc_stub_(std::move(grpc_stub)),
+        operations_stub_(std::move(operations_stub)),
+        operations_(std::move(operations)) {}
 
   StatusOr<google::iam::v2::ListPoliciesResponse> ListPolicies(
       grpc::ClientContext& context, Options const& options,
@@ -135,6 +143,10 @@ class DefaultPoliciesStub : public PoliciesStub {
       grpc::ClientContext& context, Options options,
       google::iam::v2::DeletePolicyRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -149,6 +161,8 @@ class DefaultPoliciesStub : public PoliciesStub {
 
  private:
   std::unique_ptr<google::iam::v2::Policies::StubInterface> grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 

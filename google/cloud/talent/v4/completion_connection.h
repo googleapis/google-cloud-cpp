@@ -182,6 +182,9 @@ class CompletionConnection {
 
   virtual StatusOr<google::cloud::talent::v4::CompleteQueryResponse>
   CompleteQuery(google::cloud::talent::v4::CompleteQueryRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

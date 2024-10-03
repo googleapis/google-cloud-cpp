@@ -85,6 +85,14 @@ class AdaptationLogging : public AdaptationStub {
       google::cloud::speech::v1::DeleteCustomClassRequest const& request)
       override;
 
+  StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::ListOperationsRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::shared_ptr<AdaptationStub> child_;
   TracingOptions tracing_options_;

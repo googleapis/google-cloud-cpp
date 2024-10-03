@@ -18,6 +18,7 @@
 
 #include "google/cloud/servicedirectory/v1/internal/lookup_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 #include <utility>
 
@@ -39,6 +40,26 @@ LookupServiceTracingConnection::ResolveService(
       "servicedirectory_v1::LookupServiceConnection::ResolveService");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ResolveService(request));
+}
+
+StreamRange<google::cloud::location::Location>
+LookupServiceTracingConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan(
+      "servicedirectory_v1::LookupServiceConnection::ListLocations");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListLocations(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::location::Location>(
+      std::move(span), std::move(sr));
+}
+
+StatusOr<google::cloud::location::Location>
+LookupServiceTracingConnection::GetLocation(
+    google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "servicedirectory_v1::LookupServiceConnection::GetLocation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -239,6 +239,9 @@ class JobServiceConnection {
   virtual StatusOr<google::cloud::talent::v4::SearchJobsResponse>
   SearchJobsForAlert(
       google::cloud::talent::v4::SearchJobsRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

@@ -184,6 +184,12 @@ class SearchServiceConnection {
 
   virtual StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>
   Search(google::cloud::retail::v2::SearchRequest request);
+
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

@@ -53,6 +53,30 @@ PolicyTagManagerSerializationConnectionIdempotencyPolicy::ExportTaxonomies(
   return Idempotency::kIdempotent;
 }
 
+Idempotency
+PolicyTagManagerSerializationConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+PolicyTagManagerSerializationConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+PolicyTagManagerSerializationConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+PolicyTagManagerSerializationConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<PolicyTagManagerSerializationConnectionIdempotencyPolicy>
 MakeDefaultPolicyTagManagerSerializationConnectionIdempotencyPolicy() {
   return std::make_unique<

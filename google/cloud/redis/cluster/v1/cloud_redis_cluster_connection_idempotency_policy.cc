@@ -66,6 +66,36 @@ CloudRedisClusterConnectionIdempotencyPolicy::GetClusterCertificateAuthority(
   return Idempotency::kIdempotent;
 }
 
+Idempotency CloudRedisClusterConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency CloudRedisClusterConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency CloudRedisClusterConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency CloudRedisClusterConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency CloudRedisClusterConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency CloudRedisClusterConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<CloudRedisClusterConnectionIdempotencyPolicy>
 MakeDefaultCloudRedisClusterConnectionIdempotencyPolicy() {
   return std::make_unique<CloudRedisClusterConnectionIdempotencyPolicy>();

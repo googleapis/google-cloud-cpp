@@ -215,6 +215,9 @@ class PoliciesConnection {
 
   virtual future<StatusOr<google::iam::v2::Policy>> DeletePolicy(
       google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

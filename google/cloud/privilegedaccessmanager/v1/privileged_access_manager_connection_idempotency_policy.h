@@ -21,7 +21,9 @@
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
+#include <google/cloud/location/locations.grpc.pb.h>
 #include <google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -90,6 +92,21 @@ class PrivilegedAccessManagerConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency RevokeGrant(
       google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const&
           request);
+
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
+
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
+
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 };
 
 std::unique_ptr<PrivilegedAccessManagerConnectionIdempotencyPolicy>

@@ -175,6 +175,15 @@ JobServiceTracingConnection::SearchJobsForAlert(
   return internal::EndSpan(*span, child_->SearchJobsForAlert(request));
 }
 
+StatusOr<google::longrunning::Operation>
+JobServiceTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span =
+      internal::MakeSpan("talent_v4::JobServiceConnection::GetOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetOperation(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<talent_v4::JobServiceConnection>

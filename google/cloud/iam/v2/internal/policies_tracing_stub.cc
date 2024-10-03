@@ -121,6 +121,16 @@ StatusOr<google::longrunning::Operation> PoliciesTracingStub::DeletePolicy(
                            child_->DeletePolicy(context, options, request));
 }
 
+StatusOr<google::longrunning::Operation> PoliciesTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.iam.v2.Policies", "GetOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetOperation(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 PoliciesTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

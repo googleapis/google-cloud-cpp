@@ -64,6 +64,9 @@ class ConsumerProcurementServiceTracingConnection
       google::cloud::commerce::consumer::procurement::v1::ListOrdersRequest
           request) override;
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::shared_ptr<
       commerce_consumer_procurement_v1::ConsumerProcurementServiceConnection>

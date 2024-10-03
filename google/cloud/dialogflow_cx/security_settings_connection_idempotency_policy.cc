@@ -65,6 +65,31 @@ SecuritySettingsServiceConnectionIdempotencyPolicy::DeleteSecuritySettings(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency SecuritySettingsServiceConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency SecuritySettingsServiceConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency SecuritySettingsServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency SecuritySettingsServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency SecuritySettingsServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<SecuritySettingsServiceConnectionIdempotencyPolicy>
 MakeDefaultSecuritySettingsServiceConnectionIdempotencyPolicy() {
   return std::make_unique<SecuritySettingsServiceConnectionIdempotencyPolicy>();

@@ -58,6 +58,14 @@ class ControlServiceTracingStub : public ControlServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::ListControlsRequest const& request) override;
 
+  StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::ListOperationsRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::shared_ptr<ControlServiceStub> child_;
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>

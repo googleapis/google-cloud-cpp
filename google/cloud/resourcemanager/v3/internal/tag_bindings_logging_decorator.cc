@@ -128,6 +128,17 @@ TagBindingsLogging::ListEffectiveTags(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> TagBindingsLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::longrunning::GetOperationRequest const& request) {
+        return child_->GetOperation(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TagBindingsLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

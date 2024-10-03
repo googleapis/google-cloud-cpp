@@ -100,6 +100,11 @@ TagBindingsConnection::ListEffectiveTags(
       StreamRange<google::cloud::resourcemanager::v3::EffectiveTag>>();
 }
 
+StatusOr<google::longrunning::Operation> TagBindingsConnection::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<TagBindingsConnection> MakeTagBindingsConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

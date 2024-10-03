@@ -220,6 +220,21 @@ Idempotency ArtifactRegistryConnectionIdempotencyPolicy::UpdateVPCSCConfig(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<ArtifactRegistryConnectionIdempotencyPolicy>
 MakeDefaultArtifactRegistryConnectionIdempotencyPolicy() {
   return std::make_unique<ArtifactRegistryConnectionIdempotencyPolicy>();

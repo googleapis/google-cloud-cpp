@@ -220,6 +220,9 @@ class ImageAnnotatorConnection {
   virtual future<
       StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
   AsyncBatchAnnotateFiles(google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

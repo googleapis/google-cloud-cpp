@@ -110,6 +110,24 @@ ConversationalSearchServiceConnectionIdempotencyPolicy::ListSessions(
   return Idempotency::kIdempotent;
 }
 
+Idempotency
+ConversationalSearchServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+ConversationalSearchServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+ConversationalSearchServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<ConversationalSearchServiceConnectionIdempotencyPolicy>
 MakeDefaultConversationalSearchServiceConnectionIdempotencyPolicy() {
   return std::make_unique<

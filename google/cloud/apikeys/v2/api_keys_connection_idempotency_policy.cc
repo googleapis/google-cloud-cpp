@@ -74,6 +74,11 @@ Idempotency ApiKeysConnectionIdempotencyPolicy::LookupKey(
   return Idempotency::kIdempotent;
 }
 
+Idempotency ApiKeysConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<ApiKeysConnectionIdempotencyPolicy>
 MakeDefaultApiKeysConnectionIdempotencyPolicy() {
   return std::make_unique<ApiKeysConnectionIdempotencyPolicy>();

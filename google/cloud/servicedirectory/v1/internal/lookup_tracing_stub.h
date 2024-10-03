@@ -44,6 +44,14 @@ class LookupServiceTracingStub : public LookupServiceStub {
       google::cloud::servicedirectory::v1::ResolveServiceRequest const& request)
       override;
 
+  StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::location::ListLocationsRequest const& request) override;
+
+  StatusOr<google::cloud::location::Location> GetLocation(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::location::GetLocationRequest const& request) override;
+
  private:
   std::shared_ptr<LookupServiceStub> child_;
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>

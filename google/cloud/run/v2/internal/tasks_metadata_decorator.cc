@@ -60,6 +60,38 @@ StatusOr<google::cloud::run::v2::ListTasksResponse> TasksMetadata::ListTasks(
   return child_->ListTasks(context, options, request);
 }
 
+StatusOr<google::longrunning::ListOperationsResponse>
+TasksMetadata::ListOperations(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::ListOperationsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ListOperations(context, options, request);
+}
+
+StatusOr<google::longrunning::Operation> TasksMetadata::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetOperation(context, options, request);
+}
+
+Status TasksMetadata::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::DeleteOperationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteOperation(context, options, request);
+}
+
+StatusOr<google::longrunning::Operation> TasksMetadata::WaitOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::WaitOperationRequest const& request) {
+  SetMetadata(context, options);
+  return child_->WaitOperation(context, options, request);
+}
+
 void TasksMetadata::SetMetadata(grpc::ClientContext& context,
                                 Options const& options,
                                 std::string const& request_params) {

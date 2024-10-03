@@ -222,6 +222,12 @@ class CatalogServiceConnection {
   virtual StatusOr<google::cloud::retail::v2::AttributesConfig>
   ReplaceCatalogAttribute(
       google::cloud::retail::v2::ReplaceCatalogAttributeRequest const& request);
+
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

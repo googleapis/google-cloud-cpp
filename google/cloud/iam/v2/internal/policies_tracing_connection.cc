@@ -121,6 +121,14 @@ PoliciesTracingConnection::DeletePolicy(
   return internal::EndSpan(std::move(span), child_->DeletePolicy(operation));
 }
 
+StatusOr<google::longrunning::Operation>
+PoliciesTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("iam_v2::PoliciesConnection::GetOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetOperation(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<iam_v2::PoliciesConnection> MakePoliciesTracingConnection(

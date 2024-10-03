@@ -93,6 +93,17 @@ TagHoldsTracingStub::ListTagHolds(
                            child_->ListTagHolds(context, options, request));
 }
 
+StatusOr<google::longrunning::Operation> TagHoldsTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.TagHolds",
+                                     "GetOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetOperation(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TagHoldsTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

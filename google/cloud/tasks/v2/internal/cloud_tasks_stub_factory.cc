@@ -28,6 +28,7 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
+#include <google/cloud/location/locations.grpc.pb.h>
 #include <google/cloud/tasks/v2/cloudtasks.grpc.pb.h>
 #include <memory>
 #include <utility>
@@ -44,8 +45,11 @@ std::shared_ptr<CloudTasksStub> CreateDefaultCloudTasksStub(
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       google::cloud::tasks::v2::CloudTasks::NewStub(channel);
+  auto service_locations_stub =
+      google::cloud::location::Locations::NewStub(channel);
   std::shared_ptr<CloudTasksStub> stub =
-      std::make_shared<DefaultCloudTasksStub>(std::move(service_grpc_stub));
+      std::make_shared<DefaultCloudTasksStub>(
+          std::move(service_grpc_stub), std::move(service_locations_stub));
 
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<CloudTasksAuth>(std::move(auth), std::move(stub));

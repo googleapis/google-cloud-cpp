@@ -713,6 +713,37 @@ Status ContactCenterInsightsTracingConnection::DeleteView(
   return internal::EndSpan(*span, child_->DeleteView(request));
 }
 
+StreamRange<google::longrunning::Operation>
+ContactCenterInsightsTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "ListOperations");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListOperations(std::move(request));
+  return internal::MakeTracedStreamRange<google::longrunning::Operation>(
+      std::move(span), std::move(sr));
+}
+
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "GetOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetOperation(request));
+}
+
+Status ContactCenterInsightsTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "CancelOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CancelOperation(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<contactcenterinsights_v1::ContactCenterInsightsConnection>

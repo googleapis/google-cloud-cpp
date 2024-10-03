@@ -77,6 +77,9 @@ class ImageAnnotatorTracingConnection
   AsyncBatchAnnotateFiles(
       google::longrunning::Operation const& operation) override;
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::shared_ptr<vision_v1::ImageAnnotatorConnection> child_;
 };

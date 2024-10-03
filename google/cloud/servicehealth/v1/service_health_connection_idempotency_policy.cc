@@ -66,6 +66,16 @@ Idempotency ServiceHealthConnectionIdempotencyPolicy::GetOrganizationImpact(
   return Idempotency::kIdempotent;
 }
 
+Idempotency ServiceHealthConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ServiceHealthConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<ServiceHealthConnectionIdempotencyPolicy>
 MakeDefaultServiceHealthConnectionIdempotencyPolicy() {
   return std::make_unique<ServiceHealthConnectionIdempotencyPolicy>();

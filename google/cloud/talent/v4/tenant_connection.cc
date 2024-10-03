@@ -68,6 +68,11 @@ TenantServiceConnection::ListTenants(
       StreamRange<google::cloud::talent::v4::Tenant>>();
 }
 
+StatusOr<google::longrunning::Operation> TenantServiceConnection::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<TenantServiceConnection> MakeTenantServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

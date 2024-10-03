@@ -59,6 +59,21 @@ Idempotency MetricsServiceV2ConnectionIdempotencyPolicy::DeleteLogMetric(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency MetricsServiceV2ConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency MetricsServiceV2ConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency MetricsServiceV2ConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<MetricsServiceV2ConnectionIdempotencyPolicy>
 MakeDefaultMetricsServiceV2ConnectionIdempotencyPolicy() {
   return std::make_unique<MetricsServiceV2ConnectionIdempotencyPolicy>();

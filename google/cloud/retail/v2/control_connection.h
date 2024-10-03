@@ -196,6 +196,12 @@ class ControlServiceConnection {
 
   virtual StreamRange<google::cloud::retail::v2::Control> ListControls(
       google::cloud::retail::v2::ListControlsRequest request);
+
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

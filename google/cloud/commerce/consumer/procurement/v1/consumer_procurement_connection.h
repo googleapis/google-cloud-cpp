@@ -228,6 +228,9 @@ class ConsumerProcurementServiceConnection {
   ListOrders(
       google::cloud::commerce::consumer::procurement::v1::ListOrdersRequest
           request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

@@ -134,6 +134,23 @@ StatusOr<google::longrunning::Operation> ModelServiceMetadata::TuneModel(
   return child_->TuneModel(context, options, request);
 }
 
+StatusOr<google::longrunning::ListOperationsResponse>
+ModelServiceMetadata::ListOperations(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::ListOperationsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ListOperations(context, options, request);
+}
+
+StatusOr<google::longrunning::Operation> ModelServiceMetadata::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetOperation(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ModelServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

@@ -169,6 +169,36 @@ Idempotency EdgeNetworkConnectionIdempotencyPolicy::DeleteRouter(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency EdgeNetworkConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency EdgeNetworkConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency EdgeNetworkConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency EdgeNetworkConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency EdgeNetworkConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency EdgeNetworkConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<EdgeNetworkConnectionIdempotencyPolicy>
 MakeDefaultEdgeNetworkConnectionIdempotencyPolicy() {
   return std::make_unique<EdgeNetworkConnectionIdempotencyPolicy>();

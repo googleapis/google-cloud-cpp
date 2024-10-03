@@ -98,6 +98,14 @@ ImageAnnotatorMetadata::AsyncBatchAnnotateFiles(
   return child_->AsyncBatchAnnotateFiles(context, options, request);
 }
 
+StatusOr<google::longrunning::Operation> ImageAnnotatorMetadata::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetOperation(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ImageAnnotatorMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

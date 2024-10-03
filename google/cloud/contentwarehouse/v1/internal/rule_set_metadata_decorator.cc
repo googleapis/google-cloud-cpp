@@ -88,6 +88,14 @@ RuleSetServiceMetadata::ListRuleSets(
   return child_->ListRuleSets(context, options, request);
 }
 
+StatusOr<google::longrunning::Operation> RuleSetServiceMetadata::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetOperation(context, options, request);
+}
+
 void RuleSetServiceMetadata::SetMetadata(grpc::ClientContext& context,
                                          Options const& options,
                                          std::string const& request_params) {

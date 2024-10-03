@@ -76,6 +76,39 @@ StatusOr<google::longrunning::Operation> RevisionsAuth::DeleteRevision(
   return child_->DeleteRevision(context, options, request);
 }
 
+StatusOr<google::longrunning::ListOperationsResponse>
+RevisionsAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::ListOperationsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListOperations(context, options, request);
+}
+
+StatusOr<google::longrunning::Operation> RevisionsAuth::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetOperation(context, options, request);
+}
+
+Status RevisionsAuth::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::DeleteOperationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteOperation(context, options, request);
+}
+
+StatusOr<google::longrunning::Operation> RevisionsAuth::WaitOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::WaitOperationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->WaitOperation(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 RevisionsAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

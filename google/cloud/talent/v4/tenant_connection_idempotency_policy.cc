@@ -59,6 +59,11 @@ Idempotency TenantServiceConnectionIdempotencyPolicy::ListTenants(
   return Idempotency::kIdempotent;
 }
 
+Idempotency TenantServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<TenantServiceConnectionIdempotencyPolicy>
 MakeDefaultTenantServiceConnectionIdempotencyPolicy() {
   return std::make_unique<TenantServiceConnectionIdempotencyPolicy>();

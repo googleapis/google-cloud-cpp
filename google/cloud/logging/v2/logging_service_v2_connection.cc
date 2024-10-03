@@ -83,6 +83,25 @@ LoggingServiceV2Connection::AsyncTailLogEntries() {
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StreamRange<google::longrunning::Operation>
+LoggingServiceV2Connection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::longrunning::Operation>>();
+}
+
+StatusOr<google::longrunning::Operation>
+LoggingServiceV2Connection::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status LoggingServiceV2Connection::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
 LoggingServiceV2Connection::AsyncWriteLogEntries(
     google::logging::v2::WriteLogEntriesRequest const&) {

@@ -249,6 +249,15 @@ ProductSearchTracingConnection::PurgeProducts(
   return internal::EndSpan(std::move(span), child_->PurgeProducts(operation));
 }
 
+StatusOr<google::longrunning::Operation>
+ProductSearchTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span =
+      internal::MakeSpan("vision_v1::ProductSearchConnection::GetOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetOperation(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<vision_v1::ProductSearchConnection>

@@ -204,6 +204,9 @@ class DocumentLinkServiceConnection {
   virtual Status DeleteDocumentLink(
       google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

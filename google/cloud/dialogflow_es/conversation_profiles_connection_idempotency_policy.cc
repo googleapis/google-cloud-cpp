@@ -77,6 +77,31 @@ ConversationProfilesConnectionIdempotencyPolicy::ClearSuggestionFeatureConfig(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency ConversationProfilesConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ConversationProfilesConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ConversationProfilesConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ConversationProfilesConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ConversationProfilesConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<ConversationProfilesConnectionIdempotencyPolicy>
 MakeDefaultConversationProfilesConnectionIdempotencyPolicy() {
   return std::make_unique<ConversationProfilesConnectionIdempotencyPolicy>();

@@ -193,6 +193,17 @@ StatusOr<google::api::apikeys::v2::LookupKeyResponse> ApiKeysLogging::LookupKey(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> ApiKeysLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::longrunning::GetOperationRequest const& request) {
+        return child_->GetOperation(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ApiKeysLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

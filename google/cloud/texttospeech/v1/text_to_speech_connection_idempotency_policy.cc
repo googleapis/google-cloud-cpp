@@ -44,6 +44,16 @@ Idempotency TextToSpeechConnectionIdempotencyPolicy::SynthesizeSpeech(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency TextToSpeechConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency TextToSpeechConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<TextToSpeechConnectionIdempotencyPolicy>
 MakeDefaultTextToSpeechConnectionIdempotencyPolicy() {
   return std::make_unique<TextToSpeechConnectionIdempotencyPolicy>();

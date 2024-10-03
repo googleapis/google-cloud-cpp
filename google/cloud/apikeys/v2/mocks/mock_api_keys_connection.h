@@ -198,6 +198,10 @@ class MockApiKeysConnection : public apikeys_v2::ApiKeysConnection {
   MOCK_METHOD(StatusOr<google::api::apikeys::v2::LookupKeyResponse>, LookupKey,
               (google::api::apikeys::v2::LookupKeyRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

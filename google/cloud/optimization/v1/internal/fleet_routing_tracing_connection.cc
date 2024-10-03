@@ -72,6 +72,15 @@ FleetRoutingTracingConnection::BatchOptimizeTours(
                            child_->BatchOptimizeTours(operation));
 }
 
+StatusOr<google::longrunning::Operation>
+FleetRoutingTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "optimization_v1::FleetRoutingConnection::GetOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetOperation(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<optimization_v1::FleetRoutingConnection>

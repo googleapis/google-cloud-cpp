@@ -22,6 +22,7 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
 #include <google/cloud/contentwarehouse/v1/synonymset_service.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -54,6 +55,9 @@ class SynonymSetServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency ListSynonymSets(
       google::cloud::contentwarehouse::v1::ListSynonymSetsRequest request);
+
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<SynonymSetServiceConnectionIdempotencyPolicy>

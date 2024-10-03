@@ -146,6 +146,9 @@ class AssetServiceTracingConnection : public asset_v1::AssetServiceConnection {
       google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest request)
       override;
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::shared_ptr<asset_v1::AssetServiceConnection> child_;
 };

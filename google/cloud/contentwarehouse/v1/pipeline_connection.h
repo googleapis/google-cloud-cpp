@@ -198,6 +198,9 @@ class PipelineServiceConnection {
   virtual future<
       StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>
   RunPipeline(google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

@@ -49,6 +49,11 @@ Idempotency TagHoldsConnectionIdempotencyPolicy::ListTagHolds(
   return Idempotency::kIdempotent;
 }
 
+Idempotency TagHoldsConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<TagHoldsConnectionIdempotencyPolicy>
 MakeDefaultTagHoldsConnectionIdempotencyPolicy() {
   return std::make_unique<TagHoldsConnectionIdempotencyPolicy>();

@@ -74,6 +74,16 @@ Idempotency ModelServiceConnectionIdempotencyPolicy::TuneModel(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency ModelServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ModelServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<ModelServiceConnectionIdempotencyPolicy>
 MakeDefaultModelServiceConnectionIdempotencyPolicy() {
   return std::make_unique<ModelServiceConnectionIdempotencyPolicy>();

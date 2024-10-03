@@ -49,6 +49,26 @@ Idempotency RevisionsConnectionIdempotencyPolicy::DeleteRevision(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency RevisionsConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency RevisionsConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency RevisionsConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency RevisionsConnectionIdempotencyPolicy::WaitOperation(
+    google::longrunning::WaitOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<RevisionsConnectionIdempotencyPolicy>
 MakeDefaultRevisionsConnectionIdempotencyPolicy() {
   return std::make_unique<RevisionsConnectionIdempotencyPolicy>();

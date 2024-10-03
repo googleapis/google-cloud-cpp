@@ -267,6 +267,16 @@ Idempotency BareMetalSolutionConnectionIdempotencyPolicy::ListOSImages(
   return Idempotency::kIdempotent;
 }
 
+Idempotency BareMetalSolutionConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency BareMetalSolutionConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<BareMetalSolutionConnectionIdempotencyPolicy>
 MakeDefaultBareMetalSolutionConnectionIdempotencyPolicy() {
   return std::make_unique<BareMetalSolutionConnectionIdempotencyPolicy>();

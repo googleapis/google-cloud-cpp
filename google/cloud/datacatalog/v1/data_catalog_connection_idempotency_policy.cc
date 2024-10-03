@@ -207,6 +207,26 @@ Idempotency DataCatalogConnectionIdempotencyPolicy::ImportEntries(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency DataCatalogConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DataCatalogConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DataCatalogConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DataCatalogConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<DataCatalogConnectionIdempotencyPolicy>
 MakeDefaultDataCatalogConnectionIdempotencyPolicy() {
   return std::make_unique<DataCatalogConnectionIdempotencyPolicy>();

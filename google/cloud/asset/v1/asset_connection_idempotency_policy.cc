@@ -155,6 +155,11 @@ AssetServiceConnectionIdempotencyPolicy::AnalyzeOrgPolicyGovernedAssets(
   return Idempotency::kIdempotent;
 }
 
+Idempotency AssetServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<AssetServiceConnectionIdempotencyPolicy>
 MakeDefaultAssetServiceConnectionIdempotencyPolicy() {
   return std::make_unique<AssetServiceConnectionIdempotencyPolicy>();

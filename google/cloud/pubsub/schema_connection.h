@@ -211,6 +211,15 @@ class SchemaServiceConnection {
 
   virtual StatusOr<google::pubsub::v1::ValidateMessageResponse> ValidateMessage(
       google::pubsub::v1::ValidateMessageRequest const& request);
+
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
+
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
+
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 };
 
 /**

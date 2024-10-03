@@ -218,6 +218,26 @@ Status DataTransferServiceTracingConnection::UnenrollDataSources(
   return internal::EndSpan(*span, child_->UnenrollDataSources(request));
 }
 
+StreamRange<google::cloud::location::Location>
+DataTransferServiceTracingConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan(
+      "bigquery_datatransfer_v1::DataTransferServiceConnection::ListLocations");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListLocations(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::location::Location>(
+      std::move(span), std::move(sr));
+}
+
+StatusOr<google::cloud::location::Location>
+DataTransferServiceTracingConnection::GetLocation(
+    google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigquery_datatransfer_v1::DataTransferServiceConnection::GetLocation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetLocation(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<bigquery_datatransfer_v1::DataTransferServiceConnection>

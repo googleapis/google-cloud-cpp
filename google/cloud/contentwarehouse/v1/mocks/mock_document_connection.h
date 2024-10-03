@@ -92,6 +92,10 @@ class MockDocumentServiceConnection
       StatusOr<google::cloud::contentwarehouse::v1::SetAclResponse>, SetAcl,
       (google::cloud::contentwarehouse::v1::SetAclRequest const& request),
       (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

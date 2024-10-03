@@ -104,6 +104,36 @@ Idempotency ManagedKafkaConnectionIdempotencyPolicy::DeleteConsumerGroup(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency ManagedKafkaConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ManagedKafkaConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ManagedKafkaConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ManagedKafkaConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ManagedKafkaConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ManagedKafkaConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<ManagedKafkaConnectionIdempotencyPolicy>
 MakeDefaultManagedKafkaConnectionIdempotencyPolicy() {
   return std::make_unique<ManagedKafkaConnectionIdempotencyPolicy>();

@@ -167,6 +167,20 @@ ImageAnnotatorClient::AsyncBatchAnnotateFiles(
   return connection_->AsyncBatchAnnotateFiles(operation);
 }
 
+StatusOr<google::longrunning::Operation> ImageAnnotatorClient::GetOperation(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::longrunning::GetOperationRequest request;
+  request.set_name(name);
+  return connection_->GetOperation(request);
+}
+
+StatusOr<google::longrunning::Operation> ImageAnnotatorClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetOperation(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vision_v1
 }  // namespace cloud

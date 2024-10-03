@@ -220,6 +220,9 @@ class TagBindingsConnection {
   virtual StreamRange<google::cloud::resourcemanager::v3::EffectiveTag>
   ListEffectiveTags(
       google::cloud::resourcemanager::v3::ListEffectiveTagsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

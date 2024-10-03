@@ -29,6 +29,7 @@
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/datastore/v1/datastore.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -43,8 +44,10 @@ std::shared_ptr<DatastoreStub> CreateDefaultDatastoreStub(
   auto channel = auth->CreateChannel(options.get<EndpointOption>(),
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub = google::datastore::v1::Datastore::NewStub(channel);
-  std::shared_ptr<DatastoreStub> stub =
-      std::make_shared<DefaultDatastoreStub>(std::move(service_grpc_stub));
+  auto service_operations_stub =
+      google::longrunning::Operations::NewStub(channel);
+  std::shared_ptr<DatastoreStub> stub = std::make_shared<DefaultDatastoreStub>(
+      std::move(service_grpc_stub), std::move(service_operations_stub));
 
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<DatastoreAuth>(std::move(auth), std::move(stub));

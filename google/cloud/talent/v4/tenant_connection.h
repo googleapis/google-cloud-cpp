@@ -196,6 +196,9 @@ class TenantServiceConnection {
 
   virtual StreamRange<google::cloud::talent::v4::Tenant> ListTenants(
       google::cloud::talent::v4::ListTenantsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

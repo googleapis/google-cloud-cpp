@@ -22,6 +22,7 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
 #include <google/cloud/resourcemanager/v3/tag_holds.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -44,6 +45,9 @@ class TagHoldsConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency ListTagHolds(
       google::cloud::resourcemanager::v3::ListTagHoldsRequest request);
+
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<TagHoldsConnectionIdempotencyPolicy>

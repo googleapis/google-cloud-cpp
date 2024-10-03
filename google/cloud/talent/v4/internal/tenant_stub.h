@@ -23,6 +23,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/talent/v4/tenant_service.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -54,14 +55,21 @@ class TenantServiceStub {
   virtual StatusOr<google::cloud::talent::v4::ListTenantsResponse> ListTenants(
       grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::ListTenantsRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) = 0;
 };
 
 class DefaultTenantServiceStub : public TenantServiceStub {
  public:
   explicit DefaultTenantServiceStub(
       std::unique_ptr<google::cloud::talent::v4::TenantService::StubInterface>
-          grpc_stub)
-      : grpc_stub_(std::move(grpc_stub)) {}
+          grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
+      : grpc_stub_(std::move(grpc_stub)),
+        operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::cloud::talent::v4::Tenant> CreateTenant(
       grpc::ClientContext& context, Options const& options,
@@ -83,9 +91,15 @@ class DefaultTenantServiceStub : public TenantServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::ListTenantsRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::unique_ptr<google::cloud::talent::v4::TenantService::StubInterface>
       grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

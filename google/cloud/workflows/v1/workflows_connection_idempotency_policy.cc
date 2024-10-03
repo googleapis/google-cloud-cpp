@@ -59,6 +59,31 @@ Idempotency WorkflowsConnectionIdempotencyPolicy::UpdateWorkflow(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency WorkflowsConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency WorkflowsConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency WorkflowsConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency WorkflowsConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency WorkflowsConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<WorkflowsConnectionIdempotencyPolicy>
 MakeDefaultWorkflowsConnectionIdempotencyPolicy() {
   return std::make_unique<WorkflowsConnectionIdempotencyPolicy>();

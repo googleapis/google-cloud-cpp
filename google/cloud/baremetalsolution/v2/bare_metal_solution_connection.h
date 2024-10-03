@@ -511,6 +511,12 @@ class BareMetalSolutionConnection {
   virtual StreamRange<google::cloud::baremetalsolution::v2::OSImage>
   ListOSImages(
       google::cloud::baremetalsolution::v2::ListOSImagesRequest request);
+
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
+
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 };
 
 /**

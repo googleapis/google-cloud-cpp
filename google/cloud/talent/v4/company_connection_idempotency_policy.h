@@ -22,6 +22,7 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
 #include <google/cloud/talent/v4/company_service.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -51,6 +52,9 @@ class CompanyServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency ListCompanies(
       google::cloud::talent::v4::ListCompaniesRequest request);
+
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<CompanyServiceConnectionIdempotencyPolicy>

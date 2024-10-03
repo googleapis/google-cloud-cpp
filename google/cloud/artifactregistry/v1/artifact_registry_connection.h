@@ -404,6 +404,15 @@ class ArtifactRegistryConnection {
   UpdateVPCSCConfig(
       google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const&
           request);
+
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
+
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

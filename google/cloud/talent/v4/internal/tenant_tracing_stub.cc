@@ -90,6 +90,17 @@ TenantServiceTracingStub::ListTenants(
                            child_->ListTenants(context, options, request));
 }
 
+StatusOr<google::longrunning::Operation> TenantServiceTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.TenantService",
+                                     "GetOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetOperation(context, options, request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<TenantServiceStub> MakeTenantServiceTracingStub(

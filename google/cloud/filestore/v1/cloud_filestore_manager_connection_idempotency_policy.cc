@@ -120,6 +120,36 @@ Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::UpdateBackup(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<CloudFilestoreManagerConnectionIdempotencyPolicy>
 MakeDefaultCloudFilestoreManagerConnectionIdempotencyPolicy() {
   return std::make_unique<CloudFilestoreManagerConnectionIdempotencyPolicy>();

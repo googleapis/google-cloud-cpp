@@ -102,6 +102,9 @@ class ApiKeysConnectionImpl : public apikeys_v2::ApiKeysConnection {
   StatusOr<google::api::apikeys::v2::LookupKeyResponse> LookupKey(
       google::api::apikeys::v2::LookupKeyRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<apikeys_v2_internal::ApiKeysStub> stub_;

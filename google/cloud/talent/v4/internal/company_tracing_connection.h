@@ -55,6 +55,9 @@ class CompanyServiceTracingConnection
   StreamRange<google::cloud::talent::v4::Company> ListCompanies(
       google::cloud::talent::v4::ListCompaniesRequest request) override;
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::shared_ptr<talent_v4::CompanyServiceConnection> child_;
 };

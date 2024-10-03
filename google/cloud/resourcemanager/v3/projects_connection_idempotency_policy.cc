@@ -90,6 +90,11 @@ Idempotency ProjectsConnectionIdempotencyPolicy::TestIamPermissions(
   return Idempotency::kIdempotent;
 }
 
+Idempotency ProjectsConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<ProjectsConnectionIdempotencyPolicy>
 MakeDefaultProjectsConnectionIdempotencyPolicy() {
   return std::make_unique<ProjectsConnectionIdempotencyPolicy>();

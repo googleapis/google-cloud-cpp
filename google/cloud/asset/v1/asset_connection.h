@@ -287,6 +287,9 @@ class AssetServiceConnection {
                           AnalyzeOrgPolicyGovernedAssetsResponse::GovernedAsset>
   AnalyzeOrgPolicyGovernedAssets(
       google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

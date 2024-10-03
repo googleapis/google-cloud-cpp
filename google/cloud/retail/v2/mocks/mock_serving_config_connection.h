@@ -79,6 +79,13 @@ class MockServingConfigServiceConnection
   MOCK_METHOD(StatusOr<google::cloud::retail::v2::ServingConfig>, RemoveControl,
               (google::cloud::retail::v2::RemoveControlRequest const& request),
               (override));
+
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
+              (google::longrunning::ListOperationsRequest request), (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

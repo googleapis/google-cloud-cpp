@@ -49,6 +49,16 @@ Idempotency SimulatorConnectionIdempotencyPolicy::ListReplayResults(
   return Idempotency::kIdempotent;
 }
 
+Idempotency SimulatorConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency SimulatorConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<SimulatorConnectionIdempotencyPolicy>
 MakeDefaultSimulatorConnectionIdempotencyPolicy() {
   return std::make_unique<SimulatorConnectionIdempotencyPolicy>();

@@ -54,6 +54,12 @@ class TextToSpeechTracingConnection
       google::cloud::texttospeech::v1::StreamingSynthesizeResponse>>
   AsyncStreamingSynthesize() override;
 
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::shared_ptr<texttospeech_v1::TextToSpeechConnection> child_;
 };

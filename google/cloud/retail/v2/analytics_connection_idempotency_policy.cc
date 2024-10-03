@@ -39,6 +39,16 @@ Idempotency AnalyticsServiceConnectionIdempotencyPolicy::ExportAnalyticsMetrics(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency AnalyticsServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency AnalyticsServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<AnalyticsServiceConnectionIdempotencyPolicy>
 MakeDefaultAnalyticsServiceConnectionIdempotencyPolicy() {
   return std::make_unique<AnalyticsServiceConnectionIdempotencyPolicy>();

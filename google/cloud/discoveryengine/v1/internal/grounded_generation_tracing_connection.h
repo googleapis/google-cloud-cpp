@@ -46,6 +46,15 @@ class GroundedGenerationServiceTracingConnection
       google::cloud::discoveryengine::v1::CheckGroundingRequest const& request)
       override;
 
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
+
  private:
   std::shared_ptr<discoveryengine_v1::GroundedGenerationServiceConnection>
       child_;

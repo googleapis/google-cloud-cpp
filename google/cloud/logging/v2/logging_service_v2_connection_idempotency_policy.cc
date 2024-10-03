@@ -60,6 +60,21 @@ Idempotency LoggingServiceV2ConnectionIdempotencyPolicy::ListLogs(
   return Idempotency::kIdempotent;
 }
 
+Idempotency LoggingServiceV2ConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency LoggingServiceV2ConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency LoggingServiceV2ConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<LoggingServiceV2ConnectionIdempotencyPolicy>
 MakeDefaultLoggingServiceV2ConnectionIdempotencyPolicy() {
   return std::make_unique<LoggingServiceV2ConnectionIdempotencyPolicy>();

@@ -423,6 +423,31 @@ EnvironmentsAuth::FetchDatabaseProperties(
   return child_->FetchDatabaseProperties(context, options, request);
 }
 
+StatusOr<google::longrunning::ListOperationsResponse>
+EnvironmentsAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::ListOperationsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListOperations(context, options, request);
+}
+
+StatusOr<google::longrunning::Operation> EnvironmentsAuth::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetOperation(context, options, request);
+}
+
+Status EnvironmentsAuth::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::DeleteOperationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteOperation(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

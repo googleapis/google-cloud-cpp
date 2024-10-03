@@ -29,6 +29,7 @@
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/contentwarehouse/v1/document_link_service.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -45,9 +46,11 @@ std::shared_ptr<DocumentLinkServiceStub> CreateDefaultDocumentLinkServiceStub(
   auto service_grpc_stub =
       google::cloud::contentwarehouse::v1::DocumentLinkService::NewStub(
           channel);
+  auto service_operations_stub =
+      google::longrunning::Operations::NewStub(channel);
   std::shared_ptr<DocumentLinkServiceStub> stub =
       std::make_shared<DefaultDocumentLinkServiceStub>(
-          std::move(service_grpc_stub));
+          std::move(service_grpc_stub), std::move(service_operations_stub));
 
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<DocumentLinkServiceAuth>(std::move(auth),

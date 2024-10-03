@@ -45,6 +45,18 @@ class TasksTracingConnection : public run_v2::TasksConnection {
   StreamRange<google::cloud::run::v2::Task> ListTasks(
       google::cloud::run::v2::ListTasksRequest request) override;
 
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> WaitOperation(
+      google::longrunning::WaitOperationRequest const& request) override;
+
  private:
   std::shared_ptr<run_v2::TasksConnection> child_;
 };

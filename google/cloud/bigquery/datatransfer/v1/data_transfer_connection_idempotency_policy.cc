@@ -133,6 +133,16 @@ Idempotency DataTransferServiceConnectionIdempotencyPolicy::UnenrollDataSources(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency DataTransferServiceConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DataTransferServiceConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<DataTransferServiceConnectionIdempotencyPolicy>
 MakeDefaultDataTransferServiceConnectionIdempotencyPolicy() {
   return std::make_unique<DataTransferServiceConnectionIdempotencyPolicy>();

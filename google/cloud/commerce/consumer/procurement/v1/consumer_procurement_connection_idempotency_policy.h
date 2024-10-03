@@ -23,6 +23,7 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
 #include <google/cloud/commerce/consumer/procurement/v1/procurement_service.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -49,6 +50,9 @@ class ConsumerProcurementServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ListOrders(
       google::cloud::commerce::consumer::procurement::v1::ListOrdersRequest
           request);
+
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<ConsumerProcurementServiceConnectionIdempotencyPolicy>

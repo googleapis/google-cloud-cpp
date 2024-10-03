@@ -46,6 +46,22 @@ class TasksAuth : public TasksStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::run::v2::ListTasksRequest const& request) override;
 
+  StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::ListOperationsRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  Status DeleteOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::DeleteOperationRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> WaitOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::WaitOperationRequest const& request) override;
+
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<TasksStub> child_;

@@ -101,6 +101,15 @@ TagHoldsTracingConnection::ListTagHolds(
                                                    std::move(sr));
 }
 
+StatusOr<google::longrunning::Operation>
+TagHoldsTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "resourcemanager_v3::TagHoldsConnection::GetOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetOperation(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<resourcemanager_v3::TagHoldsConnection>

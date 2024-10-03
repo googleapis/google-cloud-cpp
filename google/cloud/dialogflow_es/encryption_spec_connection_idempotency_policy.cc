@@ -46,6 +46,31 @@ EncryptionSpecServiceConnectionIdempotencyPolicy::InitializeEncryptionSpec(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency EncryptionSpecServiceConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency EncryptionSpecServiceConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency EncryptionSpecServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency EncryptionSpecServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency EncryptionSpecServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<EncryptionSpecServiceConnectionIdempotencyPolicy>
 MakeDefaultEncryptionSpecServiceConnectionIdempotencyPolicy() {
   return std::make_unique<EncryptionSpecServiceConnectionIdempotencyPolicy>();

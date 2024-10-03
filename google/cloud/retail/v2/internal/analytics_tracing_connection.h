@@ -54,6 +54,12 @@ class AnalyticsServiceTracingConnection
   ExportAnalyticsMetrics(
       google::longrunning::Operation const& operation) override;
 
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::shared_ptr<retail_v2::AnalyticsServiceConnection> child_;
 };

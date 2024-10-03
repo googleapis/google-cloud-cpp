@@ -94,6 +94,10 @@ class ApiKeysTracingStub : public ApiKeysStub {
       grpc::ClientContext& context, Options const& options,
       google::api::apikeys::v2::LookupKeyRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

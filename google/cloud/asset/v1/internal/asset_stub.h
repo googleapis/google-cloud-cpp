@@ -161,6 +161,10 @@ class AssetServiceStub {
       google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -180,8 +184,12 @@ class DefaultAssetServiceStub : public AssetServiceStub {
       std::unique_ptr<google::cloud::asset::v1::AssetService::StubInterface>
           grpc_stub,
       std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
           operations)
-      : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
+      : grpc_stub_(std::move(grpc_stub)),
+        operations_stub_(std::move(operations_stub)),
+        operations_(std::move(operations)) {}
 
   future<StatusOr<google::longrunning::Operation>> AsyncExportAssets(
       google::cloud::CompletionQueue& cq,
@@ -307,6 +315,10 @@ class DefaultAssetServiceStub : public AssetServiceStub {
       google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -322,6 +334,8 @@ class DefaultAssetServiceStub : public AssetServiceStub {
  private:
   std::unique_ptr<google::cloud::asset::v1::AssetService::StubInterface>
       grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 

@@ -221,6 +221,12 @@ class ModelServiceConnection {
 
   virtual future<StatusOr<google::cloud::retail::v2::TuneModelResponse>>
   TuneModel(google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

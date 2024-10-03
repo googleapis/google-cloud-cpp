@@ -64,6 +64,26 @@ Idempotency DatastoreAdminConnectionIdempotencyPolicy::ListIndexes(
   return Idempotency::kIdempotent;
 }
 
+Idempotency DatastoreAdminConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DatastoreAdminConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DatastoreAdminConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DatastoreAdminConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<DatastoreAdminConnectionIdempotencyPolicy>
 MakeDefaultDatastoreAdminConnectionIdempotencyPolicy() {
   return std::make_unique<DatastoreAdminConnectionIdempotencyPolicy>();

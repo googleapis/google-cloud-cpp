@@ -233,6 +233,14 @@ StatusOr<google::longrunning::Operation> ProductSearchAuth::PurgeProducts(
   return child_->PurgeProducts(context, options, request);
 }
 
+StatusOr<google::longrunning::Operation> ProductSearchAuth::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetOperation(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ProductSearchAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

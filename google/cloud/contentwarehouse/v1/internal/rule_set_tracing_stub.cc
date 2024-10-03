@@ -91,6 +91,18 @@ RuleSetServiceTracingStub::ListRuleSets(
                            child_->ListRuleSets(context, options, request));
 }
 
+StatusOr<google::longrunning::Operation>
+RuleSetServiceTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.contentwarehouse.v1.RuleSetService", "GetOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetOperation(context, options, request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<RuleSetServiceStub> MakeRuleSetServiceTracingStub(

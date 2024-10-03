@@ -65,6 +65,10 @@ class SynonymSetServiceTracingStub : public SynonymSetServiceStub {
       google::cloud::contentwarehouse::v1::ListSynonymSetsRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::shared_ptr<SynonymSetServiceStub> child_;
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>

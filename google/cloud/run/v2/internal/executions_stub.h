@@ -68,6 +68,22 @@ class ExecutionsStub {
       grpc::ClientContext& context, Options options,
       google::cloud::run::v2::CancelExecutionRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::ListOperationsRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) = 0;
+
+  virtual Status DeleteOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::DeleteOperationRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> WaitOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::WaitOperationRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -87,8 +103,12 @@ class DefaultExecutionsStub : public ExecutionsStub {
       std::unique_ptr<google::cloud::run::v2::Executions::StubInterface>
           grpc_stub,
       std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
           operations)
-      : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
+      : grpc_stub_(std::move(grpc_stub)),
+        operations_stub_(std::move(operations_stub)),
+        operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::run::v2::Execution> GetExecution(
       grpc::ClientContext& context, Options const& options,
@@ -118,6 +138,22 @@ class DefaultExecutionsStub : public ExecutionsStub {
       grpc::ClientContext& context, Options options,
       google::cloud::run::v2::CancelExecutionRequest const& request) override;
 
+  StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::ListOperationsRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  Status DeleteOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::DeleteOperationRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> WaitOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::WaitOperationRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -132,6 +168,8 @@ class DefaultExecutionsStub : public ExecutionsStub {
 
  private:
   std::unique_ptr<google::cloud::run::v2::Executions::StubInterface> grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 

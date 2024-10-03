@@ -158,6 +158,9 @@ class AssetServiceConnectionImpl : public asset_v1::AssetServiceConnection {
       google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest request)
       override;
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<asset_v1_internal::AssetServiceStub> stub_;

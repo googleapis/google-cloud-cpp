@@ -230,6 +230,9 @@ class ApiKeysConnection {
 
   virtual StatusOr<google::api::apikeys::v2::LookupKeyResponse> LookupKey(
       google::api::apikeys::v2::LookupKeyRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

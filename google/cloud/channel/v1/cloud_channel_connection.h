@@ -464,6 +464,18 @@ class CloudChannelServiceConnection {
   virtual StreamRange<google::cloud::channel::v1::EntitlementChange>
   ListEntitlementChanges(
       google::cloud::channel::v1::ListEntitlementChangesRequest request);
+
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
+
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
+
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

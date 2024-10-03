@@ -101,6 +101,12 @@ class AssuredWorkloadsServiceConnectionImpl
       google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&
           request) override;
 
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<assuredworkloads_v1_internal::AssuredWorkloadsServiceStub>

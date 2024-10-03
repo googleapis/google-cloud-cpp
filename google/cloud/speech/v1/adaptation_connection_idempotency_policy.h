@@ -22,6 +22,7 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
 #include <google/cloud/speech/v1/cloud_speech_adaptation.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -65,6 +66,12 @@ class AdaptationConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency DeleteCustomClass(
       google::cloud::speech::v1::DeleteCustomClassRequest const& request);
+
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<AdaptationConnectionIdempotencyPolicy>

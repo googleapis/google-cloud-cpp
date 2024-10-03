@@ -75,6 +75,15 @@ class EngineServiceTracingConnection
   StreamRange<google::cloud::discoveryengine::v1::Engine> ListEngines(
       google::cloud::discoveryengine::v1::ListEnginesRequest request) override;
 
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
+
  private:
   std::shared_ptr<discoveryengine_v1::EngineServiceConnection> child_;
 };

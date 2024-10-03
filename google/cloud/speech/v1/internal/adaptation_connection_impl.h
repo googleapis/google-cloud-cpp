@@ -84,6 +84,12 @@ class AdaptationConnectionImpl : public speech_v1::AdaptationConnection {
       google::cloud::speech::v1::DeleteCustomClassRequest const& request)
       override;
 
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<speech_v1_internal::AdaptationStub> stub_;

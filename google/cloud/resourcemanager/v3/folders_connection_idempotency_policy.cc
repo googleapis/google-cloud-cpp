@@ -90,6 +90,11 @@ Idempotency FoldersConnectionIdempotencyPolicy::TestIamPermissions(
   return Idempotency::kIdempotent;
 }
 
+Idempotency FoldersConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<FoldersConnectionIdempotencyPolicy>
 MakeDefaultFoldersConnectionIdempotencyPolicy() {
   return std::make_unique<FoldersConnectionIdempotencyPolicy>();

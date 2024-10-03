@@ -43,6 +43,12 @@ class SearchServiceTracingConnection
   StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult> Search(
       google::cloud::retail::v2::SearchRequest request) override;
 
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::shared_ptr<retail_v2::SearchServiceConnection> child_;
 };

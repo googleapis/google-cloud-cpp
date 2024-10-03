@@ -91,6 +91,9 @@ class ApiKeysTracingConnection : public apikeys_v2::ApiKeysConnection {
   StatusOr<google::api::apikeys::v2::LookupKeyResponse> LookupKey(
       google::api::apikeys::v2::LookupKeyRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::shared_ptr<apikeys_v2::ApiKeysConnection> child_;
 };

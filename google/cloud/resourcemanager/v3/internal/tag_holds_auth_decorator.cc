@@ -96,6 +96,14 @@ TagHoldsAuth::ListTagHolds(
   return child_->ListTagHolds(context, options, request);
 }
 
+StatusOr<google::longrunning::Operation> TagHoldsAuth::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetOperation(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TagHoldsAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

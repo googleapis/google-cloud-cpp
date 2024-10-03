@@ -22,6 +22,7 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
 #include <google/cloud/contentwarehouse/v1/ruleset_service.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -51,6 +52,9 @@ class RuleSetServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency ListRuleSets(
       google::cloud::contentwarehouse::v1::ListRuleSetsRequest request);
+
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<RuleSetServiceConnectionIdempotencyPolicy>

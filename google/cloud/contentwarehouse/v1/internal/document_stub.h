@@ -23,6 +23,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/contentwarehouse/v1/document_service.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -76,6 +77,10 @@ class DocumentServiceStub {
   virtual StatusOr<google::cloud::contentwarehouse::v1::SetAclResponse> SetAcl(
       grpc::ClientContext& context, Options const& options,
       google::cloud::contentwarehouse::v1::SetAclRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) = 0;
 };
 
 class DefaultDocumentServiceStub : public DocumentServiceStub {
@@ -83,8 +88,11 @@ class DefaultDocumentServiceStub : public DocumentServiceStub {
   explicit DefaultDocumentServiceStub(
       std::unique_ptr<
           google::cloud::contentwarehouse::v1::DocumentService::StubInterface>
-          grpc_stub)
-      : grpc_stub_(std::move(grpc_stub)) {}
+          grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
+      : grpc_stub_(std::move(grpc_stub)),
+        operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::cloud::contentwarehouse::v1::CreateDocumentResponse>
   CreateDocument(
@@ -129,10 +137,16 @@ class DefaultDocumentServiceStub : public DocumentServiceStub {
       google::cloud::contentwarehouse::v1::SetAclRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::unique_ptr<
       google::cloud::contentwarehouse::v1::DocumentService::StubInterface>
       grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

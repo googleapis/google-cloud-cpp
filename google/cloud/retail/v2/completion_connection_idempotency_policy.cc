@@ -44,6 +44,16 @@ Idempotency CompletionServiceConnectionIdempotencyPolicy::ImportCompletionData(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency CompletionServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency CompletionServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<CompletionServiceConnectionIdempotencyPolicy>
 MakeDefaultCompletionServiceConnectionIdempotencyPolicy() {
   return std::make_unique<CompletionServiceConnectionIdempotencyPolicy>();

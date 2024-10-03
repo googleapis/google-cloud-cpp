@@ -22,6 +22,7 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
 #include <google/cloud/contentwarehouse/v1/pipeline_service.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -39,6 +40,9 @@ class PipelineServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency RunPipeline(
       google::cloud::contentwarehouse::v1::RunPipelineRequest const& request);
+
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<PipelineServiceConnectionIdempotencyPolicy>

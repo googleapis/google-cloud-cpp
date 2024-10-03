@@ -203,6 +203,9 @@ class FleetRoutingConnection {
   virtual future<
       StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>
   BatchOptimizeTours(google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

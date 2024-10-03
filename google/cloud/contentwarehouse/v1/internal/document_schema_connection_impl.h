@@ -74,6 +74,9 @@ class DocumentSchemaServiceConnectionImpl
       google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest request)
       override;
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<contentwarehouse_v1_internal::DocumentSchemaServiceStub>

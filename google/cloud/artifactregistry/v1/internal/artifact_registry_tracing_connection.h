@@ -258,6 +258,15 @@ class ArtifactRegistryTracingConnection
       google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const&
           request) override;
 
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
+
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::shared_ptr<artifactregistry_v1::ArtifactRegistryConnection> child_;
 };

@@ -194,6 +194,21 @@ Idempotency ConfigServiceV2ConnectionIdempotencyPolicy::CopyLogEntries(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency ConfigServiceV2ConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ConfigServiceV2ConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ConfigServiceV2ConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<ConfigServiceV2ConnectionIdempotencyPolicy>
 MakeDefaultConfigServiceV2ConnectionIdempotencyPolicy() {
   return std::make_unique<ConfigServiceV2ConnectionIdempotencyPolicy>();

@@ -93,6 +93,17 @@ CompanyServiceLogging::ListCompanies(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> CompanyServiceLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::longrunning::GetOperationRequest const& request) {
+        return child_->GetOperation(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent_v4_internal
 }  // namespace cloud

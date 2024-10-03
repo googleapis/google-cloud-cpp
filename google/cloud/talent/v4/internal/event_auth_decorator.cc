@@ -40,6 +40,14 @@ EventServiceAuth::CreateClientEvent(
   return child_->CreateClientEvent(context, options, request);
 }
 
+StatusOr<google::longrunning::Operation> EventServiceAuth::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetOperation(context, options, request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent_v4_internal
 }  // namespace cloud

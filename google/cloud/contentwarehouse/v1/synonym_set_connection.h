@@ -205,6 +205,9 @@ class SynonymSetServiceConnection {
   virtual StreamRange<google::cloud::contentwarehouse::v1::SynonymSet>
   ListSynonymSets(
       google::cloud::contentwarehouse::v1::ListSynonymSetsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

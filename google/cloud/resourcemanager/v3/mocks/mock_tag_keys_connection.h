@@ -191,6 +191,10 @@ class MockTagKeysConnection : public resourcemanager_v3::TagKeysConnection {
               TestIamPermissions,
               (google::iam::v1::TestIamPermissionsRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

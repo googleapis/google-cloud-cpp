@@ -22,6 +22,7 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
 #include <google/cloud/talent/v4/completion_service.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -38,6 +39,9 @@ class CompletionConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency CompleteQuery(
       google::cloud::talent::v4::CompleteQueryRequest const& request);
+
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<CompletionConnectionIdempotencyPolicy>

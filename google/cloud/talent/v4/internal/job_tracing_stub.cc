@@ -190,6 +190,17 @@ JobServiceTracingStub::SearchJobsForAlert(
       context, *span, child_->SearchJobsForAlert(context, options, request));
 }
 
+StatusOr<google::longrunning::Operation> JobServiceTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.JobService",
+                                     "GetOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetOperation(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 JobServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

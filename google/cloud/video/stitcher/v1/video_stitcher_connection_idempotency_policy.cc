@@ -190,6 +190,26 @@ Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::UpdateVodConfig(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<VideoStitcherServiceConnectionIdempotencyPolicy>
 MakeDefaultVideoStitcherServiceConnectionIdempotencyPolicy() {
   return std::make_unique<VideoStitcherServiceConnectionIdempotencyPolicy>();

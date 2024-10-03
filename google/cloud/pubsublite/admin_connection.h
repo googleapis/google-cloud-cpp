@@ -262,6 +262,18 @@ class AdminServiceConnection {
   virtual StreamRange<std::string> ListReservationTopics(
       google::cloud::pubsublite::v1::ListReservationTopicsRequest request);
 
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
+
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
+
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
+
   virtual future<StatusOr<google::cloud::pubsublite::v1::TopicPartitions>>
   AsyncGetTopicPartitions(
       google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request);

@@ -80,6 +80,12 @@ ConsumerProcurementServiceConnection::ListOrders(
       StreamRange<google::cloud::commerce::consumer::procurement::v1::Order>>();
 }
 
+StatusOr<google::longrunning::Operation>
+ConsumerProcurementServiceConnection::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<ConsumerProcurementServiceConnection>
 MakeConsumerProcurementServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
