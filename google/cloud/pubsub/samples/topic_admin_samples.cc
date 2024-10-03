@@ -219,21 +219,22 @@ void CreateTopicWithCloudStorageIngestion(
   namespace pubsub = ::google::cloud::pubsub;
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   [](pubsub_admin::TopicAdminClient client, std::string project_id,
-     std::string topic_id, std::string bucket, std::string input_format,
+     std::string topic_id, std::string bucket, std::string const& input_format,
      std::string text_delimiter, std::string match_glob,
-     std::string minimum_object_create_time) {
+     std::string const& minimum_object_create_time) {
     google::pubsub::v1::Topic request;
     request.set_name(
         pubsub::Topic(std::move(project_id), std::move(topic_id)).FullName());
-    auto* cloud_storage = request.mutable_ingestion_data_source_settings()
-                              ->mutable_cloud_storage();
-    cloud_storage->set_bucket(bucket);
+    auto& cloud_storage = *request.mutable_ingestion_data_source_settings()
+                               ->mutable_cloud_storage();
+    cloud_storage.set_bucket(std::move(bucket));
     if (input_format == "text") {
-      cloud_storage->mutable_text_format()->set_delimiter(text_delimiter);
+      cloud_storage.mutable_text_format()->set_delimiter(
+          std::move(text_delimiter));
     } else if (input_format == "avro") {
-      cloud_storage->mutable_avro_format();
+      cloud_storage.mutable_avro_format();
     } else if (input_format == "pubsub_avro") {
-      cloud_storage->mutable_pubsub_avro_format();
+      cloud_storage.mutable_pubsub_avro_format();
     } else {
       std::cout << "input_format must be in ('text', 'avro', 'pubsub_avro'); "
                    "got value: "
@@ -242,14 +243,14 @@ void CreateTopicWithCloudStorageIngestion(
     }
 
     if (!match_glob.empty()) {
-      cloud_storage->set_match_glob(match_glob);
+      cloud_storage.set_match_glob(std::move(match_glob));
     }
 
     if (!minimum_object_create_time.empty()) {
       google::protobuf::Timestamp timestamp;
       if (!google::protobuf::util::TimeUtil::FromString(
               minimum_object_create_time,
-              cloud_storage->mutable_minimum_object_create_time())) {
+              cloud_storage.mutable_minimum_object_create_time())) {
         std::cout << "Invalid minimum object create time: "
                   << minimum_object_create_time << std::endl;
       }
