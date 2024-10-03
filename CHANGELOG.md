@@ -50,6 +50,10 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
 - fix(rest): promote buffer curl reads from to member variable ([#14732](https://github.com/googleapis/google-cloud-cpp/pull/14732))
 - fix: respect `GOOGLE_CLOUD_QUOTA_PROJECT` ([#14684](https://github.com/googleapis/google-cloud-cpp/pull/14684))
 
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2024-09-24T10:34:24-07:00](https://github.com/googleapis/googleapis/tree/69e9dff10df4fa1e338712d38dc26b46791a6e94)
+
 ## v2.29.0 - 2024-09
 
 ### New Libraries
