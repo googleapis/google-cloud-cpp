@@ -61,7 +61,8 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
     YAML::Node const& service_config,
     std::vector<std::pair<std::string, std::string>> const& vars) {
   std::vector<MixinMethod> mixin_methods;
-  if (service->file()->name() == "google/pubsub/v1/pubsub.proto") {
+  if (service->file()->name() == "google/pubsub/v1/pubsub.proto" ||
+      service->name() == "DataMigrationService") {
     mixin_methods = GetMixinMethods(service_config, *service);
   }
   std::vector<std::string> sources;
