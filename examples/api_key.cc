@@ -22,6 +22,7 @@
 // [START apikeys_authenticate_api_key]
 #include "google/cloud/language/v1/language_client.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/options.h"
 
 // [END apikeys_authenticate_api_key]
@@ -82,7 +83,10 @@ void AuthenticateWithApiKey(std::vector<std::string> const& argv) {
         "authenticate-with-api-key <project-id> <api-key>"};
   }
   namespace gc = ::google::cloud;
-  auto options = gc::Options{}.set<gc::ApiKeyOption>(argv[1]);
+  auto options =
+      gc::Options{}
+          .set<gc::GrpcCredentialOption>(grpc::SslCredentials({}))
+          .set<gc::CustomHeadersOption>({{"x-goog-api-key", argv[1]}});
   auto client = gc::language_v1::LanguageServiceClient(
       gc::language_v1::MakeLanguageServiceConnection(options));
 
@@ -150,6 +154,7 @@ void AutoRun(std::vector<std::string> const& argv) {
 
     try {
       AuthenticateWithApiKey({project_id, key.key_string()});
+      break;
     } catch (gc::Status const& s) {
       if (backoff == 0) throw(s);
       std::cout << "Sleeping for " << backoff << " seconds\n";
