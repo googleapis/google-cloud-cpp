@@ -40,11 +40,13 @@ jobs:
       matrix:
         exclude-from-full-trick: [ true ]
         os: [ macos-14 ]
-        shard: [ Core1, Core2, Compute, Shard1, Shard2, Shard3, Shard4, Shard5, Other ]
+        shard: [ Core1, Core2, Compute, AIPlatform, Shard1, Shard2, Shard3, Shard4, Shard5, Other ]
         exclude:
         # Only full builds include shards with generated code.
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
           shard: Compute
+        - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
+          shard: AIPlatform
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
           shard: Shard1
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
@@ -80,6 +82,7 @@ jobs:
           pubsub
           pubsublite
           storage
+          storage_grpc
         )
         # These are the libraries with the most "clients". To build the list
         # run something like this and find the midpoint:
@@ -94,7 +97,6 @@ jobs:
           monitoring
           retail
           discoveryengine
-          aiplatform
         )
         shard2_features=(
           servicecontrol
@@ -210,6 +212,8 @@ jobs:
           echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
         elif [[ "${{matrix.shard}}" == "Compute" ]]; then
           echo "features=compute" >> "${GITHUB_OUTPUT}"
+        elif [[ "${{matrix.shard}}" == "AIPlatform" ]]; then
+          echo "features=aiplatform" >> "${GITHUB_OUTPUT}"
         elif [[ "${{ matrix.shard }}" == "Shard1" ]]; then
           features="$(printf ",%s" "${shard1_features[@]}")"
           echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
@@ -229,6 +233,7 @@ jobs:
           skipped_features=("${core1_features[@]}")
           skipped_features+=("${core2_features[@]}")
           skipped_features+=(compute)
+          skipped_features+=(aiplatform)
           skipped_features+=("${shard1_features[@]}")
           skipped_features+=("${shard2_features[@]}")
           skipped_features+=("${shard3_features[@]}")
