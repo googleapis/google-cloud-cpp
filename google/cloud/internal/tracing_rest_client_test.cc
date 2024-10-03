@@ -317,7 +317,7 @@ TEST(TracingRestClient, CensorsAuthFields) {
           OTelAttribute<std::string>("http.request.header.authorization",
                                      "bearer: ABCDEFGHIJKLMNOPQRSTUVWX"),
           OTelAttribute<std::string>("http.request.header.x-goog-api-key",
-                                     "ABCDEFGHIJKLMNOP..."))));
+                                     "ABCDEFGHIJKL..."))));
 }
 
 TEST(TracingRestClient, CachedConnection) {
