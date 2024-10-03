@@ -1034,8 +1034,8 @@ void OptimisticSubscribe(std::vector<std::string> const& argv) {
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   namespace pubsub = ::google::cloud::pubsub;
   namespace gc = ::google::cloud;
-  [](std::string project_id, std::string topic_id,
-     std::string subscription_id) {
+  [](std::string const& project_id, std::string topic_id,
+     std::string const& subscription_id) {
     // Do not retry the attempts to consume messages.
     auto subscriber = pubsub::Subscriber(
         pubsub::MakeSubscriberConnection(

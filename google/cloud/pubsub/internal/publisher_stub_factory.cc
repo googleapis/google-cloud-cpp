@@ -57,12 +57,14 @@ std::shared_ptr<grpc::Channel> CreateGrpcChannel(
 
 std::shared_ptr<PublisherStub> MakeRoundRobinPublisherStub(
     google::cloud::CompletionQueue cq, Options const& options) {
-  return CreateDecoratedStubs(std::move(cq), options,
-                              [](std::shared_ptr<grpc::Channel> c) {
-                                return std::make_shared<DefaultPublisherStub>(
-                                    google::pubsub::v1::Publisher::NewStub(c),
-                                    google::iam::v1::IAMPolicy::NewStub(c));
-                              });
+  return CreateDecoratedStubs(
+      std::move(cq),
+      options,  // NOLINTNEXTLINE(performance-unnecessary-value-param)
+      [](std::shared_ptr<grpc::Channel> c) {
+        return std::make_shared<DefaultPublisherStub>(
+            google::pubsub::v1::Publisher::NewStub(c),
+            google::iam::v1::IAMPolicy::NewStub(c));
+      });
 }
 
 std::shared_ptr<PublisherStub> CreateDecoratedStubs(

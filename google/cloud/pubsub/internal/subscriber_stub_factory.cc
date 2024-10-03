@@ -56,7 +56,8 @@ std::shared_ptr<grpc::Channel> CreateGrpcChannel(
 
 }  // namespace
 
-std::shared_ptr<SubscriberStub> CreateDefaultSubscriberStub(
+std::shared_ptr<SubscriberStub>
+CreateDefaultSubscriberStub(  // NOLINTNEXTLINE(performance-unnecessary-value-param)
     std::shared_ptr<grpc::Channel> channel) {
   return std::make_shared<DefaultSubscriberStub>(
       google::pubsub::v1::Subscriber::NewStub(channel),
@@ -65,12 +66,14 @@ std::shared_ptr<SubscriberStub> CreateDefaultSubscriberStub(
 
 std::shared_ptr<SubscriberStub> MakeRoundRobinSubscriberStub(
     google::cloud::CompletionQueue cq, Options const& options) {
-  return CreateDecoratedStubs(std::move(cq), options,
-                              [](std::shared_ptr<grpc::Channel> c) {
-                                return std::make_shared<DefaultSubscriberStub>(
-                                    google::pubsub::v1::Subscriber::NewStub(c),
-                                    google::iam::v1::IAMPolicy::NewStub(c));
-                              });
+  return CreateDecoratedStubs(
+      std::move(cq),
+      options,  // NOLINTNEXTLINE(performance-unnecessary-value-param)
+      [](std::shared_ptr<grpc::Channel> c) {
+        return std::make_shared<DefaultSubscriberStub>(
+            google::pubsub::v1::Subscriber::NewStub(c),
+            google::iam::v1::IAMPolicy::NewStub(c));
+      });
 }
 
 std::shared_ptr<SubscriberStub> MakeTestSubscriberStub(
