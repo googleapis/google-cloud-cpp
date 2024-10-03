@@ -233,9 +233,8 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto subscription =
       subscription_admin_client
           .CreateSubscription(
-              pubsub::Topic(project_id, topic_id).FullName(),
-              pubsub::Subscription(project_id, subscription_id).FullName(), {},
-              {})
+              pubsub::Subscription(project_id, subscription_id).FullName(),
+              pubsub::Topic(project_id, topic_id).FullName(), {}, {})
           .value();
 
   std::cout << "\nRunning GetTopicPolicy() sample" << std::endl;
