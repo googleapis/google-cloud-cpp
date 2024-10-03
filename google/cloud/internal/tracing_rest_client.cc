@@ -34,6 +34,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 /**
+ * The number of characters to print in an [API key].
+ *
+ * API keys are 39 characters in length. The value is a secret, so we do not
+ * want to include the entire key in our telemetry.
+ *
+ * Providing some number of characters allows applications to confirm the
+ * correct API key is in use, given that the full API key is known.
+ *
+ * [API key]: https://cloud.google.com/docs/authentication/api-keys-use
+ */
+auto constexpr kApiKeyHintLength = 12;
+
+/**
  * Extracts information from @p value, and adds it to a span.
  *
  * The span is ended. The original value is returned, for the sake of
@@ -66,6 +79,11 @@ StatusOr<std::unique_ptr<RestResponse>> EndResponseSpan(
     }
     if (absl::EqualsIgnoreCase(kv.first, "authorization")) {
       span->SetAttribute(name, kv.second.front().substr(0, 32));
+      continue;
+    }
+    if (absl::EqualsIgnoreCase(kv.first, "x-goog-api-key")) {
+      span->SetAttribute(
+          name, kv.second.front().substr(0, kApiKeyHintLength) + "...");
       continue;
     }
     span->SetAttribute(name, kv.second.front());
