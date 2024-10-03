@@ -21,7 +21,6 @@
 #include "google/cloud/storage/internal/grpc/configure_client_context.h"
 #include "google/cloud/storage/internal/grpc/ctype_cord_workaround.h"
 #include "google/cloud/storage/internal/grpc/default_options.h"
-#include "google/cloud/storage/internal/grpc/notification_metadata_parser.h"
 #include "google/cloud/storage/internal/grpc/object_access_control_parser.h"
 #include "google/cloud/storage/internal/grpc/object_metadata_parser.h"
 #include "google/cloud/storage/internal/grpc/object_read_source.h"
