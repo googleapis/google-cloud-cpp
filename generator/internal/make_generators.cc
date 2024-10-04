@@ -238,7 +238,8 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
 
     std::sort(sources.begin(), sources.end());
     code_generators.push_back(std::make_unique<SourcesGenerator>(
-        service, service_vars, method_vars, context, std::move(sources)));
+        service, service_vars, method_vars, context, std::move(sources),
+        mixin_methods));
   }
 
   return code_generators;

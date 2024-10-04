@@ -80,30 +80,6 @@ jobs:
     - uses: google-github-actions/setup-gcloud@v2
       env:
         CLOUDSDK_PYTHON: ${{ steps.py311.outputs.python-path }}
-    # TODO(14314) - remove this VC Toolset workaround
-    - name: Select VC Toolset
-      id: vctoolset
-      shell: bash
-      run: |
-        # upb does not compile with the compiler that comes with the 14.40.33807
-        # VC toolset. To workaround this, we list the available toolset
-        # versions, then pick the latest one that is not 14.40.*. If 14.40.* is
-        # the only compiler version, we use that.
-        #
-        # See https://github.com/protocolbuffers/protobuf/issues/17032 for more
-        # details.
-        toolset_versions=($(ls "C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\Tools\\MSVC"))
-        echo "Available VC toolsets: ${toolset_versions[@]}"
-        toolset_version=""
-        for v in "${toolset_versions[@]}"; do
-          if [ -z "${toolset_version}" ]; then
-            toolset_version=${v}
-          elif ! echo ${v} | grep -q "^14\.40\."; then
-            toolset_version=${v}
-          fi
-        done
-        echo "Using VC toolset: ${toolset_version}"
-        echo "toolset_version=${toolset_version}" >> "${GITHUB_OUTPUT}"
     - name: Dynamic Configuration
       id: dynamic
       shell: bash
@@ -316,9 +292,6 @@ jobs:
         curl -fsSL "https://github.com/microsoft/vcpkg/archive/${{ steps.dynamic.outputs.vcpkg-version }}.tar.gz" |
             tar -C .build/vcpkg --strip-components=1 -zxf -
         .build/vcpkg/bootstrap-vcpkg.sh -disableMetrics
-        # TODO(14314) - remove this VC Toolset workaround
-        echo "set(VCPKG_PLATFORM_TOOLSET_VERSION ${{ steps.vctoolset.outputs.toolset_version }})" >> .build/vcpkg/triplets/x64-windows.cmake
-        echo "set(VCPKG_PLATFORM_TOOLSET_VERSION ${{ steps.vctoolset.outputs.toolset_version }})" >> .build/vcpkg/triplets/x86-windows.cmake
     # go/github-actions#gha-bestpractices explains why we use a SHA instead of
     # a named version for this runner. We could avoid using this runner with the
     # ideas from:
@@ -328,8 +301,6 @@ jobs:
     - uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756 # @v1.13.0
       with:
         arch: ${{ matrix.arch }}
-        # TODO(14314) - remove this VC Toolset workaround
-        toolset: ${{ steps.vctoolset.outputs.toolset_version }}
     - name: Build google-cloud-cpp
       shell: bash
       run: |

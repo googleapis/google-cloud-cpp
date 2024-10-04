@@ -391,18 +391,16 @@ absl::optional<std::string> FormatApiVersionFromUrlPattern(
 
 // Generate api version by extracting the version from the url pattern.
 // In some cases(i.e. location), there is no version in the package name.
-std::string FormatApiVersionFromUrlPattern(std::string const& url_pattern,
-                                           std::string const& file_name) {
-  std::vector<std::string> parts = absl::StrSplit(url_pattern, '/');
+absl::optional<std::string> FormatApiVersionFromUrlPattern(
+    std::string const& url_pattern) {
+  std::vector<std::string> const parts = absl::StrSplit(url_pattern, '/');
   static auto const* const kVersion = new std::regex{R"(v\d+)"};
   for (auto const& part : parts) {
     if (std::regex_match(part, *kVersion)) {
       return part;
     }
   }
-  GCP_LOG(FATAL) << "Unrecognized API version in file: " << file_name
-                 << ", url pattern: " << url_pattern;
-  return {};  // Suppress clang-tidy warnings
+  return absl::nullopt;
 }
 
 }  // namespace generator_internal

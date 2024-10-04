@@ -12,18 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package(default_visibility = ["//visibility:private"])
-
-licenses(["notice"])  # Apache 2.0
-
-[cc_test(
-    name = sample.replace(".cc", ""),
-    srcs = [sample],
-    tags = [
-        "integration-test",
-    ],
-    deps = [
-        "//:aiplatform",
-        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-    ],
-) for sample in glob(["*.cc"])]
+filename: ci/cloudbuild/cloudbuild.yaml
+github:
+  name: google-cloud-cpp
+  owner: googleapis
+  push:
+    branch: ^main$
+name: universe-domain-demo-ci
+substitutions:
+  _BUILD_NAME: universe-domain-demo
+  _DISTRO: fedora-latest-bazel
+  _TRIGGER_TYPE: ci
+includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
+tags:
+- ci

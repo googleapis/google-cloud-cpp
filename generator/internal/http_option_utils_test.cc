@@ -834,22 +834,17 @@ TEST_F(HttpOptionUtilsTest, FormatApiVersionFromUrlPatternNonExist) {
 }
 
 TEST_F(HttpOptionUtilsTest, FormatApiVersionFromUrlPattern) {
-  std::string file_name = "google/foo/v1/service.proto";
   std::string url_pattern_v1 = "/v1/foo/bar";
-  EXPECT_THAT(FormatApiVersionFromUrlPattern(url_pattern_v1, file_name),
-              Eq("v1"));
+  EXPECT_THAT(FormatApiVersionFromUrlPattern(url_pattern_v1),
+              Optional(std::string("v1")));
   std::string url_pattern_v2 = "/foo/v2/bar";
-  EXPECT_THAT(FormatApiVersionFromUrlPattern(url_pattern_v2, file_name),
-              Eq("v2"));
+  EXPECT_THAT(FormatApiVersionFromUrlPattern(url_pattern_v2),
+              Optional(std::string("v2")));
 }
 
-TEST_F(HttpOptionUtilsTest, FormatApiVersionFromUrlPatternError) {
-  std::string file_name = "google/foo/v1/service.proto";
+TEST_F(HttpOptionUtilsTest, FormatApiVersionFromUrlPatternNonExist) {
   std::string url_pattern = "/foo/bar";
-  EXPECT_DEATH_IF_SUPPORTED(
-      FormatApiVersionFromUrlPattern(url_pattern, file_name),
-      "Unrecognized API version in file: "
-      "google/foo/v1/service.proto, url pattern: /foo/bar");
+  EXPECT_THAT(FormatApiVersionFromUrlPattern(url_pattern), Eq(absl::nullopt));
 }
 
 }  // namespace
