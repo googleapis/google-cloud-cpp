@@ -108,6 +108,15 @@ DocumentServiceTracingConnection::SetAcl(
   return internal::EndSpan(*span, child_->SetAcl(request));
 }
 
+StatusOr<google::longrunning::Operation>
+DocumentServiceTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "contentwarehouse_v1::DocumentServiceConnection::GetOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetOperation(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<contentwarehouse_v1::DocumentServiceConnection>

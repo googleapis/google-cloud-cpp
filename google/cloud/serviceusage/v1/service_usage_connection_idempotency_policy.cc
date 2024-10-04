@@ -64,6 +64,16 @@ Idempotency ServiceUsageConnectionIdempotencyPolicy::BatchGetServices(
   return Idempotency::kIdempotent;
 }
 
+Idempotency ServiceUsageConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ServiceUsageConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<ServiceUsageConnectionIdempotencyPolicy>
 MakeDefaultServiceUsageConnectionIdempotencyPolicy() {
   return std::make_unique<ServiceUsageConnectionIdempotencyPolicy>();

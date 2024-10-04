@@ -171,6 +171,42 @@ Status ManagedKafkaConnection::DeleteConsumerGroup(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StreamRange<google::cloud::location::Location>
+ManagedKafkaConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::location::Location>>();
+}
+
+StatusOr<google::cloud::location::Location> ManagedKafkaConnection::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::longrunning::Operation>
+ManagedKafkaConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::longrunning::Operation>>();
+}
+
+StatusOr<google::longrunning::Operation> ManagedKafkaConnection::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status ManagedKafkaConnection::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status ManagedKafkaConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<ManagedKafkaConnection> MakeManagedKafkaConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

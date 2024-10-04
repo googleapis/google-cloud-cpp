@@ -332,6 +332,18 @@ class DatabaseAdminConnection {
   virtual StreamRange<google::spanner::admin::database::v1::BackupSchedule>
   ListBackupSchedules(
       google::spanner::admin::database::v1::ListBackupSchedulesRequest request);
+
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
+
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
+
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

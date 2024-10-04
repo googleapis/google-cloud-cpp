@@ -89,6 +89,12 @@ class ModelServiceConnectionImpl : public retail_v2::ModelServiceConnection {
   future<StatusOr<google::cloud::retail::v2::TuneModelResponse>> TuneModel(
       google::longrunning::Operation const& operation) override;
 
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<retail_v2_internal::ModelServiceStub> stub_;

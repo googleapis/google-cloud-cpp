@@ -25,6 +25,7 @@
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <google/cloud/retail/v2/prediction_service.pb.h>
 #include <memory>
@@ -184,6 +185,12 @@ class PredictionServiceConnection {
 
   virtual StatusOr<google::cloud::retail::v2::PredictResponse> Predict(
       google::cloud::retail::v2::PredictRequest const& request);
+
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

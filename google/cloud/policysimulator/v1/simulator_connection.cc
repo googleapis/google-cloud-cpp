@@ -74,6 +74,18 @@ SimulatorConnection::ListReplayResults(
       StreamRange<google::cloud::policysimulator::v1::ReplayResult>>();
 }
 
+StreamRange<google::longrunning::Operation> SimulatorConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::longrunning::Operation>>();
+}
+
+StatusOr<google::longrunning::Operation> SimulatorConnection::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<SimulatorConnection> MakeSimulatorConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,

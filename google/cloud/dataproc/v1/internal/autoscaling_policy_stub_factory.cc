@@ -29,6 +29,8 @@
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/dataproc/v1/autoscaling_policies.grpc.pb.h>
+#include <google/iam/v1/iam_policy.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -45,9 +47,13 @@ CreateDefaultAutoscalingPolicyServiceStub(
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       google::cloud::dataproc::v1::AutoscalingPolicyService::NewStub(channel);
+  auto service_operations_stub =
+      google::longrunning::Operations::NewStub(channel);
+  auto service_iampolicy_stub = google::iam::v1::IAMPolicy::NewStub(channel);
   std::shared_ptr<AutoscalingPolicyServiceStub> stub =
       std::make_shared<DefaultAutoscalingPolicyServiceStub>(
-          std::move(service_grpc_stub));
+          std::move(service_grpc_stub), std::move(service_operations_stub),
+          std::move(service_iampolicy_stub));
 
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<AutoscalingPolicyServiceAuth>(std::move(auth),

@@ -51,6 +51,9 @@ class EventServiceConnectionImpl : public talent_v4::EventServiceConnection {
       google::cloud::talent::v4::CreateClientEventRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<talent_v4_internal::EventServiceStub> stub_;

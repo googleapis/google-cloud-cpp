@@ -59,6 +59,16 @@ Idempotency UserEventServiceConnectionIdempotencyPolicy::RejoinUserEvents(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency UserEventServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency UserEventServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<UserEventServiceConnectionIdempotencyPolicy>
 MakeDefaultUserEventServiceConnectionIdempotencyPolicy() {
   return std::make_unique<UserEventServiceConnectionIdempotencyPolicy>();

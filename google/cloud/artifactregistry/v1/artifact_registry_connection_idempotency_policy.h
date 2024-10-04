@@ -21,7 +21,9 @@
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
+#include <google/cloud/location/locations.grpc.pb.h>
 #include <google/devtools/artifactregistry/v1/service.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -163,6 +165,15 @@ class ArtifactRegistryConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency UpdateVPCSCConfig(
       google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const&
           request);
+
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
+
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
+
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<ArtifactRegistryConnectionIdempotencyPolicy>

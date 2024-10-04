@@ -28,6 +28,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <google/cloud/retail/v2/user_event_service.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
@@ -224,6 +225,12 @@ class UserEventServiceConnection {
 
   virtual future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>
   RejoinUserEvents(google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

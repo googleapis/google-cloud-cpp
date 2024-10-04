@@ -26,6 +26,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 #include <utility>
@@ -64,6 +65,20 @@ CompletionServiceConnection::ImportCompletionData(
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::longrunning::Operation>
+CompletionServiceConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::longrunning::Operation>>();
+}
+
+StatusOr<google::longrunning::Operation>
+CompletionServiceConnection::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 std::shared_ptr<CompletionServiceConnection> MakeCompletionServiceConnection(

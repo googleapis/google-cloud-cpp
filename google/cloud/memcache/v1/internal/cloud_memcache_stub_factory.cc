@@ -28,7 +28,9 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
+#include <google/cloud/location/locations.grpc.pb.h>
 #include <google/cloud/memcache/v1/cloud_memcache.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -44,9 +46,14 @@ std::shared_ptr<CloudMemcacheStub> CreateDefaultCloudMemcacheStub(
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       google::cloud::memcache::v1::CloudMemcache::NewStub(channel);
+  auto service_operations_stub =
+      google::longrunning::Operations::NewStub(channel);
+  auto service_locations_stub =
+      google::cloud::location::Locations::NewStub(channel);
   std::shared_ptr<CloudMemcacheStub> stub =
       std::make_shared<DefaultCloudMemcacheStub>(
-          std::move(service_grpc_stub),
+          std::move(service_grpc_stub), std::move(service_operations_stub),
+          std::move(service_locations_stub),
           google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {

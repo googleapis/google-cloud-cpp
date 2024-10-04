@@ -65,6 +65,46 @@ SessionTemplateControllerConnectionIdempotencyPolicy::DeleteSessionTemplate(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency SessionTemplateControllerConnectionIdempotencyPolicy::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return request.policy().etag().empty() ? Idempotency::kNonIdempotent
+                                         : Idempotency::kIdempotent;
+}
+
+Idempotency SessionTemplateControllerConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+SessionTemplateControllerConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+SessionTemplateControllerConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency SessionTemplateControllerConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+SessionTemplateControllerConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+SessionTemplateControllerConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<SessionTemplateControllerConnectionIdempotencyPolicy>
 MakeDefaultSessionTemplateControllerConnectionIdempotencyPolicy() {
   return std::make_unique<

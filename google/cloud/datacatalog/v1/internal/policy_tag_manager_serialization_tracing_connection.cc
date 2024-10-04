@@ -18,6 +18,7 @@
 
 #include "google/cloud/datacatalog/v1/internal/policy_tag_manager_serialization_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 #include <utility>
 
@@ -62,6 +63,45 @@ PolicyTagManagerSerializationTracingConnection::ExportTaxonomies(
       "ExportTaxonomies");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ExportTaxonomies(request));
+}
+
+StreamRange<google::longrunning::Operation>
+PolicyTagManagerSerializationTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "datacatalog_v1::PolicyTagManagerSerializationConnection::"
+      "ListOperations");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListOperations(std::move(request));
+  return internal::MakeTracedStreamRange<google::longrunning::Operation>(
+      std::move(span), std::move(sr));
+}
+
+StatusOr<google::longrunning::Operation>
+PolicyTagManagerSerializationTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "datacatalog_v1::PolicyTagManagerSerializationConnection::GetOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetOperation(request));
+}
+
+Status PolicyTagManagerSerializationTracingConnection::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "datacatalog_v1::PolicyTagManagerSerializationConnection::"
+      "DeleteOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteOperation(request));
+}
+
+Status PolicyTagManagerSerializationTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "datacatalog_v1::PolicyTagManagerSerializationConnection::"
+      "CancelOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

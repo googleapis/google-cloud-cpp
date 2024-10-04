@@ -197,6 +197,9 @@ class RuleSetServiceConnection {
   virtual StreamRange<google::cloud::contentwarehouse::v1::RuleSet>
   ListRuleSets(
       google::cloud::contentwarehouse::v1::ListRuleSetsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

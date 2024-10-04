@@ -25,6 +25,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/dialogflow/cx/v3/environment.grpc.pb.h>
+#include <google/cloud/location/locations.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <google/protobuf/struct.pb.h>
 #include <memory>
@@ -118,6 +119,27 @@ class EnvironmentsStub {
       grpc::ClientContext& context, Options options,
       google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::location::ListLocationsResponse>
+  ListLocations(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::location::ListLocationsRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::location::GetLocationRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::ListOperationsRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) = 0;
+
+  virtual Status CancelOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::CancelOperationRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -138,8 +160,15 @@ class DefaultEnvironmentsStub : public EnvironmentsStub {
           google::cloud::dialogflow::cx::v3::Environments::StubInterface>
           grpc_stub,
       std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub,
+      std::unique_ptr<google::cloud::location::Locations::StubInterface>
+          locations_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
           operations)
-      : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
+      : grpc_stub_(std::move(grpc_stub)),
+        operations_stub_(std::move(operations_stub)),
+        locations_stub_(std::move(locations_stub)),
+        operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListEnvironmentsResponse>
   ListEnvironments(
@@ -217,6 +246,26 @@ class DefaultEnvironmentsStub : public EnvironmentsStub {
       google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request)
       override;
 
+  StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::location::ListLocationsRequest const& request) override;
+
+  StatusOr<google::cloud::location::Location> GetLocation(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::location::GetLocationRequest const& request) override;
+
+  StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::ListOperationsRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  Status CancelOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::CancelOperationRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -233,6 +282,10 @@ class DefaultEnvironmentsStub : public EnvironmentsStub {
   std::unique_ptr<
       google::cloud::dialogflow::cx::v3::Environments::StubInterface>
       grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
+  std::unique_ptr<google::cloud::location::Locations::StubInterface>
+      locations_stub_;
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 

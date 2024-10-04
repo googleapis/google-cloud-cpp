@@ -69,6 +69,9 @@ class SynonymSetServiceConnectionImpl
       google::cloud::contentwarehouse::v1::ListSynonymSetsRequest request)
       override;
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<contentwarehouse_v1_internal::SynonymSetServiceStub> stub_;

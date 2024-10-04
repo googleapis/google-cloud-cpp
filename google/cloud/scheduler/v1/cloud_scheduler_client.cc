@@ -152,6 +152,19 @@ StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerClient::RunJob(
   return connection_->RunJob(request);
 }
 
+StreamRange<google::cloud::location::Location>
+CloudSchedulerClient::ListLocations(
+    google::cloud::location::ListLocationsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListLocations(std::move(request));
+}
+
+StatusOr<google::cloud::location::Location> CloudSchedulerClient::GetLocation(
+    google::cloud::location::GetLocationRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetLocation(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace scheduler_v1
 }  // namespace cloud

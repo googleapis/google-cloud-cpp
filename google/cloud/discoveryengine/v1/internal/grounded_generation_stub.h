@@ -23,6 +23,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/discoveryengine/v1/grounded_generation_service.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -40,6 +41,18 @@ class GroundedGenerationServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::CheckGroundingRequest const&
           request) = 0;
+
+  virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::ListOperationsRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) = 0;
+
+  virtual Status CancelOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
 class DefaultGroundedGenerationServiceStub
@@ -48,8 +61,11 @@ class DefaultGroundedGenerationServiceStub
   explicit DefaultGroundedGenerationServiceStub(
       std::unique_ptr<google::cloud::discoveryengine::v1::
                           GroundedGenerationService::StubInterface>
-          grpc_stub)
-      : grpc_stub_(std::move(grpc_stub)) {}
+          grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
+      : grpc_stub_(std::move(grpc_stub)),
+        operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::cloud::discoveryengine::v1::CheckGroundingResponse>
   CheckGrounding(
@@ -57,10 +73,24 @@ class DefaultGroundedGenerationServiceStub
       google::cloud::discoveryengine::v1::CheckGroundingRequest const& request)
       override;
 
+  StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::ListOperationsRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  Status CancelOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::CancelOperationRequest const& request) override;
+
  private:
   std::unique_ptr<google::cloud::discoveryengine::v1::
                       GroundedGenerationService::StubInterface>
       grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

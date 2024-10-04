@@ -57,6 +57,51 @@ StatusOr<google::cloud::run::v2::ListTasksResponse> TasksLogging::ListTasks(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::longrunning::ListOperationsResponse>
+TasksLogging::ListOperations(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::ListOperationsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::longrunning::ListOperationsRequest const& request) {
+        return child_->ListOperations(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> TasksLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::longrunning::GetOperationRequest const& request) {
+        return child_->GetOperation(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+Status TasksLogging::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::DeleteOperationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::longrunning::DeleteOperationRequest const& request) {
+        return child_->DeleteOperation(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> TasksLogging::WaitOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::WaitOperationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::longrunning::WaitOperationRequest const& request) {
+        return child_->WaitOperation(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace run_v2_internal
 }  // namespace cloud

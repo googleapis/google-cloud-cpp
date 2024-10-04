@@ -89,6 +89,15 @@ DocumentSchemaServiceTracingConnection::ListDocumentSchemas(
                                                            std::move(sr));
 }
 
+StatusOr<google::longrunning::Operation>
+DocumentSchemaServiceTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "contentwarehouse_v1::DocumentSchemaServiceConnection::GetOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetOperation(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<contentwarehouse_v1::DocumentSchemaServiceConnection>

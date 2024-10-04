@@ -78,6 +78,40 @@ CloudChannelReportsServiceAuth::ListReports(
   return child_->ListReports(context, options, request);
 }
 
+StatusOr<google::longrunning::ListOperationsResponse>
+CloudChannelReportsServiceAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::ListOperationsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListOperations(context, options, request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudChannelReportsServiceAuth::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetOperation(context, options, request);
+}
+
+Status CloudChannelReportsServiceAuth::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::DeleteOperationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteOperation(context, options, request);
+}
+
+Status CloudChannelReportsServiceAuth::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::CancelOperationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CancelOperation(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelReportsServiceAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

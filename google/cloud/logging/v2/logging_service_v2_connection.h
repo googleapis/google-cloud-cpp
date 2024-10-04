@@ -208,6 +208,15 @@ class LoggingServiceV2Connection {
       google::logging::v2::TailLogEntriesResponse>>
   AsyncTailLogEntries();
 
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
+
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
+
   virtual future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
   AsyncWriteLogEntries(
       google::logging::v2::WriteLogEntriesRequest const& request);

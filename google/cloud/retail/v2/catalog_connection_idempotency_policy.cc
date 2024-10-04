@@ -89,6 +89,16 @@ Idempotency CatalogServiceConnectionIdempotencyPolicy::ReplaceCatalogAttribute(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency CatalogServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency CatalogServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<CatalogServiceConnectionIdempotencyPolicy>
 MakeDefaultCatalogServiceConnectionIdempotencyPolicy() {
   return std::make_unique<CatalogServiceConnectionIdempotencyPolicy>();

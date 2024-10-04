@@ -68,6 +68,52 @@ TopicStatsServiceTracingStub::ComputeTimeCursor(
       context, *span, child_->ComputeTimeCursor(context, options, request));
 }
 
+StatusOr<google::longrunning::ListOperationsResponse>
+TopicStatsServiceTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::ListOperationsRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.pubsublite.v1.TopicStatsService", "ListOperations");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListOperations(context, options, request));
+}
+
+StatusOr<google::longrunning::Operation>
+TopicStatsServiceTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.pubsublite.v1.TopicStatsService", "GetOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetOperation(context, options, request));
+}
+
+Status TopicStatsServiceTracingStub::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.pubsublite.v1.TopicStatsService", "DeleteOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteOperation(context, options, request));
+}
+
+Status TopicStatsServiceTracingStub::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.pubsublite.v1.TopicStatsService", "CancelOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CancelOperation(context, options, request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<TopicStatsServiceStub> MakeTopicStatsServiceTracingStub(

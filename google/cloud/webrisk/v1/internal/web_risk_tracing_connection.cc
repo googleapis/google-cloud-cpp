@@ -18,6 +18,7 @@
 
 #include "google/cloud/webrisk/v1/internal/web_risk_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 #include <utility>
 
@@ -93,6 +94,42 @@ WebRiskServiceTracingConnection::SubmitUri(
       internal::MakeSpan("webrisk_v1::WebRiskServiceConnection::SubmitUri");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SubmitUri(operation));
+}
+
+StreamRange<google::longrunning::Operation>
+WebRiskServiceTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "webrisk_v1::WebRiskServiceConnection::ListOperations");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListOperations(std::move(request));
+  return internal::MakeTracedStreamRange<google::longrunning::Operation>(
+      std::move(span), std::move(sr));
+}
+
+StatusOr<google::longrunning::Operation>
+WebRiskServiceTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span =
+      internal::MakeSpan("webrisk_v1::WebRiskServiceConnection::GetOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetOperation(request));
+}
+
+Status WebRiskServiceTracingConnection::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "webrisk_v1::WebRiskServiceConnection::DeleteOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteOperation(request));
+}
+
+Status WebRiskServiceTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "webrisk_v1::WebRiskServiceConnection::CancelOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

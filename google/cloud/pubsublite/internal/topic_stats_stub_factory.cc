@@ -29,6 +29,7 @@
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/pubsublite/v1/topic_stats.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -44,9 +45,11 @@ std::shared_ptr<TopicStatsServiceStub> CreateDefaultTopicStatsServiceStub(
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       google::cloud::pubsublite::v1::TopicStatsService::NewStub(channel);
+  auto service_operations_stub =
+      google::longrunning::Operations::NewStub(channel);
   std::shared_ptr<TopicStatsServiceStub> stub =
       std::make_shared<DefaultTopicStatsServiceStub>(
-          std::move(service_grpc_stub));
+          std::move(service_grpc_stub), std::move(service_operations_stub));
 
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<TopicStatsServiceAuth>(std::move(auth),

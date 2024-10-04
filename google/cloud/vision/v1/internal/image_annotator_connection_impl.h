@@ -88,6 +88,9 @@ class ImageAnnotatorConnectionImpl
   AsyncBatchAnnotateFiles(
       google::longrunning::Operation const& operation) override;
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<vision_v1_internal::ImageAnnotatorStub> stub_;

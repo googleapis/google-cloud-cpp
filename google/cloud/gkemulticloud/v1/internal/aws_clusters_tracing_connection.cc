@@ -338,6 +338,42 @@ AwsClustersTracingConnection::GetAwsServerConfig(
   return internal::EndSpan(*span, child_->GetAwsServerConfig(request));
 }
 
+StreamRange<google::longrunning::Operation>
+AwsClustersTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AwsClustersConnection::ListOperations");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListOperations(std::move(request));
+  return internal::MakeTracedStreamRange<google::longrunning::Operation>(
+      std::move(span), std::move(sr));
+}
+
+StatusOr<google::longrunning::Operation>
+AwsClustersTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AwsClustersConnection::GetOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetOperation(request));
+}
+
+Status AwsClustersTracingConnection::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AwsClustersConnection::DeleteOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteOperation(request));
+}
+
+Status AwsClustersTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AwsClustersConnection::CancelOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CancelOperation(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<gkemulticloud_v1::AwsClustersConnection>

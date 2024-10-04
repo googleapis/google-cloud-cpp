@@ -112,6 +112,15 @@ ImageAnnotatorTracingConnection::AsyncBatchAnnotateFiles(
                            child_->AsyncBatchAnnotateFiles(operation));
 }
 
+StatusOr<google::longrunning::Operation>
+ImageAnnotatorTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span =
+      internal::MakeSpan("vision_v1::ImageAnnotatorConnection::GetOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetOperation(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<vision_v1::ImageAnnotatorConnection>

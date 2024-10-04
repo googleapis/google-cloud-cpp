@@ -60,6 +60,11 @@ Idempotency OrganizationsConnectionIdempotencyPolicy::TestIamPermissions(
   return Idempotency::kIdempotent;
 }
 
+Idempotency OrganizationsConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<OrganizationsConnectionIdempotencyPolicy>
 MakeDefaultOrganizationsConnectionIdempotencyPolicy() {
   return std::make_unique<OrganizationsConnectionIdempotencyPolicy>();

@@ -39,6 +39,21 @@ Idempotency ProjectServiceConnectionIdempotencyPolicy::ProvisionProject(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency ProjectServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ProjectServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ProjectServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<ProjectServiceConnectionIdempotencyPolicy>
 MakeDefaultProjectServiceConnectionIdempotencyPolicy() {
   return std::make_unique<ProjectServiceConnectionIdempotencyPolicy>();

@@ -29,7 +29,9 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
+#include <google/cloud/location/locations.grpc.pb.h>
 #include <google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -46,9 +48,14 @@ CreateDefaultRapidMigrationAssessmentStub(
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub = google::cloud::rapidmigrationassessment::v1::
       RapidMigrationAssessment::NewStub(channel);
+  auto service_operations_stub =
+      google::longrunning::Operations::NewStub(channel);
+  auto service_locations_stub =
+      google::cloud::location::Locations::NewStub(channel);
   std::shared_ptr<RapidMigrationAssessmentStub> stub =
       std::make_shared<DefaultRapidMigrationAssessmentStub>(
-          std::move(service_grpc_stub),
+          std::move(service_grpc_stub), std::move(service_operations_stub),
+          std::move(service_locations_stub),
           google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {

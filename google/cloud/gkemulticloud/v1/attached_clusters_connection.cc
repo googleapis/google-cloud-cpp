@@ -170,6 +170,30 @@ AttachedClustersConnection::GenerateAttachedClusterAgentToken(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StreamRange<google::longrunning::Operation>
+AttachedClustersConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::longrunning::Operation>>();
+}
+
+StatusOr<google::longrunning::Operation>
+AttachedClustersConnection::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status AttachedClustersConnection::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status AttachedClustersConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<AttachedClustersConnection> MakeAttachedClustersConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

@@ -23,6 +23,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/speech/v1/cloud_speech_adaptation.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -76,14 +77,25 @@ class AdaptationStub {
   virtual Status DeleteCustomClass(
       grpc::ClientContext& context, Options const& options,
       google::cloud::speech::v1::DeleteCustomClassRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::ListOperationsRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) = 0;
 };
 
 class DefaultAdaptationStub : public AdaptationStub {
  public:
   explicit DefaultAdaptationStub(
       std::unique_ptr<google::cloud::speech::v1::Adaptation::StubInterface>
-          grpc_stub)
-      : grpc_stub_(std::move(grpc_stub)) {}
+          grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
+      : grpc_stub_(std::move(grpc_stub)),
+        operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::cloud::speech::v1::PhraseSet> CreatePhraseSet(
       grpc::ClientContext& context, Options const& options,
@@ -132,9 +144,19 @@ class DefaultAdaptationStub : public AdaptationStub {
       google::cloud::speech::v1::DeleteCustomClassRequest const& request)
       override;
 
+  StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::ListOperationsRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::unique_ptr<google::cloud::speech::v1::Adaptation::StubInterface>
       grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -262,6 +262,20 @@ SecretManagerServiceClient::TestIamPermissions(
   return connection_->TestIamPermissions(request);
 }
 
+StreamRange<google::cloud::location::Location>
+SecretManagerServiceClient::ListLocations(
+    google::cloud::location::ListLocationsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListLocations(std::move(request));
+}
+
+StatusOr<google::cloud::location::Location>
+SecretManagerServiceClient::GetLocation(
+    google::cloud::location::GetLocationRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetLocation(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace secretmanager_v1
 }  // namespace cloud

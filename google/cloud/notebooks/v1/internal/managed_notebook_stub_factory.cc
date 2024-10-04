@@ -28,7 +28,10 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
+#include <google/cloud/location/locations.grpc.pb.h>
 #include <google/cloud/notebooks/v1/managed_service.grpc.pb.h>
+#include <google/iam/v1/iam_policy.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -45,9 +48,15 @@ CreateDefaultManagedNotebookServiceStub(
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       google::cloud::notebooks::v1::ManagedNotebookService::NewStub(channel);
+  auto service_operations_stub =
+      google::longrunning::Operations::NewStub(channel);
+  auto service_iampolicy_stub = google::iam::v1::IAMPolicy::NewStub(channel);
+  auto service_locations_stub =
+      google::cloud::location::Locations::NewStub(channel);
   std::shared_ptr<ManagedNotebookServiceStub> stub =
       std::make_shared<DefaultManagedNotebookServiceStub>(
-          std::move(service_grpc_stub),
+          std::move(service_grpc_stub), std::move(service_operations_stub),
+          std::move(service_iampolicy_stub), std::move(service_locations_stub),
           google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {

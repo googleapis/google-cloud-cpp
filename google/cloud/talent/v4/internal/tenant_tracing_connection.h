@@ -55,6 +55,9 @@ class TenantServiceTracingConnection
   StreamRange<google::cloud::talent::v4::Tenant> ListTenants(
       google::cloud::talent::v4::ListTenantsRequest request) override;
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::shared_ptr<talent_v4::TenantServiceConnection> child_;
 };

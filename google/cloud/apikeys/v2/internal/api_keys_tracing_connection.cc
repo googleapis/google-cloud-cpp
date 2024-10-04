@@ -157,6 +157,13 @@ ApiKeysTracingConnection::LookupKey(
   return internal::EndSpan(*span, child_->LookupKey(request));
 }
 
+StatusOr<google::longrunning::Operation> ApiKeysTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("apikeys_v2::ApiKeysConnection::GetOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetOperation(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<apikeys_v2::ApiKeysConnection> MakeApiKeysTracingConnection(

@@ -64,6 +64,9 @@ class CompanyServiceConnectionImpl
   StreamRange<google::cloud::talent::v4::Company> ListCompanies(
       google::cloud::talent::v4::ListCompaniesRequest request) override;
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<talent_v4_internal::CompanyServiceStub> stub_;

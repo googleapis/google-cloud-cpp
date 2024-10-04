@@ -39,6 +39,11 @@ Idempotency CompletionConnectionIdempotencyPolicy::CompleteQuery(
   return Idempotency::kIdempotent;
 }
 
+Idempotency CompletionConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<CompletionConnectionIdempotencyPolicy>
 MakeDefaultCompletionConnectionIdempotencyPolicy() {
   return std::make_unique<CompletionConnectionIdempotencyPolicy>();

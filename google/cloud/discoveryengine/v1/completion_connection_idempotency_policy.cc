@@ -67,6 +67,21 @@ CompletionServiceConnectionIdempotencyPolicy::PurgeCompletionSuggestions(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency CompletionServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency CompletionServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency CompletionServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<CompletionServiceConnectionIdempotencyPolicy>
 MakeDefaultCompletionServiceConnectionIdempotencyPolicy() {
   return std::make_unique<CompletionServiceConnectionIdempotencyPolicy>();

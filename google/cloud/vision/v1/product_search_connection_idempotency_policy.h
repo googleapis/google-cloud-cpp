@@ -22,6 +22,7 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
 #include <google/cloud/vision/v1/product_search_service.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -94,6 +95,9 @@ class ProductSearchConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency PurgeProducts(
       google::cloud::vision::v1::PurgeProductsRequest const& request);
+
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<ProductSearchConnectionIdempotencyPolicy>

@@ -118,6 +118,31 @@ Idempotency PrivilegedAccessManagerConnectionIdempotencyPolicy::RevokeGrant(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency PrivilegedAccessManagerConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency PrivilegedAccessManagerConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency PrivilegedAccessManagerConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency PrivilegedAccessManagerConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency PrivilegedAccessManagerConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<PrivilegedAccessManagerConnectionIdempotencyPolicy>
 MakeDefaultPrivilegedAccessManagerConnectionIdempotencyPolicy() {
   return std::make_unique<PrivilegedAccessManagerConnectionIdempotencyPolicy>();

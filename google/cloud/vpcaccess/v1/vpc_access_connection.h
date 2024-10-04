@@ -216,6 +216,15 @@ class VpcAccessServiceConnection {
 
   virtual future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
   DeleteConnector(google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
+
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

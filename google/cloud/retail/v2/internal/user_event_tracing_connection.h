@@ -83,6 +83,12 @@ class UserEventServiceTracingConnection
   future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>
   RejoinUserEvents(google::longrunning::Operation const& operation) override;
 
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::shared_ptr<retail_v2::UserEventServiceConnection> child_;
 };

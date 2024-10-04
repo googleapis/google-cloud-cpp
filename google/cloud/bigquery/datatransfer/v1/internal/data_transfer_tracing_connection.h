@@ -115,6 +115,12 @@ class DataTransferServiceTracingConnection
       google::cloud::bigquery::datatransfer::v1::
           UnenrollDataSourcesRequest const& request) override;
 
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
+
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
+
  private:
   std::shared_ptr<bigquery_datatransfer_v1::DataTransferServiceConnection>
       child_;

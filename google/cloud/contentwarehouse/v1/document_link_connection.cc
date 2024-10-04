@@ -63,6 +63,12 @@ Status DocumentLinkServiceConnection::DeleteDocumentLink(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::longrunning::Operation>
+DocumentLinkServiceConnection::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<DocumentLinkServiceConnection>
 MakeDocumentLinkServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

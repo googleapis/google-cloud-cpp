@@ -43,6 +43,18 @@ class SearchServiceTracingStub : public SearchServiceStub {
       google::cloud::discoveryengine::v1::SearchRequest const& request)
       override;
 
+  StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::ListOperationsRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  Status CancelOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::CancelOperationRequest const& request) override;
+
  private:
   std::shared_ptr<SearchServiceStub> child_;
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>

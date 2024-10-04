@@ -367,6 +367,15 @@ class EnvironmentsConnection {
                        FetchDatabasePropertiesResponse>
   FetchDatabaseProperties(google::cloud::orchestration::airflow::service::v1::
                               FetchDatabasePropertiesRequest const& request);
+
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
+
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 };
 
 /**

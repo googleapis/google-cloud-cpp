@@ -29,6 +29,7 @@
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/contentwarehouse/v1/ruleset_service.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -44,8 +45,11 @@ std::shared_ptr<RuleSetServiceStub> CreateDefaultRuleSetServiceStub(
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       google::cloud::contentwarehouse::v1::RuleSetService::NewStub(channel);
+  auto service_operations_stub =
+      google::longrunning::Operations::NewStub(channel);
   std::shared_ptr<RuleSetServiceStub> stub =
-      std::make_shared<DefaultRuleSetServiceStub>(std::move(service_grpc_stub));
+      std::make_shared<DefaultRuleSetServiceStub>(
+          std::move(service_grpc_stub), std::move(service_operations_stub));
 
   if (auth->RequiresConfigureContext()) {
     stub =

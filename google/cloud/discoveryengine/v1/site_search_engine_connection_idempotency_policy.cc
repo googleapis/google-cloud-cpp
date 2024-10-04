@@ -107,6 +107,21 @@ Idempotency SiteSearchEngineServiceConnectionIdempotencyPolicy::
   return Idempotency::kIdempotent;
 }
 
+Idempotency SiteSearchEngineServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency SiteSearchEngineServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency SiteSearchEngineServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<SiteSearchEngineServiceConnectionIdempotencyPolicy>
 MakeDefaultSiteSearchEngineServiceConnectionIdempotencyPolicy() {
   return std::make_unique<SiteSearchEngineServiceConnectionIdempotencyPolicy>();

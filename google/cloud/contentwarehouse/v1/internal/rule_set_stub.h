@@ -23,6 +23,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/contentwarehouse/v1/ruleset_service.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -59,6 +60,10 @@ class RuleSetServiceStub {
   ListRuleSets(grpc::ClientContext& context, Options const& options,
                google::cloud::contentwarehouse::v1::ListRuleSetsRequest const&
                    request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) = 0;
 };
 
 class DefaultRuleSetServiceStub : public RuleSetServiceStub {
@@ -66,8 +71,11 @@ class DefaultRuleSetServiceStub : public RuleSetServiceStub {
   explicit DefaultRuleSetServiceStub(
       std::unique_ptr<
           google::cloud::contentwarehouse::v1::RuleSetService::StubInterface>
-          grpc_stub)
-      : grpc_stub_(std::move(grpc_stub)) {}
+          grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
+      : grpc_stub_(std::move(grpc_stub)),
+        operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::cloud::contentwarehouse::v1::RuleSet> CreateRuleSet(
       grpc::ClientContext& context, Options const& options,
@@ -94,10 +102,16 @@ class DefaultRuleSetServiceStub : public RuleSetServiceStub {
                google::cloud::contentwarehouse::v1::ListRuleSetsRequest const&
                    request) override;
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::unique_ptr<
       google::cloud::contentwarehouse::v1::RuleSetService::StubInterface>
       grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

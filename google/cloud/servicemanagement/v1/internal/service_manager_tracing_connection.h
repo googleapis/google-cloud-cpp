@@ -138,6 +138,18 @@ class ServiceManagerTracingConnection
       google::api::servicemanagement::v1::GenerateConfigReportRequest const&
           request) override;
 
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
+
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
+
  private:
   std::shared_ptr<servicemanagement_v1::ServiceManagerConnection> child_;
 };

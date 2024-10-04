@@ -484,6 +484,51 @@ DatabaseAdminRestLogging::ListBackupSchedules(
       rest_context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::longrunning::ListOperationsResponse>
+DatabaseAdminRestLogging::ListOperations(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::longrunning::ListOperationsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::longrunning::ListOperationsRequest const& request) {
+        return child_->ListOperations(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> DatabaseAdminRestLogging::GetOperation(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::longrunning::GetOperationRequest const& request) {
+        return child_->GetOperation(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+Status DatabaseAdminRestLogging::DeleteOperation(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::longrunning::DeleteOperationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::longrunning::DeleteOperationRequest const& request) {
+        return child_->DeleteOperation(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+Status DatabaseAdminRestLogging::CancelOperation(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::longrunning::CancelOperationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::longrunning::CancelOperationRequest const& request) {
+        return child_->CancelOperation(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

@@ -202,6 +202,12 @@ class SimulatorConnection {
   virtual StreamRange<google::cloud::policysimulator::v1::ReplayResult>
   ListReplayResults(
       google::cloud::policysimulator::v1::ListReplayResultsRequest request);
+
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

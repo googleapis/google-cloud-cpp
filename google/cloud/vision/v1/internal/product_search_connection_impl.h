@@ -134,6 +134,9 @@ class ProductSearchConnectionImpl : public vision_v1::ProductSearchConnection {
   future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
   PurgeProducts(google::longrunning::Operation const& operation) override;
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<vision_v1_internal::ProductSearchStub> stub_;

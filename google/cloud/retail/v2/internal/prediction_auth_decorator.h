@@ -42,6 +42,14 @@ class PredictionServiceAuth : public PredictionServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::PredictRequest const& request) override;
 
+  StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::ListOperationsRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<PredictionServiceStub> child_;

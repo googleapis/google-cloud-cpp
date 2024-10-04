@@ -87,6 +87,23 @@ SpeechAuth::AsyncStreamingRecognize(
       std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 
+StatusOr<google::longrunning::ListOperationsResponse>
+SpeechAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::ListOperationsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListOperations(context, options, request);
+}
+
+StatusOr<google::longrunning::Operation> SpeechAuth::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetOperation(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>> SpeechAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

@@ -194,6 +194,10 @@ class MockJobServiceConnection : public talent_v4::JobServiceConnection {
               SearchJobsForAlert,
               (google::cloud::talent::v4::SearchJobsRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

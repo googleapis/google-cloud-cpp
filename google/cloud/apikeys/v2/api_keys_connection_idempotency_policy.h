@@ -22,6 +22,7 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
 #include <google/api/apikeys/v2/apikeys.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -59,6 +60,9 @@ class ApiKeysConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency LookupKey(
       google::api::apikeys::v2::LookupKeyRequest const& request);
+
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<ApiKeysConnectionIdempotencyPolicy>

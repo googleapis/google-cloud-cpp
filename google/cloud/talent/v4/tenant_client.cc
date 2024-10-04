@@ -109,6 +109,20 @@ StreamRange<google::cloud::talent::v4::Tenant> TenantServiceClient::ListTenants(
   return connection_->ListTenants(std::move(request));
 }
 
+StatusOr<google::longrunning::Operation> TenantServiceClient::GetOperation(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::longrunning::GetOperationRequest request;
+  request.set_name(name);
+  return connection_->GetOperation(request);
+}
+
+StatusOr<google::longrunning::Operation> TenantServiceClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetOperation(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent_v4
 }  // namespace cloud

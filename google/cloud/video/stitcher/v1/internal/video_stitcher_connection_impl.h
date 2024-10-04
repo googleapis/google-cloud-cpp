@@ -279,6 +279,18 @@ class VideoStitcherServiceConnectionImpl
   future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
   UpdateVodConfig(google::longrunning::Operation const& operation) override;
 
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
+
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<video_stitcher_v1_internal::VideoStitcherServiceStub> stub_;

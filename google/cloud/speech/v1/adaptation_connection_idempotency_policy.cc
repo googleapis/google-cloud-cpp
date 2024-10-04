@@ -84,6 +84,16 @@ Idempotency AdaptationConnectionIdempotencyPolicy::DeleteCustomClass(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency AdaptationConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency AdaptationConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<AdaptationConnectionIdempotencyPolicy>
 MakeDefaultAdaptationConnectionIdempotencyPolicy() {
   return std::make_unique<AdaptationConnectionIdempotencyPolicy>();

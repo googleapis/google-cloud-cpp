@@ -29,6 +29,8 @@
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/batch/v1/batch.grpc.pb.h>
+#include <google/cloud/location/locations.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -44,9 +46,14 @@ std::shared_ptr<BatchServiceStub> CreateDefaultBatchServiceStub(
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       google::cloud::batch::v1::BatchService::NewStub(channel);
+  auto service_operations_stub =
+      google::longrunning::Operations::NewStub(channel);
+  auto service_locations_stub =
+      google::cloud::location::Locations::NewStub(channel);
   std::shared_ptr<BatchServiceStub> stub =
       std::make_shared<DefaultBatchServiceStub>(
-          std::move(service_grpc_stub),
+          std::move(service_grpc_stub), std::move(service_operations_stub),
+          std::move(service_locations_stub),
           google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {

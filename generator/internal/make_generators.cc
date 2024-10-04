@@ -60,10 +60,8 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
     google::protobuf::compiler::GeneratorContext* context,
     YAML::Node const& service_config,
     std::vector<std::pair<std::string, std::string>> const& vars) {
-  std::vector<MixinMethod> mixin_methods;
-  if (service->file()->name() == "google/pubsub/v1/pubsub.proto") {
-    mixin_methods = GetMixinMethods(service_config, *service);
-  }
+  std::vector<MixinMethod> mixin_methods =
+      GetMixinMethods(service_config, *service);
   std::vector<std::string> sources;
   std::vector<std::unique_ptr<GeneratorInterface>> code_generators;
   VarsDictionary service_vars =

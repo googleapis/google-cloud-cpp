@@ -39,6 +39,11 @@ Idempotency PipelineServiceConnectionIdempotencyPolicy::RunPipeline(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency PipelineServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<PipelineServiceConnectionIdempotencyPolicy>
 MakeDefaultPipelineServiceConnectionIdempotencyPolicy() {
   return std::make_unique<PipelineServiceConnectionIdempotencyPolicy>();

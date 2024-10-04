@@ -42,6 +42,9 @@ class CompletionTracingConnection : public talent_v4::CompletionConnection {
   StatusOr<google::cloud::talent::v4::CompleteQueryResponse> CompleteQuery(
       google::cloud::talent::v4::CompleteQueryRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::shared_ptr<talent_v4::CompletionConnection> child_;
 };

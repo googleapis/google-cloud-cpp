@@ -112,6 +112,18 @@ ImageAnnotatorTracingStub::AsyncBatchAnnotateFiles(
       child_->AsyncBatchAnnotateFiles(context, options, request));
 }
 
+StatusOr<google::longrunning::Operation>
+ImageAnnotatorTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ImageAnnotator",
+                                     "GetOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetOperation(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ImageAnnotatorTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

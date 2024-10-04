@@ -22,6 +22,8 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
 #include <google/api/servicemanagement/v1/servicemanager.grpc.pb.h>
+#include <google/iam/v1/iam_policy.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -82,6 +84,18 @@ class ServiceManagerConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency GenerateConfigReport(
       google::api::servicemanagement::v1::GenerateConfigReportRequest const&
           request);
+
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request);
+
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
 };
 
 std::unique_ptr<ServiceManagerConnectionIdempotencyPolicy>

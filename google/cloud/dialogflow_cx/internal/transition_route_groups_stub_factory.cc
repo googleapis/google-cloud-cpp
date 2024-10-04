@@ -29,6 +29,8 @@
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/dialogflow/cx/v3/transition_route_group.grpc.pb.h>
+#include <google/cloud/location/locations.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -46,9 +48,14 @@ CreateDefaultTransitionRouteGroupsStub(
   auto service_grpc_stub =
       google::cloud::dialogflow::cx::v3::TransitionRouteGroups::NewStub(
           channel);
+  auto service_operations_stub =
+      google::longrunning::Operations::NewStub(channel);
+  auto service_locations_stub =
+      google::cloud::location::Locations::NewStub(channel);
   std::shared_ptr<TransitionRouteGroupsStub> stub =
       std::make_shared<DefaultTransitionRouteGroupsStub>(
-          std::move(service_grpc_stub));
+          std::move(service_grpc_stub), std::move(service_operations_stub),
+          std::move(service_locations_stub));
 
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<TransitionRouteGroupsAuth>(std::move(auth),

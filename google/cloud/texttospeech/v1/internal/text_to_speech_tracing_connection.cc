@@ -18,6 +18,7 @@
 
 #include "google/cloud/texttospeech/v1/internal/text_to_speech_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 #include <utility>
 
@@ -55,6 +56,26 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::texttospeech::v1::StreamingSynthesizeResponse>>
 TextToSpeechTracingConnection::AsyncStreamingSynthesize() {
   return child_->AsyncStreamingSynthesize();
+}
+
+StreamRange<google::longrunning::Operation>
+TextToSpeechTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "texttospeech_v1::TextToSpeechConnection::ListOperations");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListOperations(std::move(request));
+  return internal::MakeTracedStreamRange<google::longrunning::Operation>(
+      std::move(span), std::move(sr));
+}
+
+StatusOr<google::longrunning::Operation>
+TextToSpeechTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "texttospeech_v1::TextToSpeechConnection::GetOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -29,6 +29,7 @@
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/identity/accesscontextmanager/v1/access_context_manager.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -45,9 +46,11 @@ std::shared_ptr<AccessContextManagerStub> CreateDefaultAccessContextManagerStub(
   auto service_grpc_stub =
       google::identity::accesscontextmanager::v1::AccessContextManager::NewStub(
           channel);
+  auto service_operations_stub =
+      google::longrunning::Operations::NewStub(channel);
   std::shared_ptr<AccessContextManagerStub> stub =
       std::make_shared<DefaultAccessContextManagerStub>(
-          std::move(service_grpc_stub),
+          std::move(service_grpc_stub), std::move(service_operations_stub),
           google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {

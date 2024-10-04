@@ -102,6 +102,18 @@ class DatastoreAdminConnectionImpl
   StreamRange<google::datastore::admin::v1::Index> ListIndexes(
       google::datastore::admin::v1::ListIndexesRequest request) override;
 
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
+
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<datastore_admin_v1_internal::DatastoreAdminStub> stub_;

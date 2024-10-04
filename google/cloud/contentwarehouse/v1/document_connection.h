@@ -213,6 +213,9 @@ class DocumentServiceConnection {
 
   virtual StatusOr<google::cloud::contentwarehouse::v1::SetAclResponse> SetAcl(
       google::cloud::contentwarehouse::v1::SetAclRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

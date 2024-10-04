@@ -29,6 +29,7 @@
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/policysimulator/v1/simulator.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -44,8 +45,10 @@ std::shared_ptr<SimulatorStub> CreateDefaultSimulatorStub(
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       google::cloud::policysimulator::v1::Simulator::NewStub(channel);
+  auto service_operations_stub =
+      google::longrunning::Operations::NewStub(channel);
   std::shared_ptr<SimulatorStub> stub = std::make_shared<DefaultSimulatorStub>(
-      std::move(service_grpc_stub),
+      std::move(service_grpc_stub), std::move(service_operations_stub),
       google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {

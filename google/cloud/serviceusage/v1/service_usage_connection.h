@@ -232,6 +232,12 @@ class ServiceUsageConnection {
   virtual StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>
   BatchGetServices(
       google::api::serviceusage::v1::BatchGetServicesRequest const& request);
+
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

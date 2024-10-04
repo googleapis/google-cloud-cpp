@@ -22,6 +22,7 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
 #include <google/cloud/baremetalsolution/v2/baremetalsolution.grpc.pb.h>
+#include <google/cloud/location/locations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -190,6 +191,12 @@ class BareMetalSolutionConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency ListOSImages(
       google::cloud::baremetalsolution::v2::ListOSImagesRequest request);
+
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
+
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 };
 
 std::unique_ptr<BareMetalSolutionConnectionIdempotencyPolicy>

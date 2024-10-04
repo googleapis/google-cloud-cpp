@@ -26,6 +26,7 @@
 #include "google/cloud/version.h"
 #include <google/cloud/functions/v1/functions.grpc.pb.h>
 #include <google/cloud/functions/v1/operations.pb.h>
+#include <google/cloud/location/locations.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
@@ -108,6 +109,19 @@ class CloudFunctionsServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::location::ListLocationsResponse>
+  ListLocations(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::location::ListLocationsRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::ListOperationsRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -128,8 +142,15 @@ class DefaultCloudFunctionsServiceStub : public CloudFunctionsServiceStub {
           google::cloud::functions::v1::CloudFunctionsService::StubInterface>
           grpc_stub,
       std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub,
+      std::unique_ptr<google::cloud::location::Locations::StubInterface>
+          locations_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
           operations)
-      : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
+      : grpc_stub_(std::move(grpc_stub)),
+        operations_stub_(std::move(operations_stub)),
+        locations_stub_(std::move(locations_stub)),
+        operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::functions::v1::ListFunctionsResponse> ListFunctions(
       grpc::ClientContext& context, Options const& options,
@@ -205,6 +226,18 @@ class DefaultCloudFunctionsServiceStub : public CloudFunctionsServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
+  StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::location::ListLocationsRequest const& request) override;
+
+  StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::ListOperationsRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -221,6 +254,10 @@ class DefaultCloudFunctionsServiceStub : public CloudFunctionsServiceStub {
   std::unique_ptr<
       google::cloud::functions::v1::CloudFunctionsService::StubInterface>
       grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
+  std::unique_ptr<google::cloud::location::Locations::StubInterface>
+      locations_stub_;
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 

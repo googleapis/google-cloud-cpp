@@ -182,6 +182,21 @@ Idempotency EnvironmentsConnectionIdempotencyPolicy::FetchDatabaseProperties(
   return Idempotency::kIdempotent;
 }
 
+Idempotency EnvironmentsConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency EnvironmentsConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency EnvironmentsConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<EnvironmentsConnectionIdempotencyPolicy>
 MakeDefaultEnvironmentsConnectionIdempotencyPolicy() {
   return std::make_unique<EnvironmentsConnectionIdempotencyPolicy>();

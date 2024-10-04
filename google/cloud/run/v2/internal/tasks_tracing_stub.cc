@@ -51,6 +51,51 @@ StatusOr<google::cloud::run::v2::ListTasksResponse> TasksTracingStub::ListTasks(
                            child_->ListTasks(context, options, request));
 }
 
+StatusOr<google::longrunning::ListOperationsResponse>
+TasksTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::ListOperationsRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.run.v2.Tasks", "ListOperations");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListOperations(context, options, request));
+}
+
+StatusOr<google::longrunning::Operation> TasksTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.run.v2.Tasks", "GetOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetOperation(context, options, request));
+}
+
+Status TasksTracingStub::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::DeleteOperationRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.run.v2.Tasks", "DeleteOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteOperation(context, options, request));
+}
+
+StatusOr<google::longrunning::Operation> TasksTracingStub::WaitOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::WaitOperationRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.run.v2.Tasks", "WaitOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->WaitOperation(context, options, request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<TasksStub> MakeTasksTracingStub(

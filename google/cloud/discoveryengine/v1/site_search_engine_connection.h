@@ -324,6 +324,15 @@ class SiteSearchEngineServiceConnection {
   FetchDomainVerificationStatus(
       google::cloud::discoveryengine::v1::FetchDomainVerificationStatusRequest
           request);
+
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
+
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

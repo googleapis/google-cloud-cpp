@@ -121,6 +121,15 @@ TagBindingsTracingConnection::ListEffectiveTags(
                                                         std::move(sr));
 }
 
+StatusOr<google::longrunning::Operation>
+TagBindingsTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "resourcemanager_v3::TagBindingsConnection::GetOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetOperation(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<resourcemanager_v3::TagBindingsConnection>

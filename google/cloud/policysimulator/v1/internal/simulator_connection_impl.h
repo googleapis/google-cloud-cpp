@@ -71,6 +71,12 @@ class SimulatorConnectionImpl : public policysimulator_v1::SimulatorConnection {
   ListReplayResults(google::cloud::policysimulator::v1::ListReplayResultsRequest
                         request) override;
 
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<policysimulator_v1_internal::SimulatorStub> stub_;

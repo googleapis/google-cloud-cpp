@@ -83,6 +83,15 @@ ConsumerProcurementServiceAuth::ListOrders(
   return child_->ListOrders(context, options, request);
 }
 
+StatusOr<google::longrunning::Operation>
+ConsumerProcurementServiceAuth::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetOperation(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ConsumerProcurementServiceAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

@@ -57,6 +57,9 @@ class FleetRoutingTracingConnection
   future<StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>
   BatchOptimizeTours(google::longrunning::Operation const& operation) override;
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::shared_ptr<optimization_v1::FleetRoutingConnection> child_;
 };

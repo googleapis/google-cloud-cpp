@@ -100,6 +100,19 @@ Status AdaptationConnection::DeleteCustomClass(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StreamRange<google::longrunning::Operation>
+AdaptationConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::longrunning::Operation>>();
+}
+
+StatusOr<google::longrunning::Operation> AdaptationConnection::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<AdaptationConnection> MakeAdaptationConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

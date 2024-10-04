@@ -235,6 +235,14 @@ StatusOr<google::longrunning::Operation> ProductSearchMetadata::PurgeProducts(
   return child_->PurgeProducts(context, options, request);
 }
 
+StatusOr<google::longrunning::Operation> ProductSearchMetadata::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetOperation(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ProductSearchMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

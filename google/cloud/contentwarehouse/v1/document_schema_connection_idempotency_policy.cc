@@ -65,6 +65,11 @@ DocumentSchemaServiceConnectionIdempotencyPolicy::ListDocumentSchemas(
   return Idempotency::kIdempotent;
 }
 
+Idempotency DocumentSchemaServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<DocumentSchemaServiceConnectionIdempotencyPolicy>
 MakeDefaultDocumentSchemaServiceConnectionIdempotencyPolicy() {
   return std::make_unique<DocumentSchemaServiceConnectionIdempotencyPolicy>();

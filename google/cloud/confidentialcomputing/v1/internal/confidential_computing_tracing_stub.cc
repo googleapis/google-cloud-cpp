@@ -60,6 +60,32 @@ ConfidentialComputingTracingStub::VerifyAttestation(
       context, *span, child_->VerifyAttestation(context, options, request));
 }
 
+StatusOr<google::cloud::location::ListLocationsResponse>
+ConfidentialComputingTracingStub::ListLocations(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::location::ListLocationsRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.confidentialcomputing.v1.ConfidentialComputing",
+      "ListLocations");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListLocations(context, options, request));
+}
+
+StatusOr<google::cloud::location::Location>
+ConfidentialComputingTracingStub::GetLocation(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.confidentialcomputing.v1.ConfidentialComputing",
+      "GetLocation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetLocation(context, options, request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<ConfidentialComputingStub> MakeConfidentialComputingTracingStub(

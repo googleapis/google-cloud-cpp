@@ -23,6 +23,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/confidentialcomputing/v1/service.grpc.pb.h>
+#include <google/cloud/location/locations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -47,6 +48,15 @@ class ConfidentialComputingStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&
           request) = 0;
+
+  virtual StatusOr<google::cloud::location::ListLocationsResponse>
+  ListLocations(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::location::ListLocationsRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::location::GetLocationRequest const& request) = 0;
 };
 
 class DefaultConfidentialComputingStub : public ConfidentialComputingStub {
@@ -54,8 +64,11 @@ class DefaultConfidentialComputingStub : public ConfidentialComputingStub {
   explicit DefaultConfidentialComputingStub(
       std::unique_ptr<google::cloud::confidentialcomputing::v1::
                           ConfidentialComputing::StubInterface>
-          grpc_stub)
-      : grpc_stub_(std::move(grpc_stub)) {}
+          grpc_stub,
+      std::unique_ptr<google::cloud::location::Locations::StubInterface>
+          locations_stub)
+      : grpc_stub_(std::move(grpc_stub)),
+        locations_stub_(std::move(locations_stub)) {}
 
   StatusOr<google::cloud::confidentialcomputing::v1::Challenge> CreateChallenge(
       grpc::ClientContext& context, Options const& options,
@@ -68,10 +81,20 @@ class DefaultConfidentialComputingStub : public ConfidentialComputingStub {
       google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&
           request) override;
 
+  StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::location::ListLocationsRequest const& request) override;
+
+  StatusOr<google::cloud::location::Location> GetLocation(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::location::GetLocationRequest const& request) override;
+
  private:
   std::unique_ptr<google::cloud::confidentialcomputing::v1::
                       ConfidentialComputing::StubInterface>
       grpc_stub_;
+  std::unique_ptr<google::cloud::location::Locations::StubInterface>
+      locations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

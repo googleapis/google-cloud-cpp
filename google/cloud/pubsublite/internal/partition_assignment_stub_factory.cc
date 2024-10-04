@@ -29,6 +29,7 @@
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/pubsublite/v1/subscriber.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -46,9 +47,11 @@ CreateDefaultPartitionAssignmentServiceStub(
   auto service_grpc_stub =
       google::cloud::pubsublite::v1::PartitionAssignmentService::NewStub(
           channel);
+  auto service_operations_stub =
+      google::longrunning::Operations::NewStub(channel);
   std::shared_ptr<PartitionAssignmentServiceStub> stub =
       std::make_shared<DefaultPartitionAssignmentServiceStub>(
-          std::move(service_grpc_stub));
+          std::move(service_grpc_stub), std::move(service_operations_stub));
 
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<PartitionAssignmentServiceAuth>(std::move(auth),

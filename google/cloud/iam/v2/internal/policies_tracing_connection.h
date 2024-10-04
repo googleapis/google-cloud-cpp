@@ -72,6 +72,9 @@ class PoliciesTracingConnection : public iam_v2::PoliciesConnection {
   future<StatusOr<google::iam::v2::Policy>> DeletePolicy(
       google::longrunning::Operation const& operation) override;
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::shared_ptr<iam_v2::PoliciesConnection> child_;
 };

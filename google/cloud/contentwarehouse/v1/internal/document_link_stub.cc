@@ -81,6 +81,18 @@ Status DefaultDocumentLinkServiceStub::DeleteDocumentLink(
   return google::cloud::Status();
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultDocumentLinkServiceStub::GetOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace contentwarehouse_v1_internal
 }  // namespace cloud

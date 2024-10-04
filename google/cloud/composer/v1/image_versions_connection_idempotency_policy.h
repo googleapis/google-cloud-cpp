@@ -22,6 +22,7 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
 #include <google/cloud/orchestration/airflow/service/v1/image_versions.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -40,6 +41,15 @@ class ImageVersionsConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ListImageVersions(
       google::cloud::orchestration::airflow::service::v1::
           ListImageVersionsRequest request);
+
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 };
 
 std::unique_ptr<ImageVersionsConnectionIdempotencyPolicy>

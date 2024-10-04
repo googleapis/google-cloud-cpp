@@ -189,6 +189,36 @@ Idempotency AlloyDBAdminConnectionIdempotencyPolicy::DeleteUser(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency AlloyDBAdminConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency AlloyDBAdminConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency AlloyDBAdminConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency AlloyDBAdminConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency AlloyDBAdminConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency AlloyDBAdminConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<AlloyDBAdminConnectionIdempotencyPolicy>
 MakeDefaultAlloyDBAdminConnectionIdempotencyPolicy() {
   return std::make_unique<AlloyDBAdminConnectionIdempotencyPolicy>();

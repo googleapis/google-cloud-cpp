@@ -244,6 +244,26 @@ class DatabaseAdminRestMetadata : public DatabaseAdminRestStub {
       google::spanner::admin::database::v1::ListBackupSchedulesRequest const&
           request) override;
 
+  StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::longrunning::ListOperationsRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  Status DeleteOperation(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::longrunning::DeleteOperationRequest const& request) override;
+
+  Status CancelOperation(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::longrunning::CancelOperationRequest const& request) override;
+
   google::cloud::future<StatusOr<google::longrunning::Operation>>
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

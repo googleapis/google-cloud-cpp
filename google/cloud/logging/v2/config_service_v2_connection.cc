@@ -302,6 +302,25 @@ ConfigServiceV2Connection::CopyLogEntries(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StreamRange<google::longrunning::Operation>
+ConfigServiceV2Connection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::longrunning::Operation>>();
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigServiceV2Connection::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status ConfigServiceV2Connection::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<ConfigServiceV2Connection> MakeConfigServiceV2Connection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

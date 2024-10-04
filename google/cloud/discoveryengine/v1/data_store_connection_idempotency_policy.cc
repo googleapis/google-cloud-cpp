@@ -59,6 +59,21 @@ Idempotency DataStoreServiceConnectionIdempotencyPolicy::UpdateDataStore(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency DataStoreServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DataStoreServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DataStoreServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<DataStoreServiceConnectionIdempotencyPolicy>
 MakeDefaultDataStoreServiceConnectionIdempotencyPolicy() {
   return std::make_unique<DataStoreServiceConnectionIdempotencyPolicy>();

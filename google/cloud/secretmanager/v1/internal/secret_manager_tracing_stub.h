@@ -115,6 +115,14 @@ class SecretManagerServiceTracingStub : public SecretManagerServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
+  StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::location::ListLocationsRequest const& request) override;
+
+  StatusOr<google::cloud::location::Location> GetLocation(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::location::GetLocationRequest const& request) override;
+
  private:
   std::shared_ptr<SecretManagerServiceStub> child_;
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>

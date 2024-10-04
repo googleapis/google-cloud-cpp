@@ -54,6 +54,11 @@ Idempotency ConsumerProcurementServiceConnectionIdempotencyPolicy::ListOrders(
   return Idempotency::kIdempotent;
 }
 
+Idempotency ConsumerProcurementServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<ConsumerProcurementServiceConnectionIdempotencyPolicy>
 MakeDefaultConsumerProcurementServiceConnectionIdempotencyPolicy() {
   return std::make_unique<

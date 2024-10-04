@@ -58,6 +58,18 @@ PipelineServiceTracingStub::RunPipeline(
                            child_->RunPipeline(context, options, request));
 }
 
+StatusOr<google::longrunning::Operation>
+PipelineServiceTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.contentwarehouse.v1.PipelineService", "GetOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetOperation(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 PipelineServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

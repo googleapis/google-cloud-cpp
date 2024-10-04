@@ -64,6 +64,14 @@ StatusOr<google::longrunning::Operation> PipelineServiceMetadata::RunPipeline(
   return child_->RunPipeline(context, options, request);
 }
 
+StatusOr<google::longrunning::Operation> PipelineServiceMetadata::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetOperation(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 PipelineServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

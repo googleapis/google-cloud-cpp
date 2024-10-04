@@ -183,6 +183,9 @@ class EventServiceConnection {
 
   virtual StatusOr<google::cloud::talent::v4::ClientEvent> CreateClientEvent(
       google::cloud::talent::v4::CreateClientEventRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

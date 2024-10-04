@@ -69,6 +69,23 @@ TextToSpeechAuth::AsyncStreamingSynthesize(
       std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 
+StatusOr<google::longrunning::ListOperationsResponse>
+TextToSpeechAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::ListOperationsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListOperations(context, options, request);
+}
+
+StatusOr<google::longrunning::Operation> TextToSpeechAuth::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetOperation(context, options, request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace texttospeech_v1_internal
 }  // namespace cloud

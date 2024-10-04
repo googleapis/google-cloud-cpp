@@ -399,6 +399,31 @@ EnvironmentsMetadata::FetchDatabaseProperties(
   return child_->FetchDatabaseProperties(context, options, request);
 }
 
+StatusOr<google::longrunning::ListOperationsResponse>
+EnvironmentsMetadata::ListOperations(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::ListOperationsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ListOperations(context, options, request);
+}
+
+StatusOr<google::longrunning::Operation> EnvironmentsMetadata::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetOperation(context, options, request);
+}
+
+Status EnvironmentsMetadata::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::DeleteOperationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteOperation(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

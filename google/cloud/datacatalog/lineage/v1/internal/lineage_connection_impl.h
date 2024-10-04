@@ -142,6 +142,18 @@ class LineageConnectionImpl : public datacatalog_lineage_v1::LineageConnection {
       google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesRequest
           request) override;
 
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
+
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<datacatalog_lineage_v1_internal::LineageStub> stub_;

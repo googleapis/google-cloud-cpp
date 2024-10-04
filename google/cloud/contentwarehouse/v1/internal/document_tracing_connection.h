@@ -75,6 +75,9 @@ class DocumentServiceTracingConnection
       google::cloud::contentwarehouse::v1::SetAclRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::shared_ptr<contentwarehouse_v1::DocumentServiceConnection> child_;
 };

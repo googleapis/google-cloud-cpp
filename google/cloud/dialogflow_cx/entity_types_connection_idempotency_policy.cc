@@ -69,6 +69,31 @@ Idempotency EntityTypesConnectionIdempotencyPolicy::ImportEntityTypes(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency EntityTypesConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency EntityTypesConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency EntityTypesConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency EntityTypesConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency EntityTypesConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<EntityTypesConnectionIdempotencyPolicy>
 MakeDefaultEntityTypesConnectionIdempotencyPolicy() {
   return std::make_unique<EntityTypesConnectionIdempotencyPolicy>();

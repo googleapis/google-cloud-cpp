@@ -277,6 +277,24 @@ SecurityCenterManagementAuth::UpdateSecurityCenterService(
   return child_->UpdateSecurityCenterService(context, options, request);
 }
 
+StatusOr<google::cloud::location::ListLocationsResponse>
+SecurityCenterManagementAuth::ListLocations(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::location::ListLocationsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListLocations(context, options, request);
+}
+
+StatusOr<google::cloud::location::Location>
+SecurityCenterManagementAuth::GetLocation(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::location::GetLocationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetLocation(context, options, request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace securitycentermanagement_v1_internal
 }  // namespace cloud

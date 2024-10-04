@@ -69,6 +69,12 @@ SynonymSetServiceConnection::ListSynonymSets(
       StreamRange<google::cloud::contentwarehouse::v1::SynonymSet>>();
 }
 
+StatusOr<google::longrunning::Operation>
+SynonymSetServiceConnection::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<SynonymSetServiceConnection> MakeSynonymSetServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

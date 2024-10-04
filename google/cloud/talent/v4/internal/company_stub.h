@@ -23,6 +23,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/talent/v4/company_service.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -55,14 +56,21 @@ class CompanyServiceStub {
   ListCompanies(
       grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::ListCompaniesRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) = 0;
 };
 
 class DefaultCompanyServiceStub : public CompanyServiceStub {
  public:
   explicit DefaultCompanyServiceStub(
       std::unique_ptr<google::cloud::talent::v4::CompanyService::StubInterface>
-          grpc_stub)
-      : grpc_stub_(std::move(grpc_stub)) {}
+          grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
+      : grpc_stub_(std::move(grpc_stub)),
+        operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::cloud::talent::v4::Company> CreateCompany(
       grpc::ClientContext& context, Options const& options,
@@ -84,9 +92,15 @@ class DefaultCompanyServiceStub : public CompanyServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::ListCompaniesRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::unique_ptr<google::cloud::talent::v4::CompanyService::StubInterface>
       grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

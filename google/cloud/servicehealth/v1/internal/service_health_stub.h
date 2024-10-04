@@ -22,6 +22,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <google/cloud/location/locations.grpc.pb.h>
 #include <google/cloud/servicehealth/v1/event_service.grpc.pb.h>
 #include <memory>
 #include <utility>
@@ -69,6 +70,15 @@ class ServiceHealthStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::servicehealth::v1::GetOrganizationImpactRequest const&
           request) = 0;
+
+  virtual StatusOr<google::cloud::location::ListLocationsResponse>
+  ListLocations(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::location::ListLocationsRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::location::GetLocationRequest const& request) = 0;
 };
 
 class DefaultServiceHealthStub : public ServiceHealthStub {
@@ -76,8 +86,11 @@ class DefaultServiceHealthStub : public ServiceHealthStub {
   explicit DefaultServiceHealthStub(
       std::unique_ptr<
           google::cloud::servicehealth::v1::ServiceHealth::StubInterface>
-          grpc_stub)
-      : grpc_stub_(std::move(grpc_stub)) {}
+          grpc_stub,
+      std::unique_ptr<google::cloud::location::Locations::StubInterface>
+          locations_stub)
+      : grpc_stub_(std::move(grpc_stub)),
+        locations_stub_(std::move(locations_stub)) {}
 
   StatusOr<google::cloud::servicehealth::v1::ListEventsResponse> ListEvents(
       grpc::ClientContext& context, Options const& options,
@@ -113,10 +126,20 @@ class DefaultServiceHealthStub : public ServiceHealthStub {
       google::cloud::servicehealth::v1::GetOrganizationImpactRequest const&
           request) override;
 
+  StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::location::ListLocationsRequest const& request) override;
+
+  StatusOr<google::cloud::location::Location> GetLocation(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::location::GetLocationRequest const& request) override;
+
  private:
   std::unique_ptr<
       google::cloud::servicehealth::v1::ServiceHealth::StubInterface>
       grpc_stub_;
+  std::unique_ptr<google::cloud::location::Locations::StubInterface>
+      locations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

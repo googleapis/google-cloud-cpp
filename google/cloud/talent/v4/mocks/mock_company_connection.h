@@ -66,6 +66,10 @@ class MockCompanyServiceConnection
   MOCK_METHOD((StreamRange<google::cloud::talent::v4::Company>), ListCompanies,
               (google::cloud::talent::v4::ListCompaniesRequest request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

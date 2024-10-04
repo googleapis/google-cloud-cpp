@@ -26,6 +26,7 @@
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <google/cloud/texttospeech/v1/cloud_tts.pb.h>
 #include <memory>
@@ -193,6 +194,12 @@ class TextToSpeechConnection {
       google::cloud::texttospeech::v1::StreamingSynthesizeRequest,
       google::cloud::texttospeech::v1::StreamingSynthesizeResponse>>
   AsyncStreamingSynthesize();
+
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

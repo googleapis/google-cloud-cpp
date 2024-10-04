@@ -119,6 +119,25 @@ ConversationalSearchServiceConnection::ListSessions(
       StreamRange<google::cloud::discoveryengine::v1::Session>>();
 }
 
+StreamRange<google::longrunning::Operation>
+ConversationalSearchServiceConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::longrunning::Operation>>();
+}
+
+StatusOr<google::longrunning::Operation>
+ConversationalSearchServiceConnection::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status ConversationalSearchServiceConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<ConversationalSearchServiceConnection>
 MakeConversationalSearchServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

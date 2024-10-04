@@ -89,6 +89,12 @@ class AssuredWorkloadsServiceTracingConnection
       google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&
           request) override;
 
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::shared_ptr<assuredworkloads_v1::AssuredWorkloadsServiceConnection>
       child_;

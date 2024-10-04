@@ -71,6 +71,17 @@ FleetRoutingTracingStub::BatchOptimizeTours(
       context, *span, child_->BatchOptimizeTours(context, options, request));
 }
 
+StatusOr<google::longrunning::Operation> FleetRoutingTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.optimization.v1.FleetRouting", "GetOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetOperation(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FleetRoutingTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

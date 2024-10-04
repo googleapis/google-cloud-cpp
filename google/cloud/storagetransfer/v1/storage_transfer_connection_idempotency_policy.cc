@@ -111,6 +111,21 @@ Idempotency StorageTransferServiceConnectionIdempotencyPolicy::DeleteAgentPool(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency StorageTransferServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency StorageTransferServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency StorageTransferServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<StorageTransferServiceConnectionIdempotencyPolicy>
 MakeDefaultStorageTransferServiceConnectionIdempotencyPolicy() {
   return std::make_unique<StorageTransferServiceConnectionIdempotencyPolicy>();

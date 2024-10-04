@@ -51,6 +51,29 @@ Idempotency CloudChannelReportsServiceConnectionIdempotencyPolicy::ListReports(
   return Idempotency::kIdempotent;
 }
 
+Idempotency
+CloudChannelReportsServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency CloudChannelReportsServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+CloudChannelReportsServiceConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+CloudChannelReportsServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<CloudChannelReportsServiceConnectionIdempotencyPolicy>
 MakeDefaultCloudChannelReportsServiceConnectionIdempotencyPolicy() {
   return std::make_unique<

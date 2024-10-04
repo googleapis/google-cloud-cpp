@@ -836,6 +836,30 @@ BareMetalSolutionTracingStub::ListOSImages(
                            child_->ListOSImages(context, options, request));
 }
 
+StatusOr<google::cloud::location::ListLocationsResponse>
+BareMetalSolutionTracingStub::ListLocations(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::location::ListLocationsRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.baremetalsolution.v2.BareMetalSolution", "ListLocations");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListLocations(context, options, request));
+}
+
+StatusOr<google::cloud::location::Location>
+BareMetalSolutionTracingStub::GetLocation(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.baremetalsolution.v2.BareMetalSolution", "GetLocation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetLocation(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BareMetalSolutionTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

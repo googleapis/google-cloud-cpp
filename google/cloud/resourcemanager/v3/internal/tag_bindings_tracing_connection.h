@@ -74,6 +74,9 @@ class TagBindingsTracingConnection
   ListEffectiveTags(google::cloud::resourcemanager::v3::ListEffectiveTagsRequest
                         request) override;
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::shared_ptr<resourcemanager_v3::TagBindingsConnection> child_;
 };

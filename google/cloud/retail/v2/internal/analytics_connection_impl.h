@@ -30,6 +30,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -64,6 +65,12 @@ class AnalyticsServiceConnectionImpl
   future<StatusOr<google::cloud::retail::v2::ExportAnalyticsMetricsResponse>>
   ExportAnalyticsMetrics(
       google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

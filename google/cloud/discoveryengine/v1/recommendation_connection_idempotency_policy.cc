@@ -40,6 +40,21 @@ Idempotency RecommendationServiceConnectionIdempotencyPolicy::Recommend(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency RecommendationServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency RecommendationServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency RecommendationServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<RecommendationServiceConnectionIdempotencyPolicy>
 MakeDefaultRecommendationServiceConnectionIdempotencyPolicy() {
   return std::make_unique<RecommendationServiceConnectionIdempotencyPolicy>();

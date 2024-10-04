@@ -94,6 +94,16 @@ Idempotency ProductServiceConnectionIdempotencyPolicy::RemoveLocalInventories(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency ProductServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ProductServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<ProductServiceConnectionIdempotencyPolicy>
 MakeDefaultProductServiceConnectionIdempotencyPolicy() {
   return std::make_unique<ProductServiceConnectionIdempotencyPolicy>();

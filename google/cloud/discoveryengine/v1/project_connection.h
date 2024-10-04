@@ -28,6 +28,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <google/cloud/discoveryengine/v1/project_service.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
@@ -197,6 +198,15 @@ class ProjectServiceConnection {
 
   virtual future<StatusOr<google::cloud::discoveryengine::v1::Project>>
   ProvisionProject(google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
+
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

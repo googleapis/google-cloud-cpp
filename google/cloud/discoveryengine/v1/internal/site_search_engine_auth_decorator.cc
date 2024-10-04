@@ -316,6 +316,32 @@ SiteSearchEngineServiceAuth::FetchDomainVerificationStatus(
   return child_->FetchDomainVerificationStatus(context, options, request);
 }
 
+StatusOr<google::longrunning::ListOperationsResponse>
+SiteSearchEngineServiceAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::ListOperationsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListOperations(context, options, request);
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceAuth::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetOperation(context, options, request);
+}
+
+Status SiteSearchEngineServiceAuth::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::CancelOperationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CancelOperation(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

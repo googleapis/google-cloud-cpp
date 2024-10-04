@@ -73,6 +73,16 @@ Idempotency ServingConfigServiceConnectionIdempotencyPolicy::RemoveControl(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency ServingConfigServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ServingConfigServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<ServingConfigServiceConnectionIdempotencyPolicy>
 MakeDefaultServingConfigServiceConnectionIdempotencyPolicy() {
   return std::make_unique<ServingConfigServiceConnectionIdempotencyPolicy>();

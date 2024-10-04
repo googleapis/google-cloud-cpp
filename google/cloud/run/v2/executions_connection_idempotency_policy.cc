@@ -54,6 +54,26 @@ Idempotency ExecutionsConnectionIdempotencyPolicy::CancelExecution(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency ExecutionsConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ExecutionsConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ExecutionsConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ExecutionsConnectionIdempotencyPolicy::WaitOperation(
+    google::longrunning::WaitOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<ExecutionsConnectionIdempotencyPolicy>
 MakeDefaultExecutionsConnectionIdempotencyPolicy() {
   return std::make_unique<ExecutionsConnectionIdempotencyPolicy>();

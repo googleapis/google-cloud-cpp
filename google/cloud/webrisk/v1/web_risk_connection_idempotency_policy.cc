@@ -59,6 +59,26 @@ Idempotency WebRiskServiceConnectionIdempotencyPolicy::SubmitUri(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency WebRiskServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency WebRiskServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency WebRiskServiceConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency WebRiskServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<WebRiskServiceConnectionIdempotencyPolicy>
 MakeDefaultWebRiskServiceConnectionIdempotencyPolicy() {
   return std::make_unique<WebRiskServiceConnectionIdempotencyPolicy>();

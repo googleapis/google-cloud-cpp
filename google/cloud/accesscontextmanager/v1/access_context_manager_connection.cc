@@ -516,6 +516,12 @@ AccessContextManagerConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::longrunning::Operation>
+AccessContextManagerConnection::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<AccessContextManagerConnection>
 MakeAccessContextManagerConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

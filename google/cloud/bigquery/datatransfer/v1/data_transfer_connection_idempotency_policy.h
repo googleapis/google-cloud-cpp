@@ -22,6 +22,7 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
 #include <google/cloud/bigquery/datatransfer/v1/datatransfer.grpc.pb.h>
+#include <google/cloud/location/locations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -100,6 +101,12 @@ class DataTransferServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency UnenrollDataSources(
       google::cloud::bigquery::datatransfer::v1::
           UnenrollDataSourcesRequest const& request);
+
+  virtual google::cloud::Idempotency ListLocations(
+      google::cloud::location::ListLocationsRequest request);
+
+  virtual google::cloud::Idempotency GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 };
 
 std::unique_ptr<DataTransferServiceConnectionIdempotencyPolicy>

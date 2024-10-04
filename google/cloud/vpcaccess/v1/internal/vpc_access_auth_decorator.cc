@@ -105,6 +105,32 @@ StatusOr<google::longrunning::Operation> VpcAccessServiceAuth::DeleteConnector(
   return child_->DeleteConnector(context, options, request);
 }
 
+StatusOr<google::cloud::location::ListLocationsResponse>
+VpcAccessServiceAuth::ListLocations(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::location::ListLocationsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListLocations(context, options, request);
+}
+
+StatusOr<google::longrunning::ListOperationsResponse>
+VpcAccessServiceAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::ListOperationsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListOperations(context, options, request);
+}
+
+StatusOr<google::longrunning::Operation> VpcAccessServiceAuth::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetOperation(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VpcAccessServiceAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

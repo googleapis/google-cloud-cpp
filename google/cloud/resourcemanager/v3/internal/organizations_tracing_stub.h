@@ -61,6 +61,10 @@ class OrganizationsTracingStub : public OrganizationsStub {
       grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::shared_ptr<OrganizationsStub> child_;
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>

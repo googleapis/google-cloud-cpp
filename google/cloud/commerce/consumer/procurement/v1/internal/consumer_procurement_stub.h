@@ -63,6 +63,10 @@ class ConsumerProcurementServiceStub {
              google::cloud::commerce::consumer::procurement::v1::
                  ListOrdersRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -84,8 +88,12 @@ class DefaultConsumerProcurementServiceStub
                           ConsumerProcurementService::StubInterface>
           grpc_stub,
       std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
           operations)
-      : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
+      : grpc_stub_(std::move(grpc_stub)),
+        operations_stub_(std::move(operations_stub)),
+        operations_(std::move(operations)) {}
 
   future<StatusOr<google::longrunning::Operation>> AsyncPlaceOrder(
       google::cloud::CompletionQueue& cq,
@@ -110,6 +118,10 @@ class DefaultConsumerProcurementServiceStub
              google::cloud::commerce::consumer::procurement::v1::
                  ListOrdersRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -126,6 +138,8 @@ class DefaultConsumerProcurementServiceStub
   std::unique_ptr<google::cloud::commerce::consumer::procurement::v1::
                       ConsumerProcurementService::StubInterface>
       grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 

@@ -115,6 +115,16 @@ Idempotency CloudTasksConnectionIdempotencyPolicy::RunTask(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency CloudTasksConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency CloudTasksConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<CloudTasksConnectionIdempotencyPolicy>
 MakeDefaultCloudTasksConnectionIdempotencyPolicy() {
   return std::make_unique<CloudTasksConnectionIdempotencyPolicy>();
