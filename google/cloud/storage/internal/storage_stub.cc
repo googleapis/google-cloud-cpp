@@ -319,6 +319,56 @@ StatusOr<google::storage::v2::Object> DefaultStorageStub::MoveObject(
   return response;
 }
 
+Status DefaultStorageStub::DeleteNotificationConfig(
+    grpc::ClientContext& context, Options const&,
+    google::storage::v2::DeleteNotificationConfigRequest const& request) {
+  google::protobuf::Empty response;
+  auto status =
+      grpc_stub_->DeleteNotificationConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
+StatusOr<google::storage::v2::NotificationConfig>
+DefaultStorageStub::GetNotificationConfig(
+    grpc::ClientContext& context, Options const&,
+    google::storage::v2::GetNotificationConfigRequest const& request) {
+  google::storage::v2::NotificationConfig response;
+  auto status = grpc_stub_->GetNotificationConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::storage::v2::NotificationConfig>
+DefaultStorageStub::CreateNotificationConfig(
+    grpc::ClientContext& context, Options const&,
+    google::storage::v2::CreateNotificationConfigRequest const& request) {
+  google::storage::v2::NotificationConfig response;
+  auto status =
+      grpc_stub_->CreateNotificationConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::storage::v2::ListNotificationConfigsResponse>
+DefaultStorageStub::ListNotificationConfigs(
+    grpc::ClientContext& context, Options const&,
+    google::storage::v2::ListNotificationConfigsRequest const& request) {
+  google::storage::v2::ListNotificationConfigsResponse response;
+  auto status =
+      grpc_stub_->ListNotificationConfigs(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::storage::v2::Object>>
 DefaultStorageStub::AsyncComposeObject(
     google::cloud::CompletionQueue& cq,

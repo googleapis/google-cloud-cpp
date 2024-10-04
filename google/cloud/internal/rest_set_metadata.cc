@@ -38,6 +38,9 @@ void SetMetadata(RestContext& context, Options const& options,
   if (options.has<QuotaUserOption>()) {
     context.AddHeader("x-goog-quota-user", options.get<QuotaUserOption>());
   }
+  if (options.has<ApiKeyOption>()) {
+    context.AddHeader("x-goog-api-key", options.get<ApiKeyOption>());
+  }
   if (options.has<FieldMaskOption>()) {
     context.AddHeader("x-goog-fieldmask", options.get<FieldMaskOption>());
   }

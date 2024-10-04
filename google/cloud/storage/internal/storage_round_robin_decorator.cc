@@ -195,6 +195,33 @@ StatusOr<google::storage::v2::Object> StorageRoundRobin::MoveObject(
   return Child()->MoveObject(context, options, request);
 }
 
+Status StorageRoundRobin::DeleteNotificationConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::v2::DeleteNotificationConfigRequest const& request) {
+  return Child()->DeleteNotificationConfig(context, options, request);
+}
+
+StatusOr<google::storage::v2::NotificationConfig>
+StorageRoundRobin::GetNotificationConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::v2::GetNotificationConfigRequest const& request) {
+  return Child()->GetNotificationConfig(context, options, request);
+}
+
+StatusOr<google::storage::v2::NotificationConfig>
+StorageRoundRobin::CreateNotificationConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::v2::CreateNotificationConfigRequest const& request) {
+  return Child()->CreateNotificationConfig(context, options, request);
+}
+
+StatusOr<google::storage::v2::ListNotificationConfigsResponse>
+StorageRoundRobin::ListNotificationConfigs(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::v2::ListNotificationConfigsRequest const& request) {
+  return Child()->ListNotificationConfigs(context, options, request);
+}
+
 future<StatusOr<google::storage::v2::Object>>
 StorageRoundRobin::AsyncComposeObject(
     google::cloud::CompletionQueue& cq,

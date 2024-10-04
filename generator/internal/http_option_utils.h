@@ -117,8 +117,8 @@ absl::optional<std::string> FormatApiVersionFromUrlPattern(
 /**
  * Parses the url pattern of the method and returns its API version.
  */
-std::string FormatApiVersionFromUrlPattern(std::string const& url_pattern,
-                                           std::string const& file_name);
+absl::optional<std::string> FormatApiVersionFromUrlPattern(
+    std::string const& url_pattern);
 
 }  // namespace generator_internal
 }  // namespace cloud
