@@ -3683,6 +3683,18 @@ service {
     "WriteObject"
   ]
   omit_repo_metadata: true
+  omitted_rpcs: [
+    "GetServiceAccount",
+    "CreateHmacKey",
+    "DeleteHmacKey",
+    "GetHmacKey",
+    "ListHmacKeys",
+    "UpdateHmacKey",
+    "DeleteNotificationConfig",
+    "GetNotificationConfig",
+    "CreateNotificationConfig",
+    "ListNotificationConfigs"
+  ]
 }
 
 # Storage Control

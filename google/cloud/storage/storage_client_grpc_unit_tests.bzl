@@ -62,7 +62,6 @@ storage_client_grpc_unit_tests = [
     "internal/grpc/metrics_histograms_test.cc",
     "internal/grpc/metrics_meter_provider_test.cc",
     "internal/grpc/monitoring_project_test.cc",
-    "internal/grpc/notification_metadata_parser_test.cc",
     "internal/grpc/object_access_control_parser_test.cc",
     "internal/grpc/object_metadata_parser_test.cc",
     "internal/grpc/object_read_source_test.cc",
