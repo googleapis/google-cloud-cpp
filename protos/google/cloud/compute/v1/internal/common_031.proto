@@ -487,6 +487,10 @@ message NetworksGetEffectiveFirewallsResponseEffectiveFirewallPolicy {
   // [Output Only] The name of the firewall policy.
   optional string name = 2 [json_name = "name"];
 
+  // [Output only] Priority of firewall policy association. Not applicable for
+  // type=HIERARCHY.
+  optional int32 priority = 6 [json_name = "priority"];
+
   // The rules that apply to the network.
   repeated FirewallPolicyRule rules = 3 [json_name = "rules"];
 
@@ -496,6 +500,7 @@ message NetworksGetEffectiveFirewallsResponseEffectiveFirewallPolicy {
   // [Output Only] The type of the firewall policy.
   // HIERARCHY:
   // NETWORK:
+  // SYSTEM:
   // UNSPECIFIED:
   optional string type = 5 [json_name = "type"];
 }

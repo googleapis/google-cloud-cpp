@@ -326,6 +326,56 @@ StatusOr<google::storage::v2::Object> StorageTracingStub::MoveObject(
                            child_->MoveObject(context, options, request));
 }
 
+Status StorageTracingStub::DeleteNotificationConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::v2::DeleteNotificationConfigRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.storage.v2.Storage",
+                                     "DeleteNotificationConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteNotificationConfig(context, options, request));
+}
+
+StatusOr<google::storage::v2::NotificationConfig>
+StorageTracingStub::GetNotificationConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::v2::GetNotificationConfigRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.storage.v2.Storage",
+                                     "GetNotificationConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->GetNotificationConfig(context, options, request));
+}
+
+StatusOr<google::storage::v2::NotificationConfig>
+StorageTracingStub::CreateNotificationConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::v2::CreateNotificationConfigRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.storage.v2.Storage",
+                                     "CreateNotificationConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateNotificationConfig(context, options, request));
+}
+
+StatusOr<google::storage::v2::ListNotificationConfigsResponse>
+StorageTracingStub::ListNotificationConfigs(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::v2::ListNotificationConfigsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.storage.v2.Storage",
+                                     "ListNotificationConfigs");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->ListNotificationConfigs(context, options, request));
+}
+
 future<StatusOr<google::storage::v2::Object>>
 StorageTracingStub::AsyncComposeObject(
     google::cloud::CompletionQueue& cq,

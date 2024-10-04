@@ -103,6 +103,23 @@ TEST(PopulateRestOptions, TracingOptions) {
   EXPECT_EQ(tracing.truncate_string_field_longer_than(), 42);
 }
 
+TEST(PopulateRestOptions, ApiKey) {
+  auto actual = PopulateRestOptions(Options{}.set<ApiKeyOption>("api-key"));
+  EXPECT_FALSE(actual.has<UnifiedCredentialsOption>());
+}
+
+TEST(PopulateRestOptions, ApiKeyWithCredentialsErrors) {
+  auto actual = PopulateRestOptions(
+      Options{}.set<ApiKeyOption>("api-key").set<UnifiedCredentialsOption>(
+          MakeGoogleDefaultCredentials()));
+
+  EXPECT_TRUE(actual.has<UnifiedCredentialsOption>());
+  auto const& creds = actual.get<UnifiedCredentialsOption>();
+  TestCredentialsVisitor v;
+  CredentialsVisitor::dispatch(*creds, v);
+  EXPECT_EQ(v.name, "ErrorCredentialsConfig");
+}
+
 }  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -74,6 +74,9 @@ message BackendBucket {
 
   // [Output Only] Server-defined URL for the resource.
   optional string self_link = 12 [json_name = "selfLink"];
+
+  // [Output Only] List of resources referencing that backend bucket.
+  repeated BackendBucketUsedBy used_by = 13 [json_name = "usedBy"];
 }
 
 // Message containing Cloud CDN configuration for a backend bucket.
@@ -437,4 +440,10 @@ message BackendServicesScopedList {
   // Informational warning which replaces the list of backend services when the
   // list is empty.
   optional Warning warning = 2 [json_name = "warning"];
+}
+
+message BackendBucketUsedBy {
+  // [Output Only] Server-defined URL for UrlMaps referencing that
+  // BackendBucket.
+  optional string reference = 1 [json_name = "reference"];
 }

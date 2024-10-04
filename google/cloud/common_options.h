@@ -281,6 +281,30 @@ struct CustomHeadersOption {
 };
 
 /**
+ * An option to authenticate using an [API key].
+ *
+ * API keys are convenient because no [principal] is needed. The API key
+ * associates the request with a Google Cloud project for billing and quota
+ * purposes.
+ *
+ * @note Most Cloud APIs do not support API keys, instead requiring full
+ * credentials.
+ *
+ * @note Using API keys is mutually exclusive with providing credentials. The
+ * client library will error out if both `ApiKeyOption` and
+ * `UnifiedCredentialsOption` are set.
+ *
+ * @ingroup guac
+ * @ingroup options
+ *
+ * [API key]: https://cloud.google.com/docs/authentication/api-keys-use
+ * [principal]: https://cloud.google.com/docs/authentication#principal
+ */
+struct ApiKeyOption {
+  using Type = std::string;
+};
+
+/**
  * Configure server-side filtering.
  *
  * Google services can filter the fields in a response using the
