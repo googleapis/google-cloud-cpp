@@ -1,307 +1,479 @@
-# ~~~
-# Copyright 2017 Google Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     https://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-# ~~~
+# 这是 CMakeCache 文件。
+# 对于构建目录：/workspaces/google-cloud-cpp/build
+# 由 CMake 生成：/usr/bin/cmake
+# 你可以编辑这个文件来改变 cmake 找到和使用的值。
+# 如果您不想更改任何值，只需退出编辑器即可。
+# 如果您确实想更改一个值，只需编辑、保存并退出编辑器即可。
+# 文件的语法如下：
+# 键：TYPE=VALUE
+# KEY 是缓存中变量的名称。
+# TYPE 是 VALUE， DO NOT EDIT TYPE！ 类型的 GUI 提示。
+# VALUE 是 KEY 的当前值。
 
-cmake_minimum_required(VERSION 3.13...3.24)
+########################
+# EXTERNAL 缓存条目
+########################
 
-# Define the project name and where to report bugs.
-set(PACKAGE_BUGREPORT "https://github.com/googleapis/google-cloud-cpp/issues")
+程序的路径。
+CMAKE_ADDR2LINE：FILEPATH=/usr/bin/addr2line
 
-project(
-    google-cloud-cpp
-    VERSION 2.30.0
-    LANGUAGES CXX)
-set(PROJECT_VERSION_PRE_RELEASE "rc")
+程序的路径。
+CMAKE_AR：FILEPATH=/usr/bin/ar
 
-if (NOT "${PROJECT_VERSION_PRE_RELEASE}" STREQUAL "")
-    set(PROJECT_VERSION "${PROJECT_VERSION}-${PROJECT_VERSION_PRE_RELEASE}")
-endif ()
+无帮助，在命令行上指定了变量。
+CMAKE_BUILD_TYPE：STRING=调试
 
-# Automatically update the version(s) in the `MODULE.bazel` file.
-file(READ "MODULE.bazel" module_contents)
-string(
-    REGEX
-    REPLACE "version = \".*\",  # Updated by CMake"
-            "version = \"${PROJECT_VERSION}\",  # Updated by CMake"
-            updated_contents "${module_contents}")
-string(
-    REGEX
-    REPLACE
-        "compatibility_level = .*,  # Updated by CMake"
-        "compatibility_level = ${PROJECT_VERSION_MAJOR},  # Updated by CMake"
-        updated_contents "${updated_contents}")
-if (NOT ("${updated_contents}" STREQUAL "${module_contents}"))
-    # Rewrite the file *only* if it was updated.
-    file(WRITE "MODULE.bazel" "${updated_contents}")
-endif ()
+在构建过程中启用/禁用颜色输出。
+CMAKE_COLOR_MAKEFILE：BOOL=ON
 
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 7.5)
-        message(
-            WARNING "The `google-cloud-cpp` library is tested with GCC >= 7.5."
-                    " We will consider patches for older versions.")
-    endif ()
-elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 6.0)
-        message(
-            WARNING
-                "The `google-cloud-cpp` library is tested with Clang >= 6.0."
-                " We will consider patches for older versions.")
-    endif ()
-elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
-    if (CMAKE_VERSION VERSION_LESS 3.15)
-        message(
-            FATAL_ERROR
-                "MSVC builds require CMake >= 3.15."
-                " Previous versions of CMake lack a standard mechanism to"
-                " select the runtime C++ library.")
-    endif ()
-endif ()
+无帮助，在命令行上指定了变量。
+CMAKE_CXX_COMPILER：FILEPATH=/usr/bin/g++
 
-list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
+对 'ar' 的包装器，添加适当的 '-plugin' 选项
+对于 GCC 编译器
+CMAKE_CXX_COMPILER_AR：FILEPATH=/usr/bin/gcc-ar-9
 
-option(GOOGLE_CLOUD_CPP_ENABLE_MACOS_OPENSSL_CHECK
-       "If enabled, check that the user has defined OPENSSL_ROOT_DIR on macOS"
-       ON)
-# This is an easy mistake to make, and the error messages are very confusing.
-# Help our users by giving them some guidance.
-if (APPLE
-    AND GOOGLE_CLOUD_CPP_ENABLE_MACOS_OPENSSL_CHECK
-    AND NOT DEFINED OPENSSL_ROOT_DIR)
-    message(
-        WARNING
-            "The Google Cloud C++ client libraries use the native OpenSSL "
-            "library. In most macOS systems, you need to set the "
-            "OPENSSL_ROOT_DIR environment variable to find this dependency, "
-            "for example:"
-            "\n"
-            "    cmake -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl ..."
-            "\n"
-            "You have not set this variable. Most likely, this will result in "
-            "a broken build with fairly obscure error messages. If your "
-            "environment does not require setting OPENSSL_ROOT_DIR, you can "
-            "disable this check using:"
-            "\n"
-            "    cmake -DGOOGLE_CLOUD_CPP_ENABLE_MACOS_OPENSSL_CHECK=OFF ...")
-endif ()
+对 'ranlib' 的包装器，添加适当的 '-plugin' 选项
+对于 GCC 编译器
+CMAKE_CXX_COMPILER_RANLIB：FILEPATH=/usr/bin/gcc-ranlib-9
 
-# If ccache is installed use it for the build.
-option(GOOGLE_CLOUD_CPP_ENABLE_CCACHE "Automatically use ccache if available"
-       OFF)
-mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_CCACHE)
+CXX 编译器在所有构建类型期间使用的标志。
+CMAKE_CXX_FLAGS：字符串=
 
-if (GOOGLE_CLOUD_CPP_ENABLE_CCACHE)
-    find_program(GOOGLE_CLOUD_CPP_CCACHE_PROGRAM ccache NAMES /usr/bin/ccache)
-    mark_as_advanced(GOOGLE_CLOUD_CPP_CCACHE_PROGRAM)
-    if (GOOGLE_CLOUD_CPP_CCACHE_PROGRAM)
-        message(STATUS "ccache found: ${GOOGLE_CLOUD_CPP_CCACHE_PROGRAM}")
-        set(CMAKE_CXX_COMPILER_LAUNCHER "${GOOGLE_CLOUD_CPP_CCACHE_PROGRAM}")
-    endif ()
-endif ()
+CXX 编译器在 DEBUG 构建期间使用的标志。
+CMAKE_CXX_FLAGS_DEBUG：字符串=-g
 
-# Search for Doxygen and create the targets for it if found.
-option(GOOGLE_CLOUD_CPP_GENERATE_DOXYGEN [==[
-Generate Doxygen documentation. Only google-cloud-cpp developers are expected to
-use this flag.]==] OFF)
-mark_as_advanced(GOOGLE_CLOUD_CPP_GENERATE_DOXYGEN)
+CXX 编译器在 MINSIZEREL 构建期间使用的标志。
+CMAKE_CXX_FLAGS_MINSIZEREL：STRING=-OS -DNDEBUG
 
-option(
-    GOOGLE_CLOUD_CPP_USE_LATEST_FOR_REFDOC_LINKS
-    [==[
-Link to "latest" in our reference documentation. Otherwise, link to the project
-version. Only google-cloud-cpp developers are expected to use this flag.]==]
-    OFF)
-mark_as_advanced(GOOGLE_CLOUD_CPP_USE_LATEST_FOR_REFDOC_LINKS)
+CXX 编译器在 RELEASE 构建期间使用的标志。
+CMAKE_CXX_FLAGS_RELEASE：STRING=-O3 -DNDEBUG
 
-# Compile the DocFX tool.
-option(
-    GOOGLE_CLOUD_CPP_INTERNAL_DOCFX
-    "Compile the docfx tool. Only google-cloud-cpp developers are expected to use this flag."
-    OFF)
-mark_as_advanced(GOOGLE_CLOUD_CPP_INTERNAL_DOCFX)
+CXX 编译器在 RELWITHDEBINFO 构建期间使用的标志。
+CMAKE_CXX_FLAGS_RELWITHDEBINFO：STRING=-O2 -g -DNDEBUG
 
-set(GOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL
-    ""
-    CACHE
-        STRING
-        [==[
-Override the default URL for the googleapis protos. google-cloud-cpp needs the
-proto and gRPC definitions for most Google Cloud services. By default these
-definitions are downloaded from GitHub. In some environments, this may not be
-possible. This variable can be used to use a local directory, or a local
-tarball, with the proto definitions.
+无帮助，在命令行上指定了变量。
+CMAKE_C_COMPILER：FILEPATH=/usr/bin/gcc
 
-If you override this variable, you must ensure the proto definitions match the
-expectations in google-cloud-cpp. Using the same SHA is the recommended
-practice. Using older SHAs is **NOT** supported, and will almost certainly
-result in build problems. You may be able to use a more recent SHA of the
-protos, but do not expect that new features will become exposed via the C++
-client libraries.
-]==])
-mark_as_advanced(GOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL)
-set(GOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL_HASH
-    ""
-    CACHE
-        STRING
-        [==[
-Override the hash for the googleapis protos tarball. See
-GOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL for details.
-]==])
-mark_as_advanced(GOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL_HASH)
+程序的路径。
+CMAKE_DLLTOOL：FILEPATH=CMAKE_DLLTOOL-NOTFOUND
 
-option(
-    GOOGLE_CLOUD_CPP_USE_INSTALLED_COMMON
-    [==[
-Use a pre-installed version of the common libraries and proto files.
+链接器在所有生成类型期间使用的标志。
+CMAKE_EXE_LINKER_FLAGS：字符串=
 
-This option is required to support package maintainers that split
-`google-cloud-cpp` into multiple packages.
-]==]
-    OFF)
-mark_as_advanced(GOOGLE_CLOUD_CPP_USE_INSTALLED_COMMON)
+链接器在 DEBUG 生成期间使用的标志。
+CMAKE_EXE_LINKER_FLAGS_DEBUG：字符串=
 
-include(CMakeDependentOption)
-cmake_dependent_option(
-    GOOGLE_CLOUD_CPP_WITH_MOCKS
-    [==[Build the google-cloud-cpp mocking libraries.
+链接器在 MINSIZEREL 生成期间使用的标志。
+CMAKE_EXE_LINKER_FLAGS_MINSIZEREL：字符串=
 
-google-cloud-cpp offers mocking libraries with mock classes, to facilitate unit
-testing of Cloud C++ clients. Consumers of this library that do not use the
-provided mocks to test code involving the Cloud C++ clients may wish to turn
-this flag off.]==]
-    ON
-    "NOT BUILD_TESTING"
-    ON)
-mark_as_advanced(GOOGLE_CLOUD_CPP_WITH_MOCKS)
+链接器在 RELEASE 生成期间使用的标志。
+CMAKE_EXE_LINKER_FLAGS_RELEASE：字符串=
 
-# The examples use exception handling to simplify the code. Therefore they
-# cannot be compiled when exceptions are disabled, and applications cannot force
-# the flag.
-cmake_dependent_option(
-    GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES "Compile the google-cloud-cpp examples."
-    ON "GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS;BUILD_TESTING" OFF)
-mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES)
+链接器在 RELWITHDEBINFO 生成期间使用的标志。
+CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO：字符串=
 
-include(GoogleCloudCppFeatures)
+无帮助，在命令行上指定了变量。
+CMAKE_EXPORT_COMPILE_COMMANDS：BOOL=TRUE
 
-# Controls the list of features compiled by `google-cloud-cpp`.
-set(GOOGLE_CLOUD_CPP_ENABLE
-    ${GOOGLE_CLOUD_CPP_LEGACY_FEATURES}
-    CACHE STRING "The list of libraries to build.")
-string(REPLACE "," ";" GOOGLE_CLOUD_CPP_ENABLE "${GOOGLE_CLOUD_CPP_ENABLE}")
+安装路径前缀，预置到安装目录上。
+CMAKE_INSTALL_PREFIX：PATH=/usr/local
 
-# We use some functions to enable the features configured in
-# `GOOGLE_CLOUD_CPP_ENABLE`. Using functions makes it easier to keep the code
-# structured, and documents what some of these things are doing.
-google_cloud_cpp_define_legacy_feature_options()
-google_cloud_cpp_apply_legacy_feature_options()
-google_cloud_cpp_enable_deps()
-google_cloud_cpp_enable_cleanup()
-google_cloud_cpp_define_dependent_legacy_feature_options()
+程序的路径。
+CMAKE_LINKER：FILEPATH=/usr/bin/ld
 
-# Building this target results in all protobufs being compiled.
-add_custom_target(google-cloud-cpp-protos)
+程序的路径。
+CMAKE_MAKE_PROGRAM：FILEPATH=/usr/bin/make
 
-# Each subproject adds dependencies to this target to have their docs generated.
-add_custom_target(doxygen-docs)
-add_custom_target(all-docfx)
+链接器在创建模块期间使用的标志
+所有 build 类型。
+CMAKE_MODULE_LINKER_FLAGS：字符串=
 
-find_package(absl CONFIG REQUIRED)
-if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
-    find_package(gRPC REQUIRED QUIET)
-    # `Protobuf_PROTOC_EXECUTABLE` is pretty standard. It has been in use by
-    # CMake's FindProtobuf module for years, and it is defined by Protobuf's
-    # CMake configuration files. There is no obvious analog for the gRPC plugin.
-    # gRPC only exports the targets (e.g. `gRPC::grpc_cpp_plugin`) when
-    # applicable. We define our own variable.
-    set(GOOGLE_CLOUD_CPP_GRPC_PLUGIN_EXECUTABLE
-        $<TARGET_FILE:gRPC::grpc_cpp_plugin>
-        CACHE
-            STRING
-            [==[Override gRPC's protoc plugin location.
-`google-cloud-cpp` uses the gRPC's protoc plugin to generate gRPC stub code.
-One may need to override the default location when cross-compiling, as the gRPC
-package will point to the target environment and the plugin won't run on the
-host environment.
-]==])
-    mark_as_advanced(GOOGLE_CLOUD_CPP_GRPC_PLUGIN_EXECUTABLE)
+链接器在创建模块期间使用的标志
+DEBUG 版本。
+CMAKE_MODULE_LINKER_FLAGS_DEBUG：字符串=
 
-    set(GOOGLE_CLOUD_CPP_FIND_DEPENDENCY_PROTOBUF
-        "find_dependency(Protobuf CONFIG)")
-    find_package(Protobuf CONFIG QUIET)
-    if (NOT Protobuf_FOUND)
-        set(GOOGLE_CLOUD_CPP_FIND_DEPENDENCY_PROTOBUF
-            "find_dependency(Protobuf)")
-        find_package(Protobuf REQUIRED)
-    endif ()
-endif ()
+链接器在创建模块期间使用的标志
+MINSIZEREL 构建。
+CMAKE_MODULE_LINKER_FLAGS_MINSIZEREL：字符串=
 
-# Enable testing in this directory so we can do a top-level `make test`. This
-# also includes the BUILD_TESTING option, which is on by default.
-include(CTest)
+链接器在创建模块期间使用的标志
+RELEASE 版本。
+CMAKE_MODULE_LINKER_FLAGS_RELEASE：字符串=
 
-# Ensure that GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS is initialized since it's
-# used in the depends condition of the next option.
-include(EnableCxxExceptions)
+链接器在创建模块期间使用的标志
+RELWITHDEBINFO 版本。
+CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO：字符串=
 
-if (BUILD_TESTING OR GOOGLE_CLOUD_CPP_WITH_MOCKS)
-    # Discover and add targets for the GTest::gtest and GTest::gmock libraries.
-    include(FindGMockWithTargets)
-endif ()
+程序的路径。
+CMAKE_NM：FILEPATH=/usr/bin/nm
 
-# Add any subdirectories configured in the application.
+程序的路径。
+CMAKE_OBJCOPY：FILEPATH=/usr/bin/objcopy
 
-# `docfx/` must be included before any library directories. The tool is used to
-# generate the library documentation.
-add_subdirectory(docfx)
+程序的路径。
+CMAKE_OBJDUMP：FILEPATH=/usr/bin/objdump
 
-# We always include the external protos. If this is not needed it immediately
-# returns.
-add_subdirectory(external/googleapis)
-add_subdirectory(google/cloud)
+CMake 计算的值
+CMAKE_PROJECT_DESCRIPTION：静态=
 
-if (GOOGLE_CLOUD_CPP_USE_INSTALLED_COMMON)
-    find_package(google_cloud_cpp_common CONFIG REQUIRED)
-    if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
-        find_package(google_cloud_cpp_grpc_utils CONFIG REQUIRED)
-        find_package(google_cloud_cpp_googleapis CONFIG REQUIRED)
-    endif ()
-    if (GOOGLE_CLOUD_CPP_ENABLE_REST)
-        find_package(google_cloud_cpp_rest_internal CONFIG REQUIRED)
-    endif ()
-    if (GOOGLE_CLOUD_CPP_ENABLE_REST AND GOOGLE_CLOUD_CPP_ENABLE_GRPC)
-        find_package(google_cloud_cpp_rest_protobuf_internal CONFIG REQUIRED)
-    endif ()
-endif ()
+CMake 计算的值
+CMAKE_PROJECT_HOMEPAGE_URL：静态=
 
-google_cloud_cpp_enable_features()
+CMake 计算的值
+CMAKE_PROJECT_NAME：静态=google-cloud-cpp
 
-add_subdirectory(examples)
+CMake 计算的值
+CMAKE_PROJECT_VERSION：静态=2.30.0
 
-# Obsolete / retired flags and options. Removing them just cleans up a bit of
-# our code at the cost of breaking customers, while putting them here makes them
-# basically invisible to us.
-set(GOOGLE_CLOUD_CPP_CXX_STANDARD
-    ""
-    CACHE STRING "Unused. Prefer CMAKE_CXX_STANDARD")
-mark_as_advanced(GOOGLE_CLOUD_CPP_CXX_STANDARD)
+CMake 计算的值
+CMAKE_PROJECT_VERSION_MAJOR：静态=2
 
-# The default source for dependencies.
-set(GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER
-    "unused"
-    CACHE STRING "This option is no longer used.")
-set_property(CACHE GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER
-             PROPERTY STRINGS "external" "package" "unused")
-mark_as_advanced(GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER)
+CMake 计算的值
+CMAKE_PROJECT_VERSION_MINOR：静态 = 30
+
+CMake 计算的值
+CMAKE_PROJECT_VERSION_PATCH：静态 = 0
+
+CMake 计算的值
+CMAKE_PROJECT_VERSION_TWEAK：静态=
+
+程序的路径。
+CMAKE_RANLIB：FILEPATH=/usr/bin/ranlib
+
+程序的路径。
+CMAKE_READELF：FILEPATH=/usr/bin/readelf
+
+链接器在创建共享库期间使用的标志
+在所有 build 类型期间。
+CMAKE_SHARED_LINKER_FLAGS：字符串=
+
+链接器在创建共享库期间使用的标志
+在 DEBUG 构建期间。
+CMAKE_SHARED_LINKER_FLAGS_DEBUG：字符串=
+
+链接器在创建共享库期间使用的标志
+在 MINSIZEREL 构建期间。
+CMAKE_SHARED_LINKER_FLAGS_MINSIZEREL：字符串=
+
+链接器在创建共享库期间使用的标志
+在 RELEASE 构建期间。
+CMAKE_SHARED_LINKER_FLAGS_RELEASE：字符串=
+
+链接器在创建共享库期间使用的标志
+在 RELWITHDEBINFO 构建期间。
+CMAKE_SHARED_LINKER_FLAGS_RELWITHDEBINFO：字符串=
+
+如果设置，则在安装共享库时不会添加运行时路径，
+但在构建时添加。
+CMAKE_SKIP_INSTALL_RPATH：BOOL=否
+
+如果设置，则在使用共享库时不会添加运行时路径。
+CMAKE_SKIP_RPATH：BOOL=否
+
+链接器在创建静态库期间使用的标志
+在所有 build 类型期间。
+CMAKE_STATIC_LINKER_FLAGS：字符串=
+
+链接器在创建静态库期间使用的标志
+在 DEBUG 构建期间。
+CMAKE_STATIC_LINKER_FLAGS_DEBUG：字符串=
+
+链接器在创建静态库期间使用的标志
+在 MINSIZEREL 构建期间。
+CMAKE_STATIC_LINKER_FLAGS_MINSIZEREL：字符串=
+
+链接器在创建静态库期间使用的标志
+在 RELEASE 构建期间。
+CMAKE_STATIC_LINKER_FLAGS_RELEASE：字符串=
+
+链接器在创建静态库期间使用的标志
+在 RELWITHDEBINFO 构建期间。
+CMAKE_STATIC_LINKER_FLAGS_RELWITHDEBINFO：字符串=
+
+程序的路径。
+CMAKE_STRIP：FILEPATH=/usr/bin/strip
+
+如果此值为打开，则生成 makefile 时将不带
+// .SILENT 指令，并且所有命令都将回显到控制台
+在制作期间。这仅对调试有用。使用 Visual
+Studio IDE 项目：所有命令都是在没有 /nologo 的情况下完成的。
+CMAKE_VERBOSE_MAKEFILE：BOOL=FALSE
+
+要构建的库列表。
+GOOGLE_CLOUD_CPP_ENABLE：STRING=bigtable;大查询;IAM 的;伐木;发布订阅;扳手;存储
+
+启用构建 Bigquery 库。已弃用，首选 GOOGLE_CLOUD_CPP_ENABLE。
+GOOGLE_CLOUD_CPP_ENABLE_BIGQUERY：BOOL=ON
+
+启用构建 Bigtable 库。已弃用，首选 GOOGLE_CLOUD_CPP_ENABLE。
+GOOGLE_CLOUD_CPP_ENABLE_BIGTABLE：BOOL=ON
+
+如果可用，则自动使用 ccache
+GOOGLE_CLOUD_CPP_ENABLE_CCACHE：BOOL=OFF
+
+启用构建生成器。已弃用，首选 GOOGLE_CLOUD_CPP_ENABLE。
+GOOGLE_CLOUD_CPP_ENABLE_GENERATOR：BOOL=OFF
+
+启用构建 IAM 库。已弃用，首选 GOOGLE_CLOUD_CPP_ENABLE。
+GOOGLE_CLOUD_CPP_ENABLE_IAM：BOOL=ON
+
+启用构建 Logging 库。已弃用，首选 GOOGLE_CLOUD_CPP_ENABLE。
+GOOGLE_CLOUD_CPP_ENABLE_LOGGING：BOOL=ON
+
+如果启用，请检查用户是否已定义OPENSSL_ROOT_DIR
+在 macOS 上
+GOOGLE_CLOUD_CPP_ENABLE_MACOS_OPENSSL_CHECK：BOOL=ON
+
+启用构建 Pub/Sub 库。已弃用，首选 GOOGLE_CLOUD_CPP_ENABLE。
+GOOGLE_CLOUD_CPP_ENABLE_PUBSUB：BOOL=ON
+
+启用构建 Spanner 库。已弃用，首选 GOOGLE_CLOUD_CPP_ENABLE。
+GOOGLE_CLOUD_CPP_ENABLE_SPANNER：BOOL=ON
+
+启用构建 Storage 库。已弃用，首选 GOOGLE_CLOUD_CPP_ENABLE。
+GOOGLE_CLOUD_CPP_ENABLE_STORAGE：BOOL=ON
+
+生成 Doxygen 文档。仅限 google-cloud-cpp 开发人员
+应
+\n使用此标志。
+GOOGLE_CLOUD_CPP_GENERATE_DOXYGEN：BOOL=OFF
+
+编译 docfx 工具。只有 google-cloud-cpp 开发人员是
+应使用此标志。
+GOOGLE_CLOUD_CPP_INTERNAL_DOCFX：BOOL=OFF
+
+覆盖 googleapis 原型的默认 URL。谷歌云 CPP
+需要
+\n大多数 Google Cloud 服务的 proto 和 gRPC 定义。由
+默认这些
+\n定义从 GitHub 下载。在某些环境中，
+这可能不是
+\n可能。此变量可用于使用本地目录
+或本地
+\ntarball，带有 proto 定义。
+\n
+\n如果覆盖此变量，则必须确保 proto 定义
+匹配
+\ngoogle-cloud-cpp 中的预期。使用相同的 SHA 是
+推荐
+\n练习。使用较旧的 SHA 是 **不支持的** ，并且几乎
+当然
+\n导致生成问题。您可以使用更新的
+的 SHA
+\nprotos，但不要指望新功能会暴露出来
+通过 C++
+\n客户端库。
+\n
+GOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL：字符串=
+
+覆盖 googleapis protos tarball 的哈希值。看
+\nGOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL 了解详情。
+\n
+GOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL_HASH：字符串=
+
+启用 GCS gRPC 插件的编译 （EXPERIMENTAL）。荒废的
+更喜欢GOOGLE_CLOUD_CPP_ENABLE。
+GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC：BOOL=OFF
+
+使用预装版本的通用库和 proto
+文件。
+\n
+\n此选项是支持满足以下条件的软件包维护者所必需的
+分裂
+\n'google-cloud-cpp' 复制到多个软件包中。
+\n
+GOOGLE_CLOUD_CPP_USE_INSTALLED_COMMON：BOOL=OFF
+
+链接到我们的参考文档中的“latest”。否则，链接
+前往项目
+\n版本。只有 google-cloud-cpp 开发人员应该使用
+this 标志。
+GOOGLE_CLOUD_CPP_USE_LATEST_FOR_REFDOC_LINKS：BOOL=OFF
+
+构建 google-cloud-cpp 模拟库。
+\n
+\ngoogle-cloud-cpp 提供了带有 mock 类的 mock 库，
+方便单位
+\n测试 Cloud C++ 客户端。此库的使用者
+请勿使用
+\n提供了 mock 以测试涉及 Cloud C++ 客户端的代码
+可能希望转身
+\n这面旗帜关闭。
+GOOGLE_CLOUD_CPP_WITH_MOCKS：BOOL=ON
+
+包含 absl 的 CMake 配置文件的目录。
+absl_DIR：PATH=absl_DIR-NOTFOUND
+
+CMake 计算的值
+google-cloud-cpp_BINARY_DIR：静态=/workspaces/google-cloud-cpp/build
+
+CMake 计算的值
+google-cloud-cpp_SOURCE_DIR：静态=/workspaces/google-cloud-cpp
+
+
+########################
+# INTERNAL 缓存条目
+########################
+
+变量的 ADVANCED 属性：CMAKE_ADDR2LINE
+CMAKE_ADDR2LINE-高级：内部=1
+变量的 ADVANCED 属性：CMAKE_AR
+CMAKE_AR-高级：内部=1
+这是创建此 CMakeCache.txt 的目录
+CMAKE_CACHEFILE_DIR：INTERNAL=/workspaces/google-cloud-cpp/build
+用于创建当前加载的缓存的 cmake 的主要版本
+CMAKE_CACHE_MAJOR_VERSION：内部=3
+用于创建当前加载的缓存的 cmake 的次要版本
+CMAKE_CACHE_MINOR_VERSION：内部=16
+用于创建当前加载的缓存的 cmake 的补丁版本
+CMAKE_CACHE_PATCH_VERSION：内部=3
+变量的 ADVANCED 属性：CMAKE_COLOR_MAKEFILE
+CMAKE_COLOR_MAKEFILE-高级：内部=1
+CMake 可执行文件的路径。
+CMAKE_COMMAND：内部=/usr/bin/cmake
+cpack 程序可执行文件的路径。
+CMAKE_CPACK_COMMAND：INTERNAL=/usr/bin/cpack
+ctest 程序可执行文件的路径。
+CMAKE_CTEST_COMMAND：INTERNAL=/usr/bin/ctest
+变量的 ADVANCED 属性：CMAKE_CXX_COMPILER
+CMAKE_CXX_COMPILER-高级：内部=1
+变量的 ADVANCED 属性：CMAKE_CXX_COMPILER_AR
+CMAKE_CXX_COMPILER_AR-高级：内部=1
+变量的 ADVANCED 属性：CMAKE_CXX_COMPILER_RANLIB
+CMAKE_CXX_COMPILER_RANLIB-高级：内部=1
+变量的 ADVANCED 属性：CMAKE_CXX_FLAGS
+CMAKE_CXX_FLAGS-高级：内部=1
+变量的 ADVANCED 属性：CMAKE_CXX_FLAGS_DEBUG
+CMAKE_CXX_FLAGS_DEBUG-高级：内部=1
+变量的 ADVANCED 属性：CMAKE_CXX_FLAGS_MINSIZEREL
+CMAKE_CXX_FLAGS_MINSIZEREL-高级：内部=1
+变量的 ADVANCED 属性：CMAKE_CXX_FLAGS_RELEASE
+CMAKE_CXX_FLAGS_RELEASE-高级：内部=1
+变量的 ADVANCED 属性：CMAKE_CXX_FLAGS_RELWITHDEBINFO
+CMAKE_CXX_FLAGS_RELWITHDEBINFO-高级：内部=1
+变量的 ADVANCED 属性：CMAKE_DLLTOOL
+CMAKE_DLLTOOL-高级：内部=1
+可执行文件格式
+CMAKE_EXECUTABLE_FORMAT：INTERNAL=ELF
+变量的 ADVANCED 属性：CMAKE_EXE_LINKER_FLAGS
+CMAKE_EXE_LINKER_FLAGS-高级：内部=1
+变量的 ADVANCED 属性：CMAKE_EXE_LINKER_FLAGS_DEBUG
+CMAKE_EXE_LINKER_FLAGS_DEBUG-高级：内部=1
+变量的 ADVANCED 属性：CMAKE_EXE_LINKER_FLAGS_MINSIZEREL
+CMAKE_EXE_LINKER_FLAGS_MINSIZEREL-高级：内部=1
+变量的 ADVANCED 属性：CMAKE_EXE_LINKER_FLAGS_RELEASE
+CMAKE_EXE_LINKER_FLAGS_RELEASE-高级：内部=1
+变量的 ADVANCED 属性：CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO
+CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO-高级：内部=1
+变量的 ADVANCED 属性：CMAKE_EXPORT_COMPILE_COMMANDS
+CMAKE_EXPORT_COMPILE_COMMANDS-高级：内部=1
+外部 makefile 项目生成器的名称。
+CMAKE_EXTRA_GENERATOR：内部=
+生成器的名称。
+CMAKE_GENERATOR：INTERNAL=Unix Makefile
+生成器实例标识符。
+CMAKE_GENERATOR_INSTANCE：内部=
+生成器平台的名称。
+CMAKE_GENERATOR_PLATFORM：内部=
+生成器工具集的名称。
+CMAKE_GENERATOR_TOOLSET：内部=
+source 目录，其中包含此文件的顶级 CMakeLists.txt 文件
+项目
+CMAKE_HOME_DIRECTORY：内部=/workspaces/google-cloud-cpp
+在没有执行权限的情况下安装 .so 文件。
+CMAKE_INSTALL_SO_NO_EXE：内部=1
+变量的 ADVANCED 属性：CMAKE_LINKER
+CMAKE_LINKER-高级：内部=1
+变量的 ADVANCED 属性：CMAKE_MAKE_PROGRAM
+CMAKE_MAKE_PROGRAM-高级：内部=1
+变量的 ADVANCED 属性：CMAKE_MODULE_LINKER_FLAGS
+CMAKE_MODULE_LINKER_FLAGS-高级：内部=1
+变量的 ADVANCED 属性：CMAKE_MODULE_LINKER_FLAGS_DEBUG
+CMAKE_MODULE_LINKER_FLAGS_DEBUG-高级：内部=1
+变量的 ADVANCED 属性：CMAKE_MODULE_LINKER_FLAGS_MINSIZEREL
+CMAKE_MODULE_LINKER_FLAGS_MINSIZEREL-高级：内部=1
+变量的 ADVANCED 属性：CMAKE_MODULE_LINKER_FLAGS_RELEASE
+CMAKE_MODULE_LINKER_FLAGS_RELEASE-高级：内部=1
+变量的 ADVANCED 属性：CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO
+CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-高级：内部=1
+变量的 ADVANCED 属性：CMAKE_NM
+CMAKE_NM-高级：内部=1
+本地发电机数量
+CMAKE_NUMBER_OF_MAKEFILES：内部=1
+变量的 ADVANCED 属性：CMAKE_OBJCOPY
+CMAKE_OBJCOPY-高级：内部=1
+变量的 ADVANCED 属性：CMAKE_OBJDUMP
+CMAKE_OBJDUMP-高级：内部=1
+初始化的平台信息
+CMAKE_PLATFORM_INFO_INITIALIZED：内部=1
+变量的 ADVANCED 属性：CMAKE_RANLIB
+CMAKE_RANLIB-高级：内部=1
+变量的 ADVANCED 属性：CMAKE_READELF
+CMAKE_READELF-高级：内部=1
+CMake 安装路径。
+CMAKE_ROOT：内部=/usr/share/cmake-3.16
+变量的 ADVANCED 属性：CMAKE_SHARED_LINKER_FLAGS
+CMAKE_SHARED_LINKER_FLAGS-高级：内部=1
+变量的 ADVANCED 属性：CMAKE_SHARED_LINKER_FLAGS_DEBUG
+CMAKE_SHARED_LINKER_FLAGS_DEBUG-高级：内部=1
+变量的 ADVANCED 属性：CMAKE_SHARED_LINKER_FLAGS_MINSIZEREL
+CMAKE_SHARED_LINKER_FLAGS_MINSIZEREL-高级：内部=1
+变量的 ADVANCED 属性：CMAKE_SHARED_LINKER_FLAGS_RELEASE
+CMAKE_SHARED_LINKER_FLAGS_RELEASE-高级：内部=1
+变量的 ADVANCED 属性：CMAKE_SHARED_LINKER_FLAGS_RELWITHDEBINFO
+CMAKE_SHARED_LINKER_FLAGS_RELWITHDEBINFO-高级：内部=1
+变量的 ADVANCED 属性：CMAKE_SKIP_INSTALL_RPATH
+CMAKE_SKIP_INSTALL_RPATH-高级：内部=1
+变量的 ADVANCED 属性：CMAKE_SKIP_RPATH
+CMAKE_SKIP_RPATH-高级：内部=1
+变量的 ADVANCED 属性：CMAKE_STATIC_LINKER_FLAGS
+CMAKE_STATIC_LINKER_FLAGS-高级：内部=1
+变量的 ADVANCED 属性：CMAKE_STATIC_LINKER_FLAGS_DEBUG
+CMAKE_STATIC_LINKER_FLAGS_DEBUG-高级：内部=1
+变量的 ADVANCED 属性：CMAKE_STATIC_LINKER_FLAGS_MINSIZEREL
+CMAKE_STATIC_LINKER_FLAGS_MINSIZEREL-高级：内部=1
+变量的 ADVANCED 属性：CMAKE_STATIC_LINKER_FLAGS_RELEASE
+CMAKE_STATIC_LINKER_FLAGS_RELEASE-高级：内部=1
+变量的 ADVANCED 属性：CMAKE_STATIC_LINKER_FLAGS_RELWITHDEBINFO
+CMAKE_STATIC_LINKER_FLAGS_RELWITHDEBINFO-高级：内部=1
+变量的 ADVANCED 属性：CMAKE_STRIP
+CMAKE_STRIP-高级：内部=1
+uname 命令
+CMAKE_UNAME：INTERNAL=/usr/bin/uname
+变量的 ADVANCED 属性：CMAKE_VERBOSE_MAKEFILE
+CMAKE_VERBOSE_MAKEFILE-高级：内部=1
+变量的 ADVANCED 属性：GOOGLE_CLOUD_CPP_ENABLE_BIGQUERY
+GOOGLE_CLOUD_CPP_ENABLE_BIGQUERY-高级：内部=1
+变量的 ADVANCED 属性：GOOGLE_CLOUD_CPP_ENABLE_BIGTABLE
+GOOGLE_CLOUD_CPP_ENABLE_BIGTABLE-高级：内部=1
+变量的 ADVANCED 属性：GOOGLE_CLOUD_CPP_ENABLE_CCACHE
+GOOGLE_CLOUD_CPP_ENABLE_CCACHE-高级：内部=1
+变量的 ADVANCED 属性：GOOGLE_CLOUD_CPP_ENABLE_GENERATOR
+GOOGLE_CLOUD_CPP_ENABLE_GENERATOR-高级：内部=1
+变量的 ADVANCED 属性：GOOGLE_CLOUD_CPP_ENABLE_IAM
+GOOGLE_CLOUD_CPP_ENABLE_IAM-高级：内部=1
+变量的 ADVANCED 属性：GOOGLE_CLOUD_CPP_ENABLE_LOGGING
+GOOGLE_CLOUD_CPP_ENABLE_LOGGING-高级：内部=1
+变量的 ADVANCED 属性：GOOGLE_CLOUD_CPP_ENABLE_PUBSUB
+GOOGLE_CLOUD_CPP_ENABLE_PUBSUB-高级：内部=1
+变量的 ADVANCED 属性：GOOGLE_CLOUD_CPP_ENABLE_SPANNER
+GOOGLE_CLOUD_CPP_ENABLE_SPANNER-高级：内部=1
+变量的 ADVANCED 属性：GOOGLE_CLOUD_CPP_ENABLE_STORAGE
+GOOGLE_CLOUD_CPP_ENABLE_STORAGE-高级：内部=1
+变量的 ADVANCED 属性：GOOGLE_CLOUD_CPP_GENERATE_DOXYGEN
+GOOGLE_CLOUD_CPP_GENERATE_DOXYGEN-高级：内部=1
+变量的 ADVANCED 属性：GOOGLE_CLOUD_CPP_INTERNAL_DOCFX
+GOOGLE_CLOUD_CPP_INTERNAL_DOCFX-高级：内部=1
+变量的 ADVANCED 属性：GOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL
+GOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL-高级：内部=1
+变量的 ADVANCED 属性：GOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL_HASH
+GOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL_HASH-高级：内部=1
+变量的 ADVANCED 属性：GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC
+GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC-高级：内部=1
+变量的 ADVANCED 属性：GOOGLE_CLOUD_CPP_USE_INSTALLED_COMMON
+GOOGLE_CLOUD_CPP_USE_INSTALLED_COMMON-高级：内部=1
+变量的 ADVANCED 属性：GOOGLE_CLOUD_CPP_USE_LATEST_FOR_REFDOC_LINKS
+GOOGLE_CLOUD_CPP_USE_LATEST_FOR_REFDOC_LINKS-高级：内部=1
+变量的 ADVANCED 属性：GOOGLE_CLOUD_CPP_WITH_MOCKS
+GOOGLE_CLOUD_CPP_WITH_MOCKS-高级：内部=1
