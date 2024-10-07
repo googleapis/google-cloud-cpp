@@ -24,6 +24,7 @@ bazel_dep(name = "platforms", version = "0.0.10")
 bazel_dep(name = "bazel_skylib", version = "1.7.1")
 bazel_dep(name = "rules_cc", version = "0.0.9")
 bazel_dep(name = "abseil-cpp", version = "20240722.0", repo_name = "com_google_absl")
+bazel_dep(name = "googleapis", version = "0.0.0-20240819-fe8ba054a", repo_name = "com_google_googleapis")
 bazel_dep(name = "protobuf", version = "28.2", repo_name = "com_google_protobuf")
 bazel_dep(name = "boringssl", version = "0.0.0-20230215-5c22014")
 bazel_dep(name = "grpc", version = "1.66.0", repo_name = "com_github_grpc_grpc")
@@ -49,16 +50,10 @@ python.toolchain(
     python_version = "3.11",
 )
 
-bazel_dep(name = "googleapis", version = "0.0.0", repo_name = "com_google_googleapis")
-archive_override(
+single_version_override(
     module_name = "googleapis",
-    integrity = "sha256-qfsB7M2N7tXY0blSHgIgq8/yUc0Kskid9Zk8H3OS5nc=",
     patch_strip = 1,
     patches = ["//bazel:googleapis.modules.patch"],
-    strip_prefix = "googleapis-69e9dff10df4fa1e338712d38dc26b46791a6e94",
-    urls = [
-        "https://github.com/googleapis/googleapis/archive/69e9dff10df4fa1e338712d38dc26b46791a6e94.tar.gz",
-    ],
 )
 
 switched_rules = use_extension("@com_google_googleapis//:extensions.bzl", "switched_rules")
