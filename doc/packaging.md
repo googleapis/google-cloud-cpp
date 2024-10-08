@@ -202,7 +202,7 @@ recommend installing this library because:
 
 ```bash
 mkdir -p $HOME/Downloads/opentelemetry-cpp && cd $HOME/Downloads/opentelemetry-cpp
-curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.16.1.tar.gz | \
+curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.17.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -305,7 +305,7 @@ recommend installing this library because:
 
 ```bash
 mkdir -p $HOME/Downloads/opentelemetry-cpp && cd $HOME/Downloads/opentelemetry-cpp
-curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.16.1.tar.gz | \
+curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.17.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -388,7 +388,7 @@ recommend installing this library because:
 
 ```bash
 mkdir -p $HOME/Downloads/opentelemetry-cpp && cd $HOME/Downloads/opentelemetry-cpp
-curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.16.1.tar.gz | \
+curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.17.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -509,7 +509,7 @@ recommend installing this library because:
 
 ```bash
 mkdir -p $HOME/Downloads/opentelemetry-cpp && cd $HOME/Downloads/opentelemetry-cpp
-curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.16.1.tar.gz | \
+curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.17.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -677,7 +677,7 @@ recommend installing this library because:
 
 ```bash
 mkdir -p $HOME/Downloads/opentelemetry-cpp && cd $HOME/Downloads/opentelemetry-cpp
-curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.16.1.tar.gz | \
+curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.17.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -864,7 +864,7 @@ recommend installing this library because:
 
 ```bash
 mkdir -p $HOME/Downloads/opentelemetry-cpp && cd $HOME/Downloads/opentelemetry-cpp
-curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.16.1.tar.gz | \
+curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.17.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -975,7 +975,7 @@ recommend installing this library because:
 
 ```bash
 mkdir -p $HOME/Downloads/opentelemetry-cpp && cd $HOME/Downloads/opentelemetry-cpp
-curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.16.1.tar.gz | \
+curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.17.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1150,7 +1150,7 @@ recommend installing this library because:
 
 ```bash
 mkdir -p $HOME/Downloads/opentelemetry-cpp && cd $HOME/Downloads/opentelemetry-cpp
-curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.16.1.tar.gz | \
+curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.17.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1372,7 +1372,7 @@ recommend installing this library because:
 
 ```bash
 mkdir -p $HOME/Downloads/opentelemetry-cpp && cd $HOME/Downloads/opentelemetry-cpp
-curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.16.1.tar.gz | \
+curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.17.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
