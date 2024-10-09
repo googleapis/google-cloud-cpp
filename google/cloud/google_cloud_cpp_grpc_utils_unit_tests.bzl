@@ -46,6 +46,7 @@ google_cloud_cpp_grpc_utils_unit_tests = [
     "internal/debug_string_status_test.cc",
     "internal/extract_long_running_result_test.cc",
     "internal/grpc_access_token_authentication_test.cc",
+    "internal/grpc_api_key_authentication_test.cc",
     "internal/grpc_async_access_token_cache_test.cc",
     "internal/grpc_channel_credentials_authentication_test.cc",
     "internal/grpc_opentelemetry_test.cc",
