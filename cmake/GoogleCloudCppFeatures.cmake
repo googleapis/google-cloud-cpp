@@ -49,6 +49,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "alloydb"
     "apigateway"
     "apigeeconnect"
+    "apihub"
     "apikeys"
     "appengine"
     "apphub"
