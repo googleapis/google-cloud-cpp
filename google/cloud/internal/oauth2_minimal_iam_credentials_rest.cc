@@ -71,12 +71,13 @@ MinimalIamCredentialsRestStub::GenerateAccessToken(
 }
 
 std::string MinimalIamCredentialsRestStub::MakeRequestPath(
-    GenerateAccessTokenRequest const& request) {
-  // TODO(#13422): Do not use hardcoded IAM endpoint. Use Universe Domain
-  // to build endpoint name.
+    GenerateAccessTokenRequest const& request) const {
+  auto universe_domain_status = universe_domain(Options{});
   return absl::StrCat(
-      "https://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/",
-      request.service_account, ":generateAccessToken");
+      "https://iamcredentials.",
+      universe_domain_status ? *universe_domain_status : "googleapis.com",
+      "/v1/projects/-/serviceAccounts/", request.service_account,
+      ":generateAccessToken");
 }
 
 MinimalIamCredentialsRestLogging::MinimalIamCredentialsRestLogging(
