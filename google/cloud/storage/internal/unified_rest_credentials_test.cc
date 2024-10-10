@@ -120,7 +120,7 @@ TEST_F(UnifiedRestCredentialsTest, LoadSuccess) {
   ScopedEnvironment env("GOOGLE_APPLICATION_CREDENTIALS", filename);
 
   auto credentials = MapCredentials(*MakeGoogleDefaultCredentials());
-  // Calling AuthorizationHeader() makes RPCs which would turn this into an
+  // Calling AuthenticationHeader() makes RPCs which would turn this into an
   // integration test, fortunately there are easier ways to verify the file was
   // loaded correctly:
   EXPECT_EQ(kClientEmail, credentials->AccountEmail());

@@ -221,7 +221,7 @@ class ServiceAccountCredentials<storage::internal::CurlRequestBuilder,
                             ChannelOptions const& options);
 
   StatusOr<std::string> AuthorizationHeader() override {
-    return oauth2_internal::AuthorizationHeaderJoined(*impl_);
+    return oauth2_internal::AuthenticationHeaderJoined(*impl_);
   }
 
   /**
@@ -253,7 +253,7 @@ class ServiceAccountCredentials<storage::internal::CurlRequestBuilder,
   friend struct ServiceAccountCredentialsTester;
   StatusOr<std::string> AuthorizationHeaderForTesting(
       std::chrono::system_clock::time_point tp) {
-    return oauth2_internal::AuthorizationHeaderJoined(*impl_, tp);
+    return oauth2_internal::AuthenticationHeaderJoined(*impl_, tp);
   }
   std::unique_ptr<oauth2_internal::Credentials> impl_;
 };

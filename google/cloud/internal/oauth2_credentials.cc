@@ -46,21 +46,21 @@ StatusOr<std::string> Credentials::project_id(
   return project_id();
 }
 
-StatusOr<std::pair<std::string, std::string>> AuthorizationHeader(
-    Credentials& credentials, std::chrono::system_clock::time_point tp) {
-  auto token = credentials.GetToken(tp);
+StatusOr<std::pair<std::string, std::string>> Credentials::AuthenticationHeader(
+    std::chrono::system_clock::time_point tp) {
+  auto token = GetToken(tp);
   if (!token) return std::move(token).status();
   if (token->token.empty()) return std::make_pair(std::string{}, std::string{});
   return std::make_pair(std::string{"Authorization"},
                         absl::StrCat("Bearer ", token->token));
 }
 
-StatusOr<std::string> AuthorizationHeaderJoined(
+StatusOr<std::string> AuthenticationHeaderJoined(
     Credentials& credentials, std::chrono::system_clock::time_point tp) {
-  auto token = credentials.GetToken(tp);
-  if (!token) return std::move(token).status();
-  if (token->token.empty()) return std::string{};
-  return absl::StrCat("Authorization: Bearer ", token->token);
+  auto header = credentials.AuthenticationHeader(tp);
+  if (!header) return std::move(header).status();
+  if (header->first.empty()) return std::string{};
+  return absl::StrCat(header->first, ": ", header->second);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
