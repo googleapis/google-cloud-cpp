@@ -25,6 +25,7 @@ namespace {
 
 using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::testing::Contains;
+using ::testing::IsNull;
 using ::testing::NotNull;
 using ::testing::Pair;
 
@@ -40,6 +41,7 @@ TEST(GrpcApiKeyAuthenticationTest, ConfigureContext) {
 
   grpc::ClientContext context;
   EXPECT_STATUS_OK(auth.ConfigureContext(context));
+  EXPECT_THAT(context.credentials(), IsNull());
 
   ValidateMetadataFixture fixture;
   auto headers = fixture.GetMetadata(context);

@@ -22,6 +22,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
 #include <fstream>
 
@@ -34,8 +35,12 @@ namespace {
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
+using ::google::cloud::testing_util::ValidateMetadataFixture;
+using ::testing::Contains;
 using ::testing::IsEmpty;
 using ::testing::IsNull;
+using ::testing::NotNull;
+using ::testing::Pair;
 
 TEST(UnifiedGrpcCredentialsTest, GrpcCredentialOption) {
   CompletionQueue cq;
@@ -123,6 +128,22 @@ TEST(UnifiedGrpcCredentialsTest, WithErrorCredentials) {
   EXPECT_THAT(async_configured_context, StatusIs(error_status.code()));
   auto channel = result->CreateChannel(std::string{}, grpc::ChannelArguments{});
   EXPECT_THAT(channel.get(), Not(IsNull()));
+}
+
+TEST(UnifiedGrpcCredentialsTest, WithApiKeyCredentials) {
+  CompletionQueue cq;
+  auto creds = ApiKeyConfig("api-key", Options{});
+  auto auth = CreateAuthenticationStrategy(creds, cq);
+  ASSERT_THAT(auth, NotNull());
+
+  grpc::ClientContext context;
+  auto status = auth->ConfigureContext(context);
+  EXPECT_STATUS_OK(status);
+  EXPECT_THAT(context.credentials(), IsNull());
+
+  ValidateMetadataFixture fixture;
+  auto headers = fixture.GetMetadata(context);
+  EXPECT_THAT(headers, Contains(Pair("x-goog-api-key", "api-key")));
 }
 
 TEST(UnifiedGrpcCredentialsTest, LoadCAInfoNotSet) {
