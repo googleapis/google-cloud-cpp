@@ -107,7 +107,7 @@ std::string TempFileName() {
  * This test only verifies the right type of object is created, the unit tests
  * for `AuthorizedUserCredentials` already check that once loaded the class
  * works correctly. Testing here would be redundant. Furthermore, calling
- * `AuthorizationHeader()` initiates the key verification workflow, that
+ * `AuthenticationHeader()` initiates the key verification workflow, that
  * requires valid keys and contacting Google's production servers, and would
  * make this an integration test.
  */
@@ -187,7 +187,7 @@ TEST_F(GoogleCredentialsTest,
  * This test only verifies the right type of object is created, the unit tests
  * for `ServiceAccountCredentials` already check that once loaded the class
  * works correctly. Testing here would be redundant. Furthermore, calling
- * `AuthorizationHeader()` initiates the key verification workflow, that
+ * `AuthenticationHeader()` initiates the key verification workflow, that
  * requires valid keys and contacting Google's production servers, and would
  * make this an integration test.
  */

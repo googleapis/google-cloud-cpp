@@ -119,7 +119,7 @@ class AuthorizedUserCredentials<storage::internal::CurlRequestBuilder,
       ChannelOptions const& channel_options = {});
 
   StatusOr<std::string> AuthorizationHeader() override {
-    return oauth2_internal::AuthorizationHeaderJoined(*impl_);
+    return oauth2_internal::AuthenticationHeaderJoined(*impl_);
   }
 
  private:
@@ -130,7 +130,7 @@ class AuthorizedUserCredentials<storage::internal::CurlRequestBuilder,
 
   StatusOr<std::string> AuthorizationHeaderForTesting(
       std::chrono::system_clock::time_point tp) {
-    return oauth2_internal::AuthorizationHeaderJoined(*impl_, tp);
+    return oauth2_internal::AuthenticationHeaderJoined(*impl_, tp);
   }
 
   std::shared_ptr<google::cloud::oauth2_internal::Credentials> impl_;

@@ -111,7 +111,7 @@ class ComputeEngineCredentials<storage::internal::CurlRequestBuilder,
   explicit ComputeEngineCredentials(std::string service_account_email);
 
   StatusOr<std::string> AuthorizationHeader() override {
-    return oauth2_internal::AuthorizationHeaderJoined(*cached_);
+    return oauth2_internal::AuthenticationHeaderJoined(*cached_);
   }
 
   std::string AccountEmail() const override { return impl_->AccountEmail(); }
@@ -143,7 +143,7 @@ class ComputeEngineCredentials<storage::internal::CurlRequestBuilder,
 
   StatusOr<std::string> AuthorizationHeaderForTesting(
       std::chrono::system_clock::time_point tp) {
-    return oauth2_internal::AuthorizationHeaderJoined(*cached_, tp);
+    return oauth2_internal::AuthenticationHeaderJoined(*cached_, tp);
   }
 
   std::shared_ptr<oauth2_internal::ComputeEngineCredentials> impl_;

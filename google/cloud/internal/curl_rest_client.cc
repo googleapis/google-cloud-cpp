@@ -122,7 +122,8 @@ StatusOr<std::unique_ptr<CurlImpl>> CurlRestClient::CreateCurlImpl(
   auto impl =
       std::make_unique<CurlImpl>(std::move(handle), handle_factory_, options);
   if (credentials_) {
-    auto auth_header = oauth2_internal::AuthorizationHeader(*credentials_);
+    auto auth_header =
+        credentials_->AuthenticationHeader(std::chrono::system_clock::now());
     if (!auth_header.ok()) return std::move(auth_header).status();
     impl->SetHeader(auth_header.value());
   }

@@ -59,7 +59,7 @@ StatusOr<AccessToken> ParseAuthorizedUserRefreshResponse(
  * google/cloud/credentials.h.
  *
  * An HTTP Authorization header, with an access token as its value,
- * can be obtained by calling the AuthorizationHeader() method; if the current
+ * can be obtained by calling the AuthenticationHeader() method; if the current
  * access token is invalid or nearing expiration, this will class will first
  * obtain a new access token before returning the Authorization header string.
  *
