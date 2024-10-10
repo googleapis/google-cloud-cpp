@@ -30,7 +30,7 @@ using ::testing::IsNull;
 TEST(Credentials, ErrorCredentials) {
   TestCredentialsVisitor visitor;
 
-  auto credentials = internal::MakeErrorCredentials({});
+  auto credentials = MakeErrorCredentials({});
   CredentialsVisitor::dispatch(*credentials, visitor);
   EXPECT_EQ("ErrorCredentialsConfig", visitor.name);
 }
@@ -111,6 +111,15 @@ TEST(Credentials, ExternalAccount) {
   EXPECT_EQ("test-only-invalid", visitor.json_object);
   EXPECT_THAT(visitor.options.get<ScopesOption>(),
               ElementsAre("scope1", "scope2"));
+}
+
+TEST(Credentials, ApiKeyCredentials) {
+  TestCredentialsVisitor visitor;
+
+  auto credentials = MakeApiKeyCredentials("api-key");
+  CredentialsVisitor::dispatch(*credentials, visitor);
+  EXPECT_EQ("ApiKeyConfig", visitor.name);
+  EXPECT_EQ("api-key", visitor.api_key);
 }
 
 }  // namespace
