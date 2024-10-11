@@ -267,6 +267,7 @@ TEST(MinimalIamCredentialsRestTest, GenerateAccessTokenSuccess) {
 TEST(MinimalIamCredentialsRestTest, GenerateAccessTokenWithUniverseDomain) {
   std::string universe_domain = "my-ud.net";
   std::string service_account = "foo@somewhere.com";
+  std::chrono::seconds lifetime(3600);
   std::string response = R"""({
     "accessToken": "my_access_token",
     "expireTime": "2022-10-12T07:20:50.52Z"})""";
@@ -308,6 +309,7 @@ TEST(MinimalIamCredentialsRestTest, GenerateAccessTokenWithUniverseDomain) {
       MinimalIamCredentialsRestStub(std::move(mock_credentials), Options{},
                                     mock_client_factory.AsStdFunction());
   GenerateAccessTokenRequest request;
+  request.lifetime = lifetime;
   request.service_account = service_account;
   stub.GenerateAccessToken(request);
 }
