@@ -79,11 +79,7 @@ class MinimalIamCredentialsRestStub : public MinimalIamCredentialsRest {
       GenerateAccessTokenRequest const& request) override;
 
   StatusOr<std::string> universe_domain(Options const& options) const override {
-    auto x = credentials_->universe_domain(options);
-    if (!x) {
-      std::cout << "------------" << x.status() << std::endl;
-    }
-    return x;
+    return credentials_->universe_domain(options);
   }
 
  private:
