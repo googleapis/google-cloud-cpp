@@ -265,7 +265,7 @@ TEST(MinimalIamCredentialsRestTest, GenerateAccessTokenSuccess) {
 }
 
 TEST(MinimalIamCredentialsRestTest, GenerateAccessTokenWithUniverseDomain) {
-  auto constexpr kExpectedUniverseDomain = "my-ud.net";
+  std::string universe_domain = "my-ud.net";
   std::string service_account = "foo@somewhere.com";
   std::string response = R"""({
     "accessToken": "my_access_token",
@@ -275,7 +275,7 @@ TEST(MinimalIamCredentialsRestTest, GenerateAccessTokenWithUniverseDomain) {
     auto client = std::make_unique<MockRestClient>();
     EXPECT_CALL(*client,
                 Post(_, _, A<std::vector<absl::Span<char const>> const&>()))
-        .WillOnce([response, service_account](
+        .WillOnce([response, service_account, universe_domain](
                       RestContext&, RestRequest const& request,
                       std::vector<absl::Span<char const>> const&) {
           auto mock_response = std::make_unique<MockRestResponse>();
@@ -286,11 +286,11 @@ TEST(MinimalIamCredentialsRestTest, GenerateAccessTokenWithUniverseDomain) {
                 return testing_util::MakeMockHttpPayloadSuccess(response);
               });
 
-          EXPECT_THAT(request.path(),
-                      Eq(absl::StrCat(
-                          "https://iamcredentials.", kExpectedUniverseDomain,
-                          "/v1/projects/-/serviceAccounts/", service_account,
-                          ":generateAccessToken")));
+          EXPECT_THAT(
+              request.path(),
+              Eq(absl::StrCat("https://iamcredentials.", universe_domain,
+                              "/v1/projects/-/serviceAccounts/",
+                              service_account, ":generateAccessToken")));
           return std::unique_ptr<RestResponse>(std::move(mock_response));
         });
     return std::unique_ptr<rest_internal::RestClient>(std::move(client));
@@ -301,7 +301,7 @@ TEST(MinimalIamCredentialsRestTest, GenerateAccessTokenWithUniverseDomain) {
   });
   EXPECT_CALL(*mock_credentials, universe_domain)
       .WillOnce([&](Options const&) -> StatusOr<std::string> {
-        return std::string{kExpectedUniverseDomain};
+        return universe_domain;
       });
 
   auto stub =
