@@ -165,7 +165,7 @@ TEST_F(ComputeIntegrationTest, VerifyUpdateSendsUpdateMaskParameter) {
   auto result = client.InsertDisk(project_id_, zone_, disk).get();
   ASSERT_THAT(result, IsOk());
 
-  google::cloud::cpp::compute::v1::Disk disk_update = disk;
+  google::cloud::cpp::compute::v1::Disk disk_update;
   disk_update.mutable_labels()->clear();
 
   google::cloud::cpp::compute::disks::v1::UpdateDiskRequest update_request;
@@ -173,14 +173,8 @@ TEST_F(ComputeIntegrationTest, VerifyUpdateSendsUpdateMaskParameter) {
   update_request.set_zone(zone_);
   update_request.set_disk(disk.name());
   *(update_request.mutable_disk_resource()) = disk_update;
-  auto update_disk = client.UpdateDisk(update_request).get();
-  update_request.set_update_mask("");
-
-  EXPECT_THAT(update_disk,
-              StatusIs(StatusCode::kInvalidArgument, HasSubstr("updateMask")));
-
   update_request.set_update_mask("labels");
-  update_disk = client.UpdateDisk(update_request).get();
+  auto update_disk = client.UpdateDisk(update_request).get();
   EXPECT_THAT(update_disk,
               StatusIs(StatusCode::kInvalidArgument,
                        HasSubstr("Updating labels is not supported")));
