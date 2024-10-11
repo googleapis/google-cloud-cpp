@@ -15,6 +15,7 @@
 #include "google/cloud/internal/oauth2_minimal_iam_credentials_rest.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/http_payload.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/rest_request.h"
 #include "google/cloud/internal/rest_response.h"
 #include "google/cloud/testing_util/chrono_output.h"
@@ -215,7 +216,6 @@ TEST(MinimalIamCredentialsRestTest, GenerateAccessTokenSuccess) {
   std::string response = R"""({
     "accessToken": "my_access_token",
     "expireTime": "2022-10-12T07:20:50.52Z"})""";
-
   MockHttpClientFactory mock_client_factory;
   EXPECT_CALL(mock_client_factory, Call).WillOnce([=](Options const&) {
     auto client = std::make_unique<MockRestClient>();
@@ -238,17 +238,14 @@ TEST(MinimalIamCredentialsRestTest, GenerateAccessTokenSuccess) {
                               "projects/-/serviceAccounts/", service_account,
                               ":generateAccessToken")));
           std::string str_payload(payload[0].begin(), payload[0].end());
+          EXPECT_THAT(str_payload, HasSubstr("\"lifetime\":\"3600s\""));
+          EXPECT_THAT(str_payload, HasSubstr("\"scope\":[\"my_scope\"]"));
           EXPECT_THAT(str_payload,
-                      testing::HasSubstr("\"lifetime\":\"3600s\""));
-          EXPECT_THAT(str_payload,
-                      testing::HasSubstr("\"scope\":[\"my_scope\"]"));
-          EXPECT_THAT(str_payload,
-                      testing::HasSubstr("\"delegates\":[\"my_delegate\"]"));
+                      HasSubstr("\"delegates\":[\"my_delegate\"]"));
           return std::unique_ptr<RestResponse>(std::move(mock_response));
         });
     return std::unique_ptr<rest_internal::RestClient>(std::move(client));
   });
-
   auto mock_credentials = std::make_shared<MockCredentials>();
   EXPECT_CALL(*mock_credentials, GetToken).WillOnce([lifetime](auto tp) {
     return AccessToken{"test-token", tp + lifetime};
@@ -262,10 +259,59 @@ TEST(MinimalIamCredentialsRestTest, GenerateAccessTokenSuccess) {
   request.lifetime = lifetime;
   request.scopes.push_back(scope);
   request.delegates.push_back(delegate);
-
   auto access_token = stub.GenerateAccessToken(request);
   EXPECT_THAT(access_token, IsOk());
   EXPECT_THAT(access_token->token, Eq("my_access_token"));
+}
+
+TEST(MinimalIamCredentialsRestTest, GenerateAccessTokenWithUniverseDomain) {
+  std::string universe_domain = "my-ud.net";
+  std::string service_account = "foo@somewhere.com";
+  std::chrono::seconds lifetime(3600);
+  std::string response = R"""({
+    "accessToken": "my_access_token",
+    "expireTime": "2022-10-12T07:20:50.52Z"})""";
+  MockHttpClientFactory mock_client_factory;
+  EXPECT_CALL(mock_client_factory, Call).WillOnce([=](Options const&) {
+    auto client = std::make_unique<MockRestClient>();
+    EXPECT_CALL(*client,
+                Post(_, _, A<std::vector<absl::Span<char const>> const&>()))
+        .WillOnce([response, service_account, universe_domain](
+                      RestContext&, RestRequest const& request,
+                      std::vector<absl::Span<char const>> const&) {
+          auto mock_response = std::make_unique<MockRestResponse>();
+          EXPECT_CALL(*mock_response, StatusCode)
+              .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
+          EXPECT_CALL(std::move(*mock_response), ExtractPayload)
+              .WillOnce([response] {
+                return testing_util::MakeMockHttpPayloadSuccess(response);
+              });
+
+          EXPECT_THAT(
+              request.path(),
+              Eq(absl::StrCat("https://iamcredentials.", universe_domain,
+                              "/v1/projects/-/serviceAccounts/",
+                              service_account, ":generateAccessToken")));
+          return std::unique_ptr<RestResponse>(std::move(mock_response));
+        });
+    return std::unique_ptr<rest_internal::RestClient>(std::move(client));
+  });
+  auto mock_credentials = std::make_shared<MockCredentials>();
+  EXPECT_CALL(*mock_credentials, GetToken).WillOnce([](auto tp) {
+    return AccessToken{"test-token", tp};
+  });
+  EXPECT_CALL(*mock_credentials, universe_domain)
+      .WillOnce([&](Options const&) -> StatusOr<std::string> {
+        return universe_domain;
+      });
+
+  auto stub =
+      MinimalIamCredentialsRestStub(std::move(mock_credentials), Options{},
+                                    mock_client_factory.AsStdFunction());
+  GenerateAccessTokenRequest request;
+  request.lifetime = lifetime;
+  request.service_account = service_account;
+  stub.GenerateAccessToken(request);
 }
 
 TEST(MinimalIamCredentialsRestTest, GenerateAccessTokenCredentialFailure) {
