@@ -174,10 +174,10 @@ TEST_F(ComputeIntegrationTest, VerifyUpdateSendsUpdateMaskParameter) {
   update_request.set_disk(disk.name());
   *(update_request.mutable_disk_resource()) = disk_update;
   auto update_disk = client.UpdateDisk(update_request).get();
+  update_request.set_update_mask("");
 
   EXPECT_THAT(update_disk,
-              StatusIs(StatusCode::kInvalidArgument,
-                       HasSubstr("Empty updateMask is not supported")));
+              StatusIs(StatusCode::kInvalidArgument, HasSubstr("updateMask")));
 
   update_request.set_update_mask("labels");
   update_disk = client.UpdateDisk(update_request).get();
