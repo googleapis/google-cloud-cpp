@@ -107,23 +107,35 @@ class Credentials {
 
   /// @copydoc project_id()
   virtual StatusOr<std::string> project_id(Options const&) const;
+
+  /**
+   * Returns a header pair used for authentication.
+   *
+   * In most cases, this is the "Authorization" HTTP header. For API key
+   * credentials, it is the "X-Goog-Api-Key" header.
+   *
+   * If unable to obtain a value for the header, which could happen for
+   * `Credentials` that need to be periodically refreshed, the underlying
+   * `Status` will indicate failure details from the refresh HTTP request.
+   * Otherwise, the returned value will contain the header pair to be used in
+   * HTTP requests.
+   */
+  virtual StatusOr<std::pair<std::string, std::string>> AuthenticationHeader(
+      std::chrono::system_clock::time_point tp);
 };
 
 /**
- * Attempts to obtain a value for the Authorization HTTP header.
+ * Returns a header pair as a single string to be used for authentication.
  *
- * If unable to obtain a value for the Authorization header, which could
- * happen for `Credentials` that need to be periodically refreshed, the
- * underlying `Status` will indicate failure details from the refresh HTTP
- * request. Otherwise, the returned value will contain the Authorization
- * header to be used in HTTP requests.
+ * In most cases, this is the "Authorization" HTTP header. For API key
+ * credentials, it is the "X-Goog-Api-Key" header.
+ *
+ * If unable to obtain a value for the header, which could happen for
+ * `Credentials` that need to be periodically refreshed, the underlying `Status`
+ * will indicate failure details from the refresh HTTP request. Otherwise, the
+ * returned value will contain the header pair to be used in HTTP requests.
  */
-StatusOr<std::pair<std::string, std::string>> AuthorizationHeader(
-    Credentials& credentials, std::chrono::system_clock::time_point tp =
-                                  std::chrono::system_clock::now());
-
-/// @copydoc AuthorizationHeader()
-StatusOr<std::string> AuthorizationHeaderJoined(
+StatusOr<std::string> AuthenticationHeaderJoined(
     Credentials& credentials, std::chrono::system_clock::time_point tp =
                                   std::chrono::system_clock::now());
 
