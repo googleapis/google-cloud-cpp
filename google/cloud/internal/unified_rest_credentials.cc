@@ -17,6 +17,7 @@
 #include "google/cloud/internal/make_jwt_assertion.h"
 #include "google/cloud/internal/oauth2_access_token_credentials.h"
 #include "google/cloud/internal/oauth2_anonymous_credentials.h"
+#include "google/cloud/internal/oauth2_api_key_credentials.h"
 #include "google/cloud/internal/oauth2_decorate_credentials.h"
 #include "google/cloud/internal/oauth2_error_credentials.h"
 #include "google/cloud/internal/oauth2_external_account_credentials.h"
@@ -137,9 +138,9 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
           cfg.options());
     }
 
-    void visit(ApiKeyConfig const&) override {
-      // TODO(#14759) - Support API key authentication over REST
-      result = std::make_shared<oauth2_internal::AnonymousCredentials>();
+    void visit(ApiKeyConfig const& cfg) override {
+      result =
+          std::make_shared<oauth2_internal::ApiKeyCredentials>(cfg.api_key());
     }
 
    private:

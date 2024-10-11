@@ -38,9 +38,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::MakeAccessTokenCredentials;
+using ::google::cloud::MakeApiKeyCredentials;
 using ::google::cloud::MakeGoogleDefaultCredentials;
 using ::google::cloud::MakeInsecureCredentials;
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::MakeMockHttpPayloadSuccess;
 using ::google::cloud::testing_util::MockRestClient;
 using ::google::cloud::testing_util::MockRestResponse;
@@ -56,6 +58,7 @@ using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::IsSupersetOf;
 using ::testing::MatcherCast;
+using ::testing::NotNull;
 using ::testing::Pair;
 using ::testing::Property;
 using ::testing::Return;
@@ -457,6 +460,18 @@ TEST(UnifiedRestCredentialsTest, ExternalAccount) {
   auto access_token = credentials->GetToken(now);
   EXPECT_THAT(access_token,
               StatusIs(StatusCode::kPermissionDenied, "uh-oh - STS exchange"));
+}
+
+TEST(UnifiedRestCredentialsTest, ApiKey) {
+  auto creds = MakeApiKeyCredentials("api-key");
+  ASSERT_THAT(creds, NotNull());
+
+  auto oauth2_creds = MapCredentials(*creds);
+  ASSERT_THAT(oauth2_creds, NotNull());
+
+  auto header =
+      oauth2_creds->AuthenticationHeader(std::chrono::system_clock::now());
+  EXPECT_THAT(header, IsOkAndHolds(Pair("x-goog-api-key", "api-key")));
 }
 
 TEST(UnifiedRestCredentialsTest, LoadError) {
