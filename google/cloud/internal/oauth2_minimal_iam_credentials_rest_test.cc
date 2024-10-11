@@ -264,11 +264,9 @@ TEST(MinimalIamCredentialsRestTest, GenerateAccessTokenSuccess) {
   EXPECT_THAT(access_token->token, Eq("my_access_token"));
 }
 
-TEST(MinimalIamCredentialsRestTest,
-     GenerateAccessTokenWithUniverseDomainSuccess) {
+TEST(MinimalIamCredentialsRestTest, GenerateAccessTokenWithUniverseDomain) {
   auto constexpr kExpectedUniverseDomain = "my-ud.net";
   std::string service_account = "foo@somewhere.com";
-  std::chrono::seconds lifetime(3600);
   std::string response = R"""({
     "accessToken": "my_access_token",
     "expireTime": "2022-10-12T07:20:50.52Z"})""";
@@ -298,8 +296,8 @@ TEST(MinimalIamCredentialsRestTest,
     return std::unique_ptr<rest_internal::RestClient>(std::move(client));
   });
   auto mock_credentials = std::make_shared<MockCredentials>();
-  EXPECT_CALL(*mock_credentials, GetToken).WillOnce([lifetime](auto tp) {
-    return AccessToken{"test-token", tp + lifetime};
+  EXPECT_CALL(*mock_credentials, GetToken).WillOnce([](auto tp) {
+    return AccessToken{"test-token", tp};
   });
   EXPECT_CALL(*mock_credentials, universe_domain)
       .WillOnce([&](Options const&) -> StatusOr<std::string> {
