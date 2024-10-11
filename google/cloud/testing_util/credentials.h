@@ -30,6 +30,7 @@ struct TestCredentialsVisitor : public internal::CredentialsVisitor {
   AccessToken access_token;
   internal::ImpersonateServiceAccountConfig const* impersonate = nullptr;
   std::string json_object;
+  std::string api_key;
   Options options;
 
   void visit(internal::ErrorCredentialsConfig const&) override {
@@ -58,6 +59,10 @@ struct TestCredentialsVisitor : public internal::CredentialsVisitor {
     name = "ExternalAccountConfig";
     json_object = cfg.json_object();
     options = cfg.options();
+  }
+  void visit(internal::ApiKeyConfig const& cfg) override {
+    name = "ApiKeyConfig";
+    api_key = cfg.api_key();
   }
 };
 

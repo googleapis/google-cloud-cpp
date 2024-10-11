@@ -31,6 +31,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::internal::AccessTokenConfig;
+using ::google::cloud::internal::ApiKeyConfig;
 using ::google::cloud::internal::CredentialsVisitor;
 using ::google::cloud::internal::ErrorCredentialsConfig;
 using ::google::cloud::internal::ExternalAccountConfig;
@@ -134,6 +135,11 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
           std::make_shared<oauth2_internal::ExternalAccountCredentials>(
               *std::move(info), std::move(client_factory_), cfg.options()),
           cfg.options());
+    }
+
+    void visit(ApiKeyConfig const&) override {
+      // TODO(#14759) - Support API key authentication over REST
+      result = std::make_shared<oauth2_internal::AnonymousCredentials>();
     }
 
    private:

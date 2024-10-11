@@ -37,6 +37,7 @@ namespace internal {
 namespace {
 
 using ::google::cloud::internal::AccessTokenConfig;
+using ::google::cloud::internal::ApiKeyConfig;
 using ::google::cloud::internal::CredentialsVisitor;
 using ::google::cloud::internal::ErrorCredentialsConfig;
 using ::google::cloud::internal::ExternalAccountConfig;
@@ -57,7 +58,7 @@ class WrapRestCredentials : public oauth2::Credentials {
       : impl_(std::move(impl)) {}
 
   StatusOr<std::string> AuthorizationHeader() override {
-    return oauth2_internal::AuthorizationHeaderJoined(*impl_);
+    return oauth2_internal::AuthenticationHeaderJoined(*impl_);
   }
 
   StatusOr<std::vector<std::uint8_t>> SignBlob(
@@ -133,6 +134,10 @@ std::shared_ptr<oauth2::Credentials> MapCredentials(
           *info, std::move(client_factory_), cfg.options());
       result = std::make_shared<WrapRestCredentials>(
           Decorate(std::move(impl), cfg.options()));
+    }
+    void visit(internal::ApiKeyConfig const&) override {
+      // TODO(#14759) - Support API key authentication over REST
+      result = google::cloud::storage::oauth2::CreateAnonymousCredentials();
     }
 
    private:

@@ -277,6 +277,27 @@ std::shared_ptr<Credentials> MakeExternalAccountCredentials(
     std::string json_object, Options opts = {});
 
 /**
+ * Create credentials that authenticate using an [API key].
+ *
+ * API keys are convenient because no [principal] is needed. The API key
+ * associates the request with a Google Cloud project for billing and quota
+ * purposes.
+ *
+ * @note Most Cloud APIs do not support API keys, instead requiring full
+ * credentials.
+ *
+ * @note This authentication scheme does not involve access tokens. The returned
+ * `Credentials` are incompatible with an `oauth2::AccessTokenGenerator`.
+ *
+ * @ingroup guac
+ *
+ * [API key]: https://cloud.google.com/docs/authentication/api-keys-use
+ * [principal]: https://cloud.google.com/docs/authentication#principal
+ */
+std::shared_ptr<Credentials> MakeApiKeyCredentials(std::string api_key,
+                                                   Options opts = {});
+
+/**
  * Configure the delegates for `MakeImpersonateServiceAccountCredentials()`
  *
  * @ingroup options

@@ -174,8 +174,8 @@ StatusOr<std::string> MakeSelfSignedJWT(
  * variable can be used to prefer OAuth-based access tokens.
  *
  * Since access tokens are relatively expensive to create this class caches the
- * access tokens until they are about to expire. Use the `AuthorizationHeader()`
- * to get the current access token.
+ * access tokens until they are about to expire. Use the
+ * `AuthenticationHeader()` to get the current access token.
  *
  * [aip/4111]: https://google.aip.dev/auth/4111
  * [aip/4112]: https://google.aip.dev/auth/4112
