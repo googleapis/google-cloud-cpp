@@ -15,6 +15,7 @@
 #include "google/cloud/internal/oauth2_minimal_iam_credentials_rest.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/http_payload.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/rest_request.h"
 #include "google/cloud/internal/rest_response.h"
 #include "google/cloud/testing_util/chrono_output.h"
@@ -207,7 +208,8 @@ TEST(ParseGenerateAccessTokenResponse, InvalidExpireTimeFormat) {
                        HasSubstr("invalid format for `expireTime` field")));
 }
 
-TEST(MinimalIamCredentialsRestTest, GenerateAccessTokenSuccess) {
+void TestGenerateAccessTokenWithUniverseDomain(absl::optional<std::string> ud) {
+  std::string universe_domain = ud.value_or("googleapis.com");
   std::string service_account = "foo@somewhere.com";
   std::chrono::seconds lifetime(3600);
   std::string scope = "my_scope";
@@ -221,7 +223,7 @@ TEST(MinimalIamCredentialsRestTest, GenerateAccessTokenSuccess) {
     auto client = std::make_unique<MockRestClient>();
     EXPECT_CALL(*client,
                 Post(_, _, A<std::vector<absl::Span<char const>> const&>()))
-        .WillOnce([response, service_account](
+        .WillOnce([response, service_account, universe_domain](
                       RestContext&, RestRequest const& request,
                       std::vector<absl::Span<char const>> const& payload) {
           auto mock_response = std::make_unique<MockRestResponse>();
@@ -234,9 +236,9 @@ TEST(MinimalIamCredentialsRestTest, GenerateAccessTokenSuccess) {
 
           EXPECT_THAT(
               request.path(),
-              Eq(absl::StrCat("https://iamcredentials.googleapis.com/v1/",
-                              "projects/-/serviceAccounts/", service_account,
-                              ":generateAccessToken")));
+              Eq(absl::StrCat("https://iamcredentials.", universe_domain,
+                              "/v1/projects/-/serviceAccounts/",
+                              service_account, ":generateAccessToken")));
           std::string str_payload(payload[0].begin(), payload[0].end());
           EXPECT_THAT(str_payload,
                       testing::HasSubstr("\"lifetime\":\"3600s\""));
@@ -253,6 +255,11 @@ TEST(MinimalIamCredentialsRestTest, GenerateAccessTokenSuccess) {
   EXPECT_CALL(*mock_credentials, GetToken).WillOnce([lifetime](auto tp) {
     return AccessToken{"test-token", tp + lifetime};
   });
+  EXPECT_CALL(*mock_credentials, universe_domain)
+      .WillOnce([&](Options const&) -> StatusOr<std::string> {
+        if (ud) return *ud;
+        return internal::InvalidArgumentError("invalid");
+      });
 
   auto stub =
       MinimalIamCredentialsRestStub(std::move(mock_credentials), Options{},
@@ -266,6 +273,16 @@ TEST(MinimalIamCredentialsRestTest, GenerateAccessTokenSuccess) {
   auto access_token = stub.GenerateAccessToken(request);
   EXPECT_THAT(access_token, IsOk());
   EXPECT_THAT(access_token->token, Eq("my_access_token"));
+}
+
+TEST(MinimalIamCredentialsRestTest, GenerateAccessTokenSuccess) {
+  TestGenerateAccessTokenWithUniverseDomain(absl::nullopt);
+}
+
+TEST(MinimalIamCredentialsRestTest,
+     GenerateAccessTokenWithUniverseDomainSuccess) {
+  auto constexpr kExpectedUniverseDomain = "my-ud.net";
+  TestGenerateAccessTokenWithUniverseDomain(kExpectedUniverseDomain);
 }
 
 TEST(MinimalIamCredentialsRestTest, GenerateAccessTokenCredentialFailure) {

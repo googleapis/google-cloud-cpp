@@ -72,12 +72,10 @@ MinimalIamCredentialsRestStub::GenerateAccessToken(
 
 std::string MinimalIamCredentialsRestStub::MakeRequestPath(
     GenerateAccessTokenRequest const& request) const {
-  auto universe_domain_status = universe_domain(Options{});
-  return absl::StrCat(
-      "https://iamcredentials.",
-      universe_domain_status ? *universe_domain_status : "googleapis.com",
-      "/v1/projects/-/serviceAccounts/", request.service_account,
-      ":generateAccessToken");
+  auto ud = universe_domain(Options{});
+  return absl::StrCat("https://iamcredentials.", ud ? *ud : "googleapis.com",
+                      "/v1/projects/-/serviceAccounts/",
+                      request.service_account, ":generateAccessToken");
 }
 
 MinimalIamCredentialsRestLogging::MinimalIamCredentialsRestLogging(
