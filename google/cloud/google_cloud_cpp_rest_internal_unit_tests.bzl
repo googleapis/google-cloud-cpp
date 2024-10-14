@@ -38,6 +38,7 @@ google_cloud_cpp_rest_internal_unit_tests = [
     "internal/make_jwt_assertion_test.cc",
     "internal/oauth2_access_token_credentials_test.cc",
     "internal/oauth2_anonymous_credentials_test.cc",
+    "internal/oauth2_api_key_credentials_test.cc",
     "internal/oauth2_authorized_user_credentials_test.cc",
     "internal/oauth2_cached_credentials_test.cc",
     "internal/oauth2_compute_engine_credentials_test.cc",

@@ -59,6 +59,8 @@ add_library(
     internal/oauth2_access_token_credentials.h
     internal/oauth2_anonymous_credentials.cc
     internal/oauth2_anonymous_credentials.h
+    internal/oauth2_api_key_credentials.cc
+    internal/oauth2_api_key_credentials.h
     internal/oauth2_authorized_user_credentials.cc
     internal/oauth2_authorized_user_credentials.h
     internal/oauth2_cached_credentials.cc
@@ -257,6 +259,7 @@ if (BUILD_TESTING)
         internal/make_jwt_assertion_test.cc
         internal/oauth2_access_token_credentials_test.cc
         internal/oauth2_anonymous_credentials_test.cc
+        internal/oauth2_api_key_credentials_test.cc
         internal/oauth2_authorized_user_credentials_test.cc
         internal/oauth2_cached_credentials_test.cc
         internal/oauth2_compute_engine_credentials_test.cc
