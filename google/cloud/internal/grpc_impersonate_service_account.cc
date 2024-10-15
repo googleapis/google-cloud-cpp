@@ -42,6 +42,17 @@ AsyncAccessTokenSource MakeSource(ImpersonateServiceAccountConfig const& config,
   *request.mutable_scope() = {config.scopes().begin(), config.scopes().end()};
   request.mutable_lifetime()->set_seconds(config.lifetime().count());
 
+  std::cout << "name:" << request.name() << std::endl;
+  std::cout << "delegates:" << std::endl;
+  for (std::string const& delegate : request.delegates()) {
+    std::cout << "  " << delegate << std::endl;
+  }
+  std::cout << "scopes:" << std::endl;
+  for (std::string const& scope : request.scope()) {
+    std::cout << "  " << scope << std::endl;
+  }
+  std::cout << "lifetime:" << request.lifetime().seconds() << std::endl;
+ 
   return [stub, request](CompletionQueue& cq) {
     return stub
         ->AsyncGenerateAccessToken(cq, std::make_shared<grpc::ClientContext>(),
@@ -49,7 +60,11 @@ AsyncAccessTokenSource MakeSource(ImpersonateServiceAccountConfig const& config,
         .then([](future<StatusOr<GenerateAccessTokenResponse>> f)
                   -> StatusOr<AccessToken> {
           auto response = f.get();
+          std::cout << "!!!!!!!!!!!!!!!!!" << std::endl;
           if (!response) return std::move(response).status();
+          std::cout << "-----------------------------------" << std::endl;
+          std::cout << *response->mutable_access_token() << std::endl;
+          std::cout << "-----------------------------------" << std::endl;
           auto expiration = ToChronoTimePoint(response->expire_time());
           return AccessToken{std::move(*response->mutable_access_token()),
                              expiration};
@@ -60,6 +75,7 @@ AsyncAccessTokenSource MakeSource(ImpersonateServiceAccountConfig const& config,
 std::shared_ptr<GrpcAsyncAccessTokenCache> MakeCache(
     CompletionQueue cq, ImpersonateServiceAccountConfig const& config,
     Options const& options) {
+  std::cout << "######################" << std::endl;
   auto source = MakeSource(config, cq, options);
   return GrpcAsyncAccessTokenCache::Create(std::move(cq), std::move(source));
 }

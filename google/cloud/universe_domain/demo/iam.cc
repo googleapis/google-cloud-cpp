@@ -13,8 +13,8 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/kms/v1/key_management_client.h"
-#include "google/cloud/kms/v1/key_management_options.h"
+#include "google/cloud/iam/admin/v1/iam_client.h"
+#include "google/cloud/iam/admin/v1/iam_options.h"
 #include "google/cloud/location.h"
 #include "google/cloud/universe_domain.h"
 #include "google/cloud/universe_domain_options.h"
@@ -28,8 +28,9 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
   namespace gc = ::google::cloud;
-  namespace kms = ::google::cloud::kms_v1;
+  namespace iam = ::google::cloud::iam_admin_v1;
   auto const location = gc::Location(argv[1], argv[2]);
+  auto const project = google::cloud::Project(argv[1]);
 
   gc::Options options;
   if (argc == 4) {
@@ -37,8 +38,7 @@ int main(int argc, char* argv[]) try {
     is.exceptions(std::ios::badbit);
     auto contents = std::string(std::istreambuf_iterator<char>(is.rdbuf()), {});
     options.set<google::cloud::UnifiedCredentialsOption>(
-        google::cloud::MakeImpersonateServiceAccountCredentials(
-          google::cloud::MakeServiceAccountCredentials(contents), "libraries-to-impersonate-sa"));
+        google::cloud::MakeServiceAccountCredentials(contents));
   }
 
   // Interrogate credentials for universe_domain and add the value to returned
@@ -47,20 +47,27 @@ int main(int argc, char* argv[]) try {
   if (!ud_options.ok()) throw std::move(ud_options).status();
 
   // Override retry policy to quickly exit if there's a failure.
-  ud_options->set<kms::KeyManagementServiceRetryPolicyOption>(
-      std::make_shared<kms::KeyManagementServiceLimitedErrorCountRetryPolicy>(
-          3));
+//   ud_options->set<kms::KeyManagementServiceRetryPolicyOption>(
+//       std::make_shared<kms::KeyManagementServiceLimitedErrorCountRetryPolicy>(
+//           3));
 
-  auto client = kms::KeyManagementServiceClient(
-      kms::MakeKeyManagementServiceConnection(*ud_options));
+  auto client = iam::IAMClient(
+      iam::MakeIAMConnection(*ud_options));
 
-  std::cout << "kms.ListKeyRings:\n";
-  for (auto kr : client.ListKeyRings(location.FullName())) {
-    if (!kr) throw std::move(kr).status();
-    std::string name = kr->name();
-    std::cout << "short_key_name: " << name.substr(name.rfind('/') + 1) << "\n";
-    std::cout << kr->create_time().DebugString() << "\n";
+//   std::cout << "kms.ListKeyRings:\n";
+//   for (auto kr : client.ListKeyRings(location.FullName())) {
+//     if (!kr) throw std::move(kr).status();
+//     std::string name = kr->name();
+//     std::cout << "short_key_name: " << name.substr(name.rfind('/') + 1) << "\n";
+//     std::cout << kr->create_time().DebugString() << "\n";
+//   }
+
+  std::cout << "iam.ListServiceAccounts: " << project.FullName() << "\n";
+  for (auto sa : client.ListServiceAccounts(project.FullName())) {
+    if (!sa) throw std::move(sa).status();
+    std::cout << sa->name() << "\n";
   }
+  
 
   return 0;
 } catch (google::cloud::Status const& status) {

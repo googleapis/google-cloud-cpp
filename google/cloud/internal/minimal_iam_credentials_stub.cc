@@ -222,6 +222,7 @@ std::shared_ptr<MinimalIamCredentialsStub> MakeMinimalIamCredentialsStub(
     Options const& options) {
   auto channel = auth_strategy->CreateChannel(options.get<EndpointOption>(),
                                               grpc::ChannelArguments{});
+  std::cout << "endpoint: " << options.get<EndpointOption>() << std::endl;
   auto impl = std::make_shared<MinimalIamCredentialsImpl>(
       std::move(auth_strategy), IAMCredentials::NewStub(std::move(channel)));
 
