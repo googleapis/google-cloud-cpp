@@ -136,7 +136,10 @@ std::shared_ptr<oauth2::Credentials> MapCredentials(
           Decorate(std::move(impl), cfg.options()));
     }
     void visit(internal::ApiKeyConfig const&) override {
-      // TODO(#14759) - Support API key authentication over REST
+      // Circa 2024, GCS does not support API key authentication. Moreover, we
+      // would have to grow the deprecated `storage::oauth2::Credentials` class
+      // to support setting the `x-goog-api-key` header. For these reasons, we
+      // just return anonymous (no-op) credentials.
       result = google::cloud::storage::oauth2::CreateAnonymousCredentials();
     }
 
