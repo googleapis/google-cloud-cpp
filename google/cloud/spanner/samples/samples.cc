@@ -1358,7 +1358,7 @@ void CopyBackupWithMRCMEKCommand(std::vector<std::string> argv) {
   if (!backup) throw std::move(backup).status();
   auto expire_time = TimestampAdd(
       google::cloud::spanner::MakeTimestamp(backup->expire_time()).value(),
-      absl::Hours(7));
+      std::chrono::hours(7));
   std::vector<google::cloud::KmsKeyName> encryption_keys;
   for (int i = 3; i < argv.size(); i += 3) {
     google::cloud::KmsKeyName encryption_key(/*project_id=*/argv[0],
@@ -1663,7 +1663,7 @@ void CreateBackupWithMRCMEKCommand(std::vector<std::string> argv) {
     encryption_keys.append(encryption_key);
   }
   CreateBackupWithMRCMEK(std::move(client), argv[0], argv[1], argv[2],
-                                argv[3], TimestampAdd(now, absl::Hours(7)), now,
+                                argv[3], TimestampAdd(now, std::chrono::hours(7)), now,
                                 encryption_keys);
 }
 
