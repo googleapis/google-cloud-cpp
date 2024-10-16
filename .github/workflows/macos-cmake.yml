@@ -68,7 +68,13 @@ jobs:
       with:
         create_credentials_file: true
         credentials_json: ${{ secrets.BUILD_CACHE_KEY }}
+    - uses: actions/setup-python@v5
+      id: py311
+      with:
+        python-version: '3.11'
     - uses: google-github-actions/setup-gcloud@v2
+      env:
+        CLOUDSDK_PYTHON: ${{ steps.py311.outputs.python-path }}
     - name: Dynamic Configuration
       id: dynamic
       shell: bash
