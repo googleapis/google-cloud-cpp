@@ -95,6 +95,16 @@ ConsumerProcurementServiceTracingConnection::ListOrders(
       std::move(span), std::move(sr));
 }
 
+StatusOr<google::longrunning::Operation>
+ConsumerProcurementServiceTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "commerce_consumer_procurement_v1::ConsumerProcurementServiceConnection::"
+      "GetOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetOperation(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<

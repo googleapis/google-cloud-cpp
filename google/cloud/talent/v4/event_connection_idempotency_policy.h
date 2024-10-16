@@ -22,6 +22,7 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
 #include <google/cloud/talent/v4/event_service.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -39,6 +40,9 @@ class EventServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency CreateClientEvent(
       google::cloud::talent::v4::CreateClientEventRequest const& request);
+
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<EventServiceConnectionIdempotencyPolicy>

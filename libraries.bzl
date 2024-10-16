@@ -22,6 +22,7 @@ GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES = [
 ]
 
 GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES = [
+    "storage_grpc",
 ]
 
 GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
@@ -159,7 +160,6 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "eventarc",
     "filestore",
     "functions",
-    "generativelanguage",
     "gkebackup",
     "gkeconnect",
     "gkehub",

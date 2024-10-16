@@ -205,6 +205,10 @@ class MockProductSearchConnection : public vision_v1::ProductSearchConnection {
       future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>,
       PurgeProducts, (google::longrunning::Operation const& operation),
       (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

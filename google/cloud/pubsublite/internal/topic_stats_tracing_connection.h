@@ -55,6 +55,18 @@ class TopicStatsServiceTracingConnection
       google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request)
       override;
 
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
+
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
+
  private:
   std::shared_ptr<pubsublite::TopicStatsServiceConnection> child_;
 };

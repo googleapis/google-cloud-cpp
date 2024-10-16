@@ -54,6 +54,62 @@ Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::CancelTuningJob(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::RebaseTunedModel(
+    google::cloud::aiplatform::v1::RebaseTunedModelRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return request.policy().etag().empty() ? Idempotency::kNonIdempotent
+                                         : Idempotency::kIdempotent;
+}
+
+Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency GenAiTuningServiceConnectionIdempotencyPolicy::WaitOperation(
+    google::longrunning::WaitOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<GenAiTuningServiceConnectionIdempotencyPolicy>
 MakeDefaultGenAiTuningServiceConnectionIdempotencyPolicy() {
   return std::make_unique<GenAiTuningServiceConnectionIdempotencyPolicy>();

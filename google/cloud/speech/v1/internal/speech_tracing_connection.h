@@ -61,6 +61,12 @@ class SpeechTracingConnection : public speech_v1::SpeechConnection {
       google::cloud::speech::v1::StreamingRecognizeResponse>>
   AsyncStreamingRecognize() override;
 
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::shared_ptr<speech_v1::SpeechConnection> child_;
 };

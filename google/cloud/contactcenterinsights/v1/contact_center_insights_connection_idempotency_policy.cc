@@ -259,6 +259,21 @@ Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::DeleteView(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<ContactCenterInsightsConnectionIdempotencyPolicy>
 MakeDefaultContactCenterInsightsConnectionIdempotencyPolicy() {
   return std::make_unique<ContactCenterInsightsConnectionIdempotencyPolicy>();

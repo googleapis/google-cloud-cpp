@@ -29,6 +29,7 @@
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/contactcenterinsights/v1/contact_center_insights.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -46,9 +47,11 @@ CreateDefaultContactCenterInsightsStub(
   auto service_grpc_stub =
       google::cloud::contactcenterinsights::v1::ContactCenterInsights::NewStub(
           channel);
+  auto service_operations_stub =
+      google::longrunning::Operations::NewStub(channel);
   std::shared_ptr<ContactCenterInsightsStub> stub =
       std::make_shared<DefaultContactCenterInsightsStub>(
-          std::move(service_grpc_stub),
+          std::move(service_grpc_stub), std::move(service_operations_stub),
           google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {

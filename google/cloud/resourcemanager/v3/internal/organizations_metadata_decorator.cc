@@ -90,6 +90,14 @@ OrganizationsMetadata::TestIamPermissions(
   return child_->TestIamPermissions(context, options, request);
 }
 
+StatusOr<google::longrunning::Operation> OrganizationsMetadata::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetOperation(context, options, request);
+}
+
 void OrganizationsMetadata::SetMetadata(grpc::ClientContext& context,
                                         Options const& options,
                                         std::string const& request_params) {

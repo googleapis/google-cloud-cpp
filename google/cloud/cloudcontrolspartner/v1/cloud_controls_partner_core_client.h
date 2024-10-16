@@ -243,7 +243,7 @@ class CloudControlsPartnerCoreClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cloudcontrolspartner.v1.Customer]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L33}
-  /// [google.cloud.cloudcontrolspartner.v1.GetCustomerRequest]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L95}
+  /// [google.cloud.cloudcontrolspartner.v1.GetCustomerRequest]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L96}
   ///
   // clang-format on
   StatusOr<google::cloud::cloudcontrolspartner::v1::Customer> GetCustomer(
@@ -273,7 +273,7 @@ class CloudControlsPartnerCoreClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cloudcontrolspartner.v1.Customer]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L33}
-  /// [google.cloud.cloudcontrolspartner.v1.GetCustomerRequest]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L95}
+  /// [google.cloud.cloudcontrolspartner.v1.GetCustomerRequest]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L96}
   ///
   // clang-format on
   StatusOr<google::cloud::cloudcontrolspartner::v1::Customer> GetCustomer(
@@ -310,7 +310,7 @@ class CloudControlsPartnerCoreClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cloudcontrolspartner.v1.Customer]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L33}
-  /// [google.cloud.cloudcontrolspartner.v1.ListCustomersRequest]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L56}
+  /// [google.cloud.cloudcontrolspartner.v1.ListCustomersRequest]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L57}
   ///
   // clang-format on
   StreamRange<google::cloud::cloudcontrolspartner::v1::Customer> ListCustomers(
@@ -349,7 +349,7 @@ class CloudControlsPartnerCoreClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cloudcontrolspartner.v1.Customer]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L33}
-  /// [google.cloud.cloudcontrolspartner.v1.ListCustomersRequest]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L56}
+  /// [google.cloud.cloudcontrolspartner.v1.ListCustomersRequest]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/customers.proto#L57}
   ///
   // clang-format on
   StreamRange<google::cloud::cloudcontrolspartner::v1::Customer> ListCustomers(
@@ -434,7 +434,7 @@ class CloudControlsPartnerCoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudcontrolspartner.v1.GetPartnerPermissionsRequest]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/partner_permissions.proto#L63}
+  /// [google.cloud.cloudcontrolspartner.v1.GetPartnerPermissionsRequest]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/partner_permissions.proto#L66}
   /// [google.cloud.cloudcontrolspartner.v1.PartnerPermissions]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/partner_permissions.proto#L31}
   ///
   // clang-format on
@@ -464,7 +464,7 @@ class CloudControlsPartnerCoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.cloudcontrolspartner.v1.GetPartnerPermissionsRequest]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/partner_permissions.proto#L63}
+  /// [google.cloud.cloudcontrolspartner.v1.GetPartnerPermissionsRequest]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/partner_permissions.proto#L66}
   /// [google.cloud.cloudcontrolspartner.v1.PartnerPermissions]: @googleapis_reference_link{google/cloud/cloudcontrolspartner/v1/partner_permissions.proto#L31}
   ///
   // clang-format on

@@ -30,11 +30,12 @@ IdempotencyPolicyGenerator::IdempotencyPolicyGenerator(
     google::protobuf::ServiceDescriptor const* service_descriptor,
     VarsDictionary service_vars,
     std::map<std::string, VarsDictionary> service_method_vars,
-    google::protobuf::compiler::GeneratorContext* context)
-    : ServiceCodeGenerator("idempotency_policy_header_path",
-                           "idempotency_policy_cc_path", service_descriptor,
-                           std::move(service_vars),
-                           std::move(service_method_vars), context) {}
+    google::protobuf::compiler::GeneratorContext* context,
+    std::vector<MixinMethod> const& mixin_methods)
+    : ServiceCodeGenerator(
+          "idempotency_policy_header_path", "idempotency_policy_cc_path",
+          service_descriptor, std::move(service_vars),
+          std::move(service_method_vars), context, mixin_methods) {}
 
 Status IdempotencyPolicyGenerator::GenerateHeader() {
   HeaderPrint(CopyrightLicenseFileHeader());
@@ -51,7 +52,10 @@ Status IdempotencyPolicyGenerator::GenerateHeader() {
   // includes
   HeaderPrint("\n");
   HeaderLocalIncludes({"google/cloud/idempotency.h", "google/cloud/version.h"});
-  HeaderSystemIncludes({GetPbIncludeByTransport(), "memory"});
+
+  auto headers = GetMixinPbIncludeByTransport();
+  headers.insert(headers.end(), {GetPbIncludeByTransport(), "memory"});
+  HeaderSystemIncludes(headers);
 
   auto result = HeaderOpenNamespaces();
   if (!result.ok()) return result;

@@ -218,6 +218,15 @@ class EngineServiceConnection {
 
   virtual StreamRange<google::cloud::discoveryengine::v1::Engine> ListEngines(
       google::cloud::discoveryengine::v1::ListEnginesRequest request);
+
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
+
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

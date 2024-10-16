@@ -39,6 +39,16 @@ Idempotency PredictionServiceConnectionIdempotencyPolicy::Predict(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency PredictionServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency PredictionServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<PredictionServiceConnectionIdempotencyPolicy>
 MakeDefaultPredictionServiceConnectionIdempotencyPolicy() {
   return std::make_unique<PredictionServiceConnectionIdempotencyPolicy>();

@@ -211,6 +211,29 @@ StatusOr<google::cloud::tasks::v2::Task> CloudTasksTracingStub::RunTask(
                            child_->RunTask(context, options, request));
 }
 
+StatusOr<google::cloud::location::ListLocationsResponse>
+CloudTasksTracingStub::ListLocations(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::location::ListLocationsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.tasks.v2.CloudTasks",
+                                     "ListLocations");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListLocations(context, options, request));
+}
+
+StatusOr<google::cloud::location::Location> CloudTasksTracingStub::GetLocation(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::location::GetLocationRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.tasks.v2.CloudTasks", "GetLocation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetLocation(context, options, request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<CloudTasksStub> MakeCloudTasksTracingStub(

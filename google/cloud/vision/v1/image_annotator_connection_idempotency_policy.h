@@ -22,6 +22,7 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
 #include <google/cloud/vision/v1/image_annotator.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -49,6 +50,9 @@ class ImageAnnotatorConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency AsyncBatchAnnotateFiles(
       google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request);
+
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<ImageAnnotatorConnectionIdempotencyPolicy>

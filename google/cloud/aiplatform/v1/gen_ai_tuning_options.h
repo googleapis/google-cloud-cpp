@@ -59,6 +59,16 @@ struct GenAiTuningServiceConnectionIdempotencyPolicyOption {
 };
 
 /**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-aiplatform-options
+ */
+struct GenAiTuningServicePollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
  * The options applicable to GenAiTuningService.
  *
  * @ingroup google-cloud-aiplatform-options
@@ -66,6 +76,7 @@ struct GenAiTuningServiceConnectionIdempotencyPolicyOption {
 using GenAiTuningServicePolicyOptionList =
     OptionList<GenAiTuningServiceRetryPolicyOption,
                GenAiTuningServiceBackoffPolicyOption,
+               GenAiTuningServicePollingPolicyOption,
                GenAiTuningServiceConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

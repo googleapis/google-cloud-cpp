@@ -29,6 +29,7 @@
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/talent/v4/tenant_service.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -44,8 +45,11 @@ std::shared_ptr<TenantServiceStub> CreateDefaultTenantServiceStub(
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       google::cloud::talent::v4::TenantService::NewStub(channel);
+  auto service_operations_stub =
+      google::longrunning::Operations::NewStub(channel);
   std::shared_ptr<TenantServiceStub> stub =
-      std::make_shared<DefaultTenantServiceStub>(std::move(service_grpc_stub));
+      std::make_shared<DefaultTenantServiceStub>(
+          std::move(service_grpc_stub), std::move(service_operations_stub));
 
   if (auth->RequiresConfigureContext()) {
     stub =

@@ -312,6 +312,15 @@ class ConfigServiceV2Connection {
 
   virtual future<StatusOr<google::logging::v2::CopyLogEntriesResponse>>
   CopyLogEntries(google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
+
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

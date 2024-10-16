@@ -15,6 +15,8 @@
 #include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/credentials_impl.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/populate_common_options.h"
 
 namespace google {

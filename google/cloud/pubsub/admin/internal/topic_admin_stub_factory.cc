@@ -28,6 +28,7 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
+#include <google/iam/v1/iam_policy.grpc.pb.h>
 #include <google/pubsub/v1/pubsub.grpc.pb.h>
 #include <memory>
 #include <utility>
@@ -43,8 +44,10 @@ std::shared_ptr<TopicAdminStub> CreateDefaultTopicAdminStub(
   auto channel = auth->CreateChannel(options.get<EndpointOption>(),
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub = google::pubsub::v1::Publisher::NewStub(channel);
+  auto service_iampolicy_stub = google::iam::v1::IAMPolicy::NewStub(channel);
   std::shared_ptr<TopicAdminStub> stub =
-      std::make_shared<DefaultTopicAdminStub>(std::move(service_grpc_stub));
+      std::make_shared<DefaultTopicAdminStub>(
+          std::move(service_grpc_stub), std::move(service_iampolicy_stub));
 
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<TopicAdminAuth>(std::move(auth), std::move(stub));

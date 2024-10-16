@@ -16,6 +16,7 @@
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/grpc_access_token_authentication.h"
+#include "google/cloud/internal/grpc_api_key_authentication.h"
 #include "google/cloud/internal/grpc_channel_credentials_authentication.h"
 #include "google/cloud/internal/grpc_impersonate_service_account.h"
 #include "google/cloud/internal/grpc_service_account_authentication.h"
@@ -124,6 +125,9 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
           grpc::CompositeChannelCredentials(
               grpc::SslCredentials(ssl_options),
               GrpcExternalAccountCredentials(cfg)));
+    }
+    void visit(ApiKeyConfig const& cfg) override {
+      result = std::make_unique<GrpcApiKeyAuthentication>(cfg.api_key());
     }
   } visitor(std::move(cq), std::move(options));
 

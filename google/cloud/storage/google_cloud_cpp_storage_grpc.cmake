@@ -18,7 +18,7 @@ if (NOT GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
     # If disabled, defined an empty library so the tests can have a simpler
     # link-line
     add_library(google_cloud_cpp_storage_grpc INTERFACE)
-    add_library(google-cloud-cpp::experimental-storage_grpc ALIAS
+    add_library(google-cloud-cpp::storage_grpc ALIAS
                 google_cloud_cpp_storage_grpc)
     add_library(google_cloud_cpp_storage_protos INTERFACE)
     add_library(google-cloud-cpp::storage_protos ALIAS
@@ -151,10 +151,6 @@ add_library(
     internal/grpc/default_options.h
     internal/grpc/enable_metrics.cc
     internal/grpc/enable_metrics.h
-    internal/grpc/hmac_key_metadata_parser.cc
-    internal/grpc/hmac_key_metadata_parser.h
-    internal/grpc/hmac_key_request_parser.cc
-    internal/grpc/hmac_key_request_parser.h
     internal/grpc/make_cord.cc
     internal/grpc/make_cord.h
     internal/grpc/metrics_exporter_impl.cc
@@ -167,10 +163,6 @@ add_library(
     internal/grpc/metrics_meter_provider.h
     internal/grpc/monitoring_project.cc
     internal/grpc/monitoring_project.h
-    internal/grpc/notification_metadata_parser.cc
-    internal/grpc/notification_metadata_parser.h
-    internal/grpc/notification_request_parser.cc
-    internal/grpc/notification_request_parser.h
     internal/grpc/object_access_control_parser.cc
     internal/grpc/object_access_control_parser.h
     internal/grpc/object_metadata_parser.cc
@@ -183,8 +175,6 @@ add_library(
     internal/grpc/owner_parser.h
     internal/grpc/scale_stall_timeout.cc
     internal/grpc/scale_stall_timeout.h
-    internal/grpc/service_account_parser.cc
-    internal/grpc/service_account_parser.h
     internal/grpc/sign_blob_request_parser.cc
     internal/grpc/sign_blob_request_parser.h
     internal/grpc/split_write_object_data.cc
@@ -248,14 +238,23 @@ if ((TARGET gRPC::grpcpp_otel_plugin)
 endif ()
 set_target_properties(
     google_cloud_cpp_storage_grpc
-    PROPERTIES EXPORT_NAME "google-cloud-cpp::experimental-storage_grpc"
+    PROPERTIES EXPORT_NAME "google-cloud-cpp::storage_grpc"
                VERSION ${PROJECT_VERSION}
                SOVERSION ${PROJECT_VERSION_MAJOR})
 
 create_bazel_config(google_cloud_cpp_storage_grpc)
 
+add_library(google-cloud-cpp::storage_grpc ALIAS google_cloud_cpp_storage_grpc)
+
+# TODO(#13857) - remove the backwards compatibility shims
+add_library(google_cloud_cpp_experimental_storage_grpc INTERFACE)
+set_target_properties(
+    google_cloud_cpp_experimental_storage_grpc
+    PROPERTIES EXPORT_NAME "google-cloud-cpp::experimental-storage_grpc")
+target_link_libraries(google_cloud_cpp_experimental_storage_grpc
+                      INTERFACE google-cloud-cpp::storage_grpc)
 add_library(google-cloud-cpp::experimental-storage_grpc ALIAS
-            google_cloud_cpp_storage_grpc)
+            google_cloud_cpp_experimental_storage_grpc)
 
 google_cloud_cpp_add_pkgconfig(
     storage_grpc
@@ -293,6 +292,8 @@ install(
 
 install(
     TARGETS google_cloud_cpp_storage_grpc google_cloud_cpp_storage_protos
+            # TODO(#13857) - remove the backwards compatibility shims
+            google_cloud_cpp_experimental_storage_grpc
     EXPORT storage_grpc-targets
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             COMPONENT google_cloud_cpp_runtime
@@ -319,13 +320,11 @@ if (GOOGLE_CLOUD_CPP_WITH_MOCKS)
         mocks/mock_async_writer_connection.h)
     export_list_to_bazel("google_cloud_cpp_storage_grpc_mocks.bzl"
                          "google_cloud_cpp_storage_grpc_mocks_hdrs" YEAR "2023")
-    target_link_libraries(
-        google_cloud_cpp_storage_grpc_mocks
-        INTERFACE google-cloud-cpp::experimental-storage_grpc GTest::gmock)
+    target_link_libraries(google_cloud_cpp_storage_grpc_mocks
+                          INTERFACE google-cloud-cpp::storage_grpc GTest::gmock)
     set_target_properties(
         google_cloud_cpp_storage_grpc_mocks
-        PROPERTIES EXPORT_NAME
-                   "google-cloud-cpp::experimental-storage_grpc_mocks")
+        PROPERTIES EXPORT_NAME "google-cloud-cpp::storage_grpc_mocks")
     target_include_directories(
         google_cloud_cpp_storage_grpc_mocks
         INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -333,8 +332,15 @@ if (GOOGLE_CLOUD_CPP_WITH_MOCKS)
                   $<INSTALL_INTERFACE:include>)
     target_compile_options(google_cloud_cpp_storage_grpc_mocks
                            INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
-    add_library(google-cloud-cpp::experimental-storage_grpc_mocks ALIAS
+    add_library(google-cloud-cpp::storage_grpc_mocks ALIAS
                 google_cloud_cpp_storage_grpc_mocks)
+
+    # TODO(#13857) - remove backwards compatibility shims
+    add_library(google_cloud_cpp_experimental_storage_grpc_mocks INTERFACE)
+    target_link_libraries(google_cloud_cpp_experimental_storage_grpc_mocks
+                          INTERFACE google-cloud-cpp::storage_grpc_mocks)
+    add_library(google-cloud-cpp::experimental-storage_grpc_mocks ALIAS
+                google_cloud_cpp_experimental_storage_grpc_mocks)
 
     install(
         FILES ${google_cloud_cpp_storage_grpc_mocks_hdrs}
@@ -349,6 +355,8 @@ if (GOOGLE_CLOUD_CPP_WITH_MOCKS)
 
     install(
         TARGETS google_cloud_cpp_storage_grpc_mocks
+                # TODO(#13857) - remove backwards compatibility shims
+                google_cloud_cpp_experimental_storage_grpc_mocks
         EXPORT storage_grpc_mocks-targets
         COMPONENT google_cloud_cpp_development)
 
@@ -381,7 +389,7 @@ endif ()
 # This is a bit weird, we add an additional link library to
 # `storage_client_testing`
 target_link_libraries(storage_client_testing
-                      PUBLIC google-cloud-cpp::experimental-storage_grpc)
+                      PUBLIC google-cloud-cpp::storage_grpc)
 
 set(storage_client_grpc_unit_tests
     # cmake-format: sort
@@ -424,23 +432,18 @@ set(storage_client_grpc_unit_tests
     internal/grpc/buffer_read_object_data_test.cc
     internal/grpc/configure_client_context_test.cc
     internal/grpc/default_options_test.cc
-    internal/grpc/hmac_key_metadata_parser_test.cc
-    internal/grpc/hmac_key_request_parser_test.cc
     internal/grpc/make_cord_test.cc
     internal/grpc/metrics_exporter_impl_test.cc
     internal/grpc/metrics_exporter_options_test.cc
     internal/grpc/metrics_histograms_test.cc
     internal/grpc/metrics_meter_provider_test.cc
     internal/grpc/monitoring_project_test.cc
-    internal/grpc/notification_metadata_parser_test.cc
-    internal/grpc/notification_request_parser_test.cc
     internal/grpc/object_access_control_parser_test.cc
     internal/grpc/object_metadata_parser_test.cc
     internal/grpc/object_read_source_test.cc
     internal/grpc/object_request_parser_test.cc
     internal/grpc/owner_parser_test.cc
     internal/grpc/scale_stall_timeout_test.cc
-    internal/grpc/service_account_parser_test.cc
     internal/grpc/sign_blob_request_parser_test.cc
     internal/grpc/split_write_object_data_test.cc
     internal/grpc/stub_acl_test.cc
@@ -462,8 +465,8 @@ foreach (fname ${storage_client_grpc_unit_tests})
         PRIVATE storage_client_testing
                 google_cloud_cpp_testing
                 google_cloud_cpp_testing_grpc
-                google-cloud-cpp::experimental-storage_grpc
-                google-cloud-cpp::experimental-storage_grpc_mocks
+                google-cloud-cpp::storage_grpc
+                google-cloud-cpp::storage_grpc_mocks
                 google-cloud-cpp::storage
                 GTest::gmock_main
                 GTest::gmock

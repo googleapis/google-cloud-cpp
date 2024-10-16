@@ -67,6 +67,12 @@ class ServiceHealthTracingConnection
       google::cloud::servicehealth::v1::GetOrganizationImpactRequest const&
           request) override;
 
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
+
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
+
  private:
   std::shared_ptr<servicehealth_v1::ServiceHealthConnection> child_;
 };

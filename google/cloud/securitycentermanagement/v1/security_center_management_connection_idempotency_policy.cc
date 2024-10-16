@@ -182,6 +182,16 @@ Idempotency SecurityCenterManagementConnectionIdempotencyPolicy::
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency SecurityCenterManagementConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency SecurityCenterManagementConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<SecurityCenterManagementConnectionIdempotencyPolicy>
 MakeDefaultSecurityCenterManagementConnectionIdempotencyPolicy() {
   return std::make_unique<

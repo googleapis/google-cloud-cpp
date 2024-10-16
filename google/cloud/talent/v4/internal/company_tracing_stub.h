@@ -58,6 +58,10 @@ class CompanyServiceTracingStub : public CompanyServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::ListCompaniesRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::shared_ptr<CompanyServiceStub> child_;
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>

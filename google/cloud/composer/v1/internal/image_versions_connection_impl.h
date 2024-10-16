@@ -53,6 +53,15 @@ class ImageVersionsConnectionImpl
   ListImageVersions(google::cloud::orchestration::airflow::service::v1::
                         ListImageVersionsRequest request) override;
 
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<composer_v1_internal::ImageVersionsStub> stub_;

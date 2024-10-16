@@ -257,6 +257,19 @@ class EnvironmentsConnection {
       google::cloud::orchestration::airflow::service::v1::ListWorkloadsRequest
           request);
 
+  virtual future<StatusOr<
+      google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>>
+  CheckUpgrade(google::cloud::orchestration::airflow::service::v1::
+                   CheckUpgradeRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CheckUpgrade(
+      NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
+                      CheckUpgradeRequest const& request);
+
+  virtual future<StatusOr<
+      google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>>
+  CheckUpgrade(google::longrunning::Operation const& operation);
+
   virtual StatusOr<
       google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
   CreateUserWorkloadsSecret(
@@ -354,6 +367,15 @@ class EnvironmentsConnection {
                        FetchDatabasePropertiesResponse>
   FetchDatabaseProperties(google::cloud::orchestration::airflow::service::v1::
                               FetchDatabasePropertiesRequest const& request);
+
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
+
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 };
 
 /**

@@ -656,6 +656,19 @@ AccessContextManagerTracingStub::TestIamPermissions(
       context, *span, child_->TestIamPermissions(context, options, request));
 }
 
+StatusOr<google::longrunning::Operation>
+AccessContextManagerTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.identity.accesscontextmanager.v1.AccessContextManager",
+      "GetOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetOperation(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

@@ -94,6 +94,13 @@ class MockSpeechConnection : public speech_v1::SpeechConnection {
                    google::cloud::speech::v1::StreamingRecognizeRequest,
                    google::cloud::speech::v1::StreamingRecognizeResponse>>),
               AsyncStreamingRecognize, (), (override));
+
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
+              (google::longrunning::ListOperationsRequest request), (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

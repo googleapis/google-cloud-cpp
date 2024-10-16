@@ -84,6 +84,11 @@ Idempotency JobServiceConnectionIdempotencyPolicy::SearchJobsForAlert(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency JobServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<JobServiceConnectionIdempotencyPolicy>
 MakeDefaultJobServiceConnectionIdempotencyPolicy() {
   return std::make_unique<JobServiceConnectionIdempotencyPolicy>();

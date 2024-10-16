@@ -65,6 +65,9 @@ class DocumentSchemaServiceTracingConnection
       google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest request)
       override;
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::shared_ptr<contentwarehouse_v1::DocumentSchemaServiceConnection> child_;
 };

@@ -79,6 +79,15 @@ TenantServiceTracingConnection::ListTenants(
       std::move(span), std::move(sr));
 }
 
+StatusOr<google::longrunning::Operation>
+TenantServiceTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span =
+      internal::MakeSpan("talent_v4::TenantServiceConnection::GetOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetOperation(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<talent_v4::TenantServiceConnection>

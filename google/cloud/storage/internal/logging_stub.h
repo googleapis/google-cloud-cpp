@@ -97,6 +97,9 @@ class LoggingStub : public storage_internal::GenericStub {
   StatusOr<RewriteObjectResponse> RewriteObject(
       rest_internal::RestContext&, Options const&,
       RewriteObjectRequest const&) override;
+  StatusOr<ObjectMetadata> RestoreObject(
+      rest_internal::RestContext&, Options const&,
+      RestoreObjectRequest const& request) override;
 
   StatusOr<CreateResumableUploadResponse> CreateResumableUpload(
       rest_internal::RestContext&, Options const&,

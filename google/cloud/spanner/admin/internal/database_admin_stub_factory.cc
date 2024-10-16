@@ -28,6 +28,7 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
+#include <google/longrunning/operations.grpc.pb.h>
 #include <google/spanner/admin/database/v1/spanner_database_admin.grpc.pb.h>
 #include <memory>
 #include <utility>
@@ -44,9 +45,11 @@ std::shared_ptr<DatabaseAdminStub> CreateDefaultDatabaseAdminStub(
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       google::spanner::admin::database::v1::DatabaseAdmin::NewStub(channel);
+  auto service_operations_stub =
+      google::longrunning::Operations::NewStub(channel);
   std::shared_ptr<DatabaseAdminStub> stub =
       std::make_shared<DefaultDatabaseAdminStub>(
-          std::move(service_grpc_stub),
+          std::move(service_grpc_stub), std::move(service_operations_stub),
           google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {

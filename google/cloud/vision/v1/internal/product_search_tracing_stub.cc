@@ -288,6 +288,17 @@ ProductSearchTracingStub::PurgeProducts(
                            child_->PurgeProducts(context, options, request));
 }
 
+StatusOr<google::longrunning::Operation> ProductSearchTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ProductSearch",
+                                     "GetOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetOperation(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ProductSearchTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

@@ -63,6 +63,9 @@ class TenantServiceConnectionImpl : public talent_v4::TenantServiceConnection {
   StreamRange<google::cloud::talent::v4::Tenant> ListTenants(
       google::cloud::talent::v4::ListTenantsRequest request) override;
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<talent_v4_internal::TenantServiceStub> stub_;

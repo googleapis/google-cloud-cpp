@@ -41,6 +41,15 @@ EventServiceTracingConnection::CreateClientEvent(
   return internal::EndSpan(*span, child_->CreateClientEvent(request));
 }
 
+StatusOr<google::longrunning::Operation>
+EventServiceTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span =
+      internal::MakeSpan("talent_v4::EventServiceConnection::GetOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetOperation(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<talent_v4::EventServiceConnection>

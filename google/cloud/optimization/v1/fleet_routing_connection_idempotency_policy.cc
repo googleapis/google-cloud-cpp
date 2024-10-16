@@ -44,6 +44,11 @@ Idempotency FleetRoutingConnectionIdempotencyPolicy::BatchOptimizeTours(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency FleetRoutingConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<FleetRoutingConnectionIdempotencyPolicy>
 MakeDefaultFleetRoutingConnectionIdempotencyPolicy() {
   return std::make_unique<FleetRoutingConnectionIdempotencyPolicy>();

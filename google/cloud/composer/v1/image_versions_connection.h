@@ -186,6 +186,15 @@ class ImageVersionsConnection {
       google::cloud::orchestration::airflow::service::v1::ImageVersion>
   ListImageVersions(google::cloud::orchestration::airflow::service::v1::
                         ListImageVersionsRequest request);
+
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
+
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 };
 
 /**

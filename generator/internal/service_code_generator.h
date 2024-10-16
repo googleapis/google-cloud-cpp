@@ -19,6 +19,7 @@
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/descriptor_utils.h"
 #include "generator/internal/generator_interface.h"
+#include "generator/internal/mixin_utils.h"
 #include "generator/internal/printer.h"
 #include "google/cloud/status.h"
 #include <google/protobuf/descriptor.h>
@@ -34,14 +35,16 @@ class ServiceCodeGenerator : public GeneratorInterface {
       google::protobuf::ServiceDescriptor const* service_descriptor,
       VarsDictionary service_vars,
       std::map<std::string, VarsDictionary> service_method_vars,
-      google::protobuf::compiler::GeneratorContext* context);
+      google::protobuf::compiler::GeneratorContext* context,
+      std::vector<MixinMethod> const& mixin_methods);
 
   ServiceCodeGenerator(
       std::string const& header_path_key,
       google::protobuf::ServiceDescriptor const* service_descriptor,
       VarsDictionary service_vars,
       std::map<std::string, VarsDictionary> service_method_vars,
-      google::protobuf::compiler::GeneratorContext* context);
+      google::protobuf::compiler::GeneratorContext* context,
+      std::vector<MixinMethod> const& mixin_methods);
 
   ~ServiceCodeGenerator() override = default;
 
@@ -222,9 +225,17 @@ class ServiceCodeGenerator : public GeneratorInterface {
   std::string GetPbIncludeByTransport() const;
 
   /**
+   * If gRPC transport is enabled return the appropriate mixin grpc.pb.h files.
+   * Otherwise, return the appropriate mixin pb.h files.
+   */
+  std::vector<std::string> GetMixinPbIncludeByTransport() const;
+
+  /**
    * If the service defining protos are produced from a REST Discovery Document.
    */
   bool IsDiscoveryDocumentProto() const;
+
+  std::vector<MixinMethod> const& MixinMethods() const;
 
  private:
   void SetMethods();
@@ -251,6 +262,7 @@ class ServiceCodeGenerator : public GeneratorInterface {
   MethodDescriptorList async_methods_;
   Printer header_;
   Printer cc_;
+  std::vector<MixinMethod> mixin_methods_;
 };
 
 }  // namespace generator_internal

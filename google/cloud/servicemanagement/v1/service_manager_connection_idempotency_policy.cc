@@ -99,6 +99,27 @@ Idempotency ServiceManagerConnectionIdempotencyPolicy::GenerateConfigReport(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency ServiceManagerConnectionIdempotencyPolicy::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return request.policy().etag().empty() ? Idempotency::kNonIdempotent
+                                         : Idempotency::kIdempotent;
+}
+
+Idempotency ServiceManagerConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ServiceManagerConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ServiceManagerConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<ServiceManagerConnectionIdempotencyPolicy>
 MakeDefaultServiceManagerConnectionIdempotencyPolicy() {
   return std::make_unique<ServiceManagerConnectionIdempotencyPolicy>();

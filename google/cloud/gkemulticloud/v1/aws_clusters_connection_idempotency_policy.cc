@@ -116,6 +116,26 @@ Idempotency AwsClustersConnectionIdempotencyPolicy::GetAwsServerConfig(
   return Idempotency::kIdempotent;
 }
 
+Idempotency AwsClustersConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency AwsClustersConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency AwsClustersConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency AwsClustersConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<AwsClustersConnectionIdempotencyPolicy>
 MakeDefaultAwsClustersConnectionIdempotencyPolicy() {
   return std::make_unique<AwsClustersConnectionIdempotencyPolicy>();

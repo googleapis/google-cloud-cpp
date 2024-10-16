@@ -45,6 +45,16 @@ Idempotency ConfidentialComputingConnectionIdempotencyPolicy::VerifyAttestation(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency ConfidentialComputingConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ConfidentialComputingConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<ConfidentialComputingConnectionIdempotencyPolicy>
 MakeDefaultConfidentialComputingConnectionIdempotencyPolicy() {
   return std::make_unique<ConfidentialComputingConnectionIdempotencyPolicy>();

@@ -633,7 +633,7 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.ResourceSearchResult]: @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L345}
+  /// [google.cloud.asset.v1.ResourceSearchResult]: @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L344}
   /// [google.cloud.asset.v1.SearchAllResourcesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L919}
   ///
   // clang-format on
@@ -677,7 +677,7 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.ResourceSearchResult]: @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L345}
+  /// [google.cloud.asset.v1.ResourceSearchResult]: @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L344}
   /// [google.cloud.asset.v1.SearchAllResourcesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L919}
   ///
   // clang-format on
@@ -738,7 +738,7 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.IamPolicySearchResult]: @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L758}
+  /// [google.cloud.asset.v1.IamPolicySearchResult]: @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L757}
   /// [google.cloud.asset.v1.SearchAllIamPoliciesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1112}
   ///
   // clang-format on
@@ -781,7 +781,7 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.IamPolicySearchResult]: @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L758}
+  /// [google.cloud.asset.v1.IamPolicySearchResult]: @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L757}
   /// [google.cloud.asset.v1.SearchAllIamPoliciesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1112}
   ///
   // clang-format on
@@ -1333,8 +1333,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.BatchGetEffectiveIamPoliciesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2078}
-  /// [google.cloud.asset.v1.BatchGetEffectiveIamPoliciesResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2108}
+  /// [google.cloud.asset.v1.BatchGetEffectiveIamPoliciesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2081}
+  /// [google.cloud.asset.v1.BatchGetEffectiveIamPoliciesResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2111}
   ///
   // clang-format on
   StatusOr<google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse>
@@ -1387,9 +1387,9 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.AnalyzeOrgPoliciesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2402}
-  /// [google.cloud.asset.v1.AnalyzeOrgPoliciesResponse.OrgPolicyResult]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2440}
-  /// [google.cloud.asset.v1.AnalyzeOrgPoliciesResponse.org_policy_results]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2476}
+  /// [google.cloud.asset.v1.AnalyzeOrgPoliciesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2405}
+  /// [google.cloud.asset.v1.AnalyzeOrgPoliciesResponse.OrgPolicyResult]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2443}
+  /// [google.cloud.asset.v1.AnalyzeOrgPoliciesResponse.org_policy_results]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2479}
   ///
   // clang-format on
   StreamRange<
@@ -1429,8 +1429,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.AnalyzeOrgPoliciesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2402}
-  /// [google.cloud.asset.v1.AnalyzeOrgPoliciesResponse.OrgPolicyResult]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2440}
+  /// [google.cloud.asset.v1.AnalyzeOrgPoliciesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2405}
+  /// [google.cloud.asset.v1.AnalyzeOrgPoliciesResponse.OrgPolicyResult]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2443}
   ///
   // clang-format on
   StreamRange<
@@ -1486,9 +1486,9 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2488}
-  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersResponse.GovernedContainer]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2530}
-  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersResponse.governed_containers]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2577}
+  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2491}
+  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersResponse.GovernedContainer]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2533}
+  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersResponse.governed_containers]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2580}
   ///
   // clang-format on
   StreamRange<google::cloud::asset::v1::
@@ -1531,8 +1531,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2488}
-  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersResponse.GovernedContainer]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2530}
+  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2491}
+  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersResponse.GovernedContainer]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2533}
   ///
   // clang-format on
   StreamRange<google::cloud::asset::v1::
@@ -1629,9 +1629,9 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2589}
-  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsResponse.GovernedAsset]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2728}
-  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsResponse.governed_assets]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2758}
+  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2592}
+  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsResponse.GovernedAsset]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2731}
+  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsResponse.governed_assets]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2761}
   ///
   // clang-format on
   StreamRange<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse::
@@ -1720,14 +1720,74 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2589}
-  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsResponse.GovernedAsset]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2728}
+  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2592}
+  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsResponse.GovernedAsset]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2731}
   ///
   // clang-format on
   StreamRange<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse::
                   GovernedAsset>
   AnalyzeOrgPolicyGovernedAssets(
       google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets the latest state of a long-running operation.  Clients can use this
+  /// method to poll the operation result at intervals as recommended by the API
+  /// service.
+  ///
+  /// @param name  The name of the operation resource.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.longrunning.Operation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets the latest state of a long-running operation.  Clients can use this
+  /// method to poll the operation result at intervals as recommended by the API
+  /// service.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.longrunning.GetOperationRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.longrunning.Operation])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
       Options opts = {});
 
  private:

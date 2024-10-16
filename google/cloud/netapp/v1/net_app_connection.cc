@@ -115,6 +115,30 @@ NetAppConnection::DeleteStoragePool(google::longrunning::Operation const&) {
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::netapp::v1::StoragePool>>
+NetAppConnection::SwitchActiveReplicaZone(
+    google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::netapp::v1::StoragePool>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+NetAppConnection::SwitchActiveReplicaZone(
+    NoAwaitTag,
+    google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::netapp::v1::StoragePool>>
+NetAppConnection::SwitchActiveReplicaZone(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::netapp::v1::StoragePool>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StreamRange<google::cloud::netapp::v1::Volume> NetAppConnection::ListVolumes(
     google::cloud::netapp::v1::
         ListVolumesRequest) {  // NOLINT(performance-unnecessary-value-param)
@@ -843,6 +867,40 @@ NetAppConnection::DeleteBackupPolicy(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::netapp::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::location::Location> NetAppConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::location::Location>>();
+}
+
+StatusOr<google::cloud::location::Location> NetAppConnection::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::longrunning::Operation> NetAppConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::longrunning::Operation>>();
+}
+
+StatusOr<google::longrunning::Operation> NetAppConnection::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status NetAppConnection::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status NetAppConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 std::shared_ptr<NetAppConnection> MakeNetAppConnection(Options options) {

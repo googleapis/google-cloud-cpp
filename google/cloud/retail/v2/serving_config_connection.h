@@ -209,6 +209,12 @@ class ServingConfigServiceConnection {
 
   virtual StatusOr<google::cloud::retail::v2::ServingConfig> RemoveControl(
       google::cloud::retail::v2::RemoveControlRequest const& request);
+
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

@@ -82,6 +82,22 @@ SpeechMetadata::AsyncStreamingRecognize(
                                          std::move(options));
 }
 
+StatusOr<google::longrunning::ListOperationsResponse>
+SpeechMetadata::ListOperations(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::ListOperationsRequest const& request) {
+  SetMetadata(context, options, absl::StrCat());
+  return child_->ListOperations(context, options, request);
+}
+
+StatusOr<google::longrunning::Operation> SpeechMetadata::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetOperation(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SpeechMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

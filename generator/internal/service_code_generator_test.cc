@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "generator/internal/service_code_generator.h"
+#include "generator/internal/mixin_utils.h"
+#include "generator/testing/descriptor_pool_fixture.h"
 #include "generator/testing/error_collectors.h"
 #include "generator/testing/fake_source_tree.h"
 #include "generator/testing/printer_mocks.h"
@@ -34,6 +36,7 @@ using ::google::cloud::generator_testing::MockZeroCopyOutputStream;
 using ::google::protobuf::DescriptorPool;
 using ::google::protobuf::FileDescriptor;
 using ::google::protobuf::FileDescriptorProto;
+using ::testing::AllOf;
 using ::testing::Contains;
 using ::testing::Eq;
 using ::testing::IsEmpty;
@@ -44,10 +47,13 @@ class TestGenerator : public ServiceCodeGenerator {
   TestGenerator(google::protobuf::ServiceDescriptor const* service_descriptor,
                 google::protobuf::compiler::GeneratorContext* context,
                 VarsDictionary service_vars = {{"header_path_key",
-                                                "header_path"}})
+                                                "header_path"}},
+                std::vector<MixinMethod> const& mixin_methods = {})
       : ServiceCodeGenerator("header_path_key", service_descriptor,
-                             std::move(service_vars), {}, context) {}
+                             std::move(service_vars), {}, context,
+                             mixin_methods) {}
 
+  using ServiceCodeGenerator::GetMixinPbIncludeByTransport;
   using ServiceCodeGenerator::GetPbIncludeByTransport;
   using ServiceCodeGenerator::HasBidirStreamingMethod;
   using ServiceCodeGenerator::HasExplicitRoutingMethod;
@@ -921,6 +927,56 @@ TEST(GetPbIncludeByTransport, ReturnsCorrectIncludeByTransport) {
       }());
   EXPECT_THAT(both_rest_and_grpc.GetPbIncludeByTransport(),
               Eq("foo.grpc.pb.h"));
+}
+
+TEST(GetMixinPbIncludeByTransport, ReturnsCorrectIncludeByTransport) {
+  FileDescriptorProto service_file;
+  auto constexpr kServiceText = R"pb(
+    name: "google/foo/v1/service.proto"
+    package: "google.foo.v1"
+    service { name: "Service" }
+  )pb";
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
+                                                            &service_file));
+  DescriptorPool pool;
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
+  auto generator_context = std::make_unique<MockGeneratorContext>();
+  ON_CALL(*generator_context, Open).WillByDefault([](std::string const&) {
+    return nullptr;
+  });
+
+  VarsDictionary service_vars = {
+      {"mixin_proto_grpc_header_paths", "foo.grpc.pb.h,bar.grpc.pb.h"},
+      {"mixin_proto_header_paths", "foo.pb.h,bar.pb.h"}};
+  TestGenerator grpc_only(service_file_descriptor->service(0),
+                          generator_context.get(), [service_vars]() mutable {
+                            service_vars.emplace("generate_grpc_transport",
+                                                 "true");
+                            return service_vars;
+                          }());
+  EXPECT_THAT(
+      grpc_only.GetMixinPbIncludeByTransport(),
+      AllOf(Contains(Eq("foo.grpc.pb.h")), Contains(Eq("bar.grpc.pb.h"))));
+
+  TestGenerator rest_only(service_file_descriptor->service(0),
+                          generator_context.get(), [service_vars]() mutable {
+                            service_vars.emplace("generate_rest_transport",
+                                                 "true");
+                            return service_vars;
+                          }());
+  EXPECT_THAT(rest_only.GetMixinPbIncludeByTransport(),
+              AllOf(Contains(Eq("foo.pb.h")), Contains(Eq("bar.pb.h"))));
+
+  TestGenerator both_rest_and_grpc(
+      service_file_descriptor->service(0), generator_context.get(),
+      [service_vars]() mutable {
+        service_vars.emplace("generate_rest_transport", "true");
+        service_vars.emplace("generate_grpc_transport", "true");
+        return service_vars;
+      }());
+  EXPECT_THAT(
+      both_rest_and_grpc.GetMixinPbIncludeByTransport(),
+      AllOf(Contains(Eq("foo.grpc.pb.h")), Contains(Eq("bar.grpc.pb.h"))));
 }
 
 TEST(PredicateUtilsTest, IsDiscoveryDocumentProto) {

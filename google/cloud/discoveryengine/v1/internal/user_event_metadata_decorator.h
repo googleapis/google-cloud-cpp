@@ -50,6 +50,18 @@ class UserEventServiceMetadata : public UserEventServiceStub {
       google::cloud::discoveryengine::v1::CollectUserEventRequest const&
           request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncPurgeUserEvents(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::PurgeUserEventsRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> PurgeUserEvents(
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::PurgeUserEventsRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncImportUserEvents(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -61,6 +73,18 @@ class UserEventServiceMetadata : public UserEventServiceStub {
       grpc::ClientContext& context, Options options,
       google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
           request) override;
+
+  StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::ListOperationsRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  Status CancelOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

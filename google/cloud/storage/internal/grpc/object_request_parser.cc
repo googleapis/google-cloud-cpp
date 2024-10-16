@@ -666,6 +666,22 @@ StatusOr<google::storage::v2::RewriteObjectRequest> ToProto(
   return result;
 }
 
+StatusOr<google::storage::v2::RestoreObjectRequest> ToProto(
+    storage::internal::RestoreObjectRequest const& request) {
+  google::storage::v2::RestoreObjectRequest result;
+  auto status = SetCommonObjectParameters(result, request);
+
+  result.set_bucket(GrpcBucketIdToName(request.bucket_name()));
+  result.set_object(request.object_name());
+  result.set_generation(request.generation());
+  SetGenerationConditions(result, request);
+  SetMetagenerationConditions(result, request);
+  result.set_copy_source_acl(
+      request.GetOption<storage::CopySourceAcl>().value_or(false));
+
+  return result;
+}
+
 storage::internal::RewriteObjectResponse FromProto(
     google::storage::v2::RewriteResponse const& response,
     Options const& options) {

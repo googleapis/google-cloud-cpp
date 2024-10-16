@@ -73,6 +73,10 @@ class MockRuleSetServiceConnection
       (StreamRange<google::cloud::contentwarehouse::v1::RuleSet>), ListRuleSets,
       (google::cloud::contentwarehouse::v1::ListRuleSetsRequest request),
       (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

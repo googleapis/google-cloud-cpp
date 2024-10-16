@@ -382,6 +382,14 @@ std::ostream& operator<<(std::ostream& os, RewriteObjectRequest const& r) {
   return os << "}";
 }
 
+std::ostream& operator<<(std::ostream& os, RestoreObjectRequest const& r) {
+  os << "RestoreObjectRequest={bucket_name=" << r.bucket_name()
+     << ", object_name=" << r.object_name()
+     << ", generation=" << r.generation();
+  r.DumpOptions(os, ", ");
+  return os << "}";
+}
+
 StatusOr<RewriteObjectResponse> RewriteObjectResponse::FromHttpResponse(
     std::string const& payload) {
   auto object = nlohmann::json::parse(payload, nullptr, false);

@@ -69,6 +69,11 @@ RuleSetServiceConnection::ListRuleSets(
       StreamRange<google::cloud::contentwarehouse::v1::RuleSet>>();
 }
 
+StatusOr<google::longrunning::Operation> RuleSetServiceConnection::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<RuleSetServiceConnection> MakeRuleSetServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

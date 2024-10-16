@@ -191,6 +191,17 @@ DefaultApiKeysStub::LookupKey(
   return response;
 }
 
+StatusOr<google::longrunning::Operation> DefaultApiKeysStub::GetOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultApiKeysStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

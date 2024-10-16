@@ -320,6 +320,26 @@ struct DataFormatOptions {
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(DataFormatOptions,
                                                 use_int64_timestamp);
 
+// Indicates the type of compute mode for the query stage.
+//
+// For more details on field members, please see:
+// https://cloud.google.com/bigquery/docs/reference/rest/v2/Job#computemode
+struct JobCreationMode {
+  static JobCreationMode UnSpecified();
+  static JobCreationMode Required();
+  static JobCreationMode Optional();
+
+  std::string value;
+
+  std::string DebugString(absl::string_view name,
+                          TracingOptions const& options = {},
+                          int indent = 0) const;
+};
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(JobCreationMode, value);
+inline bool operator==(JobCreationMode const& lhs, JobCreationMode const& rhs) {
+  return lhs.value == rhs.value;
+}
+
 class QueryRequest {
  public:
   QueryRequest() = default;
@@ -353,6 +373,9 @@ class QueryRequest {
 
   DatasetReference const& default_dataset() const { return default_dataset_; }
   DataFormatOptions const& format_options() const { return format_options_; }
+  JobCreationMode const& job_creation_mode() const {
+    return job_creation_mode_;
+  }
 
   QueryRequest& set_query(std::string query) & {
     query_ = std::move(query);
@@ -504,6 +527,14 @@ class QueryRequest {
     return std::move(set_format_options(std::move(format_options)));
   }
 
+  QueryRequest& set_job_creation_mode(JobCreationMode job_creation_mode) & {
+    job_creation_mode_ = std::move(job_creation_mode);
+    return *this;
+  }
+  QueryRequest&& set_job_creation_mode(JobCreationMode job_creation_mode) && {
+    return std::move(set_job_creation_mode(std::move(job_creation_mode)));
+  }
+
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
@@ -533,6 +564,7 @@ class QueryRequest {
 
   DatasetReference default_dataset_;
   DataFormatOptions format_options_;
+  JobCreationMode job_creation_mode_;
 };
 void to_json(nlohmann::json& j, QueryRequest const& q);
 void from_json(nlohmann::json const& j, QueryRequest& q);

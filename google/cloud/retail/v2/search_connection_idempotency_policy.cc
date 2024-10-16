@@ -39,6 +39,16 @@ Idempotency SearchServiceConnectionIdempotencyPolicy::Search(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency SearchServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency SearchServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<SearchServiceConnectionIdempotencyPolicy>
 MakeDefaultSearchServiceConnectionIdempotencyPolicy() {
   return std::make_unique<SearchServiceConnectionIdempotencyPolicy>();

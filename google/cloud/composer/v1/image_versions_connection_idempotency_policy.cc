@@ -40,6 +40,21 @@ Idempotency ImageVersionsConnectionIdempotencyPolicy::ListImageVersions(
   return Idempotency::kIdempotent;
 }
 
+Idempotency ImageVersionsConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ImageVersionsConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ImageVersionsConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<ImageVersionsConnectionIdempotencyPolicy>
 MakeDefaultImageVersionsConnectionIdempotencyPolicy() {
   return std::make_unique<ImageVersionsConnectionIdempotencyPolicy>();

@@ -22,6 +22,7 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
 #include <google/cloud/orchestration/airflow/service/v1/environments.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -72,6 +73,10 @@ class EnvironmentsConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ListWorkloads(
       google::cloud::orchestration::airflow::service::v1::ListWorkloadsRequest
           request);
+
+  virtual google::cloud::Idempotency CheckUpgrade(
+      google::cloud::orchestration::airflow::service::v1::
+          CheckUpgradeRequest const& request);
 
   virtual google::cloud::Idempotency CreateUserWorkloadsSecret(
       google::cloud::orchestration::airflow::service::v1::
@@ -128,6 +133,15 @@ class EnvironmentsConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency FetchDatabaseProperties(
       google::cloud::orchestration::airflow::service::v1::
           FetchDatabasePropertiesRequest const& request);
+
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 };
 
 std::unique_ptr<EnvironmentsConnectionIdempotencyPolicy>

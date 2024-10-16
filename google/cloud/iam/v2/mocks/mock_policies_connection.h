@@ -150,6 +150,10 @@ class MockPoliciesConnection : public iam_v2::PoliciesConnection {
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::iam::v2::Policy>>, DeletePolicy,
               (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

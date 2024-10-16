@@ -60,6 +60,30 @@ AnalyticsServiceTracingStub::ExportAnalyticsMetrics(
       child_->ExportAnalyticsMetrics(context, options, request));
 }
 
+StatusOr<google::longrunning::ListOperationsResponse>
+AnalyticsServiceTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::ListOperationsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.AnalyticsService",
+                                     "ListOperations");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListOperations(context, options, request));
+}
+
+StatusOr<google::longrunning::Operation>
+AnalyticsServiceTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.AnalyticsService",
+                                     "GetOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetOperation(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AnalyticsServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

@@ -63,6 +63,10 @@ class RuleSetServiceLogging : public RuleSetServiceStub {
                google::cloud::contentwarehouse::v1::ListRuleSetsRequest const&
                    request) override;
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::shared_ptr<RuleSetServiceStub> child_;
   TracingOptions tracing_options_;

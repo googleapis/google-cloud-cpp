@@ -43,6 +43,9 @@ class EventServiceTracingConnection : public talent_v4::EventServiceConnection {
       google::cloud::talent::v4::CreateClientEventRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::shared_ptr<talent_v4::EventServiceConnection> child_;
 };

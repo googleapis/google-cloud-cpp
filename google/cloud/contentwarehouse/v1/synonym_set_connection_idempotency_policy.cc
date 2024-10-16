@@ -59,6 +59,11 @@ Idempotency SynonymSetServiceConnectionIdempotencyPolicy::ListSynonymSets(
   return Idempotency::kIdempotent;
 }
 
+Idempotency SynonymSetServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<SynonymSetServiceConnectionIdempotencyPolicy>
 MakeDefaultSynonymSetServiceConnectionIdempotencyPolicy() {
   return std::make_unique<SynonymSetServiceConnectionIdempotencyPolicy>();

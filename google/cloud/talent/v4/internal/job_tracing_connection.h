@@ -96,6 +96,9 @@ class JobServiceTracingConnection : public talent_v4::JobServiceConnection {
   StatusOr<google::cloud::talent::v4::SearchJobsResponse> SearchJobsForAlert(
       google::cloud::talent::v4::SearchJobsRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::shared_ptr<talent_v4::JobServiceConnection> child_;
 };

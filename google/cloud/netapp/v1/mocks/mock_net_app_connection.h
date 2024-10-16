@@ -172,6 +172,46 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
               DeleteStoragePool,
               (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// SwitchActiveReplicaZone(Matcher<google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::StoragePool>>,
+              SwitchActiveReplicaZone,
+              (google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, SwitchActiveReplicaZone(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, SwitchActiveReplicaZone,
+              (NoAwaitTag,
+               google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// SwitchActiveReplicaZone(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::StoragePool>>,
+              SwitchActiveReplicaZone,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD((StreamRange<google::cloud::netapp::v1::Volume>), ListVolumes,
               (google::cloud::netapp::v1::ListVolumesRequest request),
               (override));
@@ -1347,6 +1387,29 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
   MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>,
               DeleteBackupPolicy,
               (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
+              (google::cloud::location::ListLocationsRequest request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
+              (google::cloud::location::GetLocationRequest const& request),
+              (override));
+
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
+              (google::longrunning::ListOperationsRequest request), (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
+
+  MOCK_METHOD(Status, DeleteOperation,
+              (google::longrunning::DeleteOperationRequest const& request),
+              (override));
+
+  MOCK_METHOD(Status, CancelOperation,
+              (google::longrunning::CancelOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

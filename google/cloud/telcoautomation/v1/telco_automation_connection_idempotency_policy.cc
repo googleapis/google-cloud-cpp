@@ -232,6 +232,36 @@ Idempotency TelcoAutomationConnectionIdempotencyPolicy::ApplyHydratedDeployment(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency TelcoAutomationConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<TelcoAutomationConnectionIdempotencyPolicy>
 MakeDefaultTelcoAutomationConnectionIdempotencyPolicy() {
   return std::make_unique<TelcoAutomationConnectionIdempotencyPolicy>();

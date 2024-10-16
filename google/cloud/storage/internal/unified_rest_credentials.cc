@@ -37,6 +37,7 @@ namespace internal {
 namespace {
 
 using ::google::cloud::internal::AccessTokenConfig;
+using ::google::cloud::internal::ApiKeyConfig;
 using ::google::cloud::internal::CredentialsVisitor;
 using ::google::cloud::internal::ErrorCredentialsConfig;
 using ::google::cloud::internal::ExternalAccountConfig;
@@ -57,7 +58,7 @@ class WrapRestCredentials : public oauth2::Credentials {
       : impl_(std::move(impl)) {}
 
   StatusOr<std::string> AuthorizationHeader() override {
-    return oauth2_internal::AuthorizationHeaderJoined(*impl_);
+    return oauth2_internal::AuthenticationHeaderJoined(*impl_);
   }
 
   StatusOr<std::vector<std::uint8_t>> SignBlob(
@@ -133,6 +134,13 @@ std::shared_ptr<oauth2::Credentials> MapCredentials(
           *info, std::move(client_factory_), cfg.options());
       result = std::make_shared<WrapRestCredentials>(
           Decorate(std::move(impl), cfg.options()));
+    }
+    void visit(internal::ApiKeyConfig const&) override {
+      // Circa 2024, GCS does not support API key authentication. Moreover, we
+      // would have to grow the deprecated `storage::oauth2::Credentials` class
+      // to support setting the `x-goog-api-key` header. For these reasons, we
+      // just return anonymous (no-op) credentials.
+      result = google::cloud::storage::oauth2::CreateAnonymousCredentials();
     }
 
    private:

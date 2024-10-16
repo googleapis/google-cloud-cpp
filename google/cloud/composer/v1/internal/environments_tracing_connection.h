@@ -109,6 +109,19 @@ class EnvironmentsTracingConnection
       google::cloud::orchestration::airflow::service::v1::ListWorkloadsRequest
           request) override;
 
+  future<StatusOr<
+      google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>>
+  CheckUpgrade(google::cloud::orchestration::airflow::service::v1::
+                   CheckUpgradeRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> CheckUpgrade(
+      NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
+                      CheckUpgradeRequest const& request) override;
+
+  future<StatusOr<
+      google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>>
+  CheckUpgrade(google::longrunning::Operation const& operation) override;
+
   StatusOr<
       google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
   CreateUserWorkloadsSecret(
@@ -209,6 +222,15 @@ class EnvironmentsTracingConnection
   FetchDatabaseProperties(
       google::cloud::orchestration::airflow::service::v1::
           FetchDatabasePropertiesRequest const& request) override;
+
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
 
  private:
   std::shared_ptr<composer_v1::EnvironmentsConnection> child_;

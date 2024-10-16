@@ -86,6 +86,8 @@ class StorageConnectionImpl
       ComposeObjectRequest const& request) override;
   StatusOr<RewriteObjectResponse> RewriteObject(
       RewriteObjectRequest const&) override;
+  StatusOr<ObjectMetadata> RestoreObject(
+      RestoreObjectRequest const& request) override;
 
   StatusOr<CreateResumableUploadResponse> CreateResumableUpload(
       ResumableUploadRequest const& request) override;

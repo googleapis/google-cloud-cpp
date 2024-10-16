@@ -131,6 +131,26 @@ Idempotency AzureClustersConnectionIdempotencyPolicy::GetAzureServerConfig(
   return Idempotency::kIdempotent;
 }
 
+Idempotency AzureClustersConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency AzureClustersConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency AzureClustersConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency AzureClustersConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<AzureClustersConnectionIdempotencyPolicy>
 MakeDefaultAzureClustersConnectionIdempotencyPolicy() {
   return std::make_unique<AzureClustersConnectionIdempotencyPolicy>();

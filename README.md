@@ -39,12 +39,9 @@ int main(int argc, char* argv[]) {
   }
   std::string const bucket_name = argv[1];
 
-  // Create aliases to make the code easier to read.
-  namespace gcs = ::google::cloud::storage;
-
   // Create a client to communicate with Google Cloud Storage. This client
   // uses the default configuration for authentication and project id.
-  auto client = gcs::Client();
+  auto client = google::cloud::storage::Client();
 
   auto writer = client.WriteObject(bucket_name, "quickstart.txt");
   writer << "Hello World!";
@@ -260,9 +257,6 @@ See each library's `README.md` file for more information about:
 - [Cloud Functions API](google/cloud/functions/README.md)
   [\[quickstart\]](google/cloud/functions/quickstart/README.md)
   [\[reference\]](https://cloud.google.com/cpp/docs/reference/functions/latest)
-- [Generative Language API](google/cloud/generativelanguage/README.md)
-  [\[quickstart\]](google/cloud/generativelanguage/quickstart/README.md)
-  [\[reference\]](https://cloud.google.com/cpp/docs/reference/generativelanguage/latest)
 - [Backup for GKE API](google/cloud/gkebackup/README.md)
   [\[quickstart\]](google/cloud/gkebackup/quickstart/README.md)
   [\[reference\]](https://cloud.google.com/cpp/docs/reference/gkebackup/latest)

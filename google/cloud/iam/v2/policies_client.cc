@@ -156,6 +156,20 @@ future<StatusOr<google::iam::v2::Policy>> PoliciesClient::DeletePolicy(
   return connection_->DeletePolicy(operation);
 }
 
+StatusOr<google::longrunning::Operation> PoliciesClient::GetOperation(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::longrunning::GetOperationRequest request;
+  request.set_name(name);
+  return connection_->GetOperation(request);
+}
+
+StatusOr<google::longrunning::Operation> PoliciesClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetOperation(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iam_v2
 }  // namespace cloud

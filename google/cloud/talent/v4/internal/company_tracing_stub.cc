@@ -91,6 +91,18 @@ CompanyServiceTracingStub::ListCompanies(
                            child_->ListCompanies(context, options, request));
 }
 
+StatusOr<google::longrunning::Operation>
+CompanyServiceTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.CompanyService",
+                                     "GetOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetOperation(context, options, request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<CompanyServiceStub> MakeCompanyServiceTracingStub(

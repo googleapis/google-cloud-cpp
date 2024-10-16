@@ -32,6 +32,7 @@ google_cloud_cpp_generator_unit_tests = [
     "internal/http_option_utils_test.cc",
     "internal/longrunning_test.cc",
     "internal/make_generators_test.cc",
+    "internal/mixin_utils_test.cc",
     "internal/pagination_test.cc",
     "internal/predicate_utils_test.cc",
     "internal/printer_test.cc",

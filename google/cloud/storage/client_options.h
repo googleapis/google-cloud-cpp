@@ -73,10 +73,12 @@ Options DefaultOptionsWithCredentials(Options opts);
  */
 class ChannelOptions {
  public:
-  /// @deprecated Use google::cloud::Options and CAPathOption instead.
+  /// @deprecated Use google::cloud::Options and
+  /// google::cloud::CARootsFilePathOption instead.
   std::string ssl_root_path() const { return ssl_root_path_; }
 
-  /// @deprecated Use google::cloud::Options and CAPathOption instead.
+  /// @deprecated Use google::cloud::Options and
+  /// google::cloud::CARootsFilePathOption instead.
   ChannelOptions& set_ssl_root_path(std::string ssl_root_path) {
     ssl_root_path_ = std::move(ssl_root_path);
     return *this;
@@ -400,10 +402,12 @@ class ClientOptions {
     return *this;
   }
 
-  /// @deprecated Use google::cloud::Options and CAPathOption instead.
+  /// @deprecated Use google::cloud::Options and
+  /// google::cloud::CARootsFilePathOption instead.
   ChannelOptions& channel_options() { return channel_options_; }
 
-  /// @deprecated Use google::cloud::Options and CAPathOption instead.
+  /// @deprecated Use google::cloud::Options and
+  /// google::cloud::CARootsFilePathOption instead.
   ChannelOptions const& channel_options() const { return channel_options_; }
 
   ///@{

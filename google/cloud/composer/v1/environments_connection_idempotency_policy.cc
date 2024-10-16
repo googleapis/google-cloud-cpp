@@ -88,6 +88,12 @@ Idempotency EnvironmentsConnectionIdempotencyPolicy::ListWorkloads(
   return Idempotency::kIdempotent;
 }
 
+Idempotency EnvironmentsConnectionIdempotencyPolicy::CheckUpgrade(
+    google::cloud::orchestration::airflow::service::v1::
+        CheckUpgradeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency EnvironmentsConnectionIdempotencyPolicy::CreateUserWorkloadsSecret(
     google::cloud::orchestration::airflow::service::v1::
         CreateUserWorkloadsSecretRequest const&) {
@@ -174,6 +180,21 @@ Idempotency EnvironmentsConnectionIdempotencyPolicy::FetchDatabaseProperties(
     google::cloud::orchestration::airflow::service::v1::
         FetchDatabasePropertiesRequest const&) {
   return Idempotency::kIdempotent;
+}
+
+Idempotency EnvironmentsConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency EnvironmentsConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency EnvironmentsConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<EnvironmentsConnectionIdempotencyPolicy>

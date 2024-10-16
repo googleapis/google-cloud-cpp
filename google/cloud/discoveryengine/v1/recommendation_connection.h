@@ -25,6 +25,7 @@
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <google/cloud/discoveryengine/v1/recommendation_service.pb.h>
 #include <memory>
@@ -191,6 +192,15 @@ class RecommendationServiceConnection {
   virtual StatusOr<google::cloud::discoveryengine::v1::RecommendResponse>
   Recommend(
       google::cloud::discoveryengine::v1::RecommendRequest const& request);
+
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
+
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

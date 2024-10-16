@@ -68,6 +68,14 @@ service {
 }
 
 service {
+  service_proto_path: "google/cloud/aiplatform/v1/evaluation_service.proto"
+  product_path: "google/cloud/aiplatform/v1"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
+service {
   service_proto_path: "google/cloud/aiplatform/v1/feature_online_store_admin_service.proto"
   product_path: "google/cloud/aiplatform/v1"
   initial_copyright_year: "2023"
@@ -2286,6 +2294,22 @@ service {
   endpoint_location_style: LOCATION_DEPENDENT_COMPAT
 }
 
+service {
+  service_proto_path: "google/cloud/dialogflow/v2/encryption_spec.proto"
+  product_path: "google/cloud/dialogflow_es"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT_COMPAT
+}
+
+service {
+  service_proto_path: "google/cloud/dialogflow/v2/generator.proto"
+  product_path: "google/cloud/dialogflow_es"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT_COMPAT
+}
+
 # Discovery Engine
 service {
   service_proto_path: "google/cloud/discoveryengine/v1/completion_service.proto"
@@ -2468,21 +2492,6 @@ service {
   service_proto_path: "google/cloud/functions/v2/functions.proto"
   product_path: "google/cloud/functions/v2"
   initial_copyright_year: "2023"
-  retryable_status_codes: ["kUnavailable"]
-}
-
-# Generative Language
-service {
-  service_proto_path: "google/ai/generativelanguage/v1/generative_service.proto"
-  product_path: "google/cloud/generativelanguage/v1"
-  initial_copyright_year: "2024"
-  retryable_status_codes: ["kUnavailable"]
-}
-
-service {
-  service_proto_path: "google/ai/generativelanguage/v1/model_service.proto"
-  product_path: "google/cloud/generativelanguage/v1"
-  initial_copyright_year: "2024"
   retryable_status_codes: ["kUnavailable"]
 }
 
@@ -3674,6 +3683,18 @@ service {
     "WriteObject"
   ]
   omit_repo_metadata: true
+  omitted_rpcs: [
+    "GetServiceAccount",
+    "CreateHmacKey",
+    "DeleteHmacKey",
+    "GetHmacKey",
+    "ListHmacKeys",
+    "UpdateHmacKey",
+    "DeleteNotificationConfig",
+    "GetNotificationConfig",
+    "CreateNotificationConfig",
+    "ListNotificationConfigs"
+  ]
 }
 
 # Storage Control

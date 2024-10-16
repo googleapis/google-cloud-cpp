@@ -130,6 +130,11 @@ Idempotency ProductSearchConnectionIdempotencyPolicy::PurgeProducts(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency ProductSearchConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<ProductSearchConnectionIdempotencyPolicy>
 MakeDefaultProductSearchConnectionIdempotencyPolicy() {
   return std::make_unique<ProductSearchConnectionIdempotencyPolicy>();

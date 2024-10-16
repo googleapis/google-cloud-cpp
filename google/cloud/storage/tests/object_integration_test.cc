@@ -22,6 +22,7 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <algorithm>
+#include <chrono>
 #include <cstring>
 #include <iostream>
 #include <memory>
@@ -817,6 +818,35 @@ TEST_F(ObjectIntegrationTest, WriteWithCustomTime) {
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
   EXPECT_EQ(custom_time, meta->custom_time());
+}
+
+TEST_F(ObjectIntegrationTest, RestoreObject) {
+  auto client = MakeIntegrationTestClient();
+  auto object_name = MakeRandomObjectName();
+  std::string expected = LoremIpsum();
+
+  auto bucket_metadata = client.PatchBucket(
+      bucket_name_,
+      google::cloud::storage::BucketMetadataPatchBuilder().SetSoftDeletePolicy(
+          std::chrono::seconds(7 * 24 * 60 * 60)));
+  ASSERT_STATUS_OK(bucket_metadata);
+
+  auto stream =
+      client.WriteObject(bucket_name_, object_name, IfGenerationMatch(0));
+  stream << expected;
+  stream.Close();
+  auto metadata = stream.metadata();
+  ASSERT_STATUS_OK(metadata);
+
+  auto delete_obj = client.DeleteObject(bucket_name_, object_name);
+  ASSERT_STATUS_OK(delete_obj);
+
+  auto restore = client.RestoreObject(bucket_name_, object_name,
+                                      metadata.value().generation());
+  ASSERT_STATUS_OK(restore);
+
+  EXPECT_NE(metadata.value().generation(), restore.value().generation());
+  EXPECT_EQ(restore.value().metageneration(), 1);
 }
 
 }  // anonymous namespace

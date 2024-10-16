@@ -68,6 +68,10 @@ class DocumentSchemaServiceTracingStub : public DocumentSchemaServiceStub {
       google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::shared_ptr<DocumentSchemaServiceStub> child_;
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>

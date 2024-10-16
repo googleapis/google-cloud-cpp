@@ -218,6 +218,38 @@ DefaultEnvironmentsStub::ListWorkloads(
   return response;
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultEnvironmentsStub::AsyncCheckUpgrade(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::orchestration::airflow::service::v1::
+        CheckUpgradeRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::orchestration::airflow::service::v1::CheckUpgradeRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::orchestration::airflow::service::v1::
+                 CheckUpgradeRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCheckUpgrade(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultEnvironmentsStub::CheckUpgrade(
+    grpc::ClientContext& context, Options,
+    google::cloud::orchestration::airflow::service::v1::
+        CheckUpgradeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CheckUpgrade(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<
     google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
 DefaultEnvironmentsStub::CreateUserWorkloadsSecret(
@@ -483,6 +515,40 @@ DefaultEnvironmentsStub::FetchDatabaseProperties(
     return google::cloud::MakeStatusFromRpcError(status);
   }
   return response;
+}
+
+StatusOr<google::longrunning::ListOperationsResponse>
+DefaultEnvironmentsStub::ListOperations(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::ListOperationsRequest const& request) {
+  google::longrunning::ListOperationsResponse response;
+  auto status = operations_stub_->ListOperations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::longrunning::Operation> DefaultEnvironmentsStub::GetOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+Status DefaultEnvironmentsStub::DeleteOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::DeleteOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->DeleteOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 future<StatusOr<google::longrunning::Operation>>

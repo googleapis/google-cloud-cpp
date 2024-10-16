@@ -22,6 +22,7 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
 #include <google/cloud/texttospeech/v1/cloud_tts.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -42,6 +43,12 @@ class TextToSpeechConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency SynthesizeSpeech(
       google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request);
+
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<TextToSpeechConnectionIdempotencyPolicy>

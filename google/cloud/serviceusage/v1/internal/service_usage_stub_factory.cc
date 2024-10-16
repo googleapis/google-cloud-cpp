@@ -29,6 +29,7 @@
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/api/serviceusage/v1/serviceusage.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -44,9 +45,11 @@ std::shared_ptr<ServiceUsageStub> CreateDefaultServiceUsageStub(
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       google::api::serviceusage::v1::ServiceUsage::NewStub(channel);
+  auto service_operations_stub =
+      google::longrunning::Operations::NewStub(channel);
   std::shared_ptr<ServiceUsageStub> stub =
       std::make_shared<DefaultServiceUsageStub>(
-          std::move(service_grpc_stub),
+          std::move(service_grpc_stub), std::move(service_operations_stub),
           google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {

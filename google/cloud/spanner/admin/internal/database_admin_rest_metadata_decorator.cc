@@ -315,6 +315,36 @@ DatabaseAdminRestMetadata::ListBackupSchedules(
   return child_->ListBackupSchedules(rest_context, options, request);
 }
 
+StatusOr<google::longrunning::ListOperationsResponse>
+DatabaseAdminRestMetadata::ListOperations(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::longrunning::ListOperationsRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->ListOperations(rest_context, options, request);
+}
+
+StatusOr<google::longrunning::Operation>
+DatabaseAdminRestMetadata::GetOperation(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->GetOperation(rest_context, options, request);
+}
+
+Status DatabaseAdminRestMetadata::DeleteOperation(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::longrunning::DeleteOperationRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteOperation(rest_context, options, request);
+}
+
+Status DatabaseAdminRestMetadata::CancelOperation(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::longrunning::CancelOperationRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->CancelOperation(rest_context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

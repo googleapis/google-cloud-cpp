@@ -16,7 +16,10 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_HTTP_OPTION_UTILS_H
 
 #include "generator/internal/http_annotation_parser.h"
+#include "generator/internal/mixin_utils.h"
 #include "generator/internal/printer.h"
+#include "absl/types/optional.h"
+#include <google/api/http.pb.h>
 #include <google/protobuf/descriptor.h>
 #include <string>
 
@@ -40,8 +43,7 @@ struct HttpExtensionInfo {
  * for the provided method per AIP-4222. Output is also used for gRPC/HTTP
  * transcoding and REST transport.
  */
-HttpExtensionInfo ParseHttpExtension(
-    google::protobuf::MethodDescriptor const& method);
+HttpExtensionInfo ParseHttpExtension(google::api::HttpRule const& http_rule);
 
 /**
  * Sets the following method_vars based on the provided parsed_http_info:
@@ -107,16 +109,10 @@ std::string FormatRequestResource(google::protobuf::Descriptor const& request,
                                   HttpExtensionInfo const& info);
 
 /**
- * Parses the package name of the method and returns its API version.
- */
-std::string FormatApiVersionFromPackageName(
-    google::protobuf::MethodDescriptor const& method);
-
-/**
  * Parses the url pattern of the method and returns its API version.
  */
-std::string FormatApiVersionFromUrlPattern(std::string const& url_pattern,
-                                           std::string const& file_name);
+absl::optional<std::string> FormatApiVersionFromUrlPattern(
+    std::string const& url_pattern);
 
 }  // namespace generator_internal
 }  // namespace cloud

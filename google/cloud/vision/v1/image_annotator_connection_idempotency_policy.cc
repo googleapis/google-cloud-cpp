@@ -54,6 +54,11 @@ Idempotency ImageAnnotatorConnectionIdempotencyPolicy::AsyncBatchAnnotateFiles(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency ImageAnnotatorConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<ImageAnnotatorConnectionIdempotencyPolicy>
 MakeDefaultImageAnnotatorConnectionIdempotencyPolicy() {
   return std::make_unique<ImageAnnotatorConnectionIdempotencyPolicy>();

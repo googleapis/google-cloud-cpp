@@ -87,6 +87,18 @@ Status DocumentLinkServiceTracingStub::DeleteDocumentLink(
       context, *span, child_->DeleteDocumentLink(context, options, request));
 }
 
+StatusOr<google::longrunning::Operation>
+DocumentLinkServiceTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.contentwarehouse.v1.DocumentLinkService", "GetOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetOperation(context, options, request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<DocumentLinkServiceStub> MakeDocumentLinkServiceTracingStub(

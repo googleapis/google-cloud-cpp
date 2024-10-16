@@ -97,6 +97,26 @@ ServiceHealthTracingConnection::GetOrganizationImpact(
   return internal::EndSpan(*span, child_->GetOrganizationImpact(request));
 }
 
+StreamRange<google::cloud::location::Location>
+ServiceHealthTracingConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan(
+      "servicehealth_v1::ServiceHealthConnection::ListLocations");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListLocations(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::location::Location>(
+      std::move(span), std::move(sr));
+}
+
+StatusOr<google::cloud::location::Location>
+ServiceHealthTracingConnection::GetLocation(
+    google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "servicehealth_v1::ServiceHealthConnection::GetLocation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetLocation(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<servicehealth_v1::ServiceHealthConnection>

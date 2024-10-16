@@ -48,6 +48,19 @@ class UserEventServiceTracingConnection
       google::cloud::discoveryengine::v1::CollectUserEventRequest const&
           request) override;
 
+  future<StatusOr<google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>
+  PurgeUserEvents(
+      google::cloud::discoveryengine::v1::PurgeUserEventsRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> PurgeUserEvents(
+      NoAwaitTag,
+      google::cloud::discoveryengine::v1::PurgeUserEventsRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>
+  PurgeUserEvents(google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>
   ImportUserEvents(
       google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
@@ -60,6 +73,15 @@ class UserEventServiceTracingConnection
 
   future<StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>
   ImportUserEvents(google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<discoveryengine_v1::UserEventServiceConnection> child_;

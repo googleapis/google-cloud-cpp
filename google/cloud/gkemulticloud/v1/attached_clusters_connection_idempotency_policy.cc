@@ -84,6 +84,26 @@ AttachedClustersConnectionIdempotencyPolicy::GenerateAttachedClusterAgentToken(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency AttachedClustersConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency AttachedClustersConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency AttachedClustersConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency AttachedClustersConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<AttachedClustersConnectionIdempotencyPolicy>
 MakeDefaultAttachedClustersConnectionIdempotencyPolicy() {
   return std::make_unique<AttachedClustersConnectionIdempotencyPolicy>();

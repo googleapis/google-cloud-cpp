@@ -93,6 +93,21 @@ CloudFunctionsServiceConnectionIdempotencyPolicy::TestIamPermissions(
   return Idempotency::kIdempotent;
 }
 
+Idempotency CloudFunctionsServiceConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency CloudFunctionsServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency CloudFunctionsServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<CloudFunctionsServiceConnectionIdempotencyPolicy>
 MakeDefaultCloudFunctionsServiceConnectionIdempotencyPolicy() {
   return std::make_unique<CloudFunctionsServiceConnectionIdempotencyPolicy>();

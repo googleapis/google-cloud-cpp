@@ -74,6 +74,11 @@ Idempotency DocumentServiceConnectionIdempotencyPolicy::SetAcl(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency DocumentServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<DocumentServiceConnectionIdempotencyPolicy>
 MakeDefaultDocumentServiceConnectionIdempotencyPolicy() {
   return std::make_unique<DocumentServiceConnectionIdempotencyPolicy>();

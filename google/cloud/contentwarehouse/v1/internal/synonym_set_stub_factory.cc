@@ -29,6 +29,7 @@
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/contentwarehouse/v1/synonymset_service.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -44,9 +45,11 @@ std::shared_ptr<SynonymSetServiceStub> CreateDefaultSynonymSetServiceStub(
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       google::cloud::contentwarehouse::v1::SynonymSetService::NewStub(channel);
+  auto service_operations_stub =
+      google::longrunning::Operations::NewStub(channel);
   std::shared_ptr<SynonymSetServiceStub> stub =
       std::make_shared<DefaultSynonymSetServiceStub>(
-          std::move(service_grpc_stub));
+          std::move(service_grpc_stub), std::move(service_operations_stub));
 
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<SynonymSetServiceAuth>(std::move(auth),

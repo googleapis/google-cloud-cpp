@@ -29,10 +29,12 @@ MockConnectionGenerator::MockConnectionGenerator(
     google::protobuf::ServiceDescriptor const* service_descriptor,
     VarsDictionary service_vars,
     std::map<std::string, VarsDictionary> service_method_vars,
-    google::protobuf::compiler::GeneratorContext* context)
+    google::protobuf::compiler::GeneratorContext* context,
+    std::vector<MixinMethod> const& mixin_methods)
     : ServiceCodeGenerator("mock_connection_header_path", service_descriptor,
                            std::move(service_vars),
-                           std::move(service_method_vars), context) {}
+                           std::move(service_method_vars), context,
+                           mixin_methods) {}
 
 Status MockConnectionGenerator::GenerateHeader() {
   HeaderPrint(CopyrightLicenseFileHeader());

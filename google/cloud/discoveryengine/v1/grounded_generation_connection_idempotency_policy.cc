@@ -41,6 +41,23 @@ GroundedGenerationServiceConnectionIdempotencyPolicy::CheckGrounding(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency
+GroundedGenerationServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency GroundedGenerationServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+GroundedGenerationServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<GroundedGenerationServiceConnectionIdempotencyPolicy>
 MakeDefaultGroundedGenerationServiceConnectionIdempotencyPolicy() {
   return std::make_unique<

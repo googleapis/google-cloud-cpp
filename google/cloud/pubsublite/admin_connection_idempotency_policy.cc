@@ -129,6 +129,26 @@ Idempotency AdminServiceConnectionIdempotencyPolicy::ListReservationTopics(
   return Idempotency::kIdempotent;
 }
 
+Idempotency AdminServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency AdminServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency AdminServiceConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency AdminServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<AdminServiceConnectionIdempotencyPolicy>
 MakeDefaultAdminServiceConnectionIdempotencyPolicy() {
   return std::make_unique<AdminServiceConnectionIdempotencyPolicy>();

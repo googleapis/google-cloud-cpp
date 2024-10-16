@@ -55,6 +55,15 @@ class MetricsServiceV2TracingConnection
   Status DeleteLogMetric(
       google::logging::v2::DeleteLogMetricRequest const& request) override;
 
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
+
  private:
   std::shared_ptr<logging_v2::MetricsServiceV2Connection> child_;
 };

@@ -122,6 +122,26 @@ Idempotency LineageConnectionIdempotencyPolicy::BatchSearchLinkProcesses(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency LineageConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency LineageConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency LineageConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency LineageConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<LineageConnectionIdempotencyPolicy>
 MakeDefaultLineageConnectionIdempotencyPolicy() {
   return std::make_unique<LineageConnectionIdempotencyPolicy>();

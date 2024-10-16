@@ -82,9 +82,9 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "build_bazel_rules_apple",
         urls = [
-            "https://github.com/bazelbuild/rules_apple/releases/download/3.8.0/rules_apple.3.8.0.tar.gz",
+            "https://github.com/bazelbuild/rules_apple/releases/download/3.9.2/rules_apple.3.9.2.tar.gz",
         ],
-        sha256 = "62847b3f444ce514ae386704a119ad7b29fa6dfb65a38bff4ae239f2389a0429",
+        sha256 = "86025f64d723a66438787d089bea4a7bc387877229f927dcb72ee26a8db96917",
     )
 
     # Load Abseil
@@ -115,10 +115,10 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_google_googleapis",
         urls = [
-            "https://github.com/googleapis/googleapis/archive/6a474b31c53cc1797710206824a17b364a835d2d.tar.gz",
+            "https://github.com/googleapis/googleapis/archive/69e9dff10df4fa1e338712d38dc26b46791a6e94.tar.gz",
         ],
-        sha256 = "435ae615a71ab2718d5e4b348b2442d896a03f9c1ea98182dc2ea927f383acd2",
-        strip_prefix = "googleapis-6a474b31c53cc1797710206824a17b364a835d2d",
+        sha256 = "a9fb01eccd8deed5d8d1b9521e0220abcff251cd0ab2489df5993c1f7392e677",
+        strip_prefix = "googleapis-69e9dff10df4fa1e338712d38dc26b46791a6e94",
         build_file = Label("//bazel:googleapis.BUILD"),
         # Scaffolding for patching googleapis after download. For example:
         #   patches = ["googleapis.patch"]
@@ -135,10 +135,10 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_google_protobuf",
         urls = [
-            "https://github.com/protocolbuffers/protobuf/archive/v28.1.tar.gz",
+            "https://github.com/protocolbuffers/protobuf/archive/v28.2.tar.gz",
         ],
-        sha256 = "3b8bf6e96499a744bd014c60b58f797715a758093abf859f1d902194b8e1f8c9",
-        strip_prefix = "protobuf-28.1",
+        sha256 = "b2340aa47faf7ef10a0328190319d3f3bee1b24f426d4ce8f4253b6f27ce16db",
+        strip_prefix = "protobuf-28.2",
     )
 
     # Load BoringSSL. This could be automatically loaded by gRPC. But as of
@@ -161,10 +161,10 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_github_grpc_grpc",
         urls = [
-            "https://github.com/grpc/grpc/archive/v1.66.1.tar.gz",
+            "https://github.com/grpc/grpc/archive/v1.67.0.tar.gz",
         ],
-        sha256 = "79ed4ab72fa9589b20f8b0b76c16e353e4cfec1d773d33afad605d97b5682c61",
-        strip_prefix = "grpc-1.66.1",
+        sha256 = "af0638f73e4452e22e295f8b3f452518234254104713a08497f3d3aaa76733ad",
+        strip_prefix = "grpc-1.67.0",
     )
 
     # We use the cc_proto_library() rule from @com_google_protobuf, which
@@ -222,10 +222,10 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "io_opentelemetry_cpp",
         urls = [
-            "https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.16.1.tar.gz",
+            "https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.17.0.tar.gz",
         ],
-        sha256 = "b8a78bb2a3a78133dbb08bcd04342f4b1e03cb4a19079b8416d408d905fffc37",
-        strip_prefix = "opentelemetry-cpp-1.16.1",
+        sha256 = "13542725463f1ea106edaef078c2276065cf3da998cb1d3dcf92630daa3f64d4",
+        strip_prefix = "opentelemetry-cpp-1.17.0",
         repo_mapping = {
             "@curl": "@com_github_curl_curl",
             "@com_github_google_benchmark": "@com_github_benchmark",

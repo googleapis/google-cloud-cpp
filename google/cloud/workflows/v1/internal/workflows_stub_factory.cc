@@ -28,7 +28,9 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
+#include <google/cloud/location/locations.grpc.pb.h>
 #include <google/cloud/workflows/v1/workflows.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -44,8 +46,13 @@ std::shared_ptr<WorkflowsStub> CreateDefaultWorkflowsStub(
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       google::cloud::workflows::v1::Workflows::NewStub(channel);
+  auto service_operations_stub =
+      google::longrunning::Operations::NewStub(channel);
+  auto service_locations_stub =
+      google::cloud::location::Locations::NewStub(channel);
   std::shared_ptr<WorkflowsStub> stub = std::make_shared<DefaultWorkflowsStub>(
-      std::move(service_grpc_stub),
+      std::move(service_grpc_stub), std::move(service_operations_stub),
+      std::move(service_locations_stub),
       google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {

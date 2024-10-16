@@ -4,14 +4,57 @@
 breaking changes in the upcoming 3.x release. This release is scheduled for
 2024-12 or 2025-01.
 
-## v2.30.0 - TBD
+## v2.31.0 - TBD
 
-### New Libraries
+## v2.30.0 - 2024-10
 
-We are happy to announce the following GA libraries. Unless specifically noted,
-the APIs in these libraries are stable, and are ready for production use.
+### Updated Libraries
 
-- [Gemini API](/google/cloud/generativelanguage/README.md)
+- [AI Platform API](/google/cloud/aiplatform/README.md) - new
+  `EvaluationServiceClient`
+- [Dialogflow ES API](/google/cloud/dialogflow_es/README.md) - new
+  `EncryptionSpecServiceClient` and `GeneratorsClient`
+
+### [AI Platform API](/google/cloud/aiplatform/README.md)
+
+- doc(aiplatform): add Vertex AI samples ([#14703](https://github.com/googleapis/google-cloud-cpp/pull/14703))
+
+### [KMS](/google/cloud/kms/README.md)
+
+- `AutokeyClient::ListKeyHandles(...)` signature has changed to return an
+  iterable type. Our telemetry indicates that there are no C++ applications
+  using this API, and therefore we do not consider this a breaking change.
+  ([#14726](https://github.com/googleapis/google-cloud-cpp/pull/14726))
+
+### [OpenTelemetry](/google/cloud/opentelemetry/README.md)
+
+- feat(otel): release GCM exporter ([#14693](https://github.com/googleapis/google-cloud-cpp/pull/14693))
+
+### [Pub/Sub](/google/cloud/pubsub/README.md)
+
+- feat(mixin): add manual changes for pubsub and generate mixin code ([#14756](https://github.com/googleapis/google-cloud-cpp/pull/14756))
+- docs(pubsub): Add ingestion from GCS topic creation sample ([#14749](https://github.com/googleapis/google-cloud-cpp/pull/14749))
+
+### [Spanner](/google/cloud/spanner/README.md)
+
+- docs(spanner): Add samples for backup schedule feature APIs ([#14720](https://github.com/googleapis/google-cloud-cpp/pull/14720))
+- docs(spanner): create a few code snippets as examples for using Spanner Graph using cpp ([#14660](https://github.com/googleapis/google-cloud-cpp/pull/14660))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- The gRPC plugin is now GA. The [Using the gRPC plugin][storage-grpc]
+  guide describes this feature in more detail. When using GCS from Google
+  Compute Engine (GCE) this plugin can enable higher total throughput.
+- feat(storage): Add ability to restore soft deleted objects ([#14710](https://github.com/googleapis/google-cloud-cpp/pull/14710))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- fix(rest): promote buffer curl reads from to member variable ([#14732](https://github.com/googleapis/google-cloud-cpp/pull/14732))
+- fix: respect `GOOGLE_CLOUD_QUOTA_PROJECT` ([#14684](https://github.com/googleapis/google-cloud-cpp/pull/14684))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2024-09-24T10:34:24-07:00](https://github.com/googleapis/googleapis/tree/69e9dff10df4fa1e338712d38dc26b46791a6e94)
 
 ## v2.29.0 - 2024-09
 
@@ -1803,3 +1846,4 @@ case it elicits some feedback that requires changes.
 [product-launch-stages]: https://cloud.google.com/products/#product-launch-stages
 [resource-manager-tags]: https://cloud.google.com/resource-manager/docs/tags/tags-overview
 [speech-model-adaptation]: https://cloud.google.com/speech-to-text/docs/adaptation-model
+[storage-grpc]: https://cloud.google.com/cpp/docs/reference/storage/latest/storage-grpc

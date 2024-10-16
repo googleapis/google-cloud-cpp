@@ -59,6 +59,31 @@ Idempotency WebhooksConnectionIdempotencyPolicy::DeleteWebhook(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency WebhooksConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency WebhooksConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency WebhooksConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency WebhooksConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency WebhooksConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<WebhooksConnectionIdempotencyPolicy>
 MakeDefaultWebhooksConnectionIdempotencyPolicy() {
   return std::make_unique<WebhooksConnectionIdempotencyPolicy>();

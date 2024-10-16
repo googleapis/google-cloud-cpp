@@ -119,6 +119,10 @@ class MockGenericStub : public storage_internal::GenericStub {
               (rest_internal::RestContext&, Options const&,
                storage::internal::RewriteObjectRequest const&),
               (override));
+  MOCK_METHOD(StatusOr<storage::ObjectMetadata>, RestoreObject,
+              (rest_internal::RestContext&, Options const&,
+               storage::internal::RestoreObjectRequest const&),
+              (override));
 
   MOCK_METHOD(StatusOr<storage::internal::CreateResumableUploadResponse>,
               CreateResumableUpload,

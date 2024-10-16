@@ -14,6 +14,11 @@
 
 #include "google/cloud/internal/port_platform.h"
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC && GOOGLE_CLOUD_CPP_HAVE_COROUTINES
+// TODO(#14750): Remove this guard once vcpkg has a newer version of grpc
+#if (GRPC_CPP_VERSION_MAJOR > 1 ||                                   \
+     (GRPC_CPP_VERSION_MAJOR == 1 && GRPC_CPP_VERSION_MINOR > 65) || \
+     (GRPC_CPP_VERSION_MAJOR == 1 && GRPC_CPP_VERSION_MINOR == 65 && \
+      GRPC_CPP_VERSION_PATCH >= 4))
 #include "google/cloud/storage/async/client.h"
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
 #include "google/cloud/storage/client.h"
@@ -320,7 +325,7 @@ auto MakeAsyncClients(Configuration const& cfg,
 
 auto MakeClient(ClientConfig const& cc, int background_threads) {
   if (cc.transport == "GRPC") {
-    return google::cloud::storage_experimental::DefaultGrpcClient(
+    return gcs::MakeGrpcClient(
         g::Options{}
             .set<g::GrpcBackgroundThreadPoolSizeOption>(background_threads)
             .set<g::EndpointOption>(MapPath(cc.path)));
@@ -953,5 +958,9 @@ int main() {
   return 0;
 }
 
+#endif  // (GRPC_CPP_VERSION_MAJOR > 1 ||
+        // (GRPC_CPP_VERSION_MAJOR == 1 &&  GRPC_CPP_VERSION_MINOR > 65) ||
+        // (GRPC_CPP_VERSION_MAJOR == 1 && GRPC_CPP_VERSION_MINOR == 65 &&
+        // GRPC_CPP_VERSION_PATCH >= 4))
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC &&
         // GOOGLE_CLOUD_CPP_HAVE_COROUTINES

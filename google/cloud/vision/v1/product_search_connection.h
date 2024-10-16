@@ -261,6 +261,9 @@ class ProductSearchConnection {
 
   virtual future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
   PurgeProducts(google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

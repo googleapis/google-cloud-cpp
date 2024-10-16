@@ -59,6 +59,11 @@ Idempotency PoliciesConnectionIdempotencyPolicy::DeletePolicy(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency PoliciesConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<PoliciesConnectionIdempotencyPolicy>
 MakeDefaultPoliciesConnectionIdempotencyPolicy() {
   return std::make_unique<PoliciesConnectionIdempotencyPolicy>();

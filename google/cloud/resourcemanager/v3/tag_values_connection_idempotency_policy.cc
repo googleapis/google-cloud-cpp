@@ -80,6 +80,11 @@ Idempotency TagValuesConnectionIdempotencyPolicy::TestIamPermissions(
   return Idempotency::kIdempotent;
 }
 
+Idempotency TagValuesConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<TagValuesConnectionIdempotencyPolicy>
 MakeDefaultTagValuesConnectionIdempotencyPolicy() {
   return std::make_unique<TagValuesConnectionIdempotencyPolicy>();

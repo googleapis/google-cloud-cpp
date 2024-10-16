@@ -26,6 +26,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 #include <utility>
@@ -73,6 +74,18 @@ SpeechConnection::AsyncStreamingRecognize() {
           google::cloud::speech::v1::StreamingRecognizeRequest,
           google::cloud::speech::v1::StreamingRecognizeResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::longrunning::Operation> SpeechConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::longrunning::Operation>>();
+}
+
+StatusOr<google::longrunning::Operation> SpeechConnection::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 std::shared_ptr<SpeechConnection> MakeSpeechConnection(Options options) {

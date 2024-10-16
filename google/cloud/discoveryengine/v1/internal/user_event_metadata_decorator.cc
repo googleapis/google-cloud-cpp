@@ -63,6 +63,27 @@ StatusOr<google::api::HttpBody> UserEventServiceMetadata::CollectUserEvent(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+UserEventServiceMetadata::AsyncPurgeUserEvents(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::discoveryengine::v1::PurgeUserEventsRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncPurgeUserEvents(cq, std::move(context),
+                                      std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+UserEventServiceMetadata::PurgeUserEvents(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::PurgeUserEventsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->PurgeUserEvents(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 UserEventServiceMetadata::AsyncImportUserEvents(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -83,6 +104,31 @@ UserEventServiceMetadata::ImportUserEvents(
   SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ImportUserEvents(context, options, request);
+}
+
+StatusOr<google::longrunning::ListOperationsResponse>
+UserEventServiceMetadata::ListOperations(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::ListOperationsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ListOperations(context, options, request);
+}
+
+StatusOr<google::longrunning::Operation> UserEventServiceMetadata::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetOperation(context, options, request);
+}
+
+Status UserEventServiceMetadata::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::CancelOperationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->CancelOperation(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

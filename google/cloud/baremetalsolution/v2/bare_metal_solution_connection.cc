@@ -613,6 +613,20 @@ BareMetalSolutionConnection::ListOSImages(
       StreamRange<google::cloud::baremetalsolution::v2::OSImage>>();
 }
 
+StreamRange<google::cloud::location::Location>
+BareMetalSolutionConnection::ListLocations(
+    google::cloud::location::
+        ListLocationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::location::Location>>();
+}
+
+StatusOr<google::cloud::location::Location>
+BareMetalSolutionConnection::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<BareMetalSolutionConnection> MakeBareMetalSolutionConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

@@ -196,6 +196,9 @@ class CompanyServiceConnection {
 
   virtual StreamRange<google::cloud::talent::v4::Company> ListCompanies(
       google::cloud::talent::v4::ListCompaniesRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

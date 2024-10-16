@@ -230,6 +230,21 @@ class DocumentServiceConnection {
   virtual future<
       StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>
   PurgeDocuments(google::longrunning::Operation const& operation);
+
+  virtual StatusOr<
+      google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse>
+  BatchGetDocumentsMetadata(
+      google::cloud::discoveryengine::v1::
+          BatchGetDocumentsMetadataRequest const& request);
+
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
+
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

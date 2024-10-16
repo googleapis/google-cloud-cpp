@@ -310,6 +310,15 @@ class ContactCenterInsightsTracingConnection
       google::cloud::contactcenterinsights::v1::DeleteViewRequest const&
           request) override;
 
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
+
  private:
   std::shared_ptr<contactcenterinsights_v1::ContactCenterInsightsConnection>
       child_;

@@ -62,6 +62,10 @@ class DocumentLinkServiceMetadata : public DocumentLinkServiceStub {
       google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);

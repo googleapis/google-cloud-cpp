@@ -124,6 +124,19 @@ ServiceUsageConnection::BatchGetServices(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StreamRange<google::longrunning::Operation>
+ServiceUsageConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::longrunning::Operation>>();
+}
+
+StatusOr<google::longrunning::Operation> ServiceUsageConnection::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<ServiceUsageConnection> MakeServiceUsageConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

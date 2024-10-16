@@ -616,8 +616,8 @@ class RegionBackendServicesClient {
 
   // clang-format off
   ///
-  /// Retrieves an aggregated list of all usable backend services in the
-  /// specified project in the given region.
+  /// Retrieves a list of all usable backend services in the specified project in
+  /// the given region.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/regionBackendServices/listUsable
   ///
   /// @param project  Project ID for this request.
@@ -654,8 +654,8 @@ class RegionBackendServicesClient {
 
   // clang-format off
   ///
-  /// Retrieves an aggregated list of all usable backend services in the
-  /// specified project in the given region.
+  /// Retrieves a list of all usable backend services in the specified project in
+  /// the given region.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/regionBackendServices/listUsable
   ///
   /// @param request Unary RPCs, such as the one wrapped by this

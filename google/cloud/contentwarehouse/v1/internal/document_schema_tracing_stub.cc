@@ -101,6 +101,18 @@ DocumentSchemaServiceTracingStub::ListDocumentSchemas(
       context, *span, child_->ListDocumentSchemas(context, options, request));
 }
 
+StatusOr<google::longrunning::Operation>
+DocumentSchemaServiceTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.contentwarehouse.v1.DocumentSchemaService", "GetOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetOperation(context, options, request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<DocumentSchemaServiceStub> MakeDocumentSchemaServiceTracingStub(

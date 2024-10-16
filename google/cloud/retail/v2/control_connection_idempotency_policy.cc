@@ -59,6 +59,16 @@ Idempotency ControlServiceConnectionIdempotencyPolicy::ListControls(
   return Idempotency::kIdempotent;
 }
 
+Idempotency ControlServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ControlServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<ControlServiceConnectionIdempotencyPolicy>
 MakeDefaultControlServiceConnectionIdempotencyPolicy() {
   return std::make_unique<ControlServiceConnectionIdempotencyPolicy>();

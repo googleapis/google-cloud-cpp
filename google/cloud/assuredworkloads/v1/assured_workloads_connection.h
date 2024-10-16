@@ -240,6 +240,12 @@ class AssuredWorkloadsServiceConnection {
   AcknowledgeViolation(
       google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&
           request);
+
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

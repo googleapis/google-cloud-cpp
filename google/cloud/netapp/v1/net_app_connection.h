@@ -221,6 +221,17 @@ class NetAppConnection {
   virtual future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
   DeleteStoragePool(google::longrunning::Operation const& operation);
 
+  virtual future<StatusOr<google::cloud::netapp::v1::StoragePool>>
+  SwitchActiveReplicaZone(
+      google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> SwitchActiveReplicaZone(
+      NoAwaitTag,
+      google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request);
+
+  virtual future<StatusOr<google::cloud::netapp::v1::StoragePool>>
+  SwitchActiveReplicaZone(google::longrunning::Operation const& operation);
+
   virtual StreamRange<google::cloud::netapp::v1::Volume> ListVolumes(
       google::cloud::netapp::v1::ListVolumesRequest request);
 
@@ -586,6 +597,24 @@ class NetAppConnection {
 
   virtual future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
   DeleteBackupPolicy(google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
+
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
+
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
+
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
+
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

@@ -42,11 +42,13 @@ jobs:
         msvc: [ msvc-2022 ]
         build_type: [ Debug, Release ]
         arch: [ x64, x86 ]
-        shard: [Core1, Core2, Compute, Shard1, Shard2, Shard3, Other]
+        shard: [Core1, Core2, Core3, Compute, AIPlatform, Shard1, Shard2, Shard3, Other]
         exclude:
         # Also skip shards (Compute and Other) that contain only generated code.
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
           shard: Compute
+        - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
+          shard: AIPlatform
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
           shard: Shard1
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
@@ -59,7 +61,7 @@ jobs:
         - arch: x86
           build_type: Debug
     steps:
-    - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
+    - uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4
       with:
         ref: ${{ inputs.checkout-ref }}
     - uses: google-github-actions/auth@v2
@@ -80,7 +82,8 @@ jobs:
       run: |
         echo "vcpkg-version=$(cat ci/etc/vcpkg-version.txt)" >> "${GITHUB_OUTPUT}"
         core1_features=(bigtable pubsub pubsublite)
-        core2_features=(spanner storage)
+        core2_features=(spanner)
+        core3_features=(storage storage_grpc)
         # These are the libraries with the most "clients". To build the list
         # run something like this and create shards:
         #
@@ -98,7 +101,6 @@ jobs:
           sql
           dialogflow_cx
           dialogflow_es
-          aiplatform
         )
         shard2_features=(
           beyondcorp
@@ -174,8 +176,13 @@ jobs:
         elif [[ "${{ matrix.shard }}" == "Core2" ]]; then
           features="$(printf ",%s" "${core2_features[@]}")"
           echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
+        elif [[ "${{ matrix.shard }}" == "Core3" ]]; then
+          features="$(printf ",%s" "${core3_features[@]}")"
+          echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
         elif [[ "${{matrix.shard}}" == "Compute" ]]; then
           echo "features=compute" >> "${GITHUB_OUTPUT}"
+        elif [[ "${{matrix.shard}}" == "AIPlatform" ]]; then
+          echo "features=aiplatform" >> "${GITHUB_OUTPUT}"
         elif [[ "${{matrix.shard}}" == "Shard1" ]]; then
           features="$(printf ",%s" "${shard1_features[@]}")"
           echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
@@ -188,7 +195,9 @@ jobs:
         else
           skipped_features=("${core1_features[@]}")
           skipped_features+=("${core2_features[@]}")
+          skipped_features+=("${core3_features[@]}")
           skipped_features+=(compute)
+          skipped_features+=(aiplatform)
           skipped_features+=("${shard1_features[@]}")
           skipped_features+=("${shard2_features[@]}")
           skipped_features+=("${shard3_features[@]}")
@@ -199,6 +208,9 @@ jobs:
           skipped="$(printf ",-%s" "${skipped_features[@]}")"
           echo "features=__ga_libraries__,__experimental_libraries__,${skipped:1}" >> "${GITHUB_OUTPUT}"
         fi
+    - name: Pre Build Disk Space
+      shell: bash
+      run: df -m
     - name: Download and Install CMake
       shell: bash
       run: |
@@ -241,6 +253,9 @@ jobs:
         export CMAKE_OUT='c:\b'
         export EXECUTE_INTEGRATION_TESTS=${{ inputs.execute-integration-tests }}
         ci/gha/builds/windows-cmake.sh ${{ matrix.build_type }} ${{ steps.dynamic.outputs.features }}
+    - name: Post Build Disk Space
+      shell: bash
+      run: df -m
     env:
       SCCACHE_GCS_BUCKET: cloud-cpp-community-gha-cache
       SCCACHE_GCS_KEY_PREFIX: sccache/${{ matrix.msvc }}/${{ matrix.arch}}/${{ matrix.build_type }}

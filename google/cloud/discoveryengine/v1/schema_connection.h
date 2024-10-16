@@ -226,6 +226,15 @@ class SchemaServiceConnection {
   virtual future<
       StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
   DeleteSchema(google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
+
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

@@ -59,6 +59,11 @@ Idempotency RuleSetServiceConnectionIdempotencyPolicy::ListRuleSets(
   return Idempotency::kIdempotent;
 }
 
+Idempotency RuleSetServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<RuleSetServiceConnectionIdempotencyPolicy>
 MakeDefaultRuleSetServiceConnectionIdempotencyPolicy() {
   return std::make_unique<RuleSetServiceConnectionIdempotencyPolicy>();

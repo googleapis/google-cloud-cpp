@@ -59,6 +59,11 @@ Idempotency CompanyServiceConnectionIdempotencyPolicy::ListCompanies(
   return Idempotency::kIdempotent;
 }
 
+Idempotency CompanyServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<CompanyServiceConnectionIdempotencyPolicy>
 MakeDefaultCompanyServiceConnectionIdempotencyPolicy() {
   return std::make_unique<CompanyServiceConnectionIdempotencyPolicy>();

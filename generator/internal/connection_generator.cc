@@ -19,6 +19,7 @@
 #include "generator/internal/pagination.h"
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/printer.h"
+#include "absl/strings/str_split.h"
 #include <google/protobuf/descriptor.h>
 
 namespace google {
@@ -29,10 +30,12 @@ ConnectionGenerator::ConnectionGenerator(
     google::protobuf::ServiceDescriptor const* service_descriptor,
     VarsDictionary service_vars,
     std::map<std::string, VarsDictionary> service_method_vars,
-    google::protobuf::compiler::GeneratorContext* context)
+    google::protobuf::compiler::GeneratorContext* context,
+    std::vector<MixinMethod> const& mixin_methods)
     : ServiceCodeGenerator("connection_header_path", "connection_cc_path",
                            service_descriptor, std::move(service_vars),
-                           std::move(service_method_vars), context) {}
+                           std::move(service_method_vars), context,
+                           mixin_methods) {}
 
 Status ConnectionGenerator::GenerateHeader() {
   HeaderPrint(CopyrightLicenseFileHeader());
@@ -68,11 +71,14 @@ Status ConnectionGenerator::GenerateHeader() {
            : "",
        IsExperimental() ? "google/cloud/experimental_tag.h" : "",
        "google/cloud/version.h"});
-  HeaderSystemIncludes(
-      {vars("proto_header_path"), vars("additional_pb_header_paths"),
-       HasGRPCLongrunningOperation() ? "google/longrunning/operations.grpc.pb.h"
-                                     : "",
-       "memory"});
+  std::vector<std::string> const additional_pb_header_paths =
+      absl::StrSplit(vars("additional_pb_header_paths"), absl::ByChar(','));
+  HeaderSystemIncludes(additional_pb_header_paths);
+  HeaderSystemIncludes({vars("proto_header_path"),
+                        HasGRPCLongrunningOperation()
+                            ? "google/longrunning/operations.grpc.pb.h"
+                            : "",
+                        "memory"});
   switch (endpoint_location_style) {
     case ServiceConfiguration::LOCATION_DEPENDENT:
     case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:

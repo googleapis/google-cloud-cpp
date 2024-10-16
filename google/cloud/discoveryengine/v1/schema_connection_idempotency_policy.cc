@@ -59,6 +59,21 @@ Idempotency SchemaServiceConnectionIdempotencyPolicy::DeleteSchema(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency SchemaServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency SchemaServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency SchemaServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<SchemaServiceConnectionIdempotencyPolicy>
 MakeDefaultSchemaServiceConnectionIdempotencyPolicy() {
   return std::make_unique<SchemaServiceConnectionIdempotencyPolicy>();

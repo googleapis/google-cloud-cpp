@@ -142,6 +142,11 @@ ApiKeysConnection::LookupKey(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::longrunning::Operation> ApiKeysConnection::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<ApiKeysConnection> MakeApiKeysConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,

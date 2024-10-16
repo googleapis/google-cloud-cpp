@@ -167,6 +167,32 @@ AssuredWorkloadsServiceTracingStub::AcknowledgeViolation(
       context, *span, child_->AcknowledgeViolation(context, options, request));
 }
 
+StatusOr<google::longrunning::ListOperationsResponse>
+AssuredWorkloadsServiceTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::ListOperationsRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.assuredworkloads.v1.AssuredWorkloadsService",
+      "ListOperations");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListOperations(context, options, request));
+}
+
+StatusOr<google::longrunning::Operation>
+AssuredWorkloadsServiceTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.assuredworkloads.v1.AssuredWorkloadsService",
+      "GetOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetOperation(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AssuredWorkloadsServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

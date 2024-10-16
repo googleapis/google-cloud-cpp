@@ -29,6 +29,7 @@
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/confidentialcomputing/v1/service.grpc.pb.h>
+#include <google/cloud/location/locations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -46,9 +47,11 @@ CreateDefaultConfidentialComputingStub(
   auto service_grpc_stub =
       google::cloud::confidentialcomputing::v1::ConfidentialComputing::NewStub(
           channel);
+  auto service_locations_stub =
+      google::cloud::location::Locations::NewStub(channel);
   std::shared_ptr<ConfidentialComputingStub> stub =
       std::make_shared<DefaultConfidentialComputingStub>(
-          std::move(service_grpc_stub));
+          std::move(service_grpc_stub), std::move(service_locations_stub));
 
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<ConfidentialComputingAuth>(std::move(auth),

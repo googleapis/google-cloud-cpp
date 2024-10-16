@@ -104,6 +104,10 @@ class MockConsumerProcurementServiceConnection
       (google::cloud::commerce::consumer::procurement::v1::ListOrdersRequest
            request),
       (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

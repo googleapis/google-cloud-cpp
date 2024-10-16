@@ -210,6 +210,12 @@ class AdaptationConnection {
 
   virtual Status DeleteCustomClass(
       google::cloud::speech::v1::DeleteCustomClassRequest const& request);
+
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

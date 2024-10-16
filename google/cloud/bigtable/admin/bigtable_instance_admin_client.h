@@ -1079,7 +1079,7 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L249}
+  /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L268}
   /// [google.bigtable.admin.v2.CreateAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L586}
   ///
   // clang-format on
@@ -1111,7 +1111,7 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L249}
+  /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L268}
   /// [google.bigtable.admin.v2.CreateAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L586}
   ///
   // clang-format on
@@ -1138,7 +1138,7 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L249}
+  /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L268}
   /// [google.bigtable.admin.v2.GetAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L610}
   ///
   // clang-format on
@@ -1168,7 +1168,7 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L249}
+  /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L268}
   /// [google.bigtable.admin.v2.GetAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L610}
   ///
   // clang-format on
@@ -1207,7 +1207,7 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L249}
+  /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L268}
   /// [google.bigtable.admin.v2.ListAppProfilesRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L622}
   ///
   // clang-format on
@@ -1246,7 +1246,7 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L249}
+  /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L268}
   /// [google.bigtable.admin.v2.ListAppProfilesRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L622}
   ///
   // clang-format on
@@ -1281,7 +1281,7 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L249}
+  /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L268}
   /// [google.bigtable.admin.v2.UpdateAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L668}
   ///
   // clang-format on
@@ -1334,7 +1334,7 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L249}
+  /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L268}
   /// [google.bigtable.admin.v2.UpdateAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L668}
   ///
   // clang-format on
@@ -1635,7 +1635,7 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.HotTablet]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L379}
+  /// [google.bigtable.admin.v2.HotTablet]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L423}
   /// [google.bigtable.admin.v2.ListHotTabletsRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L701}
   ///
   // clang-format on
@@ -1675,7 +1675,7 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.HotTablet]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L379}
+  /// [google.bigtable.admin.v2.HotTablet]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L423}
   /// [google.bigtable.admin.v2.ListHotTabletsRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L701}
   ///
   // clang-format on

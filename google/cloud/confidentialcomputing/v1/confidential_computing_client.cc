@@ -62,6 +62,20 @@ ConfidentialComputingClient::VerifyAttestation(
   return connection_->VerifyAttestation(request);
 }
 
+StreamRange<google::cloud::location::Location>
+ConfidentialComputingClient::ListLocations(
+    google::cloud::location::ListLocationsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListLocations(std::move(request));
+}
+
+StatusOr<google::cloud::location::Location>
+ConfidentialComputingClient::GetLocation(
+    google::cloud::location::GetLocationRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetLocation(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace confidentialcomputing_v1
 }  // namespace cloud

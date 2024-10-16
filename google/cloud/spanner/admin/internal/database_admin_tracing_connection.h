@@ -197,6 +197,18 @@ class DatabaseAdminTracingConnection
       google::spanner::admin::database::v1::ListBackupSchedulesRequest request)
       override;
 
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
+
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
+
  private:
   std::shared_ptr<spanner_admin::DatabaseAdminConnection> child_;
 };

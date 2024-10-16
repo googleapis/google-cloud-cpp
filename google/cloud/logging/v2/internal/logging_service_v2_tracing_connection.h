@@ -62,6 +62,15 @@ class LoggingServiceV2TracingConnection
       google::logging::v2::TailLogEntriesResponse>>
   AsyncTailLogEntries() override;
 
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
+
   future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
   AsyncWriteLogEntries(
       google::logging::v2::WriteLogEntriesRequest const& request) override;

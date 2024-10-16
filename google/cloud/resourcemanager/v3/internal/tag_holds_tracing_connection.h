@@ -67,6 +67,9 @@ class TagHoldsTracingConnection
   StreamRange<google::cloud::resourcemanager::v3::TagHold> ListTagHolds(
       google::cloud::resourcemanager::v3::ListTagHoldsRequest request) override;
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::shared_ptr<resourcemanager_v3::TagHoldsConnection> child_;
 };

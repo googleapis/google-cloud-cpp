@@ -39,6 +39,11 @@ Idempotency EventServiceConnectionIdempotencyPolicy::CreateClientEvent(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency EventServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<EventServiceConnectionIdempotencyPolicy>
 MakeDefaultEventServiceConnectionIdempotencyPolicy() {
   return std::make_unique<EventServiceConnectionIdempotencyPolicy>();

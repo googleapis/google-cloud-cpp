@@ -22,6 +22,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <google/cloud/location/locations.grpc.pb.h>
 #include <google/cloud/scheduler/v1/cloudscheduler.grpc.pb.h>
 #include <memory>
 #include <utility>
@@ -66,6 +67,15 @@ class CloudSchedulerStub {
   virtual StatusOr<google::cloud::scheduler::v1::Job> RunJob(
       grpc::ClientContext& context, Options const& options,
       google::cloud::scheduler::v1::RunJobRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::location::ListLocationsResponse>
+  ListLocations(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::location::ListLocationsRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::location::GetLocationRequest const& request) = 0;
 };
 
 class DefaultCloudSchedulerStub : public CloudSchedulerStub {
@@ -73,8 +83,11 @@ class DefaultCloudSchedulerStub : public CloudSchedulerStub {
   explicit DefaultCloudSchedulerStub(
       std::unique_ptr<
           google::cloud::scheduler::v1::CloudScheduler::StubInterface>
-          grpc_stub)
-      : grpc_stub_(std::move(grpc_stub)) {}
+          grpc_stub,
+      std::unique_ptr<google::cloud::location::Locations::StubInterface>
+          locations_stub)
+      : grpc_stub_(std::move(grpc_stub)),
+        locations_stub_(std::move(locations_stub)) {}
 
   StatusOr<google::cloud::scheduler::v1::ListJobsResponse> ListJobs(
       grpc::ClientContext& context, Options const& options,
@@ -108,9 +121,19 @@ class DefaultCloudSchedulerStub : public CloudSchedulerStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::scheduler::v1::RunJobRequest const& request) override;
 
+  StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::location::ListLocationsRequest const& request) override;
+
+  StatusOr<google::cloud::location::Location> GetLocation(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::location::GetLocationRequest const& request) override;
+
  private:
   std::unique_ptr<google::cloud::scheduler::v1::CloudScheduler::StubInterface>
       grpc_stub_;
+  std::unique_ptr<google::cloud::location::Locations::StubInterface>
+      locations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

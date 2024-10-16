@@ -17,6 +17,7 @@
 #include "google/cloud/internal/make_jwt_assertion.h"
 #include "google/cloud/internal/oauth2_access_token_credentials.h"
 #include "google/cloud/internal/oauth2_anonymous_credentials.h"
+#include "google/cloud/internal/oauth2_api_key_credentials.h"
 #include "google/cloud/internal/oauth2_decorate_credentials.h"
 #include "google/cloud/internal/oauth2_error_credentials.h"
 #include "google/cloud/internal/oauth2_external_account_credentials.h"
@@ -31,6 +32,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::internal::AccessTokenConfig;
+using ::google::cloud::internal::ApiKeyConfig;
 using ::google::cloud::internal::CredentialsVisitor;
 using ::google::cloud::internal::ErrorCredentialsConfig;
 using ::google::cloud::internal::ExternalAccountConfig;
@@ -134,6 +136,11 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
           std::make_shared<oauth2_internal::ExternalAccountCredentials>(
               *std::move(info), std::move(client_factory_), cfg.options()),
           cfg.options());
+    }
+
+    void visit(ApiKeyConfig const& cfg) override {
+      result =
+          std::make_shared<oauth2_internal::ApiKeyCredentials>(cfg.api_key());
     }
 
    private:

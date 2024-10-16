@@ -90,6 +90,11 @@ TagHoldsConnection::ListTagHolds(
       StreamRange<google::cloud::resourcemanager::v3::TagHold>>();
 }
 
+StatusOr<google::longrunning::Operation> TagHoldsConnection::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<TagHoldsConnection> MakeTagHoldsConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,

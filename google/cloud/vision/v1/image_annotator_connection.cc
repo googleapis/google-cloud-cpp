@@ -97,6 +97,11 @@ ImageAnnotatorConnection::AsyncBatchAnnotateFiles(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> ImageAnnotatorConnection::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<ImageAnnotatorConnection> MakeImageAnnotatorConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

@@ -45,7 +45,8 @@ MinimalIamCredentialsRestStub::MinimalIamCredentialsRestStub(
 StatusOr<google::cloud::AccessToken>
 MinimalIamCredentialsRestStub::GenerateAccessToken(
     GenerateAccessTokenRequest const& request) {
-  auto auth_header = AuthorizationHeader(*credentials_);
+  auto auth_header =
+      credentials_->AuthenticationHeader(std::chrono::system_clock::now());
   if (!auth_header) return std::move(auth_header).status();
 
   rest_internal::RestRequest rest_request;
@@ -71,12 +72,11 @@ MinimalIamCredentialsRestStub::GenerateAccessToken(
 }
 
 std::string MinimalIamCredentialsRestStub::MakeRequestPath(
-    GenerateAccessTokenRequest const& request) {
-  // TODO(#13422): Do not use hardcoded IAM endpoint. Use Universe Domain
-  // to build endpoint name.
-  return absl::StrCat(
-      "https://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/",
-      request.service_account, ":generateAccessToken");
+    GenerateAccessTokenRequest const& request) const {
+  auto ud = universe_domain(Options{});
+  return absl::StrCat("https://iamcredentials.", ud ? *ud : "googleapis.com",
+                      "/v1/projects/-/serviceAccounts/",
+                      request.service_account, ":generateAccessToken");
 }
 
 MinimalIamCredentialsRestLogging::MinimalIamCredentialsRestLogging(

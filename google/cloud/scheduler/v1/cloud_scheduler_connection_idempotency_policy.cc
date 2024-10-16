@@ -74,6 +74,16 @@ Idempotency CloudSchedulerConnectionIdempotencyPolicy::RunJob(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency CloudSchedulerConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency CloudSchedulerConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<CloudSchedulerConnectionIdempotencyPolicy>
 MakeDefaultCloudSchedulerConnectionIdempotencyPolicy() {
   return std::make_unique<CloudSchedulerConnectionIdempotencyPolicy>();

@@ -209,6 +209,9 @@ class TagHoldsConnection {
 
   virtual StreamRange<google::cloud::resourcemanager::v3::TagHold> ListTagHolds(
       google::cloud::resourcemanager::v3::ListTagHoldsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

@@ -302,6 +302,18 @@ StatusOr<google::cloud::tasks::v2::Task> CloudTasksClient::RunTask(
   return connection_->RunTask(request);
 }
 
+StreamRange<google::cloud::location::Location> CloudTasksClient::ListLocations(
+    google::cloud::location::ListLocationsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListLocations(std::move(request));
+}
+
+StatusOr<google::cloud::location::Location> CloudTasksClient::GetLocation(
+    google::cloud::location::GetLocationRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetLocation(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tasks_v2
 }  // namespace cloud

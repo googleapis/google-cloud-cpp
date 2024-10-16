@@ -211,6 +211,9 @@ class DocumentSchemaServiceConnection {
   virtual StreamRange<google::cloud::contentwarehouse::v1::DocumentSchema>
   ListDocumentSchemas(
       google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 /**

@@ -93,6 +93,13 @@ class MockAdaptationConnection : public speech_v1::AdaptationConnection {
       Status, DeleteCustomClass,
       (google::cloud::speech::v1::DeleteCustomClassRequest const& request),
       (override));
+
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
+              (google::longrunning::ListOperationsRequest request), (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

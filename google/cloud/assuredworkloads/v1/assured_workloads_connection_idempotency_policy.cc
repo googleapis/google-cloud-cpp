@@ -83,6 +83,16 @@ AssuredWorkloadsServiceConnectionIdempotencyPolicy::AcknowledgeViolation(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency AssuredWorkloadsServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency AssuredWorkloadsServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<AssuredWorkloadsServiceConnectionIdempotencyPolicy>
 MakeDefaultAssuredWorkloadsServiceConnectionIdempotencyPolicy() {
   return std::make_unique<AssuredWorkloadsServiceConnectionIdempotencyPolicy>();

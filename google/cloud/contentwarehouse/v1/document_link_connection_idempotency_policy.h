@@ -22,6 +22,7 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
 #include <google/cloud/contentwarehouse/v1/document_link_service.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -51,6 +52,9 @@ class DocumentLinkServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteDocumentLink(
       google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const&
           request);
+
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<DocumentLinkServiceConnectionIdempotencyPolicy>

@@ -288,6 +288,19 @@ TEST(StrictIdempotencyPolicyTest, RewriteObjectIfGenerationMatch) {
   EXPECT_TRUE(policy.IsIdempotent(request));
 }
 
+TEST(StrictIdempotencyPolicyTest, RestoreObject) {
+  StrictIdempotencyPolicy policy;
+  internal::RestoreObjectRequest request("test-bucket", "test-object", 1234);
+  EXPECT_FALSE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, RestoreObjectIfGenerationMatch) {
+  StrictIdempotencyPolicy policy;
+  internal::RestoreObjectRequest request("test-bucket", "test-object", 1234);
+  request.set_option(IfGenerationMatch(0));
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
 TEST(StrictIdempotencyPolicyTest, ListBucketAcl) {
   StrictIdempotencyPolicy policy;
   internal::ListBucketAclRequest request("test-bucket-name");

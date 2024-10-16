@@ -71,6 +71,7 @@ set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     "google/api/usage.proto"
     "google/api/visibility.proto"
     "google/cloud/extended_operations.proto"
+    "google/cloud/location/locations.proto"
     # orgpolicy/v**1** is used *indirectly* by google/cloud/asset, therefore it
     # does not appear in protolists/asset.list. In addition, it is not compiled
     # by any other library. So, added manually.
@@ -248,6 +249,7 @@ set(PROTO_FILES_WITH_DEPENDENCIES
     "google/api/quota.proto"
     "google/api/service.proto"
     "google/api/usage.proto"
+    "google/cloud/location/locations.proto"
     "google/rpc/status.proto")
 
 # For some directories *most* (but not all) the proto files are simple enough
@@ -314,6 +316,9 @@ external_googleapis_add_library(
     api_source_info_protos
     api_system_parameter_protos
     api_usage_protos)
+
+external_googleapis_add_library("google/cloud/location/locations.proto"
+                                api_annotations_protos api_client_protos)
 
 external_googleapis_add_library("google/iam/v1/options.proto"
                                 api_annotations_protos)

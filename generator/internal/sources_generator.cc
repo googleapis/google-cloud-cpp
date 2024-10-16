@@ -36,10 +36,12 @@ SourcesGenerator::SourcesGenerator(
     VarsDictionary service_vars,
     std::map<std::string, VarsDictionary> service_method_vars,
     google::protobuf::compiler::GeneratorContext* context,
-    std::vector<std::string> sources)
+    std::vector<std::string> sources,
+    std::vector<MixinMethod> const& mixin_methods)
     : ServiceCodeGenerator("sources_cc_path", service_descriptor,
                            ModifyCopyrightYear(std::move(service_vars)),
-                           std::move(service_method_vars), context),
+                           std::move(service_method_vars), context,
+                           mixin_methods),
       sources_(std::move(sources)) {}
 
 Status SourcesGenerator::GenerateHeader() {

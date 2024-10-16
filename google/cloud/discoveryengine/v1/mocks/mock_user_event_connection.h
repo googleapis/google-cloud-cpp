@@ -65,6 +65,47 @@ class MockUserEventServiceConnection
   /// using ::testing::_;
   /// using ::testing::Matcher;
   /// EXPECT_CALL(*mock,
+  /// PurgeUserEvents(Matcher<google::cloud::discoveryengine::v1::PurgeUserEventsRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<
+                  google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>,
+              PurgeUserEvents,
+              (google::cloud::discoveryengine::v1::PurgeUserEventsRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, PurgeUserEvents(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, PurgeUserEvents,
+              (NoAwaitTag,
+               google::cloud::discoveryengine::v1::PurgeUserEventsRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, PurgeUserEvents(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<
+                  google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>,
+              PurgeUserEvents,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
   /// ImportUserEvents(Matcher<google::cloud::discoveryengine::v1::ImportUserEventsRequest
   /// const&>(_)))
   /// @endcode
@@ -102,6 +143,17 @@ class MockUserEventServiceConnection
           google::cloud::discoveryengine::v1::ImportUserEventsResponse>>,
       ImportUserEvents, (google::longrunning::Operation const& operation),
       (override));
+
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
+              (google::longrunning::ListOperationsRequest request), (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (google::longrunning::GetOperationRequest const& request),
+              (override));
+
+  MOCK_METHOD(Status, CancelOperation,
+              (google::longrunning::CancelOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -81,6 +81,20 @@ class NetAppTracingConnection : public netapp_v1::NetAppConnection {
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
   DeleteStoragePool(google::longrunning::Operation const& operation) override;
 
+  future<StatusOr<google::cloud::netapp::v1::StoragePool>>
+  SwitchActiveReplicaZone(
+      google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> SwitchActiveReplicaZone(
+      NoAwaitTag,
+      google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::netapp::v1::StoragePool>>
+  SwitchActiveReplicaZone(
+      google::longrunning::Operation const& operation) override;
+
   StreamRange<google::cloud::netapp::v1::Volume> ListVolumes(
       google::cloud::netapp::v1::ListVolumesRequest request) override;
 
@@ -468,6 +482,24 @@ class NetAppTracingConnection : public netapp_v1::NetAppConnection {
 
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
   DeleteBackupPolicy(google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
+
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
+
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
+
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<netapp_v1::NetAppConnection> child_;

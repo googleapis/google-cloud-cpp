@@ -15,6 +15,7 @@
 #include "generator/internal/http_option_utils.h"
 #include "generator/internal/http_annotation_parser.h"
 #include "generator/internal/longrunning.h"
+#include "generator/internal/mixin_utils.h"
 #include "generator/internal/printer.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
@@ -53,12 +54,12 @@ std::string FormatFieldAccessorCall(
   return absl::StrJoin(chunks, "().");
 }
 
-void RestPathVisitorHelper(std::string const& api_version,
+void RestPathVisitorHelper(absl::optional<std::string> api_version,
                            PathTemplate::Segment const& s,
                            std::vector<HttpExtensionInfo::RestPathPiece>& path);
 
 struct RestPathVisitor {
-  explicit RestPathVisitor(std::string api_version,
+  explicit RestPathVisitor(absl::optional<std::string> api_version,
                            std::vector<HttpExtensionInfo::RestPathPiece>& path)
       : api_version(std::move(api_version)), path(path) {}
   void operator()(PathTemplate::Match const&) {}
@@ -67,13 +68,13 @@ struct RestPathVisitor {
     path.emplace_back(
         [piece = s, api = api_version](
             google::protobuf::MethodDescriptor const&, bool is_async) {
-          if (piece != api) return absl::StrFormat("\"%s\"", piece);
+          if (!api || piece != *api) return absl::StrFormat("\"%s\"", piece);
           if (is_async) {
             return absl::StrFormat(
-                "rest_internal::DetermineApiVersion(\"%s\", *options)", api);
+                "rest_internal::DetermineApiVersion(\"%s\", *options)", *api);
           }
           return absl::StrFormat(
-              "rest_internal::DetermineApiVersion(\"%s\", options)", api);
+              "rest_internal::DetermineApiVersion(\"%s\", options)", *api);
         });
   }
   void operator()(PathTemplate::Variable const& v) {
@@ -88,14 +89,14 @@ struct RestPathVisitor {
     RestPathVisitorHelper(api_version, s, path);
   }
 
-  std::string api_version;
+  absl::optional<std::string> api_version;
   std::vector<HttpExtensionInfo::RestPathPiece>& path;
 };
 
 void RestPathVisitorHelper(
-    std::string const& api_version, PathTemplate::Segment const& s,
+    absl::optional<std::string> api_version, PathTemplate::Segment const& s,
     std::vector<HttpExtensionInfo::RestPathPiece>& path) {
-  absl::visit(RestPathVisitor{api_version, path}, s.value);
+  absl::visit(RestPathVisitor{std::move(api_version), path}, s.value);
 }
 
 std::string FormatQueryParameterCode(
@@ -262,42 +263,35 @@ void SetHttpQueryParameters(HttpExtensionInfo const& info,
       FormatQueryParameterCode(method, std::move(param_field_names));
 }
 
-HttpExtensionInfo ParseHttpExtension(
-    google::protobuf::MethodDescriptor const& method) {
-  if (!method.options().HasExtension(google::api::http)) return {};
-
+HttpExtensionInfo ParseHttpExtension(google::api::HttpRule const& http_rule) {
   HttpExtensionInfo info;
-  google::api::HttpRule http_rule =
-      method.options().GetExtension(google::api::http);
-
-  std::string url_pattern;
   switch (http_rule.pattern_case()) {
     case google::api::HttpRule::kGet:
       info.http_verb = "Get";
-      url_pattern = http_rule.get();
+      info.url_path = http_rule.get();
       break;
     case google::api::HttpRule::kPut:
       info.http_verb = "Put";
-      url_pattern = http_rule.put();
+      info.url_path = http_rule.put();
       break;
     case google::api::HttpRule::kPost:
       info.http_verb = "Post";
-      url_pattern = http_rule.post();
+      info.url_path = http_rule.post();
       break;
     case google::api::HttpRule::kDelete:
       info.http_verb = "Delete";
-      url_pattern = http_rule.delete_();
+      info.url_path = http_rule.delete_();
       break;
     case google::api::HttpRule::kPatch:
       info.http_verb = "Patch";
-      url_pattern = http_rule.patch();
+      info.url_path = http_rule.patch();
       break;
     default:
       GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__
                      << ": google::api::HttpRule not handled";
   }
 
-  auto parsed_http_rule = ParsePathTemplate(url_pattern);
+  auto parsed_http_rule = ParsePathTemplate(info.url_path);
   if (!parsed_http_rule) {
     GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__
                    << " failure in ParsePathTemplate: "
@@ -305,7 +299,6 @@ HttpExtensionInfo ParseHttpExtension(
   }
 
   info.body = http_rule.body();
-  info.url_path = url_pattern;
 
   struct SegmentAsStringVisitor {
     std::string operator()(PathTemplate::Match const&) { return "*"; }
@@ -322,10 +315,9 @@ HttpExtensionInfo ParseHttpExtension(
     out->append(absl::visit(SegmentAsStringVisitor{}, s->value));
   };
 
-  auto api_version =
-      FormatApiVersionFromUrlPattern(url_pattern, method.file()->name());
-
-  auto rest_path_visitor = RestPathVisitor(api_version, info.rest_path);
+  auto api_version = FormatApiVersionFromUrlPattern(info.url_path);
+  auto rest_path_visitor =
+      RestPathVisitor(std::move(api_version), info.rest_path);
   for (auto const& s : parsed_http_rule->segments) {
     if (absl::holds_alternative<PathTemplate::Variable>(s->value)) {
       auto v = absl::get<PathTemplate::Variable>(s->value);
@@ -345,7 +337,9 @@ HttpExtensionInfo ParseHttpExtension(
 }
 
 bool HasHttpRoutingHeader(MethodDescriptor const& method) {
-  auto result = ParseHttpExtension(method);
+  if (!method.options().HasExtension(google::api::http)) return false;
+  auto result =
+      ParseHttpExtension(method.options().GetExtension(google::api::http));
   return !result.field_substitutions.empty();
 }
 
@@ -381,34 +375,18 @@ std::string FormatRequestResource(google::protobuf::Descriptor const& request,
   return absl::StrCat("request.", field_name, "()");
 }
 
-// For protos we generate from Discovery Documents the api version is always the
-// last part of the package name. Protos found in googleapis have package names
-// that mirror their directory path, which ends in the api version as well.
-std::string FormatApiVersionFromPackageName(
-    google::protobuf::MethodDescriptor const& method) {
-  std::vector<std::string> parts =
-      absl::StrSplit(method.file()->package(), '.');
-  if (absl::StartsWith(parts.back(), "v")) return parts.back();
-  GCP_LOG(FATAL) << "Unrecognized API version in file: "
-                 << method.file()->name()
-                 << ", package: " << method.file()->package();
-  return {};  // Suppress clang-tidy warnings
-}
-
 // Generate api version by extracting the version from the url pattern.
 // In some cases(i.e. location), there is no version in the package name.
-std::string FormatApiVersionFromUrlPattern(std::string const& url_pattern,
-                                           std::string const& file_name) {
-  std::vector<std::string> parts = absl::StrSplit(url_pattern, '/');
+absl::optional<std::string> FormatApiVersionFromUrlPattern(
+    std::string const& url_pattern) {
+  std::vector<std::string> const parts = absl::StrSplit(url_pattern, '/');
   static auto const* const kVersion = new std::regex{R"(v\d+)"};
   for (auto const& part : parts) {
     if (std::regex_match(part, *kVersion)) {
       return part;
     }
   }
-  GCP_LOG(FATAL) << "Unrecognized API version in file: " << file_name
-                 << ", url pattern: " << url_pattern;
-  return {};  // Suppress clang-tidy warnings
+  return absl::nullopt;
 }
 
 }  // namespace generator_internal

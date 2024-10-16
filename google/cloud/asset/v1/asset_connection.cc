@@ -222,6 +222,11 @@ AssetServiceConnection::AnalyzeOrgPolicyGovernedAssets(
                       AnalyzeOrgPolicyGovernedAssetsResponse::GovernedAsset>>();
 }
 
+StatusOr<google::longrunning::Operation> AssetServiceConnection::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<AssetServiceConnection> MakeAssetServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

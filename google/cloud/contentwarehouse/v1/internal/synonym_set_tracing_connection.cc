@@ -83,6 +83,15 @@ SynonymSetServiceTracingConnection::ListSynonymSets(
                                                        std::move(sr));
 }
 
+StatusOr<google::longrunning::Operation>
+SynonymSetServiceTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "contentwarehouse_v1::SynonymSetServiceConnection::GetOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetOperation(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<contentwarehouse_v1::SynonymSetServiceConnection>

@@ -142,6 +142,37 @@ NetAppTracingConnection::DeleteStoragePool(
                            child_->DeleteStoragePool(operation));
 }
 
+future<StatusOr<google::cloud::netapp::v1::StoragePool>>
+NetAppTracingConnection::SwitchActiveReplicaZone(
+    google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request) {
+  auto span = internal::MakeSpan(
+      "netapp_v1::NetAppConnection::SwitchActiveReplicaZone");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->SwitchActiveReplicaZone(request));
+}
+
+StatusOr<google::longrunning::Operation>
+NetAppTracingConnection::SwitchActiveReplicaZone(
+    NoAwaitTag,
+    google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request) {
+  auto span = internal::MakeSpan(
+      "netapp_v1::NetAppConnection::SwitchActiveReplicaZone");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->SwitchActiveReplicaZone(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::netapp::v1::StoragePool>>
+NetAppTracingConnection::SwitchActiveReplicaZone(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "netapp_v1::NetAppConnection::SwitchActiveReplicaZone");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->SwitchActiveReplicaZone(operation));
+}
+
 StreamRange<google::cloud::netapp::v1::Volume>
 NetAppTracingConnection::ListVolumes(
     google::cloud::netapp::v1::ListVolumesRequest request) {
@@ -1108,6 +1139,57 @@ NetAppTracingConnection::DeleteBackupPolicy(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteBackupPolicy(operation));
+}
+
+StreamRange<google::cloud::location::Location>
+NetAppTracingConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan("netapp_v1::NetAppConnection::ListLocations");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListLocations(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::location::Location>(
+      std::move(span), std::move(sr));
+}
+
+StatusOr<google::cloud::location::Location>
+NetAppTracingConnection::GetLocation(
+    google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan("netapp_v1::NetAppConnection::GetLocation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetLocation(request));
+}
+
+StreamRange<google::longrunning::Operation>
+NetAppTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("netapp_v1::NetAppConnection::ListOperations");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListOperations(std::move(request));
+  return internal::MakeTracedStreamRange<google::longrunning::Operation>(
+      std::move(span), std::move(sr));
+}
+
+StatusOr<google::longrunning::Operation> NetAppTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan("netapp_v1::NetAppConnection::GetOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetOperation(request));
+}
+
+Status NetAppTracingConnection::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
+  auto span =
+      internal::MakeSpan("netapp_v1::NetAppConnection::DeleteOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteOperation(request));
+}
+
+Status NetAppTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span =
+      internal::MakeSpan("netapp_v1::NetAppConnection::CancelOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

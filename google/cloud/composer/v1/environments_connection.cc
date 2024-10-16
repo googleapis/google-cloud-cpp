@@ -168,6 +168,33 @@ EnvironmentsConnection::ListWorkloads(
                       ListWorkloadsResponse::ComposerWorkload>>();
 }
 
+future<StatusOr<
+    google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>>
+EnvironmentsConnection::CheckUpgrade(
+    google::cloud::orchestration::airflow::service::v1::
+        CheckUpgradeRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::orchestration::airflow::service::v1::
+                   CheckUpgradeResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> EnvironmentsConnection::CheckUpgrade(
+    NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
+                    CheckUpgradeRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<
+    google::cloud::orchestration::airflow::service::v1::CheckUpgradeResponse>>
+EnvironmentsConnection::CheckUpgrade(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::orchestration::airflow::service::v1::
+                   CheckUpgradeResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<
     google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
 EnvironmentsConnection::CreateUserWorkloadsSecret(
@@ -336,6 +363,24 @@ StatusOr<google::cloud::orchestration::airflow::service::v1::
 EnvironmentsConnection::FetchDatabaseProperties(
     google::cloud::orchestration::airflow::service::v1::
         FetchDatabasePropertiesRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::longrunning::Operation>
+EnvironmentsConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::longrunning::Operation>>();
+}
+
+StatusOr<google::longrunning::Operation> EnvironmentsConnection::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status EnvironmentsConnection::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

@@ -38,7 +38,7 @@ set(GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
 )
 
 set(GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES # cmake-format: sort
-)
+                                          "storage_grpc")
 
 set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     # cmake-format: sort
@@ -100,7 +100,6 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "eventarc"
     "filestore"
     "functions"
-    "generativelanguage"
     "gkebackup"
     "gkeconnect"
     "gkehub"

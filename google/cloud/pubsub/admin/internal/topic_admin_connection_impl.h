@@ -72,6 +72,15 @@ class TopicAdminConnectionImpl : public pubsub_admin::TopicAdminConnection {
   StatusOr<google::pubsub::v1::DetachSubscriptionResponse> DetachSubscription(
       google::pubsub::v1::DetachSubscriptionRequest const& request) override;
 
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<pubsub_admin_internal::TopicAdminStub> stub_;

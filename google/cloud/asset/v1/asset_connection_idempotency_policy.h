@@ -22,6 +22,7 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
 #include <google/cloud/asset/v1/asset_service.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -108,6 +109,9 @@ class AssetServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency AnalyzeOrgPolicyGovernedAssets(
       google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest request);
+
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<AssetServiceConnectionIdempotencyPolicy>

@@ -126,6 +126,16 @@ Idempotency RegistrationServiceConnectionIdempotencyPolicy::TestIamPermissions(
   return Idempotency::kIdempotent;
 }
 
+Idempotency RegistrationServiceConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency RegistrationServiceConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<RegistrationServiceConnectionIdempotencyPolicy>
 MakeDefaultRegistrationServiceConnectionIdempotencyPolicy() {
   return std::make_unique<RegistrationServiceConnectionIdempotencyPolicy>();

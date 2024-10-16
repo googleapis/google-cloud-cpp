@@ -55,6 +55,11 @@ Idempotency DocumentLinkServiceConnectionIdempotencyPolicy::DeleteDocumentLink(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency DocumentLinkServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<DocumentLinkServiceConnectionIdempotencyPolicy>
 MakeDefaultDocumentLinkServiceConnectionIdempotencyPolicy() {
   return std::make_unique<DocumentLinkServiceConnectionIdempotencyPolicy>();

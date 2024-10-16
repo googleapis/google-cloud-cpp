@@ -22,6 +22,7 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
 #include <google/cloud/retail/v2/catalog_service.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -69,6 +70,12 @@ class CatalogServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency ReplaceCatalogAttribute(
       google::cloud::retail::v2::ReplaceCatalogAttributeRequest const& request);
+
+  virtual google::cloud::Idempotency ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual google::cloud::Idempotency GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 };
 
 std::unique_ptr<CatalogServiceConnectionIdempotencyPolicy>

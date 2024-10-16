@@ -23,6 +23,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/run/v2/task.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -42,13 +43,32 @@ class TasksStub {
   virtual StatusOr<google::cloud::run::v2::ListTasksResponse> ListTasks(
       grpc::ClientContext& context, Options const& options,
       google::cloud::run::v2::ListTasksRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::ListOperationsRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) = 0;
+
+  virtual Status DeleteOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::DeleteOperationRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> WaitOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::WaitOperationRequest const& request) = 0;
 };
 
 class DefaultTasksStub : public TasksStub {
  public:
   explicit DefaultTasksStub(
-      std::unique_ptr<google::cloud::run::v2::Tasks::StubInterface> grpc_stub)
-      : grpc_stub_(std::move(grpc_stub)) {}
+      std::unique_ptr<google::cloud::run::v2::Tasks::StubInterface> grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
+      : grpc_stub_(std::move(grpc_stub)),
+        operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::cloud::run::v2::Task> GetTask(
       grpc::ClientContext& context, Options const& options,
@@ -58,8 +78,26 @@ class DefaultTasksStub : public TasksStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::run::v2::ListTasksRequest const& request) override;
 
+  StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::ListOperationsRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  Status DeleteOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::DeleteOperationRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> WaitOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::WaitOperationRequest const& request) override;
+
  private:
   std::unique_ptr<google::cloud::run::v2::Tasks::StubInterface> grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

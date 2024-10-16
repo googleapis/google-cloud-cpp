@@ -98,6 +98,7 @@ expected_dirs+=(
   ./include/google/cloud/grpc_utils
   ./include/google/cloud/internal
   ./include/google/cloud/internal/win32
+  ./include/google/cloud/location
   # no RPC services in google/cloud/metastore/logging
   ./include/google/cloud/metastore/logging
   ./include/google/cloud/metastore/logging/v1
@@ -228,7 +229,7 @@ cmake -G Ninja \
   -S "${PROJECT_ROOT}/ci/verify_quickstart" \
   -B "${PROJECT_ROOT}/cmake-out/quickstart" \
   "-DCMAKE_PREFIX_PATH=${INSTALL_PREFIX}" \
-  "-DFEATURES=experimental-storage_grpc"
+  "-DFEATURES=storage_grpc"
 cmake --build "${PROJECT_ROOT}/cmake-out/quickstart"
 
 io::log_h2 "Delete installed artifacts and run compiled quickstarts"

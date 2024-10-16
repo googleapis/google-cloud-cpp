@@ -77,6 +77,7 @@ cc_library(
     deps = [
         ":google_cloud_cpp_generator",
         ":google_cloud_cpp_generator_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
         "@com_google_googletest//:gtest",
     ],
 ) for test in google_cloud_cpp_generator_unit_tests]

@@ -113,6 +113,36 @@ Idempotency DeveloperConnectConnectionIdempotencyPolicy::FetchGitRefs(
   return Idempotency::kIdempotent;
 }
 
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::ListLocations(
+    google::cloud::location::ListLocationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DeveloperConnectConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<DeveloperConnectConnectionIdempotencyPolicy>
 MakeDefaultDeveloperConnectConnectionIdempotencyPolicy() {
   return std::make_unique<DeveloperConnectConnectionIdempotencyPolicy>();

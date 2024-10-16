@@ -65,6 +65,10 @@ class SynonymSetServiceMetadata : public SynonymSetServiceStub {
       google::cloud::contentwarehouse::v1::ListSynonymSetsRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);

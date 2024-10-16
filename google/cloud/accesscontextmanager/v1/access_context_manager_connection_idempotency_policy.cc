@@ -199,6 +199,11 @@ Idempotency AccessContextManagerConnectionIdempotencyPolicy::TestIamPermissions(
   return Idempotency::kIdempotent;
 }
 
+Idempotency AccessContextManagerConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<AccessContextManagerConnectionIdempotencyPolicy>
 MakeDefaultAccessContextManagerConnectionIdempotencyPolicy() {
   return std::make_unique<AccessContextManagerConnectionIdempotencyPolicy>();

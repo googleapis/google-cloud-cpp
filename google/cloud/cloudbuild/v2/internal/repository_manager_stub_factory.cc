@@ -29,6 +29,8 @@
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/devtools/cloudbuild/v2/repositories.grpc.pb.h>
+#include <google/iam/v1/iam_policy.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -44,9 +46,13 @@ std::shared_ptr<RepositoryManagerStub> CreateDefaultRepositoryManagerStub(
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       google::devtools::cloudbuild::v2::RepositoryManager::NewStub(channel);
+  auto service_operations_stub =
+      google::longrunning::Operations::NewStub(channel);
+  auto service_iampolicy_stub = google::iam::v1::IAMPolicy::NewStub(channel);
   std::shared_ptr<RepositoryManagerStub> stub =
       std::make_shared<DefaultRepositoryManagerStub>(
-          std::move(service_grpc_stub),
+          std::move(service_grpc_stub), std::move(service_operations_stub),
+          std::move(service_iampolicy_stub),
           google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {

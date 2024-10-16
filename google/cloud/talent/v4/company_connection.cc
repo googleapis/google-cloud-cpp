@@ -69,6 +69,11 @@ CompanyServiceConnection::ListCompanies(
       StreamRange<google::cloud::talent::v4::Company>>();
 }
 
+StatusOr<google::longrunning::Operation> CompanyServiceConnection::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<CompanyServiceConnection> MakeCompanyServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

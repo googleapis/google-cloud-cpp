@@ -60,6 +60,12 @@ class SimulatorTracingConnection
   ListReplayResults(google::cloud::policysimulator::v1::ListReplayResultsRequest
                         request) override;
 
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::shared_ptr<policysimulator_v1::SimulatorConnection> child_;
 };

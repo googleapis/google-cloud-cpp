@@ -25,6 +25,7 @@
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <google/cloud/discoveryengine/v1/grounded_generation_service.pb.h>
 #include <memory>
@@ -198,6 +199,15 @@ class GroundedGenerationServiceConnection {
   virtual StatusOr<google::cloud::discoveryengine::v1::CheckGroundingResponse>
   CheckGrounding(
       google::cloud::discoveryengine::v1::CheckGroundingRequest const& request);
+
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
+
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
+
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**

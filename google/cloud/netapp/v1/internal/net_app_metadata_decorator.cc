@@ -123,6 +123,27 @@ StatusOr<google::longrunning::Operation> NetAppMetadata::DeleteStoragePool(
   return child_->DeleteStoragePool(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+NetAppMetadata::AsyncSwitchActiveReplicaZone(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncSwitchActiveReplicaZone(cq, std::move(context),
+                                              std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetAppMetadata::SwitchActiveReplicaZone(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->SwitchActiveReplicaZone(context, options, request);
+}
+
 StatusOr<google::cloud::netapp::v1::ListVolumesResponse>
 NetAppMetadata::ListVolumes(
     grpc::ClientContext& context, Options const& options,
@@ -871,6 +892,56 @@ StatusOr<google::longrunning::Operation> NetAppMetadata::DeleteBackupPolicy(
   SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteBackupPolicy(context, options, request);
+}
+
+StatusOr<google::cloud::location::ListLocationsResponse>
+NetAppMetadata::ListLocations(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::location::ListLocationsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ListLocations(context, options, request);
+}
+
+StatusOr<google::cloud::location::Location> NetAppMetadata::GetLocation(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::location::GetLocationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetLocation(context, options, request);
+}
+
+StatusOr<google::longrunning::ListOperationsResponse>
+NetAppMetadata::ListOperations(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::ListOperationsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ListOperations(context, options, request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppMetadata::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetOperation(context, options, request);
+}
+
+Status NetAppMetadata::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::DeleteOperationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteOperation(context, options, request);
+}
+
+Status NetAppMetadata::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::CancelOperationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->CancelOperation(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

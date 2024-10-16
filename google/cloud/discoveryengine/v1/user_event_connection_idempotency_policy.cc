@@ -44,8 +44,28 @@ Idempotency UserEventServiceConnectionIdempotencyPolicy::CollectUserEvent(
   return Idempotency::kIdempotent;
 }
 
+Idempotency UserEventServiceConnectionIdempotencyPolicy::PurgeUserEvents(
+    google::cloud::discoveryengine::v1::PurgeUserEventsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency UserEventServiceConnectionIdempotencyPolicy::ImportUserEvents(
     google::cloud::discoveryengine::v1::ImportUserEventsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency UserEventServiceConnectionIdempotencyPolicy::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency UserEventServiceConnectionIdempotencyPolicy::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency UserEventServiceConnectionIdempotencyPolicy::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

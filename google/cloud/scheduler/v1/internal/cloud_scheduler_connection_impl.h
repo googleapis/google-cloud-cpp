@@ -73,6 +73,12 @@ class CloudSchedulerConnectionImpl
   StatusOr<google::cloud::scheduler::v1::Job> RunJob(
       google::cloud::scheduler::v1::RunJobRequest const& request) override;
 
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
+
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<scheduler_v1_internal::CloudSchedulerStub> stub_;

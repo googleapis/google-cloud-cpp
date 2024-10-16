@@ -99,6 +99,12 @@ class ServiceUsageConnectionImpl
   BatchGetServices(google::api::serviceusage::v1::BatchGetServicesRequest const&
                        request) override;
 
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<serviceusage_v1_internal::ServiceUsageStub> stub_;

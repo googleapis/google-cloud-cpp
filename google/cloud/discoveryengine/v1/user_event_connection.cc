@@ -26,6 +26,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 #include <utility>
@@ -46,6 +47,30 @@ UserEventServiceConnection::WriteUserEvent(
 StatusOr<google::api::HttpBody> UserEventServiceConnection::CollectUserEvent(
     google::cloud::discoveryengine::v1::CollectUserEventRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>
+UserEventServiceConnection::PurgeUserEvents(
+    google::cloud::discoveryengine::v1::PurgeUserEventsRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+UserEventServiceConnection::PurgeUserEvents(
+    NoAwaitTag,
+    google::cloud::discoveryengine::v1::PurgeUserEventsRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>
+UserEventServiceConnection::PurgeUserEvents(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::discoveryengine::v1::PurgeUserEventsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>
@@ -70,6 +95,25 @@ UserEventServiceConnection::ImportUserEvents(
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::longrunning::Operation>
+UserEventServiceConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::longrunning::Operation>>();
+}
+
+StatusOr<google::longrunning::Operation>
+UserEventServiceConnection::GetOperation(
+    google::longrunning::GetOperationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status UserEventServiceConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 std::shared_ptr<UserEventServiceConnection> MakeUserEventServiceConnection(
