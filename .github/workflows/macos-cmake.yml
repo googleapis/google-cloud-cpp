@@ -68,7 +68,13 @@ jobs:
       with:
         create_credentials_file: true
         credentials_json: ${{ secrets.BUILD_CACHE_KEY }}
+    - uses: actions/setup-python@v5
+      id: py311
+      with:
+        python-version: '3.11'
     - uses: google-github-actions/setup-gcloud@v2
+      env:
+        CLOUDSDK_PYTHON: ${{ steps.py311.outputs.python-path }}
     - name: Dynamic Configuration
       id: dynamic
       shell: bash
@@ -282,4 +288,5 @@ jobs:
       SCCACHE_GCS_RW_MODE: ${{ inputs.sccache-mode }}
       SCCACHE_IGNORE_SERVER_IO_ERROR: 1
       VCPKG_BINARY_SOURCES: x-gcs,gs://cloud-cpp-community-gha-cache/vcpkg-cache/${{ matrix.os }},${{ inputs.vcpkg-cache-mode }}
+      VCPKG_FORCE_SYSTEM_BINARIES: 1
       GHA_TEST_BUCKET: "gcs-grpc-team-cloud-cpp-testing-bucket"
