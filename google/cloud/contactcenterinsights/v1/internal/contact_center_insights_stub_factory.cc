@@ -47,9 +47,11 @@ CreateDefaultContactCenterInsightsStub(
   auto service_grpc_stub =
       google::cloud::contactcenterinsights::v1::ContactCenterInsights::NewStub(
           channel);
+  auto service_operations_stub =
+      google::longrunning::Operations::NewStub(channel);
   std::shared_ptr<ContactCenterInsightsStub> stub =
       std::make_shared<DefaultContactCenterInsightsStub>(
-          std::move(service_grpc_stub),
+          std::move(service_grpc_stub), std::move(service_operations_stub),
           google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {

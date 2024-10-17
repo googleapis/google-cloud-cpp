@@ -329,7 +329,6 @@ TEST(GrpcSetMetadata, Full) {
       Options{}
           .set<UserProjectOption>("user-project")
           .set<QuotaUserOption>("quota-user")
-          .set<ApiKeyOption>("api-key")
           .set<AuthorityOption>("authority.googleapis.com")
           .set<CustomHeadersOption>(
               {{"custom-header-1", "v1"}, {"custom-header-2", "v2"}}),
@@ -341,7 +340,6 @@ TEST(GrpcSetMetadata, Full) {
               UnorderedElementsAre(
                   Pair("x-goog-user-project", "user-project"),
                   Pair("x-goog-quota-user", "quota-user"),
-                  Pair("x-goog-api-key", "api-key"),
                   Pair("fixed-header-1", "v1"), Pair("fixed-header-2", "v2"),
                   Pair("custom-header-1", "v1"), Pair("custom-header-2", "v2"),
                   Pair("x-goog-api-client", "api-client-header")));

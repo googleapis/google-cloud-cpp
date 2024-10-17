@@ -45,9 +45,11 @@ std::shared_ptr<FleetRoutingStub> CreateDefaultFleetRoutingStub(
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       google::cloud::optimization::v1::FleetRouting::NewStub(channel);
+  auto service_operations_stub =
+      google::longrunning::Operations::NewStub(channel);
   std::shared_ptr<FleetRoutingStub> stub =
       std::make_shared<DefaultFleetRoutingStub>(
-          std::move(service_grpc_stub),
+          std::move(service_grpc_stub), std::move(service_operations_stub),
           google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {

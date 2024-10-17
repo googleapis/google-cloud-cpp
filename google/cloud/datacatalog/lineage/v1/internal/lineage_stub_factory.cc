@@ -45,8 +45,10 @@ std::shared_ptr<LineageStub> CreateDefaultLineageStub(
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       google::cloud::datacatalog::lineage::v1::Lineage::NewStub(channel);
+  auto service_operations_stub =
+      google::longrunning::Operations::NewStub(channel);
   std::shared_ptr<LineageStub> stub = std::make_shared<DefaultLineageStub>(
-      std::move(service_grpc_stub),
+      std::move(service_grpc_stub), std::move(service_operations_stub),
       google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {

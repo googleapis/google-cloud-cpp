@@ -63,24 +63,6 @@ TEST(PopulateGrpcOptions, GrpcCredentialOptionBackCompat) {
   EXPECT_EQ(creds, actual.get<GrpcCredentialOption>());
 }
 
-TEST(PopulateGrpcOptions, ApiKey) {
-  auto actual = PopulateGrpcOptions(Options{}.set<ApiKeyOption>("api-key"));
-  EXPECT_TRUE(actual.has<GrpcCredentialOption>());
-  EXPECT_FALSE(actual.has<UnifiedCredentialsOption>());
-}
-
-TEST(PopulateGrpcOptions, ApiKeyWithCredentialsErrors) {
-  auto actual = PopulateGrpcOptions(
-      Options{}.set<ApiKeyOption>("api-key").set<UnifiedCredentialsOption>(
-          MakeGoogleDefaultCredentials()));
-
-  EXPECT_TRUE(actual.has<UnifiedCredentialsOption>());
-  auto const& creds = actual.get<UnifiedCredentialsOption>();
-  TestCredentialsVisitor v;
-  CredentialsVisitor::dispatch(*creds, v);
-  EXPECT_EQ(v.name, "ErrorCredentialsConfig");
-}
-
 TEST(PopulateGrpcOptions, TracingOptions) {
   ScopedEnvironment env("GOOGLE_CLOUD_CPP_TRACING_OPTIONS",
                         "truncate_string_field_longer_than=42");
