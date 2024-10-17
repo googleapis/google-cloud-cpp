@@ -47,9 +47,11 @@ CreateDefaultConsumerProcurementServiceStub(
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub = google::cloud::commerce::consumer::procurement::v1::
       ConsumerProcurementService::NewStub(channel);
+  auto service_operations_stub =
+      google::longrunning::Operations::NewStub(channel);
   std::shared_ptr<ConsumerProcurementServiceStub> stub =
       std::make_shared<DefaultConsumerProcurementServiceStub>(
-          std::move(service_grpc_stub),
+          std::move(service_grpc_stub), std::move(service_operations_stub),
           google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {

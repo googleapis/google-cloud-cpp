@@ -45,9 +45,11 @@ std::shared_ptr<AnalyticsServiceStub> CreateDefaultAnalyticsServiceStub(
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       google::cloud::retail::v2::AnalyticsService::NewStub(channel);
+  auto service_operations_stub =
+      google::longrunning::Operations::NewStub(channel);
   std::shared_ptr<AnalyticsServiceStub> stub =
       std::make_shared<DefaultAnalyticsServiceStub>(
-          std::move(service_grpc_stub),
+          std::move(service_grpc_stub), std::move(service_operations_stub),
           google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {

@@ -46,9 +46,11 @@ CreateDefaultCloudChannelReportsServiceStub(
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       google::cloud::channel::v1::CloudChannelReportsService::NewStub(channel);
+  auto service_operations_stub =
+      google::longrunning::Operations::NewStub(channel);
   std::shared_ptr<CloudChannelReportsServiceStub> stub =
       std::make_shared<DefaultCloudChannelReportsServiceStub>(
-          std::move(service_grpc_stub),
+          std::move(service_grpc_stub), std::move(service_operations_stub),
           google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
