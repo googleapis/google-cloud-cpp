@@ -16,7 +16,7 @@
 
 set -euo pipefail
 
-export USE_BAZEL_VERSION=6.4.0
+export USE_BAZEL_VERSION=7.0.0
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/bazel.sh
