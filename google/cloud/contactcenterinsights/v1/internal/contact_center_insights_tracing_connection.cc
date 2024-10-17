@@ -524,6 +524,80 @@ ContactCenterInsightsTracingConnection::UndeployIssueModel(
                            child_->UndeployIssueModel(operation));
 }
 
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::ExportIssueModelResponse>>
+ContactCenterInsightsTracingConnection::ExportIssueModel(
+    google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "ExportIssueModel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->ExportIssueModel(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsTracingConnection::ExportIssueModel(
+    NoAwaitTag,
+    google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "ExportIssueModel");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->ExportIssueModel(NoAwaitTag{}, request));
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::ExportIssueModelResponse>>
+ContactCenterInsightsTracingConnection::ExportIssueModel(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "ExportIssueModel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ExportIssueModel(operation));
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::ImportIssueModelResponse>>
+ContactCenterInsightsTracingConnection::ImportIssueModel(
+    google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "ImportIssueModel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->ImportIssueModel(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsTracingConnection::ImportIssueModel(
+    NoAwaitTag,
+    google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "ImportIssueModel");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->ImportIssueModel(NoAwaitTag{}, request));
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::ImportIssueModelResponse>>
+ContactCenterInsightsTracingConnection::ImportIssueModel(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "ImportIssueModel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ImportIssueModel(operation));
+}
+
 StatusOr<google::cloud::contactcenterinsights::v1::Issue>
 ContactCenterInsightsTracingConnection::GetIssue(
     google::cloud::contactcenterinsights::v1::GetIssueRequest const& request) {
@@ -661,6 +735,54 @@ ContactCenterInsightsTracingConnection::UpdateSettings(
       "UpdateSettings");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateSettings(request));
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::EncryptionSpec>
+ContactCenterInsightsTracingConnection::GetEncryptionSpec(
+    google::cloud::contactcenterinsights::v1::GetEncryptionSpecRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "GetEncryptionSpec");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetEncryptionSpec(request));
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::InitializeEncryptionSpecResponse>>
+ContactCenterInsightsTracingConnection::InitializeEncryptionSpec(
+    google::cloud::contactcenterinsights::v1::
+        InitializeEncryptionSpecRequest const& request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "InitializeEncryptionSpec");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->InitializeEncryptionSpec(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsTracingConnection::InitializeEncryptionSpec(
+    NoAwaitTag, google::cloud::contactcenterinsights::v1::
+                    InitializeEncryptionSpecRequest const& request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "InitializeEncryptionSpec");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->InitializeEncryptionSpec(NoAwaitTag{}, request));
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::InitializeEncryptionSpecResponse>>
+ContactCenterInsightsTracingConnection::InitializeEncryptionSpec(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "InitializeEncryptionSpec");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->InitializeEncryptionSpec(operation));
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::View>

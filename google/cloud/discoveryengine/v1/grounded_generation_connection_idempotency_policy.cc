@@ -36,6 +36,12 @@ GroundedGenerationServiceConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency
+GroundedGenerationServiceConnectionIdempotencyPolicy::GenerateGroundedContent(
+    google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
 GroundedGenerationServiceConnectionIdempotencyPolicy::CheckGrounding(
     google::cloud::discoveryengine::v1::CheckGroundingRequest const&) {
   return Idempotency::kNonIdempotent;

@@ -169,8 +169,8 @@ class TextToSpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.texttospeech.v1.SynthesizeSpeechRequest]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L155}
-  /// [google.cloud.texttospeech.v1.SynthesizeSpeechResponse]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L304}
+  /// [google.cloud.texttospeech.v1.SynthesizeSpeechRequest]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L162}
+  /// [google.cloud.texttospeech.v1.SynthesizeSpeechResponse]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L364}
   ///
   // clang-format on
   StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
@@ -204,8 +204,8 @@ class TextToSpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.texttospeech.v1.SynthesizeSpeechRequest]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L155}
-  /// [google.cloud.texttospeech.v1.SynthesizeSpeechResponse]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L304}
+  /// [google.cloud.texttospeech.v1.SynthesizeSpeechRequest]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L162}
+  /// [google.cloud.texttospeech.v1.SynthesizeSpeechResponse]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L364}
   ///
   // clang-format on
   StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
@@ -235,8 +235,8 @@ class TextToSpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.texttospeech.v1.StreamingSynthesizeRequest]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L335}
-  /// [google.cloud.texttospeech.v1.StreamingSynthesizeResponse]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L352}
+  /// [google.cloud.texttospeech.v1.StreamingSynthesizeRequest]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L395}
+  /// [google.cloud.texttospeech.v1.StreamingSynthesizeResponse]: @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L412}
   ///
   // clang-format on
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<

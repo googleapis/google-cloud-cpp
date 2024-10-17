@@ -95,6 +95,70 @@ ConsumerProcurementServiceTracingConnection::ListOrders(
       std::move(span), std::move(sr));
 }
 
+future<StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>
+ConsumerProcurementServiceTracingConnection::ModifyOrder(
+    google::cloud::commerce::consumer::procurement::v1::
+        ModifyOrderRequest const& request) {
+  auto span = internal::MakeSpan(
+      "commerce_consumer_procurement_v1::ConsumerProcurementServiceConnection::"
+      "ModifyOrder");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->ModifyOrder(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ConsumerProcurementServiceTracingConnection::ModifyOrder(
+    NoAwaitTag, google::cloud::commerce::consumer::procurement::v1::
+                    ModifyOrderRequest const& request) {
+  auto span = internal::MakeSpan(
+      "commerce_consumer_procurement_v1::ConsumerProcurementServiceConnection::"
+      "ModifyOrder");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->ModifyOrder(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>
+ConsumerProcurementServiceTracingConnection::ModifyOrder(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "commerce_consumer_procurement_v1::ConsumerProcurementServiceConnection::"
+      "ModifyOrder");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->ModifyOrder(operation));
+}
+
+future<StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>
+ConsumerProcurementServiceTracingConnection::CancelOrder(
+    google::cloud::commerce::consumer::procurement::v1::
+        CancelOrderRequest const& request) {
+  auto span = internal::MakeSpan(
+      "commerce_consumer_procurement_v1::ConsumerProcurementServiceConnection::"
+      "CancelOrder");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CancelOrder(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ConsumerProcurementServiceTracingConnection::CancelOrder(
+    NoAwaitTag, google::cloud::commerce::consumer::procurement::v1::
+                    CancelOrderRequest const& request) {
+  auto span = internal::MakeSpan(
+      "commerce_consumer_procurement_v1::ConsumerProcurementServiceConnection::"
+      "CancelOrder");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->CancelOrder(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>
+ConsumerProcurementServiceTracingConnection::CancelOrder(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "commerce_consumer_procurement_v1::ConsumerProcurementServiceConnection::"
+      "CancelOrder");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CancelOrder(operation));
+}
+
 StatusOr<google::longrunning::Operation>
 ConsumerProcurementServiceTracingConnection::GetOperation(
     google::longrunning::GetOperationRequest const& request) {

@@ -159,6 +159,16 @@ ContactCenterInsightsConnectionIdempotencyPolicy::UndeployIssueModel(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::ExportIssueModel(
+    google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::ImportIssueModel(
+    google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::GetIssue(
     google::cloud::contactcenterinsights::v1::GetIssueRequest const&) {
   return Idempotency::kIdempotent;
@@ -231,6 +241,18 @@ Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::GetSettings(
 
 Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::UpdateSettings(
     google::cloud::contactcenterinsights::v1::UpdateSettingsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::GetEncryptionSpec(
+    google::cloud::contactcenterinsights::v1::GetEncryptionSpecRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+ContactCenterInsightsConnectionIdempotencyPolicy::InitializeEncryptionSpec(
+    google::cloud::contactcenterinsights::v1::
+        InitializeEncryptionSpecRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

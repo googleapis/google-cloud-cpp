@@ -119,7 +119,7 @@ class SearchServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.SearchRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/search_service.proto#L63}
-  /// [google.cloud.discoveryengine.v1.SearchResponse.SearchResult]: @googleapis_reference_link{google/cloud/discoveryengine/v1/search_service.proto#L873}
+  /// [google.cloud.discoveryengine.v1.SearchResponse.SearchResult]: @googleapis_reference_link{google/cloud/discoveryengine/v1/search_service.proto#L975}
   ///
   // clang-format on
   StreamRange<google::cloud::discoveryengine::v1::SearchResponse::SearchResult>

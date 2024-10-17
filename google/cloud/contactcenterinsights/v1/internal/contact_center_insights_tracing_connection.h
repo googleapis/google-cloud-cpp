@@ -233,6 +233,36 @@ class ContactCenterInsightsTracingConnection
       google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>>
   UndeployIssueModel(google::longrunning::Operation const& operation) override;
 
+  future<StatusOr<
+      google::cloud::contactcenterinsights::v1::ExportIssueModelResponse>>
+  ExportIssueModel(
+      google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> ExportIssueModel(
+      NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const&
+          request) override;
+
+  future<StatusOr<
+      google::cloud::contactcenterinsights::v1::ExportIssueModelResponse>>
+  ExportIssueModel(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<
+      google::cloud::contactcenterinsights::v1::ImportIssueModelResponse>>
+  ImportIssueModel(
+      google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> ImportIssueModel(
+      NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const&
+          request) override;
+
+  future<StatusOr<
+      google::cloud::contactcenterinsights::v1::ImportIssueModelResponse>>
+  ImportIssueModel(google::longrunning::Operation const& operation) override;
+
   StatusOr<google::cloud::contactcenterinsights::v1::Issue> GetIssue(
       google::cloud::contactcenterinsights::v1::GetIssueRequest const& request)
       override;
@@ -289,6 +319,26 @@ class ContactCenterInsightsTracingConnection
   StatusOr<google::cloud::contactcenterinsights::v1::Settings> UpdateSettings(
       google::cloud::contactcenterinsights::v1::UpdateSettingsRequest const&
           request) override;
+
+  StatusOr<google::cloud::contactcenterinsights::v1::EncryptionSpec>
+  GetEncryptionSpec(
+      google::cloud::contactcenterinsights::v1::GetEncryptionSpecRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::contactcenterinsights::v1::
+                      InitializeEncryptionSpecResponse>>
+  InitializeEncryptionSpec(
+      google::cloud::contactcenterinsights::v1::
+          InitializeEncryptionSpecRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> InitializeEncryptionSpec(
+      NoAwaitTag, google::cloud::contactcenterinsights::v1::
+                      InitializeEncryptionSpecRequest const& request) override;
+
+  future<StatusOr<google::cloud::contactcenterinsights::v1::
+                      InitializeEncryptionSpecResponse>>
+  InitializeEncryptionSpec(
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::View> CreateView(
       google::cloud::contactcenterinsights::v1::CreateViewRequest const&

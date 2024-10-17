@@ -51,6 +51,14 @@ class ConsumerProcurementServiceConnectionIdempotencyPolicy {
       google::cloud::commerce::consumer::procurement::v1::ListOrdersRequest
           request);
 
+  virtual google::cloud::Idempotency ModifyOrder(
+      google::cloud::commerce::consumer::procurement::v1::
+          ModifyOrderRequest const& request);
+
+  virtual google::cloud::Idempotency CancelOrder(
+      google::cloud::commerce::consumer::procurement::v1::
+          CancelOrderRequest const& request);
+
   virtual google::cloud::Idempotency GetOperation(
       google::longrunning::GetOperationRequest const& request);
 };

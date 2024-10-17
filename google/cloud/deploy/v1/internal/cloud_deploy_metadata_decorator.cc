@@ -348,6 +348,91 @@ CloudDeployMetadata::AbandonRelease(
   return child_->AbandonRelease(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+CloudDeployMetadata::AsyncCreateDeployPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::deploy::v1::CreateDeployPolicyRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateDeployPolicy(cq, std::move(context),
+                                         std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudDeployMetadata::CreateDeployPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::deploy::v1::CreateDeployPolicyRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateDeployPolicy(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudDeployMetadata::AsyncUpdateDeployPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::deploy::v1::UpdateDeployPolicyRequest const& request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("deploy_policy.name=",
+                   internal::UrlEncode(request.deploy_policy().name())));
+  return child_->AsyncUpdateDeployPolicy(cq, std::move(context),
+                                         std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudDeployMetadata::UpdateDeployPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::deploy::v1::UpdateDeployPolicyRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("deploy_policy.name=",
+                   internal::UrlEncode(request.deploy_policy().name())));
+  return child_->UpdateDeployPolicy(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudDeployMetadata::AsyncDeleteDeployPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::deploy::v1::DeleteDeployPolicyRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteDeployPolicy(cq, std::move(context),
+                                         std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudDeployMetadata::DeleteDeployPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::deploy::v1::DeleteDeployPolicyRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteDeployPolicy(context, options, request);
+}
+
+StatusOr<google::cloud::deploy::v1::ListDeployPoliciesResponse>
+CloudDeployMetadata::ListDeployPolicies(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::deploy::v1::ListDeployPoliciesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListDeployPolicies(context, options, request);
+}
+
+StatusOr<google::cloud::deploy::v1::DeployPolicy>
+CloudDeployMetadata::GetDeployPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::deploy::v1::GetDeployPolicyRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetDeployPolicy(context, options, request);
+}
+
 StatusOr<google::cloud::deploy::v1::ApproveRolloutResponse>
 CloudDeployMetadata::ApproveRollout(
     grpc::ClientContext& context, Options const& options,

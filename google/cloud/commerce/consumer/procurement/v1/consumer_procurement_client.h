@@ -144,8 +144,8 @@ class ConsumerProcurementServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.commerce.consumer.procurement.v1.Order]: @googleapis_reference_link{google/cloud/commerce/consumer/procurement/v1/order.proto#L109}
-  /// [google.cloud.commerce.consumer.procurement.v1.PlaceOrderRequest]: @googleapis_reference_link{google/cloud/commerce/consumer/procurement/v1/procurement_service.proto#L92}
+  /// [google.cloud.commerce.consumer.procurement.v1.Order]: @googleapis_reference_link{google/cloud/commerce/consumer/procurement/v1/order.proto#L113}
+  /// [google.cloud.commerce.consumer.procurement.v1.PlaceOrderRequest]: @googleapis_reference_link{google/cloud/commerce/consumer/procurement/v1/procurement_service.proto#L131}
   ///
   // clang-format on
   future<StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>
@@ -202,8 +202,8 @@ class ConsumerProcurementServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.commerce.consumer.procurement.v1.GetOrderRequest]: @googleapis_reference_link{google/cloud/commerce/consumer/procurement/v1/procurement_service.proto#L125}
-  /// [google.cloud.commerce.consumer.procurement.v1.Order]: @googleapis_reference_link{google/cloud/commerce/consumer/procurement/v1/order.proto#L109}
+  /// [google.cloud.commerce.consumer.procurement.v1.GetOrderRequest]: @googleapis_reference_link{google/cloud/commerce/consumer/procurement/v1/procurement_service.proto#L164}
+  /// [google.cloud.commerce.consumer.procurement.v1.Order]: @googleapis_reference_link{google/cloud/commerce/consumer/procurement/v1/order.proto#L113}
   ///
   // clang-format on
   StatusOr<google::cloud::commerce::consumer::procurement::v1::Order> GetOrder(
@@ -233,8 +233,8 @@ class ConsumerProcurementServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.commerce.consumer.procurement.v1.GetOrderRequest]: @googleapis_reference_link{google/cloud/commerce/consumer/procurement/v1/procurement_service.proto#L125}
-  /// [google.cloud.commerce.consumer.procurement.v1.Order]: @googleapis_reference_link{google/cloud/commerce/consumer/procurement/v1/order.proto#L109}
+  /// [google.cloud.commerce.consumer.procurement.v1.GetOrderRequest]: @googleapis_reference_link{google/cloud/commerce/consumer/procurement/v1/procurement_service.proto#L164}
+  /// [google.cloud.commerce.consumer.procurement.v1.Order]: @googleapis_reference_link{google/cloud/commerce/consumer/procurement/v1/order.proto#L113}
   ///
   // clang-format on
   StatusOr<google::cloud::commerce::consumer::procurement::v1::Order> GetOrder(
@@ -272,8 +272,8 @@ class ConsumerProcurementServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.commerce.consumer.procurement.v1.ListOrdersRequest]: @googleapis_reference_link{google/cloud/commerce/consumer/procurement/v1/procurement_service.proto#L132}
-  /// [google.cloud.commerce.consumer.procurement.v1.Order]: @googleapis_reference_link{google/cloud/commerce/consumer/procurement/v1/order.proto#L109}
+  /// [google.cloud.commerce.consumer.procurement.v1.ListOrdersRequest]: @googleapis_reference_link{google/cloud/commerce/consumer/procurement/v1/procurement_service.proto#L171}
+  /// [google.cloud.commerce.consumer.procurement.v1.Order]: @googleapis_reference_link{google/cloud/commerce/consumer/procurement/v1/order.proto#L113}
   ///
   // clang-format on
   StreamRange<google::cloud::commerce::consumer::procurement::v1::Order>
@@ -313,8 +313,8 @@ class ConsumerProcurementServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.commerce.consumer.procurement.v1.ListOrdersRequest]: @googleapis_reference_link{google/cloud/commerce/consumer/procurement/v1/procurement_service.proto#L132}
-  /// [google.cloud.commerce.consumer.procurement.v1.Order]: @googleapis_reference_link{google/cloud/commerce/consumer/procurement/v1/order.proto#L109}
+  /// [google.cloud.commerce.consumer.procurement.v1.ListOrdersRequest]: @googleapis_reference_link{google/cloud/commerce/consumer/procurement/v1/procurement_service.proto#L171}
+  /// [google.cloud.commerce.consumer.procurement.v1.Order]: @googleapis_reference_link{google/cloud/commerce/consumer/procurement/v1/order.proto#L113}
   ///
   // clang-format on
   StreamRange<google::cloud::commerce::consumer::procurement::v1::Order>
@@ -322,6 +322,147 @@ class ConsumerProcurementServiceClient {
       google::cloud::commerce::consumer::procurement::v1::ListOrdersRequest
           request,
       Options opts = {});
+
+  // clang-format off
+  ///
+  /// Modifies an existing
+  /// [Order][google.cloud.commerce.consumer.procurement.v1.Order] resource.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.commerce.consumer.procurement.v1.ModifyOrderRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.commerce.consumer.procurement.v1.Order] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.commerce.consumer.procurement.v1.ModifyOrderRequest]: @googleapis_reference_link{google/cloud/commerce/consumer/procurement/v1/procurement_service.proto#L215}
+  /// [google.cloud.commerce.consumer.procurement.v1.Order]: @googleapis_reference_link{google/cloud/commerce/consumer/procurement/v1/order.proto#L113}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>
+  ModifyOrder(google::cloud::commerce::consumer::procurement::v1::
+                  ModifyOrderRequest const& request,
+              Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief ModifyOrder
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> ModifyOrder(
+      NoAwaitTag,
+      google::cloud::commerce::consumer::procurement::v1::
+          ModifyOrderRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief ModifyOrder
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>
+  ModifyOrder(google::longrunning::Operation const& operation,
+              Options opts = {});
+
+  // clang-format off
+  ///
+  /// Cancels an existing
+  /// [Order][google.cloud.commerce.consumer.procurement.v1.Order]. Every product
+  /// procured in the Order will be cancelled.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.commerce.consumer.procurement.v1.CancelOrderRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.commerce.consumer.procurement.v1.Order] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.commerce.consumer.procurement.v1.CancelOrderRequest]: @googleapis_reference_link{google/cloud/commerce/consumer/procurement/v1/procurement_service.proto#L267}
+  /// [google.cloud.commerce.consumer.procurement.v1.Order]: @googleapis_reference_link{google/cloud/commerce/consumer/procurement/v1/order.proto#L113}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>
+  CancelOrder(google::cloud::commerce::consumer::procurement::v1::
+                  CancelOrderRequest const& request,
+              Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CancelOrder
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CancelOrder(
+      NoAwaitTag,
+      google::cloud::commerce::consumer::procurement::v1::
+          CancelOrderRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CancelOrder
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>
+  CancelOrder(google::longrunning::Operation const& operation,
+              Options opts = {});
 
   // clang-format off
   ///

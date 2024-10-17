@@ -98,9 +98,9 @@ class ControlServiceClient {
   /// exists, an ALREADY_EXISTS error is returned.
   ///
   /// @param parent  Required. Full resource name of parent data store. Format:
-  ///  `projects/{project_number}/locations/{location_id}/collections/{collection_id}/dataStores/{data_store_id}`
+  ///  `projects/{project}/locations/{location}/collections/{collection_id}/dataStores/{data_store_id}`
   ///  or
-  ///  `projects/{project_number}/locations/{location_id}/collections/{collection_id}/engines/{engine_id}`.
+  ///  `projects/{project}/locations/{location}/collections/{collection_id}/engines/{engine_id}`.
   /// @param control  Required. The Control to create.
   /// @param control_id  Required. The ID to use for the Control, which will become the final
   ///  component of the Control's resource name.
@@ -173,7 +173,7 @@ class ControlServiceClient {
   /// not exist, a NOT_FOUND error is returned.
   ///
   /// @param name  Required. The resource name of the Control to delete. Format:
-  ///  `projects/{project_number}/locations/{location_id}/collections/{collection_id}/dataStores/{data_store_id}/controls/{control_id}`
+  ///  `projects/{project}/locations/{location}/collections/{collection_id}/dataStores/{data_store_id}/controls/{control_id}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [`Status`] object. If the request failed, the
@@ -303,7 +303,7 @@ class ControlServiceClient {
   /// Gets a Control.
   ///
   /// @param name  Required. The resource name of the Control to get. Format:
-  ///  `projects/{project_number}/locations/{location_id}/collections/{collection_id}/dataStores/{data_store_id}/controls/{control_id}`
+  ///  `projects/{project}/locations/{location}/collections/{collection_id}/dataStores/{data_store_id}/controls/{control_id}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -361,9 +361,9 @@ class ControlServiceClient {
   /// [DataStore][google.cloud.discoveryengine.v1.DataStore].
   ///
   /// @param parent  Required. The data store resource name. Format:
-  ///  `projects/{project_number}/locations/{location_id}/collections/{collection_id}/dataStores/{data_store_id}`
+  ///  `projects/{project}/locations/{location}/collections/{collection_id}/dataStores/{data_store_id}`
   ///  or
-  ///  `projects/{project_number}/locations/{location_id}/collections/{collection_id}/engines/{engine_id}`.
+  ///  `projects/{project}/locations/{location}/collections/{collection_id}/engines/{engine_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)

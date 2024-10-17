@@ -642,6 +642,169 @@ CloudDeployClient::AbandonRelease(
   return connection_->AbandonRelease(request);
 }
 
+future<StatusOr<google::cloud::deploy::v1::DeployPolicy>>
+CloudDeployClient::CreateDeployPolicy(
+    std::string const& parent,
+    google::cloud::deploy::v1::DeployPolicy const& deploy_policy,
+    std::string const& deploy_policy_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::deploy::v1::CreateDeployPolicyRequest request;
+  request.set_parent(parent);
+  *request.mutable_deploy_policy() = deploy_policy;
+  request.set_deploy_policy_id(deploy_policy_id);
+  return connection_->CreateDeployPolicy(request);
+}
+
+StatusOr<google::longrunning::Operation> CloudDeployClient::CreateDeployPolicy(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::deploy::v1::DeployPolicy const& deploy_policy,
+    std::string const& deploy_policy_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::deploy::v1::CreateDeployPolicyRequest request;
+  request.set_parent(parent);
+  *request.mutable_deploy_policy() = deploy_policy;
+  request.set_deploy_policy_id(deploy_policy_id);
+  return connection_->CreateDeployPolicy(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::deploy::v1::DeployPolicy>>
+CloudDeployClient::CreateDeployPolicy(
+    google::cloud::deploy::v1::CreateDeployPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateDeployPolicy(request);
+}
+
+StatusOr<google::longrunning::Operation> CloudDeployClient::CreateDeployPolicy(
+    NoAwaitTag,
+    google::cloud::deploy::v1::CreateDeployPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateDeployPolicy(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::deploy::v1::DeployPolicy>>
+CloudDeployClient::CreateDeployPolicy(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateDeployPolicy(operation);
+}
+
+future<StatusOr<google::cloud::deploy::v1::DeployPolicy>>
+CloudDeployClient::UpdateDeployPolicy(
+    google::cloud::deploy::v1::DeployPolicy const& deploy_policy,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::deploy::v1::UpdateDeployPolicyRequest request;
+  *request.mutable_deploy_policy() = deploy_policy;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateDeployPolicy(request);
+}
+
+StatusOr<google::longrunning::Operation> CloudDeployClient::UpdateDeployPolicy(
+    NoAwaitTag, google::cloud::deploy::v1::DeployPolicy const& deploy_policy,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::deploy::v1::UpdateDeployPolicyRequest request;
+  *request.mutable_deploy_policy() = deploy_policy;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateDeployPolicy(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::deploy::v1::DeployPolicy>>
+CloudDeployClient::UpdateDeployPolicy(
+    google::cloud::deploy::v1::UpdateDeployPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateDeployPolicy(request);
+}
+
+StatusOr<google::longrunning::Operation> CloudDeployClient::UpdateDeployPolicy(
+    NoAwaitTag,
+    google::cloud::deploy::v1::UpdateDeployPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateDeployPolicy(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::deploy::v1::DeployPolicy>>
+CloudDeployClient::UpdateDeployPolicy(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateDeployPolicy(operation);
+}
+
+future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
+CloudDeployClient::DeleteDeployPolicy(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::deploy::v1::DeleteDeployPolicyRequest request;
+  request.set_name(name);
+  return connection_->DeleteDeployPolicy(request);
+}
+
+StatusOr<google::longrunning::Operation> CloudDeployClient::DeleteDeployPolicy(
+    NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::deploy::v1::DeleteDeployPolicyRequest request;
+  request.set_name(name);
+  return connection_->DeleteDeployPolicy(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
+CloudDeployClient::DeleteDeployPolicy(
+    google::cloud::deploy::v1::DeleteDeployPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteDeployPolicy(request);
+}
+
+StatusOr<google::longrunning::Operation> CloudDeployClient::DeleteDeployPolicy(
+    NoAwaitTag,
+    google::cloud::deploy::v1::DeleteDeployPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteDeployPolicy(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
+CloudDeployClient::DeleteDeployPolicy(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteDeployPolicy(operation);
+}
+
+StreamRange<google::cloud::deploy::v1::DeployPolicy>
+CloudDeployClient::ListDeployPolicies(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::deploy::v1::ListDeployPoliciesRequest request;
+  request.set_parent(parent);
+  return connection_->ListDeployPolicies(request);
+}
+
+StreamRange<google::cloud::deploy::v1::DeployPolicy>
+CloudDeployClient::ListDeployPolicies(
+    google::cloud::deploy::v1::ListDeployPoliciesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListDeployPolicies(std::move(request));
+}
+
+StatusOr<google::cloud::deploy::v1::DeployPolicy>
+CloudDeployClient::GetDeployPolicy(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::deploy::v1::GetDeployPolicyRequest request;
+  request.set_name(name);
+  return connection_->GetDeployPolicy(request);
+}
+
+StatusOr<google::cloud::deploy::v1::DeployPolicy>
+CloudDeployClient::GetDeployPolicy(
+    google::cloud::deploy::v1::GetDeployPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetDeployPolicy(request);
+}
+
 StatusOr<google::cloud::deploy::v1::ApproveRolloutResponse>
 CloudDeployClient::ApproveRollout(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

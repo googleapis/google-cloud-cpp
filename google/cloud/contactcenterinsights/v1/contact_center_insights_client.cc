@@ -709,6 +709,102 @@ ContactCenterInsightsClient::UndeployIssueModel(
   return connection_->UndeployIssueModel(operation);
 }
 
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::ExportIssueModelResponse>>
+ContactCenterInsightsClient::ExportIssueModel(std::string const& name,
+                                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::contactcenterinsights::v1::ExportIssueModelRequest request;
+  request.set_name(name);
+  return connection_->ExportIssueModel(request);
+}
+
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsClient::ExportIssueModel(NoAwaitTag,
+                                              std::string const& name,
+                                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::contactcenterinsights::v1::ExportIssueModelRequest request;
+  request.set_name(name);
+  return connection_->ExportIssueModel(NoAwaitTag{}, request);
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::ExportIssueModelResponse>>
+ContactCenterInsightsClient::ExportIssueModel(
+    google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExportIssueModel(request);
+}
+
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsClient::ExportIssueModel(
+    NoAwaitTag,
+    google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExportIssueModel(NoAwaitTag{}, request);
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::ExportIssueModelResponse>>
+ContactCenterInsightsClient::ExportIssueModel(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExportIssueModel(operation);
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::ImportIssueModelResponse>>
+ContactCenterInsightsClient::ImportIssueModel(std::string const& parent,
+                                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::contactcenterinsights::v1::ImportIssueModelRequest request;
+  request.set_parent(parent);
+  return connection_->ImportIssueModel(request);
+}
+
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsClient::ImportIssueModel(NoAwaitTag,
+                                              std::string const& parent,
+                                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::contactcenterinsights::v1::ImportIssueModelRequest request;
+  request.set_parent(parent);
+  return connection_->ImportIssueModel(NoAwaitTag{}, request);
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::ImportIssueModelResponse>>
+ContactCenterInsightsClient::ImportIssueModel(
+    google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ImportIssueModel(request);
+}
+
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsClient::ImportIssueModel(
+    NoAwaitTag,
+    google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ImportIssueModel(NoAwaitTag{}, request);
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::ImportIssueModelResponse>>
+ContactCenterInsightsClient::ImportIssueModel(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ImportIssueModel(operation);
+}
+
 StatusOr<google::cloud::contactcenterinsights::v1::Issue>
 ContactCenterInsightsClient::GetIssue(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -944,6 +1040,78 @@ ContactCenterInsightsClient::UpdateSettings(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateSettings(request);
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::EncryptionSpec>
+ContactCenterInsightsClient::GetEncryptionSpec(std::string const& name,
+                                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::contactcenterinsights::v1::GetEncryptionSpecRequest request;
+  request.set_name(name);
+  return connection_->GetEncryptionSpec(request);
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::EncryptionSpec>
+ContactCenterInsightsClient::GetEncryptionSpec(
+    google::cloud::contactcenterinsights::v1::GetEncryptionSpecRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetEncryptionSpec(request);
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::InitializeEncryptionSpecResponse>>
+ContactCenterInsightsClient::InitializeEncryptionSpec(
+    google::cloud::contactcenterinsights::v1::EncryptionSpec const&
+        encryption_spec,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::contactcenterinsights::v1::InitializeEncryptionSpecRequest
+      request;
+  *request.mutable_encryption_spec() = encryption_spec;
+  return connection_->InitializeEncryptionSpec(request);
+}
+
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsClient::InitializeEncryptionSpec(
+    NoAwaitTag,
+    google::cloud::contactcenterinsights::v1::EncryptionSpec const&
+        encryption_spec,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::contactcenterinsights::v1::InitializeEncryptionSpecRequest
+      request;
+  *request.mutable_encryption_spec() = encryption_spec;
+  return connection_->InitializeEncryptionSpec(NoAwaitTag{}, request);
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::InitializeEncryptionSpecResponse>>
+ContactCenterInsightsClient::InitializeEncryptionSpec(
+    google::cloud::contactcenterinsights::v1::
+        InitializeEncryptionSpecRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InitializeEncryptionSpec(request);
+}
+
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsClient::InitializeEncryptionSpec(
+    NoAwaitTag,
+    google::cloud::contactcenterinsights::v1::
+        InitializeEncryptionSpecRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InitializeEncryptionSpec(NoAwaitTag{}, request);
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::InitializeEncryptionSpecResponse>>
+ContactCenterInsightsClient::InitializeEncryptionSpec(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InitializeEncryptionSpec(operation);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::View>

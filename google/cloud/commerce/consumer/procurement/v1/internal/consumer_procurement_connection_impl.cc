@@ -230,6 +230,194 @@ ConsumerProcurementServiceConnectionImpl::ListOrders(
       });
 }
 
+future<StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>
+ConsumerProcurementServiceConnectionImpl::ModifyOrder(
+    google::cloud::commerce::consumer::procurement::v1::
+        ModifyOrderRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ModifyOrder(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::commerce::consumer::procurement::v1::Order>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::commerce::consumer::procurement::v1::
+                         ModifyOrderRequest const& request) {
+        return stub->AsyncModifyOrder(cq, std::move(context),
+                                      std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::commerce::consumer::procurement::v1::Order>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ConsumerProcurementServiceConnectionImpl::ModifyOrder(
+    NoAwaitTag, google::cloud::commerce::consumer::procurement::v1::
+                    ModifyOrderRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ModifyOrder(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::commerce::consumer::procurement::v1::
+                 ModifyOrderRequest const& request) {
+        return stub_->ModifyOrder(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>
+ConsumerProcurementServiceConnectionImpl::ModifyOrder(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::commerce::consumer::procurement::v1::
+                   ModifyOrderMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ModifyOrder",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::commerce::consumer::procurement::v1::Order>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::commerce::consumer::procurement::v1::Order>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>
+ConsumerProcurementServiceConnectionImpl::CancelOrder(
+    google::cloud::commerce::consumer::procurement::v1::
+        CancelOrderRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CancelOrder(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::commerce::consumer::procurement::v1::Order>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::cloud::commerce::consumer::procurement::v1::
+                         CancelOrderRequest const& request) {
+        return stub->AsyncCancelOrder(cq, std::move(context),
+                                      std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::commerce::consumer::procurement::v1::Order>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ConsumerProcurementServiceConnectionImpl::CancelOrder(
+    NoAwaitTag, google::cloud::commerce::consumer::procurement::v1::
+                    CancelOrderRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CancelOrder(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::commerce::consumer::procurement::v1::
+                 CancelOrderRequest const& request) {
+        return stub_->CancelOrder(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>
+ConsumerProcurementServiceConnectionImpl::CancelOrder(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::commerce::consumer::procurement::v1::
+                   CancelOrderMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CancelOrder",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::commerce::consumer::procurement::v1::Order>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::commerce::consumer::procurement::v1::Order>,
+      polling_policy(*current), __func__);
+}
+
 StatusOr<google::longrunning::Operation>
 ConsumerProcurementServiceConnectionImpl::GetOperation(
     google::longrunning::GetOperationRequest const& request) {

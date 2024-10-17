@@ -631,7 +631,7 @@ class DocumentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.BatchGetDocumentsMetadataRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L340}
-  /// [google.cloud.discoveryengine.v1.BatchGetDocumentsMetadataResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L375}
+  /// [google.cloud.discoveryengine.v1.BatchGetDocumentsMetadataResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L392}
   /// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L36}
   ///
   // clang-format on
@@ -665,7 +665,7 @@ class DocumentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.BatchGetDocumentsMetadataRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L340}
-  /// [google.cloud.discoveryengine.v1.BatchGetDocumentsMetadataResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L375}
+  /// [google.cloud.discoveryengine.v1.BatchGetDocumentsMetadataResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L392}
   /// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L36}
   ///
   // clang-format on

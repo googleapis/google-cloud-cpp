@@ -19,6 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_INTERNAL_GROUNDED_GENERATION_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_INTERNAL_GROUNDED_GENERATION_STUB_H
 
+#include "google/cloud/async_streaming_read_write_rpc.h"
+#include "google/cloud/completion_queue.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -35,6 +37,21 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class GroundedGenerationServiceStub {
  public:
   virtual ~GroundedGenerationServiceStub() = 0;
+
+  virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::discoveryengine::v1::GenerateGroundedContentRequest,
+      google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>>
+  AsyncStreamGenerateGroundedContent(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) = 0;
+
+  virtual StatusOr<
+      google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>
+  GenerateGroundedContent(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::discoveryengine::v1::CheckGroundingResponse>
   CheckGrounding(
@@ -66,6 +83,20 @@ class DefaultGroundedGenerationServiceStub
           operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         operations_stub_(std::move(operations_stub)) {}
+
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::discoveryengine::v1::GenerateGroundedContentRequest,
+      google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>>
+  AsyncStreamGenerateGroundedContent(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
+
+  StatusOr<google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>
+  GenerateGroundedContent(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const&
+          request) override;
 
   StatusOr<google::cloud::discoveryengine::v1::CheckGroundingResponse>
   CheckGrounding(
