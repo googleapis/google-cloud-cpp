@@ -2,3 +2,8 @@
 @com_google_googleapis//google/cloud/backupdr/logging/v1:eventlog.proto
 @com_google_googleapis//google/cloud/backupdr/logging/v1:reportlog.proto
 @com_google_googleapis//google/cloud/backupdr/v1:backupdr.proto
+@com_google_googleapis//google/cloud/backupdr/v1:backupplan.proto
+@com_google_googleapis//google/cloud/backupdr/v1:backupplanassociation.proto
+@com_google_googleapis//google/cloud/backupdr/v1:backupvault.proto
+@com_google_googleapis//google/cloud/backupdr/v1:backupvault_ba.proto
+@com_google_googleapis//google/cloud/backupdr/v1:backupvault_gce.proto

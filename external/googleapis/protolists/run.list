@@ -1,3 +1,4 @@
+@com_google_googleapis//google/cloud/run/v2:build.proto
 @com_google_googleapis//google/cloud/run/v2:condition.proto
 @com_google_googleapis//google/cloud/run/v2:execution.proto
 @com_google_googleapis//google/cloud/run/v2:execution_template.proto
