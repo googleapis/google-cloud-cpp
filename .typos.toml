@@ -1,7 +1,7 @@
 [files]
 extend-exclude = [
-    # It does not like "intoto_*.proto"
-    "external/googleapis/protolists/grafeas.list",
+    # We don't name any of the files in these lists
+    "external/googleapis/protolists/*.list",
     # The discovery docs have one or more typos in their comments and enum
     # fields. These typos can be propagated to the generated .h files.
     # TODO(#11736): Try and get typos fixed upstream.
