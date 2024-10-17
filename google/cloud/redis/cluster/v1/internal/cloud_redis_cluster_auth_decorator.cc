@@ -143,6 +143,56 @@ CloudRedisClusterAuth::GetClusterCertificateAuthority(
   return child_->GetClusterCertificateAuthority(context, options, request);
 }
 
+StatusOr<google::cloud::location::ListLocationsResponse>
+CloudRedisClusterAuth::ListLocations(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::location::ListLocationsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListLocations(context, options, request);
+}
+
+StatusOr<google::cloud::location::Location> CloudRedisClusterAuth::GetLocation(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::location::GetLocationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetLocation(context, options, request);
+}
+
+StatusOr<google::longrunning::ListOperationsResponse>
+CloudRedisClusterAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::ListOperationsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListOperations(context, options, request);
+}
+
+StatusOr<google::longrunning::Operation> CloudRedisClusterAuth::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetOperation(context, options, request);
+}
+
+Status CloudRedisClusterAuth::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::DeleteOperationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteOperation(context, options, request);
+}
+
+Status CloudRedisClusterAuth::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::CancelOperationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CancelOperation(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisClusterAuth::AsyncRescheduleClusterMaintenance(
     google::cloud::CompletionQueue& cq,

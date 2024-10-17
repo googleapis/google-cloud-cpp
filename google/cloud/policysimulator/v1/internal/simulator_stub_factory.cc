@@ -45,8 +45,10 @@ std::shared_ptr<SimulatorStub> CreateDefaultSimulatorStub(
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       google::cloud::policysimulator::v1::Simulator::NewStub(channel);
+  auto service_operations_stub =
+      google::longrunning::Operations::NewStub(channel);
   std::shared_ptr<SimulatorStub> stub = std::make_shared<DefaultSimulatorStub>(
-      std::move(service_grpc_stub),
+      std::move(service_grpc_stub), std::move(service_operations_stub),
       google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {

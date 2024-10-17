@@ -45,9 +45,11 @@ std::shared_ptr<TagBindingsStub> CreateDefaultTagBindingsStub(
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       google::cloud::resourcemanager::v3::TagBindings::NewStub(channel);
+  auto service_operations_stub =
+      google::longrunning::Operations::NewStub(channel);
   std::shared_ptr<TagBindingsStub> stub =
       std::make_shared<DefaultTagBindingsStub>(
-          std::move(service_grpc_stub),
+          std::move(service_grpc_stub), std::move(service_operations_stub),
           google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {

@@ -45,9 +45,11 @@ std::shared_ptr<DatabaseAdminStub> CreateDefaultDatabaseAdminStub(
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       google::spanner::admin::database::v1::DatabaseAdmin::NewStub(channel);
+  auto service_operations_stub =
+      google::longrunning::Operations::NewStub(channel);
   std::shared_ptr<DatabaseAdminStub> stub =
       std::make_shared<DefaultDatabaseAdminStub>(
-          std::move(service_grpc_stub),
+          std::move(service_grpc_stub), std::move(service_operations_stub),
           google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {

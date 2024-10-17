@@ -44,8 +44,10 @@ std::shared_ptr<SpeechStub> CreateDefaultSpeechStub(
   auto channel = auth->CreateChannel(options.get<EndpointOption>(),
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub = google::cloud::speech::v1::Speech::NewStub(channel);
+  auto service_operations_stub =
+      google::longrunning::Operations::NewStub(channel);
   std::shared_ptr<SpeechStub> stub = std::make_shared<DefaultSpeechStub>(
-      std::move(service_grpc_stub),
+      std::move(service_grpc_stub), std::move(service_operations_stub),
       google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
