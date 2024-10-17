@@ -116,6 +116,476 @@ BackupDRTracingConnection::DeleteManagementServer(
                            child_->DeleteManagementServer(operation));
 }
 
+future<StatusOr<google::cloud::backupdr::v1::BackupVault>>
+BackupDRTracingConnection::CreateBackupVault(
+    google::cloud::backupdr::v1::CreateBackupVaultRequest const& request) {
+  auto span =
+      internal::MakeSpan("backupdr_v1::BackupDRConnection::CreateBackupVault");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateBackupVault(request));
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRTracingConnection::CreateBackupVault(
+    NoAwaitTag,
+    google::cloud::backupdr::v1::CreateBackupVaultRequest const& request) {
+  auto span =
+      internal::MakeSpan("backupdr_v1::BackupDRConnection::CreateBackupVault");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->CreateBackupVault(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::backupdr::v1::BackupVault>>
+BackupDRTracingConnection::CreateBackupVault(
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("backupdr_v1::BackupDRConnection::CreateBackupVault");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateBackupVault(operation));
+}
+
+StreamRange<google::cloud::backupdr::v1::BackupVault>
+BackupDRTracingConnection::ListBackupVaults(
+    google::cloud::backupdr::v1::ListBackupVaultsRequest request) {
+  auto span =
+      internal::MakeSpan("backupdr_v1::BackupDRConnection::ListBackupVaults");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListBackupVaults(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::backupdr::v1::BackupVault>(std::move(span), std::move(sr));
+}
+
+StreamRange<google::cloud::backupdr::v1::BackupVault>
+BackupDRTracingConnection::FetchUsableBackupVaults(
+    google::cloud::backupdr::v1::FetchUsableBackupVaultsRequest request) {
+  auto span = internal::MakeSpan(
+      "backupdr_v1::BackupDRConnection::FetchUsableBackupVaults");
+  internal::OTelScope scope(span);
+  auto sr = child_->FetchUsableBackupVaults(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::backupdr::v1::BackupVault>(std::move(span), std::move(sr));
+}
+
+StatusOr<google::cloud::backupdr::v1::BackupVault>
+BackupDRTracingConnection::GetBackupVault(
+    google::cloud::backupdr::v1::GetBackupVaultRequest const& request) {
+  auto span =
+      internal::MakeSpan("backupdr_v1::BackupDRConnection::GetBackupVault");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetBackupVault(request));
+}
+
+future<StatusOr<google::cloud::backupdr::v1::BackupVault>>
+BackupDRTracingConnection::UpdateBackupVault(
+    google::cloud::backupdr::v1::UpdateBackupVaultRequest const& request) {
+  auto span =
+      internal::MakeSpan("backupdr_v1::BackupDRConnection::UpdateBackupVault");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateBackupVault(request));
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRTracingConnection::UpdateBackupVault(
+    NoAwaitTag,
+    google::cloud::backupdr::v1::UpdateBackupVaultRequest const& request) {
+  auto span =
+      internal::MakeSpan("backupdr_v1::BackupDRConnection::UpdateBackupVault");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->UpdateBackupVault(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::backupdr::v1::BackupVault>>
+BackupDRTracingConnection::UpdateBackupVault(
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("backupdr_v1::BackupDRConnection::UpdateBackupVault");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateBackupVault(operation));
+}
+
+future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
+BackupDRTracingConnection::DeleteBackupVault(
+    google::cloud::backupdr::v1::DeleteBackupVaultRequest const& request) {
+  auto span =
+      internal::MakeSpan("backupdr_v1::BackupDRConnection::DeleteBackupVault");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteBackupVault(request));
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRTracingConnection::DeleteBackupVault(
+    NoAwaitTag,
+    google::cloud::backupdr::v1::DeleteBackupVaultRequest const& request) {
+  auto span =
+      internal::MakeSpan("backupdr_v1::BackupDRConnection::DeleteBackupVault");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->DeleteBackupVault(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
+BackupDRTracingConnection::DeleteBackupVault(
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("backupdr_v1::BackupDRConnection::DeleteBackupVault");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteBackupVault(operation));
+}
+
+StreamRange<google::cloud::backupdr::v1::DataSource>
+BackupDRTracingConnection::ListDataSources(
+    google::cloud::backupdr::v1::ListDataSourcesRequest request) {
+  auto span =
+      internal::MakeSpan("backupdr_v1::BackupDRConnection::ListDataSources");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListDataSources(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::backupdr::v1::DataSource>(std::move(span), std::move(sr));
+}
+
+StatusOr<google::cloud::backupdr::v1::DataSource>
+BackupDRTracingConnection::GetDataSource(
+    google::cloud::backupdr::v1::GetDataSourceRequest const& request) {
+  auto span =
+      internal::MakeSpan("backupdr_v1::BackupDRConnection::GetDataSource");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetDataSource(request));
+}
+
+future<StatusOr<google::cloud::backupdr::v1::DataSource>>
+BackupDRTracingConnection::UpdateDataSource(
+    google::cloud::backupdr::v1::UpdateDataSourceRequest const& request) {
+  auto span =
+      internal::MakeSpan("backupdr_v1::BackupDRConnection::UpdateDataSource");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateDataSource(request));
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRTracingConnection::UpdateDataSource(
+    NoAwaitTag,
+    google::cloud::backupdr::v1::UpdateDataSourceRequest const& request) {
+  auto span =
+      internal::MakeSpan("backupdr_v1::BackupDRConnection::UpdateDataSource");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->UpdateDataSource(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::backupdr::v1::DataSource>>
+BackupDRTracingConnection::UpdateDataSource(
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("backupdr_v1::BackupDRConnection::UpdateDataSource");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateDataSource(operation));
+}
+
+StreamRange<google::cloud::backupdr::v1::Backup>
+BackupDRTracingConnection::ListBackups(
+    google::cloud::backupdr::v1::ListBackupsRequest request) {
+  auto span =
+      internal::MakeSpan("backupdr_v1::BackupDRConnection::ListBackups");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListBackups(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::backupdr::v1::Backup>(
+      std::move(span), std::move(sr));
+}
+
+StatusOr<google::cloud::backupdr::v1::Backup>
+BackupDRTracingConnection::GetBackup(
+    google::cloud::backupdr::v1::GetBackupRequest const& request) {
+  auto span = internal::MakeSpan("backupdr_v1::BackupDRConnection::GetBackup");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetBackup(request));
+}
+
+future<StatusOr<google::cloud::backupdr::v1::Backup>>
+BackupDRTracingConnection::UpdateBackup(
+    google::cloud::backupdr::v1::UpdateBackupRequest const& request) {
+  auto span =
+      internal::MakeSpan("backupdr_v1::BackupDRConnection::UpdateBackup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateBackup(request));
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRTracingConnection::UpdateBackup(
+    NoAwaitTag,
+    google::cloud::backupdr::v1::UpdateBackupRequest const& request) {
+  auto span =
+      internal::MakeSpan("backupdr_v1::BackupDRConnection::UpdateBackup");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->UpdateBackup(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::backupdr::v1::Backup>>
+BackupDRTracingConnection::UpdateBackup(
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("backupdr_v1::BackupDRConnection::UpdateBackup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateBackup(operation));
+}
+
+future<StatusOr<google::cloud::backupdr::v1::Backup>>
+BackupDRTracingConnection::DeleteBackup(
+    google::cloud::backupdr::v1::DeleteBackupRequest const& request) {
+  auto span =
+      internal::MakeSpan("backupdr_v1::BackupDRConnection::DeleteBackup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteBackup(request));
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRTracingConnection::DeleteBackup(
+    NoAwaitTag,
+    google::cloud::backupdr::v1::DeleteBackupRequest const& request) {
+  auto span =
+      internal::MakeSpan("backupdr_v1::BackupDRConnection::DeleteBackup");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->DeleteBackup(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::backupdr::v1::Backup>>
+BackupDRTracingConnection::DeleteBackup(
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("backupdr_v1::BackupDRConnection::DeleteBackup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteBackup(operation));
+}
+
+future<StatusOr<google::cloud::backupdr::v1::RestoreBackupResponse>>
+BackupDRTracingConnection::RestoreBackup(
+    google::cloud::backupdr::v1::RestoreBackupRequest const& request) {
+  auto span =
+      internal::MakeSpan("backupdr_v1::BackupDRConnection::RestoreBackup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->RestoreBackup(request));
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRTracingConnection::RestoreBackup(
+    NoAwaitTag,
+    google::cloud::backupdr::v1::RestoreBackupRequest const& request) {
+  auto span =
+      internal::MakeSpan("backupdr_v1::BackupDRConnection::RestoreBackup");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->RestoreBackup(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::backupdr::v1::RestoreBackupResponse>>
+BackupDRTracingConnection::RestoreBackup(
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("backupdr_v1::BackupDRConnection::RestoreBackup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->RestoreBackup(operation));
+}
+
+future<StatusOr<google::cloud::backupdr::v1::BackupPlan>>
+BackupDRTracingConnection::CreateBackupPlan(
+    google::cloud::backupdr::v1::CreateBackupPlanRequest const& request) {
+  auto span =
+      internal::MakeSpan("backupdr_v1::BackupDRConnection::CreateBackupPlan");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateBackupPlan(request));
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRTracingConnection::CreateBackupPlan(
+    NoAwaitTag,
+    google::cloud::backupdr::v1::CreateBackupPlanRequest const& request) {
+  auto span =
+      internal::MakeSpan("backupdr_v1::BackupDRConnection::CreateBackupPlan");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->CreateBackupPlan(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::backupdr::v1::BackupPlan>>
+BackupDRTracingConnection::CreateBackupPlan(
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("backupdr_v1::BackupDRConnection::CreateBackupPlan");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateBackupPlan(operation));
+}
+
+StatusOr<google::cloud::backupdr::v1::BackupPlan>
+BackupDRTracingConnection::GetBackupPlan(
+    google::cloud::backupdr::v1::GetBackupPlanRequest const& request) {
+  auto span =
+      internal::MakeSpan("backupdr_v1::BackupDRConnection::GetBackupPlan");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetBackupPlan(request));
+}
+
+StreamRange<google::cloud::backupdr::v1::BackupPlan>
+BackupDRTracingConnection::ListBackupPlans(
+    google::cloud::backupdr::v1::ListBackupPlansRequest request) {
+  auto span =
+      internal::MakeSpan("backupdr_v1::BackupDRConnection::ListBackupPlans");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListBackupPlans(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::backupdr::v1::BackupPlan>(std::move(span), std::move(sr));
+}
+
+future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
+BackupDRTracingConnection::DeleteBackupPlan(
+    google::cloud::backupdr::v1::DeleteBackupPlanRequest const& request) {
+  auto span =
+      internal::MakeSpan("backupdr_v1::BackupDRConnection::DeleteBackupPlan");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteBackupPlan(request));
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRTracingConnection::DeleteBackupPlan(
+    NoAwaitTag,
+    google::cloud::backupdr::v1::DeleteBackupPlanRequest const& request) {
+  auto span =
+      internal::MakeSpan("backupdr_v1::BackupDRConnection::DeleteBackupPlan");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->DeleteBackupPlan(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
+BackupDRTracingConnection::DeleteBackupPlan(
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("backupdr_v1::BackupDRConnection::DeleteBackupPlan");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteBackupPlan(operation));
+}
+
+future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
+BackupDRTracingConnection::CreateBackupPlanAssociation(
+    google::cloud::backupdr::v1::CreateBackupPlanAssociationRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "backupdr_v1::BackupDRConnection::CreateBackupPlanAssociation");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateBackupPlanAssociation(request));
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRTracingConnection::CreateBackupPlanAssociation(
+    NoAwaitTag,
+    google::cloud::backupdr::v1::CreateBackupPlanAssociationRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "backupdr_v1::BackupDRConnection::CreateBackupPlanAssociation");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateBackupPlanAssociation(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
+BackupDRTracingConnection::CreateBackupPlanAssociation(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "backupdr_v1::BackupDRConnection::CreateBackupPlanAssociation");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateBackupPlanAssociation(operation));
+}
+
+StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>
+BackupDRTracingConnection::GetBackupPlanAssociation(
+    google::cloud::backupdr::v1::GetBackupPlanAssociationRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "backupdr_v1::BackupDRConnection::GetBackupPlanAssociation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetBackupPlanAssociation(request));
+}
+
+StreamRange<google::cloud::backupdr::v1::BackupPlanAssociation>
+BackupDRTracingConnection::ListBackupPlanAssociations(
+    google::cloud::backupdr::v1::ListBackupPlanAssociationsRequest request) {
+  auto span = internal::MakeSpan(
+      "backupdr_v1::BackupDRConnection::ListBackupPlanAssociations");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListBackupPlanAssociations(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::backupdr::v1::BackupPlanAssociation>(std::move(span),
+                                                          std::move(sr));
+}
+
+future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
+BackupDRTracingConnection::DeleteBackupPlanAssociation(
+    google::cloud::backupdr::v1::DeleteBackupPlanAssociationRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "backupdr_v1::BackupDRConnection::DeleteBackupPlanAssociation");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteBackupPlanAssociation(request));
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRTracingConnection::DeleteBackupPlanAssociation(
+    NoAwaitTag,
+    google::cloud::backupdr::v1::DeleteBackupPlanAssociationRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "backupdr_v1::BackupDRConnection::DeleteBackupPlanAssociation");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteBackupPlanAssociation(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
+BackupDRTracingConnection::DeleteBackupPlanAssociation(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "backupdr_v1::BackupDRConnection::DeleteBackupPlanAssociation");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteBackupPlanAssociation(operation));
+}
+
+future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
+BackupDRTracingConnection::TriggerBackup(
+    google::cloud::backupdr::v1::TriggerBackupRequest const& request) {
+  auto span =
+      internal::MakeSpan("backupdr_v1::BackupDRConnection::TriggerBackup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->TriggerBackup(request));
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRTracingConnection::TriggerBackup(
+    NoAwaitTag,
+    google::cloud::backupdr::v1::TriggerBackupRequest const& request) {
+  auto span =
+      internal::MakeSpan("backupdr_v1::BackupDRConnection::TriggerBackup");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->TriggerBackup(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
+BackupDRTracingConnection::TriggerBackup(
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("backupdr_v1::BackupDRConnection::TriggerBackup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->TriggerBackup(operation));
+}
+
 StreamRange<google::cloud::location::Location>
 BackupDRTracingConnection::ListLocations(
     google::cloud::location::ListLocationsRequest request) {

@@ -33,6 +33,24 @@ GroundedGenerationServiceClient::GroundedGenerationServiceClient(
           internal::MergeOptions(std::move(opts), connection_->options())) {}
 GroundedGenerationServiceClient::~GroundedGenerationServiceClient() = default;
 
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::discoveryengine::v1::GenerateGroundedContentRequest,
+    google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>>
+GroundedGenerationServiceClient::AsyncStreamGenerateGroundedContent(
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AsyncStreamGenerateGroundedContent();
+}
+
+StatusOr<google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>
+GroundedGenerationServiceClient::GenerateGroundedContent(
+    google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GenerateGroundedContent(request);
+}
+
 StatusOr<google::cloud::discoveryengine::v1::CheckGroundingResponse>
 GroundedGenerationServiceClient::CheckGrounding(
     google::cloud::discoveryengine::v1::CheckGroundingRequest const& request,

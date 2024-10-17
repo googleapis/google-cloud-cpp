@@ -373,6 +373,58 @@ ContactCenterInsightsConnection::UndeployIssueModel(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::ExportIssueModelResponse>>
+ContactCenterInsightsConnection::ExportIssueModel(
+    google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const&) {
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::contactcenterinsights::v1::ExportIssueModelResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsConnection::ExportIssueModel(
+    NoAwaitTag,
+    google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::ExportIssueModelResponse>>
+ContactCenterInsightsConnection::ExportIssueModel(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::contactcenterinsights::v1::ExportIssueModelResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::ImportIssueModelResponse>>
+ContactCenterInsightsConnection::ImportIssueModel(
+    google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const&) {
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::contactcenterinsights::v1::ImportIssueModelResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsConnection::ImportIssueModel(
+    NoAwaitTag,
+    google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::ImportIssueModelResponse>>
+ContactCenterInsightsConnection::ImportIssueModel(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::contactcenterinsights::v1::ImportIssueModelResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::contactcenterinsights::v1::Issue>
 ContactCenterInsightsConnection::GetIssue(
     google::cloud::contactcenterinsights::v1::GetIssueRequest const&) {
@@ -454,6 +506,41 @@ StatusOr<google::cloud::contactcenterinsights::v1::Settings>
 ContactCenterInsightsConnection::UpdateSettings(
     google::cloud::contactcenterinsights::v1::UpdateSettingsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::EncryptionSpec>
+ContactCenterInsightsConnection::GetEncryptionSpec(
+    google::cloud::contactcenterinsights::v1::GetEncryptionSpecRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::InitializeEncryptionSpecResponse>>
+ContactCenterInsightsConnection::InitializeEncryptionSpec(
+    google::cloud::contactcenterinsights::v1::
+        InitializeEncryptionSpecRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::contactcenterinsights::v1::
+                   InitializeEncryptionSpecResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsConnection::InitializeEncryptionSpec(
+    NoAwaitTag, google::cloud::contactcenterinsights::v1::
+                    InitializeEncryptionSpecRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::InitializeEncryptionSpecResponse>>
+ContactCenterInsightsConnection::InitializeEncryptionSpec(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::contactcenterinsights::v1::
+                   InitializeEncryptionSpecResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::View>

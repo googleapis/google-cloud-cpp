@@ -92,6 +92,72 @@ DefaultConsumerProcurementServiceStub::ListOrders(
   return response;
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultConsumerProcurementServiceStub::AsyncModifyOrder(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::commerce::consumer::procurement::v1::
+        ModifyOrderRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::commerce::consumer::procurement::v1::ModifyOrderRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::commerce::consumer::procurement::v1::
+                 ModifyOrderRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncModifyOrder(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultConsumerProcurementServiceStub::ModifyOrder(
+    grpc::ClientContext& context, Options,
+    google::cloud::commerce::consumer::procurement::v1::
+        ModifyOrderRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ModifyOrder(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultConsumerProcurementServiceStub::AsyncCancelOrder(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::commerce::consumer::procurement::v1::
+        CancelOrderRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::commerce::consumer::procurement::v1::CancelOrderRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::commerce::consumer::procurement::v1::
+                 CancelOrderRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCancelOrder(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultConsumerProcurementServiceStub::CancelOrder(
+    grpc::ClientContext& context, Options,
+    google::cloud::commerce::consumer::procurement::v1::
+        CancelOrderRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CancelOrder(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::longrunning::Operation>
 DefaultConsumerProcurementServiceStub::GetOperation(
     grpc::ClientContext& context, Options const&,

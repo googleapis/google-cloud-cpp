@@ -197,6 +197,49 @@ class CloudDeployTracingConnection : public deploy_v1::CloudDeployConnection {
   StatusOr<google::cloud::deploy::v1::AbandonReleaseResponse> AbandonRelease(
       google::cloud::deploy::v1::AbandonReleaseRequest const& request) override;
 
+  future<StatusOr<google::cloud::deploy::v1::DeployPolicy>> CreateDeployPolicy(
+      google::cloud::deploy::v1::CreateDeployPolicyRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateDeployPolicy(
+      NoAwaitTag,
+      google::cloud::deploy::v1::CreateDeployPolicyRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::deploy::v1::DeployPolicy>> CreateDeployPolicy(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::deploy::v1::DeployPolicy>> UpdateDeployPolicy(
+      google::cloud::deploy::v1::UpdateDeployPolicyRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateDeployPolicy(
+      NoAwaitTag,
+      google::cloud::deploy::v1::UpdateDeployPolicyRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::deploy::v1::DeployPolicy>> UpdateDeployPolicy(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
+  DeleteDeployPolicy(google::cloud::deploy::v1::DeleteDeployPolicyRequest const&
+                         request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteDeployPolicy(
+      NoAwaitTag,
+      google::cloud::deploy::v1::DeleteDeployPolicyRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
+  DeleteDeployPolicy(google::longrunning::Operation const& operation) override;
+
+  StreamRange<google::cloud::deploy::v1::DeployPolicy> ListDeployPolicies(
+      google::cloud::deploy::v1::ListDeployPoliciesRequest request) override;
+
+  StatusOr<google::cloud::deploy::v1::DeployPolicy> GetDeployPolicy(
+      google::cloud::deploy::v1::GetDeployPolicyRequest const& request)
+      override;
+
   StatusOr<google::cloud::deploy::v1::ApproveRolloutResponse> ApproveRollout(
       google::cloud::deploy::v1::ApproveRolloutRequest const& request) override;
 

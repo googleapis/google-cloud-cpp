@@ -96,6 +96,58 @@ ConsumerProcurementServiceClient::ListOrders(
   return connection_->ListOrders(std::move(request));
 }
 
+future<StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>
+ConsumerProcurementServiceClient::ModifyOrder(
+    google::cloud::commerce::consumer::procurement::v1::
+        ModifyOrderRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ModifyOrder(request);
+}
+
+StatusOr<google::longrunning::Operation>
+ConsumerProcurementServiceClient::ModifyOrder(
+    NoAwaitTag,
+    google::cloud::commerce::consumer::procurement::v1::
+        ModifyOrderRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ModifyOrder(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>
+ConsumerProcurementServiceClient::ModifyOrder(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ModifyOrder(operation);
+}
+
+future<StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>
+ConsumerProcurementServiceClient::CancelOrder(
+    google::cloud::commerce::consumer::procurement::v1::
+        CancelOrderRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CancelOrder(request);
+}
+
+StatusOr<google::longrunning::Operation>
+ConsumerProcurementServiceClient::CancelOrder(
+    NoAwaitTag,
+    google::cloud::commerce::consumer::procurement::v1::
+        CancelOrderRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CancelOrder(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>
+ConsumerProcurementServiceClient::CancelOrder(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CancelOrder(operation);
+}
+
 StatusOr<google::longrunning::Operation>
 ConsumerProcurementServiceClient::GetOperation(std::string const& name,
                                                Options opts) {

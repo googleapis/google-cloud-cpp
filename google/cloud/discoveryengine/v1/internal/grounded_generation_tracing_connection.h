@@ -41,6 +41,16 @@ class GroundedGenerationServiceTracingConnection
 
   Options options() override { return child_->options(); }
 
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::discoveryengine::v1::GenerateGroundedContentRequest,
+      google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>>
+  AsyncStreamGenerateGroundedContent() override;
+
+  StatusOr<google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>
+  GenerateGroundedContent(
+      google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const&
+          request) override;
+
   StatusOr<google::cloud::discoveryengine::v1::CheckGroundingResponse>
   CheckGrounding(
       google::cloud::discoveryengine::v1::CheckGroundingRequest const& request)

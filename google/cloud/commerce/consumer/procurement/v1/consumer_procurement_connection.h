@@ -229,6 +229,32 @@ class ConsumerProcurementServiceConnection {
       google::cloud::commerce::consumer::procurement::v1::ListOrdersRequest
           request);
 
+  virtual future<
+      StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>
+  ModifyOrder(google::cloud::commerce::consumer::procurement::v1::
+                  ModifyOrderRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> ModifyOrder(
+      NoAwaitTag, google::cloud::commerce::consumer::procurement::v1::
+                      ModifyOrderRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>
+  ModifyOrder(google::longrunning::Operation const& operation);
+
+  virtual future<
+      StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>
+  CancelOrder(google::cloud::commerce::consumer::procurement::v1::
+                  CancelOrderRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CancelOrder(
+      NoAwaitTag, google::cloud::commerce::consumer::procurement::v1::
+                      CancelOrderRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>
+  CancelOrder(google::longrunning::Operation const& operation);
+
   virtual StatusOr<google::longrunning::Operation> GetOperation(
       google::longrunning::GetOperationRequest const& request);
 };

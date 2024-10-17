@@ -928,7 +928,7 @@ class SiteSearchEngineServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.RecrawlUrisRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L523}
-  /// [google.cloud.discoveryengine.v1.RecrawlUrisResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L544}
+  /// [google.cloud.discoveryengine.v1.RecrawlUrisResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L549}
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::RecrawlUrisResponse>>
@@ -997,8 +997,8 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.BatchVerifyTargetSitesRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L618}
-  /// [google.cloud.discoveryengine.v1.BatchVerifyTargetSitesResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L632}
+  /// [google.cloud.discoveryengine.v1.BatchVerifyTargetSitesRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L623}
+  /// [google.cloud.discoveryengine.v1.BatchVerifyTargetSitesResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L637}
   ///
   // clang-format on
   future<StatusOr<
@@ -1073,7 +1073,7 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.FetchDomainVerificationStatusRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L650}
+  /// [google.cloud.discoveryengine.v1.FetchDomainVerificationStatusRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L655}
   /// [google.cloud.discoveryengine.v1.TargetSite]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L47}
   ///
   // clang-format on

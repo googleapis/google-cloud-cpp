@@ -505,6 +505,72 @@ DefaultContactCenterInsightsStub::UndeployIssueModel(
   return response;
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultContactCenterInsightsStub::AsyncExportIssueModel(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::contactcenterinsights::v1::ExportIssueModelRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::contactcenterinsights::v1::
+                 ExportIssueModelRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncExportIssueModel(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultContactCenterInsightsStub::ExportIssueModel(
+    grpc::ClientContext& context, Options,
+    google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ExportIssueModel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultContactCenterInsightsStub::AsyncImportIssueModel(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::contactcenterinsights::v1::ImportIssueModelRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::contactcenterinsights::v1::
+                 ImportIssueModelRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncImportIssueModel(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultContactCenterInsightsStub::ImportIssueModel(
+    grpc::ClientContext& context, Options,
+    google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ImportIssueModel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::contactcenterinsights::v1::Issue>
 DefaultContactCenterInsightsStub::GetIssue(
     grpc::ClientContext& context, Options const&,
@@ -668,6 +734,53 @@ DefaultContactCenterInsightsStub::UpdateSettings(
         request) {
   google::cloud::contactcenterinsights::v1::Settings response;
   auto status = grpc_stub_->UpdateSettings(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::EncryptionSpec>
+DefaultContactCenterInsightsStub::GetEncryptionSpec(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contactcenterinsights::v1::GetEncryptionSpecRequest const&
+        request) {
+  google::cloud::contactcenterinsights::v1::EncryptionSpec response;
+  auto status = grpc_stub_->GetEncryptionSpec(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultContactCenterInsightsStub::AsyncInitializeEncryptionSpec(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::contactcenterinsights::v1::
+        InitializeEncryptionSpecRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::contactcenterinsights::v1::InitializeEncryptionSpecRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::contactcenterinsights::v1::
+                 InitializeEncryptionSpecRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncInitializeEncryptionSpec(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultContactCenterInsightsStub::InitializeEncryptionSpec(
+    grpc::ClientContext& context, Options,
+    google::cloud::contactcenterinsights::v1::
+        InitializeEncryptionSpecRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->InitializeEncryptionSpec(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

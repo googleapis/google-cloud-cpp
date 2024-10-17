@@ -233,6 +233,32 @@ class ContactCenterInsightsStub {
       google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&
           request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncExportIssueModel(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> ExportIssueModel(
+      grpc::ClientContext& context, Options options,
+      google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncImportIssueModel(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> ImportIssueModel(
+      grpc::ClientContext& context, Options options,
+      google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const&
+          request) = 0;
+
   virtual StatusOr<google::cloud::contactcenterinsights::v1::Issue> GetIssue(
       grpc::ClientContext& context, Options const& options,
       google::cloud::contactcenterinsights::v1::GetIssueRequest const&
@@ -306,6 +332,25 @@ class ContactCenterInsightsStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::contactcenterinsights::v1::UpdateSettingsRequest const&
           request) = 0;
+
+  virtual StatusOr<google::cloud::contactcenterinsights::v1::EncryptionSpec>
+  GetEncryptionSpec(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contactcenterinsights::v1::GetEncryptionSpecRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncInitializeEncryptionSpec(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::contactcenterinsights::v1::
+          InitializeEncryptionSpecRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> InitializeEncryptionSpec(
+      grpc::ClientContext& context, Options options,
+      google::cloud::contactcenterinsights::v1::
+          InitializeEncryptionSpecRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::contactcenterinsights::v1::View> CreateView(
       grpc::ClientContext& context, Options const& options,
@@ -554,6 +599,30 @@ class DefaultContactCenterInsightsStub : public ContactCenterInsightsStub {
       google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&
           request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncExportIssueModel(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> ExportIssueModel(
+      grpc::ClientContext& context, Options options,
+      google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncImportIssueModel(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> ImportIssueModel(
+      grpc::ClientContext& context, Options options,
+      google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const&
+          request) override;
+
   StatusOr<google::cloud::contactcenterinsights::v1::Issue> GetIssue(
       grpc::ClientContext& context, Options const& options,
       google::cloud::contactcenterinsights::v1::GetIssueRequest const& request)
@@ -623,6 +692,25 @@ class DefaultContactCenterInsightsStub : public ContactCenterInsightsStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::contactcenterinsights::v1::UpdateSettingsRequest const&
           request) override;
+
+  StatusOr<google::cloud::contactcenterinsights::v1::EncryptionSpec>
+  GetEncryptionSpec(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::contactcenterinsights::v1::GetEncryptionSpecRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncInitializeEncryptionSpec(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::contactcenterinsights::v1::
+          InitializeEncryptionSpecRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> InitializeEncryptionSpec(
+      grpc::ClientContext& context, Options options,
+      google::cloud::contactcenterinsights::v1::
+          InitializeEncryptionSpecRequest const& request) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::View> CreateView(
       grpc::ClientContext& context, Options const& options,

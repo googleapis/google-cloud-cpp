@@ -194,7 +194,7 @@ class ReachabilityServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkmanagement.v1.ConnectivityTest]: @googleapis_reference_link{google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
-  /// [google.cloud.networkmanagement.v1.GetConnectivityTestRequest]: @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L210}
+  /// [google.cloud.networkmanagement.v1.GetConnectivityTestRequest]: @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L215}
   ///
   // clang-format on
   StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>
@@ -224,7 +224,7 @@ class ReachabilityServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkmanagement.v1.ConnectivityTest]: @googleapis_reference_link{google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
-  /// [google.cloud.networkmanagement.v1.GetConnectivityTestRequest]: @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L210}
+  /// [google.cloud.networkmanagement.v1.GetConnectivityTestRequest]: @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L215}
   ///
   // clang-format on
   StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>
@@ -281,7 +281,7 @@ class ReachabilityServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkmanagement.v1.ConnectivityTest]: @googleapis_reference_link{google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
-  /// [google.cloud.networkmanagement.v1.CreateConnectivityTestRequest]: @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L217}
+  /// [google.cloud.networkmanagement.v1.CreateConnectivityTestRequest]: @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L227}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
@@ -349,7 +349,7 @@ class ReachabilityServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkmanagement.v1.ConnectivityTest]: @googleapis_reference_link{google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
-  /// [google.cloud.networkmanagement.v1.CreateConnectivityTestRequest]: @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L217}
+  /// [google.cloud.networkmanagement.v1.CreateConnectivityTestRequest]: @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L227}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
@@ -403,7 +403,7 @@ class ReachabilityServiceClient {
   ///
   /// If the endpoint specifications in `ConnectivityTest` are incomplete, the
   /// reachability result returns a value of `AMBIGUOUS`. See the documentation
-  /// in `ConnectivityTest` for for more details.
+  /// in `ConnectivityTest` for more details.
   ///
   /// @param update_mask  Required. Mask of fields to update. At least one path must be supplied in
   ///  this field.
@@ -429,7 +429,7 @@ class ReachabilityServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkmanagement.v1.ConnectivityTest]: @googleapis_reference_link{google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
-  /// [google.cloud.networkmanagement.v1.UpdateConnectivityTestRequest]: @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L237}
+  /// [google.cloud.networkmanagement.v1.UpdateConnectivityTestRequest]: @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L252}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
@@ -469,7 +469,7 @@ class ReachabilityServiceClient {
   ///
   /// If the endpoint specifications in `ConnectivityTest` are incomplete, the
   /// reachability result returns a value of `AMBIGUOUS`. See the documentation
-  /// in `ConnectivityTest` for for more details.
+  /// in `ConnectivityTest` for more details.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -498,7 +498,7 @@ class ReachabilityServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkmanagement.v1.ConnectivityTest]: @googleapis_reference_link{google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
-  /// [google.cloud.networkmanagement.v1.UpdateConnectivityTestRequest]: @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L237}
+  /// [google.cloud.networkmanagement.v1.UpdateConnectivityTestRequest]: @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L252}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
@@ -579,7 +579,7 @@ class ReachabilityServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.networkmanagement.v1.ConnectivityTest]: @googleapis_reference_link{google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
-  /// [google.cloud.networkmanagement.v1.RerunConnectivityTestRequest]: @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L255}
+  /// [google.cloud.networkmanagement.v1.RerunConnectivityTestRequest]: @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L275}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
@@ -644,8 +644,8 @@ class ReachabilityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkmanagement.v1.DeleteConnectivityTestRequest]: @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L248}
-  /// [google.cloud.networkmanagement.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L262}
+  /// [google.cloud.networkmanagement.v1.DeleteConnectivityTestRequest]: @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L263}
+  /// [google.cloud.networkmanagement.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L287}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
@@ -695,8 +695,8 @@ class ReachabilityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkmanagement.v1.DeleteConnectivityTestRequest]: @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L248}
-  /// [google.cloud.networkmanagement.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L262}
+  /// [google.cloud.networkmanagement.v1.DeleteConnectivityTestRequest]: @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L263}
+  /// [google.cloud.networkmanagement.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L287}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
@@ -832,7 +832,7 @@ class ReachabilityServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
-  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
+  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
@@ -899,8 +899,8 @@ class ReachabilityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
-  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
+  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L137}
+  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(

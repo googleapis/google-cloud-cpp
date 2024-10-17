@@ -384,6 +384,52 @@ ContactCenterInsightsMetadata::UndeployIssueModel(
   return child_->UndeployIssueModel(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+ContactCenterInsightsMetadata::AsyncExportIssueModel(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncExportIssueModel(cq, std::move(context),
+                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsMetadata::ExportIssueModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ExportIssueModel(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ContactCenterInsightsMetadata::AsyncImportIssueModel(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncImportIssueModel(cq, std::move(context),
+                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsMetadata::ImportIssueModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ImportIssueModel(context, options, request);
+}
+
 StatusOr<google::cloud::contactcenterinsights::v1::Issue>
 ContactCenterInsightsMetadata::GetIssue(
     grpc::ClientContext& context, Options const& options,
@@ -516,6 +562,43 @@ ContactCenterInsightsMetadata::UpdateSettings(
               absl::StrCat("settings.name=",
                            internal::UrlEncode(request.settings().name())));
   return child_->UpdateSettings(context, options, request);
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::EncryptionSpec>
+ContactCenterInsightsMetadata::GetEncryptionSpec(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::contactcenterinsights::v1::GetEncryptionSpecRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetEncryptionSpec(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ContactCenterInsightsMetadata::AsyncInitializeEncryptionSpec(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::contactcenterinsights::v1::
+        InitializeEncryptionSpecRequest const& request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("encryption_spec.name=",
+                   internal::UrlEncode(request.encryption_spec().name())));
+  return child_->AsyncInitializeEncryptionSpec(cq, std::move(context),
+                                               std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsMetadata::InitializeEncryptionSpec(
+    grpc::ClientContext& context, Options options,
+    google::cloud::contactcenterinsights::v1::
+        InitializeEncryptionSpecRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("encryption_spec.name=",
+                   internal::UrlEncode(request.encryption_spec().name())));
+  return child_->InitializeEncryptionSpec(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::View>

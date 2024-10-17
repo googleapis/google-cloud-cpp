@@ -121,6 +121,14 @@ class ContactCenterInsightsConnectionIdempotencyPolicy {
       google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&
           request);
 
+  virtual google::cloud::Idempotency ExportIssueModel(
+      google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ImportIssueModel(
+      google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const&
+          request);
+
   virtual google::cloud::Idempotency GetIssue(
       google::cloud::contactcenterinsights::v1::GetIssueRequest const& request);
 
@@ -171,6 +179,14 @@ class ContactCenterInsightsConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency UpdateSettings(
       google::cloud::contactcenterinsights::v1::UpdateSettingsRequest const&
           request);
+
+  virtual google::cloud::Idempotency GetEncryptionSpec(
+      google::cloud::contactcenterinsights::v1::GetEncryptionSpecRequest const&
+          request);
+
+  virtual google::cloud::Idempotency InitializeEncryptionSpec(
+      google::cloud::contactcenterinsights::v1::
+          InitializeEncryptionSpecRequest const& request);
 
   virtual google::cloud::Idempotency CreateView(
       google::cloud::contactcenterinsights::v1::CreateViewRequest const&

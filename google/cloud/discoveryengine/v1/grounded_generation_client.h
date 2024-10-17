@@ -92,6 +92,69 @@ class GroundedGenerationServiceClient {
 
   // clang-format off
   ///
+  /// Generates grounded content in a streaming fashion.
+  ///
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return An object representing the bidirectional streaming
+  ///     RPC. Applications can send multiple request messages and receive
+  ///     multiple response messages through this API. Bidirectional streaming
+  ///     RPCs can impose restrictions on the sequence of request and response
+  ///     messages. Please consult the service documentation for details.
+  ///     The request message type ([google.cloud.discoveryengine.v1.GenerateGroundedContentRequest]) and response messages
+  ///     ([google.cloud.discoveryengine.v1.GenerateGroundedContentResponse]) are mapped to C++ classes using the
+  ///     [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.discoveryengine.v1.GenerateGroundedContentRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/grounded_generation_service.proto#L90}
+  /// [google.cloud.discoveryengine.v1.GenerateGroundedContentResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/grounded_generation_service.proto#L261}
+  ///
+  // clang-format on
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::discoveryengine::v1::GenerateGroundedContentRequest,
+      google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>>
+  AsyncStreamGenerateGroundedContent(Options opts = {});
+
+  // clang-format off
+  ///
+  /// Generates grounded content.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.discoveryengine.v1.GenerateGroundedContentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.discoveryengine.v1.GenerateGroundedContentResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.discoveryengine.v1.GenerateGroundedContentRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/grounded_generation_service.proto#L90}
+  /// [google.cloud.discoveryengine.v1.GenerateGroundedContentResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/grounded_generation_service.proto#L261}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>
+  GenerateGroundedContent(
+      google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
   /// Performs a grounding check.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -113,8 +176,8 @@ class GroundedGenerationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.CheckGroundingRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/grounded_generation_service.proto#L62}
-  /// [google.cloud.discoveryengine.v1.CheckGroundingResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/grounded_generation_service.proto#L105}
+  /// [google.cloud.discoveryengine.v1.CheckGroundingRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/grounded_generation_service.proto#L402}
+  /// [google.cloud.discoveryengine.v1.CheckGroundingResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/grounded_generation_service.proto#L445}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::CheckGroundingResponse>

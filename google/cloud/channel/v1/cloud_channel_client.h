@@ -158,7 +158,7 @@ class CloudChannelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.channel.v1.Customer]: @googleapis_reference_link{google/cloud/channel/v1/customers.proto#L31}
-  /// [google.cloud.channel.v1.ListCustomersRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1508}
+  /// [google.cloud.channel.v1.ListCustomersRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1521}
   ///
   // clang-format on
   StreamRange<google::cloud::channel::v1::Customer> ListCustomers(
@@ -197,7 +197,7 @@ class CloudChannelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.channel.v1.Customer]: @googleapis_reference_link{google/cloud/channel/v1/customers.proto#L31}
-  /// [google.cloud.channel.v1.GetCustomerRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1548}
+  /// [google.cloud.channel.v1.GetCustomerRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1561}
   ///
   // clang-format on
   StatusOr<google::cloud::channel::v1::Customer> GetCustomer(
@@ -239,7 +239,7 @@ class CloudChannelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.channel.v1.Customer]: @googleapis_reference_link{google/cloud/channel/v1/customers.proto#L31}
-  /// [google.cloud.channel.v1.GetCustomerRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1548}
+  /// [google.cloud.channel.v1.GetCustomerRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1561}
   ///
   // clang-format on
   StatusOr<google::cloud::channel::v1::Customer> GetCustomer(
@@ -288,8 +288,8 @@ class CloudChannelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.channel.v1.CheckCloudIdentityAccountsExistRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1470}
-  /// [google.cloud.channel.v1.CheckCloudIdentityAccountsExistResponse]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1501}
-  /// [google.cloud.channel.v1.CloudIdentityCustomerAccount]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1481}
+  /// [google.cloud.channel.v1.CheckCloudIdentityAccountsExistResponse]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1514}
+  /// [google.cloud.channel.v1.CloudIdentityCustomerAccount]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1487}
   ///
   // clang-format on
   StatusOr<google::cloud::channel::v1::CheckCloudIdentityAccountsExistResponse>
@@ -336,7 +336,7 @@ class CloudChannelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.channel.v1.CreateCustomerRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1561}
+  /// [google.cloud.channel.v1.CreateCustomerRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1574}
   /// [google.cloud.channel.v1.Customer]: @googleapis_reference_link{google/cloud/channel/v1/customers.proto#L31}
   ///
   // clang-format on
@@ -380,7 +380,7 @@ class CloudChannelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.channel.v1.Customer]: @googleapis_reference_link{google/cloud/channel/v1/customers.proto#L31}
-  /// [google.cloud.channel.v1.UpdateCustomerRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1572}
+  /// [google.cloud.channel.v1.UpdateCustomerRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1585}
   ///
   // clang-format on
   StatusOr<google::cloud::channel::v1::Customer> UpdateCustomer(
@@ -413,7 +413,7 @@ class CloudChannelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.channel.v1.Customer]: @googleapis_reference_link{google/cloud/channel/v1/customers.proto#L31}
-  /// [google.cloud.channel.v1.DeleteCustomerRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1583}
+  /// [google.cloud.channel.v1.DeleteCustomerRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1596}
   ///
   // clang-format on
   Status DeleteCustomer(std::string const& name, Options opts = {});
@@ -449,7 +449,7 @@ class CloudChannelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.channel.v1.Customer]: @googleapis_reference_link{google/cloud/channel/v1/customers.proto#L31}
-  /// [google.cloud.channel.v1.DeleteCustomerRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1583}
+  /// [google.cloud.channel.v1.DeleteCustomerRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1596}
   ///
   // clang-format on
   Status DeleteCustomer(
@@ -499,7 +499,7 @@ class CloudChannelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.channel.v1.Customer]: @googleapis_reference_link{google/cloud/channel/v1/customers.proto#L31}
-  /// [google.cloud.channel.v1.ImportCustomerRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1595}
+  /// [google.cloud.channel.v1.ImportCustomerRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1608}
   ///
   // clang-format on
   StatusOr<google::cloud::channel::v1::Customer> ImportCustomer(
@@ -561,7 +561,7 @@ class CloudChannelServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.channel.v1.Customer]: @googleapis_reference_link{google/cloud/channel/v1/customers.proto#L31}
   /// [google.cloud.channel.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/channel/v1/operations.proto#L26}
-  /// [google.cloud.channel.v1.ProvisionCloudIdentityRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1643}
+  /// [google.cloud.channel.v1.ProvisionCloudIdentityRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1659}
   ///
   // clang-format on
   future<StatusOr<google::cloud::channel::v1::Customer>> ProvisionCloudIdentity(
@@ -639,7 +639,7 @@ class CloudChannelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.channel.v1.Entitlement]: @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L32}
-  /// [google.cloud.channel.v1.ListEntitlementsRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1665}
+  /// [google.cloud.channel.v1.ListEntitlementsRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1681}
   ///
   // clang-format on
   StreamRange<google::cloud::channel::v1::Entitlement> ListEntitlements(
@@ -696,7 +696,7 @@ class CloudChannelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.channel.v1.ListTransferableSkusRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1705}
+  /// [google.cloud.channel.v1.ListTransferableSkusRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1721}
   /// [google.cloud.channel.v1.TransferableSku]: @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L238}
   ///
   // clang-format on
@@ -757,8 +757,8 @@ class CloudChannelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.channel.v1.ListTransferableOffersRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1766}
-  /// [google.cloud.channel.v1.TransferableOffer]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1827}
+  /// [google.cloud.channel.v1.ListTransferableOffersRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1782}
+  /// [google.cloud.channel.v1.TransferableOffer]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1843}
   ///
   // clang-format on
   StreamRange<google::cloud::channel::v1::TransferableOffer>
@@ -800,7 +800,7 @@ class CloudChannelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.channel.v1.Entitlement]: @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L32}
-  /// [google.cloud.channel.v1.GetEntitlementRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1834}
+  /// [google.cloud.channel.v1.GetEntitlementRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1850}
   ///
   // clang-format on
   StatusOr<google::cloud::channel::v1::Entitlement> GetEntitlement(
@@ -875,7 +875,7 @@ class CloudChannelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.channel.v1.CreateEntitlementRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2246}
+  /// [google.cloud.channel.v1.CreateEntitlementRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2262}
   /// [google.cloud.channel.v1.Entitlement]: @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L32}
   /// [google.cloud.channel.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/channel/v1/operations.proto#L26}
   ///
@@ -964,7 +964,7 @@ class CloudChannelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.channel.v1.ChangeParametersRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2344}
+  /// [google.cloud.channel.v1.ChangeParametersRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2360}
   /// [google.cloud.channel.v1.Entitlement]: @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L32}
   /// [google.cloud.channel.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/channel/v1/operations.proto#L26}
   ///
@@ -1053,7 +1053,7 @@ class CloudChannelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.channel.v1.ChangeRenewalSettingsRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2378}
+  /// [google.cloud.channel.v1.ChangeRenewalSettingsRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2394}
   /// [google.cloud.channel.v1.Entitlement]: @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L32}
   /// [google.cloud.channel.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/channel/v1/operations.proto#L26}
   ///
@@ -1142,7 +1142,7 @@ class CloudChannelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.channel.v1.ChangeOfferRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2404}
+  /// [google.cloud.channel.v1.ChangeOfferRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2420}
   /// [google.cloud.channel.v1.Entitlement]: @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L32}
   /// [google.cloud.channel.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/channel/v1/operations.proto#L26}
   ///
@@ -1233,7 +1233,7 @@ class CloudChannelServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.channel.v1.Entitlement]: @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L32}
   /// [google.cloud.channel.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/channel/v1/operations.proto#L26}
-  /// [google.cloud.channel.v1.StartPaidServiceRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2452}
+  /// [google.cloud.channel.v1.StartPaidServiceRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2468}
   ///
   // clang-format on
   future<StatusOr<google::cloud::channel::v1::Entitlement>> StartPaidService(
@@ -1320,7 +1320,7 @@ class CloudChannelServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.channel.v1.Entitlement]: @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L32}
   /// [google.cloud.channel.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/channel/v1/operations.proto#L26}
-  /// [google.cloud.channel.v1.SuspendEntitlementRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2498}
+  /// [google.cloud.channel.v1.SuspendEntitlementRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2514}
   ///
   // clang-format on
   future<StatusOr<google::cloud::channel::v1::Entitlement>> SuspendEntitlement(
@@ -1410,7 +1410,7 @@ class CloudChannelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.channel.v1.CancelEntitlementRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2475}
+  /// [google.cloud.channel.v1.CancelEntitlementRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2491}
   /// [google.cloud.channel.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/channel/v1/operations.proto#L26}
   ///
   // clang-format on
@@ -1504,7 +1504,7 @@ class CloudChannelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.channel.v1.ActivateEntitlementRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2521}
+  /// [google.cloud.channel.v1.ActivateEntitlementRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2537}
   /// [google.cloud.channel.v1.Entitlement]: @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L32}
   /// [google.cloud.channel.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/channel/v1/operations.proto#L26}
   ///
@@ -1603,8 +1603,8 @@ class CloudChannelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.channel.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/channel/v1/operations.proto#L26}
-  /// [google.cloud.channel.v1.TransferEntitlementsRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2277}
-  /// [google.cloud.channel.v1.TransferEntitlementsResponse]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2311}
+  /// [google.cloud.channel.v1.TransferEntitlementsRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2293}
+  /// [google.cloud.channel.v1.TransferEntitlementsResponse]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2327}
   ///
   // clang-format on
   future<StatusOr<google::cloud::channel::v1::TransferEntitlementsResponse>>
@@ -1700,7 +1700,7 @@ class CloudChannelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.channel.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/channel/v1/operations.proto#L26}
-  /// [google.cloud.channel.v1.TransferEntitlementsToGoogleRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2318}
+  /// [google.cloud.channel.v1.TransferEntitlementsToGoogleRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2334}
   ///
   // clang-format on
   future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
@@ -1783,7 +1783,7 @@ class CloudChannelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.channel.v1.ChannelPartnerLink]: @googleapis_reference_link{google/cloud/channel/v1/channel_partner_links.proto#L66}
-  /// [google.cloud.channel.v1.ListChannelPartnerLinksRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1848}
+  /// [google.cloud.channel.v1.ListChannelPartnerLinksRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1864}
   ///
   // clang-format on
   StreamRange<google::cloud::channel::v1::ChannelPartnerLink>
@@ -1829,7 +1829,7 @@ class CloudChannelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.channel.v1.ChannelPartnerLink]: @googleapis_reference_link{google/cloud/channel/v1/channel_partner_links.proto#L66}
-  /// [google.cloud.channel.v1.GetChannelPartnerLinkRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1885}
+  /// [google.cloud.channel.v1.GetChannelPartnerLinkRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1901}
   ///
   // clang-format on
   StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
@@ -1883,7 +1883,7 @@ class CloudChannelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.channel.v1.ChannelPartnerLink]: @googleapis_reference_link{google/cloud/channel/v1/channel_partner_links.proto#L66}
-  /// [google.cloud.channel.v1.CreateChannelPartnerLinkRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1897}
+  /// [google.cloud.channel.v1.CreateChannelPartnerLinkRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1913}
   ///
   // clang-format on
   StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
@@ -1937,7 +1937,7 @@ class CloudChannelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.channel.v1.ChannelPartnerLink]: @googleapis_reference_link{google/cloud/channel/v1/channel_partner_links.proto#L66}
-  /// [google.cloud.channel.v1.UpdateChannelPartnerLinkRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1912}
+  /// [google.cloud.channel.v1.UpdateChannelPartnerLinkRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1928}
   ///
   // clang-format on
   StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
@@ -1983,7 +1983,7 @@ class CloudChannelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.channel.v1.CustomerRepricingConfig]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L46}
-  /// [google.cloud.channel.v1.GetCustomerRepricingConfigRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1932}
+  /// [google.cloud.channel.v1.GetCustomerRepricingConfigRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1948}
   ///
   // clang-format on
   StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
@@ -2029,7 +2029,7 @@ class CloudChannelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.channel.v1.CustomerRepricingConfig]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L46}
-  /// [google.cloud.channel.v1.GetCustomerRepricingConfigRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1932}
+  /// [google.cloud.channel.v1.GetCustomerRepricingConfigRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1948}
   ///
   // clang-format on
   StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
@@ -2094,7 +2094,7 @@ class CloudChannelServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.channel.v1.CustomerRepricingConfig]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L46}
   /// [google.cloud.channel.v1.CustomerRepricingConfig.update_time]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L65}
-  /// [google.cloud.channel.v1.ListCustomerRepricingConfigsRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1946}
+  /// [google.cloud.channel.v1.ListCustomerRepricingConfigsRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1962}
   /// [google.cloud.channel.v1.RepricingConfig.EntitlementGranularity.entitlement]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L101}
   /// [google.cloud.channel.v1.RepricingConfig.effective_invoice_month]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L146}
   ///
@@ -2160,7 +2160,7 @@ class CloudChannelServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.channel.v1.CustomerRepricingConfig]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L46}
   /// [google.cloud.channel.v1.CustomerRepricingConfig.update_time]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L65}
-  /// [google.cloud.channel.v1.ListCustomerRepricingConfigsRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1946}
+  /// [google.cloud.channel.v1.ListCustomerRepricingConfigsRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1962}
   /// [google.cloud.channel.v1.RepricingConfig.EntitlementGranularity.entitlement]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L101}
   /// [google.cloud.channel.v1.RepricingConfig.effective_invoice_month]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L146}
   ///
@@ -2232,7 +2232,7 @@ class CloudChannelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.channel.v1.CreateCustomerRepricingConfigRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1996}
+  /// [google.cloud.channel.v1.CreateCustomerRepricingConfigRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2012}
   /// [google.cloud.channel.v1.CustomerRepricingConfig]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L46}
   /// [google.cloud.channel.v1.CustomerRepricingConfig.repricing_config]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L59}
   /// [google.cloud.channel.v1.RepricingConfig.EntitlementGranularity.entitlement]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L101}
@@ -2310,7 +2310,7 @@ class CloudChannelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.channel.v1.CreateCustomerRepricingConfigRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1996}
+  /// [google.cloud.channel.v1.CreateCustomerRepricingConfigRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2012}
   /// [google.cloud.channel.v1.CustomerRepricingConfig]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L46}
   /// [google.cloud.channel.v1.CustomerRepricingConfig.repricing_config]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L59}
   /// [google.cloud.channel.v1.RepricingConfig.EntitlementGranularity.entitlement]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L101}
@@ -2375,7 +2375,7 @@ class CloudChannelServiceClient {
   /// [google.cloud.channel.v1.CloudChannelService.CreateCustomerRepricingConfig]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L953}
   /// [google.cloud.channel.v1.CustomerRepricingConfig]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L46}
   /// [google.cloud.channel.v1.RepricingConfig.effective_invoice_month]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L146}
-  /// [google.cloud.channel.v1.UpdateCustomerRepricingConfigRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2014}
+  /// [google.cloud.channel.v1.UpdateCustomerRepricingConfigRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2030}
   ///
   // clang-format on
   StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
@@ -2441,7 +2441,7 @@ class CloudChannelServiceClient {
   /// [google.cloud.channel.v1.CloudChannelService.CreateCustomerRepricingConfig]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L953}
   /// [google.cloud.channel.v1.CustomerRepricingConfig]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L46}
   /// [google.cloud.channel.v1.RepricingConfig.effective_invoice_month]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L146}
-  /// [google.cloud.channel.v1.UpdateCustomerRepricingConfigRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2014}
+  /// [google.cloud.channel.v1.UpdateCustomerRepricingConfigRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2030}
   ///
   // clang-format on
   StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
@@ -2485,7 +2485,7 @@ class CloudChannelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.channel.v1.CustomerRepricingConfig]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L46}
-  /// [google.cloud.channel.v1.DeleteCustomerRepricingConfigRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2022}
+  /// [google.cloud.channel.v1.DeleteCustomerRepricingConfigRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2038}
   /// [google.cloud.channel.v1.RepricingConfig.effective_invoice_month]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L146}
   ///
   // clang-format on
@@ -2530,7 +2530,7 @@ class CloudChannelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.channel.v1.CustomerRepricingConfig]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L46}
-  /// [google.cloud.channel.v1.DeleteCustomerRepricingConfigRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2022}
+  /// [google.cloud.channel.v1.DeleteCustomerRepricingConfigRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2038}
   /// [google.cloud.channel.v1.RepricingConfig.effective_invoice_month]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L146}
   ///
   // clang-format on
@@ -2576,7 +2576,7 @@ class CloudChannelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.channel.v1.ChannelPartnerRepricingConfig]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L71}
-  /// [google.cloud.channel.v1.GetChannelPartnerRepricingConfigRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2036}
+  /// [google.cloud.channel.v1.GetChannelPartnerRepricingConfigRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2052}
   ///
   // clang-format on
   StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
@@ -2622,7 +2622,7 @@ class CloudChannelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.channel.v1.ChannelPartnerRepricingConfig]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L71}
-  /// [google.cloud.channel.v1.GetChannelPartnerRepricingConfigRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2036}
+  /// [google.cloud.channel.v1.GetChannelPartnerRepricingConfigRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2052}
   ///
   // clang-format on
   StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
@@ -2689,7 +2689,7 @@ class CloudChannelServiceClient {
   /// [google.cloud.channel.v1.ChannelPartnerLink]: @googleapis_reference_link{google/cloud/channel/v1/channel_partner_links.proto#L66}
   /// [google.cloud.channel.v1.ChannelPartnerRepricingConfig]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L71}
   /// [google.cloud.channel.v1.ChannelPartnerRepricingConfig.update_time]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L90}
-  /// [google.cloud.channel.v1.ListChannelPartnerRepricingConfigsRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2050}
+  /// [google.cloud.channel.v1.ListChannelPartnerRepricingConfigsRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2066}
   /// [google.cloud.channel.v1.RepricingConfig.effective_invoice_month]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L146}
   ///
   // clang-format on
@@ -2754,7 +2754,7 @@ class CloudChannelServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.channel.v1.ChannelPartnerRepricingConfig]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L71}
   /// [google.cloud.channel.v1.ChannelPartnerRepricingConfig.update_time]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L90}
-  /// [google.cloud.channel.v1.ListChannelPartnerRepricingConfigsRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2050}
+  /// [google.cloud.channel.v1.ListChannelPartnerRepricingConfigsRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2066}
   /// [google.cloud.channel.v1.RepricingConfig.effective_invoice_month]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L146}
   ///
   // clang-format on
@@ -2829,7 +2829,7 @@ class CloudChannelServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.channel.v1.ChannelPartnerRepricingConfig]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L71}
   /// [google.cloud.channel.v1.ChannelPartnerRepricingConfig.repricing_config]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L84}
-  /// [google.cloud.channel.v1.CreateChannelPartnerRepricingConfigRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2104}
+  /// [google.cloud.channel.v1.CreateChannelPartnerRepricingConfigRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2120}
   /// [google.cloud.channel.v1.RepricingConfig.EntitlementGranularity.entitlement]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L101}
   /// [google.cloud.channel.v1.RepricingConfig.effective_invoice_month]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L146}
   ///
@@ -2908,7 +2908,7 @@ class CloudChannelServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.channel.v1.ChannelPartnerRepricingConfig]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L71}
   /// [google.cloud.channel.v1.ChannelPartnerRepricingConfig.repricing_config]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L84}
-  /// [google.cloud.channel.v1.CreateChannelPartnerRepricingConfigRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2104}
+  /// [google.cloud.channel.v1.CreateChannelPartnerRepricingConfigRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2120}
   /// [google.cloud.channel.v1.RepricingConfig.EntitlementGranularity.entitlement]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L101}
   /// [google.cloud.channel.v1.RepricingConfig.effective_invoice_month]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L146}
   ///
@@ -2971,7 +2971,7 @@ class CloudChannelServiceClient {
   /// [google.cloud.channel.v1.ChannelPartnerRepricingConfig]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L71}
   /// [google.cloud.channel.v1.CloudChannelService.CreateChannelPartnerRepricingConfig]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1129}
   /// [google.cloud.channel.v1.RepricingConfig.effective_invoice_month]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L146}
-  /// [google.cloud.channel.v1.UpdateChannelPartnerRepricingConfigRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2122}
+  /// [google.cloud.channel.v1.UpdateChannelPartnerRepricingConfigRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2138}
   ///
   // clang-format on
   StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
@@ -3037,7 +3037,7 @@ class CloudChannelServiceClient {
   /// [google.cloud.channel.v1.ChannelPartnerRepricingConfig]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L71}
   /// [google.cloud.channel.v1.CloudChannelService.CreateChannelPartnerRepricingConfig]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1129}
   /// [google.cloud.channel.v1.RepricingConfig.effective_invoice_month]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L146}
-  /// [google.cloud.channel.v1.UpdateChannelPartnerRepricingConfigRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2122}
+  /// [google.cloud.channel.v1.UpdateChannelPartnerRepricingConfigRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2138}
   ///
   // clang-format on
   StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
@@ -3080,7 +3080,7 @@ class CloudChannelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.channel.v1.ChannelPartnerRepricingConfig]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L71}
-  /// [google.cloud.channel.v1.DeleteChannelPartnerRepricingConfigRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2129}
+  /// [google.cloud.channel.v1.DeleteChannelPartnerRepricingConfigRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2145}
   /// [google.cloud.channel.v1.RepricingConfig.effective_invoice_month]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L146}
   ///
   // clang-format on
@@ -3125,7 +3125,7 @@ class CloudChannelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.channel.v1.ChannelPartnerRepricingConfig]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L71}
-  /// [google.cloud.channel.v1.DeleteChannelPartnerRepricingConfigRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2129}
+  /// [google.cloud.channel.v1.DeleteChannelPartnerRepricingConfigRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2145}
   /// [google.cloud.channel.v1.RepricingConfig.effective_invoice_month]: @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L146}
   ///
   // clang-format on
@@ -3180,9 +3180,9 @@ class CloudChannelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.channel.v1.ListSkuGroupsRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2141}
-  /// [google.cloud.channel.v1.SkuGroup]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2207}
-  /// [google.cloud.channel.v1.SkuGroup.display_name]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2220}
+  /// [google.cloud.channel.v1.ListSkuGroupsRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2157}
+  /// [google.cloud.channel.v1.SkuGroup]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2223}
+  /// [google.cloud.channel.v1.SkuGroup.display_name]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2236}
   ///
   // clang-format on
   StreamRange<google::cloud::channel::v1::SkuGroup> ListSkuGroups(
@@ -3238,9 +3238,9 @@ class CloudChannelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.channel.v1.ListSkuGroupsRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2141}
-  /// [google.cloud.channel.v1.SkuGroup]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2207}
-  /// [google.cloud.channel.v1.SkuGroup.display_name]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2220}
+  /// [google.cloud.channel.v1.ListSkuGroupsRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2157}
+  /// [google.cloud.channel.v1.SkuGroup]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2223}
+  /// [google.cloud.channel.v1.SkuGroup.display_name]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2236}
   ///
   // clang-format on
   StreamRange<google::cloud::channel::v1::SkuGroup> ListSkuGroups(
@@ -3293,10 +3293,10 @@ class CloudChannelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.channel.v1.BillableSku]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2224}
-  /// [google.cloud.channel.v1.BillableSku.service_display_name]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2241}
-  /// [google.cloud.channel.v1.BillableSku.sku_display_name]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2232}
-  /// [google.cloud.channel.v1.ListSkuGroupBillableSkusRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2161}
+  /// [google.cloud.channel.v1.BillableSku]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2240}
+  /// [google.cloud.channel.v1.BillableSku.service_display_name]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2257}
+  /// [google.cloud.channel.v1.BillableSku.sku_display_name]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2248}
+  /// [google.cloud.channel.v1.ListSkuGroupBillableSkusRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2177}
   ///
   // clang-format on
   StreamRange<google::cloud::channel::v1::BillableSku> ListSkuGroupBillableSkus(
@@ -3352,10 +3352,10 @@ class CloudChannelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.channel.v1.BillableSku]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2224}
-  /// [google.cloud.channel.v1.BillableSku.service_display_name]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2241}
-  /// [google.cloud.channel.v1.BillableSku.sku_display_name]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2232}
-  /// [google.cloud.channel.v1.ListSkuGroupBillableSkusRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2161}
+  /// [google.cloud.channel.v1.BillableSku]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2240}
+  /// [google.cloud.channel.v1.BillableSku.service_display_name]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2257}
+  /// [google.cloud.channel.v1.BillableSku.sku_display_name]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2248}
+  /// [google.cloud.channel.v1.ListSkuGroupBillableSkusRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2177}
   ///
   // clang-format on
   StreamRange<google::cloud::channel::v1::BillableSku> ListSkuGroupBillableSkus(
@@ -3394,7 +3394,7 @@ class CloudChannelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.channel.v1.LookupOfferRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2543}
+  /// [google.cloud.channel.v1.LookupOfferRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2559}
   /// [google.cloud.channel.v1.Offer]: @googleapis_reference_link{google/cloud/channel/v1/offers.proto#L129}
   ///
   // clang-format on
@@ -3438,7 +3438,7 @@ class CloudChannelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.channel.v1.ListProductsRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2556}
+  /// [google.cloud.channel.v1.ListProductsRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2572}
   /// [google.cloud.channel.v1.Product]: @googleapis_reference_link{google/cloud/channel/v1/products.proto#L37}
   ///
   // clang-format on
@@ -3482,7 +3482,7 @@ class CloudChannelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.channel.v1.ListSkusRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2585}
+  /// [google.cloud.channel.v1.ListSkusRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2601}
   /// [google.cloud.channel.v1.Sku]: @googleapis_reference_link{google/cloud/channel/v1/products.proto#L55}
   ///
   // clang-format on
@@ -3525,7 +3525,7 @@ class CloudChannelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.channel.v1.ListOffersRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2625}
+  /// [google.cloud.channel.v1.ListOffersRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2641}
   /// [google.cloud.channel.v1.Offer]: @googleapis_reference_link{google/cloud/channel/v1/offers.proto#L129}
   ///
   // clang-format on
@@ -3572,8 +3572,8 @@ class CloudChannelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.channel.v1.ListPurchasableSkusRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2667}
-  /// [google.cloud.channel.v1.PurchasableSku]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2745}
+  /// [google.cloud.channel.v1.ListPurchasableSkusRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2683}
+  /// [google.cloud.channel.v1.PurchasableSku]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2761}
   ///
   // clang-format on
   StreamRange<google::cloud::channel::v1::PurchasableSku> ListPurchasableSkus(
@@ -3623,8 +3623,8 @@ class CloudChannelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.channel.v1.ListPurchasableOffersRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2751}
-  /// [google.cloud.channel.v1.PurchasableOffer]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2827}
+  /// [google.cloud.channel.v1.ListPurchasableOffersRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2767}
+  /// [google.cloud.channel.v1.PurchasableOffer]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2843}
   ///
   // clang-format on
   StreamRange<google::cloud::channel::v1::PurchasableOffer>
@@ -3666,8 +3666,8 @@ class CloudChannelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.channel.v1.QueryEligibleBillingAccountsRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2833}
-  /// [google.cloud.channel.v1.QueryEligibleBillingAccountsResponse]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2849}
+  /// [google.cloud.channel.v1.QueryEligibleBillingAccountsRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2849}
+  /// [google.cloud.channel.v1.QueryEligibleBillingAccountsResponse]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2865}
   ///
   // clang-format on
   StatusOr<google::cloud::channel::v1::QueryEligibleBillingAccountsResponse>
@@ -3716,8 +3716,8 @@ class CloudChannelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.channel.v1.RegisterSubscriberRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2875}
-  /// [google.cloud.channel.v1.RegisterSubscriberResponse]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2885}
+  /// [google.cloud.channel.v1.RegisterSubscriberRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2891}
+  /// [google.cloud.channel.v1.RegisterSubscriberResponse]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2901}
   ///
   // clang-format on
   StatusOr<google::cloud::channel::v1::RegisterSubscriberResponse>
@@ -3768,8 +3768,8 @@ class CloudChannelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.channel.v1.UnregisterSubscriberRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2891}
-  /// [google.cloud.channel.v1.UnregisterSubscriberResponse]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2901}
+  /// [google.cloud.channel.v1.UnregisterSubscriberRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2907}
+  /// [google.cloud.channel.v1.UnregisterSubscriberResponse]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2917}
   ///
   // clang-format on
   StatusOr<google::cloud::channel::v1::UnregisterSubscriberResponse>
@@ -3823,7 +3823,7 @@ class CloudChannelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.channel.v1.ListSubscribersRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2907}
+  /// [google.cloud.channel.v1.ListSubscribersRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2923}
   ///
   // clang-format on
   StreamRange<std::string> ListSubscribers(
@@ -3878,7 +3878,7 @@ class CloudChannelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.channel.v1.EntitlementChange]: @googleapis_reference_link{google/cloud/channel/v1/entitlement_changes.proto#L30}
-  /// [google.cloud.channel.v1.ListEntitlementChangesRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2940}
+  /// [google.cloud.channel.v1.ListEntitlementChangesRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2956}
   ///
   // clang-format on
   StreamRange<google::cloud::channel::v1::EntitlementChange>
@@ -3932,7 +3932,7 @@ class CloudChannelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.channel.v1.EntitlementChange]: @googleapis_reference_link{google/cloud/channel/v1/entitlement_changes.proto#L30}
-  /// [google.cloud.channel.v1.ListEntitlementChangesRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2940}
+  /// [google.cloud.channel.v1.ListEntitlementChangesRequest]: @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2956}
   ///
   // clang-format on
   StreamRange<google::cloud::channel::v1::EntitlementChange>

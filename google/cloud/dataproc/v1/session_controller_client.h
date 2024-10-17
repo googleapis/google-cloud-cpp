@@ -121,7 +121,7 @@ class SessionControllerClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataproc.v1.CreateSessionRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L98}
-  /// [google.cloud.dataproc.v1.Session]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L235}
+  /// [google.cloud.dataproc.v1.Session]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L236}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::Session>> CreateSession(
@@ -176,7 +176,7 @@ class SessionControllerClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataproc.v1.CreateSessionRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L98}
-  /// [google.cloud.dataproc.v1.Session]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L235}
+  /// [google.cloud.dataproc.v1.Session]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L236}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::Session>> CreateSession(
@@ -230,7 +230,7 @@ class SessionControllerClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataproc.v1.GetSessionRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L133}
-  /// [google.cloud.dataproc.v1.Session]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L235}
+  /// [google.cloud.dataproc.v1.Session]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L236}
   ///
   // clang-format on
   StatusOr<google::cloud::dataproc::v1::Session> GetSession(
@@ -260,7 +260,7 @@ class SessionControllerClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataproc.v1.GetSessionRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L133}
-  /// [google.cloud.dataproc.v1.Session]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L235}
+  /// [google.cloud.dataproc.v1.Session]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L236}
   ///
   // clang-format on
   StatusOr<google::cloud::dataproc::v1::Session> GetSession(
@@ -295,7 +295,7 @@ class SessionControllerClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataproc.v1.ListSessionsRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L144}
-  /// [google.cloud.dataproc.v1.Session]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L235}
+  /// [google.cloud.dataproc.v1.Session]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L236}
   ///
   // clang-format on
   StreamRange<google::cloud::dataproc::v1::Session> ListSessions(
@@ -334,7 +334,7 @@ class SessionControllerClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataproc.v1.ListSessionsRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L144}
-  /// [google.cloud.dataproc.v1.Session]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L235}
+  /// [google.cloud.dataproc.v1.Session]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L236}
   ///
   // clang-format on
   StreamRange<google::cloud::dataproc::v1::Session> ListSessions(
@@ -366,8 +366,8 @@ class SessionControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.Session]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L235}
-  /// [google.cloud.dataproc.v1.TerminateSessionRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L189}
+  /// [google.cloud.dataproc.v1.Session]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L236}
+  /// [google.cloud.dataproc.v1.TerminateSessionRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L190}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::Session>> TerminateSession(
@@ -417,8 +417,8 @@ class SessionControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.Session]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L235}
-  /// [google.cloud.dataproc.v1.TerminateSessionRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L189}
+  /// [google.cloud.dataproc.v1.Session]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L236}
+  /// [google.cloud.dataproc.v1.TerminateSessionRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L190}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::Session>> TerminateSession(
@@ -479,8 +479,8 @@ class SessionControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.DeleteSessionRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L212}
-  /// [google.cloud.dataproc.v1.Session]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L235}
+  /// [google.cloud.dataproc.v1.DeleteSessionRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L213}
+  /// [google.cloud.dataproc.v1.Session]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L236}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::Session>> DeleteSession(
@@ -531,8 +531,8 @@ class SessionControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataproc.v1.DeleteSessionRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L212}
-  /// [google.cloud.dataproc.v1.Session]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L235}
+  /// [google.cloud.dataproc.v1.DeleteSessionRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L213}
+  /// [google.cloud.dataproc.v1.Session]: @googleapis_reference_link{google/cloud/dataproc/v1/sessions.proto#L236}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::Session>> DeleteSession(
@@ -594,7 +594,7 @@ class SessionControllerClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
-  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
+  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
@@ -661,8 +661,8 @@ class SessionControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
-  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
+  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L137}
+  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
