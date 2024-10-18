@@ -19,11 +19,15 @@ cmake_minimum_required(VERSION 3.13...3.24)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}")
 include(GoogleCloudCppFeatures)
 
-set(GOOGLE_CLOUD_CPP_ENABLE __ga_libraries__)
-set(GOOGLE_CLOUD_CPP_LEGACY_FEATURES) # Disable warnings
-google_cloud_cpp_enable_deps()
-google_cloud_cpp_enable_cleanup()
-
-foreach (library IN LISTS GOOGLE_CLOUD_CPP_ENABLE)
-    message(${library})
+foreach (feature IN LISTS GOOGLE_CLOUD_CPP_GA_LIBRARIES
+                          GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES)
+    if (${feature} STREQUAL "compute")
+        # The `compute` feature is a collection of many `compute_*` libraries.
+        # We want to enumerate them here.
+        foreach (library IN LISTS GOOGLE_CLOUD_CPP_COMPUTE_LIBRARIES)
+            message(${library})
+        endforeach ()
+    else ()
+        message(${feature})
+    endif ()
 endforeach ()
