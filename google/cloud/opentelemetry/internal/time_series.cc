@@ -183,6 +183,7 @@ std::vector<google::monitoring::v3::TimeSeries> ToTimeSeries(
     opentelemetry::sdk::metrics::ResourceMetrics const& data,
     std::function<std::string(std::string)> const& metrics_name_formatter) {
   std::vector<google::monitoring::v3::TimeSeries> tss;
+  GCP_LOG(INFO) << "\n\n\n\nDATA LIST:\n";
   for (auto const& scope_metric : data.scope_metric_data_) {
     for (auto const& metric_data : scope_metric.metric_data_) {
       for (auto const& pda : metric_data.point_data_attr_) {
@@ -211,10 +212,12 @@ std::vector<google::monitoring::v3::TimeSeries> ToTimeSeries(
         ts->set_unit(metric_data.instrument_descriptor.unit_);
         *ts->mutable_metric() =
             ToMetric(metric_data, pda.attributes, metrics_name_formatter);
+        GCP_LOG(INFO) << "DATA name_: " << metric_data.instrument_descriptor.name_ << "\n";
         tss.push_back(*std::move(ts));
       }
     }
   }
+  GCP_LOG(INFO) << "\n\n\n";
   return tss;
 }
 

@@ -83,6 +83,11 @@ class MonitoringExporter final
     auto requests =
         otel_internal::ToRequests(project_.FullName(), mr, std::move(tss));
     for (auto& request : requests) {
+      GCP_LOG(INFO) << "METRIC INFO:\n\n\n";
+      for (auto it = request.time_series().begin(); it != request.time_series().end(); it++) {
+         GCP_LOG(INFO) << "METRIC Type: " << it->metric().type() << "\n";
+      }
+      GCP_LOG(INFO) << "\n\n\n";
       auto status = use_service_time_series_
                         ? client_.CreateServiceTimeSeries(request)
                         : client_.CreateTimeSeries(request);
