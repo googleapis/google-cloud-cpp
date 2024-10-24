@@ -24,7 +24,7 @@
 #include "google/cloud/internal/oauth2_universe_domain.h"
 #include "google/cloud/internal/parse_rfc3339.h"
 #include "google/cloud/internal/rest_client.h"
-#include "absl/strings/str_format.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include <nlohmann/json.hpp>
 
 namespace google {
@@ -163,8 +163,7 @@ StatusOr<AccessToken> ExternalAccountCredentials::GetToken(
   // header. Workload Identity is handled at project level, it doesn't require.
   if (info_.workforce_pool_user_project) {
     form_data.emplace_back("options",
-                           absl::StrFormat(R"({"userProject": "%s"})",
-                                           *info_.workforce_pool_user_project));
+                           absl::StrCat(R"({"userProject": ")", *info_.workforce_pool_user_project, R"("})"));
   }
 
   auto request =
