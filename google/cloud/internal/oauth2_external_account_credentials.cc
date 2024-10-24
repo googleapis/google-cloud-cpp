@@ -96,10 +96,19 @@ StatusOr<ExternalAccountInfo> ParseExternalAccountConfiguration(
       MakeExternalAccountTokenSource(*credential_source, *audience, ec);
   if (!source) return std::move(source).status();
 
-  auto info =
-      ExternalAccountInfo{*std::move(audience),  *std::move(subject_token_type),
-                          *std::move(token_url), *std::move(source),
-                          absl::nullopt,         *std::move(universe_domain)};
+  absl::optional<std::string> workforce_pool_user_project;
+  auto up_it = json.find("workforce_pool_user_project");
+  if (up_it != json.end()) {
+    workforce_pool_user_project = *up_it;
+  }
+
+  auto info = ExternalAccountInfo{*std::move(audience),
+                                  *std::move(subject_token_type),
+                                  *std::move(token_url),
+                                  *std::move(source),
+                                  absl::nullopt,
+                                  *std::move(universe_domain),
+                                  std::move(workforce_pool_user_project)};
 
   auto it = json.find("service_account_impersonation_url");
   if (it == json.end()) return info;
@@ -148,6 +157,15 @@ StatusOr<AccessToken> ExternalAccountCredentials::GetToken(
       {"subject_token_type", info_.subject_token_type},
       {"subject_token", subject_token->token},
   };
+
+  // Workforce Identity is handled at org level, it requires userProject in
+  // header. Workload Identity is handled at project level, it doesn't require.
+  if (info_.workforce_pool_user_project) {
+    form_data.emplace_back(
+        "options", absl::StrCat(R"({"userProject": ")",
+                                *info_.workforce_pool_user_project, R"("})"));
+  }
+
   auto request =
       rest_internal::RestRequest(info_.token_url)
           .AddHeader("content-type", "application/x-www-form-urlencoded");

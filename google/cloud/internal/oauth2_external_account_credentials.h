@@ -68,6 +68,7 @@ struct ExternalAccountInfo {
   ExternalAccountTokenSource token_source;
   absl::optional<ExternalAccountImpersonationConfig> impersonation_config;
   std::string universe_domain;
+  absl::optional<std::string> workforce_pool_user_project;
 };
 
 /// Parse a JSON string with an external account configuration.
