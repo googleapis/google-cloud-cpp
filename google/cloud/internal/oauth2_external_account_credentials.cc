@@ -109,7 +109,7 @@ StatusOr<ExternalAccountInfo> ParseExternalAccountConfiguration(
                                   *std::move(source),
                                   absl::nullopt,
                                   *std::move(universe_domain),
-                                  workforce_pool_user_project};
+                                  std::move(workforce_pool_user_project)};
 
   auto it = json.find("service_account_impersonation_url");
   if (it == json.end()) return info;
