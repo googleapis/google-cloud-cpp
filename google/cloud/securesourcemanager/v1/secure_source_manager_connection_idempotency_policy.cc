@@ -93,6 +93,31 @@ SecureSourceManagerConnectionIdempotencyPolicy::TestIamPermissionsRepo(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::CreateBranchRule(
+    google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::ListBranchRules(
+    google::cloud::securesourcemanager::v1::ListBranchRulesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::GetBranchRule(
+    google::cloud::securesourcemanager::v1::GetBranchRuleRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::UpdateBranchRule(
+    google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency SecureSourceManagerConnectionIdempotencyPolicy::DeleteBranchRule(
+    google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency SecureSourceManagerConnectionIdempotencyPolicy::ListLocations(
     google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;

@@ -57,6 +57,9 @@ class AlloyDBAdminConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency PromoteCluster(
       google::cloud::alloydb::v1::PromoteClusterRequest const& request);
 
+  virtual google::cloud::Idempotency SwitchoverCluster(
+      google::cloud::alloydb::v1::SwitchoverClusterRequest const& request);
+
   virtual google::cloud::Idempotency RestoreCluster(
       google::cloud::alloydb::v1::RestoreClusterRequest const& request);
 
@@ -93,6 +96,9 @@ class AlloyDBAdminConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency RestartInstance(
       google::cloud::alloydb::v1::RestartInstanceRequest const& request);
+
+  virtual google::cloud::Idempotency ExecuteSql(
+      google::cloud::alloydb::v1::ExecuteSqlRequest const& request);
 
   virtual google::cloud::Idempotency ListBackups(
       google::cloud::alloydb::v1::ListBackupsRequest request);
@@ -133,6 +139,9 @@ class AlloyDBAdminConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency DeleteUser(
       google::cloud::alloydb::v1::DeleteUserRequest const& request);
+
+  virtual google::cloud::Idempotency ListDatabases(
+      google::cloud::alloydb::v1::ListDatabasesRequest request);
 
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);

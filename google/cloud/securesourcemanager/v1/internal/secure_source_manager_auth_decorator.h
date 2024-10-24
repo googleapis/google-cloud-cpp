@@ -121,6 +121,53 @@ class SecureSourceManagerAuth : public SecureSourceManagerStub {
       grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateBranchRule(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateBranchRule(
+      grpc::ClientContext& context, Options options,
+      google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
+          request) override;
+
+  StatusOr<google::cloud::securesourcemanager::v1::ListBranchRulesResponse>
+  ListBranchRules(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securesourcemanager::v1::ListBranchRulesRequest const&
+          request) override;
+
+  StatusOr<google::cloud::securesourcemanager::v1::BranchRule> GetBranchRule(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securesourcemanager::v1::GetBranchRuleRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateBranchRule(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateBranchRule(
+      grpc::ClientContext& context, Options options,
+      google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteBranchRule(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteBranchRule(
+      grpc::ClientContext& context, Options options,
+      google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
+          request) override;
+
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;

@@ -209,6 +209,44 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
   /// using ::testing::_;
   /// using ::testing::Matcher;
   /// EXPECT_CALL(*mock,
+  /// SwitchoverCluster(Matcher<google::cloud::alloydb::v1::SwitchoverClusterRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::alloydb::v1::Cluster>>, SwitchoverCluster,
+      (google::cloud::alloydb::v1::SwitchoverClusterRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, SwitchoverCluster(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, SwitchoverCluster,
+      (NoAwaitTag,
+       google::cloud::alloydb::v1::SwitchoverClusterRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// SwitchoverCluster(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Cluster>>,
+              SwitchoverCluster,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
   /// RestoreCluster(Matcher<google::cloud::alloydb::v1::RestoreClusterRequest
   /// const&>(_)))
   /// @endcode
@@ -599,6 +637,11 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
               RestartInstance,
               (google::longrunning::Operation const& operation), (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::alloydb::v1::ExecuteSqlResponse>,
+              ExecuteSql,
+              (google::cloud::alloydb::v1::ExecuteSqlRequest const& request),
+              (override));
+
   MOCK_METHOD((StreamRange<google::cloud::alloydb::v1::Backup>), ListBackups,
               (google::cloud::alloydb::v1::ListBackupsRequest request),
               (override));
@@ -754,6 +797,11 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
 
   MOCK_METHOD(Status, DeleteUser,
               (google::cloud::alloydb::v1::DeleteUserRequest const& request),
+              (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::alloydb::v1::Database>),
+              ListDatabases,
+              (google::cloud::alloydb::v1::ListDatabasesRequest request),
               (override));
 
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
