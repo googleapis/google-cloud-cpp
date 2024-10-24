@@ -474,6 +474,97 @@ AlloyDBAdminConnectionImpl::PromoteCluster(
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
+AlloyDBAdminConnectionImpl::SwitchoverCluster(
+    google::cloud::alloydb::v1::SwitchoverClusterRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->SwitchoverCluster(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::alloydb::v1::Cluster>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::alloydb::v1::SwitchoverClusterRequest const& request) {
+        return stub->AsyncSwitchoverCluster(cq, std::move(context),
+                                            std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::alloydb::v1::Cluster>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+AlloyDBAdminConnectionImpl::SwitchoverCluster(
+    NoAwaitTag,
+    google::cloud::alloydb::v1::SwitchoverClusterRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SwitchoverCluster(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::alloydb::v1::SwitchoverClusterRequest const& request) {
+        return stub_->SwitchoverCluster(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::alloydb::v1::Cluster>>
+AlloyDBAdminConnectionImpl::SwitchoverCluster(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::alloydb::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::alloydb::v1::Cluster>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to SwitchoverCluster",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::alloydb::v1::Cluster>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::alloydb::v1::Cluster>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::alloydb::v1::Cluster>>
 AlloyDBAdminConnectionImpl::RestoreCluster(
     google::cloud::alloydb::v1::RestoreClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1430,6 +1521,20 @@ AlloyDBAdminConnectionImpl::RestartInstance(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::cloud::alloydb::v1::ExecuteSqlResponse>
+AlloyDBAdminConnectionImpl::ExecuteSql(
+    google::cloud::alloydb::v1::ExecuteSqlRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ExecuteSql(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::alloydb::v1::ExecuteSqlRequest const& request) {
+        return stub_->ExecuteSql(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 StreamRange<google::cloud::alloydb::v1::Backup>
 AlloyDBAdminConnectionImpl::ListBackups(
     google::cloud::alloydb::v1::ListBackupsRequest request) {
@@ -1902,6 +2007,40 @@ Status AlloyDBAdminConnectionImpl::DeleteUser(
         return stub_->DeleteUser(context, options, request);
       },
       *current, request, __func__);
+}
+
+StreamRange<google::cloud::alloydb::v1::Database>
+AlloyDBAdminConnectionImpl::ListDatabases(
+    google::cloud::alloydb::v1::ListDatabasesRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListDatabases(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::alloydb::v1::Database>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<alloydb_v1::AlloyDBAdminRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::alloydb::v1::ListDatabasesRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::alloydb::v1::ListDatabasesRequest const&
+                       request) {
+              return stub->ListDatabases(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::alloydb::v1::ListDatabasesResponse r) {
+        std::vector<google::cloud::alloydb::v1::Database> result(
+            r.databases().size());
+        auto& messages = *r.mutable_databases();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
 }
 
 StreamRange<google::cloud::location::Location>

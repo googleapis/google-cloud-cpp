@@ -175,6 +175,37 @@ StatusOr<google::longrunning::Operation> AlloyDBAdminLogging::PromoteCluster(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+AlloyDBAdminLogging::AsyncSwitchoverCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::alloydb::v1::SwitchoverClusterRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::alloydb::v1::SwitchoverClusterRequest const& request) {
+        return child_->AsyncSwitchoverCluster(cq, std::move(context),
+                                              std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> AlloyDBAdminLogging::SwitchoverCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::SwitchoverClusterRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::alloydb::v1::SwitchoverClusterRequest const& request) {
+        return child_->SwitchoverCluster(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminLogging::AsyncRestoreCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -500,6 +531,18 @@ StatusOr<google::longrunning::Operation> AlloyDBAdminLogging::RestartInstance(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::alloydb::v1::ExecuteSqlResponse>
+AlloyDBAdminLogging::ExecuteSql(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::alloydb::v1::ExecuteSqlRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::alloydb::v1::ExecuteSqlRequest const& request) {
+        return child_->ExecuteSql(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::alloydb::v1::ListBackupsResponse>
 AlloyDBAdminLogging::ListBackups(
     grpc::ClientContext& context, Options const& options,
@@ -704,6 +747,18 @@ Status AlloyDBAdminLogging::DeleteUser(
       [this](grpc::ClientContext& context, Options const& options,
              google::cloud::alloydb::v1::DeleteUserRequest const& request) {
         return child_->DeleteUser(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::alloydb::v1::ListDatabasesResponse>
+AlloyDBAdminLogging::ListDatabases(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::alloydb::v1::ListDatabasesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::alloydb::v1::ListDatabasesRequest const& request) {
+        return child_->ListDatabases(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }

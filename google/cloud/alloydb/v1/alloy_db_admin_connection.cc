@@ -137,6 +137,29 @@ AlloyDBAdminConnection::PromoteCluster(google::longrunning::Operation const&) {
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
+AlloyDBAdminConnection::SwitchoverCluster(
+    google::cloud::alloydb::v1::SwitchoverClusterRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::alloydb::v1::Cluster>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+AlloyDBAdminConnection::SwitchoverCluster(
+    NoAwaitTag, google::cloud::alloydb::v1::SwitchoverClusterRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::alloydb::v1::Cluster>>
+AlloyDBAdminConnection::SwitchoverCluster(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::alloydb::v1::Cluster>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::alloydb::v1::Cluster>>
 AlloyDBAdminConnection::RestoreCluster(
     google::cloud::alloydb::v1::RestoreClusterRequest const&) {
   return google::cloud::make_ready_future<
@@ -372,6 +395,12 @@ AlloyDBAdminConnection::RestartInstance(google::longrunning::Operation const&) {
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::alloydb::v1::ExecuteSqlResponse>
+AlloyDBAdminConnection::ExecuteSql(
+    google::cloud::alloydb::v1::ExecuteSqlRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StreamRange<google::cloud::alloydb::v1::Backup>
 AlloyDBAdminConnection::ListBackups(
     google::cloud::alloydb::v1::
@@ -493,6 +522,14 @@ StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminConnection::UpdateUser(
 Status AlloyDBAdminConnection::DeleteUser(
     google::cloud::alloydb::v1::DeleteUserRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::alloydb::v1::Database>
+AlloyDBAdminConnection::ListDatabases(
+    google::cloud::alloydb::v1::
+        ListDatabasesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::alloydb::v1::Database>>();
 }
 
 StreamRange<google::cloud::location::Location>

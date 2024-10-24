@@ -144,6 +144,27 @@ StatusOr<google::longrunning::Operation> AlloyDBAdminMetadata::PromoteCluster(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+AlloyDBAdminMetadata::AsyncSwitchoverCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::alloydb::v1::SwitchoverClusterRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncSwitchoverCluster(cq, std::move(context),
+                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+AlloyDBAdminMetadata::SwitchoverCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::SwitchoverClusterRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->SwitchoverCluster(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminMetadata::AsyncRestoreCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -366,6 +387,16 @@ StatusOr<google::longrunning::Operation> AlloyDBAdminMetadata::RestartInstance(
   return child_->RestartInstance(context, options, request);
 }
 
+StatusOr<google::cloud::alloydb::v1::ExecuteSqlResponse>
+AlloyDBAdminMetadata::ExecuteSql(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::alloydb::v1::ExecuteSqlRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("instance=", internal::UrlEncode(request.instance())));
+  return child_->ExecuteSql(context, options, request);
+}
+
 StatusOr<google::cloud::alloydb::v1::ListBackupsResponse>
 AlloyDBAdminMetadata::ListBackups(
     grpc::ClientContext& context, Options const& options,
@@ -514,6 +545,15 @@ Status AlloyDBAdminMetadata::DeleteUser(
   SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteUser(context, options, request);
+}
+
+StatusOr<google::cloud::alloydb::v1::ListDatabasesResponse>
+AlloyDBAdminMetadata::ListDatabases(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::alloydb::v1::ListDatabasesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListDatabases(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>

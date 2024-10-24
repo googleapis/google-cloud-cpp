@@ -3,7 +3,7 @@
     "api_shortname": "documentai",
     "client_documentation": "https://cloud.google.com/cpp/docs/reference/documentai/latest",
     "distribution_name": "google-cloud-cpp",
-    "issue_tracker": "https://issuetracker.google.com/savedsearches/6133855",
+    "issue_tracker": "https://issuetracker.google.com/issues?q=componentid:1132231%20status=open",
     "language": "cpp",
     "library_type": "GAPIC_AUTO",
     "name_pretty": "Cloud Document AI API",

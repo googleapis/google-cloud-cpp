@@ -233,6 +233,17 @@ class AlloyDBAdminConnection {
   virtual future<StatusOr<google::cloud::alloydb::v1::Cluster>> PromoteCluster(
       google::longrunning::Operation const& operation);
 
+  virtual future<StatusOr<google::cloud::alloydb::v1::Cluster>>
+  SwitchoverCluster(
+      google::cloud::alloydb::v1::SwitchoverClusterRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> SwitchoverCluster(
+      NoAwaitTag,
+      google::cloud::alloydb::v1::SwitchoverClusterRequest const& request);
+
+  virtual future<StatusOr<google::cloud::alloydb::v1::Cluster>>
+  SwitchoverCluster(google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::alloydb::v1::Cluster>> RestoreCluster(
       google::cloud::alloydb::v1::RestoreClusterRequest const& request);
 
@@ -349,6 +360,9 @@ class AlloyDBAdminConnection {
   virtual future<StatusOr<google::cloud::alloydb::v1::Instance>>
   RestartInstance(google::longrunning::Operation const& operation);
 
+  virtual StatusOr<google::cloud::alloydb::v1::ExecuteSqlResponse> ExecuteSql(
+      google::cloud::alloydb::v1::ExecuteSqlRequest const& request);
+
   virtual StreamRange<google::cloud::alloydb::v1::Backup> ListBackups(
       google::cloud::alloydb::v1::ListBackupsRequest request);
 
@@ -413,6 +427,9 @@ class AlloyDBAdminConnection {
 
   virtual Status DeleteUser(
       google::cloud::alloydb::v1::DeleteUserRequest const& request);
+
+  virtual StreamRange<google::cloud::alloydb::v1::Database> ListDatabases(
+      google::cloud::alloydb::v1::ListDatabasesRequest request);
 
   virtual StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request);

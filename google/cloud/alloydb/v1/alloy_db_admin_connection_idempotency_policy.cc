@@ -64,6 +64,11 @@ Idempotency AlloyDBAdminConnectionIdempotencyPolicy::PromoteCluster(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency AlloyDBAdminConnectionIdempotencyPolicy::SwitchoverCluster(
+    google::cloud::alloydb::v1::SwitchoverClusterRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency AlloyDBAdminConnectionIdempotencyPolicy::RestoreCluster(
     google::cloud::alloydb::v1::RestoreClusterRequest const&) {
   return Idempotency::kNonIdempotent;
@@ -121,6 +126,11 @@ Idempotency AlloyDBAdminConnectionIdempotencyPolicy::InjectFault(
 
 Idempotency AlloyDBAdminConnectionIdempotencyPolicy::RestartInstance(
     google::cloud::alloydb::v1::RestartInstanceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency AlloyDBAdminConnectionIdempotencyPolicy::ExecuteSql(
+    google::cloud::alloydb::v1::ExecuteSqlRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -187,6 +197,11 @@ Idempotency AlloyDBAdminConnectionIdempotencyPolicy::UpdateUser(
 Idempotency AlloyDBAdminConnectionIdempotencyPolicy::DeleteUser(
     google::cloud::alloydb::v1::DeleteUserRequest const&) {
   return Idempotency::kNonIdempotent;
+}
+
+Idempotency AlloyDBAdminConnectionIdempotencyPolicy::ListDatabases(
+    google::cloud::alloydb::v1::ListDatabasesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
 }
 
 Idempotency AlloyDBAdminConnectionIdempotencyPolicy::ListLocations(

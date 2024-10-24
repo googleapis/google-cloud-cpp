@@ -255,6 +255,134 @@ DefaultSecureSourceManagerStub::TestIamPermissionsRepo(
   return response;
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultSecureSourceManagerStub::AsyncCreateBranchRule(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::securesourcemanager::v1::CreateBranchRuleRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateBranchRule(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultSecureSourceManagerStub::CreateBranchRule(
+    grpc::ClientContext& context, Options,
+    google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateBranchRule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::ListBranchRulesResponse>
+DefaultSecureSourceManagerStub::ListBranchRules(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::securesourcemanager::v1::ListBranchRulesRequest const&
+        request) {
+  google::cloud::securesourcemanager::v1::ListBranchRulesResponse response;
+  auto status = grpc_stub_->ListBranchRules(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::BranchRule>
+DefaultSecureSourceManagerStub::GetBranchRule(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::securesourcemanager::v1::GetBranchRuleRequest const&
+        request) {
+  google::cloud::securesourcemanager::v1::BranchRule response;
+  auto status = grpc_stub_->GetBranchRule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultSecureSourceManagerStub::AsyncUpdateBranchRule(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateBranchRule(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultSecureSourceManagerStub::UpdateBranchRule(
+    grpc::ClientContext& context, Options,
+    google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateBranchRule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultSecureSourceManagerStub::AsyncDeleteBranchRule(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteBranchRule(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultSecureSourceManagerStub::DeleteBranchRule(
+    grpc::ClientContext& context, Options,
+    google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteBranchRule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultSecureSourceManagerStub::ListLocations(
     grpc::ClientContext& context, Options const&,

@@ -99,6 +99,18 @@ class AlloyDBAdminConnectionImpl : public alloydb_v1::AlloyDBAdminConnection {
   future<StatusOr<google::cloud::alloydb::v1::Cluster>> PromoteCluster(
       google::longrunning::Operation const& operation) override;
 
+  future<StatusOr<google::cloud::alloydb::v1::Cluster>> SwitchoverCluster(
+      google::cloud::alloydb::v1::SwitchoverClusterRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> SwitchoverCluster(
+      NoAwaitTag,
+      google::cloud::alloydb::v1::SwitchoverClusterRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::alloydb::v1::Cluster>> SwitchoverCluster(
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::alloydb::v1::Cluster>> RestoreCluster(
       google::cloud::alloydb::v1::RestoreClusterRequest const& request)
       override;
@@ -227,6 +239,9 @@ class AlloyDBAdminConnectionImpl : public alloydb_v1::AlloyDBAdminConnection {
   future<StatusOr<google::cloud::alloydb::v1::Instance>> RestartInstance(
       google::longrunning::Operation const& operation) override;
 
+  StatusOr<google::cloud::alloydb::v1::ExecuteSqlResponse> ExecuteSql(
+      google::cloud::alloydb::v1::ExecuteSqlRequest const& request) override;
+
   StreamRange<google::cloud::alloydb::v1::Backup> ListBackups(
       google::cloud::alloydb::v1::ListBackupsRequest request) override;
 
@@ -291,6 +306,9 @@ class AlloyDBAdminConnectionImpl : public alloydb_v1::AlloyDBAdminConnection {
 
   Status DeleteUser(
       google::cloud::alloydb::v1::DeleteUserRequest const& request) override;
+
+  StreamRange<google::cloud::alloydb::v1::Database> ListDatabases(
+      google::cloud::alloydb::v1::ListDatabasesRequest request) override;
 
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;
