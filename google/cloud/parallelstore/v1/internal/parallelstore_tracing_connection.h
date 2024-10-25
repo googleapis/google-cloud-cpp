@@ -36,88 +36,94 @@ class ParallelstoreTracingConnection
   ~ParallelstoreTracingConnection() override = default;
 
   explicit ParallelstoreTracingConnection(
-    std::shared_ptr<parallelstore_v1::ParallelstoreConnection> child);
+      std::shared_ptr<parallelstore_v1::ParallelstoreConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::parallelstore::v1::Instance>
-  ListInstances(google::cloud::parallelstore::v1::ListInstancesRequest request) override;
+  StreamRange<google::cloud::parallelstore::v1::Instance> ListInstances(
+      google::cloud::parallelstore::v1::ListInstancesRequest request) override;
 
-  StatusOr<google::cloud::parallelstore::v1::Instance>
-  GetInstance(google::cloud::parallelstore::v1::GetInstanceRequest const& request) override;
+  StatusOr<google::cloud::parallelstore::v1::Instance> GetInstance(
+      google::cloud::parallelstore::v1::GetInstanceRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::parallelstore::v1::Instance>>
-  CreateInstance(google::cloud::parallelstore::v1::CreateInstanceRequest const& request) override;
+  future<StatusOr<google::cloud::parallelstore::v1::Instance>> CreateInstance(
+      google::cloud::parallelstore::v1::CreateInstanceRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  CreateInstance(NoAwaitTag,
-      google::cloud::parallelstore::v1::CreateInstanceRequest const& request) override;
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      NoAwaitTag,
+      google::cloud::parallelstore::v1::CreateInstanceRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::parallelstore::v1::Instance>>
-  CreateInstance(
+  future<StatusOr<google::cloud::parallelstore::v1::Instance>> CreateInstance(
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::parallelstore::v1::Instance>>
-  UpdateInstance(google::cloud::parallelstore::v1::UpdateInstanceRequest const& request) override;
+  future<StatusOr<google::cloud::parallelstore::v1::Instance>> UpdateInstance(
+      google::cloud::parallelstore::v1::UpdateInstanceRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  UpdateInstance(NoAwaitTag,
-      google::cloud::parallelstore::v1::UpdateInstanceRequest const& request) override;
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      NoAwaitTag,
+      google::cloud::parallelstore::v1::UpdateInstanceRequest const& request)
+      override;
 
-  future<StatusOr<google::cloud::parallelstore::v1::Instance>>
-  UpdateInstance(
+  future<StatusOr<google::cloud::parallelstore::v1::Instance>> UpdateInstance(
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::parallelstore::v1::OperationMetadata>>
-  DeleteInstance(google::cloud::parallelstore::v1::DeleteInstanceRequest const& request) override;
+  DeleteInstance(google::cloud::parallelstore::v1::DeleteInstanceRequest const&
+                     request) override;
 
-  StatusOr<google::longrunning::Operation>
-  DeleteInstance(NoAwaitTag,
-      google::cloud::parallelstore::v1::DeleteInstanceRequest const& request) override;
+  StatusOr<google::longrunning::Operation> DeleteInstance(
+      NoAwaitTag,
+      google::cloud::parallelstore::v1::DeleteInstanceRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::parallelstore::v1::OperationMetadata>>
-  DeleteInstance(
-      google::longrunning::Operation const& operation) override;
+  DeleteInstance(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::parallelstore::v1::ImportDataResponse>>
-  ImportData(google::cloud::parallelstore::v1::ImportDataRequest const& request) override;
+  ImportData(google::cloud::parallelstore::v1::ImportDataRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  ImportData(NoAwaitTag,
-      google::cloud::parallelstore::v1::ImportDataRequest const& request) override;
+  StatusOr<google::longrunning::Operation> ImportData(
+      NoAwaitTag,
+      google::cloud::parallelstore::v1::ImportDataRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::parallelstore::v1::ImportDataResponse>>
-  ImportData(
-      google::longrunning::Operation const& operation) override;
+  ImportData(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::parallelstore::v1::ExportDataResponse>>
-  ExportData(google::cloud::parallelstore::v1::ExportDataRequest const& request) override;
+  ExportData(google::cloud::parallelstore::v1::ExportDataRequest const& request)
+      override;
 
-  StatusOr<google::longrunning::Operation>
-  ExportData(NoAwaitTag,
-      google::cloud::parallelstore::v1::ExportDataRequest const& request) override;
+  StatusOr<google::longrunning::Operation> ExportData(
+      NoAwaitTag,
+      google::cloud::parallelstore::v1::ExportDataRequest const& request)
+      override;
 
   future<StatusOr<google::cloud::parallelstore::v1::ExportDataResponse>>
-  ExportData(
-      google::longrunning::Operation const& operation) override;
+  ExportData(google::longrunning::Operation const& operation) override;
 
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request) override;
 
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<parallelstore_v1::ParallelstoreConnection> child_;

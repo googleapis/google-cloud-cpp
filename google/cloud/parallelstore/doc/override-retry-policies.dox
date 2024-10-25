@@ -67,6 +67,19 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 @section parallelstore-override-retry-example Example
 
 <!-- inject-retry-snippet-start -->
+For example, this will override the retry policies for `parallelstore_v1::ParallelstoreClient`:
+
+@snippet parallelstore_client_samples.cc set-retry-policy
+
+This assumes you have created a custom idempotency policy. Such as:
+
+@snippet parallelstore_client_samples.cc custom-idempotency-policy
+
+This will override the polling policies for `parallelstore_v1::ParallelstoreClient`
+
+@snippet parallelstore_client_samples.cc set-polling-policy
+
+
 <!-- inject-retry-snippet-end -->
 
 @section parallelstore-override-retry-more-information More Information
@@ -80,4 +93,16 @@ will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 */
 
 // <!-- inject-retry-pages-start -->
+
+/*! @page parallelstore_v1::ParallelstoreClient-retry-snippet Override parallelstore_v1::ParallelstoreClient Retry Policies
+
+This shows how to override the retry policies for parallelstore_v1::ParallelstoreClient:
+
+@snippet google/cloud/parallelstore/v1/samples/parallelstore_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/parallelstore/v1/samples/parallelstore_client_samples.cc custom-idempotency-policy
+
+*/
 // <!-- inject-retry-pages-end -->

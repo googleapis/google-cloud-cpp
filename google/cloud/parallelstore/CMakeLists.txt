@@ -17,7 +17,7 @@
 include(GoogleCloudCppLibrary)
 
 google_cloud_cpp_add_gapic_library(parallelstore "Parallelstore API"
-    SERVICE_DIRS "v1/")
+                                   SERVICE_DIRS "v1/")
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(parallelstore_quickstart "quickstart/quickstart.cc")
@@ -26,10 +26,13 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     google_cloud_cpp_add_common_options(parallelstore_quickstart)
     add_test(
         NAME parallelstore_quickstart
-        COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
-                $<TARGET_FILE:parallelstore_quickstart> GOOGLE_CLOUD_PROJECT
-                GOOGLE_CLOUD_CPP_TEST_REGION # EDIT HERE
-    )
-    set_tests_properties(parallelstore_quickstart
-                         PROPERTIES LABELS "integration-test;quickstart")
+        COMMAND
+            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+            $<TARGET_FILE:parallelstore_quickstart> GOOGLE_CLOUD_PROJECT
+            GOOGLE_CLOUD_CPP_TEST_REGION)
+    set_tests_properties(
+        parallelstore_quickstart
+        PROPERTIES
+            LABELS "integration-test;quickstart" PASS_REGULAR_EXPRESSION
+            "google::cloud::Status thrown: PERMISSION_DENIED: Permanent error")
 endif ()

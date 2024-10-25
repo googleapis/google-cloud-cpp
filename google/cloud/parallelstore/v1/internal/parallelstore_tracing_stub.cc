@@ -32,22 +32,24 @@ ParallelstoreTracingStub::ParallelstoreTracingStub(
     std::shared_ptr<ParallelstoreStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::parallelstore::v1::ListInstancesResponse> ParallelstoreTracingStub::ListInstances(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::parallelstore::v1::ListInstancesResponse>
+ParallelstoreTracingStub::ListInstances(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::parallelstore::v1::ListInstancesRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.parallelstore.v1.Parallelstore", "ListInstances");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parallelstore.v1.Parallelstore", "ListInstances");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListInstances(context, options, request));
 }
 
-StatusOr<google::cloud::parallelstore::v1::Instance> ParallelstoreTracingStub::GetInstance(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::parallelstore::v1::Instance>
+ParallelstoreTracingStub::GetInstance(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::parallelstore::v1::GetInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.parallelstore.v1.Parallelstore", "GetInstance");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parallelstore.v1.Parallelstore", "GetInstance");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -56,23 +58,25 @@ StatusOr<google::cloud::parallelstore::v1::Instance> ParallelstoreTracingStub::G
 
 future<StatusOr<google::longrunning::Operation>>
 ParallelstoreTracingStub::AsyncCreateInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::parallelstore::v1::CreateInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.parallelstore.v1.Parallelstore", "CreateInstance");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::parallelstore::v1::CreateInstanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parallelstore.v1.Parallelstore", "CreateInstance");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateInstance(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCreateInstance(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 ParallelstoreTracingStub::CreateInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::parallelstore::v1::CreateInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.parallelstore.v1.Parallelstore", "CreateInstance");
+    grpc::ClientContext& context, Options options,
+    google::cloud::parallelstore::v1::CreateInstanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parallelstore.v1.Parallelstore", "CreateInstance");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -81,23 +85,25 @@ ParallelstoreTracingStub::CreateInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 ParallelstoreTracingStub::AsyncUpdateInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::parallelstore::v1::UpdateInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.parallelstore.v1.Parallelstore", "UpdateInstance");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::parallelstore::v1::UpdateInstanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parallelstore.v1.Parallelstore", "UpdateInstance");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateInstance(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncUpdateInstance(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 ParallelstoreTracingStub::UpdateInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::parallelstore::v1::UpdateInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.parallelstore.v1.Parallelstore", "UpdateInstance");
+    grpc::ClientContext& context, Options options,
+    google::cloud::parallelstore::v1::UpdateInstanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parallelstore.v1.Parallelstore", "UpdateInstance");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -106,23 +112,25 @@ ParallelstoreTracingStub::UpdateInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 ParallelstoreTracingStub::AsyncDeleteInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::parallelstore::v1::DeleteInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.parallelstore.v1.Parallelstore", "DeleteInstance");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::parallelstore::v1::DeleteInstanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parallelstore.v1.Parallelstore", "DeleteInstance");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteInstance(cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncDeleteInstance(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::longrunning::Operation>
 ParallelstoreTracingStub::DeleteInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::parallelstore::v1::DeleteInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.parallelstore.v1.Parallelstore", "DeleteInstance");
+    grpc::ClientContext& context, Options options,
+    google::cloud::parallelstore::v1::DeleteInstanceRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parallelstore.v1.Parallelstore", "DeleteInstance");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -131,23 +139,23 @@ ParallelstoreTracingStub::DeleteInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 ParallelstoreTracingStub::AsyncImportData(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::parallelstore::v1::ImportDataRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.parallelstore.v1.Parallelstore", "ImportData");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::parallelstore::v1::ImportDataRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parallelstore.v1.Parallelstore", "ImportData");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncImportData(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation>
-ParallelstoreTracingStub::ImportData(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::parallelstore::v1::ImportDataRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.parallelstore.v1.Parallelstore", "ImportData");
+StatusOr<google::longrunning::Operation> ParallelstoreTracingStub::ImportData(
+    grpc::ClientContext& context, Options options,
+    google::cloud::parallelstore::v1::ImportDataRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parallelstore.v1.Parallelstore", "ImportData");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -156,56 +164,59 @@ ParallelstoreTracingStub::ImportData(
 
 future<StatusOr<google::longrunning::Operation>>
 ParallelstoreTracingStub::AsyncExportData(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::parallelstore::v1::ExportDataRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.parallelstore.v1.Parallelstore", "ExportData");
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::parallelstore::v1::ExportDataRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parallelstore.v1.Parallelstore", "ExportData");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncExportData(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation>
-ParallelstoreTracingStub::ExportData(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::parallelstore::v1::ExportDataRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.parallelstore.v1.Parallelstore", "ExportData");
+StatusOr<google::longrunning::Operation> ParallelstoreTracingStub::ExportData(
+    grpc::ClientContext& context, Options options,
+    google::cloud::parallelstore::v1::ExportDataRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parallelstore.v1.Parallelstore", "ExportData");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ExportData(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> ParallelstoreTracingStub::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+ParallelstoreTracingStub::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.parallelstore.v1.Parallelstore", "ListLocations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parallelstore.v1.Parallelstore", "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListLocations(context, options, request));
 }
 
-StatusOr<google::cloud::location::Location> ParallelstoreTracingStub::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location>
+ParallelstoreTracingStub::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.parallelstore.v1.Parallelstore", "GetLocation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parallelstore.v1.Parallelstore", "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetLocation(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> ParallelstoreTracingStub::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+ParallelstoreTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.parallelstore.v1.Parallelstore", "ListOperations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parallelstore.v1.Parallelstore", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -213,10 +224,10 @@ StatusOr<google::longrunning::ListOperationsResponse> ParallelstoreTracingStub::
 }
 
 StatusOr<google::longrunning::Operation> ParallelstoreTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.parallelstore.v1.Parallelstore", "GetOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parallelstore.v1.Parallelstore", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -224,10 +235,10 @@ StatusOr<google::longrunning::Operation> ParallelstoreTracingStub::GetOperation(
 }
 
 Status ParallelstoreTracingStub::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.parallelstore.v1.Parallelstore", "DeleteOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parallelstore.v1.Parallelstore", "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -235,10 +246,10 @@ Status ParallelstoreTracingStub::DeleteOperation(
 }
 
 Status ParallelstoreTracingStub::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.parallelstore.v1.Parallelstore", "CancelOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.parallelstore.v1.Parallelstore", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -255,8 +266,7 @@ ParallelstoreTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(
-      cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -269,8 +279,8 @@ future<Status> ParallelstoreTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(
-      cq, context, std::move(options), request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
