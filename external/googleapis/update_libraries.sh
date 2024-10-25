@@ -216,6 +216,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/oslogin/v1:oslogin_cc_grpc" \
       "@com_google_googleapis//google/cloud/oslogin/common:common_cc_grpc"
   )"
+  ["parallelstore"]="@com_google_googleapis//google/cloud/parallelstore/v1:parallelstore_cc_grpc"
   ["policysimulator"]="@com_google_googleapis//google/cloud/policysimulator/v1:policysimulator_cc_grpc"
   ["policytroubleshooter"]="$(
     printf ",%s" \
