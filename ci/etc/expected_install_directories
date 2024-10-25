@@ -920,6 +920,10 @@
 ./include/google/cloud/oslogin/v1
 ./include/google/cloud/oslogin/v1/internal
 ./include/google/cloud/oslogin/v1/mocks
+./include/google/cloud/parallelstore
+./include/google/cloud/parallelstore/v1
+./include/google/cloud/parallelstore/v1/internal
+./include/google/cloud/parallelstore/v1/mocks
 ./include/google/cloud/policysimulator
 ./include/google/cloud/policysimulator/v1
 ./include/google/cloud/policysimulator/v1/internal
@@ -1433,6 +1437,8 @@
 ./lib64/cmake/google_cloud_cpp_osconfig_mocks
 ./lib64/cmake/google_cloud_cpp_oslogin
 ./lib64/cmake/google_cloud_cpp_oslogin_mocks
+./lib64/cmake/google_cloud_cpp_parallelstore
+./lib64/cmake/google_cloud_cpp_parallelstore_mocks
 ./lib64/cmake/google_cloud_cpp_policysimulator
 ./lib64/cmake/google_cloud_cpp_policysimulator_mocks
 ./lib64/cmake/google_cloud_cpp_policytroubleshooter

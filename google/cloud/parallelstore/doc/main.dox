@@ -1,0 +1,41 @@
+/*!
+
+@mainpage Parallelstore API C++ Client Library
+
+An idiomatic C++ client library for the [Parallelstore API][cloud-service-docs].
+
+<UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>
+
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
+[Semantic Versioning](https://semver.org/).
+
+@tableofcontents{HTML:2}
+
+## Quickstart
+
+The following shows the code that you'll run in the
+`google/cloud/parallelstore/quickstart/` directory,
+which should give you a taste of the Parallelstore API C++ client library API.
+
+@snippet quickstart.cc all
+
+## Main classes
+
+<!-- inject-client-list-start -->
+<!-- inject-client-list-end -->
+
+## More Information
+
+- @ref common-error-handling - describes how the library reports errors.
+- @ref parallelstore-override-endpoint - describes how to override the default
+  endpoint.
+- @ref parallelstore-override-authentication - describes how to change the
+  authentication credentials used by the library.
+- @ref parallelstore-override-retry - describes how to change the default retry
+  policies.
+- @ref parallelstore-env - describes environment variables that can configure the
+  behavior of the library.
+
+[cloud-service-docs]: https://cloud.google.com/parallelstore?hl=en
+
+*/
