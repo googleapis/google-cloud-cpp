@@ -17,9 +17,9 @@
 // source: google/cloud/networkservices/v1/dep.proto
 
 #include "google/cloud/networkservices/v1/internal/dep_stub.h"
+#include "google/cloud/networkservices/v1/dep.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/networkservices/v1/dep.grpc.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>

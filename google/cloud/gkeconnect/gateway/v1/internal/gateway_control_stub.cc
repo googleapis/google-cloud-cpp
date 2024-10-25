@@ -17,9 +17,9 @@
 // source: google/cloud/gkeconnect/gateway/v1/control.proto
 
 #include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_stub.h"
+#include "google/cloud/gkeconnect/gateway/v1/control.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/gkeconnect/gateway/v1/control.grpc.pb.h"
 #include <memory>
 #include <utility>
 

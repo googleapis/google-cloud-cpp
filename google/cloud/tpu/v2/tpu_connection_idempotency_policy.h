@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TPU_V2_TPU_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TPU_V2_TPU_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/version.h"
 #include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/tpu/v2/cloud_tpu.grpc.pb.h"
+#include "google/cloud/idempotency.h"
+#include "google/cloud/version.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 

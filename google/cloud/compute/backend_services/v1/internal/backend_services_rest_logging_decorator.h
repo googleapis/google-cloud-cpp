@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_BACKEND_SERVICES_V1_INTERNAL_BACKEND_SERVICES_REST_LOGGING_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_BACKEND_SERVICES_V1_INTERNAL_BACKEND_SERVICES_REST_LOGGING_DECORATOR_H
 
+#include "google/cloud/compute/backend_services/v1/backend_services.pb.h"
 #include "google/cloud/compute/backend_services/v1/internal/backend_services_rest_stub.h"
+#include "google/cloud/compute/global_operations/v1/global_operations.pb.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include "google/cloud/compute/backend_services/v1/backend_services.pb.h"
-#include "google/cloud/compute/global_operations/v1/global_operations.pb.h"
 #include <memory>
 #include <set>
 #include <string>

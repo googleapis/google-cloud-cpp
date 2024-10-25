@@ -19,12 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_IAM_POLICIES_REST_LOGGING_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_IAM_POLICIES_REST_LOGGING_DECORATOR_H
 
+#include "google/cloud/sql/v1/cloud_sql_iam_policies.pb.h"
 #include "google/cloud/sql/v1/internal/sql_iam_policies_rest_stub.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include "google/cloud/sql/v1/cloud_sql_iam_policies.pb.h"
 #include <memory>
 #include <set>
 #include <string>

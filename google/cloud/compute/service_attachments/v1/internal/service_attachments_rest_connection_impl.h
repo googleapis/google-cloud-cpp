@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SERVICE_ATTACHMENTS_V1_INTERNAL_SERVICE_ATTACHMENTS_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SERVICE_ATTACHMENTS_V1_INTERNAL_SERVICE_ATTACHMENTS_REST_CONNECTION_IMPL_H
 
+#include "google/cloud/compute/region_operations/v1/region_operations.pb.h"
 #include "google/cloud/compute/service_attachments/v1/internal/service_attachments_rest_stub.h"
 #include "google/cloud/compute/service_attachments/v1/internal/service_attachments_retry_traits.h"
 #include "google/cloud/compute/service_attachments/v1/service_attachments_connection.h"
@@ -30,7 +31,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/compute/region_operations/v1/region_operations.pb.h"
 #include <memory>
 
 namespace google {

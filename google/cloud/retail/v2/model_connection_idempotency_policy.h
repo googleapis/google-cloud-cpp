@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_MODEL_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_MODEL_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/retail/v2/model_service.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include "google/cloud/retail/v2/model_service.grpc.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 

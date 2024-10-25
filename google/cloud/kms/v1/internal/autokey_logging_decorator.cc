@@ -17,9 +17,9 @@
 // source: google/cloud/kms/v1/autokey.proto
 
 #include "google/cloud/kms/v1/internal/autokey_logging_decorator.h"
+#include "google/cloud/kms/v1/autokey.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/kms/v1/autokey.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

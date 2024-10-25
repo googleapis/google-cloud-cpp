@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_FIREWALL_POLICIES_V1_FIREWALL_POLICIES_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_FIREWALL_POLICIES_V1_FIREWALL_POLICIES_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/compute/firewall_policies/v1/firewall_policies.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include "google/cloud/compute/firewall_policies/v1/firewall_policies.pb.h"
 #include <memory>
 
 namespace google {

@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SCHEDULER_V1_CLOUD_SCHEDULER_CONNECTION_H
 
 #include "google/cloud/scheduler/v1/cloud_scheduler_connection_idempotency_policy.h"
+#include "google/cloud/scheduler/v1/cloudscheduler.pb.h"
 #include "google/cloud/scheduler/v1/internal/cloud_scheduler_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
@@ -27,7 +28,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/scheduler/v1/cloudscheduler.pb.h"
 #include <memory>
 
 namespace google {

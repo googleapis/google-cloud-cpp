@@ -21,12 +21,12 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_HEALTH_CHECK_SERVICES_V1_INTERNAL_REGION_HEALTH_CHECK_SERVICES_REST_LOGGING_DECORATOR_H
 
 #include "google/cloud/compute/region_health_check_services/v1/internal/region_health_check_services_rest_stub.h"
+#include "google/cloud/compute/region_health_check_services/v1/region_health_check_services.pb.h"
+#include "google/cloud/compute/region_operations/v1/region_operations.pb.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include "google/cloud/compute/region_health_check_services/v1/region_health_check_services.pb.h"
-#include "google/cloud/compute/region_operations/v1/region_operations.pb.h"
 #include <memory>
 #include <set>
 #include <string>

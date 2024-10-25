@@ -17,9 +17,9 @@
 // source: google/cloud/baremetalsolution/v2/baremetalsolution.proto
 
 #include "google/cloud/baremetalsolution/v2/internal/bare_metal_solution_logging_decorator.h"
+#include "google/cloud/baremetalsolution/v2/baremetalsolution.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/baremetalsolution/v2/baremetalsolution.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

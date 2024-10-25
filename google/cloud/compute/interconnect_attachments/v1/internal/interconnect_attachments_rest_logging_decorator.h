@@ -20,13 +20,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INTERCONNECT_ATTACHMENTS_V1_INTERNAL_INTERCONNECT_ATTACHMENTS_REST_LOGGING_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INTERCONNECT_ATTACHMENTS_V1_INTERNAL_INTERCONNECT_ATTACHMENTS_REST_LOGGING_DECORATOR_H
 
+#include "google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.pb.h"
 #include "google/cloud/compute/interconnect_attachments/v1/internal/interconnect_attachments_rest_stub.h"
+#include "google/cloud/compute/region_operations/v1/region_operations.pb.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include "google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.pb.h"
-#include "google/cloud/compute/region_operations/v1/region_operations.pb.h"
 #include <memory>
 #include <set>
 #include <string>

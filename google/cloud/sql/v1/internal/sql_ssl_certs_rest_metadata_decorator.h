@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_SSL_CERTS_REST_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_INTERNAL_SQL_SSL_CERTS_REST_METADATA_DECORATOR_H
 
+#include "google/cloud/sql/v1/cloud_sql_ssl_certs.pb.h"
 #include "google/cloud/sql/v1/internal/sql_ssl_certs_rest_stub.h"
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
 #include "google/cloud/version.h"
-#include "google/cloud/sql/v1/cloud_sql_ssl_certs.pb.h"
 #include <memory>
 #include <string>
 

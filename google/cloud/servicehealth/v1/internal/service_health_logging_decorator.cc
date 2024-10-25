@@ -17,9 +17,9 @@
 // source: google/cloud/servicehealth/v1/event_service.proto
 
 #include "google/cloud/servicehealth/v1/internal/service_health_logging_decorator.h"
+#include "google/cloud/servicehealth/v1/event_service.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/servicehealth/v1/event_service.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

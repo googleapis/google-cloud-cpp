@@ -20,9 +20,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INTERCONNECT_ATTACHMENTS_V1_INTERCONNECT_ATTACHMENTS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INTERCONNECT_ATTACHMENTS_V1_INTERCONNECT_ATTACHMENTS_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include "google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.pb.h"
 #include <memory>
 
 namespace google {

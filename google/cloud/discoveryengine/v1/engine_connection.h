@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_ENGINE_CONNECTION_H
 
 #include "google/cloud/discoveryengine/v1/engine_connection_idempotency_policy.h"
+#include "google/cloud/discoveryengine/v1/engine_service.pb.h"
 #include "google/cloud/discoveryengine/v1/internal/engine_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -30,7 +31,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/discoveryengine/v1/engine_service.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 

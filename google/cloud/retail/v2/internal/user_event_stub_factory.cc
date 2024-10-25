@@ -22,13 +22,13 @@
 #include "google/cloud/retail/v2/internal/user_event_metadata_decorator.h"
 #include "google/cloud/retail/v2/internal/user_event_stub.h"
 #include "google/cloud/retail/v2/internal/user_event_tracing_stub.h"
+#include "google/cloud/retail/v2/user_event_service.grpc.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/retail/v2/user_event_service.grpc.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>

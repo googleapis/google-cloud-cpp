@@ -22,13 +22,13 @@
 #include "google/cloud/retail/v2/internal/prediction_metadata_decorator.h"
 #include "google/cloud/retail/v2/internal/prediction_stub.h"
 #include "google/cloud/retail/v2/internal/prediction_tracing_stub.h"
+#include "google/cloud/retail/v2/prediction_service.grpc.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/retail/v2/prediction_service.grpc.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>

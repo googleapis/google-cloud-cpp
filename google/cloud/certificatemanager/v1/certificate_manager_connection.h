@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CERTIFICATEMANAGER_V1_CERTIFICATE_MANAGER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CERTIFICATEMANAGER_V1_CERTIFICATE_MANAGER_CONNECTION_H
 
+#include "google/cloud/certificatemanager/v1/certificate_manager.pb.h"
 #include "google/cloud/certificatemanager/v1/certificate_manager_connection_idempotency_policy.h"
 #include "google/cloud/certificatemanager/v1/internal/certificate_manager_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
@@ -30,7 +31,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/certificatemanager/v1/certificate_manager.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 

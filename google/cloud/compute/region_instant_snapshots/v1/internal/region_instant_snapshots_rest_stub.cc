@@ -18,12 +18,12 @@
 // google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto
 
 #include "google/cloud/compute/region_instant_snapshots/v1/internal/region_instant_snapshots_rest_stub.h"
+#include "google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.pb.h"
+#include "google/cloud/compute/region_operations/v1/region_operations.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.pb.h"
-#include "google/cloud/compute/region_operations/v1/region_operations.pb.h"
 #include <memory>
 #include <utility>
 

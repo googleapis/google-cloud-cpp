@@ -17,12 +17,12 @@
 // source: google/cloud/workflows/v1/workflows.proto
 
 #include "google/cloud/workflows/v1/internal/workflows_metadata_decorator.h"
+#include "google/cloud/workflows/v1/workflows.grpc.pb.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/workflows/v1/workflows.grpc.pb.h"
 #include <memory>
 #include <string>
 #include <utility>

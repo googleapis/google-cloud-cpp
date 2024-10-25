@@ -20,13 +20,13 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_LICENSE_CODES_V1_LICENSE_CODES_CONNECTION_H
 
 #include "google/cloud/compute/license_codes/v1/internal/license_codes_retry_traits.h"
+#include "google/cloud/compute/license_codes/v1/license_codes.pb.h"
 #include "google/cloud/compute/license_codes/v1/license_codes_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "google/cloud/compute/license_codes/v1/license_codes.pb.h"
 #include <memory>
 
 namespace google {

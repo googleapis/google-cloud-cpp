@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDCONTROLSPARTNER_V1_INTERNAL_CLOUD_CONTROLS_PARTNER_CORE_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDCONTROLSPARTNER_V1_INTERNAL_CLOUD_CONTROLS_PARTNER_CORE_STUB_H
 
+#include "google/cloud/cloudcontrolspartner/v1/core.grpc.pb.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "google/cloud/cloudcontrolspartner/v1/core.grpc.pb.h"
 #include <memory>
 #include <utility>
 

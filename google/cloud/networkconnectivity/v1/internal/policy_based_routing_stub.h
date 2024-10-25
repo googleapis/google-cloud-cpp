@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKCONNECTIVITY_V1_INTERNAL_POLICY_BASED_ROUTING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKCONNECTIVITY_V1_INTERNAL_POLICY_BASED_ROUTING_STUB_H
 
+#include "google/cloud/location/locations.grpc.pb.h"
+#include "google/cloud/networkconnectivity/v1/policy_based_routing.grpc.pb.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "google/cloud/location/locations.grpc.pb.h"
-#include "google/cloud/networkconnectivity/v1/policy_based_routing.grpc.pb.h"
 #include "google/iam/v1/iam_policy.grpc.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>

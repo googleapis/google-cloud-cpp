@@ -17,6 +17,7 @@
 // source: google/cloud/discoveryengine/v1/grounded_generation_service.proto
 
 #include "google/cloud/discoveryengine/v1/internal/grounded_generation_stub_factory.h"
+#include "google/cloud/discoveryengine/v1/grounded_generation_service.grpc.pb.h"
 #include "google/cloud/discoveryengine/v1/internal/grounded_generation_auth_decorator.h"
 #include "google/cloud/discoveryengine/v1/internal/grounded_generation_logging_decorator.h"
 #include "google/cloud/discoveryengine/v1/internal/grounded_generation_metadata_decorator.h"
@@ -28,7 +29,6 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/discoveryengine/v1/grounded_generation_service.grpc.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>

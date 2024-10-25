@@ -17,9 +17,9 @@
 // source: google/cloud/aiplatform/v1/evaluation_service.proto
 
 #include "google/cloud/aiplatform/v1/internal/evaluation_stub.h"
+#include "google/cloud/aiplatform/v1/evaluation_service.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/aiplatform/v1/evaluation_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

@@ -17,8 +17,8 @@
 // source: google/cloud/discoveryengine/v1/grounded_generation_service.proto
 
 #include "google/cloud/discoveryengine/v1/internal/grounded_generation_auth_decorator.h"
-#include "google/cloud/internal/async_read_write_stream_auth.h"
 #include "google/cloud/discoveryengine/v1/grounded_generation_service.grpc.pb.h"
+#include "google/cloud/internal/async_read_write_stream_auth.h"
 #include <memory>
 #include <utility>
 

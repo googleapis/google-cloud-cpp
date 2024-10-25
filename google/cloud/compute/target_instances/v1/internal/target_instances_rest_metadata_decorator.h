@@ -20,11 +20,11 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_INSTANCES_V1_INTERNAL_TARGET_INSTANCES_REST_METADATA_DECORATOR_H
 
 #include "google/cloud/compute/target_instances/v1/internal/target_instances_rest_stub.h"
+#include "google/cloud/compute/target_instances/v1/target_instances.pb.h"
+#include "google/cloud/compute/zone_operations/v1/zone_operations.pb.h"
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
 #include "google/cloud/version.h"
-#include "google/cloud/compute/target_instances/v1/target_instances.pb.h"
-#include "google/cloud/compute/zone_operations/v1/zone_operations.pb.h"
 #include <memory>
 #include <string>
 

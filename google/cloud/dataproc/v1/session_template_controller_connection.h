@@ -21,13 +21,13 @@
 
 #include "google/cloud/dataproc/v1/internal/session_template_controller_retry_traits.h"
 #include "google/cloud/dataproc/v1/session_template_controller_connection_idempotency_policy.h"
+#include "google/cloud/dataproc/v1/session_templates.pb.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/dataproc/v1/session_templates.pb.h"
 #include <memory>
 #include <string>
 

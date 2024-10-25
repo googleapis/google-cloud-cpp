@@ -17,12 +17,12 @@
 // source: google/cloud/bigquery/storage/v1/storage.proto
 
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_write_metadata_decorator.h"
+#include "google/cloud/bigquery/storage/v1/storage.grpc.pb.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/bigquery/storage/v1/storage.grpc.pb.h"
 #include <memory>
 #include <string>
 #include <utility>

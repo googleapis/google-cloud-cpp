@@ -17,19 +17,19 @@
 // source: google/cloud/dialogflow/v2/conversation.proto
 
 #include "google/cloud/dialogflow_es/internal/conversations_stub_factory.h"
+#include "google/cloud/dialogflow/v2/conversation.grpc.pb.h"
 #include "google/cloud/dialogflow_es/internal/conversations_auth_decorator.h"
 #include "google/cloud/dialogflow_es/internal/conversations_logging_decorator.h"
 #include "google/cloud/dialogflow_es/internal/conversations_metadata_decorator.h"
 #include "google/cloud/dialogflow_es/internal/conversations_stub.h"
 #include "google/cloud/dialogflow_es/internal/conversations_tracing_stub.h"
+#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/dialogflow/v2/conversation.grpc.pb.h"
-#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>

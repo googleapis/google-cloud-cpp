@@ -17,9 +17,9 @@
 // source: google/cloud/video/transcoder/v1/services.proto
 
 #include "google/cloud/video/transcoder/v1/internal/transcoder_stub.h"
+#include "google/cloud/video/transcoder/v1/services.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/video/transcoder/v1/services.grpc.pb.h"
 #include <memory>
 #include <utility>
 

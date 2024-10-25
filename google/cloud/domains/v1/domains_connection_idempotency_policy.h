@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOMAINS_V1_DOMAINS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOMAINS_V1_DOMAINS_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/domains/v1/domains.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include "google/cloud/domains/v1/domains.grpc.pb.h"
 #include <memory>
 
 namespace google {

@@ -22,13 +22,13 @@
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_read_metadata_decorator.h"
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_read_stub.h"
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_read_tracing_stub.h"
+#include "google/cloud/bigquery/storage/v1/storage.grpc.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/bigquery/storage/v1/storage.grpc.pb.h"
 #include <memory>
 #include <utility>
 

@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_HEALTH_CHECKS_V1_HEALTH_CHECKS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_HEALTH_CHECKS_V1_HEALTH_CHECKS_CONNECTION_H
 
+#include "google/cloud/compute/health_checks/v1/health_checks.pb.h"
 #include "google/cloud/compute/health_checks/v1/health_checks_connection_idempotency_policy.h"
 #include "google/cloud/compute/health_checks/v1/internal/health_checks_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
@@ -30,7 +31,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/compute/health_checks/v1/health_checks.pb.h"
 #include <memory>
 
 namespace google {

@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_V1_CLOUD_BILLING_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_V1_CLOUD_BILLING_CONNECTION_H
 
+#include "google/cloud/billing/v1/cloud_billing.pb.h"
 #include "google/cloud/billing/v1/cloud_billing_connection_idempotency_policy.h"
 #include "google/cloud/billing/v1/internal/cloud_billing_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
@@ -27,7 +28,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/billing/v1/cloud_billing.pb.h"
 #include <memory>
 
 namespace google {

@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKFLOWS_EXECUTIONS_V1_EXECUTIONS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKFLOWS_EXECUTIONS_V1_EXECUTIONS_CONNECTION_H
 
+#include "google/cloud/workflows/executions/v1/executions.pb.h"
 #include "google/cloud/workflows/executions/v1/executions_connection_idempotency_policy.h"
 #include "google/cloud/workflows/executions/v1/internal/executions_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
@@ -27,7 +28,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/workflows/executions/v1/executions.pb.h"
 #include <memory>
 
 namespace google {

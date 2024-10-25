@@ -20,13 +20,13 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EVENTARC_PUBLISHING_V1_PUBLISHER_CONNECTION_H
 
 #include "google/cloud/eventarc/publishing/v1/internal/publisher_retry_traits.h"
+#include "google/cloud/eventarc/publishing/v1/publisher.pb.h"
 #include "google/cloud/eventarc/publishing/v1/publisher_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "google/cloud/eventarc/publishing/v1/publisher.pb.h"
 #include <memory>
 
 namespace google {

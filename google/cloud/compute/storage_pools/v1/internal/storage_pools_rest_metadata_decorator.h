@@ -20,11 +20,11 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_STORAGE_POOLS_V1_INTERNAL_STORAGE_POOLS_REST_METADATA_DECORATOR_H
 
 #include "google/cloud/compute/storage_pools/v1/internal/storage_pools_rest_stub.h"
+#include "google/cloud/compute/storage_pools/v1/storage_pools.pb.h"
+#include "google/cloud/compute/zone_operations/v1/zone_operations.pb.h"
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
 #include "google/cloud/version.h"
-#include "google/cloud/compute/storage_pools/v1/storage_pools.pb.h"
-#include "google/cloud/compute/zone_operations/v1/zone_operations.pb.h"
 #include <memory>
 #include <string>
 

@@ -17,19 +17,19 @@
 // source: google/cloud/functions/v1/functions.proto
 
 #include "google/cloud/functions/v1/internal/cloud_functions_stub_factory.h"
+#include "google/cloud/functions/v1/functions.grpc.pb.h"
 #include "google/cloud/functions/v1/internal/cloud_functions_auth_decorator.h"
 #include "google/cloud/functions/v1/internal/cloud_functions_logging_decorator.h"
 #include "google/cloud/functions/v1/internal/cloud_functions_metadata_decorator.h"
 #include "google/cloud/functions/v1/internal/cloud_functions_stub.h"
 #include "google/cloud/functions/v1/internal/cloud_functions_tracing_stub.h"
+#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/functions/v1/functions.grpc.pb.h"
-#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>

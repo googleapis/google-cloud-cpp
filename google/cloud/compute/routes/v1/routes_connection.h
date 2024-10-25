@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ROUTES_V1_ROUTES_CONNECTION_H
 
 #include "google/cloud/compute/routes/v1/internal/routes_retry_traits.h"
+#include "google/cloud/compute/routes/v1/routes.pb.h"
 #include "google/cloud/compute/routes/v1/routes_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -30,7 +31,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/compute/routes/v1/routes.pb.h"
 #include <memory>
 
 namespace google {

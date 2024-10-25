@@ -17,12 +17,12 @@
 // source: google/cloud/backupdr/v1/backupdr.proto
 
 #include "google/cloud/backupdr/v1/internal/backup_dr_metadata_decorator.h"
+#include "google/cloud/backupdr/v1/backupdr.grpc.pb.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/backupdr/v1/backupdr.grpc.pb.h"
 #include <memory>
 #include <string>
 #include <utility>

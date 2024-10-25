@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_V1_IDS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_V1_IDS_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/ids/v1/ids.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include "google/cloud/ids/v1/ids.grpc.pb.h"
 #include <memory>
 
 namespace google {

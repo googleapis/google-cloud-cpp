@@ -17,9 +17,9 @@
 // source: google/cloud/memcache/v1/cloud_memcache.proto
 
 #include "google/cloud/memcache/v1/internal/cloud_memcache_stub.h"
+#include "google/cloud/memcache/v1/cloud_memcache.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/memcache/v1/cloud_memcache.grpc.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>

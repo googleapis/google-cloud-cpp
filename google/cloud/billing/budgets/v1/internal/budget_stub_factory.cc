@@ -17,6 +17,7 @@
 // source: google/cloud/billing/budgets/v1/budget_service.proto
 
 #include "google/cloud/billing/budgets/v1/internal/budget_stub_factory.h"
+#include "google/cloud/billing/budgets/v1/budget_service.grpc.pb.h"
 #include "google/cloud/billing/budgets/v1/internal/budget_auth_decorator.h"
 #include "google/cloud/billing/budgets/v1/internal/budget_logging_decorator.h"
 #include "google/cloud/billing/budgets/v1/internal/budget_metadata_decorator.h"
@@ -28,7 +29,6 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/billing/budgets/v1/budget_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

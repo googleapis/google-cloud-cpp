@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_VPN_TUNNELS_V1_VPN_TUNNELS_CONNECTION_H
 
 #include "google/cloud/compute/vpn_tunnels/v1/internal/vpn_tunnels_retry_traits.h"
+#include "google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.pb.h"
 #include "google/cloud/compute/vpn_tunnels/v1/vpn_tunnels_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -30,7 +31,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/compute/vpn_tunnels/v1/vpn_tunnels.pb.h"
 #include <memory>
 
 namespace google {

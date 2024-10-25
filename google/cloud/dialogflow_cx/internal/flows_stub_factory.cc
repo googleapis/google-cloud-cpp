@@ -17,19 +17,19 @@
 // source: google/cloud/dialogflow/cx/v3/flow.proto
 
 #include "google/cloud/dialogflow_cx/internal/flows_stub_factory.h"
+#include "google/cloud/dialogflow/cx/v3/flow.grpc.pb.h"
 #include "google/cloud/dialogflow_cx/internal/flows_auth_decorator.h"
 #include "google/cloud/dialogflow_cx/internal/flows_logging_decorator.h"
 #include "google/cloud/dialogflow_cx/internal/flows_metadata_decorator.h"
 #include "google/cloud/dialogflow_cx/internal/flows_stub.h"
 #include "google/cloud/dialogflow_cx/internal/flows_tracing_stub.h"
+#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/dialogflow/cx/v3/flow.grpc.pb.h"
-#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>

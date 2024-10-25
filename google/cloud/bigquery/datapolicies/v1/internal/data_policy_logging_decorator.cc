@@ -17,9 +17,9 @@
 // source: google/cloud/bigquery/datapolicies/v1/datapolicy.proto
 
 #include "google/cloud/bigquery/datapolicies/v1/internal/data_policy_logging_decorator.h"
+#include "google/cloud/bigquery/datapolicies/v1/datapolicy.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/bigquery/datapolicies/v1/datapolicy.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

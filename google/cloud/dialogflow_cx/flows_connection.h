@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_FLOWS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_FLOWS_CONNECTION_H
 
+#include "google/cloud/dialogflow/cx/v3/flow.pb.h"
 #include "google/cloud/dialogflow_cx/flows_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_cx/internal/flows_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
@@ -30,7 +31,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/dialogflow/cx/v3/flow.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include "google/protobuf/struct.pb.h"
 #include <memory>

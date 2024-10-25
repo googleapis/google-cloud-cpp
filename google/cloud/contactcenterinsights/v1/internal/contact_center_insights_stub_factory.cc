@@ -17,6 +17,7 @@
 // source: google/cloud/contactcenterinsights/v1/contact_center_insights.proto
 
 #include "google/cloud/contactcenterinsights/v1/internal/contact_center_insights_stub_factory.h"
+#include "google/cloud/contactcenterinsights/v1/contact_center_insights.grpc.pb.h"
 #include "google/cloud/contactcenterinsights/v1/internal/contact_center_insights_auth_decorator.h"
 #include "google/cloud/contactcenterinsights/v1/internal/contact_center_insights_logging_decorator.h"
 #include "google/cloud/contactcenterinsights/v1/internal/contact_center_insights_metadata_decorator.h"
@@ -28,7 +29,6 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/contactcenterinsights/v1/contact_center_insights.grpc.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>

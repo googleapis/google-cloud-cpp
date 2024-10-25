@@ -21,12 +21,12 @@
 
 #include "google/cloud/publicca/v1/internal/public_certificate_authority_retry_traits.h"
 #include "google/cloud/publicca/v1/public_certificate_authority_connection_idempotency_policy.h"
+#include "google/cloud/security/publicca/v1/service.pb.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "google/cloud/security/publicca/v1/service.pb.h"
 #include <memory>
 
 namespace google {

@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_BUDGETS_V1_BUDGET_CONNECTION_H
 
 #include "google/cloud/billing/budgets/v1/budget_connection_idempotency_policy.h"
+#include "google/cloud/billing/budgets/v1/budget_service.pb.h"
 #include "google/cloud/billing/budgets/v1/internal/budget_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
@@ -27,7 +28,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/billing/budgets/v1/budget_service.pb.h"
 #include <memory>
 
 namespace google {

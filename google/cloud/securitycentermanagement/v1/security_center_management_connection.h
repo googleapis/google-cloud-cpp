@@ -21,6 +21,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECURITYCENTERMANAGEMENT_V1_SECURITY_CENTER_MANAGEMENT_CONNECTION_H
 
 #include "google/cloud/securitycentermanagement/v1/internal/security_center_management_retry_traits.h"
+#include "google/cloud/securitycentermanagement/v1/security_center_management.pb.h"
 #include "google/cloud/securitycentermanagement/v1/security_center_management_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
@@ -28,7 +29,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/securitycentermanagement/v1/security_center_management.pb.h"
 #include <memory>
 
 namespace google {

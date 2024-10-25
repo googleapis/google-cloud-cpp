@@ -19,12 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_URL_MAPS_V1_INTERNAL_URL_MAPS_REST_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_URL_MAPS_V1_INTERNAL_URL_MAPS_REST_METADATA_DECORATOR_H
 
+#include "google/cloud/compute/global_operations/v1/global_operations.pb.h"
 #include "google/cloud/compute/url_maps/v1/internal/url_maps_rest_stub.h"
+#include "google/cloud/compute/url_maps/v1/url_maps.pb.h"
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
 #include "google/cloud/version.h"
-#include "google/cloud/compute/global_operations/v1/global_operations.pb.h"
-#include "google/cloud/compute/url_maps/v1/url_maps.pb.h"
 #include <memory>
 #include <string>
 

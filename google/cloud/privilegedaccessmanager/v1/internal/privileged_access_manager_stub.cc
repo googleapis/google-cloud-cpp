@@ -17,9 +17,9 @@
 // source: google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto
 
 #include "google/cloud/privilegedaccessmanager/v1/internal/privileged_access_manager_stub.h"
+#include "google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.grpc.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>

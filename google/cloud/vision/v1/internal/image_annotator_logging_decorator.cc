@@ -17,9 +17,9 @@
 // source: google/cloud/vision/v1/image_annotator.proto
 
 #include "google/cloud/vision/v1/internal/image_annotator_logging_decorator.h"
+#include "google/cloud/vision/v1/image_annotator.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/vision/v1/image_annotator.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

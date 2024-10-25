@@ -17,19 +17,19 @@
 // source: google/cloud/aiplatform/v1/genai_tuning_service.proto
 
 #include "google/cloud/aiplatform/v1/internal/gen_ai_tuning_stub_factory.h"
+#include "google/cloud/aiplatform/v1/genai_tuning_service.grpc.pb.h"
 #include "google/cloud/aiplatform/v1/internal/gen_ai_tuning_auth_decorator.h"
 #include "google/cloud/aiplatform/v1/internal/gen_ai_tuning_logging_decorator.h"
 #include "google/cloud/aiplatform/v1/internal/gen_ai_tuning_metadata_decorator.h"
 #include "google/cloud/aiplatform/v1/internal/gen_ai_tuning_stub.h"
 #include "google/cloud/aiplatform/v1/internal/gen_ai_tuning_tracing_stub.h"
+#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/aiplatform/v1/genai_tuning_service.grpc.pb.h"
-#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/iam/v1/iam_policy.grpc.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>

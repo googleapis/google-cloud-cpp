@@ -17,6 +17,7 @@
 // source: google/cloud/support/v2/comment_service.proto
 
 #include "google/cloud/support/v2/internal/comment_stub_factory.h"
+#include "google/cloud/support/v2/comment_service.grpc.pb.h"
 #include "google/cloud/support/v2/internal/comment_auth_decorator.h"
 #include "google/cloud/support/v2/internal/comment_logging_decorator.h"
 #include "google/cloud/support/v2/internal/comment_metadata_decorator.h"
@@ -28,7 +29,6 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/support/v2/comment_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

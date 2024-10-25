@@ -17,9 +17,9 @@
 // source: google/cloud/billing/v1/cloud_catalog.proto
 
 #include "google/cloud/billing/v1/internal/cloud_catalog_logging_decorator.h"
+#include "google/cloud/billing/v1/cloud_catalog.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/billing/v1/cloud_catalog.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

@@ -17,9 +17,9 @@
 // source: google/cloud/osconfig/v1/osconfig_zonal_service.proto
 
 #include "google/cloud/osconfig/v1/internal/os_config_zonal_stub.h"
+#include "google/cloud/osconfig/v1/osconfig_zonal_service.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/osconfig/v1/osconfig_zonal_service.grpc.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>

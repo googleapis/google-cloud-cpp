@@ -22,13 +22,13 @@
 #include "google/cloud/pubsublite/internal/topic_stats_metadata_decorator.h"
 #include "google/cloud/pubsublite/internal/topic_stats_stub.h"
 #include "google/cloud/pubsublite/internal/topic_stats_tracing_stub.h"
+#include "google/cloud/pubsublite/v1/topic_stats.grpc.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/pubsublite/v1/topic_stats.grpc.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>

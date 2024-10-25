@@ -20,12 +20,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INTERCONNECT_LOCATIONS_V1_INTERNAL_INTERCONNECT_LOCATIONS_REST_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INTERCONNECT_LOCATIONS_V1_INTERNAL_INTERCONNECT_LOCATIONS_REST_STUB_H
 
+#include "google/cloud/compute/interconnect_locations/v1/interconnect_locations.pb.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/internal/rest_client.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "google/cloud/compute/interconnect_locations/v1/interconnect_locations.pb.h"
 #include <memory>
 
 namespace google {

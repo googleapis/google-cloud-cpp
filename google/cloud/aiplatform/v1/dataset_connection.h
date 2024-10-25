@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_DATASET_CONNECTION_H
 
 #include "google/cloud/aiplatform/v1/dataset_connection_idempotency_policy.h"
+#include "google/cloud/aiplatform/v1/dataset_service.pb.h"
 #include "google/cloud/aiplatform/v1/internal/dataset_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -30,7 +31,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/aiplatform/v1/dataset_service.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <string>

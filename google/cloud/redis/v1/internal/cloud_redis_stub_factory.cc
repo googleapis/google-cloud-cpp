@@ -17,6 +17,8 @@
 // source: google/cloud/redis/v1/cloud_redis.proto
 
 #include "google/cloud/redis/v1/internal/cloud_redis_stub_factory.h"
+#include "google/cloud/location/locations.grpc.pb.h"
+#include "google/cloud/redis/v1/cloud_redis.grpc.pb.h"
 #include "google/cloud/redis/v1/internal/cloud_redis_auth_decorator.h"
 #include "google/cloud/redis/v1/internal/cloud_redis_logging_decorator.h"
 #include "google/cloud/redis/v1/internal/cloud_redis_metadata_decorator.h"
@@ -28,8 +30,6 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/location/locations.grpc.pb.h"
-#include "google/cloud/redis/v1/cloud_redis.grpc.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>

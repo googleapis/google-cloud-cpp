@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/functions/cloud_event.h"
 #include "google/cloud/functions/function.h"
+#include "google/cloud/functions/cloud_event.h"
 #include <cppcodec/base64_rfc4648.hpp>
 #include <curl/curl.h>
 #include <fmt/core.h>

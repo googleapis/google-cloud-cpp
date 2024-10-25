@@ -17,6 +17,7 @@
 // source: google/cloud/resourcemanager/v3/folders.proto
 
 #include "google/cloud/resourcemanager/v3/internal/folders_stub_factory.h"
+#include "google/cloud/resourcemanager/v3/folders.grpc.pb.h"
 #include "google/cloud/resourcemanager/v3/internal/folders_auth_decorator.h"
 #include "google/cloud/resourcemanager/v3/internal/folders_logging_decorator.h"
 #include "google/cloud/resourcemanager/v3/internal/folders_metadata_decorator.h"
@@ -28,7 +29,6 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/resourcemanager/v3/folders.grpc.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>

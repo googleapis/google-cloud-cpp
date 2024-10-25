@@ -20,10 +20,10 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_STORAGE_POOL_TYPES_V1_INTERNAL_STORAGE_POOL_TYPES_REST_METADATA_DECORATOR_H
 
 #include "google/cloud/compute/storage_pool_types/v1/internal/storage_pool_types_rest_stub.h"
+#include "google/cloud/compute/storage_pool_types/v1/storage_pool_types.pb.h"
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
 #include "google/cloud/version.h"
-#include "google/cloud/compute/storage_pool_types/v1/storage_pool_types.pb.h"
 #include <memory>
 #include <string>
 

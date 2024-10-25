@@ -17,9 +17,9 @@
 // source: google/cloud/retail/v2/model_service.proto
 
 #include "google/cloud/retail/v2/internal/model_stub.h"
+#include "google/cloud/retail/v2/model_service.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/retail/v2/model_service.grpc.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>

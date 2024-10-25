@@ -17,19 +17,19 @@
 // source: google/cloud/vmwareengine/v1/vmwareengine.proto
 
 #include "google/cloud/vmwareengine/v1/internal/vmware_engine_stub_factory.h"
+#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/vmwareengine/v1/internal/vmware_engine_auth_decorator.h"
 #include "google/cloud/vmwareengine/v1/internal/vmware_engine_logging_decorator.h"
 #include "google/cloud/vmwareengine/v1/internal/vmware_engine_metadata_decorator.h"
 #include "google/cloud/vmwareengine/v1/internal/vmware_engine_stub.h"
 #include "google/cloud/vmwareengine/v1/internal/vmware_engine_tracing_stub.h"
+#include "google/cloud/vmwareengine/v1/vmwareengine.grpc.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/location/locations.grpc.pb.h"
-#include "google/cloud/vmwareengine/v1/vmwareengine.grpc.pb.h"
 #include "google/iam/v1/iam_policy.grpc.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>

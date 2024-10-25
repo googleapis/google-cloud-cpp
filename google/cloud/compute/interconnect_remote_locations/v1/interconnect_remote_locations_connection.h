@@ -20,6 +20,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INTERCONNECT_REMOTE_LOCATIONS_V1_INTERCONNECT_REMOTE_LOCATIONS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INTERCONNECT_REMOTE_LOCATIONS_V1_INTERCONNECT_REMOTE_LOCATIONS_CONNECTION_H
 
+#include "google/cloud/compute/interconnect_remote_locations/v1/interconnect_remote_locations.pb.h"
 #include "google/cloud/compute/interconnect_remote_locations/v1/interconnect_remote_locations_connection_idempotency_policy.h"
 #include "google/cloud/compute/interconnect_remote_locations/v1/internal/interconnect_remote_locations_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
@@ -28,7 +29,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/compute/interconnect_remote_locations/v1/interconnect_remote_locations.pb.h"
 #include <memory>
 
 namespace google {

@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_POOLS_V1_INTERNAL_TARGET_POOLS_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_POOLS_V1_INTERNAL_TARGET_POOLS_REST_CONNECTION_IMPL_H
 
+#include "google/cloud/compute/region_operations/v1/region_operations.pb.h"
 #include "google/cloud/compute/target_pools/v1/internal/target_pools_rest_stub.h"
 #include "google/cloud/compute/target_pools/v1/internal/target_pools_retry_traits.h"
 #include "google/cloud/compute/target_pools/v1/target_pools_connection.h"
@@ -30,7 +31,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/compute/region_operations/v1/region_operations.pb.h"
 #include <memory>
 
 namespace google {

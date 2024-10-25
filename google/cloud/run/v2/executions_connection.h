@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_EXECUTIONS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_EXECUTIONS_CONNECTION_H
 
+#include "google/cloud/run/v2/execution.pb.h"
 #include "google/cloud/run/v2/executions_connection_idempotency_policy.h"
 #include "google/cloud/run/v2/internal/executions_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
@@ -30,7 +31,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/run/v2/execution.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 

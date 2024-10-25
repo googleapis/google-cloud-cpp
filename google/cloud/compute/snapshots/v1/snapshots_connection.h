@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SNAPSHOTS_V1_SNAPSHOTS_CONNECTION_H
 
 #include "google/cloud/compute/snapshots/v1/internal/snapshots_retry_traits.h"
+#include "google/cloud/compute/snapshots/v1/snapshots.pb.h"
 #include "google/cloud/compute/snapshots/v1/snapshots_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -30,7 +31,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/compute/snapshots/v1/snapshots.pb.h"
 #include <memory>
 
 namespace google {

@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_V1_CLOUD_CATALOG_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_V1_CLOUD_CATALOG_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/billing/v1/cloud_catalog.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include "google/cloud/billing/v1/cloud_catalog.grpc.pb.h"
 #include <memory>
 
 namespace google {

@@ -17,9 +17,9 @@
 // source: google/cloud/vpcaccess/v1/vpc_access.proto
 
 #include "google/cloud/vpcaccess/v1/internal/vpc_access_logging_decorator.h"
+#include "google/cloud/vpcaccess/v1/vpc_access.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/vpcaccess/v1/vpc_access.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

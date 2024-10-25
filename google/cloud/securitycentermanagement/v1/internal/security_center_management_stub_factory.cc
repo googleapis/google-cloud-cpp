@@ -18,19 +18,19 @@
 // google/cloud/securitycentermanagement/v1/security_center_management.proto
 
 #include "google/cloud/securitycentermanagement/v1/internal/security_center_management_stub_factory.h"
+#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/securitycentermanagement/v1/internal/security_center_management_auth_decorator.h"
 #include "google/cloud/securitycentermanagement/v1/internal/security_center_management_logging_decorator.h"
 #include "google/cloud/securitycentermanagement/v1/internal/security_center_management_metadata_decorator.h"
 #include "google/cloud/securitycentermanagement/v1/internal/security_center_management_stub.h"
 #include "google/cloud/securitycentermanagement/v1/internal/security_center_management_tracing_stub.h"
+#include "google/cloud/securitycentermanagement/v1/security_center_management.grpc.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/location/locations.grpc.pb.h"
-#include "google/cloud/securitycentermanagement/v1/security_center_management.grpc.pb.h"
 #include <memory>
 #include <utility>
 

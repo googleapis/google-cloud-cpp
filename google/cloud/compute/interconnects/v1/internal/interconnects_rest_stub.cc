@@ -17,12 +17,12 @@
 // source: google/cloud/compute/interconnects/v1/interconnects.proto
 
 #include "google/cloud/compute/interconnects/v1/internal/interconnects_rest_stub.h"
+#include "google/cloud/compute/global_operations/v1/global_operations.pb.h"
+#include "google/cloud/compute/interconnects/v1/interconnects.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/compute/global_operations/v1/global_operations.pb.h"
-#include "google/cloud/compute/interconnects/v1/interconnects.pb.h"
 #include <memory>
 #include <utility>
 

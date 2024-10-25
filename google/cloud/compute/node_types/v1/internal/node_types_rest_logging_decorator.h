@@ -20,11 +20,11 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NODE_TYPES_V1_INTERNAL_NODE_TYPES_REST_LOGGING_DECORATOR_H
 
 #include "google/cloud/compute/node_types/v1/internal/node_types_rest_stub.h"
+#include "google/cloud/compute/node_types/v1/node_types.pb.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include "google/cloud/compute/node_types/v1/node_types.pb.h"
 #include <memory>
 #include <set>
 #include <string>

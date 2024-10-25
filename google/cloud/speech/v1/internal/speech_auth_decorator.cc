@@ -17,8 +17,8 @@
 // source: google/cloud/speech/v1/cloud_speech.proto
 
 #include "google/cloud/speech/v1/internal/speech_auth_decorator.h"
-#include "google/cloud/internal/async_read_write_stream_auth.h"
 #include "google/cloud/speech/v1/cloud_speech.grpc.pb.h"
+#include "google/cloud/internal/async_read_write_stream_auth.h"
 #include <memory>
 #include <utility>
 

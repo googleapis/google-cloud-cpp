@@ -17,9 +17,9 @@
 // source: google/cloud/ids/v1/ids.proto
 
 #include "google/cloud/ids/v1/internal/ids_stub.h"
+#include "google/cloud/ids/v1/ids.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/ids/v1/ids.grpc.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>

@@ -19,12 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_VPN_GATEWAYS_V1_INTERNAL_TARGET_VPN_GATEWAYS_REST_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_VPN_GATEWAYS_V1_INTERNAL_TARGET_VPN_GATEWAYS_REST_METADATA_DECORATOR_H
 
+#include "google/cloud/compute/region_operations/v1/region_operations.pb.h"
 #include "google/cloud/compute/target_vpn_gateways/v1/internal/target_vpn_gateways_rest_stub.h"
+#include "google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.pb.h"
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
 #include "google/cloud/version.h"
-#include "google/cloud/compute/region_operations/v1/region_operations.pb.h"
-#include "google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.pb.h"
 #include <memory>
 #include <string>
 

@@ -17,9 +17,9 @@
 // source: google/cloud/servicedirectory/v1/registration_service.proto
 
 #include "google/cloud/servicedirectory/v1/internal/registration_logging_decorator.h"
+#include "google/cloud/servicedirectory/v1/registration_service.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/servicedirectory/v1/registration_service.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

@@ -17,9 +17,9 @@
 // source: google/cloud/config/v1/config.proto
 
 #include "google/cloud/config/v1/internal/config_stub.h"
+#include "google/cloud/config/v1/config.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/config/v1/config.grpc.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>

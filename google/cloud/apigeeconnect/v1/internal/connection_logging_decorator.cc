@@ -17,9 +17,9 @@
 // source: google/cloud/apigeeconnect/v1/connection.proto
 
 #include "google/cloud/apigeeconnect/v1/internal/connection_logging_decorator.h"
+#include "google/cloud/apigeeconnect/v1/connection.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/apigeeconnect/v1/connection.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

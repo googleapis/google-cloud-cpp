@@ -21,13 +21,13 @@
 
 #include "google/cloud/contentwarehouse/v1/internal/rule_set_retry_traits.h"
 #include "google/cloud/contentwarehouse/v1/rule_set_connection_idempotency_policy.h"
+#include "google/cloud/contentwarehouse/v1/ruleset_service.pb.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/contentwarehouse/v1/ruleset_service.pb.h"
 #include <memory>
 
 namespace google {

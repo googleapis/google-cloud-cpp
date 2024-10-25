@@ -17,9 +17,9 @@
 // source: google/cloud/eventarc/publishing/v1/publisher.proto
 
 #include "google/cloud/eventarc/publishing/v1/internal/publisher_logging_decorator.h"
+#include "google/cloud/eventarc/publishing/v1/publisher.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/eventarc/publishing/v1/publisher.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

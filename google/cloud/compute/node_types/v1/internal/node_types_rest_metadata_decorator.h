@@ -20,10 +20,10 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NODE_TYPES_V1_INTERNAL_NODE_TYPES_REST_METADATA_DECORATOR_H
 
 #include "google/cloud/compute/node_types/v1/internal/node_types_rest_stub.h"
+#include "google/cloud/compute/node_types/v1/node_types.pb.h"
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
 #include "google/cloud/version.h"
-#include "google/cloud/compute/node_types/v1/node_types.pb.h"
 #include <memory>
 #include <string>
 

@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEHEALTH_V1_INTERNAL_SERVICE_HEALTH_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEHEALTH_V1_INTERNAL_SERVICE_HEALTH_STUB_H
 
+#include "google/cloud/location/locations.grpc.pb.h"
+#include "google/cloud/servicehealth/v1/event_service.grpc.pb.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "google/cloud/location/locations.grpc.pb.h"
-#include "google/cloud/servicehealth/v1/event_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

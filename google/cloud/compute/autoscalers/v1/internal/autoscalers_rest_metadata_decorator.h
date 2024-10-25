@@ -19,12 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_AUTOSCALERS_V1_INTERNAL_AUTOSCALERS_REST_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_AUTOSCALERS_V1_INTERNAL_AUTOSCALERS_REST_METADATA_DECORATOR_H
 
+#include "google/cloud/compute/autoscalers/v1/autoscalers.pb.h"
 #include "google/cloud/compute/autoscalers/v1/internal/autoscalers_rest_stub.h"
+#include "google/cloud/compute/zone_operations/v1/zone_operations.pb.h"
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
 #include "google/cloud/version.h"
-#include "google/cloud/compute/autoscalers/v1/autoscalers.pb.h"
-#include "google/cloud/compute/zone_operations/v1/zone_operations.pb.h"
 #include <memory>
 #include <string>
 

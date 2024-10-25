@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERYCONTROL_V2_INTERNAL_TABLE_REST_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERYCONTROL_V2_INTERNAL_TABLE_REST_METADATA_DECORATOR_H
 
+#include "google/cloud/bigquery/v2/table.pb.h"
 #include "google/cloud/bigquerycontrol/v2/internal/table_rest_stub.h"
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
 #include "google/cloud/version.h"
-#include "google/cloud/bigquery/v2/table.pb.h"
 #include <memory>
 #include <string>
 

@@ -17,9 +17,9 @@
 // source: google/cloud/security/privateca/v1/service.proto
 
 #include "google/cloud/privateca/v1/internal/certificate_authority_stub.h"
+#include "google/cloud/security/privateca/v1/service.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/security/privateca/v1/service.grpc.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>

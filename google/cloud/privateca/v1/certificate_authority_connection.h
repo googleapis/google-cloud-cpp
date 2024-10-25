@@ -21,6 +21,7 @@
 
 #include "google/cloud/privateca/v1/certificate_authority_connection_idempotency_policy.h"
 #include "google/cloud/privateca/v1/internal/certificate_authority_retry_traits.h"
+#include "google/cloud/security/privateca/v1/service.pb.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
@@ -30,7 +31,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/security/privateca/v1/service.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 

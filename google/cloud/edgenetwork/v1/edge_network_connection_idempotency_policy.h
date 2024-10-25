@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGENETWORK_V1_EDGE_NETWORK_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGENETWORK_V1_EDGE_NETWORK_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/version.h"
 #include "google/cloud/edgenetwork/v1/service.grpc.pb.h"
 #include "google/cloud/location/locations.grpc.pb.h"
+#include "google/cloud/idempotency.h"
+#include "google/cloud/version.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 

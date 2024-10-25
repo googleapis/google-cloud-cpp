@@ -17,19 +17,19 @@
 // source: google/cloud/servicedirectory/v1/lookup_service.proto
 
 #include "google/cloud/servicedirectory/v1/internal/lookup_stub_factory.h"
+#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/servicedirectory/v1/internal/lookup_auth_decorator.h"
 #include "google/cloud/servicedirectory/v1/internal/lookup_logging_decorator.h"
 #include "google/cloud/servicedirectory/v1/internal/lookup_metadata_decorator.h"
 #include "google/cloud/servicedirectory/v1/internal/lookup_stub.h"
 #include "google/cloud/servicedirectory/v1/internal/lookup_tracing_stub.h"
+#include "google/cloud/servicedirectory/v1/lookup_service.grpc.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/location/locations.grpc.pb.h"
-#include "google/cloud/servicedirectory/v1/lookup_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

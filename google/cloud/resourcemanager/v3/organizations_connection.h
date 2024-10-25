@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_ORGANIZATIONS_CONNECTION_H
 
 #include "google/cloud/resourcemanager/v3/internal/organizations_retry_traits.h"
+#include "google/cloud/resourcemanager/v3/organizations.pb.h"
 #include "google/cloud/resourcemanager/v3/organizations_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
@@ -27,7 +28,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/resourcemanager/v3/organizations.pb.h"
 #include <memory>
 
 namespace google {

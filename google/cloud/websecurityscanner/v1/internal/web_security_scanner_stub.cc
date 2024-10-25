@@ -17,9 +17,9 @@
 // source: google/cloud/websecurityscanner/v1/web_security_scanner.proto
 
 #include "google/cloud/websecurityscanner/v1/internal/web_security_scanner_stub.h"
+#include "google/cloud/websecurityscanner/v1/web_security_scanner.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/websecurityscanner/v1/web_security_scanner.grpc.pb.h"
 #include <memory>
 #include <utility>
 

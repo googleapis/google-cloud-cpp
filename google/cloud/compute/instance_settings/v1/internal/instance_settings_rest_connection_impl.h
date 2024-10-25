@@ -24,12 +24,12 @@
 #include "google/cloud/compute/instance_settings/v1/instance_settings_options.h"
 #include "google/cloud/compute/instance_settings/v1/internal/instance_settings_rest_stub.h"
 #include "google/cloud/compute/instance_settings/v1/internal/instance_settings_retry_traits.h"
+#include "google/cloud/compute/zone_operations/v1/zone_operations.pb.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "google/cloud/compute/zone_operations/v1/zone_operations.pb.h"
 #include <memory>
 
 namespace google {

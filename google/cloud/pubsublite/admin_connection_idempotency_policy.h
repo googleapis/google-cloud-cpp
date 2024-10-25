@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_ADMIN_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_ADMIN_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/pubsublite/v1/admin.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include "google/cloud/pubsublite/v1/admin.grpc.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 

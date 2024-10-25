@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_FUTURE_RESERVATIONS_V1_FUTURE_RESERVATIONS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_FUTURE_RESERVATIONS_V1_FUTURE_RESERVATIONS_CONNECTION_H
 
+#include "google/cloud/compute/future_reservations/v1/future_reservations.pb.h"
 #include "google/cloud/compute/future_reservations/v1/future_reservations_connection_idempotency_policy.h"
 #include "google/cloud/compute/future_reservations/v1/internal/future_reservations_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
@@ -30,7 +31,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/compute/future_reservations/v1/future_reservations.pb.h"
 #include <memory>
 
 namespace google {

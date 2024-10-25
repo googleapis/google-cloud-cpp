@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BEYONDCORP_APPCONNECTORS_V1_APP_CONNECTORS_CONNECTION_H
 
 #include "google/cloud/beyondcorp/appconnectors/v1/app_connectors_connection_idempotency_policy.h"
+#include "google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.pb.h"
 #include "google/cloud/beyondcorp/appconnectors/v1/internal/app_connectors_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -30,7 +31,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 

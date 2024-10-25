@@ -21,11 +21,11 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_BACKEND_SERVICES_V1_INTERNAL_REGION_BACKEND_SERVICES_REST_METADATA_DECORATOR_H
 
 #include "google/cloud/compute/region_backend_services/v1/internal/region_backend_services_rest_stub.h"
+#include "google/cloud/compute/region_backend_services/v1/region_backend_services.pb.h"
+#include "google/cloud/compute/region_operations/v1/region_operations.pb.h"
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
 #include "google/cloud/version.h"
-#include "google/cloud/compute/region_backend_services/v1/region_backend_services.pb.h"
-#include "google/cloud/compute/region_operations/v1/region_operations.pb.h"
 #include <memory>
 #include <string>
 

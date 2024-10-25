@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NETWORK_ATTACHMENTS_V1_NETWORK_ATTACHMENTS_CONNECTION_H
 
 #include "google/cloud/compute/network_attachments/v1/internal/network_attachments_retry_traits.h"
+#include "google/cloud/compute/network_attachments/v1/network_attachments.pb.h"
 #include "google/cloud/compute/network_attachments/v1/network_attachments_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -30,7 +31,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/compute/network_attachments/v1/network_attachments.pb.h"
 #include <memory>
 
 namespace google {

@@ -17,12 +17,12 @@
 // source: google/cloud/servicedirectory/v1/lookup_service.proto
 
 #include "google/cloud/servicedirectory/v1/internal/lookup_metadata_decorator.h"
+#include "google/cloud/servicedirectory/v1/lookup_service.grpc.pb.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/servicedirectory/v1/lookup_service.grpc.pb.h"
 #include <memory>
 #include <string>
 #include <utility>

@@ -17,9 +17,9 @@
 // source: google/cloud/recaptchaenterprise/v1/recaptchaenterprise.proto
 
 #include "google/cloud/recaptchaenterprise/v1/internal/recaptcha_enterprise_logging_decorator.h"
+#include "google/cloud/recaptchaenterprise/v1/recaptchaenterprise.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/recaptchaenterprise/v1/recaptchaenterprise.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

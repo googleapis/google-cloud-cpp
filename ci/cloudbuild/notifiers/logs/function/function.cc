@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "generate_svg_badge.h"
 #include "google/cloud/functions/cloud_event.h"
 #include "google/cloud/storage/client.h"
+#include "generate_svg_badge.h"
 #include <cppcodec/base64_rfc4648.hpp>
 #include <fmt/core.h>
 #include <nlohmann/json.hpp>

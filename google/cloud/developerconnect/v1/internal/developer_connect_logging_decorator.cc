@@ -17,9 +17,9 @@
 // source: google/cloud/developerconnect/v1/developer_connect.proto
 
 #include "google/cloud/developerconnect/v1/internal/developer_connect_logging_decorator.h"
+#include "google/cloud/developerconnect/v1/developer_connect.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/developerconnect/v1/developer_connect.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

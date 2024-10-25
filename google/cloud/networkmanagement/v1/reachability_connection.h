@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKMANAGEMENT_V1_REACHABILITY_CONNECTION_H
 
 #include "google/cloud/networkmanagement/v1/internal/reachability_retry_traits.h"
+#include "google/cloud/networkmanagement/v1/reachability.pb.h"
 #include "google/cloud/networkmanagement/v1/reachability_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -30,7 +31,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/networkmanagement/v1/reachability.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 

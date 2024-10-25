@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_GROUNDED_GENERATION_CONNECTION_H
 
 #include "google/cloud/discoveryengine/v1/grounded_generation_connection_idempotency_policy.h"
+#include "google/cloud/discoveryengine/v1/grounded_generation_service.pb.h"
 #include "google/cloud/discoveryengine/v1/internal/grounded_generation_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/async_read_write_stream_impl.h"
@@ -28,7 +29,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/discoveryengine/v1/grounded_generation_service.pb.h"
 #include <memory>
 
 namespace google {

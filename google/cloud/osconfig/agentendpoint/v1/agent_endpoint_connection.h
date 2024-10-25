@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_AGENTENDPOINT_V1_AGENT_ENDPOINT_CONNECTION_H
 
 #include "google/cloud/osconfig/agentendpoint/v1/agent_endpoint_connection_idempotency_policy.h"
+#include "google/cloud/osconfig/agentendpoint/v1/agentendpoint.pb.h"
 #include "google/cloud/osconfig/agentendpoint/v1/internal/agent_endpoint_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
@@ -27,7 +28,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/osconfig/agentendpoint/v1/agentendpoint.pb.h"
 #include <memory>
 
 namespace google {

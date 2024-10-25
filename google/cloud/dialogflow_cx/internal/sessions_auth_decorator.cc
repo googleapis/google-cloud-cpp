@@ -17,8 +17,8 @@
 // source: google/cloud/dialogflow/cx/v3/session.proto
 
 #include "google/cloud/dialogflow_cx/internal/sessions_auth_decorator.h"
-#include "google/cloud/internal/async_read_write_stream_auth.h"
 #include "google/cloud/dialogflow/cx/v3/session.grpc.pb.h"
+#include "google/cloud/internal/async_read_write_stream_auth.h"
 #include <memory>
 #include <utility>
 

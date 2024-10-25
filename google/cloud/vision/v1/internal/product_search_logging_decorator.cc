@@ -17,9 +17,9 @@
 // source: google/cloud/vision/v1/product_search_service.proto
 
 #include "google/cloud/vision/v1/internal/product_search_logging_decorator.h"
+#include "google/cloud/vision/v1/product_search_service.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/vision/v1/product_search_service.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

@@ -17,19 +17,19 @@
 // source: google/cloud/networkconnectivity/v1/policy_based_routing.proto
 
 #include "google/cloud/networkconnectivity/v1/internal/policy_based_routing_stub_factory.h"
+#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/networkconnectivity/v1/internal/policy_based_routing_auth_decorator.h"
 #include "google/cloud/networkconnectivity/v1/internal/policy_based_routing_logging_decorator.h"
 #include "google/cloud/networkconnectivity/v1/internal/policy_based_routing_metadata_decorator.h"
 #include "google/cloud/networkconnectivity/v1/internal/policy_based_routing_stub.h"
 #include "google/cloud/networkconnectivity/v1/internal/policy_based_routing_tracing_stub.h"
+#include "google/cloud/networkconnectivity/v1/policy_based_routing.grpc.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/location/locations.grpc.pb.h"
-#include "google/cloud/networkconnectivity/v1/policy_based_routing.grpc.pb.h"
 #include "google/iam/v1/iam_policy.grpc.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>

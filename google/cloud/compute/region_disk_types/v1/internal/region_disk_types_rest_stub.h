@@ -19,12 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_DISK_TYPES_V1_INTERNAL_REGION_DISK_TYPES_REST_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_DISK_TYPES_V1_INTERNAL_REGION_DISK_TYPES_REST_STUB_H
 
+#include "google/cloud/compute/region_disk_types/v1/region_disk_types.pb.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/internal/rest_client.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "google/cloud/compute/region_disk_types/v1/region_disk_types.pb.h"
 #include <memory>
 
 namespace google {

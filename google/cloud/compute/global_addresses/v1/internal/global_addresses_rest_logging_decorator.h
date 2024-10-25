@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_GLOBAL_ADDRESSES_V1_INTERNAL_GLOBAL_ADDRESSES_REST_LOGGING_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_GLOBAL_ADDRESSES_V1_INTERNAL_GLOBAL_ADDRESSES_REST_LOGGING_DECORATOR_H
 
+#include "google/cloud/compute/global_addresses/v1/global_addresses.pb.h"
 #include "google/cloud/compute/global_addresses/v1/internal/global_addresses_rest_stub.h"
+#include "google/cloud/compute/global_operations/v1/global_operations.pb.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include "google/cloud/compute/global_addresses/v1/global_addresses.pb.h"
-#include "google/cloud/compute/global_operations/v1/global_operations.pb.h"
 #include <memory>
 #include <set>
 #include <string>

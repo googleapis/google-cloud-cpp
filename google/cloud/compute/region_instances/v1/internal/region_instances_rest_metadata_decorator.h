@@ -20,11 +20,11 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_INSTANCES_V1_INTERNAL_REGION_INSTANCES_REST_METADATA_DECORATOR_H
 
 #include "google/cloud/compute/region_instances/v1/internal/region_instances_rest_stub.h"
+#include "google/cloud/compute/region_instances/v1/region_instances.pb.h"
+#include "google/cloud/compute/region_operations/v1/region_operations.pb.h"
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
 #include "google/cloud/version.h"
-#include "google/cloud/compute/region_instances/v1/region_instances.pb.h"
-#include "google/cloud/compute/region_operations/v1/region_operations.pb.h"
 #include <memory>
 #include <string>
 

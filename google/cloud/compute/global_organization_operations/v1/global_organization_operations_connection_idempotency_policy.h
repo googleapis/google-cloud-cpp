@@ -20,9 +20,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_GLOBAL_ORGANIZATION_OPERATIONS_V1_GLOBAL_ORGANIZATION_OPERATIONS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_GLOBAL_ORGANIZATION_OPERATIONS_V1_GLOBAL_ORGANIZATION_OPERATIONS_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/compute/global_organization_operations/v1/global_organization_operations.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include "google/cloud/compute/global_organization_operations/v1/global_organization_operations.pb.h"
 #include <memory>
 
 namespace google {

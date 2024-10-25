@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEMULTICLOUD_V1_AWS_CLUSTERS_CONNECTION_H
 
 #include "google/cloud/gkemulticloud/v1/aws_clusters_connection_idempotency_policy.h"
+#include "google/cloud/gkemulticloud/v1/aws_service.pb.h"
 #include "google/cloud/gkemulticloud/v1/internal/aws_clusters_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -30,7 +31,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/gkemulticloud/v1/aws_service.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <string>

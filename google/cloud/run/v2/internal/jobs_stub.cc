@@ -17,9 +17,9 @@
 // source: google/cloud/run/v2/job.proto
 
 #include "google/cloud/run/v2/internal/jobs_stub.h"
+#include "google/cloud/run/v2/job.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/run/v2/job.grpc.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>

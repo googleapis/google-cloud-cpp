@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_IMAGE_FAMILY_VIEWS_V1_IMAGE_FAMILY_VIEWS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_IMAGE_FAMILY_VIEWS_V1_IMAGE_FAMILY_VIEWS_CONNECTION_H
 
+#include "google/cloud/compute/image_family_views/v1/image_family_views.pb.h"
 #include "google/cloud/compute/image_family_views/v1/image_family_views_connection_idempotency_policy.h"
 #include "google/cloud/compute/image_family_views/v1/internal/image_family_views_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
@@ -26,7 +27,6 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "google/cloud/compute/image_family_views/v1/image_family_views.pb.h"
 #include <memory>
 
 namespace google {

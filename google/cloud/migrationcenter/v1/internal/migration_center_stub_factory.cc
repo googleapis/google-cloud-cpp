@@ -17,19 +17,19 @@
 // source: google/cloud/migrationcenter/v1/migrationcenter.proto
 
 #include "google/cloud/migrationcenter/v1/internal/migration_center_stub_factory.h"
+#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/migrationcenter/v1/internal/migration_center_auth_decorator.h"
 #include "google/cloud/migrationcenter/v1/internal/migration_center_logging_decorator.h"
 #include "google/cloud/migrationcenter/v1/internal/migration_center_metadata_decorator.h"
 #include "google/cloud/migrationcenter/v1/internal/migration_center_stub.h"
 #include "google/cloud/migrationcenter/v1/internal/migration_center_tracing_stub.h"
+#include "google/cloud/migrationcenter/v1/migrationcenter.grpc.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/location/locations.grpc.pb.h"
-#include "google/cloud/migrationcenter/v1/migrationcenter.grpc.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>

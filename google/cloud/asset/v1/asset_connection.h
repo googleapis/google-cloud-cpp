@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSET_V1_ASSET_CONNECTION_H
 
 #include "google/cloud/asset/v1/asset_connection_idempotency_policy.h"
+#include "google/cloud/asset/v1/asset_service.pb.h"
 #include "google/cloud/asset/v1/internal/asset_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -30,7 +31,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/asset/v1/asset_service.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 

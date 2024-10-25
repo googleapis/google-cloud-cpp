@@ -21,13 +21,13 @@
 
 #include "google/cloud/iap/v1/identity_aware_proxy_admin_connection_idempotency_policy.h"
 #include "google/cloud/iap/v1/internal/identity_aware_proxy_admin_retry_traits.h"
+#include "google/cloud/iap/v1/service.pb.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/iap/v1/service.pb.h"
 #include <memory>
 
 namespace google {

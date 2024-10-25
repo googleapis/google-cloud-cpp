@@ -17,6 +17,8 @@
 // source: google/cloud/tpu/v1/cloud_tpu.proto
 
 #include "google/cloud/tpu/v1/internal/tpu_stub_factory.h"
+#include "google/cloud/location/locations.grpc.pb.h"
+#include "google/cloud/tpu/v1/cloud_tpu.grpc.pb.h"
 #include "google/cloud/tpu/v1/internal/tpu_auth_decorator.h"
 #include "google/cloud/tpu/v1/internal/tpu_logging_decorator.h"
 #include "google/cloud/tpu/v1/internal/tpu_metadata_decorator.h"
@@ -28,8 +30,6 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/location/locations.grpc.pb.h"
-#include "google/cloud/tpu/v1/cloud_tpu.grpc.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>

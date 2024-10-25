@@ -19,7 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKSECURITY_V1_NETWORK_SECURITY_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKSECURITY_V1_NETWORK_SECURITY_CONNECTION_H
 
+#include "google/cloud/networksecurity/v1/common.pb.h"
 #include "google/cloud/networksecurity/v1/internal/network_security_retry_traits.h"
+#include "google/cloud/networksecurity/v1/network_security.pb.h"
 #include "google/cloud/networksecurity/v1/network_security_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -30,8 +32,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/networksecurity/v1/common.pb.h"
-#include "google/cloud/networksecurity/v1/network_security.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 

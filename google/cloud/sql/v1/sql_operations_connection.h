@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_OPERATIONS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SQL_V1_SQL_OPERATIONS_CONNECTION_H
 
+#include "google/cloud/sql/v1/cloud_sql_operations.pb.h"
 #include "google/cloud/sql/v1/internal/sql_operations_retry_traits.h"
 #include "google/cloud/sql/v1/sql_operations_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
@@ -27,7 +28,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/sql/v1/cloud_sql_operations.pb.h"
 #include <memory>
 
 namespace google {

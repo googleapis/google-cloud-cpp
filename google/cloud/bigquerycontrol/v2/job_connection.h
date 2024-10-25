@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERYCONTROL_V2_JOB_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERYCONTROL_V2_JOB_CONNECTION_H
 
+#include "google/cloud/bigquery/v2/job.pb.h"
 #include "google/cloud/bigquerycontrol/v2/internal/job_retry_traits.h"
 #include "google/cloud/bigquerycontrol/v2/job_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
@@ -27,7 +28,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/bigquery/v2/job.pb.h"
 #include <memory>
 
 namespace google {

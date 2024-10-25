@@ -22,13 +22,13 @@
 #include "google/cloud/run/v2/internal/jobs_metadata_decorator.h"
 #include "google/cloud/run/v2/internal/jobs_stub.h"
 #include "google/cloud/run/v2/internal/jobs_tracing_stub.h"
+#include "google/cloud/run/v2/job.grpc.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/run/v2/job.grpc.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>

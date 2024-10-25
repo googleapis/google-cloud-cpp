@@ -20,12 +20,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INSTANCE_GROUP_MANAGERS_V1_INTERNAL_INSTANCE_GROUP_MANAGERS_REST_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INSTANCE_GROUP_MANAGERS_V1_INTERNAL_INSTANCE_GROUP_MANAGERS_REST_METADATA_DECORATOR_H
 
+#include "google/cloud/compute/instance_group_managers/v1/instance_group_managers.pb.h"
 #include "google/cloud/compute/instance_group_managers/v1/internal/instance_group_managers_rest_stub.h"
+#include "google/cloud/compute/zone_operations/v1/zone_operations.pb.h"
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
 #include "google/cloud/version.h"
-#include "google/cloud/compute/instance_group_managers/v1/instance_group_managers.pb.h"
-#include "google/cloud/compute/zone_operations/v1/zone_operations.pb.h"
 #include <memory>
 #include <string>
 

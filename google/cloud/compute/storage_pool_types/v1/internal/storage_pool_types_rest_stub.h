@@ -19,12 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_STORAGE_POOL_TYPES_V1_INTERNAL_STORAGE_POOL_TYPES_REST_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_STORAGE_POOL_TYPES_V1_INTERNAL_STORAGE_POOL_TYPES_REST_STUB_H
 
+#include "google/cloud/compute/storage_pool_types/v1/storage_pool_types.pb.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/internal/rest_client.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "google/cloud/compute/storage_pool_types/v1/storage_pool_types.pb.h"
 #include <memory>
 
 namespace google {

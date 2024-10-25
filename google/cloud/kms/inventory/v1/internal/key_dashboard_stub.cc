@@ -17,9 +17,9 @@
 // source: google/cloud/kms/inventory/v1/key_dashboard_service.proto
 
 #include "google/cloud/kms/inventory/v1/internal/key_dashboard_stub.h"
+#include "google/cloud/kms/inventory/v1/key_dashboard_service.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/kms/inventory/v1/key_dashboard_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

@@ -17,9 +17,9 @@
 // source: google/cloud/video/stitcher/v1/video_stitcher_service.proto
 
 #include "google/cloud/video/stitcher/v1/internal/video_stitcher_logging_decorator.h"
+#include "google/cloud/video/stitcher/v1/video_stitcher_service.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/video/stitcher/v1/video_stitcher_service.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

@@ -17,6 +17,7 @@
 // source: google/cloud/retail/v2/analytics_service.proto
 
 #include "google/cloud/retail/v2/internal/analytics_stub_factory.h"
+#include "google/cloud/retail/v2/analytics_service.grpc.pb.h"
 #include "google/cloud/retail/v2/internal/analytics_auth_decorator.h"
 #include "google/cloud/retail/v2/internal/analytics_logging_decorator.h"
 #include "google/cloud/retail/v2/internal/analytics_metadata_decorator.h"
@@ -28,7 +29,6 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/retail/v2/analytics_service.grpc.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>

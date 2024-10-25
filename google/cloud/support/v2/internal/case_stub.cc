@@ -17,9 +17,9 @@
 // source: google/cloud/support/v2/case_service.proto
 
 #include "google/cloud/support/v2/internal/case_stub.h"
+#include "google/cloud/support/v2/case_service.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/support/v2/case_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

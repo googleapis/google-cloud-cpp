@@ -21,6 +21,7 @@
 
 #include "google/cloud/privilegedaccessmanager/v1/internal/privileged_access_manager_retry_traits.h"
 #include "google/cloud/privilegedaccessmanager/v1/privileged_access_manager_connection_idempotency_policy.h"
+#include "google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.pb.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
@@ -30,7 +31,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 

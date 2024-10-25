@@ -17,9 +17,9 @@
 // source: google/cloud/functions/v1/functions.proto
 
 #include "google/cloud/functions/v1/internal/cloud_functions_logging_decorator.h"
+#include "google/cloud/functions/v1/functions.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/functions/v1/functions.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

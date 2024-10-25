@@ -20,11 +20,11 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NODE_TEMPLATES_V1_INTERNAL_NODE_TEMPLATES_REST_METADATA_DECORATOR_H
 
 #include "google/cloud/compute/node_templates/v1/internal/node_templates_rest_stub.h"
+#include "google/cloud/compute/node_templates/v1/node_templates.pb.h"
+#include "google/cloud/compute/region_operations/v1/region_operations.pb.h"
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
 #include "google/cloud/version.h"
-#include "google/cloud/compute/node_templates/v1/node_templates.pb.h"
-#include "google/cloud/compute/region_operations/v1/region_operations.pb.h"
 #include <memory>
 #include <string>
 

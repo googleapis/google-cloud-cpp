@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTORS_V1_CONNECTORS_CONNECTION_H
 
 #include "google/cloud/connectors/v1/connectors_connection_idempotency_policy.h"
+#include "google/cloud/connectors/v1/connectors_service.pb.h"
 #include "google/cloud/connectors/v1/internal/connectors_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -30,7 +31,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include "google/cloud/connectors/v1/connectors_service.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 

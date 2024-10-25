@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SHELL_V1_CLOUD_SHELL_CONNECTION_H
 
 #include "google/cloud/shell/v1/cloud_shell_connection_idempotency_policy.h"
+#include "google/cloud/shell/v1/cloudshell.pb.h"
 #include "google/cloud/shell/v1/internal/cloud_shell_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -29,7 +30,6 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "google/cloud/shell/v1/cloudshell.pb.h"
 #include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 

@@ -17,6 +17,7 @@
 // source: google/cloud/domains/v1/domains.proto
 
 #include "google/cloud/domains/v1/internal/domains_stub_factory.h"
+#include "google/cloud/domains/v1/domains.grpc.pb.h"
 #include "google/cloud/domains/v1/internal/domains_auth_decorator.h"
 #include "google/cloud/domains/v1/internal/domains_logging_decorator.h"
 #include "google/cloud/domains/v1/internal/domains_metadata_decorator.h"
@@ -28,7 +29,6 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/domains/v1/domains.grpc.pb.h"
 #include <memory>
 #include <utility>
 

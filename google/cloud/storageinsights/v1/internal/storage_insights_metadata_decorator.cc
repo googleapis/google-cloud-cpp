@@ -17,12 +17,12 @@
 // source: google/cloud/storageinsights/v1/storageinsights.proto
 
 #include "google/cloud/storageinsights/v1/internal/storage_insights_metadata_decorator.h"
+#include "google/cloud/storageinsights/v1/storageinsights.grpc.pb.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/storageinsights/v1/storageinsights.grpc.pb.h"
 #include <memory>
 #include <string>
 #include <utility>

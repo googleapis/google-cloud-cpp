@@ -22,13 +22,13 @@
 #include "google/cloud/resourcesettings/v1/internal/resource_settings_metadata_decorator.h"
 #include "google/cloud/resourcesettings/v1/internal/resource_settings_stub.h"
 #include "google/cloud/resourcesettings/v1/internal/resource_settings_tracing_stub.h"
+#include "google/cloud/resourcesettings/v1/resource_settings.grpc.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/resourcesettings/v1/resource_settings.grpc.pb.h"
 #include <memory>
 #include <utility>
 
