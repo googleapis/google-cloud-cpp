@@ -273,6 +273,56 @@ class SecureSourceManagerConnection {
   TestIamPermissionsRepo(
       google::iam::v1::TestIamPermissionsRequest const& request);
 
+  virtual future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
+  CreateBranchRule(
+      google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateBranchRule(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
+  CreateBranchRule(google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::cloud::securesourcemanager::v1::BranchRule>
+  ListBranchRules(
+      google::cloud::securesourcemanager::v1::ListBranchRulesRequest request);
+
+  virtual StatusOr<google::cloud::securesourcemanager::v1::BranchRule>
+  GetBranchRule(
+      google::cloud::securesourcemanager::v1::GetBranchRuleRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
+  UpdateBranchRule(
+      google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateBranchRule(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
+  UpdateBranchRule(google::longrunning::Operation const& operation);
+
+  virtual future<
+      StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+  DeleteBranchRule(
+      google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteBranchRule(
+      NoAwaitTag,
+      google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+  DeleteBranchRule(google::longrunning::Operation const& operation);
+
   virtual StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

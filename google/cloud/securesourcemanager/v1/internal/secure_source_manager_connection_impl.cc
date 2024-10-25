@@ -606,6 +606,349 @@ SecureSourceManagerConnectionImpl::TestIamPermissionsRepo(
       *current, request, __func__);
 }
 
+future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
+SecureSourceManagerConnectionImpl::CreateBranchRule(
+    google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateBranchRule(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::securesourcemanager::v1::BranchRule>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
+              request) {
+        return stub->AsyncCreateBranchRule(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::BranchRule>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnectionImpl::CreateBranchRule(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateBranchRule(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
+              request) {
+        return stub_->CreateBranchRule(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
+SecureSourceManagerConnectionImpl::CreateBranchRule(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::securesourcemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateBranchRule",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::securesourcemanager::v1::BranchRule>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::BranchRule>,
+      polling_policy(*current), __func__);
+}
+
+StreamRange<google::cloud::securesourcemanager::v1::BranchRule>
+SecureSourceManagerConnectionImpl::ListBranchRules(
+    google::cloud::securesourcemanager::v1::ListBranchRulesRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListBranchRules(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::securesourcemanager::v1::BranchRule>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<
+           securesourcemanager_v1::SecureSourceManagerRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::securesourcemanager::v1::ListBranchRulesRequest const&
+              r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::securesourcemanager::v1::
+                       ListBranchRulesRequest const& request) {
+              return stub->ListBranchRules(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::securesourcemanager::v1::ListBranchRulesResponse r) {
+        std::vector<google::cloud::securesourcemanager::v1::BranchRule> result(
+            r.branch_rules().size());
+        auto& messages = *r.mutable_branch_rules();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::BranchRule>
+SecureSourceManagerConnectionImpl::GetBranchRule(
+    google::cloud::securesourcemanager::v1::GetBranchRuleRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetBranchRule(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::GetBranchRuleRequest const&
+                 request) {
+        return stub_->GetBranchRule(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
+SecureSourceManagerConnectionImpl::UpdateBranchRule(
+    google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateBranchRule(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::securesourcemanager::v1::BranchRule>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
+              request) {
+        return stub->AsyncUpdateBranchRule(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::BranchRule>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnectionImpl::UpdateBranchRule(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateBranchRule(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
+              request) {
+        return stub_->UpdateBranchRule(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
+SecureSourceManagerConnectionImpl::UpdateBranchRule(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::securesourcemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateBranchRule",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::securesourcemanager::v1::BranchRule>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::securesourcemanager::v1::BranchRule>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerConnectionImpl::DeleteBranchRule(
+    google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteBranchRule(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::securesourcemanager::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
+              request) {
+        return stub->AsyncDeleteBranchRule(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::securesourcemanager::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnectionImpl::DeleteBranchRule(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteBranchRule(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
+              request) {
+        return stub_->DeleteBranchRule(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerConnectionImpl::DeleteBranchRule(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::securesourcemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteBranchRule",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::securesourcemanager::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::securesourcemanager::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
 StreamRange<google::cloud::location::Location>
 SecureSourceManagerConnectionImpl::ListLocations(
     google::cloud::location::ListLocationsRequest request) {

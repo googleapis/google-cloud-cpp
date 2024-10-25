@@ -180,6 +180,92 @@ SecureSourceManagerConnection::TestIamPermissionsRepo(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
+SecureSourceManagerConnection::CreateBranchRule(
+    google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnection::CreateBranchRule(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
+SecureSourceManagerConnection::CreateBranchRule(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::securesourcemanager::v1::BranchRule>
+SecureSourceManagerConnection::ListBranchRules(
+    google::cloud::securesourcemanager::v1::
+        ListBranchRulesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::securesourcemanager::v1::BranchRule>>();
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::BranchRule>
+SecureSourceManagerConnection::GetBranchRule(
+    google::cloud::securesourcemanager::v1::GetBranchRuleRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
+SecureSourceManagerConnection::UpdateBranchRule(
+    google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnection::UpdateBranchRule(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
+SecureSourceManagerConnection::UpdateBranchRule(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerConnection::DeleteBranchRule(
+    google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerConnection::DeleteBranchRule(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerConnection::DeleteBranchRule(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StreamRange<google::cloud::location::Location>
 SecureSourceManagerConnection::ListLocations(
     google::cloud::location::
