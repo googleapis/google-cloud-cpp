@@ -26,7 +26,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/oslogin/v1/oslogin.pb.h>
+#include "google/cloud/oslogin/v1/oslogin.pb.h"
 #include <memory>
 
 namespace google {

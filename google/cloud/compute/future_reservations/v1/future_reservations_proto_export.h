@@ -26,12 +26,12 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_FUTURE_RESERVATIONS_V1_FUTURE_RESERVATIONS_PROTO_EXPORT_H
 
 // IWYU pragma: begin_exports
-#include <google/cloud/compute/v1/internal/common_001.pb.h>
-#include <google/cloud/compute/v1/internal/common_007.pb.h>
-#include <google/cloud/compute/v1/internal/common_017.pb.h>
-#include <google/cloud/compute/v1/internal/common_030.pb.h>
-#include <google/cloud/compute/v1/internal/common_043.pb.h>
-#include <google/cloud/compute/v1/internal/common_114.pb.h>
+#include "google/cloud/compute/v1/internal/common_001.pb.h"
+#include "google/cloud/compute/v1/internal/common_007.pb.h"
+#include "google/cloud/compute/v1/internal/common_017.pb.h"
+#include "google/cloud/compute/v1/internal/common_030.pb.h"
+#include "google/cloud/compute/v1/internal/common_043.pb.h"
+#include "google/cloud/compute/v1/internal/common_114.pb.h"
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_FUTURE_RESERVATIONS_V1_FUTURE_RESERVATIONS_PROTO_EXPORT_H

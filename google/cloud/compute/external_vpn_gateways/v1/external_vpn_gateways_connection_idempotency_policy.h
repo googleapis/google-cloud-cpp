@@ -22,7 +22,7 @@
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.pb.h>
+#include "google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.pb.h"
 #include <memory>
 
 namespace google {

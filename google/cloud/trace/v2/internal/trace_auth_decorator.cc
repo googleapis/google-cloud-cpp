@@ -17,7 +17,7 @@
 // source: google/devtools/cloudtrace/v2/tracing.proto
 
 #include "google/cloud/trace/v2/internal/trace_auth_decorator.h"
-#include <google/devtools/cloudtrace/v2/tracing.grpc.pb.h>
+#include "google/devtools/cloudtrace/v2/tracing.grpc.pb.h"
 #include <memory>
 #include <utility>
 

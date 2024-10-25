@@ -27,7 +27,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/bigquery/connection/v1/connection.pb.h>
+#include "google/cloud/bigquery/connection/v1/connection.pb.h"
 #include <memory>
 
 namespace google {

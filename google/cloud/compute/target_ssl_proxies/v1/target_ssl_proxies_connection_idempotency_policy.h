@@ -21,7 +21,7 @@
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.pb.h>
+#include "google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies.pb.h"
 #include <memory>
 
 namespace google {

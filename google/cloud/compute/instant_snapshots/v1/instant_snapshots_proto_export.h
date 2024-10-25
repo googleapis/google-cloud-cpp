@@ -26,14 +26,14 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INSTANT_SNAPSHOTS_V1_INSTANT_SNAPSHOTS_PROTO_EXPORT_H
 
 // IWYU pragma: begin_exports
-#include <google/cloud/compute/v1/internal/common_008.pb.h>
-#include <google/cloud/compute/v1/internal/common_017.pb.h>
-#include <google/cloud/compute/v1/internal/common_032.pb.h>
-#include <google/cloud/compute/v1/internal/common_066.pb.h>
-#include <google/cloud/compute/v1/internal/common_067.pb.h>
-#include <google/cloud/compute/v1/internal/common_139.pb.h>
-#include <google/cloud/compute/v1/internal/common_145.pb.h>
-#include <google/cloud/compute/v1/internal/common_146.pb.h>
+#include "google/cloud/compute/v1/internal/common_008.pb.h"
+#include "google/cloud/compute/v1/internal/common_017.pb.h"
+#include "google/cloud/compute/v1/internal/common_032.pb.h"
+#include "google/cloud/compute/v1/internal/common_066.pb.h"
+#include "google/cloud/compute/v1/internal/common_067.pb.h"
+#include "google/cloud/compute/v1/internal/common_139.pb.h"
+#include "google/cloud/compute/v1/internal/common_145.pb.h"
+#include "google/cloud/compute/v1/internal/common_146.pb.h"
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INSTANT_SNAPSHOTS_V1_INSTANT_SNAPSHOTS_PROTO_EXPORT_H

@@ -21,8 +21,8 @@
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/discoveryengine/v1/document_service.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/cloud/discoveryengine/v1/document_service.grpc.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {

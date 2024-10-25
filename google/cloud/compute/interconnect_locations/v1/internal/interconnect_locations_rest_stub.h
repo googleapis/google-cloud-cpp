@@ -25,7 +25,7 @@
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/interconnect_locations/v1/interconnect_locations.pb.h>
+#include "google/cloud/compute/interconnect_locations/v1/interconnect_locations.pb.h"
 #include <memory>
 
 namespace google {

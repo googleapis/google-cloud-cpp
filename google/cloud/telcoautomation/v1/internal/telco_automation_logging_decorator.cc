@@ -19,7 +19,7 @@
 #include "google/cloud/telcoautomation/v1/internal/telco_automation_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/telcoautomation/v1/telcoautomation.grpc.pb.h>
+#include "google/cloud/telcoautomation/v1/telcoautomation.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

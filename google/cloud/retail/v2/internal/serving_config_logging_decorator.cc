@@ -19,7 +19,7 @@
 #include "google/cloud/retail/v2/internal/serving_config_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/retail/v2/serving_config_service.grpc.pb.h>
+#include "google/cloud/retail/v2/serving_config_service.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

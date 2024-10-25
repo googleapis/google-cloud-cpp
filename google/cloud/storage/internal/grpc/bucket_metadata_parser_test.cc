@@ -16,7 +16,7 @@
 #include "google/cloud/storage/internal/bucket_metadata_parser.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include <google/protobuf/text_format.h>
+#include "google/protobuf/text_format.h"
 #include <gmock/gmock.h>
 
 namespace google {

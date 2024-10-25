@@ -27,8 +27,8 @@
 #include "absl/flags/flag.h"
 #include "absl/flags/parse.h"
 #include "absl/strings/match.h"
-#include <google/protobuf/compiler/command_line_interface.h>
-#include <google/protobuf/text_format.h>
+#include "google/protobuf/compiler/command_line_interface.h"
+#include "google/protobuf/text_format.h"
 #include <algorithm>
 #include <fstream>
 #include <future>

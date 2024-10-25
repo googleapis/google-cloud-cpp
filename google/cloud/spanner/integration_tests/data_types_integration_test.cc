@@ -20,7 +20,7 @@
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/time/time.h"
-#include <google/cloud/spanner/testing/singer.pb.h>
+#include "google/cloud/spanner/testing/singer.pb.h"
 #include <gmock/gmock.h>
 #include <cstdint>
 #include <string>

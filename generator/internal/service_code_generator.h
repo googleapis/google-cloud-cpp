@@ -22,7 +22,7 @@
 #include "generator/internal/mixin_utils.h"
 #include "generator/internal/printer.h"
 #include "google/cloud/status.h"
-#include <google/protobuf/descriptor.h>
+#include "google/protobuf/descriptor.h"
 
 namespace google {
 namespace cloud {

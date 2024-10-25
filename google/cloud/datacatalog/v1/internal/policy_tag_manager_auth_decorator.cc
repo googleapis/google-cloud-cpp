@@ -17,7 +17,7 @@
 // source: google/cloud/datacatalog/v1/policytagmanager.proto
 
 #include "google/cloud/datacatalog/v1/internal/policy_tag_manager_auth_decorator.h"
-#include <google/cloud/datacatalog/v1/policytagmanager.grpc.pb.h>
+#include "google/cloud/datacatalog/v1/policytagmanager.grpc.pb.h"
 #include <memory>
 #include <utility>
 

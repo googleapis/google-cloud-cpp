@@ -24,7 +24,7 @@
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/interconnect_locations/v1/interconnect_locations.pb.h>
+#include "google/cloud/compute/interconnect_locations/v1/interconnect_locations.pb.h"
 #include <memory>
 #include <string>
 

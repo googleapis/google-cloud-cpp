@@ -20,7 +20,7 @@
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/dialogflow/cx/v3/session.grpc.pb.h>
+#include "google/cloud/dialogflow/cx/v3/session.grpc.pb.h"
 #include <memory>
 #include <utility>
 

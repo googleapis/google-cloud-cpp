@@ -26,7 +26,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/image_family_views/v1/image_family_views.pb.h>
+#include "google/cloud/compute/image_family_views/v1/image_family_views.pb.h"
 #include <memory>
 
 namespace google {

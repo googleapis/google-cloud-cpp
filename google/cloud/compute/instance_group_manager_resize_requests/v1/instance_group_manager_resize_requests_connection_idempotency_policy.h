@@ -22,7 +22,7 @@
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/instance_group_manager_resize_requests/v1/instance_group_manager_resize_requests.pb.h>
+#include "google/cloud/compute/instance_group_manager_resize_requests/v1/instance_group_manager_resize_requests.pb.h"
 #include <memory>
 
 namespace google {

@@ -24,8 +24,8 @@
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/global_operations/v1/global_operations.pb.h>
-#include <google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.pb.h>
+#include "google/cloud/compute/global_operations/v1/global_operations.pb.h"
+#include "google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.pb.h"
 #include <memory>
 #include <string>
 

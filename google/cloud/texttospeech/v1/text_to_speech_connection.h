@@ -28,7 +28,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/texttospeech/v1/cloud_tts.pb.h>
+#include "google/cloud/texttospeech/v1/cloud_tts.pb.h"
 #include <memory>
 
 namespace google {

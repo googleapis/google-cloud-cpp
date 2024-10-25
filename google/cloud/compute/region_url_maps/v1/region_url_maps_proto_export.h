@@ -26,11 +26,11 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_URL_MAPS_V1_REGION_URL_MAPS_PROTO_EXPORT_H
 
 // IWYU pragma: begin_exports
-#include <google/cloud/compute/v1/internal/common_017.pb.h>
-#include <google/cloud/compute/v1/internal/common_020.pb.h>
-#include <google/cloud/compute/v1/internal/common_030.pb.h>
-#include <google/cloud/compute/v1/internal/common_079.pb.h>
-#include <google/cloud/compute/v1/internal/common_106.pb.h>
+#include "google/cloud/compute/v1/internal/common_017.pb.h"
+#include "google/cloud/compute/v1/internal/common_020.pb.h"
+#include "google/cloud/compute/v1/internal/common_030.pb.h"
+#include "google/cloud/compute/v1/internal/common_079.pb.h"
+#include "google/cloud/compute/v1/internal/common_106.pb.h"
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_URL_MAPS_V1_REGION_URL_MAPS_PROTO_EXPORT_H

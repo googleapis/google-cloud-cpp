@@ -22,8 +22,8 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/iam/v1/iam_policy.grpc.pb.h>
-#include <google/pubsub/v1/pubsub.grpc.pb.h>
+#include "google/iam/v1/iam_policy.grpc.pb.h"
+#include "google/pubsub/v1/pubsub.grpc.pb.h"
 #include <memory>
 #include <utility>
 

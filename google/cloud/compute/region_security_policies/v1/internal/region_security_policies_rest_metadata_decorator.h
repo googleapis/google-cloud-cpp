@@ -24,8 +24,8 @@
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/region_operations/v1/region_operations.pb.h>
-#include <google/cloud/compute/region_security_policies/v1/region_security_policies.pb.h>
+#include "google/cloud/compute/region_operations/v1/region_operations.pb.h"
+#include "google/cloud/compute/region_security_policies/v1/region_security_policies.pb.h"
 #include <memory>
 #include <string>
 

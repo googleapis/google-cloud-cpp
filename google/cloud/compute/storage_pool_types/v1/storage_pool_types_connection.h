@@ -27,7 +27,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/storage_pool_types/v1/storage_pool_types.pb.h>
+#include "google/cloud/compute/storage_pool_types/v1/storage_pool_types.pb.h"
 #include <memory>
 
 namespace google {

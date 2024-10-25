@@ -23,7 +23,7 @@
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/image_family_views/v1/image_family_views.pb.h>
+#include "google/cloud/compute/image_family_views/v1/image_family_views.pb.h"
 #include <memory>
 #include <string>
 

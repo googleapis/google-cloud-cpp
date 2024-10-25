@@ -17,7 +17,7 @@
 // source: google/storage/control/v2/storage_control.proto
 
 #include "google/cloud/storagecontrol/v2/internal/storage_control_auth_decorator.h"
-#include <google/storage/control/v2/storage_control.grpc.pb.h>
+#include "google/storage/control/v2/storage_control.grpc.pb.h"
 #include <memory>
 #include <utility>
 

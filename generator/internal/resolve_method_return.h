@@ -17,7 +17,7 @@
 
 #include "generator/internal/proto_definition_location.h"
 #include "absl/types/optional.h"
-#include <google/protobuf/descriptor.h>
+#include "google/protobuf/descriptor.h"
 #include <string>
 #include <utility>
 

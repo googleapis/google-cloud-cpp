@@ -19,7 +19,7 @@
 #include "google/cloud/oslogin/v1/internal/os_login_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/oslogin/v1/oslogin.grpc.pb.h>
+#include "google/cloud/oslogin/v1/oslogin.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

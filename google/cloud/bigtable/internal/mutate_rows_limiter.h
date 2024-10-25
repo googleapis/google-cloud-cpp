@@ -21,7 +21,7 @@
 #include "google/cloud/internal/clock.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
-#include <google/bigtable/v2/bigtable.pb.h>
+#include "google/bigtable/v2/bigtable.pb.h"
 #include <chrono>
 #include <functional>
 #include <memory>

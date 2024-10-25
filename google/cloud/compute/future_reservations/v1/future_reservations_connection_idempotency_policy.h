@@ -21,7 +21,7 @@
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/future_reservations/v1/future_reservations.pb.h>
+#include "google/cloud/compute/future_reservations/v1/future_reservations.pb.h"
 #include <memory>
 
 namespace google {

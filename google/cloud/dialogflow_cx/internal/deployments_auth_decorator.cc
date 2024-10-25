@@ -17,7 +17,7 @@
 // source: google/cloud/dialogflow/cx/v3/deployment.proto
 
 #include "google/cloud/dialogflow_cx/internal/deployments_auth_decorator.h"
-#include <google/cloud/dialogflow/cx/v3/deployment.grpc.pb.h>
+#include "google/cloud/dialogflow/cx/v3/deployment.grpc.pb.h"
 #include <memory>
 #include <utility>
 

@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_ROUTING_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_ROUTING_H
 
-#include <google/protobuf/descriptor.h>
+#include "google/protobuf/descriptor.h"
 #include <string>
 #include <unordered_map>
 #include <vector>

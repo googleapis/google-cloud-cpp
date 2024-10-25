@@ -24,8 +24,8 @@
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/global_operations/v1/global_operations.pb.h>
-#include <google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.pb.h>
+#include "google/cloud/compute/global_operations/v1/global_operations.pb.h"
+#include "google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies.pb.h"
 #include <memory>
 
 namespace google {

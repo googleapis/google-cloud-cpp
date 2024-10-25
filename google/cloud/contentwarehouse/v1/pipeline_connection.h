@@ -29,8 +29,8 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/contentwarehouse/v1/pipeline_service.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/cloud/contentwarehouse/v1/pipeline_service.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {

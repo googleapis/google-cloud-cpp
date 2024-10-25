@@ -26,7 +26,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/policytroubleshooter/iam/v3/troubleshooter.pb.h>
+#include "google/cloud/policytroubleshooter/iam/v3/troubleshooter.pb.h"
 #include <memory>
 
 namespace google {

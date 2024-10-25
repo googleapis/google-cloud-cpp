@@ -19,7 +19,7 @@
 #include "google/cloud/privateca/v1/internal/certificate_authority_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/security/privateca/v1/service.grpc.pb.h>
+#include "google/cloud/security/privateca/v1/service.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

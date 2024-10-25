@@ -22,8 +22,8 @@
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include <google/iam/v1/policy.pb.h>
-#include <google/protobuf/util/field_mask_util.h>
+#include "google/iam/v1/policy.pb.h"
+#include "google/protobuf/util/field_mask_util.h"
 #include <gmock/gmock.h>
 #include <memory>
 

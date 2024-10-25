@@ -24,7 +24,7 @@
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/machine_types/v1/machine_types.pb.h>
+#include "google/cloud/compute/machine_types/v1/machine_types.pb.h"
 #include <memory>
 
 namespace google {

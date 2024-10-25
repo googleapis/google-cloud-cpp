@@ -17,7 +17,7 @@
 // source: google/cloud/retail/v2/catalog_service.proto
 
 #include "google/cloud/retail/v2/internal/catalog_auth_decorator.h"
-#include <google/cloud/retail/v2/catalog_service.grpc.pb.h>
+#include "google/cloud/retail/v2/catalog_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

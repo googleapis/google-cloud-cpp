@@ -21,7 +21,7 @@
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/snapshot_settings/v1/snapshot_settings.pb.h>
+#include "google/cloud/compute/snapshot_settings/v1/snapshot_settings.pb.h"
 #include <memory>
 
 namespace google {

@@ -27,7 +27,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/orgpolicy/v2/orgpolicy.pb.h>
+#include "google/cloud/orgpolicy/v2/orgpolicy.pb.h"
 #include <memory>
 
 namespace google {

@@ -26,7 +26,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/gkeconnect/gateway/v1/control.pb.h>
+#include "google/cloud/gkeconnect/gateway/v1/control.pb.h"
 #include <memory>
 
 namespace google {

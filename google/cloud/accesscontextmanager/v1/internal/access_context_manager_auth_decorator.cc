@@ -17,7 +17,7 @@
 // source: google/identity/accesscontextmanager/v1/access_context_manager.proto
 
 #include "google/cloud/accesscontextmanager/v1/internal/access_context_manager_auth_decorator.h"
-#include <google/identity/accesscontextmanager/v1/access_context_manager.grpc.pb.h>
+#include "google/identity/accesscontextmanager/v1/access_context_manager.grpc.pb.h"
 #include <memory>
 #include <utility>
 

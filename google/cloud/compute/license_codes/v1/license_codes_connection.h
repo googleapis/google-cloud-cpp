@@ -26,7 +26,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/license_codes/v1/license_codes.pb.h>
+#include "google/cloud/compute/license_codes/v1/license_codes.pb.h"
 #include <memory>
 
 namespace google {

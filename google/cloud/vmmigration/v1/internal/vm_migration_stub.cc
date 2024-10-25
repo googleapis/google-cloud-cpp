@@ -19,8 +19,8 @@
 #include "google/cloud/vmmigration/v1/internal/vm_migration_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/vmmigration/v1/vmmigration.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/cloud/vmmigration/v1/vmmigration.grpc.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

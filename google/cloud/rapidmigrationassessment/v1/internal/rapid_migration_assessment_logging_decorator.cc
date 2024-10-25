@@ -20,7 +20,7 @@
 #include "google/cloud/rapidmigrationassessment/v1/internal/rapid_migration_assessment_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.grpc.pb.h>
+#include "google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

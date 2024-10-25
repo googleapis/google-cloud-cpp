@@ -14,7 +14,7 @@
 
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include <google/protobuf/timestamp.pb.h>
+#include "google/protobuf/timestamp.pb.h"
 #include <gmock/gmock.h>
 #include <cstdint>
 #include <limits>

@@ -17,9 +17,9 @@
 
 #include "google/cloud/internal/port_platform.h"
 #include "absl/strings/str_format.h"
-#include <google/protobuf/compiler/code_generator.h>
-#include <google/protobuf/io/printer.h>
-#include <google/protobuf/io/zero_copy_stream.h>
+#include "google/protobuf/compiler/code_generator.h"
+#include "google/protobuf/io/printer.h"
+#include "google/protobuf/io/zero_copy_stream.h"
 #include <string>
 
 namespace google {

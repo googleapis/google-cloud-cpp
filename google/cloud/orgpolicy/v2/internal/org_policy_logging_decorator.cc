@@ -19,7 +19,7 @@
 #include "google/cloud/orgpolicy/v2/internal/org_policy_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/orgpolicy/v2/orgpolicy.grpc.pb.h>
+#include "google/cloud/orgpolicy/v2/orgpolicy.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

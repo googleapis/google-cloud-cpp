@@ -25,8 +25,8 @@
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.pb.h>
-#include <google/cloud/compute/region_operations/v1/region_operations.pb.h>
+#include "google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.pb.h"
+#include "google/cloud/compute/region_operations/v1/region_operations.pb.h"
 #include <memory>
 
 namespace google {

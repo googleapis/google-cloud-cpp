@@ -20,8 +20,8 @@
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/printer.h"
 #include "absl/types/variant.h"
-#include <google/protobuf/compiler/code_generator.h>
-#include <google/protobuf/descriptor.h>
+#include "google/protobuf/compiler/code_generator.h"
+#include "google/protobuf/descriptor.h"
 #include <yaml-cpp/yaml.h>
 #include <map>
 #include <memory>

@@ -23,7 +23,7 @@
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
 #include "google/cloud/version.h"
-#include <google/cloud/sql/v1/cloud_sql_backup_runs.pb.h>
+#include "google/cloud/sql/v1/cloud_sql_backup_runs.pb.h"
 #include <memory>
 #include <string>
 

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/instance_update_config.h"
-#include <google/protobuf/text_format.h>
+#include "google/protobuf/text_format.h"
 #include <gmock/gmock.h>
 
 namespace google {

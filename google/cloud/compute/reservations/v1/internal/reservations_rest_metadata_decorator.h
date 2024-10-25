@@ -23,8 +23,8 @@
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/reservations/v1/reservations.pb.h>
-#include <google/cloud/compute/zone_operations/v1/zone_operations.pb.h>
+#include "google/cloud/compute/reservations/v1/reservations.pb.h"
+#include "google/cloud/compute/zone_operations/v1/zone_operations.pb.h"
 #include <memory>
 #include <string>
 

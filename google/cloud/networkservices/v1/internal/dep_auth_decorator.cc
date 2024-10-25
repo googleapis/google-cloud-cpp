@@ -17,7 +17,7 @@
 // source: google/cloud/networkservices/v1/dep.proto
 
 #include "google/cloud/networkservices/v1/internal/dep_auth_decorator.h"
-#include <google/cloud/networkservices/v1/dep.grpc.pb.h>
+#include "google/cloud/networkservices/v1/dep.grpc.pb.h"
 #include <memory>
 #include <utility>
 

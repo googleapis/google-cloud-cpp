@@ -17,7 +17,7 @@
 // source: google/spanner/admin/instance/v1/spanner_instance_admin.proto
 
 #include "google/cloud/spanner/admin/internal/instance_admin_auth_decorator.h"
-#include <google/spanner/admin/instance/v1/spanner_instance_admin.grpc.pb.h>
+#include "google/spanner/admin/instance/v1/spanner_instance_admin.grpc.pb.h"
 #include <memory>
 #include <utility>
 

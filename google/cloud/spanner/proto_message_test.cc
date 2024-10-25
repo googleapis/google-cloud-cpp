@@ -14,7 +14,7 @@
 
 #include "google/cloud/spanner/proto_message.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
-#include <google/cloud/spanner/testing/singer.pb.h>
+#include "google/cloud/spanner/testing/singer.pb.h"
 #include <gmock/gmock.h>
 #include <sstream>
 

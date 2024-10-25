@@ -21,7 +21,7 @@
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/apigateway/v1/apigateway_service.grpc.pb.h>
+#include "google/cloud/apigateway/v1/apigateway_service.grpc.pb.h"
 #include <memory>
 
 namespace google {

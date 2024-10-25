@@ -19,7 +19,7 @@
 #include "google/cloud/securitycenter/v1/internal/security_center_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/securitycenter/v1/securitycenter_service.grpc.pb.h>
+#include "google/cloud/securitycenter/v1/securitycenter_service.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

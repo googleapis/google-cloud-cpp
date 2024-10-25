@@ -19,7 +19,7 @@
 #include "google/cloud/gkemulticloud/v1/internal/attached_clusters_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/gkemulticloud/v1/attached_service.grpc.pb.h>
+#include "google/cloud/gkemulticloud/v1/attached_service.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

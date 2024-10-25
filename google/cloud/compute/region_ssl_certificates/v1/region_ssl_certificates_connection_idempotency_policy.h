@@ -22,7 +22,7 @@
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.pb.h>
+#include "google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates.pb.h"
 #include <memory>
 
 namespace google {

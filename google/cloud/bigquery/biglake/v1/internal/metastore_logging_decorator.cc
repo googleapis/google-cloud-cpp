@@ -19,7 +19,7 @@
 #include "google/cloud/bigquery/biglake/v1/internal/metastore_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/bigquery/biglake/v1/metastore.grpc.pb.h>
+#include "google/cloud/bigquery/biglake/v1/metastore.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

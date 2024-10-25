@@ -30,7 +30,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.pb.h>
+#include "google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.pb.h"
 #include <memory>
 
 namespace google {

@@ -20,7 +20,7 @@
 #include "google/cloud/securitycentermanagement/v1/internal/security_center_management_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/securitycentermanagement/v1/security_center_management.grpc.pb.h>
+#include "google/cloud/securitycentermanagement/v1/security_center_management.grpc.pb.h"
 #include <memory>
 #include <utility>
 

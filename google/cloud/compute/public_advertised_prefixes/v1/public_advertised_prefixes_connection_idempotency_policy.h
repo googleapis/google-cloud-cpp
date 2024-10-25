@@ -22,7 +22,7 @@
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.pb.h>
+#include "google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes.pb.h"
 #include <memory>
 
 namespace google {

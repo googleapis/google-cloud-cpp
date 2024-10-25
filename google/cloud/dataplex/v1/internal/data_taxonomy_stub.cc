@@ -19,8 +19,8 @@
 #include "google/cloud/dataplex/v1/internal/data_taxonomy_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/dataplex/v1/data_taxonomy.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/cloud/dataplex/v1/data_taxonomy.grpc.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

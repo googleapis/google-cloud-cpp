@@ -28,7 +28,7 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include <google/cloud/managedidentities/v1/managed_identities_service.grpc.pb.h>
+#include "google/cloud/managedidentities/v1/managed_identities_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

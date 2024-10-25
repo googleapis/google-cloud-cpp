@@ -19,7 +19,7 @@
 #include "google/cloud/aiplatform/v1/internal/feature_online_store_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/aiplatform/v1/feature_online_store_service.grpc.pb.h>
+#include "google/cloud/aiplatform/v1/feature_online_store_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

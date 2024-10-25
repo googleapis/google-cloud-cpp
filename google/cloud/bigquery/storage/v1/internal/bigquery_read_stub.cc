@@ -19,7 +19,7 @@
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_read_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/bigquery/storage/v1/storage.grpc.pb.h>
+#include "google/cloud/bigquery/storage/v1/storage.grpc.pb.h"
 #include <memory>
 #include <utility>
 

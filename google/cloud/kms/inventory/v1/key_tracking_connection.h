@@ -27,7 +27,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/kms/inventory/v1/key_tracking_service.pb.h>
+#include "google/cloud/kms/inventory/v1/key_tracking_service.pb.h"
 #include <memory>
 
 namespace google {

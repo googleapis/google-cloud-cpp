@@ -27,7 +27,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/timeseriesinsights/v1/timeseries_insights.pb.h>
+#include "google/cloud/timeseriesinsights/v1/timeseries_insights.pb.h"
 #include <memory>
 
 namespace google {

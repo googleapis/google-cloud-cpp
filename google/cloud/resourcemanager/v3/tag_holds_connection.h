@@ -30,8 +30,8 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/resourcemanager/v3/tag_holds.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/cloud/resourcemanager/v3/tag_holds.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {

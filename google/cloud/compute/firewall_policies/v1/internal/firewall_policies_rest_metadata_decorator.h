@@ -23,8 +23,8 @@
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/firewall_policies/v1/firewall_policies.pb.h>
-#include <google/cloud/compute/global_organization_operations/v1/global_organization_operations.pb.h>
+#include "google/cloud/compute/firewall_policies/v1/firewall_policies.pb.h"
+#include "google/cloud/compute/global_organization_operations/v1/global_organization_operations.pb.h"
 #include <memory>
 #include <string>
 

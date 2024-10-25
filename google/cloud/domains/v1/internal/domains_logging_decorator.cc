@@ -19,7 +19,7 @@
 #include "google/cloud/domains/v1/internal/domains_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/domains/v1/domains.grpc.pb.h>
+#include "google/cloud/domains/v1/domains.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

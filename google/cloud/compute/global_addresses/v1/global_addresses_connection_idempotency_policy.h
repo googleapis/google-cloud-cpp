@@ -21,7 +21,7 @@
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/global_addresses/v1/global_addresses.pb.h>
+#include "google/cloud/compute/global_addresses/v1/global_addresses.pb.h"
 #include <memory>
 
 namespace google {

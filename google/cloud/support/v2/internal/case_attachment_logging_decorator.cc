@@ -19,7 +19,7 @@
 #include "google/cloud/support/v2/internal/case_attachment_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/support/v2/attachment_service.grpc.pb.h>
+#include "google/cloud/support/v2/attachment_service.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

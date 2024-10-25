@@ -24,8 +24,8 @@
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.pb.h>
-#include <google/cloud/compute/region_operations/v1/region_operations.pb.h>
+#include "google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints.pb.h"
+#include "google/cloud/compute/region_operations/v1/region_operations.pb.h"
 #include <memory>
 #include <string>
 

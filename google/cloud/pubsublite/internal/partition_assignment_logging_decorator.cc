@@ -20,7 +20,7 @@
 #include "google/cloud/internal/async_read_write_stream_logging.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/pubsublite/v1/subscriber.grpc.pb.h>
+#include "google/cloud/pubsublite/v1/subscriber.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

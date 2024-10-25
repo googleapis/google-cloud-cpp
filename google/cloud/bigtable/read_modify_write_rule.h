@@ -16,8 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_READ_MODIFY_WRITE_RULE_H
 
 #include "google/cloud/bigtable/version.h"
-#include <google/bigtable/v2/data.pb.h>
-#include <google/protobuf/util/message_differencer.h>
+#include "google/bigtable/v2/data.pb.h"
+#include "google/protobuf/util/message_differencer.h"
 #include <string>
 
 namespace google {

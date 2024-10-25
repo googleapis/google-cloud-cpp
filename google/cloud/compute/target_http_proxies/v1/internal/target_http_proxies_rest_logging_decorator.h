@@ -24,8 +24,8 @@
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/global_operations/v1/global_operations.pb.h>
-#include <google/cloud/compute/target_http_proxies/v1/target_http_proxies.pb.h>
+#include "google/cloud/compute/global_operations/v1/global_operations.pb.h"
+#include "google/cloud/compute/target_http_proxies/v1/target_http_proxies.pb.h"
 #include <memory>
 #include <set>
 #include <string>

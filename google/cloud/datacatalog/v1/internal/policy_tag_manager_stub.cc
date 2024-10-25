@@ -19,7 +19,7 @@
 #include "google/cloud/datacatalog/v1/internal/policy_tag_manager_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/datacatalog/v1/policytagmanager.grpc.pb.h>
+#include "google/cloud/datacatalog/v1/policytagmanager.grpc.pb.h"
 #include <memory>
 #include <utility>
 

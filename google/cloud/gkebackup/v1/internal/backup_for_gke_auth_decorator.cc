@@ -17,7 +17,7 @@
 // source: google/cloud/gkebackup/v1/gkebackup.proto
 
 #include "google/cloud/gkebackup/v1/internal/backup_for_gke_auth_decorator.h"
-#include <google/cloud/gkebackup/v1/gkebackup.grpc.pb.h>
+#include "google/cloud/gkebackup/v1/gkebackup.grpc.pb.h"
 #include <memory>
 #include <utility>
 

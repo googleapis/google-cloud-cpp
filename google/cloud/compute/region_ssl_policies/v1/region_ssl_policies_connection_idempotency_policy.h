@@ -21,7 +21,7 @@
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.pb.h>
+#include "google/cloud/compute/region_ssl_policies/v1/region_ssl_policies.pb.h"
 #include <memory>
 
 namespace google {

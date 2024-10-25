@@ -19,7 +19,7 @@
 #include "google/cloud/dataproc/v1/internal/autoscaling_policy_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/dataproc/v1/autoscaling_policies.grpc.pb.h>
+#include "google/cloud/dataproc/v1/autoscaling_policies.grpc.pb.h"
 #include <memory>
 #include <utility>
 

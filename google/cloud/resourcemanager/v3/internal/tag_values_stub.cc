@@ -19,8 +19,8 @@
 #include "google/cloud/resourcemanager/v3/internal/tag_values_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/resourcemanager/v3/tag_values.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/cloud/resourcemanager/v3/tag_values.grpc.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

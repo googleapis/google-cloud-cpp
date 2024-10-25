@@ -15,7 +15,7 @@
 #include "generator/internal/retry_traits_generator.h"
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/printer.h"
-#include <google/protobuf/descriptor.h>
+#include "google/protobuf/descriptor.h"
 
 namespace google {
 namespace cloud {

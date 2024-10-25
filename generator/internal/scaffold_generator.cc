@@ -19,8 +19,8 @@
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/log.h"
 #include "absl/strings/str_split.h"
-#include <google/protobuf/io/printer.h>
-#include <google/protobuf/io/zero_copy_stream_impl.h>
+#include "google/protobuf/io/printer.h"
+#include "google/protobuf/io/zero_copy_stream_impl.h"
 #include <nlohmann/json.hpp>
 #include <yaml-cpp/yaml.h>
 #include <fstream>

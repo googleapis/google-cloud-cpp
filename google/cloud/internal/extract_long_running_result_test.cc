@@ -16,7 +16,7 @@
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include <google/protobuf/timestamp.pb.h>
+#include "google/protobuf/timestamp.pb.h"
 #include <gmock/gmock.h>
 
 namespace google {

@@ -21,7 +21,7 @@
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/https_health_checks/v1/https_health_checks.pb.h>
+#include "google/cloud/compute/https_health_checks/v1/https_health_checks.pb.h"
 #include <memory>
 
 namespace google {

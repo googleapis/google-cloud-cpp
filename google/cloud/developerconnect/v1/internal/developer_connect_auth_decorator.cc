@@ -17,7 +17,7 @@
 // source: google/cloud/developerconnect/v1/developer_connect.proto
 
 #include "google/cloud/developerconnect/v1/internal/developer_connect_auth_decorator.h"
-#include <google/cloud/developerconnect/v1/developer_connect.grpc.pb.h>
+#include "google/cloud/developerconnect/v1/developer_connect.grpc.pb.h"
 #include <memory>
 #include <utility>
 

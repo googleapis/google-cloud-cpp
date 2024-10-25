@@ -16,9 +16,9 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_TESTING_DESCRIPTOR_POOL_FIXTURE_H
 
 #include "generator/testing/fake_source_tree.h"
-#include <google/protobuf/compiler/importer.h>
-#include <google/protobuf/descriptor.h>
-#include <google/protobuf/descriptor_database.h>
+#include "google/protobuf/compiler/importer.h"
+#include "google/protobuf/descriptor.h"
+#include "google/protobuf/descriptor_database.h"
 #include <gmock/gmock.h>
 
 namespace google {

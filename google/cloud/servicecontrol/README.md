@@ -23,7 +23,7 @@ top-level [README](/README.md#building-and-installing).
 ```cc
 #include "google/cloud/servicecontrol/v1/service_controller_client.h"
 #include "google/cloud/project.h"
-#include <google/protobuf/util/time_util.h>
+#include "google/protobuf/util/time_util.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {

@@ -19,7 +19,7 @@
 #include "google/cloud/billing/budgets/v1/internal/budget_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/billing/budgets/v1/budget_service.grpc.pb.h>
+#include "google/cloud/billing/budgets/v1/budget_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

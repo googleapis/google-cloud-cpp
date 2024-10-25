@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_LONGRUNNING_H
 
 #include "generator/internal/printer.h"
-#include <google/protobuf/descriptor.h>
+#include "google/protobuf/descriptor.h"
 
 namespace google {
 namespace cloud {

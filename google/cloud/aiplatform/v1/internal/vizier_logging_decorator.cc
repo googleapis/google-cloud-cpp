@@ -19,7 +19,7 @@
 #include "google/cloud/aiplatform/v1/internal/vizier_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/aiplatform/v1/vizier_service.grpc.pb.h>
+#include "google/cloud/aiplatform/v1/vizier_service.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

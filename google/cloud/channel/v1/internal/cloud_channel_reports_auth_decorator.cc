@@ -17,7 +17,7 @@
 // source: google/cloud/channel/v1/reports_service.proto
 
 #include "google/cloud/channel/v1/internal/cloud_channel_reports_auth_decorator.h"
-#include <google/cloud/channel/v1/reports_service.grpc.pb.h>
+#include "google/cloud/channel/v1/reports_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

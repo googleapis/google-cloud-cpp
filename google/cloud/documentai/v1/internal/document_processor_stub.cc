@@ -19,8 +19,8 @@
 #include "google/cloud/documentai/v1/internal/document_processor_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/documentai/v1/document_processor_service.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/cloud/documentai/v1/document_processor_service.grpc.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

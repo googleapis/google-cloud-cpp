@@ -22,8 +22,8 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/bigquery/datatransfer/v1/datatransfer.grpc.pb.h>
-#include <google/cloud/location/locations.grpc.pb.h>
+#include "google/cloud/bigquery/datatransfer/v1/datatransfer.grpc.pb.h"
+#include "google/cloud/location/locations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

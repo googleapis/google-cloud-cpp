@@ -26,7 +26,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/sql/v1/cloud_sql_ssl_certs.pb.h>
+#include "google/cloud/sql/v1/cloud_sql_ssl_certs.pb.h"
 #include <memory>
 
 namespace google {

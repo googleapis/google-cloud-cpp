@@ -21,7 +21,7 @@
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/firewall_policies/v1/firewall_policies.pb.h>
+#include "google/cloud/compute/firewall_policies/v1/firewall_policies.pb.h"
 #include <memory>
 
 namespace google {

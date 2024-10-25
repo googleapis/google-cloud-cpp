@@ -21,7 +21,7 @@
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/target_pools/v1/target_pools.pb.h>
+#include "google/cloud/compute/target_pools/v1/target_pools.pb.h"
 #include <memory>
 
 namespace google {

@@ -22,8 +22,8 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/compute/global_operations/v1/global_operations.pb.h>
-#include <google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.pb.h>
+#include "google/cloud/compute/global_operations/v1/global_operations.pb.h"
+#include "google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes.pb.h"
 #include <memory>
 #include <utility>
 

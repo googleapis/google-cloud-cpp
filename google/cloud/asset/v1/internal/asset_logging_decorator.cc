@@ -19,7 +19,7 @@
 #include "google/cloud/asset/v1/internal/asset_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/asset/v1/asset_service.grpc.pb.h>
+#include "google/cloud/asset/v1/asset_service.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

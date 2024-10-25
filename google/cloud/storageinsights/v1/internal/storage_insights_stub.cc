@@ -19,7 +19,7 @@
 #include "google/cloud/storageinsights/v1/internal/storage_insights_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/storageinsights/v1/storageinsights.grpc.pb.h>
+#include "google/cloud/storageinsights/v1/storageinsights.grpc.pb.h"
 #include <memory>
 #include <utility>
 

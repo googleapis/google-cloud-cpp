@@ -19,7 +19,7 @@
 #include "google/cloud/dialogflow_es/internal/contexts_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/dialogflow/v2/context.grpc.pb.h>
+#include "google/cloud/dialogflow/v2/context.grpc.pb.h"
 #include <memory>
 #include <utility>
 

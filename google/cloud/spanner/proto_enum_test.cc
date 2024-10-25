@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/proto_enum.h"
-#include <google/cloud/spanner/testing/singer.pb.h>
+#include "google/cloud/spanner/testing/singer.pb.h"
 #include <gmock/gmock.h>
 #include <sstream>
 #include <string>

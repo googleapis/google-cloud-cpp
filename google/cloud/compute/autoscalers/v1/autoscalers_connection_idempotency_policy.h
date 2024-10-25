@@ -21,7 +21,7 @@
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/autoscalers/v1/autoscalers.pb.h>
+#include "google/cloud/compute/autoscalers/v1/autoscalers.pb.h"
 #include <memory>
 
 namespace google {

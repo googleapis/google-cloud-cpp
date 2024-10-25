@@ -21,8 +21,8 @@
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/cloud/servicedirectory/v1/lookup_service.grpc.pb.h>
+#include "google/cloud/location/locations.grpc.pb.h"
+#include "google/cloud/servicedirectory/v1/lookup_service.grpc.pb.h"
 #include <memory>
 
 namespace google {

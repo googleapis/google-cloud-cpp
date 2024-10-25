@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "generator/internal/request_id.h"
-#include <google/api/field_info.pb.h>
+#include "google/api/field_info.pb.h"
 
 namespace google {
 namespace cloud {

@@ -19,7 +19,7 @@
 #include "google/cloud/servicedirectory/v1/internal/lookup_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/servicedirectory/v1/lookup_service.grpc.pb.h>
+#include "google/cloud/servicedirectory/v1/lookup_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

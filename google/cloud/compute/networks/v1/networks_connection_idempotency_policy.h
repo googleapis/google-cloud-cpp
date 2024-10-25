@@ -21,7 +21,7 @@
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/networks/v1/networks.pb.h>
+#include "google/cloud/compute/networks/v1/networks.pb.h"
 #include <memory>
 
 namespace google {

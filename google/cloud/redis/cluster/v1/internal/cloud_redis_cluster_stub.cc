@@ -19,8 +19,8 @@
 #include "google/cloud/redis/cluster/v1/internal/cloud_redis_cluster_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/redis/cluster/v1/cloud_redis_cluster.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/cloud/redis/cluster/v1/cloud_redis_cluster.grpc.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

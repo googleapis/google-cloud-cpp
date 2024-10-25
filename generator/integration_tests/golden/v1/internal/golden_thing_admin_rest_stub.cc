@@ -22,7 +22,7 @@
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
 #include <generator/integration_tests/test.pb.h>
-#include <google/longrunning/operations.pb.h>
+#include "google/longrunning/operations.pb.h"
 #include <memory>
 #include <utility>
 

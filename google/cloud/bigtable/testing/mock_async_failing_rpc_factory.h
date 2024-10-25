@@ -21,7 +21,7 @@
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/mock_async_response_reader.h"
 #include "google/cloud/testing_util/validate_metadata.h"
-#include <google/protobuf/text_format.h>
+#include "google/protobuf/text_format.h"
 #include <grpcpp/support/async_unary_call.h>
 #include <string>
 

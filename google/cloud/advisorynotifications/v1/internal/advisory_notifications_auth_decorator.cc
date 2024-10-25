@@ -17,7 +17,7 @@
 // source: google/cloud/advisorynotifications/v1/service.proto
 
 #include "google/cloud/advisorynotifications/v1/internal/advisory_notifications_auth_decorator.h"
-#include <google/cloud/advisorynotifications/v1/service.grpc.pb.h>
+#include "google/cloud/advisorynotifications/v1/service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

@@ -27,7 +27,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/aiplatform/v1/feature_online_store_service.pb.h>
+#include "google/cloud/aiplatform/v1/feature_online_store_service.pb.h"
 #include <memory>
 #include <string>
 

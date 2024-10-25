@@ -41,7 +41,7 @@
 #include "absl/time/clock.h"
 #include "absl/time/time.h"
 #include "absl/types/optional.h"
-#include <google/cloud/spanner/testing/singer.pb.h>
+#include "google/cloud/spanner/testing/singer.pb.h"
 #include <chrono>
 #include <iomanip>
 #include <iterator>

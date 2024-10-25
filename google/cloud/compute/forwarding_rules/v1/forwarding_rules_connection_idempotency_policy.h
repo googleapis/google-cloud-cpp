@@ -21,7 +21,7 @@
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/forwarding_rules/v1/forwarding_rules.pb.h>
+#include "google/cloud/compute/forwarding_rules/v1/forwarding_rules.pb.h"
 #include <memory>
 
 namespace google {

@@ -19,8 +19,8 @@
 #include "generator/internal/mixin_utils.h"
 #include "generator/internal/printer.h"
 #include "absl/types/optional.h"
-#include <google/api/http.pb.h>
-#include <google/protobuf/descriptor.h>
+#include "google/api/http.pb.h"
+#include "google/protobuf/descriptor.h"
 #include <string>
 
 namespace google {

@@ -18,8 +18,8 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/time/time.h"
 #include "absl/types/optional.h"
-#include <google/cloud/spanner/testing/singer.pb.h>
-#include <google/protobuf/text_format.h>
+#include "google/cloud/spanner/testing/singer.pb.h"
+#include "google/protobuf/text_format.h"
 #include <gmock/gmock.h>
 #include <cmath>
 #include <cstdint>

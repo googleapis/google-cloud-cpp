@@ -24,7 +24,7 @@
 #include "google/cloud/background_threads.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
-#include <google/spanner/v1/spanner.pb.h>
+#include "google/spanner/v1/spanner.pb.h"
 #include <cstdint>
 #include <memory>
 #include <mutex>

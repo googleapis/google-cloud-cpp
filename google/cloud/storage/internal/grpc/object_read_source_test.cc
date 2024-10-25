@@ -18,8 +18,8 @@
 #include "google/cloud/storage/internal/grpc/object_metadata_parser.h"
 #include "google/cloud/storage/testing/mock_storage_stub.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include <google/protobuf/text_format.h>
-#include <google/protobuf/util/message_differencer.h>
+#include "google/protobuf/text_format.h"
+#include "google/protobuf/util/message_differencer.h"
 #include <gmock/gmock.h>
 
 namespace google {

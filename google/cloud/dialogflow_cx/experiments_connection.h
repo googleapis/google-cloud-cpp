@@ -27,7 +27,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/dialogflow/cx/v3/experiment.pb.h>
+#include "google/cloud/dialogflow/cx/v3/experiment.pb.h"
 #include <memory>
 #include <string>
 

@@ -21,7 +21,7 @@
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/accelerator_types/v1/accelerator_types.pb.h>
+#include "google/cloud/compute/accelerator_types/v1/accelerator_types.pb.h"
 #include <memory>
 
 namespace google {

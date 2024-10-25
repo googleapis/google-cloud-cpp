@@ -19,7 +19,7 @@
 #include "google/cloud/cloudcontrolspartner/v1/internal/cloud_controls_partner_core_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/cloudcontrolspartner/v1/core.grpc.pb.h>
+#include "google/cloud/cloudcontrolspartner/v1/core.grpc.pb.h"
 #include <memory>
 #include <utility>
 

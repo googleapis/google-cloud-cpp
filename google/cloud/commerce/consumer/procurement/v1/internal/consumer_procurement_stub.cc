@@ -20,8 +20,8 @@
 #include "google/cloud/commerce/consumer/procurement/v1/internal/consumer_procurement_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/commerce/consumer/procurement/v1/procurement_service.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/cloud/commerce/consumer/procurement/v1/procurement_service.grpc.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

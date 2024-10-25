@@ -21,7 +21,7 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/compute/accelerator_types/v1/accelerator_types.pb.h>
+#include "google/cloud/compute/accelerator_types/v1/accelerator_types.pb.h"
 #include <memory>
 #include <utility>
 

@@ -16,8 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_TESTING_ERROR_COLLECTORS_H
 
 #include "absl/strings/string_view.h"
-#include <google/protobuf/compiler/importer.h>
-#include <google/protobuf/descriptor.h>
+#include "google/protobuf/compiler/importer.h"
+#include "google/protobuf/descriptor.h"
 
 namespace google {
 namespace cloud {

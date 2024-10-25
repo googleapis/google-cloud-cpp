@@ -19,7 +19,7 @@
 #include "google/cloud/kms/v1/internal/autokey_admin_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/kms/v1/autokey_admin.grpc.pb.h>
+#include "google/cloud/kms/v1/autokey_admin.grpc.pb.h"
 #include <memory>
 #include <utility>
 

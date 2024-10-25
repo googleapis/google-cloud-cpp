@@ -19,7 +19,7 @@
 #include "google/cloud/artifactregistry/v1/internal/artifact_registry_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/devtools/artifactregistry/v1/service.grpc.pb.h>
+#include "google/devtools/artifactregistry/v1/service.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

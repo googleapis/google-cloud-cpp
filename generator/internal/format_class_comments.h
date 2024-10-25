@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_FORMAT_CLASS_COMMENTS_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_FORMAT_CLASS_COMMENTS_H
 
-#include <google/protobuf/descriptor.h>
+#include "google/protobuf/descriptor.h"
 #include <string>
 
 namespace google {

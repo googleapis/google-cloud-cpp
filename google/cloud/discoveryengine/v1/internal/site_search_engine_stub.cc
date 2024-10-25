@@ -19,8 +19,8 @@
 #include "google/cloud/discoveryengine/v1/internal/site_search_engine_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/discoveryengine/v1/site_search_engine_service.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/cloud/discoveryengine/v1/site_search_engine_service.grpc.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

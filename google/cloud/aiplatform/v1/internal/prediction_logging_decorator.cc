@@ -21,7 +21,7 @@
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/internal/streaming_read_rpc_logging.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/aiplatform/v1/prediction_service.grpc.pb.h>
+#include "google/cloud/aiplatform/v1/prediction_service.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

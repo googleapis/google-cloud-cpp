@@ -19,8 +19,8 @@
 #include "google/cloud/certificatemanager/v1/internal/certificate_manager_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/certificatemanager/v1/certificate_manager.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/cloud/certificatemanager/v1/certificate_manager.grpc.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

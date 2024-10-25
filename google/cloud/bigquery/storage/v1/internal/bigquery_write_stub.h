@@ -24,7 +24,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/bigquery/storage/v1/storage.grpc.pb.h>
+#include "google/cloud/bigquery/storage/v1/storage.grpc.pb.h"
 #include <memory>
 #include <utility>
 

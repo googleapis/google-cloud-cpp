@@ -29,8 +29,8 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/cloud/securitycentermanagement/v1/security_center_management.grpc.pb.h>
+#include "google/cloud/location/locations.grpc.pb.h"
+#include "google/cloud/securitycentermanagement/v1/security_center_management.grpc.pb.h"
 #include <memory>
 #include <utility>
 

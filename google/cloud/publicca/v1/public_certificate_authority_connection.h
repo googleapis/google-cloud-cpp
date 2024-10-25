@@ -26,7 +26,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/security/publicca/v1/service.pb.h>
+#include "google/cloud/security/publicca/v1/service.pb.h"
 #include <memory>
 
 namespace google {

@@ -17,7 +17,7 @@
 
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/spanner/version.h"
-#include <google/spanner/v1/keys.pb.h>
+#include "google/spanner/v1/keys.pb.h"
 #include <utility>
 #include <vector>
 

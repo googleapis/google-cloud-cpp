@@ -28,7 +28,7 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include <google/cloud/osconfig/agentendpoint/v1/agentendpoint.grpc.pb.h>
+#include "google/cloud/osconfig/agentendpoint/v1/agentendpoint.grpc.pb.h"
 #include <memory>
 #include <utility>
 

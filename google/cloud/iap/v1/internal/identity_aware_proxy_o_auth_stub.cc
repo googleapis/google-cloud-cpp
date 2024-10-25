@@ -19,7 +19,7 @@
 #include "google/cloud/iap/v1/internal/identity_aware_proxy_o_auth_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/iap/v1/service.grpc.pb.h>
+#include "google/cloud/iap/v1/service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

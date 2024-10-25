@@ -30,7 +30,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/backend_buckets/v1/backend_buckets.pb.h>
+#include "google/cloud/compute/backend_buckets/v1/backend_buckets.pb.h"
 #include <memory>
 
 namespace google {

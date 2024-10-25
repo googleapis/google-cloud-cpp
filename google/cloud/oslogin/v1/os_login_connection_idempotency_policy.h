@@ -21,7 +21,7 @@
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/oslogin/v1/oslogin.grpc.pb.h>
+#include "google/cloud/oslogin/v1/oslogin.grpc.pb.h"
 #include <memory>
 
 namespace google {

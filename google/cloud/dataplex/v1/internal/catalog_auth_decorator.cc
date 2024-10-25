@@ -17,7 +17,7 @@
 // source: google/cloud/dataplex/v1/catalog.proto
 
 #include "google/cloud/dataplex/v1/internal/catalog_auth_decorator.h"
-#include <google/cloud/dataplex/v1/catalog.grpc.pb.h>
+#include "google/cloud/dataplex/v1/catalog.grpc.pb.h"
 #include <memory>
 #include <utility>
 

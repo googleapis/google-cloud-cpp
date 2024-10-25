@@ -45,7 +45,7 @@
 #include "generator/internal/stub_rest_generator.h"
 #include "generator/internal/tracing_connection_generator.h"
 #include "generator/internal/tracing_stub_generator.h"
-#include <google/protobuf/compiler/code_generator.h>
+#include "google/protobuf/compiler/code_generator.h"
 #include <algorithm>
 #include <string>
 #include <utility>

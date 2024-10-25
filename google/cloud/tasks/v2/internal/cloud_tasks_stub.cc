@@ -19,7 +19,7 @@
 #include "google/cloud/tasks/v2/internal/cloud_tasks_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/tasks/v2/cloudtasks.grpc.pb.h>
+#include "google/cloud/tasks/v2/cloudtasks.grpc.pb.h"
 #include <memory>
 #include <utility>
 

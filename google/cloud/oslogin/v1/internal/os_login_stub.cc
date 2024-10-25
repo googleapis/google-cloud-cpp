@@ -19,7 +19,7 @@
 #include "google/cloud/oslogin/v1/internal/os_login_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/oslogin/v1/oslogin.grpc.pb.h>
+#include "google/cloud/oslogin/v1/oslogin.grpc.pb.h"
 #include <memory>
 #include <utility>
 

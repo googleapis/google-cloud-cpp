@@ -16,8 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_MAKE_GENERATORS_H
 
 #include "generator/internal/generator_interface.h"
-#include <google/protobuf/compiler/code_generator.h>
-#include <google/protobuf/descriptor.h>
+#include "google/protobuf/compiler/code_generator.h"
+#include "google/protobuf/descriptor.h"
 #include <yaml-cpp/yaml.h>
 #include <memory>
 #include <string>

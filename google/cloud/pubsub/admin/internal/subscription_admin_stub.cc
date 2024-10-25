@@ -19,7 +19,7 @@
 #include "google/cloud/pubsub/admin/internal/subscription_admin_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/pubsub/v1/pubsub.grpc.pb.h>
+#include "google/pubsub/v1/pubsub.grpc.pb.h"
 #include <memory>
 #include <utility>
 

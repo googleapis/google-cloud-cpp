@@ -24,7 +24,7 @@
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/regions/v1/regions.pb.h>
+#include "google/cloud/compute/regions/v1/regions.pb.h"
 #include <memory>
 #include <set>
 #include <string>

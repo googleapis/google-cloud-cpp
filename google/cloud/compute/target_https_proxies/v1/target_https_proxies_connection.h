@@ -31,7 +31,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/target_https_proxies/v1/target_https_proxies.pb.h>
+#include "google/cloud/compute/target_https_proxies/v1/target_https_proxies.pb.h"
 #include <memory>
 
 namespace google {

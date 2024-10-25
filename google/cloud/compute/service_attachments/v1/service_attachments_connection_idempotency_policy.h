@@ -21,7 +21,7 @@
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/service_attachments/v1/service_attachments.pb.h>
+#include "google/cloud/compute/service_attachments/v1/service_attachments.pb.h"
 #include <memory>
 
 namespace google {

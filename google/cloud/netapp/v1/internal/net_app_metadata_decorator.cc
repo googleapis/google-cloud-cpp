@@ -22,7 +22,7 @@
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/netapp/v1/cloud_netapp_service.grpc.pb.h>
+#include "google/cloud/netapp/v1/cloud_netapp_service.grpc.pb.h"
 #include <memory>
 #include <string>
 #include <utility>

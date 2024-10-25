@@ -22,7 +22,7 @@ top-level [README](/README.md#building-and-installing).
 
 ```cc
 #include "google/cloud/videointelligence/v1/video_intelligence_client.h"
-#include <google/protobuf/util/time_util.h>
+#include "google/protobuf/util/time_util.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {

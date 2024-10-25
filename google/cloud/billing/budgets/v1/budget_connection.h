@@ -27,7 +27,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/billing/budgets/v1/budget_service.pb.h>
+#include "google/cloud/billing/budgets/v1/budget_service.pb.h"
 #include <memory>
 
 namespace google {

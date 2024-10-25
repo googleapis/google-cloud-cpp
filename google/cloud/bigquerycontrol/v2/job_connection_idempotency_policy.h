@@ -21,7 +21,7 @@
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/bigquery/v2/job.pb.h>
+#include "google/cloud/bigquery/v2/job.pb.h"
 #include <memory>
 
 namespace google {

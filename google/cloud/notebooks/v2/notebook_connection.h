@@ -30,8 +30,8 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/notebooks/v2/service.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/cloud/notebooks/v2/service.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 
 namespace google {

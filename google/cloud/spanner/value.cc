@@ -18,8 +18,8 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/strerror.h"
 #include "absl/time/civil_time.h"
-#include <google/protobuf/descriptor.h>
-#include <google/protobuf/message.h>
+#include "google/protobuf/descriptor.h"
+#include "google/protobuf/message.h"
 #include <cerrno>
 #include <cmath>
 #include <cstdlib>

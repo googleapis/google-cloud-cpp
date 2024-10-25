@@ -19,7 +19,7 @@
 #include "google/cloud/dataproc/v1/internal/session_controller_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/dataproc/v1/sessions.grpc.pb.h>
+#include "google/cloud/dataproc/v1/sessions.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

@@ -19,8 +19,8 @@
 #include "google/cloud/managedkafka/v1/internal/managed_kafka_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/managedkafka/v1/managed_kafka.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/cloud/managedkafka/v1/managed_kafka.grpc.pb.h"
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

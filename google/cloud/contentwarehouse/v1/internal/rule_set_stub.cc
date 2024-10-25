@@ -19,7 +19,7 @@
 #include "google/cloud/contentwarehouse/v1/internal/rule_set_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/contentwarehouse/v1/ruleset_service.grpc.pb.h>
+#include "google/cloud/contentwarehouse/v1/ruleset_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

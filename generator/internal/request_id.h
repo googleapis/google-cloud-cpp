@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_REQUEST_ID_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_REQUEST_ID_H
 
-#include <google/protobuf/descriptor.h>
+#include "google/protobuf/descriptor.h"
 #include <yaml-cpp/yaml.h>
 #include <string>
 

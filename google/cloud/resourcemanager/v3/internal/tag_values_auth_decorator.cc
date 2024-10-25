@@ -17,7 +17,7 @@
 // source: google/cloud/resourcemanager/v3/tag_values.proto
 
 #include "google/cloud/resourcemanager/v3/internal/tag_values_auth_decorator.h"
-#include <google/cloud/resourcemanager/v3/tag_values.grpc.pb.h>
+#include "google/cloud/resourcemanager/v3/tag_values.grpc.pb.h"
 #include <memory>
 #include <utility>
 

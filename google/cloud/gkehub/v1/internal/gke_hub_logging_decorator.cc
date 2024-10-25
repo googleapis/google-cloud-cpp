@@ -19,7 +19,7 @@
 #include "google/cloud/gkehub/v1/internal/gke_hub_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/gkehub/v1/service.grpc.pb.h>
+#include "google/cloud/gkehub/v1/service.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

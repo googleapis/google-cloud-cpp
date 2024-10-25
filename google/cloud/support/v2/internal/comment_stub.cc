@@ -19,7 +19,7 @@
 #include "google/cloud/support/v2/internal/comment_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/support/v2/comment_service.grpc.pb.h>
+#include "google/cloud/support/v2/comment_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

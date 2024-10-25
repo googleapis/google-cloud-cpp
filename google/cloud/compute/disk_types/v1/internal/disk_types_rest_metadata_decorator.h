@@ -23,7 +23,7 @@
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/disk_types/v1/disk_types.pb.h>
+#include "google/cloud/compute/disk_types/v1/disk_types.pb.h"
 #include <memory>
 #include <string>
 

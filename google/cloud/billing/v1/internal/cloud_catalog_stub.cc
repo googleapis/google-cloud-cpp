@@ -19,7 +19,7 @@
 #include "google/cloud/billing/v1/internal/cloud_catalog_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/billing/v1/cloud_catalog.grpc.pb.h>
+#include "google/cloud/billing/v1/cloud_catalog.grpc.pb.h"
 #include <memory>
 #include <utility>
 

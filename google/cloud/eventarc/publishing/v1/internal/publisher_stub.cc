@@ -19,7 +19,7 @@
 #include "google/cloud/eventarc/publishing/v1/internal/publisher_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/eventarc/publishing/v1/publisher.grpc.pb.h>
+#include "google/cloud/eventarc/publishing/v1/publisher.grpc.pb.h"
 #include <memory>
 #include <utility>
 

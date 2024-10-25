@@ -21,8 +21,8 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/compute/reservations/v1/reservations.pb.h>
-#include <google/cloud/compute/zone_operations/v1/zone_operations.pb.h>
+#include "google/cloud/compute/reservations/v1/reservations.pb.h"
+#include "google/cloud/compute/zone_operations/v1/zone_operations.pb.h"
 #include <memory>
 #include <utility>
 

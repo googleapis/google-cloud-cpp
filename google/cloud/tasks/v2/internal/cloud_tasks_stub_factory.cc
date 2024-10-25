@@ -28,8 +28,8 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/cloud/tasks/v2/cloudtasks.grpc.pb.h>
+#include "google/cloud/location/locations.grpc.pb.h"
+#include "google/cloud/tasks/v2/cloudtasks.grpc.pb.h"
 #include <memory>
 #include <utility>
 

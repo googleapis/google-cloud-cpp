@@ -19,7 +19,7 @@
 #include "google/cloud/storageinsights/v1/internal/storage_insights_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/storageinsights/v1/storageinsights.grpc.pb.h>
+#include "google/cloud/storageinsights/v1/storageinsights.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

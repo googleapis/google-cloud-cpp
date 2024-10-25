@@ -18,7 +18,7 @@
 
 #include "google/cloud/logging/v2/internal/logging_service_v2_auth_decorator.h"
 #include "google/cloud/internal/async_read_write_stream_auth.h"
-#include <google/logging/v2/logging.grpc.pb.h>
+#include "google/logging/v2/logging.grpc.pb.h"
 #include <memory>
 #include <utility>
 

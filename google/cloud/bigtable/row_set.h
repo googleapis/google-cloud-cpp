@@ -17,7 +17,7 @@
 
 #include "google/cloud/bigtable/row_range.h"
 #include "google/cloud/bigtable/version.h"
-#include <google/protobuf/util/message_differencer.h>
+#include "google/protobuf/util/message_differencer.h"
 
 namespace google {
 namespace cloud {

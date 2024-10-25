@@ -19,7 +19,7 @@
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "absl/strings/str_format.h"
-#include <google/protobuf/text_format.h>
+#include "google/protobuf/text_format.h"
 #include <gmock/gmock.h>
 #include <unordered_map>
 

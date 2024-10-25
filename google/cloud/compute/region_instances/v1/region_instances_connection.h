@@ -29,7 +29,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/region_instances/v1/region_instances.pb.h>
+#include "google/cloud/compute/region_instances/v1/region_instances.pb.h"
 #include <memory>
 
 namespace google {

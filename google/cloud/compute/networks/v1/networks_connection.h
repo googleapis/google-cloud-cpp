@@ -30,7 +30,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/networks/v1/networks.pb.h>
+#include "google/cloud/compute/networks/v1/networks.pb.h"
 #include <memory>
 
 namespace google {

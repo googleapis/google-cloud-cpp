@@ -21,7 +21,7 @@
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/osconfig/v1/osconfig_zonal_service.grpc.pb.h>
+#include "google/cloud/osconfig/v1/osconfig_zonal_service.grpc.pb.h"
 #include <memory>
 
 namespace google {

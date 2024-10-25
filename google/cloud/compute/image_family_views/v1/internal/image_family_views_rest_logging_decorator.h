@@ -24,7 +24,7 @@
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/image_family_views/v1/image_family_views.pb.h>
+#include "google/cloud/compute/image_family_views/v1/image_family_views.pb.h"
 #include <memory>
 #include <set>
 #include <string>

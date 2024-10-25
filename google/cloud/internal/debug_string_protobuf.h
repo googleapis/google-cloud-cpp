@@ -18,7 +18,7 @@
 #include "google/cloud/status.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include <google/protobuf/message.h>
+#include "google/protobuf/message.h"
 
 namespace google {
 namespace cloud {

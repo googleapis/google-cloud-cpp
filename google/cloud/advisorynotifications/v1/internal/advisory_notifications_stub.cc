@@ -19,7 +19,7 @@
 #include "google/cloud/advisorynotifications/v1/internal/advisory_notifications_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/advisorynotifications/v1/service.grpc.pb.h>
+#include "google/cloud/advisorynotifications/v1/service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

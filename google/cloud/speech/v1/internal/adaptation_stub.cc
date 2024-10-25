@@ -19,7 +19,7 @@
 #include "google/cloud/speech/v1/internal/adaptation_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/speech/v1/cloud_speech_adaptation.grpc.pb.h>
+#include "google/cloud/speech/v1/cloud_speech_adaptation.grpc.pb.h"
 #include <memory>
 #include <utility>
 

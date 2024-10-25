@@ -30,7 +30,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/images/v1/images.pb.h>
+#include "google/cloud/compute/images/v1/images.pb.h"
 #include <memory>
 
 namespace google {

@@ -22,7 +22,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/language/v1/language_service.grpc.pb.h>
+#include "google/cloud/language/v1/language_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

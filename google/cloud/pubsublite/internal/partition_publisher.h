@@ -21,7 +21,7 @@
 #include "google/cloud/pubsublite/internal/resumable_async_streaming_read_write_rpc.h"
 #include "google/cloud/pubsublite/internal/service_composite.h"
 #include "absl/functional/function_ref.h"
-#include <google/cloud/pubsublite/v1/publisher.pb.h>
+#include "google/cloud/pubsublite/v1/publisher.pb.h"
 #include <deque>
 #include <mutex>
 

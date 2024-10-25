@@ -21,7 +21,7 @@
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/video/transcoder/v1/services.grpc.pb.h>
+#include "google/cloud/video/transcoder/v1/services.grpc.pb.h"
 #include <memory>
 
 namespace google {

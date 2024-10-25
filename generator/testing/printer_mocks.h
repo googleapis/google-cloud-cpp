@@ -15,9 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_TESTING_PRINTER_MOCKS_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_TESTING_PRINTER_MOCKS_H
 
-#include <google/protobuf/compiler/code_generator.h>
-#include <google/protobuf/descriptor.h>
-#include <google/protobuf/io/zero_copy_stream.h>
+#include "google/protobuf/compiler/code_generator.h"
+#include "google/protobuf/descriptor.h"
+#include "google/protobuf/io/zero_copy_stream.h"
 #include <gmock/gmock.h>
 
 namespace google {

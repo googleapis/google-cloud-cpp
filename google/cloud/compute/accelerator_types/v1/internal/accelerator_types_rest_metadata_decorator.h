@@ -23,7 +23,7 @@
 #include "google/cloud/future.h"
 #include "google/cloud/rest_options.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/accelerator_types/v1/accelerator_types.pb.h>
+#include "google/cloud/compute/accelerator_types/v1/accelerator_types.pb.h"
 #include <memory>
 #include <string>
 

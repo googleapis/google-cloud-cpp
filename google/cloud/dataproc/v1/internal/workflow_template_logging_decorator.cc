@@ -19,7 +19,7 @@
 #include "google/cloud/dataproc/v1/internal/workflow_template_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/dataproc/v1/workflow_templates.grpc.pb.h>
+#include "google/cloud/dataproc/v1/workflow_templates.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

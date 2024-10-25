@@ -29,7 +29,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/region_operations/v1/region_operations.pb.h>
+#include "google/cloud/compute/region_operations/v1/region_operations.pb.h"
 #include <memory>
 
 namespace google {

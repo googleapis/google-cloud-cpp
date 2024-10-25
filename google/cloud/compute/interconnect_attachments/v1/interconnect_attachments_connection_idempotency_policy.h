@@ -22,7 +22,7 @@
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.pb.h>
+#include "google/cloud/compute/interconnect_attachments/v1/interconnect_attachments.pb.h"
 #include <memory>
 
 namespace google {

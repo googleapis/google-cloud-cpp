@@ -17,7 +17,7 @@
 
 #include "generator/internal/printer.h"
 #include "google/cloud/optional.h"
-#include <google/protobuf/descriptor.h>
+#include "google/protobuf/descriptor.h"
 #include <string>
 #include <utility>
 
