@@ -162,7 +162,7 @@ def gl_cpp_workspace0(name = None):
         git_repository,
         name = "com_github_grpc_grpc",
         remote = "https://github.com/yashykt/grpc.git",
-        branch = "AddAuthorityToXdsClientMetricsScope",
+        commit = "380c2be289fedf341aed2c11b9c85d67e21d2528",
     )
 
     # We use the cc_proto_library() rule from @com_google_protobuf, which
