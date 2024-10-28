@@ -28,26 +28,31 @@ cd $HOME/google-cloud-cpp
 ```shell
 library=... # The name of your new library in the google-cloud-cpp repository
 subdir="google/cloud/${library}"  # The path in googleapis repo, may not start with google/cloud/
-bazel_output_base="$(bazel info output_base)"
+bazel_output_base="$(bazelisk info output_base)"
 ```
 
 ### Verify the C++ rules exist
 
+You may need to
+[Send a PR to update the googleapis SHA to the latest version](../contributor/howto-guide-update-googleapis-sha.md).
+Wait until that is submitted before proceeding any further for the following 2
+cases:
+
+1. The dependency does not exist at the pinned version of the googleapis repo.
+
 ```shell
-bazel --batch query --noshow_progress --noshow_loading_progress \
+bazelisk --batch query --noshow_progress --noshow_loading_progress \
     "kind(cc_library, @com_google_googleapis//${subdir}/...)"
 ```
 
-If the command fails, it returns something like this:
+- If the command fails, it returns something like this:
 
 ```shell
 ERROR: no targets found beneath 'commerce'
 ```
 
-This means the dependency does not exist at the pinned version of the googleapis
-repo.
-[Send a PR to update the googleapis SHA to the latest version](../contributor/howto-guide-update-googleapis-sha.md).
-Wait until that is submitted before proceeding any further.
+2. Check `$bazel_output_base/external/googleapis~/api-index-v1.json`, if
+   `$library` with the correct version is not in `apis` section.
 
 ### Edit the scripts and configuration
 
@@ -143,7 +148,7 @@ external/googleapis/update_libraries.sh "${library}"
 Then run the micro-generator to create the scaffold and the C++ sources:
 
 ```shell
-bazel run \
+bazelisk run \
   //generator:google-cloud-cpp-codegen -- \
   --protobuf_proto_path="${bazel_output_base}"/external/protobuf~/src \
   --googleapis_proto_path="${bazel_output_base}"/external/googleapis~ \
@@ -226,7 +231,7 @@ API. Test your changes with:
 
 ```sh
 gcloud services enable --project=cloud-cpp-testing-resources "${library}.googleapis.com"
-bazel run -- //google/cloud/${library}/quickstart:quickstart $params
+bazelisk run -- //google/cloud/${library}/quickstart:quickstart $params
 ```
 
 Edit the tests so this new quickstart receives the right command-line arguments
@@ -243,6 +248,15 @@ running while you work on tweaks to the quickstart and documentation.
 env GOOGLE_CLOUD_CPP_CHECK_API=${library} ci/cloudbuild/build.sh -t check-api-pr
 git add ci/abi-dumps
 git commit -m "Add API baseline"
+```
+
+The following error is expected for the first run, because the command generates
+the ABI dump and fails because there is no previous ABI dump to compare to. When
+you run once more, the error is gone.
+
+```
+grep: cmake-out/compat_reports/google_cloud_cpp_parallelstore/src_compat_report.html: No such file or directory
+2024-10-25T19:00:49Z (+57s): ABI Compliance error: google_cloud_cpp_parallelstore
 ```
 
 ### Update the README files
@@ -279,7 +293,7 @@ ci/cloudbuild/build.sh -t checkers-pr
 ### Verify everything compiles
 
 ```shell
-bazel build //google/cloud/${library}/...
+bazelisk build //google/cloud/${library}/...
 ci/cloudbuild/build.sh -t cmake-install-pr
 ```
 
@@ -359,7 +373,7 @@ git commit -am "generated changes"
 ### Verify everything compiles
 
 ```shell
-bazel build //google/cloud/${library}/...
+bazelisk build //google/cloud/${library}/...
 ci/cloudbuild/build.sh -t cmake-install-pr
 ```
 

@@ -349,12 +349,12 @@ for library in "${keys[@]}"; do
     if [[ -z "${rule}" ]]; then continue; fi
     path="${rule%:*}"
     echo "=== $library $rule $path"
-    bazel query --noshow_progress --noshow_loading_progress \
+    bazelisk query --noshow_progress --noshow_loading_progress \
       "deps(${rule})" |
       grep "${path}" |
       grep -E '\.proto$' \
         >>"external/googleapis/protolists/${library}.list" || true
-    bazel query --noshow_progress --noshow_loading_progress \
+    bazelisk query --noshow_progress --noshow_loading_progress \
       "deps(${rule})" |
       grep "@com_google_googleapis//" | grep _proto |
       grep -v "${path}" \
