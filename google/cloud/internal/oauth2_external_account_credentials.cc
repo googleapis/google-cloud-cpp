@@ -97,9 +97,9 @@ StatusOr<ExternalAccountInfo> ParseExternalAccountConfiguration(
   if (!source) return std::move(source).status();
 
   absl::optional<std::string> workforce_pool_user_project;
-  auto up_it = json.find("workforce_pool_user_project");
-  if (up_it != json.end()) {
-    workforce_pool_user_project = *up_it;
+  auto it = json.find("workforce_pool_user_project");
+  if (it != json.end()) {
+    workforce_pool_user_project = it->get<std::string>();
   }
 
   auto info = ExternalAccountInfo{*std::move(audience),
@@ -110,7 +110,7 @@ StatusOr<ExternalAccountInfo> ParseExternalAccountConfiguration(
                                   *std::move(universe_domain),
                                   std::move(workforce_pool_user_project)};
 
-  auto it = json.find("service_account_impersonation_url");
+  it = json.find("service_account_impersonation_url");
   if (it == json.end()) return info;
 
   auto constexpr kDefaultImpersonationTokenLifetime =
@@ -158,8 +158,9 @@ StatusOr<AccessToken> ExternalAccountCredentials::GetToken(
       {"subject_token", subject_token->token},
   };
 
-  // Workforce Identity is handled at org level, it requires userProject in
-  // header. Workload Identity is handled at project level, it doesn't require.
+  // Workforce Identity is handled at the org level and requires the userProject
+  // header. Workload Identity is handled at the project level and doesn't
+  // require the header.
   if (info_.workforce_pool_user_project) {
     form_data.emplace_back(
         "options", absl::StrCat(R"({"userProject": ")",
