@@ -251,7 +251,7 @@ git commit -m "Add API baseline"
 ```
 
 The following error is expected for the first run, because the command generates
-the ABI dump, it fails because there is no previous ABI dump to compare to. When
+the ABI dump and fails because there is no previous ABI dump to compare to. When
 you run once more, the error is gone.
 
 ```
