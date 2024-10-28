@@ -158,13 +158,10 @@ def gl_cpp_workspace0(name = None):
 
     # Load gRPC and its dependencies, using a similar pattern to this function.
     maybe(
-        http_archive,
+        git_repository,
         name = "com_github_grpc_grpc",
-        urls = [
-            "https://github.com/grpc/grpc/archive/v1.67.0.tar.gz",
-        ],
-        sha256 = "af0638f73e4452e22e295f8b3f452518234254104713a08497f3d3aaa76733ad",
-        strip_prefix = "grpc-1.67.0",
+        remote = "github.com/yashykt/grpc",
+        branch = "AddAuthorityToXdsClientMetricsScope",
     )
 
     # We use the cc_proto_library() rule from @com_google_protobuf, which
