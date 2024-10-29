@@ -24,7 +24,6 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_firewall_policies_v1::FirewallPoliciesClient](@ref compute_firewall_policies_v1::FirewallPoliciesClient-service-account-snippet)
 - [\c compute_firewalls_v1::FirewallsClient](@ref compute_firewalls_v1::FirewallsClient-service-account-snippet)
 - [\c compute_forwarding_rules_v1::ForwardingRulesClient](@ref compute_forwarding_rules_v1::ForwardingRulesClient-service-account-snippet)
-- [\c compute_future_reservations_v1::FutureReservationsClient](@ref compute_future_reservations_v1::FutureReservationsClient-service-account-snippet)
 - [\c compute_global_addresses_v1::GlobalAddressesClient](@ref compute_global_addresses_v1::GlobalAddressesClient-service-account-snippet)
 - [\c compute_global_forwarding_rules_v1::GlobalForwardingRulesClient](@ref compute_global_forwarding_rules_v1::GlobalForwardingRulesClient-service-account-snippet)
 - [\c compute_global_network_endpoint_groups_v1::GlobalNetworkEndpointGroupsClient](@ref compute_global_network_endpoint_groups_v1::GlobalNetworkEndpointGroupsClient-service-account-snippet)
@@ -194,12 +193,6 @@ guide for more details.
 /*! @page compute_forwarding_rules_v1::ForwardingRulesClient-service-account-snippet Override compute_forwarding_rules_v1::ForwardingRulesClient Authentication Defaults
 
 @snippet google/cloud/compute/forwarding_rules/v1/samples/forwarding_rules_client_samples.cc with-service-account
-
-*/
-
-/*! @page compute_future_reservations_v1::FutureReservationsClient-service-account-snippet Override compute_future_reservations_v1::FutureReservationsClient Authentication Defaults
-
-@snippet google/cloud/compute/future_reservations/v1/samples/future_reservations_client_samples.cc with-service-account
 
 */
 

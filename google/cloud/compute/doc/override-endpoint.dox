@@ -24,7 +24,6 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_firewall_policies_v1::FirewallPoliciesClient](@ref compute_firewall_policies_v1::FirewallPoliciesClient-endpoint-snippet)
 - [\c compute_firewalls_v1::FirewallsClient](@ref compute_firewalls_v1::FirewallsClient-endpoint-snippet)
 - [\c compute_forwarding_rules_v1::ForwardingRulesClient](@ref compute_forwarding_rules_v1::ForwardingRulesClient-endpoint-snippet)
-- [\c compute_future_reservations_v1::FutureReservationsClient](@ref compute_future_reservations_v1::FutureReservationsClient-endpoint-snippet)
 - [\c compute_global_addresses_v1::GlobalAddressesClient](@ref compute_global_addresses_v1::GlobalAddressesClient-endpoint-snippet)
 - [\c compute_global_forwarding_rules_v1::GlobalForwardingRulesClient](@ref compute_global_forwarding_rules_v1::GlobalForwardingRulesClient-endpoint-snippet)
 - [\c compute_global_network_endpoint_groups_v1::GlobalNetworkEndpointGroupsClient](@ref compute_global_network_endpoint_groups_v1::GlobalNetworkEndpointGroupsClient-endpoint-snippet)
@@ -184,12 +183,6 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page compute_forwarding_rules_v1::ForwardingRulesClient-endpoint-snippet Override compute_forwarding_rules_v1::ForwardingRulesClient Endpoint Configuration
 
 @snippet google/cloud/compute/forwarding_rules/v1/samples/forwarding_rules_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page compute_future_reservations_v1::FutureReservationsClient-endpoint-snippet Override compute_future_reservations_v1::FutureReservationsClient Endpoint Configuration
-
-@snippet google/cloud/compute/future_reservations/v1/samples/future_reservations_client_samples.cc set-client-endpoint
 
 */
 

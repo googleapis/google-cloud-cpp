@@ -12,6 +12,8 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
 
 - [AI Platform API](/google/cloud/aiplatform/README.md) - new
   `EvaluationServiceClient`
+- [Compute Engine](/google/cloud/compute/README.md) - changed
+  - `FutureReservationsClient` has been removed as the service is not GA.
 - [Dialogflow ES API](/google/cloud/dialogflow_es/README.md) - new
   `EncryptionSpecServiceClient` and `GeneratorsClient`
 
