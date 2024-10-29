@@ -29,6 +29,7 @@ if [[ -n "${UD_SERVICE_ACCOUNT}" ]]; then
   UD_SA_KEY_FILE=$(mktemp)
   echo "${UD_SERVICE_ACCOUNT}" >"${UD_SA_KEY_FILE}"
   umask "${ORIG_UMASK}"
+  io::log "Created SA key file ${UD_SA_KEY_FILE}"
 fi
 
 function ud::bazel_run() {
