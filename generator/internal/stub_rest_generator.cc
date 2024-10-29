@@ -55,6 +55,9 @@ Status StubRestGenerator::GenerateHeader() {
   std::vector<std::string> additional_pb_header_paths =
       absl::StrSplit(vars("additional_pb_header_paths"), absl::ByChar(','));
   HeaderSystemIncludes(additional_pb_header_paths);
+  std::vector<std::string> mixin_headers =
+      absl::StrSplit(vars("mixin_proto_header_paths"), ',');
+  HeaderSystemIncludes(mixin_headers);
   HeaderSystemIncludes({vars("proto_header_path"),
                         HasLongrunningMethod()
                             ? vars("longrunning_operation_include_header")
