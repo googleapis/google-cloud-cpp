@@ -15,6 +15,7 @@
 #include "google/cloud/internal/oauth2_impersonate_service_account_credentials.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <nlohmann/json.hpp>
 #include <memory>
 
 namespace google {
@@ -30,7 +31,82 @@ using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::StatusIs;
 using ::std::chrono::minutes;
 using ::std::chrono::seconds;
+using ::testing::AllOf;
+using ::testing::ElementsAre;
+using ::testing::HasSubstr;
+using ::testing::Optional;
 using ::testing::Return;
+
+auto constexpr kFullValidConfig = R"""({
+  "service_account_impersonation_url": "https://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/sa3@developer.gserviceaccount.com:generateAccessToken",
+  "delegates": [
+    "sa1@developer.gserviceaccount.com",
+    "sa2@developer.gserviceaccount.com"
+  ],
+  "quota_project_id": "my-project",
+  "source_credentials": {
+    "type": "authorized_user"
+  },
+  "type": "impersonated_service_account"
+})""";
+
+TEST(ParseImpersonatedServiceAccountCredentials, Success) {
+  auto actual =
+      ParseImpersonatedServiceAccountCredentials(kFullValidConfig, "test-data");
+  ASSERT_STATUS_OK(actual);
+  EXPECT_EQ(actual->service_account, "sa3@developer.gserviceaccount.com");
+  EXPECT_THAT(actual->delegates,
+              ElementsAre("sa1@developer.gserviceaccount.com",
+                          "sa2@developer.gserviceaccount.com"));
+  EXPECT_THAT(actual->quota_project_id, Optional<std::string>("my-project"));
+  EXPECT_THAT(actual->source_credentials,
+              AllOf(HasSubstr("type"), HasSubstr("authorized_user")));
+}
+
+TEST(ParseImpersonatedServiceAccountCredentials, MissingRequiredFieldsError) {
+  for (auto const& required_field :
+       {"service_account_impersonation_url", "source_credentials"}) {
+    auto json = nlohmann::json::parse(kFullValidConfig);
+    json.erase(required_field);
+    auto actual = ParseImpersonatedServiceAccountCredentials(json.dump(), "");
+    EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
+                                 AllOf(HasSubstr("Missing"),
+                                       HasSubstr(required_field))));
+  }
+}
+
+TEST(ParseImpersonatedServiceAccountCredentials, MissingOptionalFieldsIsOk) {
+  for (auto const& optional_field : {"delegates", "quota_project_id"}) {
+    auto json = nlohmann::json::parse(kFullValidConfig);
+    json.erase(optional_field);
+    auto actual = ParseImpersonatedServiceAccountCredentials(json.dump(), "");
+    EXPECT_STATUS_OK(actual);
+  }
+}
+
+TEST(ParseImpersonatedServiceAccountCredentials, MalformedServiceAccountPath) {
+  auto json = nlohmann::json::parse(kFullValidConfig);
+  json["service_account_impersonation_url"] = "not-a-valid-url-path";
+  auto actual = ParseImpersonatedServiceAccountCredentials(json.dump(), "");
+  EXPECT_THAT(actual,
+              StatusIs(StatusCode::kInvalidArgument,
+                       AllOf(HasSubstr("Malformed"),
+                             HasSubstr("service_account_impersonation_url"),
+                             HasSubstr("contents"))));
+}
+
+TEST(ParseImpersonatedServiceAccountCredentials, MalformedJsonFields) {
+  for (auto const& non_int_field :
+       {"service_account_impersonation_url", "delegates", "quota_project_id",
+        "source_credentials"}) {
+    auto json = nlohmann::json::parse(kFullValidConfig);
+    json[non_int_field] = 0;  // Provide an unexpected JSON type
+    auto actual = ParseImpersonatedServiceAccountCredentials(json.dump(), "");
+    EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
+                                 AllOf(HasSubstr("Malformed"),
+                                       HasSubstr(non_int_field))));
+  }
+}
 
 class MockMinimalIamCredentialsRest : public MinimalIamCredentialsRest {
  public:
