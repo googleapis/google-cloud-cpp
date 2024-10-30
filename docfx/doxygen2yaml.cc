@@ -59,11 +59,6 @@ bool IgnoreForRecurse(pugi::xml_node node) {
         //   This is a title for a sectionref (a "group" of member functions),
         //   maybe we can add this to break down each compound ToC.
         "header",
-        // Starting with Doxygen 1.9.7 any namespace members that are defined
-        // in a group appear as `member` children in the namespace, with just a
-        // `refid` pointing to its location. We need to skip these. They lack
-        // enough information to create a valid YAML element describing them.
-        "member",
     };
   }();
   auto const name = std::string{node.name()};
