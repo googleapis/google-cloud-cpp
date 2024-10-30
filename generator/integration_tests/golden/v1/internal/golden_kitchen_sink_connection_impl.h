@@ -89,6 +89,9 @@ class GoldenKitchenSinkConnectionImpl
   Status
   ExplicitRouting2(google::test::admin::database::v1::ExplicitRoutingRequest const& request) override;
 
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<golden_v1_internal::GoldenKitchenSinkStub> stub_;

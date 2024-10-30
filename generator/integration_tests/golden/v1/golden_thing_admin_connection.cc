@@ -236,6 +236,12 @@ GoldenThingAdminConnection::LongRunningWithoutRouting(
     Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::location::Location>
+GoldenThingAdminConnection::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 future<StatusOr<google::test::admin::database::v1::Database>>
 GoldenThingAdminConnection::AsyncGetDatabase(
     google::test::admin::database::v1::GetDatabaseRequest const&) {

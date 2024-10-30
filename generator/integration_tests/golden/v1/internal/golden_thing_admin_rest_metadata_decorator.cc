@@ -257,6 +257,14 @@ GoldenThingAdminRestMetadata::ListBackupOperations(
   return child_->ListBackupOperations(rest_context, options, request);
 }
 
+StatusOr<google::cloud::location::Location>
+GoldenThingAdminRestMetadata::GetLocation(
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::location::GetLocationRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->GetLocation(rest_context, options, request);
+}
+
 future<StatusOr<google::test::admin::database::v1::Database>>
 GoldenThingAdminRestMetadata::AsyncGetDatabase(
     google::cloud::CompletionQueue& cq,

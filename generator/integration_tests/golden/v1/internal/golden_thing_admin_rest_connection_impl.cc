@@ -576,6 +576,19 @@ GoldenThingAdminRestConnectionImpl::ListBackupOperations(google::test::admin::da
       });
 }
 
+StatusOr<google::cloud::location::Location>
+GoldenThingAdminRestConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetLocation(request),
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::cloud::location::GetLocationRequest const& request) {
+        return stub_->GetLocation(rest_context, options, request);
+      },
+      *current, request, __func__);
+}
+
 future<StatusOr<google::test::admin::database::v1::Database>>
 GoldenThingAdminRestConnectionImpl::AsyncGetDatabase(google::test::admin::database::v1::GetDatabaseRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();

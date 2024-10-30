@@ -300,6 +300,17 @@ GoldenThingAdminTracingStub::LongRunningWithoutRouting(
                            child_->LongRunningWithoutRouting(context, options, request));
 }
 
+StatusOr<google::cloud::location::Location> GoldenThingAdminTracingStub::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.test.admin.database.v1.GoldenThingAdmin", "GetLocation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetLocation(context, options, request));
+}
+
 future<StatusOr<google::test::admin::database::v1::Database>>
 GoldenThingAdminTracingStub::AsyncGetDatabase(
       google::cloud::CompletionQueue& cq,

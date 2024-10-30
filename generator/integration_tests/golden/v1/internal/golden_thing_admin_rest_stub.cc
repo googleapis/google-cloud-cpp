@@ -354,6 +354,17 @@ DefaultGoldenThingAdminRestStub::ListBackupOperations(
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.parent(), "/", "backupOperations"), std::move(query_params));
 }
 
+StatusOr<google::cloud::location::Location>
+DefaultGoldenThingAdminRestStub::GetLocation(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::location::GetLocationRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  return rest_internal::Get<google::cloud::location::Location>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.name()), std::move(query_params));
+}
+
 future<StatusOr<google::test::admin::database::v1::Database>>
 DefaultGoldenThingAdminRestStub::AsyncGetDatabase(
     google::cloud::CompletionQueue& cq,

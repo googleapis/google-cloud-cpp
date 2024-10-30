@@ -181,6 +181,12 @@ GoldenKitchenSinkClient::ExplicitRouting2(google::test::admin::database::v1::Exp
   return connection_->ExplicitRouting2(request);
 }
 
+StatusOr<google::cloud::location::Location>
+GoldenKitchenSinkClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetLocation(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_v1
 }  // namespace cloud

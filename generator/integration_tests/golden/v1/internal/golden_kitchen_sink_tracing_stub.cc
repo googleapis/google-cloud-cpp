@@ -178,6 +178,17 @@ Status GoldenKitchenSinkTracingStub::ExplicitRouting2(
                            child_->ExplicitRouting2(context, options, request));
 }
 
+StatusOr<google::cloud::location::Location> GoldenKitchenSinkTracingStub::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.test.admin.database.v1.GoldenKitchenSink", "GetLocation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetLocation(context, options, request));
+}
+
 std::unique_ptr<internal::AsyncStreamingReadRpc<google::test::admin::database::v1::Response>>
 GoldenKitchenSinkTracingStub::AsyncStreamingRead(
     google::cloud::CompletionQueue const& cq,

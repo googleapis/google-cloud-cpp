@@ -71,6 +71,10 @@ class GoldenKitchenSinkRestMetadata : public GoldenKitchenSinkRestStub {
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options, google::test::admin::database::v1::ExplicitRoutingRequest const& request) override;
 
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::location::GetLocationRequest const& request) override;
+
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,
                    Options const& options,

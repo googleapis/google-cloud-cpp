@@ -90,6 +90,10 @@ class MockGoldenKitchenSinkConnection : public golden_v1::GoldenKitchenSinkConne
   MOCK_METHOD(Status,
   ExplicitRouting2,
   (google::test::admin::database::v1::ExplicitRoutingRequest const& request), (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
+  GetLocation,
+  (google::cloud::location::GetLocationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -113,6 +113,13 @@ GoldenKitchenSinkTracingConnection::ExplicitRouting2(google::test::admin::databa
   return internal::EndSpan(*span, child_->ExplicitRouting2(request));
 }
 
+StatusOr<google::cloud::location::Location>
+GoldenKitchenSinkTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan("golden_v1::GoldenKitchenSinkConnection::GetLocation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetLocation(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<golden_v1::GoldenKitchenSinkConnection>

@@ -688,6 +688,19 @@ GoldenThingAdminConnectionImpl::LongRunningWithoutRouting(
     polling_policy(*current), __func__);
 }
 
+StatusOr<google::cloud::location::Location>
+GoldenThingAdminConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetLocation(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::location::GetLocationRequest const& request) {
+        return stub_->GetLocation(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 future<StatusOr<google::test::admin::database::v1::Database>>
 GoldenThingAdminConnectionImpl::AsyncGetDatabase(google::test::admin::database::v1::GetDatabaseRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();

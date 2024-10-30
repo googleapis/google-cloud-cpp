@@ -355,6 +355,19 @@ DefaultGoldenThingAdminStub::LongRunningWithoutRouting(
     return response;
 }
 
+StatusOr<google::cloud::location::Location>
+DefaultGoldenThingAdminStub::GetLocation(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::location::GetLocationRequest const& request) {
+    google::cloud::location::Location response;
+    auto status =
+        locations_stub_->GetLocation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
+}
+
 future<StatusOr<google::test::admin::database::v1::Database>>
 DefaultGoldenThingAdminStub::AsyncGetDatabase(
     google::cloud::CompletionQueue& cq,

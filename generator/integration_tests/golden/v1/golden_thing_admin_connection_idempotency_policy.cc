@@ -107,6 +107,10 @@ Idempotency GoldenThingAdminConnectionIdempotencyPolicy::LongRunningWithoutRouti
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency GoldenThingAdminConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<GoldenThingAdminConnectionIdempotencyPolicy>
     MakeDefaultGoldenThingAdminConnectionIdempotencyPolicy() {
   return std::make_unique<GoldenThingAdminConnectionIdempotencyPolicy>();

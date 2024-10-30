@@ -189,6 +189,19 @@ DefaultGoldenKitchenSinkStub::ExplicitRouting2(
     return google::cloud::Status();
 }
 
+StatusOr<google::cloud::location::Location>
+DefaultGoldenKitchenSinkStub::GetLocation(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::location::GetLocationRequest const& request) {
+    google::cloud::location::Location response;
+    auto status =
+        locations_stub_->GetLocation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
+}
+
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
     google::test::admin::database::v1::Response>>
 DefaultGoldenKitchenSinkStub::AsyncStreamingRead(

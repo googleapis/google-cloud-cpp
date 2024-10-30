@@ -46,6 +46,7 @@ service {
     {rpc_name: "GoldenKitchenSink.ListLogs", idempotency: NON_IDEMPOTENT}
   ]
   omit_repo_metadata: true
+  override_service_config_yaml_name: "generator/integration_tests/test.yaml"
 }
 
 service {

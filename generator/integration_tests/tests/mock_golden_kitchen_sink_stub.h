@@ -125,6 +125,11 @@ class MockGoldenKitchenSinkStub : public GoldenKitchenSinkStub {
        std::shared_ptr<grpc::ClientContext> context,
        google::cloud::internal::ImmutableOptions options),
       (override));
+
+  MOCK_METHOD(StatusOr<::google::cloud::location::Location>, GetLocation,
+              (grpc::ClientContext&, Options const&,
+               ::google::cloud::location::GetLocationRequest const&),
+              (override));
 };
 
 class MockStreamingReadRpc
