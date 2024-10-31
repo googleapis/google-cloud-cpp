@@ -33,7 +33,8 @@ struct ImpersonatedServiceAccountCredentialsInfo {
   std::string source_credentials;
 };
 
-/// Parses the contents of a JSON keyfile into a ServiceAccountCredentialsInfo.
+/// Parses the contents of a JSON keyfile into an
+/// ImpersonatedServiceAccountCredentialsInfo.
 StatusOr<ImpersonatedServiceAccountCredentialsInfo>
 ParseImpersonatedServiceAccountCredentials(std::string const& content,
                                            std::string const& source);
