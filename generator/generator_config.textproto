@@ -1655,15 +1655,6 @@ discovery_products {
     generate_grpc_transport: false
   }
 
-  rest_services {
-    service_proto_path: "google/cloud/compute/future_reservations/v1/future_reservations.proto"
-    product_path: "google/cloud/compute/future_reservations/v1"
-    initial_copyright_year: "2024"
-    retryable_status_codes: ["kUnavailable"]
-    generate_rest_transport: true
-    generate_grpc_transport: false
-  }
-
   # update_discovery_doc.sh additions
 }
 
@@ -2983,6 +2974,13 @@ service {
   product_path: "google/cloud/oslogin/v1"
   forwarding_product_path: "google/cloud/oslogin"
   initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/parallelstore/v1/parallelstore.proto"
+  product_path: "google/cloud/parallelstore/v1"
+  initial_copyright_year: "2024"
   retryable_status_codes: ["kUnavailable"]
 }
 
