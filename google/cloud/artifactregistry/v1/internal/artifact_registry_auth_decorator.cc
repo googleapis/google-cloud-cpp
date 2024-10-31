@@ -392,6 +392,16 @@ ArtifactRegistryAuth::BatchDeleteVersions(
   return child_->BatchDeleteVersions(context, options, request);
 }
 
+StatusOr<google::devtools::artifactregistry::v1::Version>
+ArtifactRegistryAuth::UpdateVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::UpdateVersionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateVersion(context, options, request);
+}
+
 StatusOr<google::devtools::artifactregistry::v1::ListFilesResponse>
 ArtifactRegistryAuth::ListFiles(
     grpc::ClientContext& context, Options const& options,
@@ -408,6 +418,43 @@ ArtifactRegistryAuth::GetFile(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetFile(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ArtifactRegistryAuth::AsyncDeleteFile(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::devtools::artifactregistry::v1::DeleteFileRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteFile(cq, *std::move(context),
+                                      std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> ArtifactRegistryAuth::DeleteFile(
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::DeleteFileRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteFile(context, options, request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::File>
+ArtifactRegistryAuth::UpdateFile(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::UpdateFileRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateFile(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListTagsResponse>
@@ -452,6 +499,50 @@ Status ArtifactRegistryAuth::DeleteTag(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteTag(context, options, request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::Rule>
+ArtifactRegistryAuth::CreateRule(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::CreateRuleRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateRule(context, options, request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::ListRulesResponse>
+ArtifactRegistryAuth::ListRules(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::ListRulesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListRules(context, options, request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::Rule>
+ArtifactRegistryAuth::GetRule(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::GetRuleRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetRule(context, options, request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::Rule>
+ArtifactRegistryAuth::UpdateRule(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::UpdateRuleRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateRule(context, options, request);
+}
+
+Status ArtifactRegistryAuth::DeleteRule(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::DeleteRuleRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteRule(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> ArtifactRegistryAuth::SetIamPolicy(
@@ -517,6 +608,96 @@ ArtifactRegistryAuth::UpdateVPCSCConfig(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateVPCSCConfig(context, options, request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::Package>
+ArtifactRegistryAuth::UpdatePackage(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::UpdatePackageRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdatePackage(context, options, request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::ListAttachmentsResponse>
+ArtifactRegistryAuth::ListAttachments(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::ListAttachmentsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListAttachments(context, options, request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::Attachment>
+ArtifactRegistryAuth::GetAttachment(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::GetAttachmentRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetAttachment(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ArtifactRegistryAuth::AsyncCreateAttachment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateAttachment(cq, *std::move(context),
+                                            std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> ArtifactRegistryAuth::CreateAttachment(
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateAttachment(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ArtifactRegistryAuth::AsyncDeleteAttachment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteAttachment(cq, *std::move(context),
+                                            std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> ArtifactRegistryAuth::DeleteAttachment(
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteAttachment(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>

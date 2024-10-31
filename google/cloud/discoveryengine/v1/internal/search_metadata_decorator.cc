@@ -54,6 +54,16 @@ SearchServiceMetadata::Search(
   return child_->Search(context, options, request);
 }
 
+StatusOr<google::cloud::discoveryengine::v1::SearchResponse>
+SearchServiceMetadata::SearchLite(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::SearchRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("serving_config=",
+                           internal::UrlEncode(request.serving_config())));
+  return child_->SearchLite(context, options, request);
+}
+
 StatusOr<google::longrunning::ListOperationsResponse>
 SearchServiceMetadata::ListOperations(
     grpc::ClientContext& context, Options const& options,

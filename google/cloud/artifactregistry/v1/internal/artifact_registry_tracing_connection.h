@@ -203,12 +203,32 @@ class ArtifactRegistryTracingConnection
       google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
   BatchDeleteVersions(google::longrunning::Operation const& operation) override;
 
+  StatusOr<google::devtools::artifactregistry::v1::Version> UpdateVersion(
+      google::devtools::artifactregistry::v1::UpdateVersionRequest const&
+          request) override;
+
   StreamRange<google::devtools::artifactregistry::v1::File> ListFiles(
       google::devtools::artifactregistry::v1::ListFilesRequest request)
       override;
 
   StatusOr<google::devtools::artifactregistry::v1::File> GetFile(
       google::devtools::artifactregistry::v1::GetFileRequest const& request)
+      override;
+
+  future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+  DeleteFile(google::devtools::artifactregistry::v1::DeleteFileRequest const&
+                 request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteFile(
+      NoAwaitTag,
+      google::devtools::artifactregistry::v1::DeleteFileRequest const& request)
+      override;
+
+  future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+  DeleteFile(google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::devtools::artifactregistry::v1::File> UpdateFile(
+      google::devtools::artifactregistry::v1::UpdateFileRequest const& request)
       override;
 
   StreamRange<google::devtools::artifactregistry::v1::Tag> ListTags(
@@ -228,6 +248,26 @@ class ArtifactRegistryTracingConnection
 
   Status DeleteTag(
       google::devtools::artifactregistry::v1::DeleteTagRequest const& request)
+      override;
+
+  StatusOr<google::devtools::artifactregistry::v1::Rule> CreateRule(
+      google::devtools::artifactregistry::v1::CreateRuleRequest const& request)
+      override;
+
+  StreamRange<google::devtools::artifactregistry::v1::Rule> ListRules(
+      google::devtools::artifactregistry::v1::ListRulesRequest request)
+      override;
+
+  StatusOr<google::devtools::artifactregistry::v1::Rule> GetRule(
+      google::devtools::artifactregistry::v1::GetRuleRequest const& request)
+      override;
+
+  StatusOr<google::devtools::artifactregistry::v1::Rule> UpdateRule(
+      google::devtools::artifactregistry::v1::UpdateRuleRequest const& request)
+      override;
+
+  Status DeleteRule(
+      google::devtools::artifactregistry::v1::DeleteRuleRequest const& request)
       override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
@@ -257,6 +297,44 @@ class ArtifactRegistryTracingConnection
   UpdateVPCSCConfig(
       google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const&
           request) override;
+
+  StatusOr<google::devtools::artifactregistry::v1::Package> UpdatePackage(
+      google::devtools::artifactregistry::v1::UpdatePackageRequest const&
+          request) override;
+
+  StreamRange<google::devtools::artifactregistry::v1::Attachment>
+  ListAttachments(google::devtools::artifactregistry::v1::ListAttachmentsRequest
+                      request) override;
+
+  StatusOr<google::devtools::artifactregistry::v1::Attachment> GetAttachment(
+      google::devtools::artifactregistry::v1::GetAttachmentRequest const&
+          request) override;
+
+  future<StatusOr<google::devtools::artifactregistry::v1::Attachment>>
+  CreateAttachment(
+      google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateAttachment(
+      NoAwaitTag,
+      google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
+          request) override;
+
+  future<StatusOr<google::devtools::artifactregistry::v1::Attachment>>
+  CreateAttachment(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+  DeleteAttachment(
+      google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteAttachment(
+      NoAwaitTag,
+      google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
+          request) override;
+
+  future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+  DeleteAttachment(google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;

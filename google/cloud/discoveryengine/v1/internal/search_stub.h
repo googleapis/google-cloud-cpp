@@ -40,6 +40,11 @@ class SearchServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::SearchRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::discoveryengine::v1::SearchResponse>
+  SearchLite(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::SearchRequest const& request) = 0;
+
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
       grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
@@ -65,6 +70,11 @@ class DefaultSearchServiceStub : public SearchServiceStub {
         operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::cloud::discoveryengine::v1::SearchResponse> Search(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::SearchRequest const& request)
+      override;
+
+  StatusOr<google::cloud::discoveryengine::v1::SearchResponse> SearchLite(
       grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::SearchRequest const& request)
       override;

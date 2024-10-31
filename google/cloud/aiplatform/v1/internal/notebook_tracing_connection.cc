@@ -291,6 +291,37 @@ NotebookServiceTracingConnection::StartNotebookRuntime(
                            child_->StartNotebookRuntime(operation));
 }
 
+future<StatusOr<google::cloud::aiplatform::v1::StopNotebookRuntimeResponse>>
+NotebookServiceTracingConnection::StopNotebookRuntime(
+    google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::NotebookServiceConnection::StopNotebookRuntime");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->StopNotebookRuntime(request));
+}
+
+StatusOr<google::longrunning::Operation>
+NotebookServiceTracingConnection::StopNotebookRuntime(
+    NoAwaitTag,
+    google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::NotebookServiceConnection::StopNotebookRuntime");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->StopNotebookRuntime(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::StopNotebookRuntimeResponse>>
+NotebookServiceTracingConnection::StopNotebookRuntime(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::NotebookServiceConnection::StopNotebookRuntime");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->StopNotebookRuntime(operation));
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>>
 NotebookServiceTracingConnection::CreateNotebookExecutionJob(
     google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const&

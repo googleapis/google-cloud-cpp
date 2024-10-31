@@ -139,6 +139,26 @@ RecaptchaEnterpriseServiceMetadata::AddIpOverride(
   return child_->AddIpOverride(context, options, request);
 }
 
+StatusOr<google::cloud::recaptchaenterprise::v1::RemoveIpOverrideResponse>
+RecaptchaEnterpriseServiceMetadata::RemoveIpOverride(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::recaptchaenterprise::v1::RemoveIpOverrideRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->RemoveIpOverride(context, options, request);
+}
+
+StatusOr<google::cloud::recaptchaenterprise::v1::ListIpOverridesResponse>
+RecaptchaEnterpriseServiceMetadata::ListIpOverrides(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::recaptchaenterprise::v1::ListIpOverridesRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListIpOverrides(context, options, request);
+}
+
 StatusOr<google::cloud::recaptchaenterprise::v1::Metrics>
 RecaptchaEnterpriseServiceMetadata::GetMetrics(
     grpc::ClientContext& context, Options const& options,

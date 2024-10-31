@@ -231,6 +231,27 @@ NotebookServiceMetadata::StartNotebookRuntime(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+NotebookServiceMetadata::AsyncStopNotebookRuntime(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncStopNotebookRuntime(cq, std::move(context),
+                                          std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+NotebookServiceMetadata::StopNotebookRuntime(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->StopNotebookRuntime(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 NotebookServiceMetadata::AsyncCreateNotebookExecutionJob(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

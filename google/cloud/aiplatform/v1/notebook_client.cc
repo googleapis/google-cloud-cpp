@@ -402,6 +402,48 @@ NotebookServiceClient::StartNotebookRuntime(
   return connection_->StartNotebookRuntime(operation);
 }
 
+future<StatusOr<google::cloud::aiplatform::v1::StopNotebookRuntimeResponse>>
+NotebookServiceClient::StopNotebookRuntime(std::string const& name,
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::StopNotebookRuntimeRequest request;
+  request.set_name(name);
+  return connection_->StopNotebookRuntime(request);
+}
+
+StatusOr<google::longrunning::Operation>
+NotebookServiceClient::StopNotebookRuntime(NoAwaitTag, std::string const& name,
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::StopNotebookRuntimeRequest request;
+  request.set_name(name);
+  return connection_->StopNotebookRuntime(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::StopNotebookRuntimeResponse>>
+NotebookServiceClient::StopNotebookRuntime(
+    google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StopNotebookRuntime(request);
+}
+
+StatusOr<google::longrunning::Operation>
+NotebookServiceClient::StopNotebookRuntime(
+    NoAwaitTag,
+    google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StopNotebookRuntime(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::StopNotebookRuntimeResponse>>
+NotebookServiceClient::StopNotebookRuntime(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StopNotebookRuntime(operation);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>>
 NotebookServiceClient::CreateNotebookExecutionJob(
     std::string const& parent,

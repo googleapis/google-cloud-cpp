@@ -1528,10 +1528,10 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.EncryptRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L968}
   /// [google.cloud.kms.v1.EncryptResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1539}
   /// [google.cloud.kms.v1.KeyManagementService.Decrypt]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L312}
-  /// [google.cloud.kms.v1.ProtectionLevel.EXTERNAL]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L930}
-  /// [google.cloud.kms.v1.ProtectionLevel.EXTERNAL_VPC]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L933}
-  /// [google.cloud.kms.v1.ProtectionLevel.HSM]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L927}
-  /// [google.cloud.kms.v1.ProtectionLevel.SOFTWARE]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L924}
+  /// [google.cloud.kms.v1.ProtectionLevel.EXTERNAL]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L944}
+  /// [google.cloud.kms.v1.ProtectionLevel.EXTERNAL_VPC]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L947}
+  /// [google.cloud.kms.v1.ProtectionLevel.HSM]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L941}
+  /// [google.cloud.kms.v1.ProtectionLevel.SOFTWARE]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L938}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::EncryptResponse> Encrypt(
@@ -2050,8 +2050,8 @@ class KeyManagementServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.kms.v1.GenerateRandomBytesRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1521}
   /// [google.cloud.kms.v1.GenerateRandomBytesResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L2024}
-  /// [google.cloud.kms.v1.ProtectionLevel]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L919}
-  /// [google.cloud.kms.v1.ProtectionLevel.HSM]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L927}
+  /// [google.cloud.kms.v1.ProtectionLevel]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L933}
+  /// [google.cloud.kms.v1.ProtectionLevel.HSM]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L941}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::GenerateRandomBytesResponse>

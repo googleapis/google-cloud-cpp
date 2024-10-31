@@ -59,6 +59,10 @@ class PublisherConnectionImpl
       google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
           request) override;
 
+  StatusOr<google::cloud::eventarc::publishing::v1::PublishResponse> Publish(
+      google::cloud::eventarc::publishing::v1::PublishRequest const& request)
+      override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<eventarc_publishing_v1_internal::PublisherStub> stub_;

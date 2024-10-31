@@ -120,11 +120,21 @@ class ArtifactRegistryConnectionIdempotencyPolicy {
       google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
           request);
 
+  virtual google::cloud::Idempotency UpdateVersion(
+      google::devtools::artifactregistry::v1::UpdateVersionRequest const&
+          request);
+
   virtual google::cloud::Idempotency ListFiles(
       google::devtools::artifactregistry::v1::ListFilesRequest request);
 
   virtual google::cloud::Idempotency GetFile(
       google::devtools::artifactregistry::v1::GetFileRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteFile(
+      google::devtools::artifactregistry::v1::DeleteFileRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateFile(
+      google::devtools::artifactregistry::v1::UpdateFileRequest const& request);
 
   virtual google::cloud::Idempotency ListTags(
       google::devtools::artifactregistry::v1::ListTagsRequest request);
@@ -140,6 +150,21 @@ class ArtifactRegistryConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency DeleteTag(
       google::devtools::artifactregistry::v1::DeleteTagRequest const& request);
+
+  virtual google::cloud::Idempotency CreateRule(
+      google::devtools::artifactregistry::v1::CreateRuleRequest const& request);
+
+  virtual google::cloud::Idempotency ListRules(
+      google::devtools::artifactregistry::v1::ListRulesRequest request);
+
+  virtual google::cloud::Idempotency GetRule(
+      google::devtools::artifactregistry::v1::GetRuleRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateRule(
+      google::devtools::artifactregistry::v1::UpdateRuleRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteRule(
+      google::devtools::artifactregistry::v1::DeleteRuleRequest const& request);
 
   virtual google::cloud::Idempotency SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request);
@@ -164,6 +189,25 @@ class ArtifactRegistryConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency UpdateVPCSCConfig(
       google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdatePackage(
+      google::devtools::artifactregistry::v1::UpdatePackageRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListAttachments(
+      google::devtools::artifactregistry::v1::ListAttachmentsRequest request);
+
+  virtual google::cloud::Idempotency GetAttachment(
+      google::devtools::artifactregistry::v1::GetAttachmentRequest const&
+          request);
+
+  virtual google::cloud::Idempotency CreateAttachment(
+      google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteAttachment(
+      google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
           request);
 
   virtual google::cloud::Idempotency ListLocations(

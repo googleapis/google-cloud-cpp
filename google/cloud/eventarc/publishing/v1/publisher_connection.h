@@ -191,6 +191,10 @@ class PublisherConnection {
   PublishEvents(
       google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
           request);
+
+  virtual StatusOr<google::cloud::eventarc::publishing::v1::PublishResponse>
+  Publish(
+      google::cloud::eventarc::publishing::v1::PublishRequest const& request);
 };
 
 /**
