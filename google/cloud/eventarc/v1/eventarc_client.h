@@ -105,8 +105,8 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.GetTriggerRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L230}
-  /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L47}
+  /// [google.cloud.eventarc.v1.GetTriggerRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L489}
+  /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L51}
   ///
   // clang-format on
   StatusOr<google::cloud::eventarc::v1::Trigger> GetTrigger(
@@ -135,8 +135,8 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.GetTriggerRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L230}
-  /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L47}
+  /// [google.cloud.eventarc.v1.GetTriggerRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L489}
+  /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L51}
   ///
   // clang-format on
   StatusOr<google::cloud::eventarc::v1::Trigger> GetTrigger(
@@ -170,8 +170,8 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.ListTriggersRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L241}
-  /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L47}
+  /// [google.cloud.eventarc.v1.ListTriggersRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L500}
+  /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L51}
   ///
   // clang-format on
   StreamRange<google::cloud::eventarc::v1::Trigger> ListTriggers(
@@ -209,8 +209,8 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.ListTriggersRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L241}
-  /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L47}
+  /// [google.cloud.eventarc.v1.ListTriggersRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L500}
+  /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L51}
   ///
   // clang-format on
   StreamRange<google::cloud::eventarc::v1::Trigger> ListTriggers(
@@ -244,8 +244,8 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.CreateTriggerRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L288}
-  /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L47}
+  /// [google.cloud.eventarc.v1.CreateTriggerRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L547}
+  /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L51}
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::Trigger>> CreateTrigger(
@@ -299,8 +299,8 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.CreateTriggerRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L288}
-  /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L47}
+  /// [google.cloud.eventarc.v1.CreateTriggerRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L547}
+  /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L51}
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::Trigger>> CreateTrigger(
@@ -365,8 +365,8 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L47}
-  /// [google.cloud.eventarc.v1.UpdateTriggerRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L309}
+  /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L51}
+  /// [google.cloud.eventarc.v1.UpdateTriggerRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L568}
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::Trigger>> UpdateTrigger(
@@ -420,8 +420,8 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L47}
-  /// [google.cloud.eventarc.v1.UpdateTriggerRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L309}
+  /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L51}
+  /// [google.cloud.eventarc.v1.UpdateTriggerRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L568}
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::Trigger>> UpdateTrigger(
@@ -483,8 +483,8 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.DeleteTriggerRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L328}
-  /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L47}
+  /// [google.cloud.eventarc.v1.DeleteTriggerRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L587}
+  /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L51}
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::Trigger>> DeleteTrigger(
@@ -535,8 +535,8 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.DeleteTriggerRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L328}
-  /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L47}
+  /// [google.cloud.eventarc.v1.DeleteTriggerRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L587}
+  /// [google.cloud.eventarc.v1.Trigger]: @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L51}
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::Trigger>> DeleteTrigger(
@@ -590,7 +590,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.Channel]: @googleapis_reference_link{google/cloud/eventarc/v1/channel.proto#L35}
-  /// [google.cloud.eventarc.v1.GetChannelRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L351}
+  /// [google.cloud.eventarc.v1.GetChannelRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L610}
   ///
   // clang-format on
   StatusOr<google::cloud::eventarc::v1::Channel> GetChannel(
@@ -620,7 +620,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.Channel]: @googleapis_reference_link{google/cloud/eventarc/v1/channel.proto#L35}
-  /// [google.cloud.eventarc.v1.GetChannelRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L351}
+  /// [google.cloud.eventarc.v1.GetChannelRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L610}
   ///
   // clang-format on
   StatusOr<google::cloud::eventarc::v1::Channel> GetChannel(
@@ -655,7 +655,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.Channel]: @googleapis_reference_link{google/cloud/eventarc/v1/channel.proto#L35}
-  /// [google.cloud.eventarc.v1.ListChannelsRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L362}
+  /// [google.cloud.eventarc.v1.ListChannelsRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L621}
   ///
   // clang-format on
   StreamRange<google::cloud::eventarc::v1::Channel> ListChannels(
@@ -694,7 +694,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.Channel]: @googleapis_reference_link{google/cloud/eventarc/v1/channel.proto#L35}
-  /// [google.cloud.eventarc.v1.ListChannelsRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L362}
+  /// [google.cloud.eventarc.v1.ListChannelsRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L621}
   ///
   // clang-format on
   StreamRange<google::cloud::eventarc::v1::Channel> ListChannels(
@@ -729,7 +729,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.Channel]: @googleapis_reference_link{google/cloud/eventarc/v1/channel.proto#L35}
-  /// [google.cloud.eventarc.v1.CreateChannelRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L404}
+  /// [google.cloud.eventarc.v1.CreateChannelRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L663}
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::Channel>> CreateChannel(
@@ -784,7 +784,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.Channel]: @googleapis_reference_link{google/cloud/eventarc/v1/channel.proto#L35}
-  /// [google.cloud.eventarc.v1.CreateChannelRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L404}
+  /// [google.cloud.eventarc.v1.CreateChannelRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L663}
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::Channel>> CreateChannel(
@@ -848,7 +848,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.Channel]: @googleapis_reference_link{google/cloud/eventarc/v1/channel.proto#L35}
-  /// [google.cloud.eventarc.v1.UpdateChannelRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L425}
+  /// [google.cloud.eventarc.v1.UpdateChannelRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L684}
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::Channel>> UpdateChannel(
@@ -901,7 +901,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.Channel]: @googleapis_reference_link{google/cloud/eventarc/v1/channel.proto#L35}
-  /// [google.cloud.eventarc.v1.UpdateChannelRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L425}
+  /// [google.cloud.eventarc.v1.UpdateChannelRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L684}
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::Channel>> UpdateChannel(
@@ -962,7 +962,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.Channel]: @googleapis_reference_link{google/cloud/eventarc/v1/channel.proto#L35}
-  /// [google.cloud.eventarc.v1.DeleteChannelRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L440}
+  /// [google.cloud.eventarc.v1.DeleteChannelRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L699}
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::Channel>> DeleteChannel(
@@ -1013,7 +1013,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.Channel]: @googleapis_reference_link{google/cloud/eventarc/v1/channel.proto#L35}
-  /// [google.cloud.eventarc.v1.DeleteChannelRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L440}
+  /// [google.cloud.eventarc.v1.DeleteChannelRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L699}
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::Channel>> DeleteChannel(
@@ -1066,7 +1066,7 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.GetProviderRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L455}
+  /// [google.cloud.eventarc.v1.GetProviderRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L714}
   /// [google.cloud.eventarc.v1.Provider]: @googleapis_reference_link{google/cloud/eventarc/v1/discovery.proto#L28}
   ///
   // clang-format on
@@ -1096,7 +1096,7 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.GetProviderRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L455}
+  /// [google.cloud.eventarc.v1.GetProviderRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L714}
   /// [google.cloud.eventarc.v1.Provider]: @googleapis_reference_link{google/cloud/eventarc/v1/discovery.proto#L28}
   ///
   // clang-format on
@@ -1131,7 +1131,7 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.ListProvidersRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L466}
+  /// [google.cloud.eventarc.v1.ListProvidersRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L725}
   /// [google.cloud.eventarc.v1.Provider]: @googleapis_reference_link{google/cloud/eventarc/v1/discovery.proto#L28}
   ///
   // clang-format on
@@ -1170,7 +1170,7 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.ListProvidersRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L466}
+  /// [google.cloud.eventarc.v1.ListProvidersRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L725}
   /// [google.cloud.eventarc.v1.Provider]: @googleapis_reference_link{google/cloud/eventarc/v1/discovery.proto#L28}
   ///
   // clang-format on
@@ -1197,7 +1197,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.ChannelConnection]: @googleapis_reference_link{google/cloud/eventarc/v1/channel_connection.proto#L35}
-  /// [google.cloud.eventarc.v1.GetChannelConnectionRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L509}
+  /// [google.cloud.eventarc.v1.GetChannelConnectionRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L768}
   ///
   // clang-format on
   StatusOr<google::cloud::eventarc::v1::ChannelConnection> GetChannelConnection(
@@ -1227,7 +1227,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.ChannelConnection]: @googleapis_reference_link{google/cloud/eventarc/v1/channel_connection.proto#L35}
-  /// [google.cloud.eventarc.v1.GetChannelConnectionRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L509}
+  /// [google.cloud.eventarc.v1.GetChannelConnectionRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L768}
   ///
   // clang-format on
   StatusOr<google::cloud::eventarc::v1::ChannelConnection> GetChannelConnection(
@@ -1262,7 +1262,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.ChannelConnection]: @googleapis_reference_link{google/cloud/eventarc/v1/channel_connection.proto#L35}
-  /// [google.cloud.eventarc.v1.ListChannelConnectionsRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L520}
+  /// [google.cloud.eventarc.v1.ListChannelConnectionsRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L779}
   ///
   // clang-format on
   StreamRange<google::cloud::eventarc::v1::ChannelConnection>
@@ -1301,7 +1301,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.ChannelConnection]: @googleapis_reference_link{google/cloud/eventarc/v1/channel_connection.proto#L35}
-  /// [google.cloud.eventarc.v1.ListChannelConnectionsRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L520}
+  /// [google.cloud.eventarc.v1.ListChannelConnectionsRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L779}
   ///
   // clang-format on
   StreamRange<google::cloud::eventarc::v1::ChannelConnection>
@@ -1337,7 +1337,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.ChannelConnection]: @googleapis_reference_link{google/cloud/eventarc/v1/channel_connection.proto#L35}
-  /// [google.cloud.eventarc.v1.CreateChannelConnectionRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L558}
+  /// [google.cloud.eventarc.v1.CreateChannelConnectionRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L817}
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
@@ -1393,7 +1393,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.ChannelConnection]: @googleapis_reference_link{google/cloud/eventarc/v1/channel_connection.proto#L35}
-  /// [google.cloud.eventarc.v1.CreateChannelConnectionRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L558}
+  /// [google.cloud.eventarc.v1.CreateChannelConnectionRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L817}
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
@@ -1458,7 +1458,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.ChannelConnection]: @googleapis_reference_link{google/cloud/eventarc/v1/channel_connection.proto#L35}
-  /// [google.cloud.eventarc.v1.DeleteChannelConnectionRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L575}
+  /// [google.cloud.eventarc.v1.DeleteChannelConnectionRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L835}
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
@@ -1509,7 +1509,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.ChannelConnection]: @googleapis_reference_link{google/cloud/eventarc/v1/channel_connection.proto#L35}
-  /// [google.cloud.eventarc.v1.DeleteChannelConnectionRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L575}
+  /// [google.cloud.eventarc.v1.DeleteChannelConnectionRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L835}
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
@@ -1566,7 +1566,7 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.GetGoogleChannelConfigRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L597}
+  /// [google.cloud.eventarc.v1.GetGoogleChannelConfigRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L858}
   /// [google.cloud.eventarc.v1.GoogleChannelConfig]: @googleapis_reference_link{google/cloud/eventarc/v1/google_channel_config.proto#L40}
   ///
   // clang-format on
@@ -1596,7 +1596,7 @@ class EventarcClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.v1.GetGoogleChannelConfigRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L597}
+  /// [google.cloud.eventarc.v1.GetGoogleChannelConfigRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L858}
   /// [google.cloud.eventarc.v1.GoogleChannelConfig]: @googleapis_reference_link{google/cloud/eventarc/v1/google_channel_config.proto#L40}
   ///
   // clang-format on
@@ -1627,7 +1627,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.GoogleChannelConfig]: @googleapis_reference_link{google/cloud/eventarc/v1/google_channel_config.proto#L40}
-  /// [google.cloud.eventarc.v1.UpdateGoogleChannelConfigRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L586}
+  /// [google.cloud.eventarc.v1.UpdateGoogleChannelConfigRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L846}
   ///
   // clang-format on
   StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
@@ -1660,7 +1660,7 @@ class EventarcClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.eventarc.v1.GoogleChannelConfig]: @googleapis_reference_link{google/cloud/eventarc/v1/google_channel_config.proto#L40}
-  /// [google.cloud.eventarc.v1.UpdateGoogleChannelConfigRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L586}
+  /// [google.cloud.eventarc.v1.UpdateGoogleChannelConfigRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L846}
   ///
   // clang-format on
   StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
@@ -1668,6 +1668,1998 @@ class EventarcClient {
       google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const&
           request,
       Options opts = {});
+
+  // clang-format off
+  ///
+  /// Get a single MessageBus.
+  ///
+  /// @param name  Required. The name of the message bus to get.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.eventarc.v1.MessageBus])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.GetMessageBusRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L869}
+  /// [google.cloud.eventarc.v1.MessageBus]: @googleapis_reference_link{google/cloud/eventarc/v1/message_bus.proto#L36}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::eventarc::v1::MessageBus> GetMessageBus(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Get a single MessageBus.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.eventarc.v1.GetMessageBusRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.eventarc.v1.MessageBus])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.GetMessageBusRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L869}
+  /// [google.cloud.eventarc.v1.MessageBus]: @googleapis_reference_link{google/cloud/eventarc/v1/message_bus.proto#L36}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::eventarc::v1::MessageBus> GetMessageBus(
+      google::cloud::eventarc::v1::GetMessageBusRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// List message buses.
+  ///
+  /// @param parent  Required. The parent collection to list triggers on.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.eventarc.v1.MessageBus], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.ListMessageBusesRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L880}
+  /// [google.cloud.eventarc.v1.MessageBus]: @googleapis_reference_link{google/cloud/eventarc/v1/message_bus.proto#L36}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::eventarc::v1::MessageBus> ListMessageBuses(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// List message buses.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.eventarc.v1.ListMessageBusesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.eventarc.v1.MessageBus], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.ListMessageBusesRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L880}
+  /// [google.cloud.eventarc.v1.MessageBus]: @googleapis_reference_link{google/cloud/eventarc/v1/message_bus.proto#L36}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::eventarc::v1::MessageBus> ListMessageBuses(
+      google::cloud::eventarc::v1::ListMessageBusesRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// List message bus enrollments.
+  ///
+  /// @param parent  Required. The parent message bus to list enrollments on.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.eventarc.v1.ListMessageBusEnrollmentsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.ListMessageBusEnrollmentsRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L926}
+  /// [google.cloud.eventarc.v1.ListMessageBusEnrollmentsResponse]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L949}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::eventarc::v1::ListMessageBusEnrollmentsResponse>
+  ListMessageBusEnrollments(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// List message bus enrollments.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.eventarc.v1.ListMessageBusEnrollmentsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.eventarc.v1.ListMessageBusEnrollmentsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.ListMessageBusEnrollmentsRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L926}
+  /// [google.cloud.eventarc.v1.ListMessageBusEnrollmentsResponse]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L949}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::eventarc::v1::ListMessageBusEnrollmentsResponse>
+  ListMessageBusEnrollments(
+      google::cloud::eventarc::v1::ListMessageBusEnrollmentsRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Create a new MessageBus in a particular project and location.
+  ///
+  /// @param parent  Required. The parent collection in which to add this message bus.
+  /// @param message_bus  Required. The message bus to create.
+  /// @param message_bus_id  Required. The user-provided ID to be assigned to the MessageBus. It should
+  ///  match the format (^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$)
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.eventarc.v1.MessageBus] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.CreateMessageBusRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L962}
+  /// [google.cloud.eventarc.v1.MessageBus]: @googleapis_reference_link{google/cloud/eventarc/v1/message_bus.proto#L36}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::eventarc::v1::MessageBus>> CreateMessageBus(
+      std::string const& parent,
+      google::cloud::eventarc::v1::MessageBus const& message_bus,
+      std::string const& message_bus_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateMessageBus
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateMessageBus(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::eventarc::v1::MessageBus const& message_bus,
+      std::string const& message_bus_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Create a new MessageBus in a particular project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.eventarc.v1.CreateMessageBusRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.eventarc.v1.MessageBus] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.CreateMessageBusRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L962}
+  /// [google.cloud.eventarc.v1.MessageBus]: @googleapis_reference_link{google/cloud/eventarc/v1/message_bus.proto#L36}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::eventarc::v1::MessageBus>> CreateMessageBus(
+      google::cloud::eventarc::v1::CreateMessageBusRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateMessageBus
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateMessageBus(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::CreateMessageBusRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateMessageBus
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::eventarc::v1::MessageBus>> CreateMessageBus(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Update a single message bus.
+  ///
+  /// @param message_bus  Required. The MessageBus to be updated.
+  /// @param update_mask  Optional. The fields to be updated; only fields explicitly provided are
+  ///  updated. If no field mask is provided, all provided fields in the request
+  ///  are updated. To update all fields, provide a field mask of "*".
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.eventarc.v1.MessageBus] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.MessageBus]: @googleapis_reference_link{google/cloud/eventarc/v1/message_bus.proto#L36}
+  /// [google.cloud.eventarc.v1.UpdateMessageBusRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L984}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::eventarc::v1::MessageBus>> UpdateMessageBus(
+      google::cloud::eventarc::v1::MessageBus const& message_bus,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateMessageBus
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateMessageBus(
+      NoAwaitTag, google::cloud::eventarc::v1::MessageBus const& message_bus,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Update a single message bus.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.eventarc.v1.UpdateMessageBusRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.eventarc.v1.MessageBus] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.MessageBus]: @googleapis_reference_link{google/cloud/eventarc/v1/message_bus.proto#L36}
+  /// [google.cloud.eventarc.v1.UpdateMessageBusRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L984}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::eventarc::v1::MessageBus>> UpdateMessageBus(
+      google::cloud::eventarc::v1::UpdateMessageBusRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateMessageBus
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateMessageBus(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::UpdateMessageBusRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateMessageBus
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::eventarc::v1::MessageBus>> UpdateMessageBus(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Delete a single message bus.
+  ///
+  /// @param name  Required. The name of the MessageBus to be deleted.
+  /// @param etag  Optional. If provided, the MessageBus will only be deleted if the etag
+  ///  matches the current etag on the resource.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.eventarc.v1.MessageBus] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.DeleteMessageBusRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1004}
+  /// [google.cloud.eventarc.v1.MessageBus]: @googleapis_reference_link{google/cloud/eventarc/v1/message_bus.proto#L36}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::eventarc::v1::MessageBus>> DeleteMessageBus(
+      std::string const& name, std::string const& etag, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteMessageBus
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteMessageBus(
+      NoAwaitTag, std::string const& name, std::string const& etag,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Delete a single message bus.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.eventarc.v1.DeleteMessageBusRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.eventarc.v1.MessageBus] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.DeleteMessageBusRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1004}
+  /// [google.cloud.eventarc.v1.MessageBus]: @googleapis_reference_link{google/cloud/eventarc/v1/message_bus.proto#L36}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::eventarc::v1::MessageBus>> DeleteMessageBus(
+      google::cloud::eventarc::v1::DeleteMessageBusRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteMessageBus
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteMessageBus(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::DeleteMessageBusRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteMessageBus
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::eventarc::v1::MessageBus>> DeleteMessageBus(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Get a single Enrollment.
+  ///
+  /// @param name  Required. The name of the Enrollment to get.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.eventarc.v1.Enrollment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.Enrollment]: @googleapis_reference_link{google/cloud/eventarc/v1/enrollment.proto#L34}
+  /// [google.cloud.eventarc.v1.GetEnrollmentRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1027}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::eventarc::v1::Enrollment> GetEnrollment(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Get a single Enrollment.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.eventarc.v1.GetEnrollmentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.eventarc.v1.Enrollment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.Enrollment]: @googleapis_reference_link{google/cloud/eventarc/v1/enrollment.proto#L34}
+  /// [google.cloud.eventarc.v1.GetEnrollmentRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1027}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::eventarc::v1::Enrollment> GetEnrollment(
+      google::cloud::eventarc::v1::GetEnrollmentRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// List Enrollments.
+  ///
+  /// @param parent  Required. The parent collection to list triggers on.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.eventarc.v1.Enrollment], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.Enrollment]: @googleapis_reference_link{google/cloud/eventarc/v1/enrollment.proto#L34}
+  /// [google.cloud.eventarc.v1.ListEnrollmentsRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1038}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::eventarc::v1::Enrollment> ListEnrollments(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// List Enrollments.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.eventarc.v1.ListEnrollmentsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.eventarc.v1.Enrollment], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.Enrollment]: @googleapis_reference_link{google/cloud/eventarc/v1/enrollment.proto#L34}
+  /// [google.cloud.eventarc.v1.ListEnrollmentsRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1038}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::eventarc::v1::Enrollment> ListEnrollments(
+      google::cloud::eventarc::v1::ListEnrollmentsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Create a new Enrollment in a particular project and location.
+  ///
+  /// @param parent  Required. The parent collection in which to add this enrollment.
+  /// @param enrollment  Required. The enrollment to create.
+  /// @param enrollment_id  Required. The user-provided ID to be assigned to the Enrollment. It should
+  ///  match the format (^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$).
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.eventarc.v1.Enrollment] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.CreateEnrollmentRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1084}
+  /// [google.cloud.eventarc.v1.Enrollment]: @googleapis_reference_link{google/cloud/eventarc/v1/enrollment.proto#L34}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::eventarc::v1::Enrollment>> CreateEnrollment(
+      std::string const& parent,
+      google::cloud::eventarc::v1::Enrollment const& enrollment,
+      std::string const& enrollment_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateEnrollment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateEnrollment(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::eventarc::v1::Enrollment const& enrollment,
+      std::string const& enrollment_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Create a new Enrollment in a particular project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.eventarc.v1.CreateEnrollmentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.eventarc.v1.Enrollment] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.CreateEnrollmentRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1084}
+  /// [google.cloud.eventarc.v1.Enrollment]: @googleapis_reference_link{google/cloud/eventarc/v1/enrollment.proto#L34}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::eventarc::v1::Enrollment>> CreateEnrollment(
+      google::cloud::eventarc::v1::CreateEnrollmentRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateEnrollment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateEnrollment(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::CreateEnrollmentRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateEnrollment
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::eventarc::v1::Enrollment>> CreateEnrollment(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Update a single Enrollment.
+  ///
+  /// @param enrollment  Required. The Enrollment to be updated.
+  /// @param update_mask  Optional. The fields to be updated; only fields explicitly provided are
+  ///  updated. If no field mask is provided, all provided fields in the request
+  ///  are updated. To update all fields, provide a field mask of "*".
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.eventarc.v1.Enrollment] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.Enrollment]: @googleapis_reference_link{google/cloud/eventarc/v1/enrollment.proto#L34}
+  /// [google.cloud.eventarc.v1.UpdateEnrollmentRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1106}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::eventarc::v1::Enrollment>> UpdateEnrollment(
+      google::cloud::eventarc::v1::Enrollment const& enrollment,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateEnrollment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateEnrollment(
+      NoAwaitTag, google::cloud::eventarc::v1::Enrollment const& enrollment,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Update a single Enrollment.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.eventarc.v1.UpdateEnrollmentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.eventarc.v1.Enrollment] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.Enrollment]: @googleapis_reference_link{google/cloud/eventarc/v1/enrollment.proto#L34}
+  /// [google.cloud.eventarc.v1.UpdateEnrollmentRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1106}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::eventarc::v1::Enrollment>> UpdateEnrollment(
+      google::cloud::eventarc::v1::UpdateEnrollmentRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateEnrollment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateEnrollment(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::UpdateEnrollmentRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateEnrollment
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::eventarc::v1::Enrollment>> UpdateEnrollment(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Delete a single Enrollment.
+  ///
+  /// @param name  Required. The name of the Enrollment to be deleted.
+  /// @param etag  Optional. If provided, the Enrollment will only be deleted if the etag
+  ///  matches the current etag on the resource.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.eventarc.v1.Enrollment] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.DeleteEnrollmentRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1126}
+  /// [google.cloud.eventarc.v1.Enrollment]: @googleapis_reference_link{google/cloud/eventarc/v1/enrollment.proto#L34}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::eventarc::v1::Enrollment>> DeleteEnrollment(
+      std::string const& name, std::string const& etag, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteEnrollment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteEnrollment(
+      NoAwaitTag, std::string const& name, std::string const& etag,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Delete a single Enrollment.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.eventarc.v1.DeleteEnrollmentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.eventarc.v1.Enrollment] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.DeleteEnrollmentRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1126}
+  /// [google.cloud.eventarc.v1.Enrollment]: @googleapis_reference_link{google/cloud/eventarc/v1/enrollment.proto#L34}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::eventarc::v1::Enrollment>> DeleteEnrollment(
+      google::cloud::eventarc::v1::DeleteEnrollmentRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteEnrollment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteEnrollment(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::DeleteEnrollmentRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteEnrollment
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::eventarc::v1::Enrollment>> DeleteEnrollment(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Get a single Pipeline.
+  ///
+  /// @param name  Required. The name of the pipeline to get.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.eventarc.v1.Pipeline])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.GetPipelineRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1149}
+  /// [google.cloud.eventarc.v1.Pipeline]: @googleapis_reference_link{google/cloud/eventarc/v1/pipeline.proto#L39}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::eventarc::v1::Pipeline> GetPipeline(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Get a single Pipeline.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.eventarc.v1.GetPipelineRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.eventarc.v1.Pipeline])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.GetPipelineRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1149}
+  /// [google.cloud.eventarc.v1.Pipeline]: @googleapis_reference_link{google/cloud/eventarc/v1/pipeline.proto#L39}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::eventarc::v1::Pipeline> GetPipeline(
+      google::cloud::eventarc::v1::GetPipelineRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// List pipelines.
+  ///
+  /// @param parent  Required. The parent collection to list pipelines on.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.eventarc.v1.Pipeline], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.ListPipelinesRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1160}
+  /// [google.cloud.eventarc.v1.Pipeline]: @googleapis_reference_link{google/cloud/eventarc/v1/pipeline.proto#L39}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::eventarc::v1::Pipeline> ListPipelines(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// List pipelines.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.eventarc.v1.ListPipelinesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.eventarc.v1.Pipeline], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.ListPipelinesRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1160}
+  /// [google.cloud.eventarc.v1.Pipeline]: @googleapis_reference_link{google/cloud/eventarc/v1/pipeline.proto#L39}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::eventarc::v1::Pipeline> ListPipelines(
+      google::cloud::eventarc::v1::ListPipelinesRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Create a new Pipeline in a particular project and location.
+  ///
+  /// @param parent  Required. The parent collection in which to add this pipeline.
+  /// @param pipeline  Required. The pipeline to create.
+  /// @param pipeline_id  Required. The user-provided ID to be assigned to the Pipeline.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.eventarc.v1.Pipeline] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.CreatePipelineRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1206}
+  /// [google.cloud.eventarc.v1.Pipeline]: @googleapis_reference_link{google/cloud/eventarc/v1/pipeline.proto#L39}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::eventarc::v1::Pipeline>> CreatePipeline(
+      std::string const& parent,
+      google::cloud::eventarc::v1::Pipeline const& pipeline,
+      std::string const& pipeline_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreatePipeline
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreatePipeline(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::eventarc::v1::Pipeline const& pipeline,
+      std::string const& pipeline_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Create a new Pipeline in a particular project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.eventarc.v1.CreatePipelineRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.eventarc.v1.Pipeline] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.CreatePipelineRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1206}
+  /// [google.cloud.eventarc.v1.Pipeline]: @googleapis_reference_link{google/cloud/eventarc/v1/pipeline.proto#L39}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::eventarc::v1::Pipeline>> CreatePipeline(
+      google::cloud::eventarc::v1::CreatePipelineRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreatePipeline
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreatePipeline(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::CreatePipelineRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreatePipeline
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::eventarc::v1::Pipeline>> CreatePipeline(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Update a single pipeline.
+  ///
+  /// @param pipeline  Required. The Pipeline to be updated.
+  /// @param update_mask  Optional. The fields to be updated; only fields explicitly provided are
+  ///  updated. If no field mask is provided, all provided fields in the request
+  ///  are updated. To update all fields, provide a field mask of "*".
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.eventarc.v1.Pipeline] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.Pipeline]: @googleapis_reference_link{google/cloud/eventarc/v1/pipeline.proto#L39}
+  /// [google.cloud.eventarc.v1.UpdatePipelineRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1227}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::eventarc::v1::Pipeline>> UpdatePipeline(
+      google::cloud::eventarc::v1::Pipeline const& pipeline,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdatePipeline
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdatePipeline(
+      NoAwaitTag, google::cloud::eventarc::v1::Pipeline const& pipeline,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Update a single pipeline.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.eventarc.v1.UpdatePipelineRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.eventarc.v1.Pipeline] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.Pipeline]: @googleapis_reference_link{google/cloud/eventarc/v1/pipeline.proto#L39}
+  /// [google.cloud.eventarc.v1.UpdatePipelineRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1227}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::eventarc::v1::Pipeline>> UpdatePipeline(
+      google::cloud::eventarc::v1::UpdatePipelineRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdatePipeline
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdatePipeline(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::UpdatePipelineRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdatePipeline
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::eventarc::v1::Pipeline>> UpdatePipeline(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Delete a single pipeline.
+  ///
+  /// @param name  Required. The name of the Pipeline to be deleted.
+  /// @param etag  Optional. If provided, the Pipeline will only be deleted if the etag
+  ///  matches the current etag on the resource.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.eventarc.v1.Pipeline] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.DeletePipelineRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1247}
+  /// [google.cloud.eventarc.v1.Pipeline]: @googleapis_reference_link{google/cloud/eventarc/v1/pipeline.proto#L39}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::eventarc::v1::Pipeline>> DeletePipeline(
+      std::string const& name, std::string const& etag, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeletePipeline
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeletePipeline(
+      NoAwaitTag, std::string const& name, std::string const& etag,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Delete a single pipeline.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.eventarc.v1.DeletePipelineRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.eventarc.v1.Pipeline] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.DeletePipelineRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1247}
+  /// [google.cloud.eventarc.v1.Pipeline]: @googleapis_reference_link{google/cloud/eventarc/v1/pipeline.proto#L39}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::eventarc::v1::Pipeline>> DeletePipeline(
+      google::cloud::eventarc::v1::DeletePipelineRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeletePipeline
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeletePipeline(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::DeletePipelineRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeletePipeline
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::eventarc::v1::Pipeline>> DeletePipeline(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Get a single GoogleApiSource.
+  ///
+  /// @param name  Required. The name of the google api source to get.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.eventarc.v1.GoogleApiSource])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.GetGoogleApiSourceRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1270}
+  /// [google.cloud.eventarc.v1.GoogleApiSource]: @googleapis_reference_link{google/cloud/eventarc/v1/google_api_source.proto#L34}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::eventarc::v1::GoogleApiSource> GetGoogleApiSource(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Get a single GoogleApiSource.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.eventarc.v1.GetGoogleApiSourceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.eventarc.v1.GoogleApiSource])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.GetGoogleApiSourceRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1270}
+  /// [google.cloud.eventarc.v1.GoogleApiSource]: @googleapis_reference_link{google/cloud/eventarc/v1/google_api_source.proto#L34}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::eventarc::v1::GoogleApiSource> GetGoogleApiSource(
+      google::cloud::eventarc::v1::GetGoogleApiSourceRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// List GoogleApiSources.
+  ///
+  /// @param parent  Required. The parent collection to list GoogleApiSources on.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.eventarc.v1.GoogleApiSource], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.GoogleApiSource]: @googleapis_reference_link{google/cloud/eventarc/v1/google_api_source.proto#L34}
+  /// [google.cloud.eventarc.v1.ListGoogleApiSourcesRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1281}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::eventarc::v1::GoogleApiSource>
+  ListGoogleApiSources(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// List GoogleApiSources.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.eventarc.v1.ListGoogleApiSourcesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.eventarc.v1.GoogleApiSource], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.GoogleApiSource]: @googleapis_reference_link{google/cloud/eventarc/v1/google_api_source.proto#L34}
+  /// [google.cloud.eventarc.v1.ListGoogleApiSourcesRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1281}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::eventarc::v1::GoogleApiSource>
+  ListGoogleApiSources(
+      google::cloud::eventarc::v1::ListGoogleApiSourcesRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Create a new GoogleApiSource in a particular project and location.
+  ///
+  /// @param parent  Required. The parent collection in which to add this google api source.
+  /// @param google_api_source  Required. The google api source to create.
+  /// @param google_api_source_id  Required. The user-provided ID to be assigned to the GoogleApiSource. It
+  ///  should match the format (^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$).
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.eventarc.v1.GoogleApiSource] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.CreateGoogleApiSourceRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1327}
+  /// [google.cloud.eventarc.v1.GoogleApiSource]: @googleapis_reference_link{google/cloud/eventarc/v1/google_api_source.proto#L34}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
+  CreateGoogleApiSource(
+      std::string const& parent,
+      google::cloud::eventarc::v1::GoogleApiSource const& google_api_source,
+      std::string const& google_api_source_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateGoogleApiSource
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateGoogleApiSource(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::eventarc::v1::GoogleApiSource const& google_api_source,
+      std::string const& google_api_source_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Create a new GoogleApiSource in a particular project and location.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.eventarc.v1.CreateGoogleApiSourceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.eventarc.v1.GoogleApiSource] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.CreateGoogleApiSourceRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1327}
+  /// [google.cloud.eventarc.v1.GoogleApiSource]: @googleapis_reference_link{google/cloud/eventarc/v1/google_api_source.proto#L34}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
+  CreateGoogleApiSource(
+      google::cloud::eventarc::v1::CreateGoogleApiSourceRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateGoogleApiSource
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateGoogleApiSource(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::CreateGoogleApiSourceRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateGoogleApiSource
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
+  CreateGoogleApiSource(google::longrunning::Operation const& operation,
+                        Options opts = {});
+
+  // clang-format off
+  ///
+  /// Update a single GoogleApiSource.
+  ///
+  /// @param google_api_source  Required. The GoogleApiSource to be updated.
+  /// @param update_mask  Optional. The fields to be updated; only fields explicitly provided are
+  ///  updated. If no field mask is provided, all provided fields in the request
+  ///  are updated. To update all fields, provide a field mask of "*".
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.eventarc.v1.GoogleApiSource] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.GoogleApiSource]: @googleapis_reference_link{google/cloud/eventarc/v1/google_api_source.proto#L34}
+  /// [google.cloud.eventarc.v1.UpdateGoogleApiSourceRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1350}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
+  UpdateGoogleApiSource(
+      google::cloud::eventarc::v1::GoogleApiSource const& google_api_source,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateGoogleApiSource
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateGoogleApiSource(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::GoogleApiSource const& google_api_source,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Update a single GoogleApiSource.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.eventarc.v1.UpdateGoogleApiSourceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.eventarc.v1.GoogleApiSource] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.GoogleApiSource]: @googleapis_reference_link{google/cloud/eventarc/v1/google_api_source.proto#L34}
+  /// [google.cloud.eventarc.v1.UpdateGoogleApiSourceRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1350}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
+  UpdateGoogleApiSource(
+      google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateGoogleApiSource
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateGoogleApiSource(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateGoogleApiSource
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
+  UpdateGoogleApiSource(google::longrunning::Operation const& operation,
+                        Options opts = {});
+
+  // clang-format off
+  ///
+  /// Delete a single GoogleApiSource.
+  ///
+  /// @param name  Required. The name of the GoogleApiSource to be deleted.
+  /// @param etag  Optional. If provided, the MessageBus will only be deleted if the etag
+  ///  matches the current etag on the resource.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.eventarc.v1.GoogleApiSource] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.DeleteGoogleApiSourceRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1372}
+  /// [google.cloud.eventarc.v1.GoogleApiSource]: @googleapis_reference_link{google/cloud/eventarc/v1/google_api_source.proto#L34}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
+  DeleteGoogleApiSource(std::string const& name, std::string const& etag,
+                        Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteGoogleApiSource
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteGoogleApiSource(
+      NoAwaitTag, std::string const& name, std::string const& etag,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Delete a single GoogleApiSource.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.eventarc.v1.DeleteGoogleApiSourceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.eventarc.v1.GoogleApiSource] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.v1.DeleteGoogleApiSourceRequest]: @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L1372}
+  /// [google.cloud.eventarc.v1.GoogleApiSource]: @googleapis_reference_link{google/cloud/eventarc/v1/google_api_source.proto#L34}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
+  DeleteGoogleApiSource(
+      google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteGoogleApiSource
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteGoogleApiSource(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteGoogleApiSource
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
+  DeleteGoogleApiSource(google::longrunning::Operation const& operation,
+                        Options opts = {});
 
   // clang-format off
   ///

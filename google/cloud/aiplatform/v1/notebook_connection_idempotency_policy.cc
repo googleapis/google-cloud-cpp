@@ -98,6 +98,11 @@ Idempotency NotebookServiceConnectionIdempotencyPolicy::StartNotebookRuntime(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency NotebookServiceConnectionIdempotencyPolicy::StopNotebookRuntime(
+    google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency
 NotebookServiceConnectionIdempotencyPolicy::CreateNotebookExecutionJob(
     google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const&) {

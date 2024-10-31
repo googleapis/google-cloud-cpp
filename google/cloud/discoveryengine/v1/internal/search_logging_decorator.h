@@ -43,6 +43,11 @@ class SearchServiceLogging : public SearchServiceStub {
       google::cloud::discoveryengine::v1::SearchRequest const& request)
       override;
 
+  StatusOr<google::cloud::discoveryengine::v1::SearchResponse> SearchLite(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::SearchRequest const& request)
+      override;
+
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
       grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;

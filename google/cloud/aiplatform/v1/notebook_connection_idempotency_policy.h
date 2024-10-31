@@ -82,6 +82,9 @@ class NotebookServiceConnectionIdempotencyPolicy {
       google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const&
           request);
 
+  virtual google::cloud::Idempotency StopNotebookRuntime(
+      google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const& request);
+
   virtual google::cloud::Idempotency CreateNotebookExecutionJob(
       google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const&
           request);

@@ -60,6 +60,18 @@ PublisherTracingStub::PublishEvents(
                            child_->PublishEvents(context, options, request));
 }
 
+StatusOr<google::cloud::eventarc::publishing::v1::PublishResponse>
+PublisherTracingStub::Publish(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::eventarc::publishing::v1::PublishRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.eventarc.publishing.v1.Publisher", "Publish");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->Publish(context, options, request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<PublisherStub> MakePublisherTracingStub(

@@ -59,6 +59,18 @@ DefaultPublisherStub::PublishEvents(
   return response;
 }
 
+StatusOr<google::cloud::eventarc::publishing::v1::PublishResponse>
+DefaultPublisherStub::Publish(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::eventarc::publishing::v1::PublishRequest const& request) {
+  google::cloud::eventarc::publishing::v1::PublishResponse response;
+  auto status = grpc_stub_->Publish(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace eventarc_publishing_v1_internal
 }  // namespace cloud

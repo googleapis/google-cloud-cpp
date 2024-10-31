@@ -45,6 +45,18 @@ SearchServiceTracingConnection::Search(
       std::move(span), std::move(sr));
 }
 
+StreamRange<google::cloud::discoveryengine::v1::SearchResponse::SearchResult>
+SearchServiceTracingConnection::SearchLite(
+    google::cloud::discoveryengine::v1::SearchRequest request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SearchServiceConnection::SearchLite");
+  internal::OTelScope scope(span);
+  auto sr = child_->SearchLite(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::discoveryengine::v1::SearchResponse::SearchResult>(
+      std::move(span), std::move(sr));
+}
+
 StreamRange<google::longrunning::Operation>
 SearchServiceTracingConnection::ListOperations(
     google::longrunning::ListOperationsRequest request) {

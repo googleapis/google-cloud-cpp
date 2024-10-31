@@ -129,8 +129,8 @@ class PublisherClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.publishing.v1.PublishChannelConnectionEventsRequest]: @googleapis_reference_link{google/cloud/eventarc/publishing/v1/publisher.proto#L76}
-  /// [google.cloud.eventarc.publishing.v1.PublishChannelConnectionEventsResponse]: @googleapis_reference_link{google/cloud/eventarc/publishing/v1/publisher.proto#L91}
+  /// [google.cloud.eventarc.publishing.v1.PublishChannelConnectionEventsRequest]: @googleapis_reference_link{google/cloud/eventarc/publishing/v1/publisher.proto#L90}
+  /// [google.cloud.eventarc.publishing.v1.PublishChannelConnectionEventsResponse]: @googleapis_reference_link{google/cloud/eventarc/publishing/v1/publisher.proto#L108}
   ///
   // clang-format on
   StatusOr<google::cloud::eventarc::publishing::v1::
@@ -163,14 +163,45 @@ class PublisherClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.eventarc.publishing.v1.PublishEventsRequest]: @googleapis_reference_link{google/cloud/eventarc/publishing/v1/publisher.proto#L93}
-  /// [google.cloud.eventarc.publishing.v1.PublishEventsResponse]: @googleapis_reference_link{google/cloud/eventarc/publishing/v1/publisher.proto#L108}
+  /// [google.cloud.eventarc.publishing.v1.PublishEventsRequest]: @googleapis_reference_link{google/cloud/eventarc/publishing/v1/publisher.proto#L111}
+  /// [google.cloud.eventarc.publishing.v1.PublishEventsResponse]: @googleapis_reference_link{google/cloud/eventarc/publishing/v1/publisher.proto#L129}
   ///
   // clang-format on
   StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse>
   PublishEvents(
       google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
           request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Publish events to a message bus.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.eventarc.publishing.v1.PublishRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.eventarc.publishing.v1.PublishResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.eventarc.publishing.v1.PublishRequest]: @googleapis_reference_link{google/cloud/eventarc/publishing/v1/publisher.proto#L132}
+  /// [google.cloud.eventarc.publishing.v1.PublishResponse]: @googleapis_reference_link{google/cloud/eventarc/publishing/v1/publisher.proto#L156}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::eventarc::publishing::v1::PublishResponse> Publish(
+      google::cloud::eventarc::publishing::v1::PublishRequest const& request,
       Options opts = {});
 
  private:

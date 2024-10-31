@@ -34,10 +34,7 @@ namespace bigquerycontrol_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ///
-/// This is an experimental RPC service definition for the BigQuery
-/// Project Service.
-///
-/// It should not be relied on for production use cases at this time.
+/// This service provides access to BigQuery functionality related to projects.
 ///
 /// @par Equality
 ///
@@ -112,8 +109,8 @@ class ProjectServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.GetServiceAccountRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/project.proto#L49}
-  /// [google.cloud.bigquery.v2.GetServiceAccountResponse]: @googleapis_reference_link{google/cloud/bigquery/v2/project.proto#L55}
+  /// [google.cloud.bigquery.v2.GetServiceAccountRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/project.proto#L46}
+  /// [google.cloud.bigquery.v2.GetServiceAccountResponse]: @googleapis_reference_link{google/cloud/bigquery/v2/project.proto#L52}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::GetServiceAccountResponse>

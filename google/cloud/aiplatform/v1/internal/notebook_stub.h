@@ -152,6 +152,19 @@ class NotebookServiceStub {
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncStopNotebookRuntime(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> StopNotebookRuntime(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
   AsyncCreateNotebookExecutionJob(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -365,6 +378,18 @@ class DefaultNotebookServiceStub : public NotebookServiceStub {
   StatusOr<google::longrunning::Operation> StartNotebookRuntime(
       grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncStopNotebookRuntime(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> StopNotebookRuntime(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>>

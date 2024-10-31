@@ -408,6 +408,519 @@ class MockEventarcConnection : public eventarc_v1::EventarcConnection {
            request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::cloud::eventarc::v1::MessageBus>, GetMessageBus,
+      (google::cloud::eventarc::v1::GetMessageBusRequest const& request),
+      (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::eventarc::v1::MessageBus>),
+              ListMessageBuses,
+              (google::cloud::eventarc::v1::ListMessageBusesRequest request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::eventarc::v1::ListMessageBusEnrollmentsResponse>,
+      ListMessageBusEnrollments,
+      (google::cloud::eventarc::v1::ListMessageBusEnrollmentsRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateMessageBus(Matcher<google::cloud::eventarc::v1::CreateMessageBusRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::eventarc::v1::MessageBus>>,
+      CreateMessageBus,
+      (google::cloud::eventarc::v1::CreateMessageBusRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateMessageBus(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateMessageBus,
+      (NoAwaitTag,
+       google::cloud::eventarc::v1::CreateMessageBusRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateMessageBus(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::eventarc::v1::MessageBus>>,
+              CreateMessageBus,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateMessageBus(Matcher<google::cloud::eventarc::v1::UpdateMessageBusRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::eventarc::v1::MessageBus>>,
+      UpdateMessageBus,
+      (google::cloud::eventarc::v1::UpdateMessageBusRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateMessageBus(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateMessageBus,
+      (NoAwaitTag,
+       google::cloud::eventarc::v1::UpdateMessageBusRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateMessageBus(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::eventarc::v1::MessageBus>>,
+              UpdateMessageBus,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteMessageBus(Matcher<google::cloud::eventarc::v1::DeleteMessageBusRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::eventarc::v1::MessageBus>>,
+      DeleteMessageBus,
+      (google::cloud::eventarc::v1::DeleteMessageBusRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteMessageBus(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteMessageBus,
+      (NoAwaitTag,
+       google::cloud::eventarc::v1::DeleteMessageBusRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteMessageBus(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::eventarc::v1::MessageBus>>,
+              DeleteMessageBus,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::eventarc::v1::Enrollment>, GetEnrollment,
+      (google::cloud::eventarc::v1::GetEnrollmentRequest const& request),
+      (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::eventarc::v1::Enrollment>),
+              ListEnrollments,
+              (google::cloud::eventarc::v1::ListEnrollmentsRequest request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateEnrollment(Matcher<google::cloud::eventarc::v1::CreateEnrollmentRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::eventarc::v1::Enrollment>>,
+      CreateEnrollment,
+      (google::cloud::eventarc::v1::CreateEnrollmentRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateEnrollment(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateEnrollment,
+      (NoAwaitTag,
+       google::cloud::eventarc::v1::CreateEnrollmentRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreateEnrollment(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::eventarc::v1::Enrollment>>,
+              CreateEnrollment,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateEnrollment(Matcher<google::cloud::eventarc::v1::UpdateEnrollmentRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::eventarc::v1::Enrollment>>,
+      UpdateEnrollment,
+      (google::cloud::eventarc::v1::UpdateEnrollmentRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateEnrollment(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateEnrollment,
+      (NoAwaitTag,
+       google::cloud::eventarc::v1::UpdateEnrollmentRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateEnrollment(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::eventarc::v1::Enrollment>>,
+              UpdateEnrollment,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteEnrollment(Matcher<google::cloud::eventarc::v1::DeleteEnrollmentRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::eventarc::v1::Enrollment>>,
+      DeleteEnrollment,
+      (google::cloud::eventarc::v1::DeleteEnrollmentRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteEnrollment(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteEnrollment,
+      (NoAwaitTag,
+       google::cloud::eventarc::v1::DeleteEnrollmentRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteEnrollment(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::eventarc::v1::Enrollment>>,
+              DeleteEnrollment,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::eventarc::v1::Pipeline>, GetPipeline,
+              (google::cloud::eventarc::v1::GetPipelineRequest const& request),
+              (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::eventarc::v1::Pipeline>),
+              ListPipelines,
+              (google::cloud::eventarc::v1::ListPipelinesRequest request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreatePipeline(Matcher<google::cloud::eventarc::v1::CreatePipelineRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::eventarc::v1::Pipeline>>, CreatePipeline,
+      (google::cloud::eventarc::v1::CreatePipelineRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreatePipeline(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreatePipeline,
+      (NoAwaitTag,
+       google::cloud::eventarc::v1::CreatePipelineRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CreatePipeline(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::eventarc::v1::Pipeline>>,
+              CreatePipeline, (google::longrunning::Operation const& operation),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdatePipeline(Matcher<google::cloud::eventarc::v1::UpdatePipelineRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::eventarc::v1::Pipeline>>, UpdatePipeline,
+      (google::cloud::eventarc::v1::UpdatePipelineRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdatePipeline(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdatePipeline,
+      (NoAwaitTag,
+       google::cloud::eventarc::v1::UpdatePipelineRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdatePipeline(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::eventarc::v1::Pipeline>>,
+              UpdatePipeline, (google::longrunning::Operation const& operation),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeletePipeline(Matcher<google::cloud::eventarc::v1::DeletePipelineRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::eventarc::v1::Pipeline>>, DeletePipeline,
+      (google::cloud::eventarc::v1::DeletePipelineRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeletePipeline(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeletePipeline,
+      (NoAwaitTag,
+       google::cloud::eventarc::v1::DeletePipelineRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeletePipeline(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::eventarc::v1::Pipeline>>,
+              DeletePipeline, (google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::eventarc::v1::GoogleApiSource>,
+      GetGoogleApiSource,
+      (google::cloud::eventarc::v1::GetGoogleApiSourceRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::eventarc::v1::GoogleApiSource>),
+      ListGoogleApiSources,
+      (google::cloud::eventarc::v1::ListGoogleApiSourcesRequest request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateGoogleApiSource(Matcher<google::cloud::eventarc::v1::CreateGoogleApiSourceRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>,
+              CreateGoogleApiSource,
+              (google::cloud::eventarc::v1::CreateGoogleApiSourceRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateGoogleApiSource(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateGoogleApiSource,
+              (NoAwaitTag,
+               google::cloud::eventarc::v1::CreateGoogleApiSourceRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateGoogleApiSource(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>,
+              CreateGoogleApiSource,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateGoogleApiSource(Matcher<google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>,
+              UpdateGoogleApiSource,
+              (google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateGoogleApiSource(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateGoogleApiSource,
+              (NoAwaitTag,
+               google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateGoogleApiSource(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>,
+              UpdateGoogleApiSource,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteGoogleApiSource(Matcher<google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>,
+              DeleteGoogleApiSource,
+              (google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteGoogleApiSource(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteGoogleApiSource,
+              (NoAwaitTag,
+               google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteGoogleApiSource(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>,
+              DeleteGoogleApiSource,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
               (google::cloud::location::ListLocationsRequest request),
               (override));

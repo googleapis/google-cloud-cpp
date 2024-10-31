@@ -102,6 +102,20 @@ RecaptchaEnterpriseServiceConnection::AddIpOverride(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::recaptchaenterprise::v1::RemoveIpOverrideResponse>
+RecaptchaEnterpriseServiceConnection::RemoveIpOverride(
+    google::cloud::recaptchaenterprise::v1::RemoveIpOverrideRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::recaptchaenterprise::v1::IpOverrideData>
+RecaptchaEnterpriseServiceConnection::ListIpOverrides(
+    google::cloud::recaptchaenterprise::v1::
+        ListIpOverridesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::recaptchaenterprise::v1::IpOverrideData>>();
+}
+
 StatusOr<google::cloud::recaptchaenterprise::v1::Metrics>
 RecaptchaEnterpriseServiceConnection::GetMetrics(
     google::cloud::recaptchaenterprise::v1::GetMetricsRequest const&) {

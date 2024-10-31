@@ -51,6 +51,11 @@ class PublisherAuth : public PublisherStub {
       google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
           request) override;
 
+  StatusOr<google::cloud::eventarc::publishing::v1::PublishResponse> Publish(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::eventarc::publishing::v1::PublishRequest const& request)
+      override;
+
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<PublisherStub> child_;

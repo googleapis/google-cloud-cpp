@@ -1,8 +1,11 @@
 @com_google_googleapis//google/devtools/artifactregistry/v1:apt_artifact.proto
 @com_google_googleapis//google/devtools/artifactregistry/v1:artifact.proto
+@com_google_googleapis//google/devtools/artifactregistry/v1:attachment.proto
 @com_google_googleapis//google/devtools/artifactregistry/v1:file.proto
+@com_google_googleapis//google/devtools/artifactregistry/v1:generic.proto
 @com_google_googleapis//google/devtools/artifactregistry/v1:package.proto
 @com_google_googleapis//google/devtools/artifactregistry/v1:repository.proto
+@com_google_googleapis//google/devtools/artifactregistry/v1:rule.proto
 @com_google_googleapis//google/devtools/artifactregistry/v1:service.proto
 @com_google_googleapis//google/devtools/artifactregistry/v1:settings.proto
 @com_google_googleapis//google/devtools/artifactregistry/v1:tag.proto

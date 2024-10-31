@@ -316,6 +316,12 @@ ArtifactRegistryConnection::BatchDeleteVersions(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::devtools::artifactregistry::v1::Version>
+ArtifactRegistryConnection::UpdateVersion(
+    google::devtools::artifactregistry::v1::UpdateVersionRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StreamRange<google::devtools::artifactregistry::v1::File>
 ArtifactRegistryConnection::ListFiles(
     google::devtools::artifactregistry::v1::
@@ -327,6 +333,34 @@ ArtifactRegistryConnection::ListFiles(
 StatusOr<google::devtools::artifactregistry::v1::File>
 ArtifactRegistryConnection::GetFile(
     google::devtools::artifactregistry::v1::GetFileRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+ArtifactRegistryConnection::DeleteFile(
+    google::devtools::artifactregistry::v1::DeleteFileRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> ArtifactRegistryConnection::DeleteFile(
+    NoAwaitTag,
+    google::devtools::artifactregistry::v1::DeleteFileRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+ArtifactRegistryConnection::DeleteFile(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::devtools::artifactregistry::v1::File>
+ArtifactRegistryConnection::UpdateFile(
+    google::devtools::artifactregistry::v1::UpdateFileRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -358,6 +392,37 @@ ArtifactRegistryConnection::UpdateTag(
 
 Status ArtifactRegistryConnection::DeleteTag(
     google::devtools::artifactregistry::v1::DeleteTagRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::devtools::artifactregistry::v1::Rule>
+ArtifactRegistryConnection::CreateRule(
+    google::devtools::artifactregistry::v1::CreateRuleRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::devtools::artifactregistry::v1::Rule>
+ArtifactRegistryConnection::ListRules(
+    google::devtools::artifactregistry::v1::
+        ListRulesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::devtools::artifactregistry::v1::Rule>>();
+}
+
+StatusOr<google::devtools::artifactregistry::v1::Rule>
+ArtifactRegistryConnection::GetRule(
+    google::devtools::artifactregistry::v1::GetRuleRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::devtools::artifactregistry::v1::Rule>
+ArtifactRegistryConnection::UpdateRule(
+    google::devtools::artifactregistry::v1::UpdateRuleRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status ArtifactRegistryConnection::DeleteRule(
+    google::devtools::artifactregistry::v1::DeleteRuleRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -400,6 +465,74 @@ StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
 ArtifactRegistryConnection::UpdateVPCSCConfig(
     google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::devtools::artifactregistry::v1::Package>
+ArtifactRegistryConnection::UpdatePackage(
+    google::devtools::artifactregistry::v1::UpdatePackageRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::devtools::artifactregistry::v1::Attachment>
+ArtifactRegistryConnection::ListAttachments(
+    google::devtools::artifactregistry::v1::
+        ListAttachmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::devtools::artifactregistry::v1::Attachment>>();
+}
+
+StatusOr<google::devtools::artifactregistry::v1::Attachment>
+ArtifactRegistryConnection::GetAttachment(
+    google::devtools::artifactregistry::v1::GetAttachmentRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::devtools::artifactregistry::v1::Attachment>>
+ArtifactRegistryConnection::CreateAttachment(
+    google::devtools::artifactregistry::v1::CreateAttachmentRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::devtools::artifactregistry::v1::Attachment>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryConnection::CreateAttachment(
+    NoAwaitTag,
+    google::devtools::artifactregistry::v1::CreateAttachmentRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::devtools::artifactregistry::v1::Attachment>>
+ArtifactRegistryConnection::CreateAttachment(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::devtools::artifactregistry::v1::Attachment>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+ArtifactRegistryConnection::DeleteAttachment(
+    google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryConnection::DeleteAttachment(
+    NoAwaitTag,
+    google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+ArtifactRegistryConnection::DeleteAttachment(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StreamRange<google::cloud::location::Location>

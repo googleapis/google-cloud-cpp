@@ -106,6 +106,20 @@ class MockRecaptchaEnterpriseServiceConnection
            request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<
+          google::cloud::recaptchaenterprise::v1::RemoveIpOverrideResponse>,
+      RemoveIpOverride,
+      (google::cloud::recaptchaenterprise::v1::RemoveIpOverrideRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::recaptchaenterprise::v1::IpOverrideData>),
+      ListIpOverrides,
+      (google::cloud::recaptchaenterprise::v1::ListIpOverridesRequest request),
+      (override));
+
   MOCK_METHOD(StatusOr<google::cloud::recaptchaenterprise::v1::Metrics>,
               GetMetrics,
               (google::cloud::recaptchaenterprise::v1::GetMetricsRequest const&

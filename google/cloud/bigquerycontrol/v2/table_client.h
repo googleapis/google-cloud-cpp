@@ -35,10 +35,8 @@ namespace bigquerycontrol_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ///
-/// This is an experimental RPC service definition for the BigQuery
-/// Table Service.
-///
-/// It should not be relied on for production use cases at this time.
+/// TableService provides methods for managing BigQuery tables and table-like
+/// entities such as views and snapshots.
 ///
 /// @par Equality
 ///
@@ -114,8 +112,8 @@ class TableServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.GetTableRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L553}
-  /// [google.cloud.bigquery.v2.Table]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L282}
+  /// [google.cloud.bigquery.v2.GetTableRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L551}
+  /// [google.cloud.bigquery.v2.Table]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L280}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::Table> GetTable(
@@ -145,8 +143,8 @@ class TableServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.InsertTableRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L600}
-  /// [google.cloud.bigquery.v2.Table]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L282}
+  /// [google.cloud.bigquery.v2.InsertTableRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L598}
+  /// [google.cloud.bigquery.v2.Table]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L280}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::Table> InsertTable(
@@ -179,8 +177,8 @@ class TableServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.Table]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L282}
-  /// [google.cloud.bigquery.v2.UpdateOrPatchTableRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L611}
+  /// [google.cloud.bigquery.v2.Table]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L280}
+  /// [google.cloud.bigquery.v2.UpdateOrPatchTableRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L609}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::Table> PatchTable(
@@ -212,8 +210,8 @@ class TableServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.Table]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L282}
-  /// [google.cloud.bigquery.v2.UpdateOrPatchTableRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L611}
+  /// [google.cloud.bigquery.v2.Table]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L280}
+  /// [google.cloud.bigquery.v2.UpdateOrPatchTableRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L609}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::Table> UpdateTable(
@@ -242,7 +240,7 @@ class TableServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.DeleteTableRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L629}
+  /// [google.cloud.bigquery.v2.DeleteTableRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L627}
   ///
   // clang-format on
   Status DeleteTable(
@@ -282,8 +280,8 @@ class TableServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.ListFormatTable]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L667}
-  /// [google.cloud.bigquery.v2.ListTablesRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L641}
+  /// [google.cloud.bigquery.v2.ListFormatTable]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L665}
+  /// [google.cloud.bigquery.v2.ListTablesRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/table.proto#L639}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::v2::ListFormatTable> ListTables(
