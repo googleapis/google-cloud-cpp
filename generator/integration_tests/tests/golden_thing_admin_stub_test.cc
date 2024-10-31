@@ -543,10 +543,10 @@ class MockLongrunningOperationsStub
               (override));
 };
 
-class MockLocationOperationsStub
+class MockLocationsStub
     : public google::cloud::location::Locations::StubInterface {
  public:
-  ~MockLocationOperationsStub() override = default;
+  ~MockLocationsStub() override = default;
   MOCK_METHOD(::grpc::Status, ListLocations,
               (::grpc::ClientContext * context,
                ::google::cloud::location::ListLocationsRequest const& request,
@@ -597,7 +597,7 @@ class GoldenStubTest : public ::testing::Test {
   void SetUp() override {
     grpc_stub_ = std::make_unique<MockGrpcGoldenThingAdminStub>();
     longrunning_stub_ = std::make_unique<MockLongrunningOperationsStub>();
-    location_stub_ = std::make_unique<MockLocationOperationsStub>();
+    location_stub_ = std::make_unique<MockLocationsStub>();
   }
 
   static grpc::Status GrpcTransientError() {
@@ -620,8 +620,25 @@ class GoldenStubTest : public ::testing::Test {
 
   std::unique_ptr<MockGrpcGoldenThingAdminStub> grpc_stub_;
   std::unique_ptr<MockLongrunningOperationsStub> longrunning_stub_;
-  std::unique_ptr<MockLocationOperationsStub> location_stub_;
+  std::unique_ptr<MockLocationsStub> location_stub_;
 };
+
+TEST_F(GoldenStubTest, GetLocation) {
+  grpc::Status status;
+  grpc::ClientContext context;
+  google::cloud::location::GetLocationRequest request;
+  EXPECT_CALL(*location_stub_, GetLocation(&context, _, _))
+      .WillOnce(Return(status))
+      .WillOnce(Return(GrpcTransientError()));
+
+  DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(location_stub_),
+                                   std::move(longrunning_stub_));
+  auto success = stub.GetLocation(context, Options{}, request);
+  EXPECT_THAT(success, IsOk());
+  auto failure = stub.GetLocation(context, Options{}, request);
+  EXPECT_EQ(failure.status(), TransientError());
+}
 
 TEST_F(GoldenStubTest, ListDatabases) {
   grpc::Status status;
