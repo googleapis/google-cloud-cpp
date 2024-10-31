@@ -272,6 +272,13 @@ GoldenThingAdminTracingConnection::LongRunningWithoutRouting(
       child_->LongRunningWithoutRouting(operation));
 }
 
+StatusOr<google::cloud::location::Location>
+GoldenThingAdminTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan("golden_v1::GoldenThingAdminConnection::GetLocation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetLocation(request));
+}
+
 future<StatusOr<google::test::admin::database::v1::Database>>
 GoldenThingAdminTracingConnection::AsyncGetDatabase(google::test::admin::database::v1::GetDatabaseRequest const& request) {
   auto span = internal::MakeSpan(

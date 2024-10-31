@@ -214,6 +214,9 @@ class GoldenKitchenSinkConnection {
 
   virtual Status
   ExplicitRouting2(google::test::admin::database::v1::ExplicitRoutingRequest const& request);
+
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 };
 
 /**

@@ -69,6 +69,10 @@ Idempotency GoldenKitchenSinkConnectionIdempotencyPolicy::ExplicitRouting2(googl
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency GoldenKitchenSinkConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<GoldenKitchenSinkConnectionIdempotencyPolicy>
     MakeDefaultGoldenKitchenSinkConnectionIdempotencyPolicy() {
   return std::make_unique<GoldenKitchenSinkConnectionIdempotencyPolicy>();

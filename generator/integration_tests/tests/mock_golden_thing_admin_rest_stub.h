@@ -181,6 +181,11 @@ class MockGoldenThingAdminRestStub
                google::cloud::internal::ImmutableOptions,
                google::longrunning::CancelOperationRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<::google::cloud::location::Location>, GetLocation,
+              (google::cloud::rest_internal::RestContext&, Options const&,
+               ::google::cloud::location::GetLocationRequest const&),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

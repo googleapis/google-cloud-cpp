@@ -22,6 +22,7 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
 #include <generator/integration_tests/test.grpc.pb.h>
+#include <google/cloud/location/locations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -62,6 +63,9 @@ class GoldenKitchenSinkConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency
   ExplicitRouting2(google::test::admin::database::v1::ExplicitRoutingRequest const& request);
+
+  virtual google::cloud::Idempotency
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 };
 
 std::unique_ptr<GoldenKitchenSinkConnectionIdempotencyPolicy>

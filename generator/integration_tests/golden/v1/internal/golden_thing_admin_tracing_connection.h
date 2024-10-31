@@ -134,6 +134,9 @@ class GoldenThingAdminTracingConnection
   LongRunningWithoutRouting(
       google::longrunning::Operation const& operation) override;
 
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+
   future<StatusOr<google::test::admin::database::v1::Database>>
   AsyncGetDatabase(google::test::admin::database::v1::GetDatabaseRequest const& request) override;
 

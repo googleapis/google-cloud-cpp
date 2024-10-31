@@ -419,6 +419,12 @@ GoldenThingAdminClient::LongRunningWithoutRouting(google::longrunning::Operation
   return connection_->LongRunningWithoutRouting(operation);
 }
 
+StatusOr<google::cloud::location::Location>
+GoldenThingAdminClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetLocation(request);
+}
+
 future<StatusOr<google::test::admin::database::v1::Database>>
 GoldenThingAdminClient::AsyncGetDatabase(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

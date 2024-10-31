@@ -543,11 +543,61 @@ class MockLongrunningOperationsStub
               (override));
 };
 
+class MockLocationsStub
+    : public google::cloud::location::Locations::StubInterface {
+ public:
+  ~MockLocationsStub() override = default;
+  MOCK_METHOD(::grpc::Status, ListLocations,
+              (::grpc::ClientContext * context,
+               ::google::cloud::location::ListLocationsRequest const& request,
+               ::google::cloud::location::ListLocationsResponse* response),
+              (override));
+
+  MOCK_METHOD(::grpc::Status, GetLocation,
+              (::grpc::ClientContext * context,
+               ::google::cloud::location::GetLocationRequest const& request,
+               ::google::cloud::location::Location* response),
+              (override));
+
+  MOCK_METHOD(::grpc::ClientAsyncResponseReaderInterface<
+                  ::google::cloud::location::ListLocationsResponse>*,
+              AsyncListLocationsRaw,
+              (::grpc::ClientContext * context,
+               ::google::cloud::location::ListLocationsRequest const& request,
+               ::grpc::CompletionQueue* cq),
+              (override));
+
+  MOCK_METHOD(::grpc::ClientAsyncResponseReaderInterface<
+                  ::google::cloud::location::ListLocationsResponse>*,
+              PrepareAsyncListLocationsRaw,
+              (::grpc::ClientContext * context,
+               ::google::cloud::location::ListLocationsRequest const& request,
+               ::grpc::CompletionQueue* cq),
+              (override));
+
+  MOCK_METHOD(::grpc::ClientAsyncResponseReaderInterface<
+                  ::google::cloud::location::Location>*,
+              AsyncGetLocationRaw,
+              (::grpc::ClientContext * context,
+               ::google::cloud::location::GetLocationRequest const& request,
+               ::grpc::CompletionQueue* cq),
+              (override));
+
+  MOCK_METHOD(::grpc::ClientAsyncResponseReaderInterface<
+                  ::google::cloud::location::Location>*,
+              PrepareAsyncGetLocationRaw,
+              (::grpc::ClientContext * context,
+               ::google::cloud::location::GetLocationRequest const& request,
+               ::grpc::CompletionQueue* cq),
+              (override));
+};
+
 class GoldenStubTest : public ::testing::Test {
  protected:
   void SetUp() override {
     grpc_stub_ = std::make_unique<MockGrpcGoldenThingAdminStub>();
     longrunning_stub_ = std::make_unique<MockLongrunningOperationsStub>();
+    location_stub_ = std::make_unique<MockLocationsStub>();
   }
 
   static grpc::Status GrpcTransientError() {
@@ -570,7 +620,25 @@ class GoldenStubTest : public ::testing::Test {
 
   std::unique_ptr<MockGrpcGoldenThingAdminStub> grpc_stub_;
   std::unique_ptr<MockLongrunningOperationsStub> longrunning_stub_;
+  std::unique_ptr<MockLocationsStub> location_stub_;
 };
+
+TEST_F(GoldenStubTest, GetLocation) {
+  grpc::Status status;
+  grpc::ClientContext context;
+  google::cloud::location::GetLocationRequest request;
+  EXPECT_CALL(*location_stub_, GetLocation(&context, _, _))
+      .WillOnce(Return(status))
+      .WillOnce(Return(GrpcTransientError()));
+
+  DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(location_stub_),
+                                   std::move(longrunning_stub_));
+  auto success = stub.GetLocation(context, Options{}, request);
+  EXPECT_THAT(success, IsOk());
+  auto failure = stub.GetLocation(context, Options{}, request);
+  EXPECT_EQ(failure.status(), TransientError());
+}
 
 TEST_F(GoldenStubTest, ListDatabases) {
   grpc::Status status;
@@ -581,6 +649,7 @@ TEST_F(GoldenStubTest, ListDatabases) {
       .WillOnce(Return(GrpcTransientError()));
 
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(location_stub_),
                                    std::move(longrunning_stub_));
   auto success = stub.ListDatabases(context, Options{}, request);
   EXPECT_THAT(success, IsOk());
@@ -603,6 +672,7 @@ TEST_F(GoldenStubTest, AsyncCreateDatabase) {
   CompletionQueue cq(mock);
 
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(location_stub_),
                                    std::move(longrunning_stub_));
   google::test::admin::database::v1::CreateDatabaseRequest request;
   auto failure =
@@ -619,6 +689,7 @@ TEST_F(GoldenStubTest, SynchronousCreateDatabase) {
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(location_stub_),
                                    std::move(longrunning_stub_));
   auto success = stub.CreateDatabase(context, Options{}, request);
   EXPECT_THAT(success, IsOk());
@@ -634,6 +705,7 @@ TEST_F(GoldenStubTest, GetDatabase) {
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(location_stub_),
                                    std::move(longrunning_stub_));
   auto success = stub.GetDatabase(context, Options{}, request);
   EXPECT_THAT(success, IsOk());
@@ -656,6 +728,7 @@ TEST_F(GoldenStubTest, AsyncUpdateDatabaseDdl) {
   CompletionQueue cq(mock);
 
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(location_stub_),
                                    std::move(longrunning_stub_));
   google::test::admin::database::v1::UpdateDatabaseDdlRequest request;
   auto failure =
@@ -672,6 +745,7 @@ TEST_F(GoldenStubTest, SynchronousUpdateDatabaseDdl) {
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(location_stub_),
                                    std::move(longrunning_stub_));
   auto success = stub.UpdateDatabaseDdl(context, Options{}, request);
   EXPECT_THAT(success, IsOk());
@@ -687,6 +761,7 @@ TEST_F(GoldenStubTest, DropDatabase) {
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(location_stub_),
                                    std::move(longrunning_stub_));
   auto success = stub.DropDatabase(context, Options{}, request);
   EXPECT_THAT(success, IsOk());
@@ -702,6 +777,7 @@ TEST_F(GoldenStubTest, GetDatabaseDdl) {
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(location_stub_),
                                    std::move(longrunning_stub_));
   auto success = stub.GetDatabaseDdl(context, Options{}, request);
   EXPECT_THAT(success, IsOk());
@@ -717,6 +793,7 @@ TEST_F(GoldenStubTest, SetIamPolicy) {
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(location_stub_),
                                    std::move(longrunning_stub_));
   auto success = stub.SetIamPolicy(context, Options{}, request);
   EXPECT_THAT(success, IsOk());
@@ -732,6 +809,7 @@ TEST_F(GoldenStubTest, GetIamPolicy) {
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(location_stub_),
                                    std::move(longrunning_stub_));
   auto success = stub.GetIamPolicy(context, Options{}, request);
   EXPECT_THAT(success, IsOk());
@@ -747,6 +825,7 @@ TEST_F(GoldenStubTest, TestIamPermissions) {
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(location_stub_),
                                    std::move(longrunning_stub_));
   auto success = stub.TestIamPermissions(context, Options{}, request);
   EXPECT_THAT(success, IsOk());
@@ -768,6 +847,7 @@ TEST_F(GoldenStubTest, AsyncCreateBackup) {
   CompletionQueue cq(mock);
 
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(location_stub_),
                                    std::move(longrunning_stub_));
   google::test::admin::database::v1::CreateBackupRequest request;
   auto failure =
@@ -784,6 +864,7 @@ TEST_F(GoldenStubTest, SynchronousCreateBackup) {
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(location_stub_),
                                    std::move(longrunning_stub_));
   auto success = stub.CreateBackup(context, Options{}, request);
   EXPECT_THAT(success, IsOk());
@@ -799,6 +880,7 @@ TEST_F(GoldenStubTest, GetBackup) {
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(location_stub_),
                                    std::move(longrunning_stub_));
   auto success = stub.GetBackup(context, Options{}, request);
   EXPECT_THAT(success, IsOk());
@@ -814,6 +896,7 @@ TEST_F(GoldenStubTest, UpdateBackup) {
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(location_stub_),
                                    std::move(longrunning_stub_));
   auto success = stub.UpdateBackup(context, Options{}, request);
   EXPECT_THAT(success, IsOk());
@@ -829,6 +912,7 @@ TEST_F(GoldenStubTest, DeleteBackup) {
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(location_stub_),
                                    std::move(longrunning_stub_));
   auto success = stub.DeleteBackup(context, Options{}, request);
   EXPECT_THAT(success, IsOk());
@@ -844,6 +928,7 @@ TEST_F(GoldenStubTest, ListBackups) {
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(location_stub_),
                                    std::move(longrunning_stub_));
   auto success = stub.ListBackups(context, Options{}, request);
   EXPECT_THAT(success, IsOk());
@@ -866,6 +951,7 @@ TEST_F(GoldenStubTest, AsyncRestoreDatabase) {
   CompletionQueue cq(mock);
 
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(location_stub_),
                                    std::move(longrunning_stub_));
   google::test::admin::database::v1::RestoreDatabaseRequest request;
   auto failure =
@@ -882,6 +968,7 @@ TEST_F(GoldenStubTest, SynchronousRestoreDatabase) {
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(location_stub_),
                                    std::move(longrunning_stub_));
   auto success = stub.RestoreDatabase(context, Options{}, request);
   EXPECT_THAT(success, IsOk());
@@ -897,6 +984,7 @@ TEST_F(GoldenStubTest, ListDatabaseOperations) {
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(location_stub_),
                                    std::move(longrunning_stub_));
   auto success = stub.ListDatabaseOperations(context, Options{}, request);
   EXPECT_THAT(success, IsOk());
@@ -912,6 +1000,7 @@ TEST_F(GoldenStubTest, ListBackupOperations) {
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(location_stub_),
                                    std::move(longrunning_stub_));
   auto success = stub.ListBackupOperations(context, Options{}, request);
   EXPECT_THAT(success, IsOk());
@@ -934,6 +1023,7 @@ TEST_F(GoldenStubTest, AsyncGetDatabase) {
   CompletionQueue cq(mock);
 
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(location_stub_),
                                    std::move(longrunning_stub_));
   google::test::admin::database::v1::GetDatabaseRequest request;
   auto failure = stub.AsyncGetDatabase(
@@ -956,6 +1046,7 @@ TEST_F(GoldenStubTest, AsyncDropDatabase) {
   CompletionQueue cq(mock);
 
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(location_stub_),
                                    std::move(longrunning_stub_));
   google::test::admin::database::v1::DropDatabaseRequest request;
   auto failure = stub.AsyncDropDatabase(
@@ -979,6 +1070,7 @@ TEST_F(GoldenStubTest, AsyncGetOperation) {
   CompletionQueue cq(mock);
 
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(location_stub_),
                                    std::move(longrunning_stub_));
   google::longrunning::GetOperationRequest request;
   auto failure =
@@ -1002,6 +1094,7 @@ TEST_F(GoldenStubTest, AsyncCancelOperation) {
   CompletionQueue cq(mock);
 
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(location_stub_),
                                    std::move(longrunning_stub_));
   google::longrunning::CancelOperationRequest request;
   auto failure =

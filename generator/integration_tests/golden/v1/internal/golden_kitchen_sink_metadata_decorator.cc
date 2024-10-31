@@ -217,6 +217,15 @@ GoldenKitchenSinkMetadata::ExplicitRouting2(
   return child_->ExplicitRouting2(context, options, request);
 }
 
+StatusOr<google::cloud::location::Location>
+GoldenKitchenSinkMetadata::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::location::GetLocationRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetLocation(context, options, request);
+}
+
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
       google::test::admin::database::v1::Response>>
 GoldenKitchenSinkMetadata::AsyncStreamingRead(
