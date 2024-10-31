@@ -22,6 +22,7 @@
 #include "google/cloud/internal/oauth2_external_account_credentials.h"
 #include "google/cloud/internal/oauth2_google_application_default_credentials_file.h"
 #include "google/cloud/internal/oauth2_http_client_factory.h"
+#include "google/cloud/internal/oauth2_impersonate_service_account_credentials.h"
 #include "google/cloud/internal/oauth2_service_account_credentials.h"
 #include "google/cloud/internal/parse_service_account_p12_file.h"
 #include "google/cloud/internal/throw_delegate.h"
@@ -36,6 +37,7 @@ namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+// NOLINTNEXTLINE(misc-no-recursion)
 StatusOr<std::unique_ptr<Credentials>> LoadCredsFromString(
     std::string const& contents, std::string const& path,
     Options const& options, HttpClientFactory client_factory) {
@@ -64,6 +66,30 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromString(
     return std::unique_ptr<Credentials>(
         std::make_unique<ServiceAccountCredentials>(*info, options,
                                                     std::move(client_factory)));
+  }
+  if (cred_type == "impersonated_service_account") {
+    auto info = ParseImpersonatedServiceAccountCredentials(contents, path);
+    if (!info) return std::move(info).status();
+    auto source_creds = LoadCredsFromString(std::move(info->source_credentials),
+                                            path, options, client_factory);
+    if (!source_creds) return std::move(source_creds).status();
+
+    auto opts = options;
+    auto& delegates = opts.lookup<DelegatesOption>();
+    for (auto& delegate : info->delegates) {
+      delegates.push_back(std::move(delegate));
+    }
+
+    internal::ImpersonateServiceAccountConfig config(
+        // The base credentials (GUAC) are used to create the IAM REST Stub. We
+        // are going to override them by supplying our own IAM REST Stub,
+        // constructed using `oauth2_internal::Credentials`.
+        nullptr, std::move(info->service_account), opts);
+    auto rest_stub = MakeMinimalIamCredentialsRestStub(
+        *std::move(source_creds), opts, std::move(client_factory));
+    return std::unique_ptr<Credentials>(
+        std::make_unique<ImpersonateServiceAccountCredentials>(
+            config, std::move(rest_stub)));
   }
   return internal::InvalidArgumentError(
       "Unsupported credential type (" + cred_type +
