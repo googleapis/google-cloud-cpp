@@ -17,7 +17,7 @@
 // source: google/monitoring/v3/service_service.proto
 
 #include "google/cloud/monitoring/v3/internal/service_monitoring_auth_decorator.h"
-#include <google/monitoring/v3/service_service.grpc.pb.h>
+#include "google/monitoring/v3/service_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

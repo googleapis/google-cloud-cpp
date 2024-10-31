@@ -25,7 +25,7 @@
 #include "google/cloud/testing_util/validate_metadata.h"
 #include "google/cloud/testing_util/validate_propagator.h"
 #include "google/cloud/universe_domain_options.h"
-#include <google/iam/credentials/v1/iamcredentials.grpc.pb.h>
+#include "google/iam/credentials/v1/iamcredentials.grpc.pb.h"
 #include <gmock/gmock.h>
 
 namespace google {

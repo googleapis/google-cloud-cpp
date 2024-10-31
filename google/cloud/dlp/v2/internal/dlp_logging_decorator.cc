@@ -19,7 +19,7 @@
 #include "google/cloud/dlp/v2/internal/dlp_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/privacy/dlp/v2/dlp.grpc.pb.h>
+#include "google/privacy/dlp/v2/dlp.grpc.pb.h"
 #include <memory>
 #include <set>
 #include <string>

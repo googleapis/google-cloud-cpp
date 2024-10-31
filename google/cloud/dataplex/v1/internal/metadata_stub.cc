@@ -17,9 +17,9 @@
 // source: google/cloud/dataplex/v1/metadata.proto
 
 #include "google/cloud/dataplex/v1/internal/metadata_stub.h"
+#include "google/cloud/dataplex/v1/metadata.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/dataplex/v1/metadata.grpc.pb.h>
 #include <memory>
 #include <utility>
 

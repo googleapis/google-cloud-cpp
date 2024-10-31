@@ -20,9 +20,9 @@
 #include "google/cloud/status_or.h"
 #include "absl/meta/type_traits.h"
 #include "absl/strings/str_split.h"
-#include <google/api/annotations.pb.h>
-#include <google/api/routing.pb.h>
-#include <google/protobuf/descriptor.h>
+#include "google/api/annotations.pb.h"
+#include "google/api/routing.pb.h"
+#include "google/protobuf/descriptor.h"
 #include <gmock/gmock.h>
 #include <grpcpp/completion_queue.h>
 #include <grpcpp/generic/generic_stub.h>

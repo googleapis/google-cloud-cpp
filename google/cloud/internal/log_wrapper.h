@@ -29,7 +29,7 @@
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include "absl/strings/string_view.h"
-#include <google/protobuf/message.h>
+#include "google/protobuf/message.h"
 #include <grpcpp/grpcpp.h>
 #include <chrono>
 #include <string>

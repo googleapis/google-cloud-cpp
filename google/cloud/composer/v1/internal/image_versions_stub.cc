@@ -17,9 +17,9 @@
 // source: google/cloud/orchestration/airflow/service/v1/image_versions.proto
 
 #include "google/cloud/composer/v1/internal/image_versions_stub.h"
+#include "google/cloud/orchestration/airflow/service/v1/image_versions.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/orchestration/airflow/service/v1/image_versions.grpc.pb.h>
 #include <memory>
 #include <utility>
 

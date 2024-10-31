@@ -23,7 +23,7 @@
 #include "google/cloud/testing_util/mock_async_streaming_write_rpc.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include <google/protobuf/text_format.h>
+#include "google/protobuf/text_format.h"
 #include <gmock/gmock.h>
 #include <string>
 

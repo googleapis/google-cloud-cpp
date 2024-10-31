@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_FORWARDING_RULES_V1_FORWARDING_RULES_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_FORWARDING_RULES_V1_FORWARDING_RULES_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/compute/forwarding_rules/v1/forwarding_rules.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/forwarding_rules/v1/forwarding_rules.pb.h>
 #include <memory>
 
 namespace google {

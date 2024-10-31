@@ -17,9 +17,9 @@
 
 #include "google/cloud/bigtable/version.h"
 #include "absl/meta/type_traits.h"
-#include <google/bigtable/admin/v2/bigtable_table_admin.pb.h>
-#include <google/bigtable/admin/v2/table.pb.h>
-#include <google/protobuf/util/message_differencer.h>
+#include "google/bigtable/admin/v2/bigtable_table_admin.pb.h"
+#include "google/bigtable/admin/v2/table.pb.h"
+#include "google/protobuf/util/message_differencer.h"
 #include <chrono>
 #include <memory>
 #include <string>

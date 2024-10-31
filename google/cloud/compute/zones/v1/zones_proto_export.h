@@ -26,8 +26,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ZONES_V1_ZONES_PROTO_EXPORT_H
 
 // IWYU pragma: begin_exports
-#include <google/cloud/compute/v1/internal/common_023.pb.h>
-#include <google/cloud/compute/v1/internal/common_144.pb.h>
+#include "google/cloud/compute/v1/internal/common_023.pb.h"
+#include "google/cloud/compute/v1/internal/common_144.pb.h"
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ZONES_V1_ZONES_PROTO_EXPORT_H

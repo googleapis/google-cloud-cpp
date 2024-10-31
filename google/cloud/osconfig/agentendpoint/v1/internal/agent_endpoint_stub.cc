@@ -17,9 +17,9 @@
 // source: google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto
 
 #include "google/cloud/osconfig/agentendpoint/v1/internal/agent_endpoint_stub.h"
+#include "google/cloud/osconfig/agentendpoint/v1/agentendpoint.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/osconfig/agentendpoint/v1/agentendpoint.grpc.pb.h>
 #include <memory>
 #include <utility>
 

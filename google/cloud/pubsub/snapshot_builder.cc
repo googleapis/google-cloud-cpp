@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/snapshot_builder.h"
-#include <google/protobuf/util/field_mask_util.h>
+#include "google/protobuf/util/field_mask_util.h"
 
 namespace google {
 namespace cloud {

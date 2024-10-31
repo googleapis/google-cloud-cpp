@@ -17,7 +17,7 @@
 
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
-#include <google/protobuf/message.h>
+#include "google/protobuf/message.h"
 #include <gmock/gmock.h>
 #include <string>
 

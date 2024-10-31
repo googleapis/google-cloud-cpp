@@ -17,10 +17,10 @@
 // source: google/cloud/batch/v1/batch.proto
 
 #include "google/cloud/batch/v1/internal/batch_stub.h"
+#include "google/cloud/batch/v1/batch.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/batch/v1/batch.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

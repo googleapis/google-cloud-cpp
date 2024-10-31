@@ -17,19 +17,19 @@
 // source: google/cloud/baremetalsolution/v2/baremetalsolution.proto
 
 #include "google/cloud/baremetalsolution/v2/internal/bare_metal_solution_stub_factory.h"
+#include "google/cloud/baremetalsolution/v2/baremetalsolution.grpc.pb.h"
 #include "google/cloud/baremetalsolution/v2/internal/bare_metal_solution_auth_decorator.h"
 #include "google/cloud/baremetalsolution/v2/internal/bare_metal_solution_logging_decorator.h"
 #include "google/cloud/baremetalsolution/v2/internal/bare_metal_solution_metadata_decorator.h"
 #include "google/cloud/baremetalsolution/v2/internal/bare_metal_solution_stub.h"
 #include "google/cloud/baremetalsolution/v2/internal/bare_metal_solution_tracing_stub.h"
+#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include <google/cloud/baremetalsolution/v2/baremetalsolution.grpc.pb.h>
-#include <google/cloud/location/locations.grpc.pb.h>
 #include <memory>
 #include <utility>
 

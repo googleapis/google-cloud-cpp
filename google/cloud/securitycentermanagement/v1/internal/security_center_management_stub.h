@@ -20,11 +20,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECURITYCENTERMANAGEMENT_V1_INTERNAL_SECURITY_CENTER_MANAGEMENT_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECURITYCENTERMANAGEMENT_V1_INTERNAL_SECURITY_CENTER_MANAGEMENT_STUB_H
 
+#include "google/cloud/location/locations.grpc.pb.h"
+#include "google/cloud/securitycentermanagement/v1/security_center_management.grpc.pb.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/cloud/securitycentermanagement/v1/security_center_management.grpc.pb.h>
 #include <memory>
 #include <utility>
 

@@ -17,9 +17,9 @@
 
 #include "google/cloud/internal/debug_string_protobuf.h"
 #include "google/cloud/version.h"
-#include <google/protobuf/descriptor.h>
-#include <google/protobuf/message.h>
-#include <google/protobuf/util/message_differencer.h>
+#include "google/protobuf/descriptor.h"
+#include "google/protobuf/message.h"
+#include "google/protobuf/util/message_differencer.h"
 #include <ostream>
 #include <string>
 

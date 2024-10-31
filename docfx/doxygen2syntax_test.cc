@@ -414,7 +414,7 @@ TEST(Doxygen2SyntaxContent, Constructor) {
 
 TEST(Doxygen2SyntaxContent, Struct) {
   auto constexpr kExpected =
-      R"""(// Found in #include <google/cloud/async_operation.h>
+      R"""(// Found in #include "google/cloud/async_operation.h"
 struct google::cloud::AsyncTimerResult { ... };)""";
   pugi::xml_document doc;
   doc.load_string(kStructXml);
@@ -427,7 +427,7 @@ struct google::cloud::AsyncTimerResult { ... };)""";
 
 TEST(Doxygen2SyntaxContent, Class) {
   auto constexpr kExpected =
-      R"""(// Found in #include <google/cloud/status.h>
+      R"""(// Found in #include "google/cloud/status.h"
 class google::cloud::RuntimeStatusError { ... };)""";
   pugi::xml_document doc;
   doc.load_string(kClassXml);
@@ -455,7 +455,7 @@ TEST(Doxygen2SyntaxContent, TemplateClass) {
   </compounddef>)xml";
 
   auto constexpr kExpected =
-      R"""(// Found in #include <google/cloud/status_or.h>
+      R"""(// Found in #include "google/cloud/status_or.h"
 template <
     typename T>
 class google::cloud::StatusOr { ... };)""";
@@ -485,7 +485,7 @@ TEST(Doxygen2SyntaxContent, TemplateStruct) {
   </compounddef>)xml";
 
   auto constexpr kExpected =
-      R"""(// Found in #include <google/cloud/status_or.h>
+      R"""(// Found in #include "google/cloud/status_or.h"
 template <
     typename T>
 struct google::cloud::StatusOr { ... };)""";
@@ -826,7 +826,7 @@ TEST(Doxygen2SyntaxContent, FunctionException) {
 TEST(Doxygen2Syntax, Class) {
   auto constexpr kExpected = R"yml(syntax:
   contents: |
-    // Found in #include <google/cloud/status.h>
+    // Found in #include "google/cloud/status.h"
     class google::cloud::RuntimeStatusError { ... };
   source:
     id: google::cloud::RuntimeStatusError
@@ -854,7 +854,7 @@ TEST(Doxygen2Syntax, Class) {
 TEST(Doxygen2Syntax, Struct) {
   auto constexpr kExpected = R"yml(syntax:
   contents: |
-    // Found in #include <google/cloud/async_operation.h>
+    // Found in #include "google/cloud/async_operation.h"
     struct google::cloud::AsyncTimerResult { ... };
   source:
     id: google::cloud::AsyncTimerResult

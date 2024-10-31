@@ -25,7 +25,7 @@ top-level [README](/README.md#building-and-installing).
 ```cc
 #include "google/cloud/trace/v2/trace_client.h"
 #include "google/cloud/project.h"
-#include <google/protobuf/util/time_util.h>
+#include "google/protobuf/util/time_util.h"
 #include <iostream>
 #include <random>
 #include <thread>

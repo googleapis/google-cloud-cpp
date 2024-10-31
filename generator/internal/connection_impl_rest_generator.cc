@@ -20,7 +20,7 @@
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/printer.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
-#include <google/protobuf/descriptor.h>
+#include "google/protobuf/descriptor.h"
 
 namespace google {
 namespace cloud {

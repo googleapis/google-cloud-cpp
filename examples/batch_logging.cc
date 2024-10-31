@@ -28,7 +28,7 @@
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/example_driver.h"
 #include "absl/strings/match.h"
-#include <google/protobuf/text_format.h>
+#include "google/protobuf/text_format.h"
 #include <fstream>
 #include <iostream>
 #include <random>

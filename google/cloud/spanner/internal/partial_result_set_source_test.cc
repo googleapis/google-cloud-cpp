@@ -21,7 +21,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include <google/protobuf/text_format.h>
+#include "google/protobuf/text_format.h"
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>
 #include <array>

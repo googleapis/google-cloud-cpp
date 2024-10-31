@@ -17,7 +17,7 @@
 // source: google/cloud/video/livestream/v1/service.proto
 
 #include "google/cloud/video/livestream/v1/internal/livestream_auth_decorator.h"
-#include <google/cloud/video/livestream/v1/service.grpc.pb.h>
+#include "google/cloud/video/livestream/v1/service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

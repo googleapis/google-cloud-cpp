@@ -17,7 +17,7 @@
 // source: google/cloud/batch/v1/batch.proto
 
 #include "google/cloud/batch/v1/internal/batch_auth_decorator.h"
-#include <google/cloud/batch/v1/batch.grpc.pb.h>
+#include "google/cloud/batch/v1/batch.grpc.pb.h"
 #include <memory>
 #include <utility>
 

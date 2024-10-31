@@ -17,9 +17,9 @@
 // source: google/cloud/language/v1/language_service.proto
 
 #include "google/cloud/language/v1/internal/language_logging_decorator.h"
+#include "google/cloud/language/v1/language_service.grpc.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/language/v1/language_service.grpc.pb.h>
 #include <memory>
 #include <set>
 #include <string>

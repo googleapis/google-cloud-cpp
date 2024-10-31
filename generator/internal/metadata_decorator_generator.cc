@@ -23,7 +23,7 @@
 #include "google/cloud/internal/url_encode.h"
 #include "absl/strings/str_split.h"
 #include "absl/strings/string_view.h"
-#include <google/protobuf/descriptor.h>
+#include "google/protobuf/descriptor.h"
 #include <algorithm>
 
 namespace google {

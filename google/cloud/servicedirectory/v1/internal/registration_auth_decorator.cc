@@ -17,7 +17,7 @@
 // source: google/cloud/servicedirectory/v1/registration_service.proto
 
 #include "google/cloud/servicedirectory/v1/internal/registration_auth_decorator.h"
-#include <google/cloud/servicedirectory/v1/registration_service.grpc.pb.h>
+#include "google/cloud/servicedirectory/v1/registration_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

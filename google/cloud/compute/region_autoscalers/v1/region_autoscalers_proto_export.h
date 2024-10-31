@@ -26,10 +26,10 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_AUTOSCALERS_V1_REGION_AUTOSCALERS_PROTO_EXPORT_H
 
 // IWYU pragma: begin_exports
-#include <google/cloud/compute/v1/internal/common_009.pb.h>
-#include <google/cloud/compute/v1/internal/common_017.pb.h>
-#include <google/cloud/compute/v1/internal/common_040.pb.h>
-#include <google/cloud/compute/v1/internal/common_096.pb.h>
+#include "google/cloud/compute/v1/internal/common_009.pb.h"
+#include "google/cloud/compute/v1/internal/common_017.pb.h"
+#include "google/cloud/compute/v1/internal/common_040.pb.h"
+#include "google/cloud/compute/v1/internal/common_096.pb.h"
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_AUTOSCALERS_V1_REGION_AUTOSCALERS_PROTO_EXPORT_H

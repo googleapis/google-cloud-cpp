@@ -17,9 +17,9 @@
 // source: google/cloud/dialogflow/cx/v3/deployment.proto
 
 #include "google/cloud/dialogflow_cx/internal/deployments_stub.h"
+#include "google/cloud/dialogflow/cx/v3/deployment.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/dialogflow/cx/v3/deployment.grpc.pb.h>
 #include <memory>
 #include <utility>
 

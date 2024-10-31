@@ -18,11 +18,11 @@
 // google/cloud/compute/interconnect_remote_locations/v1/interconnect_remote_locations.proto
 
 #include "google/cloud/compute/interconnect_remote_locations/v1/internal/interconnect_remote_locations_rest_stub.h"
+#include "google/cloud/compute/interconnect_remote_locations/v1/interconnect_remote_locations.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/compute/interconnect_remote_locations/v1/interconnect_remote_locations.pb.h>
 #include <memory>
 #include <utility>
 

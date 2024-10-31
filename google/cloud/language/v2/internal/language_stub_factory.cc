@@ -22,13 +22,13 @@
 #include "google/cloud/language/v2/internal/language_metadata_decorator.h"
 #include "google/cloud/language/v2/internal/language_stub.h"
 #include "google/cloud/language/v2/internal/language_tracing_stub.h"
+#include "google/cloud/language/v2/language_service.grpc.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include <google/cloud/language/v2/language_service.grpc.pb.h>
 #include <memory>
 #include <utility>
 

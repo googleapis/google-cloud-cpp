@@ -18,7 +18,7 @@
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/mocks/mock_spanner_connection.h"
 #include "google/cloud/spanner/mocks/row.h"
-#include <google/protobuf/text_format.h>
+#include "google/protobuf/text_format.h"
 #include <gmock/gmock.h>
 //! [required-includes]
 

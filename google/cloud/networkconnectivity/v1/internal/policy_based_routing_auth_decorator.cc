@@ -17,7 +17,7 @@
 // source: google/cloud/networkconnectivity/v1/policy_based_routing.proto
 
 #include "google/cloud/networkconnectivity/v1/internal/policy_based_routing_auth_decorator.h"
-#include <google/cloud/networkconnectivity/v1/policy_based_routing.grpc.pb.h>
+#include "google/cloud/networkconnectivity/v1/policy_based_routing.grpc.pb.h"
 #include <memory>
 #include <utility>
 

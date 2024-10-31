@@ -17,11 +17,11 @@
 // source: google/cloud/sql/v1/cloud_sql_iam_policies.proto
 
 #include "google/cloud/sql/v1/internal/sql_iam_policies_rest_stub.h"
+#include "google/cloud/sql/v1/cloud_sql_iam_policies.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/sql/v1/cloud_sql_iam_policies.pb.h>
 #include <memory>
 #include <utility>
 

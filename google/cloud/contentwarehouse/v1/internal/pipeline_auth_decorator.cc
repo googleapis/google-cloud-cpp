@@ -17,7 +17,7 @@
 // source: google/cloud/contentwarehouse/v1/pipeline_service.proto
 
 #include "google/cloud/contentwarehouse/v1/internal/pipeline_auth_decorator.h"
-#include <google/cloud/contentwarehouse/v1/pipeline_service.grpc.pb.h>
+#include "google/cloud/contentwarehouse/v1/pipeline_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

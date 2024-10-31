@@ -22,7 +22,7 @@
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/mock_async_streaming_read_rpc.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include <google/protobuf/text_format.h>
+#include "google/protobuf/text_format.h"
 #include <gmock/gmock.h>
 #include <type_traits>
 

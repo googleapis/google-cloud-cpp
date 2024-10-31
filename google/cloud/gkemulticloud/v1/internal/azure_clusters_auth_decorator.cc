@@ -17,7 +17,7 @@
 // source: google/cloud/gkemulticloud/v1/azure_service.proto
 
 #include "google/cloud/gkemulticloud/v1/internal/azure_clusters_auth_decorator.h"
-#include <google/cloud/gkemulticloud/v1/azure_service.grpc.pb.h>
+#include "google/cloud/gkemulticloud/v1/azure_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

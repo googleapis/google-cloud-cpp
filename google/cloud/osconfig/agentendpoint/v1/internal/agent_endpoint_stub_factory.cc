@@ -17,6 +17,7 @@
 // source: google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto
 
 #include "google/cloud/osconfig/agentendpoint/v1/internal/agent_endpoint_stub_factory.h"
+#include "google/cloud/osconfig/agentendpoint/v1/agentendpoint.grpc.pb.h"
 #include "google/cloud/osconfig/agentendpoint/v1/internal/agent_endpoint_auth_decorator.h"
 #include "google/cloud/osconfig/agentendpoint/v1/internal/agent_endpoint_logging_decorator.h"
 #include "google/cloud/osconfig/agentendpoint/v1/internal/agent_endpoint_metadata_decorator.h"
@@ -28,7 +29,6 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include <google/cloud/osconfig/agentendpoint/v1/agentendpoint.grpc.pb.h>
 #include <memory>
 #include <utility>
 

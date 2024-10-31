@@ -17,7 +17,7 @@
 
 #include "google/cloud/bigtable/testing/mock_response_reader.h"
 #include "google/cloud/testing_util/mock_async_response_reader.h"
-#include <google/bigtable/v2/bigtable.pb.h>
+#include "google/bigtable/v2/bigtable.pb.h"
 #include <gmock/gmock.h>
 
 namespace google {

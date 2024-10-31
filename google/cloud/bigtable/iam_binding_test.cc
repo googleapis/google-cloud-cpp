@@ -14,7 +14,7 @@
 
 #include "google/cloud/bigtable/iam_binding.h"
 #include "google/cloud/bigtable/expr.h"
-#include <google/protobuf/text_format.h>
+#include "google/protobuf/text_format.h"
 #include <gmock/gmock.h>
 #include <fstream>
 

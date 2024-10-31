@@ -21,13 +21,13 @@
 
 #include "google/cloud/bigquery/storage/v1/bigquery_read_connection_idempotency_policy.h"
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_read_retry_traits.h"
+#include "google/cloud/bigquery/storage/v1/storage.pb.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/bigquery/storage/v1/storage.pb.h>
 #include <memory>
 
 namespace google {

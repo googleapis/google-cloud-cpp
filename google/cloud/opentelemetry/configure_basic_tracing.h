@@ -72,7 +72,7 @@ class BasicTracingConfiguration {
  * as follows:
  *
  * @code
- * #include <google/cloud/opentelemetry/configure_basic_tracing.h>
+ * #include "google/cloud/opentelemetry/configure_basic_tracing.h"
  *
  * ...
  *

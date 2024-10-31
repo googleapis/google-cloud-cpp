@@ -20,7 +20,7 @@
 #include "google/cloud/background_threads.h"
 #include "google/cloud/internal/minimal_iam_credentials_stub.h"
 #include "google/cloud/internal/streaming_write_rpc.h"
-#include <google/storage/v2/storage.pb.h>
+#include "google/storage/v2/storage.pb.h"
 #include <functional>
 #include <memory>
 #include <string>

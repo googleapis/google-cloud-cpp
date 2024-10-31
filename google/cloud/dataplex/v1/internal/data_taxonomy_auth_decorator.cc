@@ -17,7 +17,7 @@
 // source: google/cloud/dataplex/v1/data_taxonomy.proto
 
 #include "google/cloud/dataplex/v1/internal/data_taxonomy_auth_decorator.h"
-#include <google/cloud/dataplex/v1/data_taxonomy.grpc.pb.h>
+#include "google/cloud/dataplex/v1/data_taxonomy.grpc.pb.h"
 #include <memory>
 #include <utility>
 

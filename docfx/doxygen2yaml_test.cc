@@ -822,7 +822,7 @@ items:
       - cpp
     syntax:
       contents: |
-        // Found in #include <google/cloud/status_or.h>
+        // Found in #include "google/cloud/status_or.h"
         template <
             typename T>
         class google::cloud::StatusOr { ... };
@@ -1130,7 +1130,7 @@ items:
       - cpp
     syntax:
       contents: |
-        // Found in #include <google/cloud/status.h>
+        // Found in #include "google/cloud/status.h"
         class google::cloud::RuntimeStatusError { ... };
       source:
         id: google::cloud::RuntimeStatusError
@@ -1223,7 +1223,7 @@ items:
       - cpp
     syntax:
       contents: |
-        // Found in #include <google/cloud/log.h>
+        // Found in #include "google/cloud/log.h"
         struct google::cloud::LogRecord { ... };
       source:
         id: google::cloud::LogRecord

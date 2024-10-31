@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "generator/generator.h"
-#include <google/protobuf/compiler/plugin.h>
+#include "google/protobuf/compiler/plugin.h"
 
 int main(int argc, char** argv) {
   google::cloud::generator::Generator generator;

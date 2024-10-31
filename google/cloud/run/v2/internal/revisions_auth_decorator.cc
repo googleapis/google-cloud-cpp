@@ -17,7 +17,7 @@
 // source: google/cloud/run/v2/revision.proto
 
 #include "google/cloud/run/v2/internal/revisions_auth_decorator.h"
-#include <google/cloud/run/v2/revision.grpc.pb.h>
+#include "google/cloud/run/v2/revision.grpc.pb.h"
 #include <memory>
 #include <utility>
 

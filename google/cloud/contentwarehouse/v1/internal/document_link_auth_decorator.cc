@@ -17,7 +17,7 @@
 // source: google/cloud/contentwarehouse/v1/document_link_service.proto
 
 #include "google/cloud/contentwarehouse/v1/internal/document_link_auth_decorator.h"
-#include <google/cloud/contentwarehouse/v1/document_link_service.grpc.pb.h>
+#include "google/cloud/contentwarehouse/v1/document_link_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

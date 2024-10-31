@@ -19,7 +19,7 @@
 #include "absl/base/no_destructor.h"
 #include "absl/strings/ascii.h"
 #include "absl/types/optional.h"
-#include <google/protobuf/compiler/code_generator.h>
+#include "google/protobuf/compiler/code_generator.h"
 #include <yaml-cpp/yaml.h>
 #include <iostream>
 #include <string>

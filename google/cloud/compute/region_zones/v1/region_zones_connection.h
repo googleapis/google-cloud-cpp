@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_ZONES_V1_REGION_ZONES_CONNECTION_H
 
 #include "google/cloud/compute/region_zones/v1/internal/region_zones_retry_traits.h"
+#include "google/cloud/compute/region_zones/v1/region_zones.pb.h"
 #include "google/cloud/compute/region_zones/v1/region_zones_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
@@ -27,7 +28,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/region_zones/v1/region_zones.pb.h>
 #include <memory>
 
 namespace google {

@@ -17,9 +17,9 @@
 // source: google/cloud/bigquery/biglake/v1/metastore.proto
 
 #include "google/cloud/bigquery/biglake/v1/internal/metastore_stub.h"
+#include "google/cloud/bigquery/biglake/v1/metastore.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/bigquery/biglake/v1/metastore.grpc.pb.h>
 #include <memory>
 #include <utility>
 

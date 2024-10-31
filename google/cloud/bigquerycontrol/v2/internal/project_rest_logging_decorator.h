@@ -19,12 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERYCONTROL_V2_INTERNAL_PROJECT_REST_LOGGING_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERYCONTROL_V2_INTERNAL_PROJECT_REST_LOGGING_DECORATOR_H
 
+#include "google/cloud/bigquery/v2/project.pb.h"
 #include "google/cloud/bigquerycontrol/v2/internal/project_rest_stub.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
-#include <google/cloud/bigquery/v2/project.pb.h>
 #include <memory>
 #include <set>
 #include <string>

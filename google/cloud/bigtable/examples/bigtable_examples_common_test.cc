@@ -14,7 +14,7 @@
 
 #include "google/cloud/bigtable/examples/bigtable_examples_common.h"
 #include "google/cloud/testing_util/scoped_environment.h"
-#include <google/protobuf/util/time_util.h>
+#include "google/protobuf/util/time_util.h"
 #include <gmock/gmock.h>
 #include <stdexcept>
 

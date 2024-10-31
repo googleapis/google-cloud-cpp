@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_PREDICATE_UTILS_H
 
 #include "google/cloud/optional.h"
-#include <google/protobuf/descriptor.h>
+#include "google/protobuf/descriptor.h"
 #include <algorithm>
 #include <functional>
 #include <vector>

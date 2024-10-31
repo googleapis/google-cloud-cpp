@@ -17,9 +17,9 @@
 // source: google/cloud/dialogflow/v2/conversation.proto
 
 #include "google/cloud/dialogflow_es/internal/conversations_stub.h"
+#include "google/cloud/dialogflow/v2/conversation.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/dialogflow/v2/conversation.grpc.pb.h>
 #include <memory>
 #include <utility>
 

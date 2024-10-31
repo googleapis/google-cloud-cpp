@@ -17,7 +17,7 @@
 // source: google/cloud/cloudcontrolspartner/v1/monitoring.proto
 
 #include "google/cloud/cloudcontrolspartner/v1/internal/cloud_controls_partner_monitoring_auth_decorator.h"
-#include <google/cloud/cloudcontrolspartner/v1/monitoring.grpc.pb.h>
+#include "google/cloud/cloudcontrolspartner/v1/monitoring.grpc.pb.h"
 #include <memory>
 #include <utility>
 

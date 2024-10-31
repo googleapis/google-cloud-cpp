@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EVENTARC_PUBLISHING_V1_PUBLISHER_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EVENTARC_PUBLISHING_V1_PUBLISHER_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/eventarc/publishing/v1/publisher.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/eventarc/publishing/v1/publisher.grpc.pb.h>
 #include <memory>
 
 namespace google {

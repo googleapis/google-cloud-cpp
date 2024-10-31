@@ -19,7 +19,7 @@
 #include "google/cloud/dlp/v2/internal/dlp_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/privacy/dlp/v2/dlp.grpc.pb.h>
+#include "google/privacy/dlp/v2/dlp.grpc.pb.h"
 #include <memory>
 #include <utility>
 

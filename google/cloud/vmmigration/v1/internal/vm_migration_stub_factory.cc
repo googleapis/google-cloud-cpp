@@ -17,20 +17,20 @@
 // source: google/cloud/vmmigration/v1/vmmigration.proto
 
 #include "google/cloud/vmmigration/v1/internal/vm_migration_stub_factory.h"
+#include "google/cloud/location/locations.grpc.pb.h"
 #include "google/cloud/vmmigration/v1/internal/vm_migration_auth_decorator.h"
 #include "google/cloud/vmmigration/v1/internal/vm_migration_logging_decorator.h"
 #include "google/cloud/vmmigration/v1/internal/vm_migration_metadata_decorator.h"
 #include "google/cloud/vmmigration/v1/internal/vm_migration_stub.h"
 #include "google/cloud/vmmigration/v1/internal/vm_migration_tracing_stub.h"
+#include "google/cloud/vmmigration/v1/vmmigration.grpc.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/cloud/vmmigration/v1/vmmigration.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

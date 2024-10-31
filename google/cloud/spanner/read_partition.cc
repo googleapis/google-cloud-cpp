@@ -14,7 +14,7 @@
 
 #include "google/cloud/spanner/read_partition.h"
 #include "google/cloud/internal/make_status.h"
-#include <google/spanner/v1/spanner.pb.h>
+#include "google/spanner/v1/spanner.pb.h"
 
 namespace google {
 namespace cloud {

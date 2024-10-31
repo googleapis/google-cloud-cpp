@@ -17,7 +17,7 @@
 // source: google/monitoring/v3/uptime_service.proto
 
 #include "google/cloud/monitoring/v3/internal/uptime_check_auth_decorator.h"
-#include <google/monitoring/v3/uptime_service.grpc.pb.h>
+#include "google/monitoring/v3/uptime_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

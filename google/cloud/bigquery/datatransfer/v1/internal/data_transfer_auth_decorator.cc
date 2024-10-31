@@ -17,7 +17,7 @@
 // source: google/cloud/bigquery/datatransfer/v1/datatransfer.proto
 
 #include "google/cloud/bigquery/datatransfer/v1/internal/data_transfer_auth_decorator.h"
-#include <google/cloud/bigquery/datatransfer/v1/datatransfer.grpc.pb.h>
+#include "google/cloud/bigquery/datatransfer/v1/datatransfer.grpc.pb.h"
 #include <memory>
 #include <utility>
 

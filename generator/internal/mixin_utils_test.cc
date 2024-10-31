@@ -15,8 +15,8 @@
 #include "generator/internal/mixin_utils.h"
 #include "generator/testing/descriptor_pool_fixture.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
-#include <google/api/annotations.pb.h>
-#include <google/protobuf/text_format.h>
+#include "google/api/annotations.pb.h"
+#include "google/protobuf/text_format.h"
 #include <gmock/gmock.h>
 
 namespace google {

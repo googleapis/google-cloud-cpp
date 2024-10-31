@@ -26,16 +26,16 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_DISKS_V1_REGION_DISKS_PROTO_EXPORT_H
 
 // IWYU pragma: begin_exports
-#include <google/cloud/compute/v1/internal/common_008.pb.h>
-#include <google/cloud/compute/v1/internal/common_015.pb.h>
-#include <google/cloud/compute/v1/internal/common_017.pb.h>
-#include <google/cloud/compute/v1/internal/common_021.pb.h>
-#include <google/cloud/compute/v1/internal/common_032.pb.h>
-#include <google/cloud/compute/v1/internal/common_098.pb.h>
-#include <google/cloud/compute/v1/internal/common_103.pb.h>
-#include <google/cloud/compute/v1/internal/common_104.pb.h>
-#include <google/cloud/compute/v1/internal/common_116.pb.h>
-#include <google/cloud/compute/v1/internal/common_139.pb.h>
+#include "google/cloud/compute/v1/internal/common_008.pb.h"
+#include "google/cloud/compute/v1/internal/common_015.pb.h"
+#include "google/cloud/compute/v1/internal/common_017.pb.h"
+#include "google/cloud/compute/v1/internal/common_021.pb.h"
+#include "google/cloud/compute/v1/internal/common_032.pb.h"
+#include "google/cloud/compute/v1/internal/common_098.pb.h"
+#include "google/cloud/compute/v1/internal/common_103.pb.h"
+#include "google/cloud/compute/v1/internal/common_104.pb.h"
+#include "google/cloud/compute/v1/internal/common_116.pb.h"
+#include "google/cloud/compute/v1/internal/common_139.pb.h"
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_DISKS_V1_REGION_DISKS_PROTO_EXPORT_H

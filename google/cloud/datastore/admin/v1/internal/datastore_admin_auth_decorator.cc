@@ -17,7 +17,7 @@
 // source: google/datastore/admin/v1/datastore_admin.proto
 
 #include "google/cloud/datastore/admin/v1/internal/datastore_admin_auth_decorator.h"
-#include <google/datastore/admin/v1/datastore_admin.grpc.pb.h>
+#include "google/datastore/admin/v1/datastore_admin.grpc.pb.h"
 #include <memory>
 #include <utility>
 

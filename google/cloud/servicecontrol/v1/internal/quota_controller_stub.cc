@@ -19,7 +19,7 @@
 #include "google/cloud/servicecontrol/v1/internal/quota_controller_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/api/servicecontrol/v1/quota_controller.grpc.pb.h>
+#include "google/api/servicecontrol/v1/quota_controller.grpc.pb.h"
 #include <memory>
 #include <utility>
 

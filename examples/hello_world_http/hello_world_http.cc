@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <google/cloud/functions/http_request.h>
-#include <google/cloud/functions/http_response.h>
+#include "google/cloud/functions/http_request.h"
+#include "google/cloud/functions/http_response.h"
 
 namespace gcf = ::google::cloud::functions;
 

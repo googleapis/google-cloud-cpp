@@ -23,7 +23,7 @@
 #include "google/cloud/beyondcorp/appconnections/v1/internal/app_connections_stub.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <map>
 #include <memory>
 #include <string>

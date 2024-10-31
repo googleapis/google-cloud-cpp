@@ -22,7 +22,7 @@
 #include "google/cloud/log.h"
 #include "google/cloud/status.h"
 #include "absl/time/time.h"
-#include <google/protobuf/util/time_util.h>
+#include "google/protobuf/util/time_util.h"
 #include <chrono>
 
 namespace google {

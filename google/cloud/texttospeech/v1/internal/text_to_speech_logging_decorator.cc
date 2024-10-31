@@ -17,10 +17,10 @@
 // source: google/cloud/texttospeech/v1/cloud_tts.proto
 
 #include "google/cloud/texttospeech/v1/internal/text_to_speech_logging_decorator.h"
+#include "google/cloud/texttospeech/v1/cloud_tts.grpc.pb.h"
 #include "google/cloud/internal/async_read_write_stream_logging.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/texttospeech/v1/cloud_tts.grpc.pb.h>
 #include <memory>
 #include <set>
 #include <string>

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/testing_util/is_proto_equal.h"
-#include <google/protobuf/util/message_differencer.h>
+#include "google/protobuf/util/message_differencer.h"
 
 namespace google {
 namespace cloud {

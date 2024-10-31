@@ -17,8 +17,8 @@
 
 #include "generator/internal/service_code_generator.h"
 #include "google/cloud/status.h"
-#include <google/protobuf/compiler/code_generator.h>
-#include <google/protobuf/descriptor.h>
+#include "google/protobuf/compiler/code_generator.h"
+#include "google/protobuf/descriptor.h"
 #include <map>
 #include <string>
 #include <vector>

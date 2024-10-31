@@ -14,7 +14,7 @@
 
 #include "google/cloud/pubsub/topic_builder.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
-#include <google/protobuf/text_format.h>
+#include "google/protobuf/text_format.h"
 #include <gmock/gmock.h>
 #include <sstream>
 

@@ -22,7 +22,7 @@ top-level [README](/README.md#building-and-installing).
 ```cc
 #include "google/cloud/contactcenterinsights/v1/contact_center_insights_client.h"
 #include "google/cloud/location.h"
-#include <google/protobuf/util/time_util.h>
+#include "google/protobuf/util/time_util.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {

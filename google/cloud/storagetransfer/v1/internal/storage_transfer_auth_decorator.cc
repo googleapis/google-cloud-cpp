@@ -17,7 +17,7 @@
 // source: google/storagetransfer/v1/transfer.proto
 
 #include "google/cloud/storagetransfer/v1/internal/storage_transfer_auth_decorator.h"
-#include <google/storagetransfer/v1/transfer.grpc.pb.h>
+#include "google/storagetransfer/v1/transfer.grpc.pb.h"
 #include <memory>
 #include <utility>
 

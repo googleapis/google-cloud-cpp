@@ -22,7 +22,7 @@
 #include "google/cloud/alloydb/v1/internal/alloy_db_admin_stub.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <map>
 #include <memory>
 #include <string>

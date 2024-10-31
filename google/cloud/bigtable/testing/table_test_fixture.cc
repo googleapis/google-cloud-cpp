@@ -15,7 +15,7 @@
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/internal/throw_delegate.h"
-#include <google/protobuf/text_format.h>
+#include "google/protobuf/text_format.h"
 
 namespace google {
 namespace cloud {

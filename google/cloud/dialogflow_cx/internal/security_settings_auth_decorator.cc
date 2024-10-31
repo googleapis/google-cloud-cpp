@@ -17,7 +17,7 @@
 // source: google/cloud/dialogflow/cx/v3/security_settings.proto
 
 #include "google/cloud/dialogflow_cx/internal/security_settings_auth_decorator.h"
-#include <google/cloud/dialogflow/cx/v3/security_settings.grpc.pb.h>
+#include "google/cloud/dialogflow/cx/v3/security_settings.grpc.pb.h"
 #include <memory>
 #include <utility>
 

@@ -21,6 +21,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_INSTANCE_GROUPS_V1_REGION_INSTANCE_GROUPS_CONNECTION_H
 
 #include "google/cloud/compute/region_instance_groups/v1/internal/region_instance_groups_retry_traits.h"
+#include "google/cloud/compute/region_instance_groups/v1/region_instance_groups.pb.h"
 #include "google/cloud/compute/region_instance_groups/v1/region_instance_groups_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -31,7 +32,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/cloud/compute/region_instance_groups/v1/region_instance_groups.pb.h>
 #include <memory>
 
 namespace google {

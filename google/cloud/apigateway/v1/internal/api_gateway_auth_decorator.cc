@@ -17,7 +17,7 @@
 // source: google/cloud/apigateway/v1/apigateway_service.proto
 
 #include "google/cloud/apigateway/v1/internal/api_gateway_auth_decorator.h"
-#include <google/cloud/apigateway/v1/apigateway_service.grpc.pb.h>
+#include "google/cloud/apigateway/v1/apigateway_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

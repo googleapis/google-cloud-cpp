@@ -29,7 +29,7 @@
 #include "google/cloud/version.h"
 #include "absl/strings/cord.h"
 #include "absl/strings/string_view.h"
-#include <google/storage/v2/storage.pb.h>
+#include "google/storage/v2/storage.pb.h"
 #include <functional>
 #include <memory>
 #include <string>

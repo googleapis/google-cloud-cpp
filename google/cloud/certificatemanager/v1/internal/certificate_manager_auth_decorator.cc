@@ -17,7 +17,7 @@
 // source: google/cloud/certificatemanager/v1/certificate_manager.proto
 
 #include "google/cloud/certificatemanager/v1/internal/certificate_manager_auth_decorator.h"
-#include <google/cloud/certificatemanager/v1/certificate_manager.grpc.pb.h>
+#include "google/cloud/certificatemanager/v1/certificate_manager.grpc.pb.h"
 #include <memory>
 #include <utility>
 

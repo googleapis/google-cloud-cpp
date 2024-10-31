@@ -17,7 +17,7 @@
 // source: google/cloud/discoveryengine/v1/rank_service.proto
 
 #include "google/cloud/discoveryengine/v1/internal/rank_auth_decorator.h"
-#include <google/cloud/discoveryengine/v1/rank_service.grpc.pb.h>
+#include "google/cloud/discoveryengine/v1/rank_service.grpc.pb.h"
 #include <memory>
 #include <utility>
 

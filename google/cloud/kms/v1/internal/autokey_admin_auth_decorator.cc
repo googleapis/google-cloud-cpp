@@ -17,7 +17,7 @@
 // source: google/cloud/kms/v1/autokey_admin.proto
 
 #include "google/cloud/kms/v1/internal/autokey_admin_auth_decorator.h"
-#include <google/cloud/kms/v1/autokey_admin.grpc.pb.h>
+#include "google/cloud/kms/v1/autokey_admin.grpc.pb.h"
 #include <memory>
 #include <utility>
 

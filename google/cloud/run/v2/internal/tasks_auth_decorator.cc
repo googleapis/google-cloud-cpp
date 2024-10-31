@@ -17,7 +17,7 @@
 // source: google/cloud/run/v2/task.proto
 
 #include "google/cloud/run/v2/internal/tasks_auth_decorator.h"
-#include <google/cloud/run/v2/task.grpc.pb.h>
+#include "google/cloud/run/v2/task.grpc.pb.h"
 #include <memory>
 #include <utility>
 

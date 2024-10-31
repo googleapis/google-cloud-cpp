@@ -17,7 +17,7 @@
 // source: google/logging/v2/logging_metrics.proto
 
 #include "google/cloud/logging/v2/internal/metrics_service_v2_auth_decorator.h"
-#include <google/logging/v2/logging_metrics.grpc.pb.h>
+#include "google/logging/v2/logging_metrics.grpc.pb.h"
 #include <memory>
 #include <utility>
 

@@ -17,7 +17,7 @@
 // source: google/iam/admin/v1/iam.proto
 
 #include "google/cloud/iam/admin/v1/internal/iam_auth_decorator.h"
-#include <google/iam/admin/v1/iam.grpc.pb.h>
+#include "google/iam/admin/v1/iam.grpc.pb.h"
 #include <memory>
 #include <utility>
 

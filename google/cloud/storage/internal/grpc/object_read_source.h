@@ -21,7 +21,7 @@
 #include "google/cloud/future.h"
 #include "google/cloud/internal/streaming_read_rpc.h"
 #include "absl/functional/function_ref.h"
-#include <google/storage/v2/storage.pb.h>
+#include "google/storage/v2/storage.pb.h"
 #include <functional>
 #include <string>
 

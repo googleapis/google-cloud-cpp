@@ -17,10 +17,10 @@
 // source: google/cloud/domains/v1/domains.proto
 
 #include "google/cloud/domains/v1/internal/domains_stub.h"
+#include "google/cloud/domains/v1/domains.grpc.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/domains/v1/domains.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

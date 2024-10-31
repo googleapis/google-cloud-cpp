@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/iam_policy.h"
-#include <google/protobuf/util/message_differencer.h>
+#include "google/protobuf/util/message_differencer.h"
 #include <iostream>
 
 namespace google {

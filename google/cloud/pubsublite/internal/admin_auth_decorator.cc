@@ -17,7 +17,7 @@
 // source: google/cloud/pubsublite/v1/admin.proto
 
 #include "google/cloud/pubsublite/internal/admin_auth_decorator.h"
-#include <google/cloud/pubsublite/v1/admin.grpc.pb.h>
+#include "google/cloud/pubsublite/v1/admin.grpc.pb.h"
 #include <memory>
 #include <utility>
 

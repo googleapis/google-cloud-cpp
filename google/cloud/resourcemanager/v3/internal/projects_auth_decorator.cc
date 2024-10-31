@@ -17,7 +17,7 @@
 // source: google/cloud/resourcemanager/v3/projects.proto
 
 #include "google/cloud/resourcemanager/v3/internal/projects_auth_decorator.h"
-#include <google/cloud/resourcemanager/v3/projects.grpc.pb.h>
+#include "google/cloud/resourcemanager/v3/projects.grpc.pb.h"
 #include <memory>
 #include <utility>
 

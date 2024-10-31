@@ -17,7 +17,7 @@
 // source: google/cloud/dialogflow/cx/v3/session_entity_type.proto
 
 #include "google/cloud/dialogflow_cx/internal/session_entity_types_auth_decorator.h"
-#include <google/cloud/dialogflow/cx/v3/session_entity_type.grpc.pb.h>
+#include "google/cloud/dialogflow/cx/v3/session_entity_type.grpc.pb.h"
 #include <memory>
 #include <utility>
 

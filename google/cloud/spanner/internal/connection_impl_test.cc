@@ -30,8 +30,8 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/time/time.h"
 #include "absl/types/optional.h"
-#include <google/protobuf/text_format.h>
-#include <google/protobuf/util/time_util.h>
+#include "google/protobuf/text_format.h"
+#include "google/protobuf/util/time_util.h"
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>
 #include <array>

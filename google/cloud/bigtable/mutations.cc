@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/mutations.h"
-#include <google/protobuf/text_format.h>
+#include "google/protobuf/text_format.h"
 
 namespace google {
 namespace cloud {

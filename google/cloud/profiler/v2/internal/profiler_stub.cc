@@ -19,7 +19,7 @@
 #include "google/cloud/profiler/v2/internal/profiler_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/devtools/cloudprofiler/v2/profiler.grpc.pb.h>
+#include "google/devtools/cloudprofiler/v2/profiler.grpc.pb.h"
 #include <memory>
 #include <utility>
 

@@ -15,7 +15,7 @@
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/status.h"
-#include <google/protobuf/util/time_util.h>
+#include "google/protobuf/util/time_util.h"
 #include <string>
 
 namespace google {

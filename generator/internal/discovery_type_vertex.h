@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_DISCOVERY_TYPE_VERTEX_H
 
 #include "google/cloud/status_or.h"
-#include <google/protobuf/descriptor.h>
+#include "google/protobuf/descriptor.h"
 #include <nlohmann/json.hpp>
 #include <map>
 #include <set>

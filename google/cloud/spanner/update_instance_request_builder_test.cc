@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/update_instance_request_builder.h"
-#include <google/protobuf/util/field_mask_util.h>
+#include "google/protobuf/util/field_mask_util.h"
 #include <gmock/gmock.h>
 
 namespace google {

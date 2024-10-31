@@ -19,8 +19,8 @@
 #include "google/cloud/storagecontrol/v2/internal/storage_control_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <google/storage/control/v2/storage_control.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
+#include "google/storage/control/v2/storage_control.grpc.pb.h"
 #include <memory>
 #include <utility>
 

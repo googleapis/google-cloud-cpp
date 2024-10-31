@@ -16,9 +16,9 @@
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/status_payload_keys.h"
 #include "absl/strings/match.h"
-#include <google/rpc/error_details.pb.h>
-#include <google/rpc/status.pb.h>
-#include <google/spanner/v1/spanner.pb.h>
+#include "google/rpc/error_details.pb.h"
+#include "google/rpc/status.pb.h"
+#include "google/spanner/v1/spanner.pb.h"
 
 namespace google {
 namespace cloud {

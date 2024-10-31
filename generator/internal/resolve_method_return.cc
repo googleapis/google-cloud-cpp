@@ -15,8 +15,8 @@
 #include "generator/internal/resolve_method_return.h"
 #include "generator/internal/longrunning.h"
 #include "generator/internal/pagination.h"
-#include <google/longrunning/operations.pb.h>
-#include <google/protobuf/descriptor.h>
+#include "google/longrunning/operations.pb.h"
+#include "google/protobuf/descriptor.h"
 #include <string>
 #include <utility>
 

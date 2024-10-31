@@ -26,7 +26,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/api/servicecontrol/v1/quota_controller.pb.h>
+#include "google/api/servicecontrol/v1/quota_controller.pb.h"
 #include <memory>
 
 namespace google {

@@ -17,6 +17,8 @@
 // source: google/cloud/netapp/v1/cloud_netapp_service.proto
 
 #include "google/cloud/netapp/v1/internal/net_app_stub_factory.h"
+#include "google/cloud/location/locations.grpc.pb.h"
+#include "google/cloud/netapp/v1/cloud_netapp_service.grpc.pb.h"
 #include "google/cloud/netapp/v1/internal/net_app_auth_decorator.h"
 #include "google/cloud/netapp/v1/internal/net_app_logging_decorator.h"
 #include "google/cloud/netapp/v1/internal/net_app_metadata_decorator.h"
@@ -28,9 +30,7 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include <google/cloud/location/locations.grpc.pb.h>
-#include <google/cloud/netapp/v1/cloud_netapp_service.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
+#include "google/longrunning/operations.grpc.pb.h"
 #include <memory>
 #include <utility>
 

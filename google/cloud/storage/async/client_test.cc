@@ -19,7 +19,7 @@
 #include "google/cloud/storage/mocks/mock_async_writer_connection.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include <google/protobuf/text_format.h>
+#include "google/protobuf/text_format.h"
 #include <gmock/gmock.h>
 #include <memory>
 #include <string>

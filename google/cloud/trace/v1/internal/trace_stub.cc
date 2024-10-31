@@ -19,7 +19,7 @@
 #include "google/cloud/trace/v1/internal/trace_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
-#include <google/devtools/cloudtrace/v1/trace.grpc.pb.h>
+#include "google/devtools/cloudtrace/v1/trace.grpc.pb.h"
 #include <memory>
 #include <utility>
 

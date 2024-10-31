@@ -14,7 +14,7 @@
 
 #include "google/cloud/spanner/create_instance_request_builder.h"
 #include "google/cloud/spanner/instance.h"
-#include <google/protobuf/util/field_mask_util.h>
+#include "google/protobuf/util/field_mask_util.h"
 #include <gmock/gmock.h>
 
 namespace google {

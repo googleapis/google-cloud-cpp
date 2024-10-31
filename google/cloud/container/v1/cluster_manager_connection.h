@@ -27,7 +27,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
-#include <google/container/v1/cluster_service.pb.h>
+#include "google/container/v1/cluster_service.pb.h"
 #include <memory>
 
 namespace google {

@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_GENERATOR_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_GENERATOR_H
 
-#include <google/protobuf/compiler/code_generator.h>
-#include <google/protobuf/descriptor.h>
+#include "google/protobuf/compiler/code_generator.h"
+#include "google/protobuf/descriptor.h"
 #include <string>
 
 namespace google {

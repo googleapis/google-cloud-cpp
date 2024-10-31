@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDCONTROLSPARTNER_V1_CLOUD_CONTROLS_PARTNER_MONITORING_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDCONTROLSPARTNER_V1_CLOUD_CONTROLS_PARTNER_MONITORING_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/cloudcontrolspartner/v1/monitoring.grpc.pb.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
-#include <google/cloud/cloudcontrolspartner/v1/monitoring.grpc.pb.h>
 #include <memory>
 
 namespace google {

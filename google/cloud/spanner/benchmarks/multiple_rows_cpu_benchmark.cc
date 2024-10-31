@@ -29,7 +29,7 @@
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/testing_util/timer.h"
 #include "absl/time/civil_time.h"
-#include <google/spanner/v1/result_set.pb.h>
+#include "google/spanner/v1/result_set.pb.h"
 #include <grpcpp/grpcpp.h>
 #include <algorithm>
 #include <chrono>

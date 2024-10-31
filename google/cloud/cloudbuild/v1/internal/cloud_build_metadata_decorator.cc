@@ -24,7 +24,7 @@
 #include "google/cloud/internal/routing_matcher.h"
 #include "google/cloud/internal/url_encode.h"
 #include "google/cloud/status_or.h"
-#include <google/devtools/cloudbuild/v1/cloudbuild.grpc.pb.h>
+#include "google/devtools/cloudbuild/v1/cloudbuild.grpc.pb.h"
 #include <memory>
 #include <string>
 #include <utility>

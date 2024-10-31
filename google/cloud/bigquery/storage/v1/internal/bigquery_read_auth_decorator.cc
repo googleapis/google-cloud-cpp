@@ -17,7 +17,7 @@
 // source: google/cloud/bigquery/storage/v1/storage.proto
 
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_read_auth_decorator.h"
-#include <google/cloud/bigquery/storage/v1/storage.grpc.pb.h>
+#include "google/cloud/bigquery/storage/v1/storage.grpc.pb.h"
 #include <memory>
 #include <utility>
 

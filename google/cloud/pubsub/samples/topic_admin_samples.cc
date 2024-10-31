@@ -23,8 +23,8 @@
 #include "google/cloud/project.h"
 #include "google/cloud/testing_util/example_driver.h"
 #include "absl/strings/match.h"
-#include <google/protobuf/timestamp.pb.h>
-#include <google/protobuf/util/time_util.h>
+#include "google/protobuf/timestamp.pb.h"
+#include "google/protobuf/util/time_util.h"
 #include <sstream>
 
 using google::cloud::pubsub::examples::Cleanup;

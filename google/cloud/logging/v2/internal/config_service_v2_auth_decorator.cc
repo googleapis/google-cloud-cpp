@@ -17,7 +17,7 @@
 // source: google/logging/v2/logging_config.proto
 
 #include "google/cloud/logging/v2/internal/config_service_v2_auth_decorator.h"
-#include <google/logging/v2/logging_config.grpc.pb.h>
+#include "google/logging/v2/logging_config.grpc.pb.h"
 #include <memory>
 #include <utility>
 

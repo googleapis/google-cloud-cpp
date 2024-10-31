@@ -14,7 +14,7 @@
 
 #include "google/cloud/bigtable/table_config.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
-#include <google/protobuf/text_format.h>
+#include "google/protobuf/text_format.h"
 #include <gmock/gmock.h>
 
 namespace google {

@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_RESOLVE_COMMENT_REFERENCES_H
 
 #include "generator/internal/proto_definition_location.h"
-#include <google/protobuf/descriptor.h>
+#include "google/protobuf/descriptor.h"
 #include <map>
 #include <string>
 
