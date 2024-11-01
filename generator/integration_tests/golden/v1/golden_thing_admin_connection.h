@@ -269,6 +269,9 @@ class GoldenThingAdminConnection {
   virtual StatusOr<google::cloud::location::Location>
   GetLocation(google::cloud::location::GetLocationRequest const& request);
 
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
+
   virtual future<StatusOr<google::test::admin::database::v1::Database>>
   AsyncGetDatabase(google::test::admin::database::v1::GetDatabaseRequest const& request);
 

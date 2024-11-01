@@ -120,6 +120,22 @@ GoldenKitchenSinkTracingConnection::GetLocation(google::cloud::location::GetLoca
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
+StatusOr<google::iam::v1::Policy>
+GoldenKitchenSinkTracingConnection::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("golden_v1::GoldenKitchenSinkConnection::GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIamPolicy(request));
+}
+
+StreamRange<google::longrunning::Operation>
+GoldenKitchenSinkTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("golden_v1::GoldenKitchenSinkConnection::ListOperations");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListOperations(std::move(request));
+  return internal::MakeTracedStreamRange<google::longrunning::Operation>(
+        std::move(span), std::move(sr));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<golden_v1::GoldenKitchenSinkConnection>

@@ -242,6 +242,12 @@ GoldenThingAdminConnection::GetLocation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StreamRange<google::longrunning::Operation> GoldenThingAdminConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::longrunning::Operation>>();
+}
+
 future<StatusOr<google::test::admin::database::v1::Database>>
 GoldenThingAdminConnection::AsyncGetDatabase(
     google::test::admin::database::v1::GetDatabaseRequest const&) {

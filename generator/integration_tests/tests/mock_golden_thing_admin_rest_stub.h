@@ -186,6 +186,12 @@ class MockGoldenThingAdminRestStub
               (google::cloud::rest_internal::RestContext&, Options const&,
                ::google::cloud::location::GetLocationRequest const&),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::ListOperationsResponse>,
+              ListOperations,
+              (google::cloud::rest_internal::RestContext&, Options const&,
+               ::google::longrunning::ListOperationsRequest const&),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

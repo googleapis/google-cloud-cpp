@@ -26,6 +26,8 @@
 #include "google/cloud/version.h"
 #include <generator/integration_tests/backup.pb.h>
 #include <google/cloud/location/locations.pb.h>
+#include <google/iam/v1/iam_policy.pb.h>
+#include <google/longrunning/operations.pb.h>
 #include <generator/integration_tests/test.pb.h>
 #include <memory>
 
@@ -73,6 +75,14 @@ class GoldenKitchenSinkRestStub {
   virtual StatusOr<google::cloud::location::Location> GetLocation(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options, google::cloud::location::GetLocationRequest const& request) = 0;
+
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::iam::v1::GetIamPolicyRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::longrunning::ListOperationsRequest const& request) = 0;
 };
 
 class DefaultGoldenKitchenSinkRestStub : public GoldenKitchenSinkRestStub {
@@ -119,6 +129,14 @@ class DefaultGoldenKitchenSinkRestStub : public GoldenKitchenSinkRestStub {
   StatusOr<google::cloud::location::Location> GetLocation(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options, google::cloud::location::GetLocationRequest const& request) override;
+
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::iam::v1::GetIamPolicyRequest const& request) override;
+
+  StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::longrunning::ListOperationsRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

@@ -75,6 +75,14 @@ class GoldenKitchenSinkRestMetadata : public GoldenKitchenSinkRestStub {
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options, google::cloud::location::GetLocationRequest const& request) override;
 
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::iam::v1::GetIamPolicyRequest const& request) override;
+
+  StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::longrunning::ListOperationsRequest const& request) override;
+
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,
                    Options const& options,
