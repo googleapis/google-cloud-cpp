@@ -77,9 +77,14 @@ Status StubGenerator::GenerateHeader() {
   std::vector<std::string> mixin_headers =
       absl::StrSplit(vars("mixin_proto_grpc_header_paths"), ',');
   HeaderSystemIncludes(mixin_headers);
+  bool include_lro_header =
+      HasLongrunningMethod() &&
+      std::find(mixin_headers.begin(), mixin_headers.end(),
+                "google/longrunning/operations.grpc.pb.h") ==
+          mixin_headers.end();
   HeaderSystemIncludes(
       {vars("proto_grpc_header_path"),
-       HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
+       include_lro_header ? "google/longrunning/operations.grpc.pb.h" : "",
        "memory", "utility"});
 
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
