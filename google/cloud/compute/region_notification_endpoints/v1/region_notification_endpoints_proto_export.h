@@ -26,9 +26,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_NOTIFICATION_ENDPOINTS_V1_REGION_NOTIFICATION_ENDPOINTS_PROTO_EXPORT_H
 
 // IWYU pragma: begin_exports
-#include <google/cloud/compute/v1/internal/common_017.pb.h>
-#include <google/cloud/compute/v1/internal/common_030.pb.h>
-#include <google/cloud/compute/v1/internal/common_086.pb.h>
+#include <google/cloud/compute/v1/internal/common_016.pb.h>
+#include <google/cloud/compute/v1/internal/common_029.pb.h>
+#include <google/cloud/compute/v1/internal/common_084.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_NOTIFICATION_ENDPOINTS_V1_REGION_NOTIFICATION_ENDPOINTS_PROTO_EXPORT_H
