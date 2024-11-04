@@ -76,11 +76,14 @@ void ObjectDescriptorImpl::Flush(std::unique_lock<std::mutex> lk) {
   write_pending_ = true;
   google::storage::v2::BidiReadObjectRequest request;
   request.Swap(&next_request_);
-  CurrentStream(std::move(lk))
-      ->Write(std::move(request))
-      .then([w = WeakFromThis()](auto f) {
-        if (auto self = w.lock()) self->OnWrite(f.get());
-      });
+
+  // Assign CurrentStream to a temporary variable to prevent
+  // lifetime extension which can cause the lock to be held until the
+  // end of the block.
+  auto current_stream = CurrentStream(std::move(lk));
+  current_stream->Write(std::move(request)).then([w = WeakFromThis()](auto f) {
+    if (auto self = w.lock()) self->OnWrite(f.get());
+  });
 }
 
 void ObjectDescriptorImpl::OnWrite(bool ok) {
@@ -91,7 +94,11 @@ void ObjectDescriptorImpl::OnWrite(bool ok) {
 }
 
 void ObjectDescriptorImpl::DoRead(std::unique_lock<std::mutex> lk) {
-  CurrentStream(std::move(lk))->Read().then([w = WeakFromThis()](auto f) {
+  // Assign CurrentStream to a temporary variable to prevent
+  // lifetime extension which can cause the lock to be held until the
+  // end of the block.
+  auto current_stream = CurrentStream(std::move(lk));
+  current_stream->Read().then([w = WeakFromThis()](auto f) {
     if (auto self = w.lock()) self->OnRead(f.get());
   });
 }
@@ -136,7 +143,11 @@ void ObjectDescriptorImpl::CleanupDoneRanges(
 }
 
 void ObjectDescriptorImpl::DoFinish(std::unique_lock<std::mutex> lk) {
-  auto pending = CurrentStream(std::move(lk))->Finish();
+  // Assign CurrentStream to a temporary variable to prevent
+  // lifetime extension which can cause the lock to be held until the
+  // end of the block.
+  auto current_stream = CurrentStream(std::move(lk));
+  auto pending = current_stream->Finish();
   if (!pending.valid()) return;
   pending.then([w = WeakFromThis()](auto f) {
     if (auto self = w.lock()) self->OnFinish(f.get());
