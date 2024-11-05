@@ -165,7 +165,7 @@ class RegionOperationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_operations.v1.GetOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L109}
-  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_017.proto#L131}
+  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> GetOperation(
@@ -197,7 +197,7 @@ class RegionOperationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_operations.v1.GetOperationRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L109}
-  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_017.proto#L131}
+  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> GetOperation(
@@ -236,7 +236,7 @@ class RegionOperationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_operations.v1.ListRegionOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L131}
-  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_017.proto#L131}
+  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Operation> ListRegionOperations(
@@ -277,7 +277,7 @@ class RegionOperationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_operations.v1.ListRegionOperationsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L131}
-  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_017.proto#L131}
+  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Operation> ListRegionOperations(
@@ -318,7 +318,7 @@ class RegionOperationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_operations.v1.WaitRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L203}
-  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_017.proto#L131}
+  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(
@@ -360,7 +360,7 @@ class RegionOperationsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_operations.v1.WaitRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_operations/v1/region_operations.proto#L203}
-  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_017.proto#L131}
+  /// [google.cloud.cpp.compute.v1.Operation]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_016.proto#L131}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Wait(
