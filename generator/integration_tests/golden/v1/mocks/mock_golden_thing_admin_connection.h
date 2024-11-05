@@ -272,6 +272,10 @@ class MockGoldenThingAdminConnection : public golden_v1::GoldenThingAdminConnect
   GetLocation,
   (google::cloud::location::GetLocationRequest const& request), (override));
 
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
+
   MOCK_METHOD(future<StatusOr<google::test::admin::database::v1::Database>>,
   AsyncGetDatabase,
   (google::test::admin::database::v1::GetDatabaseRequest const& request), (override));

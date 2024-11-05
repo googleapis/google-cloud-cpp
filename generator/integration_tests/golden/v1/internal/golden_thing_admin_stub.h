@@ -26,8 +26,8 @@
 #include "google/cloud/version.h"
 #include <generator/integration_tests/backup.pb.h>
 #include <google/cloud/location/locations.grpc.pb.h>
-#include <generator/integration_tests/test.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
+#include <generator/integration_tests/test.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -165,6 +165,11 @@ class GoldenThingAdminStub {
       Options const& options,
       google::cloud::location::GetLocationRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::longrunning::ListOperationsRequest const& request) = 0;
+
   virtual future<StatusOr<google::test::admin::database::v1::Database>>
   AsyncGetDatabase(
     google::cloud::CompletionQueue& cq,
@@ -196,9 +201,11 @@ class DefaultGoldenThingAdminStub : public GoldenThingAdminStub {
  public:
   DefaultGoldenThingAdminStub(
       std::unique_ptr<google::test::admin::database::v1::GoldenThingAdmin::StubInterface> grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub,
       std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub,
       std::unique_ptr<google::longrunning::Operations::StubInterface> operations)
       : grpc_stub_(std::move(grpc_stub)),
+        operations_stub_(std::move(operations_stub)),
         locations_stub_(std::move(locations_stub)),
         operations_(std::move(operations)) {}
 
@@ -327,6 +334,11 @@ class DefaultGoldenThingAdminStub : public GoldenThingAdminStub {
       Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
+  StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::longrunning::ListOperationsRequest const& request) override;
+
   future<StatusOr<google::test::admin::database::v1::Database>> AsyncGetDatabase(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -353,6 +365,7 @@ class DefaultGoldenThingAdminStub : public GoldenThingAdminStub {
 
  private:
   std::unique_ptr<google::test::admin::database::v1::GoldenThingAdmin::StubInterface> grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
   std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub_;
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };

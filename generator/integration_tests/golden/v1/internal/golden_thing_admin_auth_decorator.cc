@@ -302,6 +302,15 @@ StatusOr<google::cloud::location::Location> GoldenThingAdminAuth::GetLocation(
   return child_->GetLocation(context, options, request);
 }
 
+StatusOr<google::longrunning::ListOperationsResponse> GoldenThingAdminAuth::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::longrunning::ListOperationsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListOperations(context, options, request);
+}
+
 future<StatusOr<google::test::admin::database::v1::Database>>
 GoldenThingAdminAuth::AsyncGetDatabase(
       google::cloud::CompletionQueue& cq,

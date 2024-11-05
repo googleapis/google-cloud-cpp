@@ -365,6 +365,21 @@ DefaultGoldenThingAdminRestStub::GetLocation(
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.name()), std::move(query_params));
 }
 
+StatusOr<google::longrunning::ListOperationsResponse>
+DefaultGoldenThingAdminRestStub::ListOperations(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::longrunning::ListOperationsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back({"page_size", std::to_string(request.page_size())});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  return rest_internal::Get<google::longrunning::ListOperationsResponse>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.name(), "/", "operations"), std::move(query_params));
+}
+
 future<StatusOr<google::test::admin::database::v1::Database>>
 DefaultGoldenThingAdminRestStub::AsyncGetDatabase(
     google::cloud::CompletionQueue& cq,

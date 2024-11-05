@@ -425,6 +425,21 @@ GoldenThingAdminClient::GetLocation(google::cloud::location::GetLocationRequest 
   return connection_->GetLocation(request);
 }
 
+StreamRange<google::longrunning::Operation>
+GoldenThingAdminClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::longrunning::ListOperationsRequest request;
+  request.set_name(name);
+  request.set_filter(filter);
+  return connection_->ListOperations(request);
+}
+
+StreamRange<google::longrunning::Operation>
+GoldenThingAdminClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListOperations(std::move(request));
+}
+
 future<StatusOr<google::test::admin::database::v1::Database>>
 GoldenThingAdminClient::AsyncGetDatabase(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

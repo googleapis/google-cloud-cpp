@@ -393,6 +393,20 @@ GoldenThingAdminLogging::GetLocation(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::longrunning::ListOperationsResponse>
+GoldenThingAdminLogging::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::longrunning::ListOperationsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::longrunning::ListOperationsRequest const& request) {
+        return child_->ListOperations(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::test::admin::database::v1::Database>>
 GoldenThingAdminLogging::AsyncGetDatabase(
       google::cloud::CompletionQueue& cq,

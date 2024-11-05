@@ -226,6 +226,24 @@ GoldenKitchenSinkMetadata::GetLocation(
   return child_->GetLocation(context, options, request);
 }
 
+StatusOr<google::iam::v1::Policy>
+GoldenKitchenSinkMetadata::GetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  return child_->GetIamPolicy(context, options, request);
+}
+
+StatusOr<google::longrunning::ListOperationsResponse>
+GoldenKitchenSinkMetadata::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::longrunning::ListOperationsRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ListOperations(context, options, request);
+}
+
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
       google::test::admin::database::v1::Response>>
 GoldenKitchenSinkMetadata::AsyncStreamingRead(

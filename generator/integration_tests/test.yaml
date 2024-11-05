@@ -28,3 +28,7 @@ http:
   rules:
   - selector: google.cloud.location.Locations.GetLocation
     get: '/v1/{name=projects/*/locations/*}'
+  - selector: google.iam.v1.IAMPolicy.GetIamPolicy
+    get: '/v1/{resource=projects/*/locations/*/connectionProfiles/*}:getIamPolicy'
+  - selector: google.longrunning.Operations.ListOperations
+    get: '/v1/{name=projects/*/locations/*}/operations'

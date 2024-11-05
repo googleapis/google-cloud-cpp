@@ -217,6 +217,12 @@ class GoldenKitchenSinkConnection {
 
   virtual StatusOr<google::cloud::location::Location>
   GetLocation(google::cloud::location::GetLocationRequest const& request);
+
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 };
 
 /**

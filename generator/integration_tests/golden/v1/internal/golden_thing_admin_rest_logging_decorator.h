@@ -138,6 +138,10 @@ class GoldenThingAdminRestLogging : public GoldenThingAdminRestStub {
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options, google::cloud::location::GetLocationRequest const& request) override;
 
+  StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::longrunning::ListOperationsRequest const& request) override;
+
   future<StatusOr<google::test::admin::database::v1::Database>> AsyncGetDatabase(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,

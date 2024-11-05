@@ -111,6 +111,10 @@ Idempotency GoldenThingAdminConnectionIdempotencyPolicy::GetLocation(google::clo
   return Idempotency::kIdempotent;
 }
 
+Idempotency GoldenThingAdminConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<GoldenThingAdminConnectionIdempotencyPolicy>
     MakeDefaultGoldenThingAdminConnectionIdempotencyPolicy() {
   return std::make_unique<GoldenThingAdminConnectionIdempotencyPolicy>();

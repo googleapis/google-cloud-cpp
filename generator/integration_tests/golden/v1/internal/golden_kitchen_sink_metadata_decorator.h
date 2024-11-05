@@ -110,6 +110,16 @@ class GoldenKitchenSinkMetadata : public GoldenKitchenSinkStub {
       Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::iam::v1::GetIamPolicyRequest const& request) override;
+
+  StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::longrunning::ListOperationsRequest const& request) override;
+
   std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
       google::test::admin::database::v1::Response>>
   AsyncStreamingRead(
