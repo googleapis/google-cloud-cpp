@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "absl/types/optional.h"
 #include "google/cloud/opentelemetry/internal/time_series.h"
 #include "google/cloud/opentelemetry/internal/monitored_resource.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
@@ -20,13 +21,29 @@
 #include <opentelemetry/common/attribute_value.h>
 #include <opentelemetry/sdk/metrics/data/metric_data.h>
 #include <opentelemetry/sdk/metrics/export/metric_producer.h>
+#include <opentelemetry/sdk/resource/semantic_conventions.h>
 #include <cctype>
+#include <string>
+#include <unordered_map>
+#include <vector>
 
 namespace google {
 namespace cloud {
 namespace otel_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
+
+namespace sc = opentelemetry::sdk::resource::SemanticConventions;
+
+struct OTelKeyMatch {
+  std::vector<std::string> otel_keys;
+  absl::optional<std::string> fallback = absl::nullopt;
+};
+
+std::unordered_map<std::string, OTelKeyMatch> const kExtraLabelsLookup = {
+    {"service_name", {{sc::kServiceName}}},
+    {"service_namespace", {{sc::kServiceNamespace}}},
+    {"service_instance_id", {{sc::kServiceInstanceId}}}};
 
 google::protobuf::Timestamp ToProtoTimestamp(
     opentelemetry::common::SystemTimestamp ts) {
@@ -215,7 +232,7 @@ std::vector<google::monitoring::v3::TimeSeries> ToTimeSeries(
       }
     }
   }
-  return tss;
+  return WithExtraLabels(data, tss);
 }
 
 std::vector<google::monitoring::v3::CreateTimeSeriesRequest> ToRequests(
@@ -234,6 +251,41 @@ std::vector<google::monitoring::v3::CreateTimeSeriesRequest> ToRequests(
     *requests.back().add_time_series() = std::move(ts);
   }
   return requests;
+}
+
+std::vector<google::monitoring::v3::TimeSeries> WithExtraLabels(
+    opentelemetry::sdk::metrics::ResourceMetrics const& data,
+    std::vector<google::monitoring::v3::TimeSeries>& tss) {
+  if (!data.resource_) {
+    return tss;
+  }
+
+  opentelemetry::sdk::resource::ResourceAttributes const& attributes =
+      data.resource_->GetAttributes();
+  for (auto const& kv : kExtraLabelsLookup) {
+    auto const& oks = kv.second.otel_keys;
+    auto found = std::find_first_of(
+        oks.begin(), oks.end(), attributes.begin(), attributes.end(),
+        [](auto const& key, auto const& attr) { return key == attr.first; });
+
+    std::string value;
+    if (found != oks.end()) {
+      value = AsString(attributes.at(*found));
+    } else if (kv.second.fallback) {
+      value = *kv.second.fallback;
+    }
+    if (value.empty()) {
+      continue;
+    }
+
+    for (auto& ts : tss) {
+      auto& labels = *((*ts.mutable_metric()).mutable_labels());
+      if (labels.find(kv.first) == labels.end()) {
+        labels[kv.first] = value;
+      }
+    }
+  }
+  return tss;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

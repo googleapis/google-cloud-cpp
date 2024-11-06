@@ -21,6 +21,7 @@
 #include <google/api/monitored_resource.pb.h>
 #include <google/monitoring/v3/metric_service.pb.h>
 #include <opentelemetry/sdk/metrics/metric_reader.h>
+#include <opentelemetry/sdk/resource/resource.h>
 #include <functional>
 #include <string>
 
@@ -88,6 +89,20 @@ std::vector<google::monitoring::v3::TimeSeries> ToTimeSeries(
 std::vector<google::monitoring::v3::CreateTimeSeriesRequest> ToRequests(
     std::string const& project, google::api::MonitoredResource const& mr_proto,
     std::vector<google::monitoring::v3::TimeSeries> tss);
+
+/**
+ * Copy some resource labels into metric labels.
+ *
+ * Some resource labels need to be copied into metric labels as they are not
+ * directly accepted by Google Cloud Monitoring as resource labels.
+ *
+ * For example, service resource labels need to be copied into metric labels.
+ * See:
+ * https://github.com/GoogleCloudPlatform/opentelemetry-operations-go/blob/main/exporter/collector/breaking-changes.md#labels
+ */
+std::vector<google::monitoring::v3::TimeSeries> WithExtraLabels(
+    opentelemetry::sdk::metrics::ResourceMetrics const& data,
+    std::vector<google::monitoring::v3::TimeSeries>& tss);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace otel_internal
