@@ -13,11 +13,18 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async/read_range.h"
+#include "google/cloud/storage/internal/hash_function.h"
+#include "google/cloud/storage/internal/hash_values.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/cord.h"
+#include "absl/strings/string_view.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
+#include <gtest/gtest.h>
+#include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -31,10 +38,29 @@ using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
+using ::testing::_;
+using ::testing::AtLeast;
 using ::testing::ElementsAre;
 using ::testing::Optional;
 using ::testing::ResultOf;
 using ::testing::VariantWith;
+
+class MockHashFunction : public storage::internal::HashFunction {
+ public:
+  MOCK_METHOD(void, Update, (absl::string_view buffer), (override));
+  MOCK_METHOD(Status, Update, (std::int64_t offset, absl::string_view buffer),
+              (override));
+  MOCK_METHOD(Status, Update,
+              (std::int64_t offset, absl::string_view buffer,
+               std::uint32_t buffer_crc),
+              (override));
+  MOCK_METHOD(Status, Update,
+              (std::int64_t offset, absl::Cord const& buffer,
+               std::uint32_t buffer_crc),
+              (override));
+  MOCK_METHOD(std::string, Name, (), (const, override));
+  MOCK_METHOD(storage::internal::HashValues, Finish, (), (override));
+};
 
 TEST(ReadRange, BasicLifecycle) {
   ReadRange actual(10000, 40);
@@ -154,6 +180,23 @@ TEST(ReadRange, Queue) {
       },
       "01234567891234567890");
   EXPECT_THAT(actual.Read().get(), VariantWith<ReadPayload>(matcher));
+}
+
+TEST(ReadRange, HashFunctionCalled) {
+  auto hash_function = std::make_shared<MockHashFunction>();
+  absl::Cord contents("1234567890");
+  EXPECT_CALL(*hash_function, Update(0, contents, _)).Times(AtLeast(1));
+
+  ReadRange actual(0, 0, hash_function);
+  auto data = google::storage::v2::ObjectRangeData{};
+  auto constexpr kData0 = R"pb(
+    checksummed_data { content: "1234567890" }
+    read_range { read_offset: 0 read_limit: 10 read_id: 7 }
+    range_end: false
+  )pb";
+
+  EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
+  actual.OnRead(std::move(data));
 }
 
 }  // namespace
