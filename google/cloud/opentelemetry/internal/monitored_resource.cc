@@ -19,10 +19,14 @@
 #include "absl/types/optional.h"
 #include "absl/types/variant.h"
 #include <opentelemetry/common/attribute_value.h>
+#include <opentelemetry/sdk/common/attribute_utils.h>
+#include <opentelemetry/sdk/instrumentationscope/instrumentation_scope.h>
 #include <opentelemetry/sdk/resource/resource.h>
 #include <opentelemetry/sdk/resource/semantic_conventions.h>
 #include <numeric>
+#include <string>
 #include <unordered_map>
+#include <unordered_set>
 
 namespace google {
 namespace cloud {
@@ -227,6 +231,52 @@ MonitoredResource ToMonitoredResource(
     opentelemetry::sdk::resource::ResourceAttributes const& attributes) {
   auto provider = MakeProvider(attributes);
   return provider.Process(attributes);
+}
+
+opentelemetry::sdk::metrics::ResourceMetrics
+GetCopyWithServiceResourceLabelsAsMetricLabels(
+    opentelemetry::sdk::metrics::ResourceMetrics const& data) {
+  if (!data.resource_) {
+    return data;
+  }
+
+  std::unordered_set<std::string> const& kOtelServiceKeys{
+      sc::kServiceName, sc::kServiceNamespace, sc::kServiceInstanceId};
+
+  std::unordered_map<std::string,
+                     opentelemetry::sdk::common::OwnedAttributeValue>
+      service_labels;
+  auto resource_attributes = data.resource_->GetAttributes();
+  for (auto it = resource_attributes.begin(); it != resource_attributes.end();
+       ++it) {
+    if (kOtelServiceKeys.find(it->first) != kOtelServiceKeys.end()) {
+      service_labels[it->first] = it->second;
+    }
+  }
+
+  if (service_labels.empty()) {
+    return data;
+  }
+
+  opentelemetry::sdk::metrics::ResourceMetrics data_copy = data;
+  for (opentelemetry::sdk::metrics::ScopeMetrics& scope_metrics :
+       data_copy.scope_metric_data_) {
+    for (opentelemetry::sdk::metrics::MetricData& metric :
+         scope_metrics.metric_data_) {
+      for (opentelemetry::sdk::metrics::PointDataAttributes& pda :
+           metric.point_data_attr_) {
+        auto& attributes = pda.attributes;
+        for (auto it = service_labels.begin(); it != service_labels.end();
+             ++it) {
+          if (attributes.find(it->first) == attributes.end()) {
+            attributes[it->first] = it->second;
+          }
+        }
+      }
+    }
+  }
+
+  return data_copy;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

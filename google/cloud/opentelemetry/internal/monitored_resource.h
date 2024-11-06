@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPENTELEMETRY_INTERNAL_MONITORED_RESOURCE_H
 
 #include "google/cloud/version.h"
+#include <opentelemetry/sdk/metrics/export/metric_producer.h>
 #include <opentelemetry/sdk/resource/resource.h>
 #include <string>
 #include <unordered_map>
@@ -41,6 +42,11 @@ struct MonitoredResource {
   // e.g. {{"location", "us-central1-a"}}
   std::unordered_map<std::string, std::string> labels;
 };
+
+opentelemetry::sdk::metrics::ResourceMetrics
+GetCopyWithServiceResourceLabelsAsMetricLabels(
+    opentelemetry::sdk::metrics::ResourceMetrics const& data);
+
 
 /*
  * Map the attributes to a monitored resource.

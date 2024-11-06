@@ -14,6 +14,7 @@
 
 #include "google/cloud/opentelemetry/monitoring_exporter.h"
 #include "google/cloud/monitoring/v3/metric_client.h"
+#include "google/cloud/opentelemetry/internal/monitored_resource.h"
 #include "google/cloud/opentelemetry/internal/time_series.h"
 #include "google/cloud/internal/noexcept_action.h"
 #include "google/cloud/log.h"
@@ -73,13 +74,15 @@ class MonitoringExporter final
       opentelemetry::sdk::metrics::ResourceMetrics const& data) {
     auto result = opentelemetry::sdk::common::ExportResult::kSuccess;
 
-    auto tss = otel_internal::ToTimeSeries(data, formatter_);
+    auto data_copy =
+        otel_internal::GetCopyWithServiceResourceLabelsAsMetricLabels(data);
+    auto tss = otel_internal::ToTimeSeries(data_copy, formatter_);
     if (tss.empty()) {
       GCP_LOG(INFO) << "Cloud Monitoring Export skipped. No data.";
       // Return early to save the littlest bit of processing.
       return result;
     }
-    auto mr = otel_internal::ToMonitoredResource(data, mr_proto_);
+    auto mr = otel_internal::ToMonitoredResource(data_copy, mr_proto_);
     auto requests =
         otel_internal::ToRequests(project_.FullName(), mr, std::move(tss));
     for (auto& request : requests) {
