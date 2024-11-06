@@ -13,11 +13,15 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async/object_descriptor_impl.h"
+#include "google/cloud/storage/async/options.h"
 #include "google/cloud/storage/internal/async/handle_redirect_error.h"
 #include "google/cloud/storage/internal/async/object_descriptor_reader_tracing.h"
+#include "google/cloud/storage/internal/hash_function.h"
+#include "google/cloud/storage/internal/hash_function_impl.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include <google/rpc/status.pb.h>
+#include <memory>
 #include <utility>
 
 namespace google {
@@ -53,7 +57,15 @@ absl::optional<google::storage::v2::Object> ObjectDescriptorImpl::metadata()
 
 std::unique_ptr<storage_experimental::AsyncReaderConnection>
 ObjectDescriptorImpl::Read(ReadParams p) {
-  auto range = std::make_shared<ReadRange>(p.start, p.limit);
+  std::shared_ptr<storage::internal::HashFunction> hash_function =
+      std::shared_ptr<storage::internal::HashFunction>(
+          storage::internal::CreateNullHashFunction());
+  if (options_.has<storage_experimental::EnableCrc32cValidationOption>()) {
+    hash_function =
+        std::make_shared<storage::internal::Crc32cMessageHashFunction>(
+            storage::internal::CreateNullHashFunction());
+  }
+  auto range = std::make_shared<ReadRange>(p.start, p.limit, hash_function);
 
   std::unique_lock<std::mutex> lk(mu_);
   auto const id = ++read_id_generator_;

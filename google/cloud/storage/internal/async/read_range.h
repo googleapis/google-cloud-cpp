@@ -16,12 +16,14 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_READ_RANGE_H
 
 #include "google/cloud/storage/async/reader_connection.h"
+#include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/future.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
 #include <google/storage/v2/storage.pb.h>
 #include <cstdint>
+#include <memory>
 #include <mutex>
 
 namespace google {
@@ -43,8 +45,12 @@ class ReadRange {
   using ReadResponse =
       storage_experimental::AsyncReaderConnection::ReadResponse;
 
-  ReadRange(std::int64_t offset, std::int64_t limit)
-      : offset_(offset), limit_(limit) {}
+  ReadRange(std::int64_t offset, std::int64_t limit,
+            std::shared_ptr<storage::internal::HashFunction> hash_function =
+                storage::internal::CreateNullHashFunction())
+      : offset_(offset),
+        limit_(limit),
+        hash_function_(std::move(hash_function)) {}
 
   bool IsDone() const;
 
@@ -66,6 +72,7 @@ class ReadRange {
   absl::optional<storage_experimental::ReadPayload> payload_;
   absl::optional<Status> status_;
   absl::optional<promise<ReadResponse>> wait_;
+  std::shared_ptr<storage::internal::HashFunction> hash_function_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
