@@ -69,8 +69,16 @@ void ReadRange::OnRead(google::storage::v2::ObjectRangeData data) {
   std::unique_lock<std::mutex> lk(mu_);
   if (status_) return;
   if (data.range_end()) status_ = Status{};
-  // TODO(#28) - verify the checksum
+
+  auto check_summed_data = data.mutable_checksummed_data();
   auto content = StealMutableContent(*data.mutable_checksummed_data());
+  auto status =
+      hash_function_->Update(offset_, content, check_summed_data->crc32c());
+  if (!status.ok()) {
+    status_ = std::move(status);
+    return Notify(std::move(lk), ReadPayloadImpl::Make(std::move(content)));
+  }
+
   offset_ += content.size();
   if (limit_ != 0) limit_ -= std::min<std::int64_t>(content.size(), limit_);
   auto p = ReadPayloadImpl::Make(std::move(content));
