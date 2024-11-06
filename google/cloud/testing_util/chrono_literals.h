@@ -25,32 +25,32 @@ namespace testing_util {
 namespace chrono_literals {
 
 // NOLINTNEXTLINE(google-runtime-int)
-std::chrono::hours constexpr operator"" _h(unsigned long long h) {
+std::chrono::hours constexpr operator""_h(unsigned long long h) {
   return std::chrono::hours(h);
 }
 
 // NOLINTNEXTLINE(google-runtime-int)
-std::chrono::minutes constexpr operator"" _min(unsigned long long m) {
+std::chrono::minutes constexpr operator""_min(unsigned long long m) {
   return std::chrono::minutes(m);
 }
 
 // NOLINTNEXTLINE(google-runtime-int)
-std::chrono::seconds constexpr operator"" _s(unsigned long long s) {
+std::chrono::seconds constexpr operator""_s(unsigned long long s) {
   return std::chrono::seconds(s);
 }
 
 // NOLINTNEXTLINE(google-runtime-int)
-std::chrono::milliseconds constexpr operator"" _ms(unsigned long long ms) {
+std::chrono::milliseconds constexpr operator""_ms(unsigned long long ms) {
   return std::chrono::milliseconds(ms);
 }
 
 // NOLINTNEXTLINE(google-runtime-int)
-std::chrono::microseconds constexpr operator"" _us(unsigned long long us) {
+std::chrono::microseconds constexpr operator""_us(unsigned long long us) {
   return std::chrono::microseconds(us);
 }
 
 // NOLINTNEXTLINE(google-runtime-int)
-std::chrono::nanoseconds constexpr operator"" _ns(unsigned long long ns) {
+std::chrono::nanoseconds constexpr operator""_ns(unsigned long long ns) {
   return std::chrono::nanoseconds(ns);
 }
 
