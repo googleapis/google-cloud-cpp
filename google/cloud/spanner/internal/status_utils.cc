@@ -14,9 +14,9 @@
 
 #include "google/cloud/spanner/internal/status_utils.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/status_payload_keys.h"
 #include "absl/strings/match.h"
-#include "absl/strings/str_cat.h"
 #include <google/rpc/error_details.pb.h>
 #include <google/rpc/status.pb.h>
 #include <google/spanner/v1/spanner.pb.h>
