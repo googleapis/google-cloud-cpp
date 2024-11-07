@@ -130,6 +130,17 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
   EXPECT_THAT(database->name(), EndsWith(database_.database_id()));
   EXPECT_FALSE(database->has_encryption_config());
   EXPECT_THAT(database->encryption_info(), IsEmpty());
+
+  // Test mixin method
+  auto stream =
+      client_.ListOperations(database_.FullName() + "/operations", "");
+  std::vector<StatusOr<google::longrunning::Operation>> operations(
+      stream.begin(), stream.end());
+  EXPECT_EQ(operations.size(), 1);
+  EXPECT_THAT(operations[0], StatusIs(StatusCode::kOk));
+  EXPECT_THAT(operations[0]->name(),
+              StartsWith(database_.FullName() + "/operations/"));
+
   if (emulator_) {
     EXPECT_EQ(database->database_dialect(),
               google::spanner::admin::database::v1::DatabaseDialect::
