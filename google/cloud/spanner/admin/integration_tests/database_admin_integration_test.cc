@@ -131,16 +131,6 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
   EXPECT_FALSE(database->has_encryption_config());
   EXPECT_THAT(database->encryption_info(), IsEmpty());
 
-  // Test mixin method
-  auto stream =
-      client_.ListOperations(database_.FullName() + "/operations", "");
-  std::vector<StatusOr<google::longrunning::Operation>> operations(
-      stream.begin(), stream.end());
-  EXPECT_EQ(operations.size(), 1);
-  EXPECT_THAT(operations[0], StatusIs(StatusCode::kOk));
-  EXPECT_THAT(operations[0]->name(),
-              StartsWith(database_.FullName() + "/operations/"));
-
   if (emulator_) {
     EXPECT_EQ(database->database_dialect(),
               google::spanner::admin::database::v1::DatabaseDialect::
@@ -690,6 +680,25 @@ TEST_F(DatabaseAdminClientTest, LROStartAwait) {
   EXPECT_TRUE(DatabaseExists()) << "Database " << database_;
 
   // Clean up the test artifacts.
+  auto drop_status = client_.DropDatabase(database_.FullName());
+  EXPECT_STATUS_OK(drop_status);
+  EXPECT_FALSE(DatabaseExists()) << "Database " << database_;
+}
+
+/// @test Verify the LRO Mixin method GetOperation.
+TEST_F(DatabaseAdminClientTest, LROMixin) {
+  auto operation = client_.CreateDatabase(
+      NoAwaitTag{}, database_.instance().FullName(),
+      absl::StrCat("CREATE DATABASE `", database_.database_id(), "`"));
+  ASSERT_STATUS_OK(operation);
+
+  auto get_operation = client_.GetOperation(operation->name());
+  ASSERT_STATUS_OK(get_operation);
+
+  EXPECT_EQ(get_operation->name(), operation->name());
+
+  (void)client_.CreateDatabase(*operation).get();
+  EXPECT_TRUE(DatabaseExists()) << "Database " << database_;
   auto drop_status = client_.DropDatabase(database_.FullName());
   EXPECT_STATUS_OK(drop_status);
   EXPECT_FALSE(DatabaseExists()) << "Database " << database_;
