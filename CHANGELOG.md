@@ -11,7 +11,7 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
 We are happy to announce the following GA libraries. Unless specifically noted,
 the APIs in these libraries are stable, and are ready for production use.
 
-- feat(parallelstore): generate library ([#14805](https://github.com/googleapis/google-cloud-cpp/pull/14805))
+- [ParallelStore API](/google/cloud/parallelstore/README.md)
 
 ### [Pub/Sub](/google/cloud/pubsub/README.md)
 
