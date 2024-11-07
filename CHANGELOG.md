@@ -4,7 +4,32 @@
 breaking changes in the upcoming 3.x release. This release is scheduled for
 2024-12 or 2025-01.
 
-## v2.31.0 - TBD
+## v2.31.0 - 2024-11
+
+### New Libraries
+
+We are happy to announce the following GA libraries. Unless specifically noted,
+the APIs in these libraries are stable, and are ready for production use.
+
+- feat(parallelstore): generate library ([#14805](https://github.com/googleapis/google-cloud-cpp/pull/14805))
+
+### [Pub/Sub](/google/cloud/pubsub/README.md)
+
+- docs(pubsub): Fix region tags for Pub/Sub ingestion from GCS samples ([#14773](https://github.com/googleapis/google-cloud-cpp/pull/14773))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- docs(storage): better suggestion for deprecated API ([#14786](https://github.com/googleapis/google-cloud-cpp/pull/14786))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- feat(oauth2): add support for external account workforce identity ([#14800](https://github.com/googleapis/google-cloud-cpp/pull/14800))
+- feat: API key authentication ([#14779](https://github.com/googleapis/google-cloud-cpp/pull/14779))
+- feat(mixin): generate mixins for libraries ([#14766](https://github.com/googleapis/google-cloud-cpp/pull/14766))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2024-10-31T11:22:40-07:00](https://github.com/googleapis/googleapis/tree/b7c5b60ee76c4591e32c874978c6cd8231087ed6)
 
 ## v2.30.0 - 2024-10
 
