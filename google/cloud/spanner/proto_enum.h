@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_PROTO_ENUM_H
 
 #include "google/cloud/version.h"
+#include "absl/strings/string_view.h"
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/generated_enum_reflection.h>
 #include <ostream>
@@ -57,7 +58,7 @@ class ProtoEnum {
   explicit operator enum_type() const { return v_; }
 
   /// The fully-qualified name of the enum type, scope delimited by periods.
-  static std::string const& TypeName() { return Descriptor()->full_name(); }
+  static absl::string_view TypeName() { return Descriptor()->full_name(); }
 
   /// @name Relational operators
   ///@{

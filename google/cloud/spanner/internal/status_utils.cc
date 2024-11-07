@@ -16,6 +16,7 @@
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/status_payload_keys.h"
 #include "absl/strings/match.h"
+#include "absl/strings/str_cat.h"
 #include <google/rpc/error_details.pb.h>
 #include <google/rpc/status.pb.h>
 #include <google/spanner/v1/spanner.pb.h>
@@ -38,7 +39,7 @@ bool IsSessionNotFound(google::cloud::Status const& status) {
     for (google::protobuf::Any const& any : proto.details()) {
       if (any.UnpackTo(&resource_info)) {
         google::spanner::v1::Session session;
-        auto session_url = "type.googleapis.com/" + session.GetTypeName();
+        auto session_url = absl::StrCat("type.googleapis.com/", session.GetTypeName());
         return resource_info.resource_type() == session_url;
       }
     }

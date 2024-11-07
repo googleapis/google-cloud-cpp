@@ -17,6 +17,7 @@
 
 #include "google/cloud/internal/debug_string_protobuf.h"
 #include "google/cloud/version.h"
+#include "absl/strings/string_view.h"
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/message.h>
 #include <google/protobuf/util/message_differencer.h>
@@ -73,7 +74,7 @@ class ProtoMessage {
   explicit operator std::string() const { return serialized_message_; }
 
   /// The fully-qualified name of the message type, scope delimited by periods.
-  static std::string const& TypeName() {
+  static absl::string_view TypeName() {
     return message_type::GetDescriptor()->full_name();
   }
 
