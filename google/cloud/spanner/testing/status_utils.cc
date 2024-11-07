@@ -26,7 +26,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 grpc::Status SessionNotFoundRpcError(std::string name) {
   google::spanner::v1::Session session;
-  auto session_url = absl::StrCat("type.googleapis.com/", session.GetTypeName());
+  auto session_url =
+      absl::StrCat("type.googleapis.com/", session.GetTypeName());
 
   google::rpc::ResourceInfo resource_info;
   resource_info.set_resource_type(session_url);

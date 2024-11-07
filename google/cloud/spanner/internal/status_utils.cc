@@ -39,7 +39,8 @@ bool IsSessionNotFound(google::cloud::Status const& status) {
     for (google::protobuf::Any const& any : proto.details()) {
       if (any.UnpackTo(&resource_info)) {
         google::spanner::v1::Session session;
-        auto session_url = absl::StrCat("type.googleapis.com/", session.GetTypeName());
+        auto session_url =
+            absl::StrCat("type.googleapis.com/", session.GetTypeName());
         return resource_info.resource_type() == session_url;
       }
     }
