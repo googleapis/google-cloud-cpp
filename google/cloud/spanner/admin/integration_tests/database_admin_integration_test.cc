@@ -130,7 +130,6 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
   EXPECT_THAT(database->name(), EndsWith(database_.database_id()));
   EXPECT_FALSE(database->has_encryption_config());
   EXPECT_THAT(database->encryption_info(), IsEmpty());
-
   if (emulator_) {
     EXPECT_EQ(database->database_dialect(),
               google::spanner::admin::database::v1::DatabaseDialect::
