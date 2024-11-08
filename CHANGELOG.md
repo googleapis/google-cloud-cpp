@@ -4,6 +4,8 @@
 breaking changes in the upcoming 3.x release. This release is scheduled for
 2024-12 or 2025-01.
 
+## v2.32.0 - TBD
+
 ## v2.31.0 - 2024-11
 
 ### New Libraries
