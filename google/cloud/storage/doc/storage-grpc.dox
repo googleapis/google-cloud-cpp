@@ -117,3 +117,5 @@ build with the following option:
 ```{.bash}
 --//google/cloud/storage:enable_grpc_metrics=false
 ```
+
+*/
