@@ -20,7 +20,7 @@ differently from the REST-based implementation.
    [`RestEndpointOption`](@ref google::cloud::storage::RestEndpointOption).
 1. The cloud path endpoint (`storage.googleapis.com`) works from any hosting
    environment (on-prem, GKE, GCE, other cloud providers, etc.). For best
-   performance on GCE or GKE consider we default to the direct connectivity endpoint
+   performance on GCE or GKE we default to the direct connectivity endpoint
    `google-c2p:///storage.googleapis.com`.
 1. The [`Fields`](@ref google::cloud::storage::Fields) request parameter is
    passed verbatim to the backend. Some fields have different names in gRPC, and
@@ -90,4 +90,30 @@ cc_binary(
 )
 ```
 
-*/
+## gRPC+OpenTelemetry
+
+The gRPC client will default to enabling OpenTelemetry metrics. 
+This means that the library must be built with support for OpenTelemetry
+and support for the gRPC OpenTelemetry plugin. Please note metrics require
+using a version of gRPC > 1.64.
+
+If you are using CMake to compile your application:
+
+1. Build and install OpenTelemetry with the following options:
+```{.bash}
+-DWITH_ABSEIL=ON -DWITH_PROMETHEUS=ON
+```
+
+1. Build and install gRPC with the OpenTelemetry plugin enabled:
+
+Build and and install gRPC with the following option:
+```{.bash}
+-DgRPC_BUILD_GRPCPP_OTEL_PLUGIN=ON
+```
+
+If you are using Bazel and wish to disable gRPC metrics please
+build with the following option:
+
+```{.bash}
+--//google/cloud/storage:enable_grpc_metrics=false
+```
