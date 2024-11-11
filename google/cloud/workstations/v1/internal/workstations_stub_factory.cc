@@ -46,13 +46,10 @@ std::shared_ptr<WorkstationsStub> CreateDefaultWorkstationsStub(
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       google::cloud::workstations::v1::Workstations::NewStub(channel);
-  auto service_operations_stub =
-      google::longrunning::Operations::NewStub(channel);
   auto service_iampolicy_stub = google::iam::v1::IAMPolicy::NewStub(channel);
   std::shared_ptr<WorkstationsStub> stub =
       std::make_shared<DefaultWorkstationsStub>(
-          std::move(service_grpc_stub), std::move(service_operations_stub),
-          std::move(service_iampolicy_stub),
+          std::move(service_grpc_stub), std::move(service_iampolicy_stub),
           google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {

@@ -45,11 +45,9 @@ std::shared_ptr<UserEventServiceStub> CreateDefaultUserEventServiceStub(
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       google::cloud::discoveryengine::v1::UserEventService::NewStub(channel);
-  auto service_operations_stub =
-      google::longrunning::Operations::NewStub(channel);
   std::shared_ptr<UserEventServiceStub> stub =
       std::make_shared<DefaultUserEventServiceStub>(
-          std::move(service_grpc_stub), std::move(service_operations_stub),
+          std::move(service_grpc_stub),
           google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {

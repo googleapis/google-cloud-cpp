@@ -99,6 +99,12 @@ Status StubFactoryGenerator::GenerateCc() {
 
   std::unordered_map<std::string, std::string> mixin_grpc_stubs;
   for (auto const& mixin_method : MixinMethods()) {
+    // We create operations stub for service with LRO no matter it has LRO mixin
+    // or not, so we skip creating mixin operations stub for the services with
+    // LRO.
+    if (HasLongrunningMethod() &&
+        mixin_method.grpc_stub_name == "operations_stub")
+      continue;
     mixin_grpc_stubs[mixin_method.grpc_stub_name] = mixin_method.grpc_stub_fqn;
   }
   std::string mixin_stub_inits;

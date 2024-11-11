@@ -46,14 +46,11 @@ std::shared_ptr<ManagedKafkaStub> CreateDefaultManagedKafkaStub(
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       google::cloud::managedkafka::v1::ManagedKafka::NewStub(channel);
-  auto service_operations_stub =
-      google::longrunning::Operations::NewStub(channel);
   auto service_locations_stub =
       google::cloud::location::Locations::NewStub(channel);
   std::shared_ptr<ManagedKafkaStub> stub =
       std::make_shared<DefaultManagedKafkaStub>(
-          std::move(service_grpc_stub), std::move(service_operations_stub),
-          std::move(service_locations_stub),
+          std::move(service_grpc_stub), std::move(service_locations_stub),
           google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {

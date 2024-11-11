@@ -47,15 +47,13 @@ std::shared_ptr<PipelineServiceStub> CreateDefaultPipelineServiceStub(
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       google::cloud::aiplatform::v1::PipelineService::NewStub(channel);
-  auto service_operations_stub =
-      google::longrunning::Operations::NewStub(channel);
   auto service_iampolicy_stub = google::iam::v1::IAMPolicy::NewStub(channel);
   auto service_locations_stub =
       google::cloud::location::Locations::NewStub(channel);
   std::shared_ptr<PipelineServiceStub> stub =
       std::make_shared<DefaultPipelineServiceStub>(
-          std::move(service_grpc_stub), std::move(service_operations_stub),
-          std::move(service_iampolicy_stub), std::move(service_locations_stub),
+          std::move(service_grpc_stub), std::move(service_iampolicy_stub),
+          std::move(service_locations_stub),
           google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {

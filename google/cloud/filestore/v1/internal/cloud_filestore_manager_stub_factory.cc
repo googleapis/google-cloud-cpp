@@ -47,14 +47,11 @@ CreateDefaultCloudFilestoreManagerStub(
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       google::cloud::filestore::v1::CloudFilestoreManager::NewStub(channel);
-  auto service_operations_stub =
-      google::longrunning::Operations::NewStub(channel);
   auto service_locations_stub =
       google::cloud::location::Locations::NewStub(channel);
   std::shared_ptr<CloudFilestoreManagerStub> stub =
       std::make_shared<DefaultCloudFilestoreManagerStub>(
-          std::move(service_grpc_stub), std::move(service_operations_stub),
-          std::move(service_locations_stub),
+          std::move(service_grpc_stub), std::move(service_locations_stub),
           google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {

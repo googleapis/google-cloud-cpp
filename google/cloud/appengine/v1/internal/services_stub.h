@@ -85,8 +85,9 @@ class DefaultServicesStub : public ServicesStub {
   DefaultServicesStub(
       std::unique_ptr<google::appengine::v1::Services::StubInterface> grpc_stub,
       std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations)
-      : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
+          operations_stub)
+      : grpc_stub_(std::move(grpc_stub)),
+        operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::appengine::v1::ListServicesResponse> ListServices(
       grpc::ClientContext& context, Options const& options,
@@ -130,7 +131,8 @@ class DefaultServicesStub : public ServicesStub {
 
  private:
   std::unique_ptr<google::appengine::v1::Services::StubInterface> grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
