@@ -74,8 +74,8 @@ class ProtoMessage {
 
   /// The fully-qualified name of the message type, scope delimited by periods.
   static std::string const& TypeName() {
-    static std::string const name(message_type::GetDescriptor()->full_name());
-    return name;
+    static std::string const kName(message_type::GetDescriptor()->full_name());
+    return kName;
   }
 
   /// @name Relational operators
