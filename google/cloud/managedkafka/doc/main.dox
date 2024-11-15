@@ -1,8 +1,8 @@
 /*!
 
-@mainpage Apache Kafka for BigQuery API C++ Client Library
+@mainpage Managed Service for Apache Kafka API C++ Client Library
 
-An idiomatic C++ client library for the [Apache Kafka for BigQuery API][cloud-service-docs].
+An idiomatic C++ client library for the [Managed Service for Apache Kafka API][cloud-service-docs].
 
 Manage Apache Kafka clusters and resources.
 
@@ -15,7 +15,7 @@ While this library is **GA**, please note that the Google Cloud C++ client libra
 
 The following shows the code that you'll run in the
 `google/cloud/managedkafka/quickstart/` directory,
-which should give you a taste of the Apache Kafka for BigQuery API C++ client library API.
+which should give you a taste of the Managed Service for Apache Kafka API C++ client library API.
 
 @snippet quickstart.cc all
 

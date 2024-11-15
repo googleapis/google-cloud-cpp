@@ -16,7 +16,7 @@
 
 include(GoogleCloudCppLibrary)
 
-google_cloud_cpp_add_gapic_library(managedkafka "Apache Kafka for BigQuery API"
+google_cloud_cpp_add_gapic_library(managedkafka "Managed Service for Apache Kafka API"
                                    SERVICE_DIRS "v1/")
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)

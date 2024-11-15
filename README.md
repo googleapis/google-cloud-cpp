@@ -290,7 +290,7 @@ See each library's `README.md` file for more information about:
 - [Managed Service for Microsoft Active Directory API](google/cloud/managedidentities/README.md)
   [\[quickstart\]](google/cloud/managedidentities/quickstart/README.md)
   [\[reference\]](https://cloud.google.com/cpp/docs/reference/managedidentities/latest)
-- [Apache Kafka for BigQuery API](google/cloud/managedkafka/README.md)
+- [Managed Service for Apache Kafka API](google/cloud/managedkafka/README.md)
   [\[quickstart\]](google/cloud/managedkafka/quickstart/README.md)
   [\[reference\]](https://cloud.google.com/cpp/docs/reference/managedkafka/latest)
 - [Cloud Memorystore for Memcached API](google/cloud/memcache/README.md)
