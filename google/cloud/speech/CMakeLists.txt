@@ -25,21 +25,28 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(speech_quickstart "quickstart/quickstart.cc")
     target_link_libraries(speech_quickstart PRIVATE google-cloud-cpp::speech)
     google_cloud_cpp_add_common_options(speech_quickstart)
-    # TODO(#14841): add this back when the test on CI is recovered.
-
-    # add_test( NAME speech_quickstart_global COMMAND cmake -P
-    # "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
-    # $<TARGET_FILE:speech_quickstart> GOOGLE_CLOUD_PROJECT
-    # GOOGLE_CLOUD_CPP_TEST_GLOBAL)
-    # set_tests_properties(speech_quickstart_global PROPERTIES LABELS
-    # "integration-test;quickstart")
     add_test(
-        NAME speech_quickstart_regional
+        NAME speech_quickstart_global
+        COMMAND
+            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+            $<TARGET_FILE:speech_quickstart> GOOGLE_CLOUD_PROJECT
+            GOOGLE_CLOUD_CPP_TEST_GLOBAL)
+    set_tests_properties(speech_quickstart_global
+                         PROPERTIES LABELS "integration-test;quickstart")
+    add_test(
+        NAME speech_quickstart_us_regional
         COMMAND
             cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
             $<TARGET_FILE:speech_quickstart> GOOGLE_CLOUD_PROJECT
             GOOGLE_CLOUD_CPP_TEST_REGION)
-    set_tests_properties(speech_quickstart_regional
+    set_tests_properties(speech_quickstart_us_regional
                          PROPERTIES LABELS "integration-test;quickstart")
-
+    add_test(
+        NAME speech_quickstart_non_us_regional
+        COMMAND
+            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+            $<TARGET_FILE:speech_quickstart> GOOGLE_CLOUD_PROJECT
+            GOOGLE_CLOUD_CPP_NON_US_TEST_REGION)
+    set_tests_properties(speech_quickstart_non_us_regional
+                         PROPERTIES LABELS "integration-test;quickstart")
 endif ()
