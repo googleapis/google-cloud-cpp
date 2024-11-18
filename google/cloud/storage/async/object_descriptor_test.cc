@@ -69,6 +69,83 @@ TEST(ObjectDescriptor, Basic) {
   EXPECT_FALSE(token.valid());
 }
 
+TEST(ObjectDescriptor, ReadFromOffset) {
+  auto mock = std::make_shared<MockAsyncObjectDescriptorConnection>();
+  EXPECT_CALL(*mock, metadata).WillOnce(Return(absl::nullopt));
+  EXPECT_CALL(*mock, Read)
+      .WillOnce([](ReadParams p) -> std::unique_ptr<AsyncReaderConnection> {
+        EXPECT_EQ(p.start, 10);
+        EXPECT_EQ(p.limit, 0);
+        auto reader = std::make_unique<MockAsyncReaderConnection>();
+        EXPECT_CALL(*reader, Read)
+            .WillOnce([] {
+              auto response =
+                  std::string("The quick brown fox jumps over the lazy dog")
+                      .substr(10);
+              return make_ready_future(ReadResponse(ReadPayload(response)));
+            })
+            .WillOnce([] { return make_ready_future(ReadResponse(Status{})); });
+        return reader;
+      });
+
+  auto tested = ObjectDescriptor(mock);
+  EXPECT_FALSE(tested.metadata().has_value());
+  AsyncReader reader;
+  AsyncToken token;
+  std::tie(reader, token) = tested.ReadFromOffset(10);
+  ASSERT_TRUE(token.valid());
+
+  auto r1 = reader.Read(std::move(token)).get();
+  ASSERT_STATUS_OK(r1);
+  ReadPayload payload;
+  std::tie(payload, token) = *std::move(r1);
+  EXPECT_THAT(payload.contents(),
+              ElementsAre("brown fox jumps over the lazy dog"));
+
+  auto r2 = reader.Read(std::move(token)).get();
+  ASSERT_STATUS_OK(r2);
+  std::tie(payload, token) = *std::move(r2);
+  EXPECT_FALSE(token.valid());
+}
+
+TEST(ObjectDescriptor, ReadLast) {
+  auto mock = std::make_shared<MockAsyncObjectDescriptorConnection>();
+  EXPECT_CALL(*mock, metadata).WillOnce(Return(absl::nullopt));
+  EXPECT_CALL(*mock, Read)
+      .WillOnce([](ReadParams p) -> std::unique_ptr<AsyncReaderConnection> {
+        EXPECT_EQ(p.start, -15);
+        EXPECT_EQ(p.limit, 0);
+        auto reader = std::make_unique<MockAsyncReaderConnection>();
+        EXPECT_CALL(*reader, Read)
+            .WillOnce([] {
+              std::string full_response(
+                  "The quick brown fox jumps over the lazy dog");
+              auto response = full_response.substr(full_response.size() - 15);
+              return make_ready_future(ReadResponse(ReadPayload(response)));
+            })
+            .WillOnce([] { return make_ready_future(ReadResponse(Status{})); });
+        return reader;
+      });
+
+  auto tested = ObjectDescriptor(mock);
+  EXPECT_FALSE(tested.metadata().has_value());
+  AsyncReader reader;
+  AsyncToken token;
+  std::tie(reader, token) = tested.ReadLast(15);
+  ASSERT_TRUE(token.valid());
+
+  auto r1 = reader.Read(std::move(token)).get();
+  ASSERT_STATUS_OK(r1);
+  ReadPayload payload;
+  std::tie(payload, token) = *std::move(r1);
+  EXPECT_THAT(payload.contents(), ElementsAre("er the lazy dog"));
+
+  auto r2 = reader.Read(std::move(token)).get();
+  ASSERT_STATUS_OK(r2);
+  std::tie(payload, token) = *std::move(r2);
+  EXPECT_FALSE(token.valid());
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_experimental
 }  // namespace cloud
