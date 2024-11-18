@@ -45,11 +45,9 @@ std::shared_ptr<ServiceUsageStub> CreateDefaultServiceUsageStub(
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       google::api::serviceusage::v1::ServiceUsage::NewStub(channel);
-  auto service_operations_stub =
-      google::longrunning::Operations::NewStub(channel);
   std::shared_ptr<ServiceUsageStub> stub =
       std::make_shared<DefaultServiceUsageStub>(
-          std::move(service_grpc_stub), std::move(service_operations_stub),
+          std::move(service_grpc_stub),
           google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {

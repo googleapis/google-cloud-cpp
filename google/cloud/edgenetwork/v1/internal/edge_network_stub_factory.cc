@@ -46,14 +46,11 @@ std::shared_ptr<EdgeNetworkStub> CreateDefaultEdgeNetworkStub(
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       google::cloud::edgenetwork::v1::EdgeNetwork::NewStub(channel);
-  auto service_operations_stub =
-      google::longrunning::Operations::NewStub(channel);
   auto service_locations_stub =
       google::cloud::location::Locations::NewStub(channel);
   std::shared_ptr<EdgeNetworkStub> stub =
       std::make_shared<DefaultEdgeNetworkStub>(
-          std::move(service_grpc_stub), std::move(service_operations_stub),
-          std::move(service_locations_stub),
+          std::move(service_grpc_stub), std::move(service_locations_stub),
           google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {

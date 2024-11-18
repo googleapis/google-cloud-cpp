@@ -46,14 +46,11 @@ std::shared_ptr<CloudMemcacheStub> CreateDefaultCloudMemcacheStub(
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       google::cloud::memcache::v1::CloudMemcache::NewStub(channel);
-  auto service_operations_stub =
-      google::longrunning::Operations::NewStub(channel);
   auto service_locations_stub =
       google::cloud::location::Locations::NewStub(channel);
   std::shared_ptr<CloudMemcacheStub> stub =
       std::make_shared<DefaultCloudMemcacheStub>(
-          std::move(service_grpc_stub), std::move(service_operations_stub),
-          std::move(service_locations_stub),
+          std::move(service_grpc_stub), std::move(service_locations_stub),
           google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {

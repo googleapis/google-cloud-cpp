@@ -204,8 +204,9 @@ class DefaultAnalyticsHubServiceStub : public AnalyticsHubServiceStub {
                           AnalyticsHubService::StubInterface>
           grpc_stub,
       std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations)
-      : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
+          operations_stub)
+      : grpc_stub_(std::move(grpc_stub)),
+        operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::cloud::bigquery::analyticshub::v1::ListDataExchangesResponse>
   ListDataExchanges(
@@ -361,7 +362,8 @@ class DefaultAnalyticsHubServiceStub : public AnalyticsHubServiceStub {
   std::unique_ptr<google::cloud::bigquery::analyticshub::v1::
                       AnalyticsHubService::StubInterface>
       grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

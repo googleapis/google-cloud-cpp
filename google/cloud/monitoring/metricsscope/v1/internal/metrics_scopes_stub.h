@@ -97,8 +97,9 @@ class DefaultMetricsScopesStub : public MetricsScopesStub {
           google::monitoring::metricsscope::v1::MetricsScopes::StubInterface>
           grpc_stub,
       std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations)
-      : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
+          operations_stub)
+      : grpc_stub_(std::move(grpc_stub)),
+        operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::monitoring::metricsscope::v1::MetricsScope> GetMetricsScope(
       grpc::ClientContext& context, Options const& options,
@@ -152,7 +153,8 @@ class DefaultMetricsScopesStub : public MetricsScopesStub {
   std::unique_ptr<
       google::monitoring::metricsscope::v1::MetricsScopes::StubInterface>
       grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

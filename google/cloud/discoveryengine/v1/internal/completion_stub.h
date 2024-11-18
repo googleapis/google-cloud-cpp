@@ -129,12 +129,9 @@ class DefaultCompletionServiceStub : public CompletionServiceStub {
           google::cloud::discoveryengine::v1::CompletionService::StubInterface>
           grpc_stub,
       std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations)
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
-        operations_stub_(std::move(operations_stub)),
-        operations_(std::move(operations)) {}
+        operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::cloud::discoveryengine::v1::CompleteQueryResponse>
   CompleteQuery(grpc::ClientContext& context, Options const& options,
@@ -223,7 +220,6 @@ class DefaultCompletionServiceStub : public CompletionServiceStub {
       grpc_stub_;
   std::unique_ptr<google::longrunning::Operations::StubInterface>
       operations_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

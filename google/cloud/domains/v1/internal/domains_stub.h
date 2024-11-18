@@ -189,8 +189,9 @@ class DefaultDomainsStub : public DomainsStub {
       std::unique_ptr<google::cloud::domains::v1::Domains::StubInterface>
           grpc_stub,
       std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations)
-      : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
+          operations_stub)
+      : grpc_stub_(std::move(grpc_stub)),
+        operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::cloud::domains::v1::SearchDomainsResponse> SearchDomains(
       grpc::ClientContext& context, Options const& options,
@@ -343,7 +344,8 @@ class DefaultDomainsStub : public DomainsStub {
  private:
   std::unique_ptr<google::cloud::domains::v1::Domains::StubInterface>
       grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

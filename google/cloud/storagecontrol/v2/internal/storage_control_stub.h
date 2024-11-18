@@ -112,8 +112,9 @@ class DefaultStorageControlStub : public StorageControlStub {
           google::storage::control::v2::StorageControl::StubInterface>
           grpc_stub,
       std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations)
-      : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
+          operations_stub)
+      : grpc_stub_(std::move(grpc_stub)),
+        operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::storage::control::v2::Folder> CreateFolder(
       grpc::ClientContext& context, Options const& options,
@@ -185,7 +186,8 @@ class DefaultStorageControlStub : public StorageControlStub {
  private:
   std::unique_ptr<google::storage::control::v2::StorageControl::StubInterface>
       grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
