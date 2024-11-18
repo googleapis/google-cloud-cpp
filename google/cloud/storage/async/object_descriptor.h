@@ -63,6 +63,17 @@ class ObjectDescriptor {
   std::pair<AsyncReader, AsyncToken> Read(std::int64_t offset,
                                           std::int64_t limit);
 
+  /**
+   * Starts a new read beginning at the supplied offset and continuing
+   * until the end.
+   */
+  std::pair<AsyncReader, AsyncToken> ReadFromOffset(std::int64_t offset);
+
+  /**
+   * Reads the last number of bytes from the end.
+   */
+  std::pair<AsyncReader, AsyncToken> ReadLast(std::int64_t limit);
+
  private:
   std::shared_ptr<ObjectDescriptorConnection> impl_;
 };

@@ -31,6 +31,20 @@ std::pair<AsyncReader, AsyncToken> ObjectDescriptor::Read(std::int64_t offset,
   return {AsyncReader(std::move(reader)), std::move(token)};
 }
 
+std::pair<AsyncReader, AsyncToken> ObjectDescriptor::ReadFromOffset(
+    std::int64_t offset) {
+  auto reader = impl_->Read({offset, 0});
+  auto token = storage_internal::MakeAsyncToken(reader.get());
+  return {AsyncReader(std::move(reader)), std::move(token)};
+}
+
+std::pair<AsyncReader, AsyncToken> ObjectDescriptor::ReadLast(
+    std::int64_t limit) {
+  auto reader = impl_->Read({-limit, 0});
+  auto token = storage_internal::MakeAsyncToken(reader.get());
+  return {AsyncReader(std::move(reader)), std::move(token)};
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_experimental
 }  // namespace cloud
