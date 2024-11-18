@@ -211,12 +211,12 @@ jobs:
     - name: Pre Build Disk Space
       shell: bash
       run: df -m
-    - name: Download and Install CMake
-      shell: bash
-      run: |
-        choco install -y cmake --version 3.29.2 || \
-        (sleep 60  ; choco install -y cmake --version 3.29.2) || \
-        (sleep 120 ; choco install -y cmake --version 3.29.2)
+#    - name: Download and Install CMake
+#      shell: bash
+#      run: |
+#        choco install -y cmake --version 3.29.2 || \
+#        (sleep 60  ; choco install -y cmake --version 3.29.2) || \
+#        (sleep 120 ; choco install -y cmake --version 3.29.2)
     - name: Download and Install sccache
       if: ${{ inputs.sccache-mode != 'DISABLED' }}
       working-directory: "${{runner.temp}}"
