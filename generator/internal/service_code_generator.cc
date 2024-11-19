@@ -293,12 +293,13 @@ VarsDictionary ServiceCodeGenerator::MergeServiceAndMethodVars(
 
 void ServiceCodeGenerator::HeaderLocalIncludes(
     std::vector<std::string> const& local_includes) {
-  GenerateLocalIncludes(header_, local_includes);
+  GenerateLocalIncludes(header_, local_includes, FileType::kHeaderFile,
+                        IsDeprecated());
 }
 
 void ServiceCodeGenerator::CcLocalIncludes(
     std::vector<std::string> const& local_includes) {
-  GenerateLocalIncludes(cc_, local_includes, FileType::kCcFile);
+  GenerateLocalIncludes(cc_, local_includes, FileType::kCcFile, IsDeprecated());
 }
 
 void ServiceCodeGenerator::HeaderSystemIncludes(
@@ -384,7 +385,14 @@ void ServiceCodeGenerator::CcPrintMethod(
 }
 
 void ServiceCodeGenerator::GenerateLocalIncludes(
-    Printer& p, std::vector<std::string> local_includes, FileType file_type) {
+    Printer& p, std::vector<std::string> local_includes, FileType file_type,
+    bool is_deprecated) {
+  if (is_deprecated) {
+    p.Print(
+        "#include "
+        "\"google/cloud/internal/disable_deprecation_warnings.inc\"\n");
+  }
+
   if (file_type == FileType::kCcFile) {
     std::sort(local_includes.begin() + 1, local_includes.end());
   } else {
@@ -505,6 +513,10 @@ bool ServiceCodeGenerator::IsDiscoveryDocumentProto() const {
 
 std::vector<MixinMethod> const& ServiceCodeGenerator::MixinMethods() const {
   return mixin_methods_;
+}
+
+bool ServiceCodeGenerator::IsDeprecated() const {
+  return service_descriptor_->options().deprecated();
 }
 
 }  // namespace generator_internal

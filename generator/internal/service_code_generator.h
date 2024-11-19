@@ -237,13 +237,19 @@ class ServiceCodeGenerator : public GeneratorInterface {
 
   std::vector<MixinMethod> const& MixinMethods() const;
 
+  /**
+   * If the service is defined with `option deprecated = true;`.
+   * @return
+   */
+  bool IsDeprecated() const;
+
  private:
   void SetMethods();
 
   enum class FileType { kHeaderFile, kCcFile };
   static void GenerateLocalIncludes(Printer& p,
                                     std::vector<std::string> local_includes,
-                                    FileType file_type = FileType::kHeaderFile);
+                                    FileType file_type, bool is_deprecated);
   static void GenerateSystemIncludes(Printer& p,
                                      std::vector<std::string> system_includes);
 

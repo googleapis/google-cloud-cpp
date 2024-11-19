@@ -75,6 +75,7 @@ Status ClientGenerator::GenerateHeader() {
 
   // includes
   HeaderPrint("\n");
+
   HeaderLocalIncludes(
       {HasGenerateGrpcTransport() ? vars("connection_header_path")
                                   : vars("connection_rest_header_path"),
