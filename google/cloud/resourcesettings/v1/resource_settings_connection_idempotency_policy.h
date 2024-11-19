@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCESETTINGS_V1_RESOURCE_SETTINGS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCESETTINGS_V1_RESOURCE_SETTINGS_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
 #include <google/cloud/resourcesettings/v1/resource_settings.grpc.pb.h>

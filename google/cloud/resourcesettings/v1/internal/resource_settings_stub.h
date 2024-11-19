@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCESETTINGS_V1_INTERNAL_RESOURCE_SETTINGS_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCESETTINGS_V1_INTERNAL_RESOURCE_SETTINGS_STUB_H
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"

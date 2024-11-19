@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCESETTINGS_V1_RESOURCE_SETTINGS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCESETTINGS_V1_RESOURCE_SETTINGS_CONNECTION_H
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/resourcesettings/v1/internal/resource_settings_retry_traits.h"
 #include "google/cloud/resourcesettings/v1/resource_settings_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"

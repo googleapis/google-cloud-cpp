@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCESETTINGS_RESOURCE_SETTINGS_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCESETTINGS_RESOURCE_SETTINGS_CLIENT_H
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/resourcesettings/resource_settings_connection.h"
 #include "google/cloud/resourcesettings/v1/resource_settings_client.h"
 

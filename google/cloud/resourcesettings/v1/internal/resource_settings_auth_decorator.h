@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCESETTINGS_V1_INTERNAL_RESOURCE_SETTINGS_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCESETTINGS_V1_INTERNAL_RESOURCE_SETTINGS_AUTH_DECORATOR_H
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/resourcesettings/v1/internal/resource_settings_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
