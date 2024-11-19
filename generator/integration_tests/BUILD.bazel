@@ -30,6 +30,7 @@ proto_library(
         "common.proto",
         "test.proto",
         "test2.proto",
+        "test_deprecated.proto",
         "test_request_id.proto",
     ],
     deps = [
