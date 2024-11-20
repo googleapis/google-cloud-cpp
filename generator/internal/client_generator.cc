@@ -97,6 +97,12 @@ Status ClientGenerator::GenerateHeader() {
   auto result = HeaderOpenNamespaces();
   if (!result.ok()) return result;
 
+  if (IsDeprecated()) {
+    HeaderPrint(R"""(
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "$service_name$ has been deprecated and will be turned down in the future."
+))""");
+  }
   // Client Class
   HeaderPrint(
       R"""(

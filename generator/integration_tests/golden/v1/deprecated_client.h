@@ -34,6 +34,9 @@ namespace cloud {
 namespace golden_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "DeprecatedService has been deprecated and will be turned down in the future."
+)
 ///
 /// Service to test deprecated services.
 ///

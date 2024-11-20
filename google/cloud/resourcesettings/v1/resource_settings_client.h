@@ -34,6 +34,9 @@ namespace cloud {
 namespace resourcesettings_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+GOOGLE_CLOUD_CPP_DEPRECATED(
+    "ResourceSettingsService has been deprecated and will be turned down in "
+    "the future.")
 ///
 /// An interface to interact with resource settings and setting values
 /// throughout the resource hierarchy.

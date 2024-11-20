@@ -36,6 +36,9 @@ namespace cloud {
 namespace channel_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+GOOGLE_CLOUD_CPP_DEPRECATED(
+    "CloudChannelReportsService has been deprecated and will be turned down in "
+    "the future.")
 ///
 /// CloudChannelReportsService lets Google Cloud resellers and
 /// distributors retrieve and combine a variety of data in Cloud Channel for
