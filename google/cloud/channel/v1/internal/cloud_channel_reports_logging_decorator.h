@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_V1_INTERNAL_CLOUD_CHANNEL_REPORTS_LOGGING_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_V1_INTERNAL_CLOUD_CHANNEL_REPORTS_LOGGING_DECORATOR_H
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/channel/v1/internal/cloud_channel_reports_stub.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"

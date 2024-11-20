@@ -63,6 +63,7 @@ class TestGenerator : public ServiceCodeGenerator {
   using ServiceCodeGenerator::HasPaginatedMethod;
   using ServiceCodeGenerator::HasStreamingReadMethod;
   using ServiceCodeGenerator::HasStreamingWriteMethod;
+  using ServiceCodeGenerator::IsDeprecated;
   using ServiceCodeGenerator::IsDiscoveryDocumentProto;
   using ServiceCodeGenerator::IsExperimental;
   using ServiceCodeGenerator::MethodSignatureWellKnownProtobufTypeIncludes;
@@ -1009,6 +1010,55 @@ TEST(PredicateUtilsTest, IsDiscoveryDocumentProto) {
                    {{"header_path_key", "header_path"},
                     {"proto_file_source", "googleapis"}});
   EXPECT_FALSE(g3.IsDiscoveryDocumentProto());
+}
+
+TEST(ServiceCodeGeneratorTest, IsDeprecated) {
+  auto constexpr kServiceProto = R"""(
+syntax = "proto3";
+
+// This service that is deprecated.
+service DeprecatedService {
+  option deprecated = true;
+}
+
+// This service that is NOT deprecated.
+service NonDeprecatedService {
+}
+
+)""";
+
+  generator_testing::FakeSourceTree source_tree(
+      std::map<std::string, std::string>{
+          {"google/cloud/foo/service.proto", kServiceProto}});
+  google::protobuf::compiler::SourceTreeDescriptorDatabase source_tree_db(
+      &source_tree);
+  google::protobuf::SimpleDescriptorDatabase simple_db;
+  FileDescriptorProto file_proto;
+  // we need descriptor.proto to be accessible by the pool
+  // since our test file imports it
+  FileDescriptorProto::descriptor()->file()->CopyTo(&file_proto);
+  simple_db.Add(file_proto);
+  google::protobuf::MergedDescriptorDatabase merged_db(&simple_db,
+                                                       &source_tree_db);
+  generator_testing::ErrorCollector collector;
+  DescriptorPool pool(&merged_db, &collector);
+
+  FileDescriptor const* service_file_descriptor =
+      pool.FindFileByName("google/cloud/foo/service.proto");
+
+  auto generator_context = std::make_unique<MockGeneratorContext>();
+  EXPECT_CALL(*generator_context, Open("header_path"))
+      .Times(2)
+      .WillRepeatedly(
+          [](std::string const&) { return new MockZeroCopyOutputStream(); });
+
+  TestGenerator deprecated_service(service_file_descriptor->service(0),
+                                   generator_context.get());
+  EXPECT_TRUE(deprecated_service.IsDeprecated());
+
+  TestGenerator non_deprecated_service(service_file_descriptor->service(1),
+                                       generator_context.get());
+  EXPECT_FALSE(non_deprecated_service.IsDeprecated());
 }
 
 }  // namespace

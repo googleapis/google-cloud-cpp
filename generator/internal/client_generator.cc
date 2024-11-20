@@ -75,6 +75,7 @@ Status ClientGenerator::GenerateHeader() {
 
   // includes
   HeaderPrint("\n");
+
   HeaderLocalIncludes(
       {HasGenerateGrpcTransport() ? vars("connection_header_path")
                                   : vars("connection_rest_header_path"),
@@ -97,10 +98,22 @@ Status ClientGenerator::GenerateHeader() {
   if (!result.ok()) return result;
 
   // Client Class
+  if (IsDeprecated()) {
+    HeaderPrint(R"""(
+$class_comment_block$
+class
+ GOOGLE_CLOUD_CPP_DEPRECATED(
+      "$service_name$ has been deprecated and will be turned down in the future."
+)
+$client_class_name$ {)""");
+  } else {
+    HeaderPrint(
+        R"""(
+$class_comment_block$
+class $client_class_name$ {)""");
+  }
   HeaderPrint(
       R"""(
-$class_comment_block$
-class $client_class_name$ {
  public:
   explicit $client_class_name$()""");
   if (IsExperimental()) HeaderPrint("ExperimentalTag, ");

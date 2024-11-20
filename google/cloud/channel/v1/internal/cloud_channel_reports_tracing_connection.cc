@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/channel/v1/reports_service.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/channel/v1/internal/cloud_channel_reports_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/traced_stream_range.h"

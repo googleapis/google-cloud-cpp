@@ -31,6 +31,7 @@ google_cloud_cpp_grpcpp_library(
     ${PROJECT_SOURCE_DIR}/generator/integration_tests/test.proto
     ${PROJECT_SOURCE_DIR}/generator/integration_tests/test2.proto
     ${PROJECT_SOURCE_DIR}/generator/integration_tests/test_request_id.proto
+    ${PROJECT_SOURCE_DIR}/generator/integration_tests/test_deprecated.proto
     PROTO_PATH_DIRECTORIES
     ${PROTO_INCLUDE_DIR}
     ${PROJECT_SOURCE_DIR}

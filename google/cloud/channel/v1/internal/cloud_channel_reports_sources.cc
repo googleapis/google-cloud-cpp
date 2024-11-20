@@ -17,6 +17,7 @@
 // source: google/cloud/channel/v1/reports_service.proto
 
 // NOLINTBEGIN(bugprone-suspicious-include)
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/channel/v1/cloud_channel_reports_client.cc"
 #include "google/cloud/channel/v1/cloud_channel_reports_connection.cc"
 #include "google/cloud/channel/v1/cloud_channel_reports_connection_idempotency_policy.cc"

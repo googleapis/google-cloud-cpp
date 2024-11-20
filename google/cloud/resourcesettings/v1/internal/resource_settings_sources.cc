@@ -17,6 +17,7 @@
 // source: google/cloud/resourcesettings/v1/resource_settings.proto
 
 // NOLINTBEGIN(bugprone-suspicious-include)
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/resourcesettings/v1/internal/resource_settings_auth_decorator.cc"
 #include "google/cloud/resourcesettings/v1/internal/resource_settings_connection_impl.cc"
 #include "google/cloud/resourcesettings/v1/internal/resource_settings_logging_decorator.cc"
