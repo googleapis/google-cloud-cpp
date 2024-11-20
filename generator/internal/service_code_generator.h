@@ -239,7 +239,6 @@ class ServiceCodeGenerator : public GeneratorInterface {
 
   /**
    * If the service is defined with `option deprecated = true;`.
-   * @return
    */
   bool IsDeprecated() const;
 
