@@ -1,4 +1,4 @@
-# HOWTO: using the Apache Kafka for BigQuery API C++ client in your project
+# HOWTO: using the Managed Service for Apache Kafka API C++ client in your project
 
 This directory contains small examples showing how to use the Apache Kafka for
 BigQuery API C++ client library in your own project. These instructions assume
@@ -29,12 +29,13 @@ detail.
 
 ## Configuring authentication for the C++ Client Library
 
-Like most Google Cloud Platform (GCP) services, Apache Kafka for BigQuery API
-requires that your application authenticates with the service before accessing
-any data. If you are not familiar with GCP authentication please take this
-opportunity to review the [Authentication Overview][authentication-quickstart].
-This library uses the `GOOGLE_APPLICATION_CREDENTIALS` environment variable to
-find the credentials file. For example:
+Like most Google Cloud Platform (GCP) services, Managed Service for Apache Kafka
+API requires that your application authenticates with the service before
+accessing any data. If you are not familiar with GCP authentication please take
+this opportunity to review the
+[Authentication Overview][authentication-quickstart]. This library uses the
+`GOOGLE_APPLICATION_CREDENTIALS` environment variable to find the credentials
+file. For example:
 
 | Shell              | Command                                                                              |
 | :----------------- | ------------------------------------------------------------------------------------ |

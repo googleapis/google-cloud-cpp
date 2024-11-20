@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# A minimal WORKSPACE file showing how to use the Apache Kafka for BigQuery API
+# A minimal WORKSPACE file showing how to use the Managed Service for Apache Kafka API
 # C++ client library in Bazel-based projects.
 workspace(name = "qs")
 
