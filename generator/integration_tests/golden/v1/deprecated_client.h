@@ -34,9 +34,6 @@ namespace cloud {
 namespace golden_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-  GOOGLE_CLOUD_CPP_DEPRECATED(
-      "DeprecatedService has been deprecated and will be turned down in the future."
-)
 ///
 /// Service to test deprecated services.
 ///
@@ -63,7 +60,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-class DeprecatedServiceClient {
+class
+ GOOGLE_CLOUD_CPP_DEPRECATED(
+      "DeprecatedService has been deprecated and will be turned down in the future."
+)
+DeprecatedServiceClient {
  public:
   explicit DeprecatedServiceClient(std::shared_ptr<DeprecatedServiceConnection> connection, Options opts = {});
   ~DeprecatedServiceClient();

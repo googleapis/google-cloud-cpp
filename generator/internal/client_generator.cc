@@ -97,17 +97,23 @@ Status ClientGenerator::GenerateHeader() {
   auto result = HeaderOpenNamespaces();
   if (!result.ok()) return result;
 
+  // Client Class
   if (IsDeprecated()) {
     HeaderPrint(R"""(
-  GOOGLE_CLOUD_CPP_DEPRECATED(
+$class_comment_block$
+class
+ GOOGLE_CLOUD_CPP_DEPRECATED(
       "$service_name$ has been deprecated and will be turned down in the future."
-))""");
+)
+$client_class_name$ {)""");
+  } else {
+    HeaderPrint(
+        R"""(
+$class_comment_block$
+class $client_class_name$ {)""");
   }
-  // Client Class
   HeaderPrint(
       R"""(
-$class_comment_block$
-class $client_class_name$ {
  public:
   explicit $client_class_name$()""");
   if (IsExperimental()) HeaderPrint("ExperimentalTag, ");
