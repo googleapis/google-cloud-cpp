@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/resourcesettings/v1/resource_settings.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/resourcesettings/v1/resource_settings_client.h"
 #include "google/cloud/resourcesettings/v1/resource_settings_connection_idempotency_policy.h"
 #include "google/cloud/resourcesettings/v1/resource_settings_options.h"
