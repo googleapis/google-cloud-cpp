@@ -63,6 +63,7 @@ Status RetryTraitsGenerator::GenerateHeader() {
   );
 
   HeaderCloseNamespaces();
+  HeaderPrintDiagnosticsPop();
   // close header guard
   HeaderPrint("\n#endif  // $header_include_guard$\n");
   return {};

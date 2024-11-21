@@ -111,6 +111,7 @@ Status IdempotencyPolicyGenerator::GenerateHeader() {
   // clang-format on
 
   HeaderCloseNamespaces();
+  HeaderPrintDiagnosticsPop();
   // close header guard
   HeaderPrint("\n#endif  // $header_include_guard$\n");
   return {};
@@ -213,6 +214,7 @@ Idempotency $idempotency_class_name$::$method_name$($request_type$ const&) {
   // clang-format on
 
   CcCloseNamespaces();
+  CcPrintDiagnosticsPop();
   return {};
 }
 

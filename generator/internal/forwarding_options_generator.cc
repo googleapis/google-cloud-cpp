@@ -73,6 +73,7 @@ using ::google::cloud::$product_namespace$::$service_name$RetryPolicyOption;
 )""");
 
   HeaderCloseNamespaces();
+  HeaderPrintDiagnosticsPop();
   // close header guard
   HeaderPrint(R"""(
 #endif  // $header_include_guard$

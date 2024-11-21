@@ -392,6 +392,7 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
   HeaderPrint("};\n");
 
   HeaderCloseNamespaces();
+  HeaderPrintDiagnosticsPop();
   // close header guard
   HeaderPrint("\n#endif  // $header_include_guard$\n");
   return {};
@@ -728,6 +729,7 @@ $client_class_name$::Async$method_name$(Options opts) {
   }
 
   CcCloseNamespaces();
+  CcPrintDiagnosticsPop();
   return {};
 }
 

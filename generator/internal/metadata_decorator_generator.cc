@@ -163,6 +163,7 @@ class $metadata_class_name$ : public $stub_class_name$ {
 )""");
 
   HeaderCloseNamespaces();
+  HeaderPrintDiagnosticsPop();
   // close header guard
   HeaderPrint("\n#endif  // $header_include_guard$\n");
   return {};
@@ -420,6 +421,7 @@ void $metadata_class_name$::SetMetadata(grpc::ClientContext& context,
 )""");
 
   CcCloseNamespaces();
+  CcPrintDiagnosticsPop();
   return {};
 }
 

@@ -136,6 +136,7 @@ class $logging_rest_class_name$ : public $stub_rest_class_name$ {
 )""");
 
   HeaderCloseNamespaces();
+  HeaderPrintDiagnosticsPop();
   HeaderPrint("\n#endif  // $header_include_guard$\n");
   return {};
 }
@@ -295,6 +296,7 @@ $logging_rest_class_name$::AsyncCancelOperation(
   }
 
   CcCloseNamespaces();
+  CcPrintDiagnosticsPop();
   return {};
 }
 

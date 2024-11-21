@@ -293,13 +293,16 @@ VarsDictionary ServiceCodeGenerator::MergeServiceAndMethodVars(
 
 void ServiceCodeGenerator::HeaderLocalIncludes(
     std::vector<std::string> const& local_includes) {
+  needs_diagnostics_pop_ = IsDeprecated() || HasDeprecatedRpcs();
   GenerateLocalIncludes(header_, local_includes, FileType::kHeaderFile,
-                        IsDeprecated());
+                        needs_diagnostics_pop_);
 }
 
 void ServiceCodeGenerator::CcLocalIncludes(
     std::vector<std::string> const& local_includes) {
-  GenerateLocalIncludes(cc_, local_includes, FileType::kCcFile, IsDeprecated());
+  needs_diagnostics_pop_ = IsDeprecated() || HasDeprecatedRpcs();
+  GenerateLocalIncludes(cc_, local_includes, FileType::kCcFile,
+                        needs_diagnostics_pop_);
 }
 
 void ServiceCodeGenerator::HeaderSystemIncludes(
@@ -517,6 +520,27 @@ std::vector<MixinMethod> const& ServiceCodeGenerator::MixinMethods() const {
 
 bool ServiceCodeGenerator::IsDeprecated() const {
   return service_descriptor_->options().deprecated();
+}
+
+bool ServiceCodeGenerator::HasDeprecatedRpcs() const {
+  for (auto i = 0; i < service_descriptor_->method_count(); ++i) {
+    if (service_descriptor_->method(i)->options().deprecated()) {
+      return true;
+    }
+  }
+  return false;
+}
+
+void ServiceCodeGenerator::HeaderPrintDiagnosticsPop() {
+  if (needs_diagnostics_pop_) {
+    HeaderPrint("#include \"google/cloud/internal/diagnostics_pop.inc\"\n");
+  }
+}
+
+void ServiceCodeGenerator::CcPrintDiagnosticsPop() {
+  if (needs_diagnostics_pop_) {
+    CcPrint("#include \"google/cloud/internal/diagnostics_pop.inc\"\n");
+  }
 }
 
 }  // namespace generator_internal

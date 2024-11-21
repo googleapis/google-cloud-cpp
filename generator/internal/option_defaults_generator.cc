@@ -72,7 +72,7 @@ Status OptionDefaultsGenerator::GenerateHeader() {
   HeaderPrint("Options options);\n");
 
   HeaderCloseNamespaces();
-
+  HeaderPrintDiagnosticsPop();
   // close header guard
   HeaderPrint("\n#endif  // $header_include_guard$\n");
   return {};
@@ -188,6 +188,7 @@ auto constexpr kBackoffScaling = 2.0;
 )""");
 
   CcCloseNamespaces();
+  CcPrintDiagnosticsPop();
   return {};
 }
 

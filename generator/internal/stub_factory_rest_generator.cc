@@ -58,6 +58,7 @@ std::shared_ptr<$stub_rest_class_name$> CreateDefault$stub_rest_class_name$(
 )""");
 
   HeaderCloseNamespaces();
+  HeaderPrintDiagnosticsPop();
   // close header guard
   HeaderPrint("\n#endif  // $header_include_guard$\n");
   return {};
@@ -106,6 +107,7 @@ CreateDefault$stub_rest_class_name$(Options const& options) {
 )""");
 
   CcCloseNamespaces();
+  CcPrintDiagnosticsPop();
   return {};
 }
 

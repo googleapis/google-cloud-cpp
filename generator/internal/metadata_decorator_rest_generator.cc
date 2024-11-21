@@ -205,6 +205,7 @@ class $metadata_rest_class_name$ : public $stub_rest_class_name$ {
 )""");
 
   HeaderCloseNamespaces();
+  HeaderPrintDiagnosticsPop();
   HeaderPrint("\n#endif  // $header_include_guard$\n");
   return {};
 }
@@ -362,6 +363,7 @@ void $metadata_rest_class_name$::SetMetadata(
 )""");
 
   CcCloseNamespaces();
+  CcPrintDiagnosticsPop();
   return {};
 }
 

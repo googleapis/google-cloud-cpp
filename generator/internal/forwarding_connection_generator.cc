@@ -92,6 +92,7 @@ using ::google::cloud::$product_namespace$::$retry_policy_name$;
   }
 
   HeaderCloseNamespaces();
+  HeaderPrintDiagnosticsPop();
   // close header guard
   HeaderPrint(R"""(
 #endif  // $header_include_guard$

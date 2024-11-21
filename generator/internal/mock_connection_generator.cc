@@ -194,6 +194,7 @@ class $mock_connection_class_name$ : public $product_namespace$::$connection_cla
   HeaderPrint("};\n");
 
   HeaderCloseNamespaces();
+  HeaderPrintDiagnosticsPop();
   // close header guard
   HeaderPrint("\n#endif  // $header_include_guard$\n");
   return {};

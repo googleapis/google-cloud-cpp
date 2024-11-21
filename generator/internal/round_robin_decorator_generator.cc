@@ -78,6 +78,7 @@ class $round_robin_class_name$ : public $stub_class_name$ {
 )""");
 
   HeaderCloseNamespaces();
+  HeaderPrintDiagnosticsPop();
   // close header guard
   HeaderPrint("\n#endif  // $header_include_guard$\n");
   return {};
@@ -268,6 +269,7 @@ $round_robin_class_name$::Child() {
 )""");
 
   CcCloseNamespaces();
+  CcPrintDiagnosticsPop();
   return {};
 }
 

@@ -87,6 +87,7 @@ std::shared_ptr<$stub_class_name$> Make$tracing_stub_class_name$(
 )""");
 
   HeaderCloseNamespaces();
+  HeaderPrintDiagnosticsPop();
   // close header guard
   HeaderPrint("\n#endif  // $header_include_guard$\n");
   return {};
@@ -358,6 +359,7 @@ std::shared_ptr<$stub_class_name$> Make$tracing_stub_class_name$(
 }
 )""");
   CcCloseNamespaces();
+  CcPrintDiagnosticsPop();
   return {};
 }
 

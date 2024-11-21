@@ -60,6 +60,7 @@ using ::google::cloud::$product_namespace$::$idempotency_class_name$;
 )""");
 
   HeaderCloseNamespaces();
+  HeaderPrintDiagnosticsPop();
   // close header guard
   HeaderPrint(R"""(
 #endif  // $header_include_guard$

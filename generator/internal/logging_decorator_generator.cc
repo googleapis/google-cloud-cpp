@@ -91,6 +91,7 @@ Status LoggingDecoratorGenerator::GenerateHeader() {
   HeaderPrint("};  // $logging_class_name$\n");
 
   HeaderCloseNamespaces();
+  HeaderPrintDiagnosticsPop();
   HeaderPrint("\n#endif  // $header_include_guard$\n");
   return {};
 }
@@ -407,6 +408,7 @@ future<Status> $logging_class_name$::AsyncCancelOperation(
   }
 
   CcCloseNamespaces();
+  CcPrintDiagnosticsPop();
   return {};
 }
 

@@ -290,6 +290,7 @@ Status StubGenerator::GenerateHeader() {
   HeaderPrint("};\n");
 
   HeaderCloseNamespaces();
+  HeaderPrintDiagnosticsPop();
   // close header guard
   HeaderPrint("\n#endif  // $header_include_guard$\n");
   return {};
@@ -595,6 +596,7 @@ future<Status> Default$stub_class_name$::AsyncCancelOperation(
   }
 
   CcCloseNamespaces();
+  CcPrintDiagnosticsPop();
   return {};
 }
 

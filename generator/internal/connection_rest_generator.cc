@@ -120,6 +120,7 @@ std::shared_ptr<$connection_class_name$> Make$connection_class_name$Rest(
   }
 
   HeaderCloseNamespaces();
+  HeaderPrintDiagnosticsPop();
   // close header guard
   HeaderPrint("\n#endif  // $header_include_guard$\n");
   return {};
@@ -195,6 +196,7 @@ std::shared_ptr<$connection_class_name$> Make$connection_class_name$Rest(
   }
 
   CcCloseNamespaces();
+  CcPrintDiagnosticsPop();
   return {};
 }
 

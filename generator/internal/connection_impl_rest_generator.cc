@@ -127,6 +127,7 @@ class $connection_impl_rest_class_name$
 )""");
 
   HeaderCloseNamespaces();
+  HeaderPrintDiagnosticsPop();
   HeaderPrint("\n#endif  // $header_include_guard$\n");
   return {};
 }
@@ -194,6 +195,7 @@ $connection_impl_rest_class_name$::$connection_impl_rest_class_name$(
   }
 
   CcCloseNamespaces();
+  CcPrintDiagnosticsPop();
   return {};
 }
 

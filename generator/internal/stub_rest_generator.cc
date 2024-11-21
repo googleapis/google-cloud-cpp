@@ -242,6 +242,7 @@ class Default$stub_rest_class_name$ : public $stub_rest_class_name$ {
 )""");
 
   HeaderCloseNamespaces();
+  HeaderPrintDiagnosticsPop();
   // close header guard
   HeaderPrint("\n#endif  // $header_include_guard$\n");
   return {};
@@ -500,6 +501,7 @@ Default$stub_rest_class_name$::AsyncCancelOperation(
   }
 
   CcCloseNamespaces();
+  CcPrintDiagnosticsPop();
   return {};
 }
 

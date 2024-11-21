@@ -136,7 +136,7 @@ class $connection_class_name$Impl
   HeaderPrint("\n};\n");
 
   HeaderCloseNamespaces();
-
+  HeaderPrintDiagnosticsPop();
   // close header guard
   HeaderPrint("\n#endif  // $header_include_guard$\n");
   return {};
@@ -242,6 +242,7 @@ $connection_class_name$Impl::$connection_class_name$Impl(
   }
 
   CcCloseNamespaces();
+  CcPrintDiagnosticsPop();
   return {};
 }
 

@@ -101,7 +101,7 @@ Make$tracing_connection_class_name$(
 )""");
 
   HeaderCloseNamespaces();
-
+  HeaderPrintDiagnosticsPop();
   // close header guard
   HeaderPrint("\n#endif  // $header_include_guard$\n");
   return {};
@@ -162,6 +162,7 @@ Make$tracing_connection_class_name$(
 }
 )""");
   CcCloseNamespaces();
+  CcPrintDiagnosticsPop();
   return {};
 }
 

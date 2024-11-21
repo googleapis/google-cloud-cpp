@@ -320,7 +320,7 @@ class $connection_class_name$ {
   }
 
   HeaderCloseNamespaces();
-
+  HeaderPrintDiagnosticsPop();
   // close header guard
   HeaderPrint("\n#endif  // $header_include_guard$\n");
   return {};
@@ -508,7 +508,7 @@ void BigQueryReadReadRowsStreamingUpdater(
 )""");
     CcCloseNamespaces();
   }
-
+  CcPrintDiagnosticsPop();
   return {};
 }
 

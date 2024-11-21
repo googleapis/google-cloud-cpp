@@ -55,6 +55,7 @@ Status SourcesGenerator::GenerateHeader() {
   HeaderPrint(R"""(// NOLINTBEGIN(bugprone-suspicious-include)
   )""");
   HeaderLocalIncludes(sources_);
+  HeaderPrintDiagnosticsPop();
   HeaderPrint(R"""(// NOLINTEND(bugprone-suspicious-include)
   )""");
   return Status();
