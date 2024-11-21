@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: generator/integration_tests/test.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "generator/integration_tests/golden/v1/golden_kitchen_sink_connection_idempotency_policy.h"
 #include <memory>
 
@@ -90,3 +91,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_v1
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"

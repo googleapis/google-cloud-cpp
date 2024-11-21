@@ -123,5 +123,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_v1
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_V1_DEPRECATED_CLIENT_H

@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_V1_GOLDEN_KITCHEN_SINK_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_V1_GOLDEN_KITCHEN_SINK_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
 #include <generator/integration_tests/test.grpc.pb.h>
@@ -83,5 +84,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_v1
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_V1_GOLDEN_KITCHEN_SINK_CONNECTION_IDEMPOTENCY_POLICY_H

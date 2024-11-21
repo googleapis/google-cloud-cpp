@@ -17,6 +17,7 @@
 // source: generator/integration_tests/test.proto
 
 // NOLINTBEGIN(bugprone-suspicious-include)
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "generator/integration_tests/golden/v1/golden_kitchen_sink_client.cc"
 #include "generator/integration_tests/golden/v1/golden_kitchen_sink_connection.cc"
 #include "generator/integration_tests/golden/v1/golden_kitchen_sink_connection_idempotency_policy.cc"
@@ -36,4 +37,5 @@
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_stub_factory.cc"
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_tracing_connection.cc"
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_tracing_stub.cc"
+#include "google/cloud/internal/diagnostics_pop.inc"
 // NOLINTEND(bugprone-suspicious-include)

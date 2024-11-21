@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: generator/integration_tests/test.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "generator/integration_tests/golden/v1/golden_kitchen_sink_client.h"
 #include "generator/integration_tests/golden/v1/golden_kitchen_sink_connection_idempotency_policy.h"
 #include "generator/integration_tests/golden/v1/golden_kitchen_sink_options.h"
@@ -143,3 +144,4 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   });
   return example.Run(argc, argv);
 }
+#include "google/cloud/internal/diagnostics_pop.inc"

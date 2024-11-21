@@ -36,4 +36,5 @@
 #include "generator/integration_tests/golden/v1/internal/deprecated_stub_factory.cc"
 #include "generator/integration_tests/golden/v1/internal/deprecated_tracing_connection.cc"
 #include "generator/integration_tests/golden/v1/internal/deprecated_tracing_stub.cc"
+#include "google/cloud/internal/diagnostics_pop.inc"
 // NOLINTEND(bugprone-suspicious-include)
