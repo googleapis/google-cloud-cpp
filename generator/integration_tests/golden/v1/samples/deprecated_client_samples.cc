@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: generator/integration_tests/test_deprecated.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "generator/integration_tests/golden/v1/deprecated_client.h"
 #include "generator/integration_tests/golden/v1/deprecated_connection_idempotency_policy.h"
 #include "generator/integration_tests/golden/v1/deprecated_options.h"
