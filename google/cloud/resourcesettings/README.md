@@ -21,6 +21,7 @@ top-level [README](/README.md#building-and-installing).
 <!-- inject-quickstart-start -->
 
 ```cc
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/resourcesettings/v1/resource_settings_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
@@ -46,6 +47,7 @@ int main(int argc, char* argv[]) try {
   std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }
+#include "google/cloud/internal/diagnostics_pop.inc"
 ```
 
 <!-- inject-quickstart-end -->
