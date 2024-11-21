@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/bigquery/reservation/v1/reservation.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/bigquery/reservation/v1/internal/reservation_connection_impl.h"
 #include "google/cloud/bigquery/reservation/v1/internal/reservation_option_defaults.h"
 #include "google/cloud/background_threads.h"
@@ -510,3 +511,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_reservation_v1_internal
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"

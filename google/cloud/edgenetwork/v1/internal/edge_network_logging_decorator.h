@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGENETWORK_V1_INTERNAL_EDGE_NETWORK_LOGGING_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGENETWORK_V1_INTERNAL_EDGE_NETWORK_LOGGING_DECORATOR_H
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/edgenetwork/v1/internal/edge_network_stub.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
@@ -286,5 +287,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace edgenetwork_v1_internal
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGENETWORK_V1_INTERNAL_EDGE_NETWORK_LOGGING_DECORATOR_H

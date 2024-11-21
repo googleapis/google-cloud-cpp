@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/bigquery/datatransfer/v1/datatransfer.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/bigquery/datatransfer/v1/data_transfer_client.h"
 #include "google/cloud/bigquery/datatransfer/v1/data_transfer_connection_idempotency_policy.h"
 #include "google/cloud/bigquery/datatransfer/v1/data_transfer_options.h"
@@ -163,3 +164,4 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   });
   return example.Run(argc, argv);
 }
+#include "google/cloud/internal/diagnostics_pop.inc"

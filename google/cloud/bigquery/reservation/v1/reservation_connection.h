@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_RESERVATION_V1_RESERVATION_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_RESERVATION_V1_RESERVATION_CONNECTION_H
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/bigquery/reservation/v1/internal/reservation_retry_traits.h"
 #include "google/cloud/bigquery/reservation/v1/reservation_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
@@ -315,5 +316,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_reservation_v1
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_RESERVATION_V1_RESERVATION_CONNECTION_H

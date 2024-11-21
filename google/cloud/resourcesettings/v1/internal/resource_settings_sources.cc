@@ -30,4 +30,5 @@
 #include "google/cloud/resourcesettings/v1/resource_settings_client.cc"
 #include "google/cloud/resourcesettings/v1/resource_settings_connection.cc"
 #include "google/cloud/resourcesettings/v1/resource_settings_connection_idempotency_policy.cc"
+#include "google/cloud/internal/diagnostics_pop.inc"
 // NOLINTEND(bugprone-suspicious-include)

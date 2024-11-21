@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/cloudcontrolspartner/v1/core.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/cloudcontrolspartner/v1/internal/cloud_controls_partner_core_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/traced_stream_range.h"
@@ -149,3 +150,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudcontrolspartner_v1_internal
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"

@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGENETWORK_V1_MOCKS_MOCK_EDGE_NETWORK_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGENETWORK_V1_MOCKS_MOCK_EDGE_NETWORK_CONNECTION_H
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/edgenetwork/v1/edge_network_connection.h"
 #include <gmock/gmock.h>
 
@@ -556,5 +557,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace edgenetwork_v1_mocks
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGENETWORK_V1_MOCKS_MOCK_EDGE_NETWORK_CONNECTION_H

@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/iam/admin/v1/iam.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/iam/admin/v1/iam_client.h"
 #include "google/cloud/iam/admin/v1/iam_options.h"
 #include <memory>
@@ -402,3 +403,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iam_admin_v1
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"

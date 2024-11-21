@@ -17,6 +17,7 @@
 // source: google/container/v1/cluster_service.proto
 
 // NOLINTBEGIN(bugprone-suspicious-include)
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/container/v1/cluster_manager_client.cc"
 #include "google/cloud/container/v1/cluster_manager_connection.cc"
 #include "google/cloud/container/v1/cluster_manager_connection_idempotency_policy.cc"
@@ -29,4 +30,5 @@
 #include "google/cloud/container/v1/internal/cluster_manager_stub_factory.cc"
 #include "google/cloud/container/v1/internal/cluster_manager_tracing_connection.cc"
 #include "google/cloud/container/v1/internal/cluster_manager_tracing_stub.cc"
+#include "google/cloud/internal/diagnostics_pop.inc"
 // NOLINTEND(bugprone-suspicious-include)

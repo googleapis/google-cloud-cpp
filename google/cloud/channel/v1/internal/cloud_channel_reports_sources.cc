@@ -30,4 +30,5 @@
 #include "google/cloud/channel/v1/internal/cloud_channel_reports_stub_factory.cc"
 #include "google/cloud/channel/v1/internal/cloud_channel_reports_tracing_connection.cc"
 #include "google/cloud/channel/v1/internal/cloud_channel_reports_tracing_stub.cc"
+#include "google/cloud/internal/diagnostics_pop.inc"
 // NOLINTEND(bugprone-suspicious-include)

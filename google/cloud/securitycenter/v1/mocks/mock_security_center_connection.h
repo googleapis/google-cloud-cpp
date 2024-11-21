@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECURITYCENTER_V1_MOCKS_MOCK_SECURITY_CENTER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECURITYCENTER_V1_MOCKS_MOCK_SECURITY_CENTER_CONNECTION_H
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/securitycenter/v1/security_center_connection.h"
 #include <gmock/gmock.h>
 
@@ -545,5 +546,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace securitycenter_v1_mocks
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECURITYCENTER_V1_MOCKS_MOCK_SECURITY_CENTER_CONNECTION_H

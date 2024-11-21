@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_DATATRANSFER_V1_DATA_TRANSFER_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_DATATRANSFER_V1_DATA_TRANSFER_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
 #include <google/cloud/bigquery/datatransfer/v1/datatransfer.grpc.pb.h>
@@ -116,5 +117,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_datatransfer_v1
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_DATATRANSFER_V1_DATA_TRANSFER_CONNECTION_IDEMPOTENCY_POLICY_H

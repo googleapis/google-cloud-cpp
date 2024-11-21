@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/securitycenter/v1/securitycenter_service.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/securitycenter/v1/security_center_client.h"
 #include "google/cloud/securitycenter/v1/security_center_options.h"
 #include <memory>
@@ -1376,3 +1377,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace securitycenter_v1
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"

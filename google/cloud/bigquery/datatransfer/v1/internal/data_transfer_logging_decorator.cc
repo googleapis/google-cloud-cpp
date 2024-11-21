@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/bigquery/datatransfer/v1/datatransfer.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/bigquery/datatransfer/v1/internal/data_transfer_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
@@ -286,3 +287,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_datatransfer_v1_internal
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"

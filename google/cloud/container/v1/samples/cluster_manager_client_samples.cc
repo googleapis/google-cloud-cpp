@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/container/v1/cluster_service.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/container/v1/cluster_manager_client.h"
 #include "google/cloud/container/v1/cluster_manager_connection_idempotency_policy.h"
 #include "google/cloud/container/v1/cluster_manager_options.h"
@@ -154,3 +155,4 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   });
   return example.Run(argc, argv);
 }
+#include "google/cloud/internal/diagnostics_pop.inc"

@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDCONTROLSPARTNER_V1_CLOUD_CONTROLS_PARTNER_CORE_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDCONTROLSPARTNER_V1_CLOUD_CONTROLS_PARTNER_CORE_CLIENT_H
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/cloudcontrolspartner/v1/cloud_controls_partner_core_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
@@ -625,5 +626,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudcontrolspartner_v1
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDCONTROLSPARTNER_V1_CLOUD_CONTROLS_PARTNER_CORE_CLIENT_H

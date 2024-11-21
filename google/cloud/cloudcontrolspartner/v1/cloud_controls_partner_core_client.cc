@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/cloudcontrolspartner/v1/core.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/cloudcontrolspartner/v1/cloud_controls_partner_core_client.h"
 #include <memory>
 #include <utility>
@@ -177,3 +178,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudcontrolspartner_v1
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"

@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGENETWORK_V1_EDGE_NETWORK_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGENETWORK_V1_EDGE_NETWORK_CLIENT_H
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/edgenetwork/v1/edge_network_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
@@ -2664,5 +2665,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace edgenetwork_v1
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGENETWORK_V1_EDGE_NETWORK_CLIENT_H

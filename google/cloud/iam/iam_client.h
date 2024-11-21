@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_IAM_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_IAM_CLIENT_H
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/iam/admin/v1/iam_client.h"
 #include "google/cloud/iam/iam_connection.h"
 
@@ -37,5 +38,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iam
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_IAM_CLIENT_H

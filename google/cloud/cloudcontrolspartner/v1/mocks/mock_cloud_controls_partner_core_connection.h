@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDCONTROLSPARTNER_V1_MOCKS_MOCK_CLOUD_CONTROLS_PARTNER_CORE_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDCONTROLSPARTNER_V1_MOCKS_MOCK_CLOUD_CONTROLS_PARTNER_CORE_CONNECTION_H
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/cloudcontrolspartner/v1/cloud_controls_partner_core_connection.h"
 #include <gmock/gmock.h>
 
@@ -104,5 +105,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudcontrolspartner_v1_mocks
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDCONTROLSPARTNER_V1_MOCKS_MOCK_CLOUD_CONTROLS_PARTNER_CORE_CONNECTION_H

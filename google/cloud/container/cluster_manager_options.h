@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_CLUSTER_MANAGER_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_CLUSTER_MANAGER_OPTIONS_H
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/container/cluster_manager_connection.h"
 #include "google/cloud/container/cluster_manager_connection_idempotency_policy.h"
 #include "google/cloud/container/v1/cluster_manager_options.h"
@@ -46,5 +47,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace container
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_CLUSTER_MANAGER_OPTIONS_H

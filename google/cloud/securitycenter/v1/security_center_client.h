@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECURITYCENTER_V1_SECURITY_CENTER_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECURITYCENTER_V1_SECURITY_CENTER_CLIENT_H
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/securitycenter/v1/security_center_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/iam_updater.h"
@@ -4812,5 +4813,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace securitycenter_v1
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECURITYCENTER_V1_SECURITY_CENTER_CLIENT_H

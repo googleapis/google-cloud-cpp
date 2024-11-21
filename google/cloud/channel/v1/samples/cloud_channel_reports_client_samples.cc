@@ -214,3 +214,4 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   });
   return example.Run(argc, argv);
 }
+#include "google/cloud/internal/diagnostics_pop.inc"

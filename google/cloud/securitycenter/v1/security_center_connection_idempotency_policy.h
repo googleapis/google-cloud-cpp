@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECURITYCENTER_V1_SECURITY_CENTER_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECURITYCENTER_V1_SECURITY_CENTER_CONNECTION_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
 #include <google/cloud/securitycenter/v1/securitycenter_service.grpc.pb.h>
@@ -297,5 +298,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace securitycenter_v1
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECURITYCENTER_V1_SECURITY_CENTER_CONNECTION_IDEMPOTENCY_POLICY_H

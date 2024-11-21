@@ -97,5 +97,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace channel_v1_internal
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_V1_INTERNAL_CLOUD_CHANNEL_REPORTS_AUTH_DECORATOR_H

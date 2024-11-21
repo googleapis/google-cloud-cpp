@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_V1_MOCKS_MOCK_CLUSTER_MANAGER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_V1_MOCKS_MOCK_CLUSTER_MANAGER_CONNECTION_H
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/container/v1/cluster_manager_connection.h"
 #include <gmock/gmock.h>
 
@@ -202,5 +203,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace container_v1_mocks
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_V1_MOCKS_MOCK_CLUSTER_MANAGER_CONNECTION_H

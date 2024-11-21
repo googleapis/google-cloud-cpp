@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/edgenetwork/v1/service.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/edgenetwork/v1/internal/edge_network_metadata_decorator.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
@@ -488,3 +489,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace edgenetwork_v1_internal
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"

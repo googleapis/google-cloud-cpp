@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/container/v1/cluster_service.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/container/v1/cluster_manager_connection_idempotency_policy.h"
 #include <memory>
 
@@ -214,3 +215,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace container_v1
 }  // namespace cloud
 }  // namespace google
+#include "google/cloud/internal/diagnostics_pop.inc"
