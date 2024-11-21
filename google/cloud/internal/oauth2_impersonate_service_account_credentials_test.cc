@@ -50,6 +50,19 @@ auto constexpr kFullValidConfig = R"""({
   "type": "impersonated_service_account"
 })""";
 
+auto constexpr kFullValidConfigNoAction = R"""({
+  "service_account_impersonation_url": "https://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/sa3@developer.gserviceaccount.com",
+  "delegates": [
+    "sa1@developer.gserviceaccount.com",
+    "sa2@developer.gserviceaccount.com"
+  ],
+  "quota_project_id": "my-project",
+  "source_credentials": {
+    "type": "authorized_user"
+  },
+  "type": "impersonated_service_account"
+})""";
+
 TEST(ParseImpersonatedServiceAccountCredentials, Success) {
   auto actual =
       ParseImpersonatedServiceAccountCredentials(kFullValidConfig, "test-data");
@@ -144,6 +157,19 @@ TEST(ImpersonateServiceAccountCredentialsTest, Basic) {
 
   token = under_test.GetToken(now + minutes(45));
   ASSERT_THAT(token, StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST(ParseImpersonatedServiceAccountCredentialsWithoutAction, Success) {
+  auto actual = ParseImpersonatedServiceAccountCredentials(
+      kFullValidConfigNoAction, "test-data");
+  ASSERT_STATUS_OK(actual);
+  EXPECT_EQ(actual->service_account, "sa3@developer.gserviceaccount.com");
+  EXPECT_THAT(actual->delegates,
+              ElementsAre("sa1@developer.gserviceaccount.com",
+                          "sa2@developer.gserviceaccount.com"));
+  EXPECT_THAT(actual->quota_project_id, Optional<std::string>("my-project"));
+  EXPECT_THAT(actual->source_credentials,
+              AllOf(HasSubstr("type"), HasSubstr("authorized_user")));
 }
 
 }  // namespace
