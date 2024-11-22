@@ -213,7 +213,7 @@ io::log_h1 "Build and run quickstarts"
 # Tests the installed artifacts by building and running the quickstarts.
 # shellcheck disable=SC2046
 feature_list="$(printf "%s;" $(features::libraries))"
-# OpenTelemetry also have quickstarts.
+# OpenTelemetry also has a quickstart.
 feature_list="${feature_list}opentelemetry"
 
 io::log_h2 "All features"
