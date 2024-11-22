@@ -100,7 +100,11 @@ function (add_make_quickstart_target feature library target)
 endfunction ()
 
 foreach (feature IN LISTS FEATURES)
-    if ("${feature}" STREQUAL "storage_grpc")
+    # Regardless of whether "-" or "_" is used for storage+grpc, its quickstart
+    # does not follow the usual convention for feature to quickstart naming nor
+    # location.
+    if ("${feature}" STREQUAL "storage-grpc" OR "${feature}" STREQUAL
+                                                "storage_grpc")
         add_cmake_quickstart_target("${feature}" storage quickstart_grpc)
         add_make_quickstart_target("${feature}" storage quickstart_grpc)
         continue()

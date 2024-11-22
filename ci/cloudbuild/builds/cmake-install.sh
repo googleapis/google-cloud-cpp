@@ -213,23 +213,15 @@ io::log_h1 "Build and run quickstarts"
 # Tests the installed artifacts by building and running the quickstarts.
 # shellcheck disable=SC2046
 feature_list="$(printf "%s;" $(features::libraries))"
-# GCS+gRPC and OpenTelemetry also have quickstarts.
+# OpenTelemetry also have quickstarts.
 feature_list="${feature_list}opentelemetry"
 
-io::log_h2 "Most features"
+io::log_h2 "All features"
 cmake -G Ninja \
   -S "${PROJECT_ROOT}/ci/verify_quickstart" \
   -B "${PROJECT_ROOT}/cmake-out/quickstart" \
   "-DCMAKE_PREFIX_PATH=${INSTALL_PREFIX}" \
   "-DFEATURES=${feature_list}"
-cmake --build "${PROJECT_ROOT}/cmake-out/quickstart"
-
-io::log_h2 "GCS+gRPC"
-cmake -G Ninja \
-  -S "${PROJECT_ROOT}/ci/verify_quickstart" \
-  -B "${PROJECT_ROOT}/cmake-out/quickstart" \
-  "-DCMAKE_PREFIX_PATH=${INSTALL_PREFIX}" \
-  "-DFEATURES=storage_grpc"
 cmake --build "${PROJECT_ROOT}/cmake-out/quickstart"
 
 io::log_h2 "Delete installed artifacts and run compiled quickstarts"
