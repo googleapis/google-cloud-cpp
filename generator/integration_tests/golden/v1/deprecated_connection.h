@@ -19,7 +19,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_V1_DEPRECATED_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_V1_DEPRECATED_CONNECTION_H
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "generator/integration_tests/golden/v1/deprecated_connection_idempotency_policy.h"
 #include "generator/integration_tests/golden/v1/internal/deprecated_retry_traits.h"
 #include "google/cloud/backoff_policy.h"

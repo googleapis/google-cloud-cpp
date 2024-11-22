@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: generator/integration_tests/test_deprecated.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "generator/integration_tests/golden/v1/internal/deprecated_rest_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"

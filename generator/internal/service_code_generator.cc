@@ -293,13 +293,12 @@ VarsDictionary ServiceCodeGenerator::MergeServiceAndMethodVars(
 
 void ServiceCodeGenerator::HeaderLocalIncludes(
     std::vector<std::string> const& local_includes) {
-  GenerateLocalIncludes(header_, local_includes, FileType::kHeaderFile,
-                        IsDeprecated());
+  GenerateLocalIncludes(header_, local_includes, FileType::kHeaderFile);
 }
 
 void ServiceCodeGenerator::CcLocalIncludes(
     std::vector<std::string> const& local_includes) {
-  GenerateLocalIncludes(cc_, local_includes, FileType::kCcFile, IsDeprecated());
+  GenerateLocalIncludes(cc_, local_includes, FileType::kCcFile);
 }
 
 void ServiceCodeGenerator::HeaderSystemIncludes(
@@ -385,14 +384,7 @@ void ServiceCodeGenerator::CcPrintMethod(
 }
 
 void ServiceCodeGenerator::GenerateLocalIncludes(
-    Printer& p, std::vector<std::string> local_includes, FileType file_type,
-    bool is_deprecated) {
-  if (is_deprecated) {
-    p.Print(
-        "#include "
-        "\"google/cloud/internal/disable_deprecation_warnings.inc\"\n");
-  }
-
+    Printer& p, std::vector<std::string> local_includes, FileType file_type) {
   if (file_type == FileType::kCcFile) {
     std::sort(local_includes.begin() + 1, local_includes.end());
   } else {

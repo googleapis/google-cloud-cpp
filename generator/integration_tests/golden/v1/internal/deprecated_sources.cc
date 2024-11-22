@@ -17,7 +17,6 @@
 // source: generator/integration_tests/test_deprecated.proto
 
 // NOLINTBEGIN(bugprone-suspicious-include)
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "generator/integration_tests/golden/v1/deprecated_client.cc"
 #include "generator/integration_tests/golden/v1/deprecated_connection.cc"
 #include "generator/integration_tests/golden/v1/deprecated_connection_idempotency_policy.cc"

@@ -19,7 +19,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_V1_INTERNAL_DEPRECATED_RETRY_TRAITS_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_V1_INTERNAL_DEPRECATED_RETRY_TRAITS_H
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
 

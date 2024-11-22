@@ -248,7 +248,7 @@ class ServiceCodeGenerator : public GeneratorInterface {
   enum class FileType { kHeaderFile, kCcFile };
   static void GenerateLocalIncludes(Printer& p,
                                     std::vector<std::string> local_includes,
-                                    FileType file_type, bool is_deprecated);
+                                    FileType file_type);
   static void GenerateSystemIncludes(Printer& p,
                                      std::vector<std::string> system_includes);
 

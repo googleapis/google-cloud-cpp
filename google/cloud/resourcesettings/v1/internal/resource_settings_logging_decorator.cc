@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/resourcesettings/v1/resource_settings.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/resourcesettings/v1/internal/resource_settings_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"

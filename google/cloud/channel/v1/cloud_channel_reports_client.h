@@ -19,7 +19,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_V1_CLOUD_CHANNEL_REPORTS_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_V1_CLOUD_CHANNEL_REPORTS_CLIENT_H
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/channel/v1/cloud_channel_reports_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"

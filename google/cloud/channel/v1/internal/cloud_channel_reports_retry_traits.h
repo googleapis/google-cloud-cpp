@@ -19,7 +19,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_V1_INTERNAL_CLOUD_CHANNEL_REPORTS_RETRY_TRAITS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_V1_INTERNAL_CLOUD_CHANNEL_REPORTS_RETRY_TRAITS_H
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
 
