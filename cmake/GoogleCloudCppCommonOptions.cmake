@@ -105,5 +105,6 @@ function (google_cloud_cpp_add_common_options target)
     if (GOOGLE_CLOUD_CPP_COMPILER_SUPPORTS_WERROR
         AND GOOGLE_CLOUD_CPP_ENABLE_WERROR)
         target_compile_options(${target} PRIVATE "-Werror")
+        target_compile_options(${target} PRIVATE "-Wno-error=deprecated-declarations")
     endif ()
 endfunction ()
