@@ -14,11 +14,6 @@
 
 #include "google/cloud/internal/port_platform.h"
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC && GOOGLE_CLOUD_CPP_HAVE_COROUTINES
-// TODO(#14750): Remove this guard once vcpkg has a newer version of grpc
-#if (GRPC_CPP_VERSION_MAJOR > 1 ||                                   \
-     (GRPC_CPP_VERSION_MAJOR == 1 && GRPC_CPP_VERSION_MINOR > 65) || \
-     (GRPC_CPP_VERSION_MAJOR == 1 && GRPC_CPP_VERSION_MINOR == 65 && \
-      GRPC_CPP_VERSION_PATCH >= 4))
 #include "google/cloud/storage/async/client.h"
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
 #include "google/cloud/storage/client.h"
@@ -958,9 +953,5 @@ int main() {
   return 0;
 }
 
-#endif  // (GRPC_CPP_VERSION_MAJOR > 1 ||
-        // (GRPC_CPP_VERSION_MAJOR == 1 &&  GRPC_CPP_VERSION_MINOR > 65) ||
-        // (GRPC_CPP_VERSION_MAJOR == 1 && GRPC_CPP_VERSION_MINOR == 65 &&
-        // GRPC_CPP_VERSION_PATCH >= 4))
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC &&
         // GOOGLE_CLOUD_CPP_HAVE_COROUTINES
