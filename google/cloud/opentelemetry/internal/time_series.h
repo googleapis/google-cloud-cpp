@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPENTELEMETRY_INTERNAL_TIME_SERIES_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPENTELEMETRY_INTERNAL_TIME_SERIES_H
 
+#include "google/cloud/opentelemetry/internal/monitored_resource.h"
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
 #include <google/api/metric.pb.h>
@@ -22,8 +23,10 @@
 #include <google/monitoring/v3/metric_service.pb.h>
 #include <opentelemetry/sdk/metrics/metric_reader.h>
 #include <opentelemetry/sdk/resource/resource.h>
+#include <opentelemetry/sdk/resource/semantic_conventions.h>
 #include <functional>
 #include <string>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -34,6 +37,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 //
 // See: https://cloud.google.com/monitoring/quotas
 auto constexpr kMaxTimeSeriesPerRequest = 200;
+
+std::unordered_map<std::string, OTelKeyMatch> const kExtraLabelsLookup = {
+    {"service_name",
+     {{opentelemetry::sdk::resource::SemanticConventions::kServiceName}}},
+    {"service_namespace",
+     {{opentelemetry::sdk::resource::SemanticConventions::kServiceNamespace}}},
+    {"service_instance_id",
+     {{opentelemetry::sdk::resource::SemanticConventions::
+           kServiceInstanceId}}}};
 
 google::api::Metric ToMetric(
     opentelemetry::sdk::metrics::MetricData const& metric_data,
@@ -102,7 +114,9 @@ std::vector<google::monitoring::v3::CreateTimeSeriesRequest> ToRequests(
  */
 std::vector<google::monitoring::v3::TimeSeries> WithExtraLabels(
     opentelemetry::sdk::metrics::ResourceMetrics const& data,
-    std::vector<google::monitoring::v3::TimeSeries>& tss);
+    std::vector<google::monitoring::v3::TimeSeries>& tss,
+    std::unordered_map<std::string, OTelKeyMatch> const& extra_labels =
+        kExtraLabelsLookup);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace otel_internal

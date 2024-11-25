@@ -20,11 +20,13 @@
 #include "google/cloud/testing_util/scoped_log.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
+#include <opentelemetry/sdk/common/attribute_utils.h>
 #include <opentelemetry/sdk/metrics/export/metric_producer.h>
 #include <opentelemetry/sdk/resource/resource.h>
 #include <opentelemetry/sdk/resource/semantic_conventions.h>
 #include <algorithm>
 #include <cstdint>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -153,6 +155,18 @@ auto IsTestResource() {
           [](google::api::MonitoredResource const& mr) { return mr.labels(); },
           UnorderedElementsAre(Pair("zone", "us-central1-a"),
                                Pair("instance_id", "1020304050607080900"))));
+}
+
+auto ResourceWithAllExtraLabels() {
+  opentelemetry::sdk::common::AttributeMap labels;
+  for (auto const& kv : kExtraLabelsLookup) {
+    auto const& oks = kv.second.otel_keys;
+    if (oks.empty()) {
+      continue;
+    }
+    labels.SetAttribute(oks[0], kv.first);
+  }
+  return opentelemetry::sdk::resource::Resource::Create(labels);
 }
 
 auto MetricType(std::string const& type) {
@@ -694,6 +708,82 @@ TEST(ToRequests, Batches) {
     batch_sizes.reserve(requests.size());
     for (auto& r : requests) batch_sizes.push_back(r.time_series_size());
     EXPECT_THAT(batch_sizes, ElementsAreArray(c.batch_sizes));
+  }
+}
+
+TEST(WithExtraLabels, CopyLabels) {
+  opentelemetry::sdk::metrics::PointDataAttributes pda;
+  pda.point_data = opentelemetry::sdk::metrics::SumPointData{};
+
+  opentelemetry::sdk::metrics::MetricData md;
+  md.point_data_attr_.push_back(std::move(pda));
+  md.instrument_descriptor.name_ = "metric-name";
+  md.instrument_descriptor.unit_ = "unit";
+  md.instrument_descriptor.type_ = {};
+  md.instrument_descriptor.value_type_ = {};
+
+  opentelemetry::sdk::metrics::ScopeMetrics sm;
+  sm.metric_data_.push_back(md);
+  sm.metric_data_.push_back(std::move(md));
+
+  opentelemetry::sdk::metrics::ResourceMetrics rm;
+  auto resource = ResourceWithAllExtraLabels();
+  rm.resource_ = &resource;
+  rm.scope_metric_data_.push_back(std::move(sm));
+
+  auto tss = ToTimeSeries(rm, PrefixWithWorkload);
+  for (auto const& kv : kExtraLabelsLookup) {
+    auto const& oks = kv.second.otel_keys;
+    if (oks.empty()) {
+      continue;
+    }
+    for (auto const& ts : tss) {
+      auto const& labels = ts.metric().labels();
+      ASSERT_TRUE(labels.find(kv.first) != labels.end());
+      EXPECT_EQ(labels.at(kv.first), kv.first);
+    }
+  }
+}
+
+TEST(WithExtraLabels, NoOverwrites) {
+  opentelemetry::sdk::metrics::PointDataAttributes pda;
+  opentelemetry::sdk::common::OrderedAttributeMap existing_labels;
+  existing_labels.SetAttribute("service_name", "do_not_overwrite");
+  pda.attributes = existing_labels;
+  pda.point_data = opentelemetry::sdk::metrics::SumPointData{};
+
+  opentelemetry::sdk::metrics::MetricData md;
+  md.point_data_attr_.push_back(std::move(pda));
+  md.instrument_descriptor.name_ = "metric-name";
+  md.instrument_descriptor.unit_ = "unit";
+  md.instrument_descriptor.type_ = {};
+  md.instrument_descriptor.value_type_ = {};
+
+  opentelemetry::sdk::metrics::ScopeMetrics sm;
+  sm.metric_data_.push_back(md);
+  sm.metric_data_.push_back(std::move(md));
+
+  opentelemetry::sdk::metrics::ResourceMetrics rm;
+  auto resource = ResourceWithAllExtraLabels();
+  rm.resource_ = &resource;
+  rm.scope_metric_data_.push_back(std::move(sm));
+
+  auto tss = ToTimeSeries(rm, PrefixWithWorkload);
+  for (auto const& kv : kExtraLabelsLookup) {
+    auto const& oks = kv.second.otel_keys;
+    if (oks.empty()) {
+      continue;
+    }
+    for (auto const& ts : tss) {
+      auto const& labels = ts.metric().labels();
+      ASSERT_TRUE(labels.find(kv.first) != labels.end());
+      if (existing_labels.GetAttributes().find(kv.first) ==
+          existing_labels.GetAttributes().end()) {
+        EXPECT_EQ(labels.at(kv.first), kv.first);
+      } else {
+        EXPECT_EQ(labels.at(kv.first), "do_not_overwrite");
+      }
+    }
   }
 }
 

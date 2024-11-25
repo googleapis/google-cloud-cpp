@@ -49,11 +49,6 @@ struct AsStringVisitor {
   std::string operator()(bool const& v) const { return v ? "true" : "false"; }
 };
 
-struct OTelKeyMatch {
-  std::vector<std::string> otel_keys;
-  absl::optional<std::string> fallback = absl::nullopt;
-};
-
 class MonitoredResourceProvider {
  public:
   MonitoredResourceProvider(

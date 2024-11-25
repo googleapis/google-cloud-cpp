@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "absl/types/optional.h"
 #include "google/cloud/opentelemetry/internal/time_series.h"
 #include "google/cloud/opentelemetry/internal/monitored_resource.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
@@ -21,10 +20,8 @@
 #include <opentelemetry/common/attribute_value.h>
 #include <opentelemetry/sdk/metrics/data/metric_data.h>
 #include <opentelemetry/sdk/metrics/export/metric_producer.h>
-#include <opentelemetry/sdk/resource/semantic_conventions.h>
 #include <cctype>
 #include <string>
-#include <unordered_map>
 #include <vector>
 
 namespace google {
@@ -32,18 +29,6 @@ namespace cloud {
 namespace otel_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
-
-namespace sc = opentelemetry::sdk::resource::SemanticConventions;
-
-struct OTelKeyMatch {
-  std::vector<std::string> otel_keys;
-  absl::optional<std::string> fallback = absl::nullopt;
-};
-
-std::unordered_map<std::string, OTelKeyMatch> const kExtraLabelsLookup = {
-    {"service_name", {{sc::kServiceName}}},
-    {"service_namespace", {{sc::kServiceNamespace}}},
-    {"service_instance_id", {{sc::kServiceInstanceId}}}};
 
 google::protobuf::Timestamp ToProtoTimestamp(
     opentelemetry::common::SystemTimestamp ts) {
@@ -255,14 +240,15 @@ std::vector<google::monitoring::v3::CreateTimeSeriesRequest> ToRequests(
 
 std::vector<google::monitoring::v3::TimeSeries> WithExtraLabels(
     opentelemetry::sdk::metrics::ResourceMetrics const& data,
-    std::vector<google::monitoring::v3::TimeSeries>& tss) {
+    std::vector<google::monitoring::v3::TimeSeries>& tss,
+    std::unordered_map<std::string, OTelKeyMatch> const& extra_labels) {
   if (!data.resource_) {
     return tss;
   }
 
   opentelemetry::sdk::resource::ResourceAttributes const& attributes =
       data.resource_->GetAttributes();
-  for (auto const& kv : kExtraLabelsLookup) {
+  for (auto const& kv : extra_labels) {
     auto const& oks = kv.second.otel_keys;
     auto found = std::find_first_of(
         oks.begin(), oks.end(), attributes.begin(), attributes.end(),
