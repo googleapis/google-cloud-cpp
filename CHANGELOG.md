@@ -130,6 +130,13 @@ the APIs in these libraries are stable, and are ready for production use.
 
 - docs: update mock LRO tips ([#14609](https://github.com/googleapis/google-cloud-cpp/pull/14609))
 
+### New Libraries
+
+We are happy to announce the following GA libraries. Unless specifically noted,
+the APIs in these libraries are stable, and are ready for production use.
+
+- [ApiHub API](/google/cloud/apihub/README.md)
+
 ## v2.27.0 - 2024-08
 
 - We now link our mocking libraries against GoogleTest in CMake.
