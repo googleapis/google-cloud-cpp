@@ -1,7 +1,7 @@
 # Public Certificate Authority API C++ Client Library
 
-This directory contains an idiomatic C++ client library for the \[Public
-Certificate Authority API\]\[cloud-service-docs\].
+This directory contains an idiomatic C++ client library for the
+[Public Certificate Authority API][cloud-service-docs].
 
 The Public Certificate Authority API may be used to create and manage ACME
 external account binding keys associated with Google Trust Services' publicly
