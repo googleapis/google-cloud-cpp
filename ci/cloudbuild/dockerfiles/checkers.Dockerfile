@@ -46,8 +46,9 @@ RUN curl -L -o /usr/local/bin/shfmt https://github.com/mvdan/sh/releases/downloa
 RUN pip3 install --upgrade pip
 RUN pip3 install cmake_format==0.6.13
 RUN pip3 install black==22.3.0
-RUN pip3 install mdformat-gfm==0.3.5 \
-                 mdformat-frontmatter==0.4.1 \
+RUN pip3 install mdformat==0.7.19 \
+                 mdformat-gfm==0.3.7 \
+                 mdformat-frontmatter==2.0.8 \
                  mdformat-footnote==0.1.1
 
 RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.24.0/bazelisk-linux-${ARCH}" && \
