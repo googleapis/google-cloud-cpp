@@ -84,7 +84,7 @@ enables OpenTelemetry tracing instrumentation in `google-cloud-cpp`.
 build --@google_cloud_cpp//:enable_opentelemetry
 ```
 
-If you are using an OpenTelemetry version \< v1.16.0, you must also supply the
+If you are using an OpenTelemetry version < v1.16.0, you must also supply the
 following flag for compatibility with Abseil. Without this flag, the above
 `bazel build ...` command will fail.
 
