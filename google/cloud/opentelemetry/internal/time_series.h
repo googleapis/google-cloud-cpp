@@ -112,11 +112,10 @@ std::vector<google::monitoring::v3::CreateTimeSeriesRequest> ToRequests(
  * See:
  * https://github.com/GoogleCloudPlatform/opentelemetry-operations-go/blob/main/exporter/collector/breaking-changes.md#labels
  */
-std::vector<google::monitoring::v3::TimeSeries> WithExtraLabels(
-    opentelemetry::sdk::metrics::ResourceMetrics const& data,
-    std::vector<google::monitoring::v3::TimeSeries>& tss,
-    std::unordered_map<std::string, OTelKeyMatch> const& extra_labels =
-        kExtraLabelsLookup);
+void WithExtraLabels(opentelemetry::sdk::metrics::ResourceMetrics const& data,
+                     std::vector<google::monitoring::v3::TimeSeries>& tss,
+                     std::unordered_map<std::string, OTelKeyMatch> const&
+                         extra_labels = kExtraLabelsLookup);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace otel_internal

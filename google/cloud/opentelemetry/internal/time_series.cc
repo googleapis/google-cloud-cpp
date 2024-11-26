@@ -217,7 +217,8 @@ std::vector<google::monitoring::v3::TimeSeries> ToTimeSeries(
       }
     }
   }
-  return WithExtraLabels(data, tss);
+  WithExtraLabels(data, tss);
+  return tss;
 }
 
 std::vector<google::monitoring::v3::CreateTimeSeriesRequest> ToRequests(
@@ -238,12 +239,12 @@ std::vector<google::monitoring::v3::CreateTimeSeriesRequest> ToRequests(
   return requests;
 }
 
-std::vector<google::monitoring::v3::TimeSeries> WithExtraLabels(
+void WithExtraLabels(
     opentelemetry::sdk::metrics::ResourceMetrics const& data,
     std::vector<google::monitoring::v3::TimeSeries>& tss,
     std::unordered_map<std::string, OTelKeyMatch> const& extra_labels) {
   if (!data.resource_) {
-    return tss;
+    return;
   }
 
   opentelemetry::sdk::resource::ResourceAttributes const& attributes =
@@ -271,7 +272,6 @@ std::vector<google::monitoring::v3::TimeSeries> WithExtraLabels(
       }
     }
   }
-  return tss;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
