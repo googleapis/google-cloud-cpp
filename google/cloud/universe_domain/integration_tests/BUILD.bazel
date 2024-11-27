@@ -21,6 +21,7 @@ cc_test(
     timeout = "long",
     srcs = ["impersonation_tests.cc"],
     tags = [
+        "ud-only",
         "integration-test",
     ],
     deps = [
