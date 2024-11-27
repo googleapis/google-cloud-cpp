@@ -20,6 +20,9 @@ cc_test(
     name = "impersonation_tests",
     timeout = "long",
     srcs = ["impersonation_tests.cc"],
+    tags = [
+        "integration-test",
+    ],
     deps = [
         "//:common",
         "//:experimental-universe_domain",
