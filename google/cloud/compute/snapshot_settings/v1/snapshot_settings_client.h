@@ -108,7 +108,7 @@ class SnapshotSettingsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.snapshot_settings.v1.GetSnapshotSettingsRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshot_settings/v1/snapshot_settings.proto#L65}
-  /// [google.cloud.cpp.compute.v1.SnapshotSettings]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_118.proto#L24}
+  /// [google.cloud.cpp.compute.v1.SnapshotSettings]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_116.proto#L24}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SnapshotSettings>
@@ -139,7 +139,7 @@ class SnapshotSettingsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.snapshot_settings.v1.GetSnapshotSettingsRequest]: @cloud_cpp_reference_link{google/cloud/compute/snapshot_settings/v1/snapshot_settings.proto#L65}
-  /// [google.cloud.cpp.compute.v1.SnapshotSettings]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_118.proto#L24}
+  /// [google.cloud.cpp.compute.v1.SnapshotSettings]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_116.proto#L24}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SnapshotSettings>

@@ -678,7 +678,7 @@ class NetworksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.networks.v1.ListPeeringRoutesRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L345}
-  /// [google.cloud.cpp.compute.v1.ExchangedPeeringRoute]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_031.proto#L27}
+  /// [google.cloud.cpp.compute.v1.ExchangedPeeringRoute]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_030.proto#L27}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::ExchangedPeeringRoute>
@@ -719,7 +719,7 @@ class NetworksClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.networks.v1.ListPeeringRoutesRequest]: @cloud_cpp_reference_link{google/cloud/compute/networks/v1/networks.proto#L345}
-  /// [google.cloud.cpp.compute.v1.ExchangedPeeringRoute]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_031.proto#L27}
+  /// [google.cloud.cpp.compute.v1.ExchangedPeeringRoute]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_030.proto#L27}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::ExchangedPeeringRoute>

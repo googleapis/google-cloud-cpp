@@ -21,18 +21,25 @@ syntax = "proto3";
 
 package google.cloud.cpp.compute.v1;
 
-import "google/cloud/compute/v1/internal/common_006.proto";
+// Represents a Route resource. A route defines a path from VM instances in the
+// VPC network to a specific destination. This destination can be inside or
+// outside the VPC network. For more information, read the Routes overview.
+message Route {
+  // [Output Only] AS path.
+  repeated RouteAsPath as_paths = 1 [json_name = "asPaths"];
 
-// Contains a list of reservations.
-message ReservationAggregatedList {
-  // [Output Only] Unique identifier for the resource; defined by the server.
-  optional string id = 1 [json_name = "id"];
+  // [Output Only] Creation timestamp in RFC3339 text format.
+  optional string creation_timestamp = 2 [json_name = "creationTimestamp"];
 
-  // A list of Allocation resources.
-  map<string, ReservationsScopedList> items = 2 [json_name = "items"];
+  // An optional description of this resource. Provide this field when you
+  // create the resource.
+  optional string description = 3 [json_name = "description"];
 
-  // Type of resource.
-  optional string kind = 3 [json_name = "kind"];
+  // The destination range of outgoing packets that this route applies to. Both
+  // IPv4 and IPv6 are supported. Must specify an IPv4 range (e.g. 192.0.2.0/24)
+  // or an IPv6 range in RFC 4291 format (e.g. 2001:db8::/32). IPv6 range will
+  // be displayed using RFC 5952 compressed format.
+  optional string dest_range = 4 [json_name = "destRange"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
@@ -137,26 +144,104 @@ message ReservationAggregatedList {
 message ReservationList {
   // [Output Only] The unique identifier for the resource. This identifier is
   // defined by the server.
-  optional string id = 1 [json_name = "id"];
+  optional string id = 5 [json_name = "id"];
 
-  // [Output Only] A list of Allocation resources.
-  repeated Reservation items = 2 [json_name = "items"];
+  // [Output Only] Type of this resource. Always compute#routes for Route
+  // resources.
+  optional string kind = 6 [json_name = "kind"];
 
-  // [Output Only] Type of resource.Always compute#reservationsList for listsof
-  // reservations
-  optional string kind = 3 [json_name = "kind"];
+  // Name of the resource. Provided by the client when the resource is created.
+  // The name must be 1-63 characters long, and comply with RFC1035.
+  // Specifically, the name must be 1-63 characters long and match the regular
+  // expression `[a-z]([-a-z0-9]*[a-z0-9])?`. The first character must be a
+  // lowercase letter, and all following characters (except for the last
+  // character) must be a dash, lowercase letter, or digit. The last character
+  // must be a lowercase letter or digit.
+  optional string name = 7 [json_name = "name"];
 
-  // [Output Only] This token allows you to get the next page of results for
-  // list requests. If the number of results is larger than maxResults, use the
-  // nextPageToken as a value for the query parameter pageToken in the next list
-  // request. Subsequent list requests will have their own nextPageToken to
-  // continue paging through the results.
-  optional string next_page_token = 4 [json_name = "nextPageToken"];
+  // Fully-qualified URL of the network that this route applies to.
+  optional string network = 8 [json_name = "network"];
 
-  // [Output Only] Server-defined URL for this resource.
-  optional string self_link = 5 [json_name = "selfLink"];
+  // The URL to a gateway that should handle matching packets. You can only
+  // specify the internet gateway using a full or partial valid URL: projects/
+  // project/global/gateways/default-internet-gateway
+  optional string next_hop_gateway = 9 [json_name = "nextHopGateway"];
 
-  message Warning {
+  // [Output Only] The full resource name of the Network Connectivity Center hub
+  // that will handle matching packets.
+  optional string next_hop_hub = 22 [json_name = "nextHopHub"];
+
+  // The URL to a forwarding rule of type loadBalancingScheme=INTERNAL that
+  // should handle matching packets or the IP address of the forwarding Rule.
+  // For example, the following are all valid URLs: -
+  // https://www.googleapis.com/compute/v1/projects/project/regions/region
+  // /forwardingRules/forwardingRule -
+  // regions/region/forwardingRules/forwardingRule If an IP address is provided,
+  // must specify an IPv4 address in dot-decimal notation or an IPv6 address in
+  // RFC 4291 format. For example, the following are all valid IP addresses: -
+  // 10.128.0.56 - 2001:db8::2d9:51:0:0 - 2001:db8:0:0:2d9:51:0:0 IPv6 addresses
+  // will be displayed using RFC 5952 compressed format (e.g.
+  // 2001:db8::2d9:51:0:0). Should never be an IPv4-mapped IPv6 address.
+  optional string next_hop_ilb = 10 [json_name = "nextHopIlb"];
+
+  // The URL to an instance that should handle matching packets. You can specify
+  // this as a full or partial URL. For example:
+  // https://www.googleapis.com/compute/v1/projects/project/zones/zone/instances/
+  optional string next_hop_instance = 11 [json_name = "nextHopInstance"];
+
+  // The network IP address of an instance that should handle matching packets.
+  // Both IPv6 address and IPv4 addresses are supported. Must specify an IPv4
+  // address in dot-decimal notation (e.g. 192.0.2.99) or an IPv6 address in RFC
+  // 4291 format (e.g. 2001:db8::2d9:51:0:0 or 2001:db8:0:0:2d9:51:0:0). IPv6
+  // addresses will be displayed using RFC 5952 compressed format (e.g.
+  // 2001:db8::2d9:51:0:0). Should never be an IPv4-mapped IPv6 address.
+  optional string next_hop_ip = 12 [json_name = "nextHopIp"];
+
+  // The URL of the local network if it should handle matching packets.
+  optional string next_hop_network = 13 [json_name = "nextHopNetwork"];
+
+  // [Output Only] The network peering name that should handle matching packets,
+  // which should conform to RFC1035.
+  optional string next_hop_peering = 14 [json_name = "nextHopPeering"];
+
+  // The URL to a VpnTunnel that should handle matching packets.
+  optional string next_hop_vpn_tunnel = 15 [json_name = "nextHopVpnTunnel"];
+
+  // The priority of this route. Priority is used to break ties in cases where
+  // there is more than one matching route of equal prefix length. In cases
+  // where multiple routes have equal prefix length, the one with the
+  // lowest-numbered priority value wins. The default value is `1000`. The
+  // priority value must be from `0` to `65535`, inclusive.
+  optional uint32 priority = 16 [json_name = "priority"];
+
+  // [Output only] The status of the route.
+  // ACTIVE: This route is processed and active.
+  // DROPPED: The route is dropped due to the VPC exceeding the dynamic route
+  // limit. For dynamic route limit, please refer to the Learned route example
+  // INACTIVE: This route is processed but inactive due to failure from the
+  // backend. The backend may have rejected the route
+  // PENDING: This route is being processed internally. The status will change
+  // once processed.
+  optional string route_status = 17 [json_name = "routeStatus"];
+
+  // [Output Only] The type of this route, which can be one of the following
+  // values: - 'TRANSIT' for a transit route that this router learned from
+  // another Cloud Router and will readvertise to one of its BGP peers -
+  // 'SUBNET' for a route from a subnet of the VPC - 'BGP' for a route learned
+  // from a BGP peer of this router - 'STATIC' for a static route
+  // BGP:
+  // STATIC:
+  // SUBNET:
+  // TRANSIT:
+  optional string route_type = 18 [json_name = "routeType"];
+
+  // [Output Only] Server-defined fully-qualified URL for this resource.
+  optional string self_link = 19 [json_name = "selfLink"];
+
+  // A list of instance tags to which this route applies.
+  repeated string tags = 20 [json_name = "tags"];
+
+  message WarningsItem {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
     // returns NO_RESULTS_ON_PAGE if there are no results in the response.
     // CLEANUP_FAILED: Warning about failed cleanup of transient changes made by
@@ -239,8 +324,9 @@ message ReservationList {
     optional string message = 3 [json_name = "message"];
   }
 
-  // [Output Only] Informational warning message.
-  optional Warning warning = 6 [json_name = "warning"];
+  // [Output Only] If potential misconfigurations are detected for this route,
+  // this field will be populated with warning messages.
+  repeated WarningsItem warnings = 21 [json_name = "warnings"];
 }
 
 message ReservationsResizeRequest {

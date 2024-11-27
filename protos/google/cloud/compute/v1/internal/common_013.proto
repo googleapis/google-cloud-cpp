@@ -24,22 +24,170 @@ package google.cloud.cpp.compute.v1;
 import "google/cloud/compute/v1/internal/common_031.proto";
 import "google/cloud/compute/v1/internal/common_109.proto";
 
-message BackendServiceReference {
-  optional string backend_service = 1 [json_name = "backendService"];
+message BfdPacket {
+  // The Authentication Present bit of the BFD packet. This is specified in
+  // section 4.1 of RFC5880
+  optional bool authentication_present = 1
+      [json_name = "authenticationPresent"];
+
+  // The Control Plane Independent bit of the BFD packet. This is specified in
+  // section 4.1 of RFC5880
+  optional bool control_plane_independent = 2
+      [json_name = "controlPlaneIndependent"];
+
+  // The demand bit of the BFD packet. This is specified in section 4.1 of
+  // RFC5880
+  optional bool demand = 3 [json_name = "demand"];
+
+  // The diagnostic code specifies the local system's reason for the last change
+  // in session state. This allows remote systems to determine the reason that
+  // the previous session failed, for example. These diagnostic codes are
+  // specified in section 4.1 of RFC5880
+  // ADMINISTRATIVELY_DOWN:
+  // CONCATENATED_PATH_DOWN:
+  // CONTROL_DETECTION_TIME_EXPIRED:
+  // DIAGNOSTIC_UNSPECIFIED:
+  // ECHO_FUNCTION_FAILED:
+  // FORWARDING_PLANE_RESET:
+  // NEIGHBOR_SIGNALED_SESSION_DOWN:
+  // NO_DIAGNOSTIC:
+  // PATH_DOWN:
+  // REVERSE_CONCATENATED_PATH_DOWN:
+  optional string diagnostic = 4 [json_name = "diagnostic"];
+
+  // The Final bit of the BFD packet. This is specified in section 4.1 of
+  // RFC5880
+  optional bool final = 5 [json_name = "final"];
+
+  // The length of the BFD Control packet in bytes. This is specified in section
+  // 4.1 of RFC5880
+  optional uint32 length = 6 [json_name = "length"];
+
+  // The Required Min Echo RX Interval value in the BFD packet. This is
+  // specified in section 4.1 of RFC5880
+  optional uint32 min_echo_rx_interval_ms = 7
+      [json_name = "minEchoRxIntervalMs"];
+
+  // The Required Min RX Interval value in the BFD packet. This is specified in
+  // section 4.1 of RFC5880
+  optional uint32 min_rx_interval_ms = 8 [json_name = "minRxIntervalMs"];
+
+  // The Desired Min TX Interval value in the BFD packet. This is specified in
+  // section 4.1 of RFC5880
+  optional uint32 min_tx_interval_ms = 9 [json_name = "minTxIntervalMs"];
+
+  // The detection time multiplier of the BFD packet. This is specified in
+  // section 4.1 of RFC5880
+  optional uint32 multiplier = 10 [json_name = "multiplier"];
+
+  // The multipoint bit of the BFD packet. This is specified in section 4.1 of
+  // RFC5880
+  optional bool multipoint = 11 [json_name = "multipoint"];
+
+  // The My Discriminator value in the BFD packet. This is specified in section
+  // 4.1 of RFC5880
+  optional uint32 my_discriminator = 12 [json_name = "myDiscriminator"];
+
+  // The Poll bit of the BFD packet. This is specified in section 4.1 of RFC5880
+  optional bool poll = 13 [json_name = "poll"];
+
+  // The current BFD session state as seen by the transmitting system. These
+  // states are specified in section 4.1 of RFC5880
+  // ADMIN_DOWN:
+  // DOWN:
+  // INIT:
+  // STATE_UNSPECIFIED:
+  // UP:
+  optional string state = 14 [json_name = "state"];
+
+  // The version number of the BFD protocol, as specified in section 4.1 of
+  // RFC5880.
+  optional uint32 version = 15 [json_name = "version"];
+
+  // The Your Discriminator value in the BFD packet. This is specified in
+  // section 4.1 of RFC5880
+  optional uint32 your_discriminator = 16 [json_name = "yourDiscriminator"];
 }
 
-message ForwardingRuleReference {
-  optional string forwarding_rule = 1 [json_name = "forwardingRule"];
+// Next free: 15
+message BfdStatus {
+  // The BFD session initialization mode for this BGP peer. If set to ACTIVE,
+  // the Cloud Router will initiate the BFD session for this BGP peer. If set to
+  // PASSIVE, the Cloud Router will wait for the peer router to initiate the BFD
+  // session for this BGP peer. If set to DISABLED, BFD is disabled for this BGP
+  // peer.
+  // ACTIVE:
+  // DISABLED:
+  // PASSIVE:
+  optional string bfd_session_initialization_mode = 1
+      [json_name = "bfdSessionInitializationMode"];
+
+  // Unix timestamp of the most recent config update.
+  optional string config_update_timestamp_micros = 2
+      [json_name = "configUpdateTimestampMicros"];
+
+  // Control packet counts for the current BFD session.
+  optional BfdStatusPacketCounts control_packet_counts = 3
+      [json_name = "controlPacketCounts"];
+
+  // Inter-packet time interval statistics for control packets.
+  repeated PacketIntervals control_packet_intervals = 4
+      [json_name = "controlPacketIntervals"];
+
+  // The diagnostic code specifies the local system's reason for the last change
+  // in session state. This allows remote systems to determine the reason that
+  // the previous session failed, for example. These diagnostic codes are
+  // specified in section 4.1 of RFC5880
+  // ADMINISTRATIVELY_DOWN:
+  // CONCATENATED_PATH_DOWN:
+  // CONTROL_DETECTION_TIME_EXPIRED:
+  // DIAGNOSTIC_UNSPECIFIED:
+  // ECHO_FUNCTION_FAILED:
+  // FORWARDING_PLANE_RESET:
+  // NEIGHBOR_SIGNALED_SESSION_DOWN:
+  // NO_DIAGNOSTIC:
+  // PATH_DOWN:
+  // REVERSE_CONCATENATED_PATH_DOWN:
+  optional string local_diagnostic = 5 [json_name = "localDiagnostic"];
+
+  // The current BFD session state as seen by the transmitting system. These
+  // states are specified in section 4.1 of RFC5880
+  // ADMIN_DOWN:
+  // DOWN:
+  // INIT:
+  // STATE_UNSPECIFIED:
+  // UP:
+  optional string local_state = 6 [json_name = "localState"];
+
+  // Negotiated transmit interval for control packets.
+  optional uint32 negotiated_local_control_tx_interval_ms = 7
+      [json_name = "negotiatedLocalControlTxIntervalMs"];
+
+  // The most recent Rx control packet for this BFD session.
+  optional BfdPacket rx_packet = 8 [json_name = "rxPacket"];
+
+  // The most recent Tx control packet for this BFD session.
+  optional BfdPacket tx_packet = 9 [json_name = "txPacket"];
+
+  // Session uptime in milliseconds. Value will be 0 if session is not up.
+  optional string uptime_ms = 10 [json_name = "uptimeMs"];
 }
 
-// A full or valid partial URL to a health check service. For example, the
-// following are valid URLs: -
-// https://www.googleapis.com/compute/beta/projects/project-id/regions/us-west1/healthCheckServices/health-check-service
-// -
-// projects/project-id/regions/us-west1/healthCheckServices/health-check-service
-// - regions/us-west1/healthCheckServices/health-check-service
-message HealthCheckServiceReference {
-  optional string health_check_service = 1 [json_name = "healthCheckService"];
+message BfdStatusPacketCounts {
+  // Number of packets received since the beginning of the current BFD session.
+  optional uint32 num_rx = 1 [json_name = "numRx"];
+
+  // Number of packets received that were rejected because of errors since the
+  // beginning of the current BFD session.
+  optional uint32 num_rx_rejected = 2 [json_name = "numRxRejected"];
+
+  // Number of packets received that were successfully processed since the
+  // beginning of the current BFD session.
+  optional uint32 num_rx_successful = 3 [json_name = "numRxSuccessful"];
+
+  // Number of packets transmitted since the beginning of the current BFD
+  // session.
+  optional uint32 num_tx = 4 [json_name = "numTx"];
 }
 
 message BgpRoute {
@@ -91,87 +239,42 @@ message NatIpInfo {
   repeated NatIpInfoNatIpInfoMapping nat_ip_info_mappings = 1
       [json_name = "natIpInfoMappings"];
 
-  // URL of the forwarding rule associated with the health state of the network
-  // endpoint.
-  optional ForwardingRuleReference forwarding_rule = 2
-      [json_name = "forwardingRule"];
-
-  // URL of the health check associated with the health state of the network
-  // endpoint.
-  optional HealthCheckReference health_check = 3 [json_name = "healthCheck"];
-
-  // URL of the health check service associated with the health state of the
-  // network endpoint.
-  optional HealthCheckServiceReference health_check_service = 4
-      [json_name = "healthCheckService"];
-
-  // Health state of the network endpoint determined based on the health checks
-  // configured.
-  // DRAINING: Endpoint is being drained.
-  // HEALTHY: Endpoint is healthy.
-  // UNHEALTHY: Endpoint is unhealthy.
-  // UNKNOWN: Health status of the endpoint is unknown.
-  optional string health_state = 5 [json_name = "healthState"];
+  // Name of the NAT config which the NAT IP belongs to.
+  optional string nat_name = 2 [json_name = "natName"];
 }
 
-// The network endpoint.
-message NetworkEndpoint {
-  // Metadata defined as annotations on the network endpoint.
-  map<string, string> annotations = 1 [json_name = "annotations"];
+// Contains information of a NAT IP.
+message NatIpInfoNatIpInfoMapping {
+  // Specifies whether NAT IP is auto or manual.
+  // AUTO:
+  // MANUAL:
+  optional string mode = 1 [json_name = "mode"];
 
-  // Represents the port number to which PSC consumer sends packets. Only valid
-  // for network endpoint groups created with GCE_VM_IP_PORTMAP endpoint type.
-  optional int32 client_destination_port = 6
-      [json_name = "clientDestinationPort"];
+  // NAT IP address. For example: 203.0.113.11.
+  optional string nat_ip = 2 [json_name = "natIp"];
 
-  // Optional fully qualified domain name of network endpoint. This can only be
-  // specified when NetworkEndpointGroup.network_endpoint_type is
-  // NON_GCP_FQDN_PORT.
-  optional string fqdn = 2 [json_name = "fqdn"];
-
-  // The name or a URL of VM instance of this network endpoint. This field is
-  // required for network endpoints of type GCE_VM_IP and GCE_VM_IP_PORT. The
-  // instance must be in the same zone of network endpoint group (for zonal
-  // NEGs) or in the zone within the region of the NEG (for regional NEGs). If
-  // the ipAddress is specified, it must belongs to the VM instance. The name
-  // must be 1-63 characters long, and comply with RFC1035 or be a valid URL
-  // pointing to an existing instance.
-  optional string instance = 3 [json_name = "instance"];
-
-  // Optional IPv4 address of network endpoint. The IP address must belong to a
-  // VM in Compute Engine (either the primary IP or as part of an aliased IP
-  // range). If the IP address is not specified, then the primary IP address for
-  // the VM instance in the network that the network endpoint group belongs to
-  // will be used. This field is redundant and need not be set for network
-  // endpoints of type GCE_VM_IP. If set, it must be set to the primary internal
-  // IP address of the attached VM instance that matches the subnetwork of the
-  // NEG. The primary internal IP address from any NIC of a multi-NIC VM
-  // instance can be added to a NEG as long as it matches the NEG subnetwork.
-  optional string ip_address = 4 [json_name = "ipAddress"];
-
-  // Optional port number of network endpoint. If not specified, the defaultPort
-  // for the network endpoint group will be used. This field can not be set for
-  // network endpoints of type GCE_VM_IP.
-  optional int32 port = 5 [json_name = "port"];
+  // Specifies whether NAT IP is currently serving at least one endpoint or not.
+  // IN_USE:
+  // UNUSED:
+  optional string usage = 3 [json_name = "usage"];
 }
 
-// Represents a collection of network endpoints. A network endpoint group (NEG)
-// defines how a set of endpoints should be reached, whether they are reachable,
-// and where they are located. For more information about using NEGs for
-// different use cases, see Network endpoint groups overview.
-message NetworkEndpointGroup {
-  // Metadata defined as annotations on the network endpoint group.
-  map<string, string> annotations = 1 [json_name = "annotations"];
+message NatIpInfoResponse {
+  // [Output Only] A list of NAT IP information.
+  repeated NatIpInfo result = 1 [json_name = "result"];
+}
 
-  // Only valid when networkEndpointType is SERVERLESS. Only one of cloudRun,
-  // appEngine or cloudFunction may be set.
-  optional NetworkEndpointGroupAppEngine app_engine = 2
-      [json_name = "appEngine"];
+// Next free: 7
+message PacketIntervals {
+  // Average observed inter-packet interval in milliseconds.
+  optional string avg_ms = 1 [json_name = "avgMs"];
 
-  // Only valid when networkEndpointType is SERVERLESS. Only one of cloudRun,
-  // appEngine or cloudFunction may be set.
-  optional NetworkEndpointGroupCloudFunction cloud_function = 3
-      [json_name = "cloudFunction"];
+  // From how long ago in the past these intervals were observed.
+  // DURATION_UNSPECIFIED:
+  // HOUR:
+  // MAX: From BfdSession object creation time.
+  // MINUTE:
+  optional string duration = 2 [json_name = "duration"];
 
   // Maximum observed inter-packet interval in milliseconds.
   optional string max_ms = 3 [json_name = "maxMs"];
@@ -243,26 +346,36 @@ message Router {
   repeated RouterBgpPeer bgp_peers = 2 [json_name = "bgpPeers"];
 
   // [Output Only] Creation timestamp in RFC3339 text format.
-  optional string creation_timestamp = 5 [json_name = "creationTimestamp"];
-
-  // The default port used if the port number is not specified in the network
-  // endpoint. If the network endpoint type is either GCE_VM_IP, SERVERLESS or
-  // PRIVATE_SERVICE_CONNECT, this field must not be specified.
-  optional int32 default_port = 6 [json_name = "defaultPort"];
+  optional string creation_timestamp = 3 [json_name = "creationTimestamp"];
 
   // An optional description of this resource. Provide this property when you
   // create the resource.
-  optional string description = 7 [json_name = "description"];
+  optional string description = 4 [json_name = "description"];
+
+  // Indicates if a router is dedicated for use with encrypted VLAN attachments
+  // (interconnectAttachments).
+  optional bool encrypted_interconnect_router = 5
+      [json_name = "encryptedInterconnectRouter"];
 
   // [Output Only] The unique identifier for the resource. This identifier is
   // defined by the server.
-  optional string id = 8 [json_name = "id"];
+  optional string id = 6 [json_name = "id"];
 
-  // [Output Only] Type of the resource. Always compute#networkEndpointGroup for
-  // network endpoint group.
-  optional string kind = 9 [json_name = "kind"];
+  // Router interfaces. To create a BGP peer that uses a router interface, the
+  // interface must have one of the following fields specified: -
+  // linkedVpnTunnel - linkedInterconnectAttachment - subnetwork You can create
+  // a router interface without any of these fields specified. However, you
+  // cannot create a BGP peer that uses that interface.
+  repeated RouterInterface interfaces = 7 [json_name = "interfaces"];
 
-  // Name of the resource; provided by the client when the resource is created.
+  // [Output Only] Type of resource. Always compute#router for routers.
+  optional string kind = 8 [json_name = "kind"];
+
+  // Keys used for MD5 authentication.
+  repeated RouterMd5AuthenticationKey md5_authentication_keys = 9
+      [json_name = "md5AuthenticationKeys"];
+
+  // Name of the resource. Provided by the client when the resource is created.
   // The name must be 1-63 characters long, and comply with RFC1035.
   // Specifically, the name must be 1-63 characters long and match the regular
   // expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character
@@ -271,136 +384,37 @@ message Router {
   // dash.
   optional string name = 10 [json_name = "name"];
 
-  // The URL of the network to which all network endpoints in the NEG belong.
-  // Uses default project network if unspecified.
-  optional string network = 11 [json_name = "network"];
+  // A list of NAT services created in this router.
+  repeated RouterNat nats = 11 [json_name = "nats"];
 
-  // Type of network endpoints in this network endpoint group. Can be one of
-  // GCE_VM_IP, GCE_VM_IP_PORT, NON_GCP_PRIVATE_IP_PORT, INTERNET_FQDN_PORT,
-  // INTERNET_IP_PORT, SERVERLESS, PRIVATE_SERVICE_CONNECT, GCE_VM_IP_PORTMAP.
-  // GCE_VM_IP: The network endpoint is represented by an IP address.
-  // GCE_VM_IP_PORT: The network endpoint is represented by IP address and port
-  // pair.
-  // GCE_VM_IP_PORTMAP: The network endpoint is represented by an IP, Port and
-  // Client Destination Port.
-  // INTERNET_FQDN_PORT: The network endpoint is represented by fully qualified
-  // domain name and port.
-  // INTERNET_IP_PORT: The network endpoint is represented by an internet IP
-  // address and port.
-  // NON_GCP_PRIVATE_IP_PORT: The network endpoint is represented by an IP
-  // address and port. The endpoint belongs to a VM or pod running in a
-  // customer's on-premises.
-  // PRIVATE_SERVICE_CONNECT: The network endpoint is either public Google APIs
-  // or services exposed by other GCP Project with a Service Attachment. The
-  // connection is set up by private service connect
-  // SERVERLESS: The network endpoint is handled by specified serverless
-  // infrastructure.
-  optional string network_endpoint_type = 12
-      [json_name = "networkEndpointType"];
+  // URI of the network to which this router belongs.
+  optional string network = 12 [json_name = "network"];
 
-  optional NetworkEndpointGroupPscData psc_data = 13 [json_name = "pscData"];
-
-  // The target service url used to set up private service connection to a
-  // Google API or a PSC Producer Service Attachment. An example value is:
-  // asia-northeast3-cloudkms.googleapis.com
-  optional string psc_target_service = 14 [json_name = "pscTargetService"];
-
-  // [Output Only] The URL of the region where the network endpoint group is
-  // located.
-  optional string region = 15 [json_name = "region"];
+  // [Output Only] URI of the region where the router resides. You must specify
+  // this field as part of the HTTP request URL. It is not settable as a field
+  // in the request body.
+  optional string region = 13 [json_name = "region"];
 
   // [Output Only] Server-defined URL for the resource.
-  optional string self_link = 16 [json_name = "selfLink"];
-
-  // [Output only] Number of network endpoints in the network endpoint group.
-  optional int32 size = 17 [json_name = "size"];
-
-  // Optional URL of the subnetwork to which all network endpoints in the NEG
-  // belong.
-  optional string subnetwork = 18 [json_name = "subnetwork"];
-
-  // [Output Only] The URL of the zone where the network endpoint group is
-  // located.
-  optional string zone = 19 [json_name = "zone"];
+  optional string self_link = 14 [json_name = "selfLink"];
 }
 
-// Configuration for an App Engine network endpoint group (NEG). The service is
-// optional, may be provided explicitly or in the URL mask. The version is
-// optional and can only be provided explicitly or in the URL mask when service
-// is present. Note: App Engine service must be in the same project and located
-// in the same region as the Serverless NEG.
-message NetworkEndpointGroupAppEngine {
-  // Optional serving service. The service name is case-sensitive and must be
-  // 1-63 characters long. Example value: default, my-service.
-  optional string service = 1 [json_name = "service"];
+// Description-tagged IP ranges for the router to advertise.
+message RouterAdvertisedIpRange {
+  // User-specified description for the IP range.
+  optional string description = 1 [json_name = "description"];
 
-  // An URL mask is one of the main components of the Cloud Function. A template
-  // to parse service and version fields from a request URL. URL mask allows for
-  // routing to multiple App Engine services without having to create multiple
-  // Network Endpoint Groups and backend services. For example, the request URLs
-  // foo1-dot-appname.appspot.com/v1 and foo1-dot-appname.appspot.com/v2 can be
-  // backed by the same Serverless NEG with URL mask
-  // <service>-dot-appname.appspot.com/<version>. The URL mask will parse them
-  // to { service = "foo1", version = "v1" } and { service = "foo1", version =
-  // "v2" } respectively.
-  optional string url_mask = 2 [json_name = "urlMask"];
-
-  // Optional serving version. The version name is case-sensitive and must be
-  // 1-100 characters long. Example value: v1, v2.
-  optional string version = 3 [json_name = "version"];
+  // The IP range to advertise. The value must be a CIDR-formatted string.
+  optional string range = 2 [json_name = "range"];
 }
 
-// Configuration for a Cloud Function network endpoint group (NEG). The function
-// must be provided explicitly or in the URL mask. Note: Cloud Function must be
-// in the same project and located in the same region as the Serverless NEG.
-message NetworkEndpointGroupCloudFunction {
-  // A user-defined name of the Cloud Function. The function name is
-  // case-sensitive and must be 1-63 characters long. Example value: func1.
-  optional string function = 1 [json_name = "function"];
-
-  // An URL mask is one of the main components of the Cloud Function. A template
-  // to parse function field from a request URL. URL mask allows for routing to
-  // multiple Cloud Functions without having to create multiple Network Endpoint
-  // Groups and backend services. For example, request URLs
-  // mydomain.com/function1 and mydomain.com/function2 can be backed by the same
-  // Serverless NEG with URL mask /<function>. The URL mask will parse them to {
-  // function = "function1" } and { function = "function2" } respectively.
-  optional string url_mask = 2 [json_name = "urlMask"];
-}
-
-// Configuration for a Cloud Run network endpoint group (NEG). The service must
-// be provided explicitly or in the URL mask. The tag is optional, may be
-// provided explicitly or in the URL mask. Note: Cloud Run service must be in
-// the same project and located in the same region as the Serverless NEG.
-message NetworkEndpointGroupCloudRun {
-  // Cloud Run service is the main resource of Cloud Run. The service must be
-  // 1-63 characters long, and comply with RFC1035. Example value:
-  // "run-service".
-  optional string service = 1 [json_name = "service"];
-
-  // Optional Cloud Run tag represents the "named-revision" to provide
-  // additional fine-grained traffic routing information. The tag must be 1-63
-  // characters long, and comply with RFC1035. Example value: "revision-0010".
-  optional string tag = 2 [json_name = "tag"];
-
-  // An URL mask is one of the main components of the Cloud Function. A template
-  // to parse <service> and <tag> fields from a request URL. URL mask allows for
-  // routing to multiple Run services without having to create multiple network
-  // endpoint groups and backend services. For example, request URLs
-  // foo1.domain.com/bar1 and foo1.domain.com/bar2 can be backed by the same
-  // Serverless Network Endpoint Group (NEG) with URL mask
-  // <tag>.domain.com/<service>. The URL mask will parse them to {
-  // service="bar1", tag="foo1" } and { service="bar2", tag="foo2" }
-  // respectively.
-  optional string url_mask = 3 [json_name = "urlMask"];
-}
-
-message NetworkEndpointGroupList {
+// Contains a list of routers.
+message RouterAggregatedList {
   // [Output Only] Unique identifier for the resource; defined by the server.
   optional string id = 1 [json_name = "id"];
 
-  // A list of NetworkEndpointGroup resources.
-  repeated NetworkEndpointGroup items = 2 [json_name = "items"];
+  // A list of Router resources.
+  map<string, RoutersScopedList> items = 2 [json_name = "items"];
 
   // Type of resource.
   optional string kind = 3 [json_name = "kind"];
@@ -910,34 +924,16 @@ message RouterList {
   optional Warning warning = 6 [json_name = "warning"];
 }
 
-// All data that is specifically relevant to only network endpoint groups of
-// type PRIVATE_SERVICE_CONNECT.
-message NetworkEndpointGroupPscData {
-  // [Output Only] Address allocated from given subnetwork for PSC. This IP
-  // address acts as a VIP for a PSC NEG, allowing it to act as an endpoint in
-  // L7 PSC-XLB.
-  optional string consumer_psc_address = 1 [json_name = "consumerPscAddress"];
+message RouterMd5AuthenticationKey {
+  // [Input only] Value of the key. For patch and update calls, it can be
+  // skipped to copy the value from the previous configuration. This is allowed
+  // if the key with the same name existed before the operation. Maximum length
+  // is 80 characters. Can only contain printable ASCII characters.
+  optional string key = 1 [json_name = "key"];
 
-  // The psc producer port is used to connect PSC NEG with specific port on the
-  // PSC Producer side; should only be used for the PRIVATE_SERVICE_CONNECT NEG
-  // type
-  optional int32 producer_port = 4 [json_name = "producerPort"];
-
-  // [Output Only] The PSC connection id of the PSC Network Endpoint Group
-  // Consumer.
-  optional string psc_connection_id = 2 [json_name = "pscConnectionId"];
-
-  // [Output Only] The connection status of the PSC Forwarding Rule.
-  // ACCEPTED: The connection has been accepted by the producer.
-  // CLOSED: The connection has been closed by the producer and will not serve
-  // traffic going forward.
-  // NEEDS_ATTENTION: The connection has been accepted by the producer, but the
-  // producer needs to take further action before the forwarding rule can serve
-  // traffic.
-  // PENDING: The connection is pending acceptance by the producer.
-  // REJECTED: The connection has been rejected by the producer.
-  // STATUS_UNSPECIFIED:
-  optional string psc_connection_status = 3 [json_name = "pscConnectionStatus"];
+  // Name used to identify the key. Must be unique within a router. Must be
+  // referenced by exactly one bgpPeer. Must comply with RFC1035.
+  optional string name = 2 [json_name = "name"];
 }
 
 // Represents a Nat resource. It enables the VMs within the specified
@@ -1746,20 +1742,22 @@ message VmEndpointNatMappingsList {
   // defined by the server.
   optional string id = 1 [json_name = "id"];
 
-  // A list of NetworkEndpointWithHealthStatus resources.
-  repeated NetworkEndpointWithHealthStatus items = 2 [json_name = "items"];
-
-  // [Output Only] The resource type, which is always
-  // compute#networkEndpointGroupsListNetworkEndpoints for the list of network
-  // endpoints in the specified network endpoint group.
-  optional string kind = 3 [json_name = "kind"];
+  // [Output Only] Type of resource. Always compute#vmEndpointNatMappingsList
+  // for lists of Nat mappings of VM endpoints.
+  optional string kind = 2 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 4 [json_name = "nextPageToken"];
+  optional string next_page_token = 3 [json_name = "nextPageToken"];
+
+  // [Output Only] A list of Nat mapping information of VM endpoints.
+  repeated VmEndpointNatMappings result = 4 [json_name = "result"];
+
+  // [Output Only] Server-defined URL for this resource.
+  optional string self_link = 5 [json_name = "selfLink"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -1845,13 +1843,5 @@ message VmEndpointNatMappingsList {
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 5 [json_name = "warning"];
-}
-
-message NetworkEndpointWithHealthStatus {
-  // [Output only] The health status of network endpoint;
-  repeated HealthStatusForNetworkEndpoint healths = 1 [json_name = "healths"];
-
-  // [Output only] The network endpoint;
-  optional NetworkEndpoint network_endpoint = 2 [json_name = "networkEndpoint"];
+  optional Warning warning = 6 [json_name = "warning"];
 }

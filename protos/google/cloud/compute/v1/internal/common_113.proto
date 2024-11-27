@@ -21,15 +21,15 @@ syntax = "proto3";
 
 package google.cloud.cpp.compute.v1;
 
-// Represents a ServiceAttachment resource. A service attachment represents a
-// service that a producer has exposed. It encapsulates the load balancer which
-// fronts the service runs and a list of NAT IP ranges that the producers uses
-// to represent the consumers connecting to the service.
-message ServiceAttachment {
-  // [Output Only] An array of connections for all the consumers connected to
-  // this service attachment.
-  repeated ServiceAttachmentConnectedEndpoint connected_endpoints = 1
-      [json_name = "connectedEndpoints"];
+// Represents a customer-supplied Signing Key used by Cloud CDN Signed URLs
+message SignedUrlKey {
+  // Name of the key. The name must be 1-63 characters long, and comply with
+  // RFC1035. Specifically, the name must be 1-63 characters long and match the
+  // regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first
+  // character must be a lowercase letter, and all following characters must be
+  // a dash, lowercase letter, or digit, except the last character, which cannot
+  // be a dash.
+  optional string key_name = 1 [json_name = "keyName"];
 
   // The connection preference of service attachment. The value can be set to
   // ACCEPT_AUTOMATIC. An ACCEPT_AUTOMATIC service attachment is one that always

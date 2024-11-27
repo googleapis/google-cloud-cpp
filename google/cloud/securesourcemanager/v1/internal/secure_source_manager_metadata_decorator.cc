@@ -203,6 +203,97 @@ SecureSourceManagerMetadata::TestIamPermissionsRepo(
   return child_->TestIamPermissionsRepo(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerMetadata::AsyncCreateBranchRule(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateBranchRule(cq, std::move(context),
+                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerMetadata::CreateBranchRule(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateBranchRule(context, options, request);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::ListBranchRulesResponse>
+SecureSourceManagerMetadata::ListBranchRules(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::ListBranchRulesRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListBranchRules(context, options, request);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::BranchRule>
+SecureSourceManagerMetadata::GetBranchRule(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::GetBranchRuleRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetBranchRule(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerMetadata::AsyncUpdateBranchRule(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("branch_rule.name=",
+                           internal::UrlEncode(request.branch_rule().name())));
+  return child_->AsyncUpdateBranchRule(cq, std::move(context),
+                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerMetadata::UpdateBranchRule(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("branch_rule.name=",
+                           internal::UrlEncode(request.branch_rule().name())));
+  return child_->UpdateBranchRule(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerMetadata::AsyncDeleteBranchRule(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteBranchRule(cq, std::move(context),
+                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerMetadata::DeleteBranchRule(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteBranchRule(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 SecureSourceManagerMetadata::ListLocations(
     grpc::ClientContext& context, Options const& options,

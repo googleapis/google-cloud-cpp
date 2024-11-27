@@ -24,8 +24,8 @@ package google.cloud.cpp.compute.disk_types.v1;
 import "google/api/annotations.proto";
 import "google/api/client.proto";
 import "google/api/field_behavior.proto";
+import "google/cloud/compute/v1/internal/common_026.proto";
 import "google/cloud/compute/v1/internal/common_027.proto";
-import "google/cloud/compute/v1/internal/common_028.proto";
 
 // Service for the diskTypes resource.
 // https://cloud.google.com/compute/docs/reference/rest/v1/diskTypes

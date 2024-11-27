@@ -21,46 +21,45 @@ syntax = "proto3";
 
 package google.cloud.cpp.compute.v1;
 
-import "google/cloud/compute/v1/internal/common_030.proto";
-import "google/cloud/compute/v1/internal/common_079.proto";
+message CustomerEncryptionKey {
+  // The name of the encryption key that is stored in Google Cloud KMS. For
+  // example: "kmsKeyName": "projects/kms_project_id/locations/region/keyRings/
+  // key_region/cryptoKeys/key The fully-qualifed key name may be returned for
+  // resource GET requests. For example: "kmsKeyName":
+  // "projects/kms_project_id/locations/region/keyRings/
+  // key_region/cryptoKeys/key /cryptoKeyVersions/1
+  optional string kms_key_name = 1 [json_name = "kmsKeyName"];
 
-// The specification for allowing client-side cross-origin requests. For more
-// information about the W3C recommendation for cross-origin resource sharing
-// (CORS), see Fetch API Living Standard.
-message CorsPolicy {
-  // In response to a preflight request, setting this to true indicates that the
-  // actual request can include user credentials. This field translates to the
-  // Access-Control-Allow-Credentials header. Default is false.
-  optional bool allow_credentials = 1 [json_name = "allowCredentials"];
+  // The service account being used for the encryption request for the given KMS
+  // key. If absent, the Compute Engine default service account is used. For
+  // example: "kmsKeyServiceAccount": "name@project_id.iam.gserviceaccount.com/
+  optional string kms_key_service_account = 2
+      [json_name = "kmsKeyServiceAccount"];
 
-  // Specifies the content for the Access-Control-Allow-Headers header.
-  repeated string allow_headers = 2 [json_name = "allowHeaders"];
+  // Specifies a 256-bit customer-supplied encryption key, encoded in RFC 4648
+  // base64 to either encrypt or decrypt this resource. You can provide either
+  // the rawKey or the rsaEncryptedKey. For example: "rawKey":
+  // "SGVsbG8gZnJvbSBHb29nbGUgQ2xvdWQgUGxhdGZvcm0="
+  optional string raw_key = 3 [json_name = "rawKey"];
 
-  // Specifies the content for the Access-Control-Allow-Methods header.
-  repeated string allow_methods = 3 [json_name = "allowMethods"];
+  // Specifies an RFC 4648 base64 encoded, RSA-wrapped 2048-bit
+  // customer-supplied encryption key to either encrypt or decrypt this
+  // resource. You can provide either the rawKey or the rsaEncryptedKey. For
+  // example: "rsaEncryptedKey":
+  // "ieCx/NcW06PcT7Ep1X6LUTc/hLvUDYyzSZPPVCVPTVEohpeHASqC8uw5TzyO9U+Fka9JFH
+  // z0mBibXUInrC/jEk014kCK/NPjYgEMOyssZ4ZINPKxlUh2zn1bV+MCaTICrdmuSBTWlUUiFoD
+  // D6PYznLwh8ZNdaheCeZ8ewEXgFQ8V+sDroLaN3Xs3MDTXQEMMoNUXMCZEIpg9Vtp9x2oe=="
+  // The key must meet the following requirements before you can provide it to
+  // Compute Engine: 1. The key is wrapped using a RSA public key certificate
+  // provided by Google. 2. After being wrapped, the key must be encoded in RFC
+  // 4648 base64 encoding. Gets the RSA public key certificate provided by
+  // Google at:
+  // https://cloud-certs.storage.googleapis.com/google-cloud-csek-ingress.pem
+  optional string rsa_encrypted_key = 4 [json_name = "rsaEncryptedKey"];
 
-  // Specifies a regular expression that matches allowed origins. For more
-  // information, see regular expression syntax . An origin is allowed if it
-  // matches either an item in allowOrigins or an item in allowOriginRegexes.
-  // Regular expressions can only be used when the loadBalancingScheme is set to
-  // INTERNAL_SELF_MANAGED.
-  repeated string allow_origin_regexes = 4 [json_name = "allowOriginRegexes"];
-
-  // Specifies the list of origins that is allowed to do CORS requests. An
-  // origin is allowed if it matches either an item in allowOrigins or an item
-  // in allowOriginRegexes.
-  repeated string allow_origins = 5 [json_name = "allowOrigins"];
-
-  // If true, disables the CORS policy. The default value is false, which
-  // indicates that the CORS policy is in effect.
-  optional bool disabled = 6 [json_name = "disabled"];
-
-  // Specifies the content for the Access-Control-Expose-Headers header.
-  repeated string expose_headers = 7 [json_name = "exposeHeaders"];
-
-  // Specifies how long results of a preflight request can be cached in seconds.
-  // This field translates to the Access-Control-Max-Age header.
-  optional int32 max_age = 8 [json_name = "maxAge"];
+  // [Output only] The RFC 4648 base64 encoded SHA-256 hash of the
+  // customer-supplied encryption key that protects this resource.
+  optional string sha256 = 5 [json_name = "sha256"];
 }
 
 // Guest OS features.
