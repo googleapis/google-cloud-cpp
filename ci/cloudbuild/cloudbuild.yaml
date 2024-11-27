@@ -70,11 +70,14 @@ availableSecrets:
     env: 'UD_PROJECT'
   - versionName: 'projects/${PROJECT_ID}/secrets/UD_REGION/versions/latest'
     env: 'UD_REGION'
+  - versionName: 'projects/${PROJECT_ID}/secrets/UD_ZONE/versions/latest'
+    env: 'UD_ZONE'
   - versionName: 'projects/${PROJECT_ID}/secrets/UD_SERVICE_ACCOUNT/versions/latest'
     env: 'UD_SERVICE_ACCOUNT'
   - versionName: 'projects/${PROJECT_ID}/secrets/UD_SERVICE_ACCOUNT_NAME/versions/latest'
     env: 'UD_SERVICE_ACCOUNT_NAME'
-
+  - versionName: 'projects/${PROJECT_ID}/secrets/UD_IMPERSONATED_SERVICE_ACCOUNT_NAME/versions/latest'
+    env: 'UD_IMPERSONATED_SERVICE_ACCOUNT_NAME'
 
 logsBucket: 'gs://${_LOGS_BUCKET}/logs/google-cloud-cpp/${_TRIGGER_SOURCE}/${COMMIT_SHA}/${_DISTRO}-${_BUILD_NAME}-${_SHARD}'
 
@@ -112,7 +115,7 @@ steps:
 - name: '${_POOL_REGION}-docker.pkg.dev/${PROJECT_ID}/gcb/${_IMAGE}:${BUILD_ID}'
   entrypoint: 'ci/cloudbuild/build.sh'
   args: [ '--local', '--build', '${_BUILD_NAME}' ]
-  secretEnv: ['CODECOV_TOKEN', 'UD', 'UD_PROJECT', 'UD_REGION', 'UD_SERVICE_ACCOUNT', 'UD_SERVICE_ACCOUNT_NAME']
+  secretEnv: ['CODECOV_TOKEN', 'UD', 'UD_PROJECT', 'UD_REGION', 'UD_ZONE', 'UD_SERVICE_ACCOUNT', 'UD_SERVICE_ACCOUNT_NAME', 'UD_IMPERSONATED_SERVICE_ACCOUNT_NAME']
   env: [
     'BAZEL_REMOTE_CACHE=https://storage.googleapis.com/${_CACHE_BUCKET}/bazel-cache/${_DISTRO}-${_BUILD_NAME}',
     'LIBRARIES=${_LIBRARIES}',
