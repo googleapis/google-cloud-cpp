@@ -21,6 +21,24 @@ syntax = "proto3";
 
 package google.cloud.cpp.compute.v1;
 
-message SecurityPolicyReference {
-  optional string security_policy = 1 [json_name = "securityPolicy"];
+// The share setting for reservations and sole tenancy node groups.
+message ShareSettings {
+  // A map of project id and project config. This is only valid when
+  // share_type's value is SPECIFIC_PROJECTS.
+  map<string, ShareSettingsProjectConfig> project_map = 1
+      [json_name = "projectMap"];
+
+  // Type of sharing for this shared-reservation
+  // LOCAL: Default value.
+  // ORGANIZATION: Shared-reservation is open to entire Organization
+  // SHARE_TYPE_UNSPECIFIED: Default value. This value is unused.
+  // SPECIFIC_PROJECTS: Shared-reservation is open to specific projects
+  optional string share_type = 2 [json_name = "shareType"];
+}
+
+// Config for each project in the share settings.
+message ShareSettingsProjectConfig {
+  // The project ID, should be same as the key of this project config in the
+  // parent map.
+  optional string project_id = 1 [json_name = "projectId"];
 }

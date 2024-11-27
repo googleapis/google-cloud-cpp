@@ -26,9 +26,10 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NETWORK_FIREWALL_POLICIES_V1_NETWORK_FIREWALL_POLICIES_PROTO_EXPORT_H
 
 // IWYU pragma: begin_exports
-#include <google/cloud/compute/v1/internal/common_008.pb.h>
-#include <google/cloud/compute/v1/internal/common_017.pb.h>
-#include <google/cloud/compute/v1/internal/common_032.pb.h>
+#include <google/cloud/compute/v1/internal/common_007.pb.h>
+#include <google/cloud/compute/v1/internal/common_016.pb.h>
+#include <google/cloud/compute/v1/internal/common_031.pb.h>
+#include <google/cloud/compute/v1/internal/common_037.pb.h>
 #include <google/cloud/compute/v1/internal/common_038.pb.h>
 #include <google/cloud/compute/v1/internal/common_039.pb.h>
 #include <google/cloud/compute/v1/internal/common_047.pb.h>

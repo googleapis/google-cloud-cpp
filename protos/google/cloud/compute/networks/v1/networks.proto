@@ -24,8 +24,8 @@ package google.cloud.cpp.compute.networks.v1;
 import "google/api/annotations.proto";
 import "google/api/client.proto";
 import "google/api/field_behavior.proto";
-import "google/cloud/compute/v1/internal/common_017.proto";
-import "google/cloud/compute/v1/internal/common_031.proto";
+import "google/cloud/compute/v1/internal/common_016.proto";
+import "google/cloud/compute/v1/internal/common_030.proto";
 import "google/cloud/extended_operations.proto";
 
 // Service for the networks resource.

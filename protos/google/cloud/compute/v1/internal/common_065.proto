@@ -133,7 +133,9 @@ message InstantSnapshotList {
   // A list of InstantSnapshot resources.
   repeated InstantSnapshot items = 2 [json_name = "items"];
 
-  // Type of resource.
+  // [Output Only] Type of resource. Always
+  // compute#instantSnapshotAggregatedList for aggregated lists of
+  // instantSnapshots.
   optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
@@ -145,6 +147,9 @@ message InstantSnapshotList {
 
   // [Output Only] Server-defined URL for this resource.
   optional string self_link = 5 [json_name = "selfLink"];
+
+  // [Output Only] Unreachable resources.
+  repeated string unreachables = 6 [json_name = "unreachables"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -230,7 +235,7 @@ message InstantSnapshotList {
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 6 [json_name = "warning"];
+  optional Warning warning = 7 [json_name = "warning"];
 }
 
 message InstantSnapshotResourceStatus {

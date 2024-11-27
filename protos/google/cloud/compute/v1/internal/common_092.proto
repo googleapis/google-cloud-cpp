@@ -21,28 +21,181 @@ syntax = "proto3";
 
 package google.cloud.cpp.compute.v1;
 
-// A PublicDelegatedPrefix resource represents an IP block within a
-// PublicAdvertisedPrefix that is configured within a single cloud scope (global
-// or region). IPs in the block can be allocated to resources within that scope.
-// Public delegated prefixes may be further broken up into smaller IP blocks in
-// the same scope as the parent block.
-message PublicDelegatedPrefix {
-  // The allocatable prefix length supported by this public delegated prefix.
-  // This field is optional and cannot be set for prefixes in DELEGATION mode.
-  // It cannot be set for IPv4 prefixes either, and it always defaults to 32.
-  optional int32 allocatable_prefix_length = 15
-      [json_name = "allocatablePrefixLength"];
+// A quotas entry.
+message Quota {
+  // [Output Only] Quota limit for this metric.
+  optional double limit = 1 [json_name = "limit"];
 
-  // [Output Only] The version of BYOIP API.
-  // V1: This public delegated prefix usually takes 4 weeks to delete, and the
-  // BGP status cannot be changed. Announce and Withdraw APIs can not be used on
-  // this prefix.
-  // V2: This public delegated prefix takes minutes to delete. Announce and
-  // Withdraw APIs can be used on this prefix to change the BGP status.
-  optional string byoip_api_version = 14 [json_name = "byoipApiVersion"];
+  // [Output Only] Name of the quota metric.
+  // A2_CPUS:
+  // AFFINITY_GROUPS:
+  // AUTOSCALERS:
+  // BACKEND_BUCKETS:
+  // BACKEND_SERVICES:
+  // C2D_CPUS:
+  // C2_CPUS:
+  // C3_CPUS:
+  // COMMITMENTS:
+  // COMMITTED_A2_CPUS:
+  // COMMITTED_C2D_CPUS:
+  // COMMITTED_C2_CPUS:
+  // COMMITTED_C3_CPUS:
+  // COMMITTED_CPUS:
+  // COMMITTED_E2_CPUS:
+  // COMMITTED_LICENSES:
+  // COMMITTED_LOCAL_SSD_TOTAL_GB:
+  // COMMITTED_M3_CPUS:
+  // COMMITTED_MEMORY_OPTIMIZED_CPUS:
+  // COMMITTED_N2A_CPUS:
+  // COMMITTED_N2D_CPUS:
+  // COMMITTED_N2_CPUS:
+  // COMMITTED_NVIDIA_A100_80GB_GPUS:
+  // COMMITTED_NVIDIA_A100_GPUS:
+  // COMMITTED_NVIDIA_H100_GPUS:
+  // COMMITTED_NVIDIA_K80_GPUS:
+  // COMMITTED_NVIDIA_L4_GPUS:
+  // COMMITTED_NVIDIA_P100_GPUS:
+  // COMMITTED_NVIDIA_P4_GPUS:
+  // COMMITTED_NVIDIA_T4_GPUS:
+  // COMMITTED_NVIDIA_V100_GPUS:
+  // COMMITTED_T2A_CPUS:
+  // COMMITTED_T2D_CPUS:
+  // COMMITTED_Z3_CPUS:
+  // CPUS: Guest CPUs
+  // CPUS_ALL_REGIONS:
+  // DISKS_TOTAL_GB:
+  // E2_CPUS:
+  // EXTERNAL_MANAGED_FORWARDING_RULES:
+  // EXTERNAL_NETWORK_LB_FORWARDING_RULES:
+  // EXTERNAL_PROTOCOL_FORWARDING_RULES:
+  // EXTERNAL_VPN_GATEWAYS:
+  // FIREWALLS:
+  // FORWARDING_RULES:
+  // GLOBAL_EXTERNAL_MANAGED_BACKEND_SERVICES:
+  // GLOBAL_EXTERNAL_MANAGED_FORWARDING_RULES:
+  // GLOBAL_EXTERNAL_PROXY_LB_BACKEND_SERVICES:
+  // GLOBAL_INTERNAL_ADDRESSES:
+  // GLOBAL_INTERNAL_MANAGED_BACKEND_SERVICES:
+  // GLOBAL_INTERNAL_TRAFFIC_DIRECTOR_BACKEND_SERVICES:
+  // GPUS_ALL_REGIONS:
+  // HDB_TOTAL_GB:
+  // HDB_TOTAL_IOPS:
+  // HDB_TOTAL_THROUGHPUT:
+  // HEALTH_CHECKS:
+  // IMAGES:
+  // INSTANCES:
+  // INSTANCE_GROUPS:
+  // INSTANCE_GROUP_MANAGERS:
+  // INSTANCE_TEMPLATES:
+  // INTERCONNECTS:
+  // INTERCONNECT_ATTACHMENTS_PER_REGION:
+  // INTERCONNECT_ATTACHMENTS_TOTAL_MBPS:
+  // INTERCONNECT_TOTAL_GBPS:
+  // INTERNAL_ADDRESSES:
+  // INTERNAL_TRAFFIC_DIRECTOR_FORWARDING_RULES:
+  // IN_PLACE_SNAPSHOTS:
+  // IN_USE_ADDRESSES:
+  // IN_USE_BACKUP_SCHEDULES:
+  // IN_USE_SNAPSHOT_SCHEDULES:
+  // LOCAL_SSD_TOTAL_GB:
+  // M1_CPUS:
+  // M2_CPUS:
+  // M3_CPUS:
+  // MACHINE_IMAGES:
+  // N2A_CPUS:
+  // N2D_CPUS:
+  // N2_CPUS:
+  // NETWORKS:
+  // NETWORK_ATTACHMENTS:
+  // NETWORK_ENDPOINT_GROUPS:
+  // NETWORK_FIREWALL_POLICIES:
+  // NET_LB_SECURITY_POLICIES_PER_REGION:
+  // NET_LB_SECURITY_POLICY_RULES_PER_REGION:
+  // NET_LB_SECURITY_POLICY_RULE_ATTRIBUTES_PER_REGION:
+  // NODE_GROUPS:
+  // NODE_TEMPLATES:
+  // NVIDIA_A100_80GB_GPUS:
+  // NVIDIA_A100_GPUS:
+  // NVIDIA_K80_GPUS:
+  // NVIDIA_L4_GPUS:
+  // NVIDIA_P100_GPUS:
+  // NVIDIA_P100_VWS_GPUS:
+  // NVIDIA_P4_GPUS:
+  // NVIDIA_P4_VWS_GPUS:
+  // NVIDIA_T4_GPUS:
+  // NVIDIA_T4_VWS_GPUS:
+  // NVIDIA_V100_GPUS:
+  // PACKET_MIRRORINGS:
+  // PD_EXTREME_TOTAL_PROVISIONED_IOPS:
+  // PREEMPTIBLE_CPUS:
+  // PREEMPTIBLE_LOCAL_SSD_GB:
+  // PREEMPTIBLE_NVIDIA_A100_80GB_GPUS:
+  // PREEMPTIBLE_NVIDIA_A100_GPUS:
+  // PREEMPTIBLE_NVIDIA_H100_GPUS:
+  // PREEMPTIBLE_NVIDIA_K80_GPUS:
+  // PREEMPTIBLE_NVIDIA_L4_GPUS:
+  // PREEMPTIBLE_NVIDIA_P100_GPUS:
+  // PREEMPTIBLE_NVIDIA_P100_VWS_GPUS:
+  // PREEMPTIBLE_NVIDIA_P4_GPUS:
+  // PREEMPTIBLE_NVIDIA_P4_VWS_GPUS:
+  // PREEMPTIBLE_NVIDIA_T4_GPUS:
+  // PREEMPTIBLE_NVIDIA_T4_VWS_GPUS:
+  // PREEMPTIBLE_NVIDIA_V100_GPUS:
+  // PREEMPTIBLE_TPU_LITE_DEVICE_V5:
+  // PREEMPTIBLE_TPU_LITE_PODSLICE_V5:
+  // PREEMPTIBLE_TPU_PODSLICE_V4:
+  // PSC_ILB_CONSUMER_FORWARDING_RULES_PER_PRODUCER_NETWORK:
+  // PSC_INTERNAL_LB_FORWARDING_RULES:
+  // PUBLIC_ADVERTISED_PREFIXES:
+  // PUBLIC_DELEGATED_PREFIXES:
+  // REGIONAL_AUTOSCALERS:
+  // REGIONAL_EXTERNAL_MANAGED_BACKEND_SERVICES:
+  // REGIONAL_EXTERNAL_NETWORK_LB_BACKEND_SERVICES:
+  // REGIONAL_INSTANCE_GROUP_MANAGERS:
+  // REGIONAL_INTERNAL_LB_BACKEND_SERVICES:
+  // REGIONAL_INTERNAL_MANAGED_BACKEND_SERVICES:
+  // REGIONAL_INTERNAL_TRAFFIC_DIRECTOR_BACKEND_SERVICES:
+  // RESERVATIONS:
+  // RESOURCE_POLICIES:
+  // ROUTERS:
+  // ROUTES:
+  // SECURITY_POLICIES:
+  // SECURITY_POLICIES_PER_REGION:
+  // SECURITY_POLICY_ADVANCED_RULES_PER_REGION:
+  // SECURITY_POLICY_CEVAL_RULES:
+  // SECURITY_POLICY_RULES:
+  // SECURITY_POLICY_RULES_PER_REGION:
+  // SERVICE_ATTACHMENTS:
+  // SNAPSHOTS: The total number of snapshots allowed for a single project.
+  // SSD_TOTAL_GB:
+  // SSL_CERTIFICATES:
+  // SSL_POLICIES:
+  // STATIC_ADDRESSES:
+  // STATIC_BYOIP_ADDRESSES:
+  // STATIC_EXTERNAL_IPV6_ADDRESS_RANGES:
+  // SUBNETWORKS:
+  // T2A_CPUS:
+  // T2D_CPUS:
+  // TARGET_HTTPS_PROXIES:
+  // TARGET_HTTP_PROXIES:
+  // TARGET_INSTANCES:
+  // TARGET_POOLS:
+  // TARGET_SSL_PROXIES:
+  // TARGET_TCP_PROXIES:
+  // TARGET_VPN_GATEWAYS:
+  // TPU_LITE_DEVICE_V5:
+  // TPU_LITE_PODSLICE_V5:
+  // TPU_PODSLICE_V4:
+  // URL_MAPS:
+  // VARIABLE_IPV6_PUBLIC_DELEGATED_PREFIXES:
+  // VPN_GATEWAYS:
+  // VPN_TUNNELS:
+  // XPN_SERVICE_PROJECTS:
+  optional string metric = 2 [json_name = "metric"];
 
-  // [Output Only] Creation timestamp in RFC3339 text format.
-  optional string creation_timestamp = 1 [json_name = "creationTimestamp"];
+  // [Output Only] Owning resource. This is the resource on which this quota is
+  // applied.
+  optional string owner = 3 [json_name = "owner"];
 
   // An optional description of this resource. Provide this property when you
   // create the resource.

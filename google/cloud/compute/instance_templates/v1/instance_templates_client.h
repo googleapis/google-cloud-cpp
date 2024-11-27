@@ -321,7 +321,7 @@ class InstanceTemplatesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.instance_templates.v1.GetInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L266}
-  /// [google.cloud.cpp.compute.v1.InstanceTemplate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_025.proto#L85}
+  /// [google.cloud.cpp.compute.v1.InstanceTemplate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_024.proto#L85}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
@@ -353,7 +353,7 @@ class InstanceTemplatesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.instance_templates.v1.GetInstanceTemplateRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L266}
-  /// [google.cloud.cpp.compute.v1.InstanceTemplate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_025.proto#L85}
+  /// [google.cloud.cpp.compute.v1.InstanceTemplate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_024.proto#L85}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
@@ -584,7 +584,7 @@ class InstanceTemplatesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.instance_templates.v1.ListInstanceTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L303}
-  /// [google.cloud.cpp.compute.v1.InstanceTemplate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_025.proto#L85}
+  /// [google.cloud.cpp.compute.v1.InstanceTemplate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_024.proto#L85}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>
@@ -625,7 +625,7 @@ class InstanceTemplatesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.instance_templates.v1.ListInstanceTemplatesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L303}
-  /// [google.cloud.cpp.compute.v1.InstanceTemplate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_025.proto#L85}
+  /// [google.cloud.cpp.compute.v1.InstanceTemplate]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_024.proto#L85}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>
@@ -721,7 +721,7 @@ class InstanceTemplatesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.instance_templates.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L387}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_139.proto#L30}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_137.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -756,7 +756,7 @@ class InstanceTemplatesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.instance_templates.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instance_templates/v1/instance_templates.proto#L387}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_139.proto#L30}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_137.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

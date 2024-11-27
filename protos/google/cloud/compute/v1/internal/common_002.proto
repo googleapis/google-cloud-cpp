@@ -21,7 +21,7 @@ syntax = "proto3";
 
 package google.cloud.cpp.compute.v1;
 
-import "google/cloud/compute/v1/internal/common_023.proto";
+import "google/cloud/compute/v1/internal/common_022.proto";
 
 // Represents an Accelerator Type resource. Google Cloud Platform provides
 // graphics processing units (accelerators) that you can add to VM instances to
