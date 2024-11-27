@@ -45,11 +45,9 @@ std::shared_ptr<AwsClustersStub> CreateDefaultAwsClustersStub(
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       google::cloud::gkemulticloud::v1::AwsClusters::NewStub(channel);
-  auto service_operations_stub =
-      google::longrunning::Operations::NewStub(channel);
   std::shared_ptr<AwsClustersStub> stub =
       std::make_shared<DefaultAwsClustersStub>(
-          std::move(service_grpc_stub), std::move(service_operations_stub),
+          std::move(service_grpc_stub),
           google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {

@@ -97,6 +97,43 @@ message AllocationResourceStatusSpecificSKUAllocation {
   map<string, string> utilizations = 2 [json_name = "utilizations"];
 }
 
+message AllocationSpecificSKUAllocationAllocatedInstancePropertiesReservedDisk {
+  // Specifies the size of the disk in base-2 GB.
+  optional string disk_size_gb = 1 [json_name = "diskSizeGb"];
+
+  // Specifies the disk interface to use for attaching this disk, which is
+  // either SCSI or NVME. The default is SCSI. For performance characteristics
+  // of SCSI over NVMe, see Local SSD performance.
+  // NVME:
+  // SCSI:
+  optional string interface = 2 [json_name = "interface"];
+}
+
+// Properties of the SKU instances being reserved. Next ID: 9
+message AllocationSpecificSKUAllocationReservedInstanceProperties {
+  // Specifies accelerator type and count.
+  repeated AcceleratorConfig guest_accelerators = 1
+      [json_name = "guestAccelerators"];
+
+  // Specifies amount of local ssd to reserve with each instance. The type of
+  // disk is local-ssd.
+  repeated
+      AllocationSpecificSKUAllocationAllocatedInstancePropertiesReservedDisk
+          local_ssds = 2 [json_name = "localSsds"];
+
+  // An opaque location hint used to place the allocation close to other
+  // resources. This field is for use by internal tools that use the public API.
+  optional string location_hint = 3 [json_name = "locationHint"];
+
+  // Specifies type of machine (name only) which has fixed number of vCPUs and
+  // fixed amount of memory. This also includes specifying custom machine type
+  // following custom-NUMBER_OF_CPUS-AMOUNT_OF_MEMORY pattern.
+  optional string machine_type = 4 [json_name = "machineType"];
+
+  // Minimum cpu platform the reservation.
+  optional string min_cpu_platform = 5 [json_name = "minCpuPlatform"];
+}
+
 // This reservation type allows to pre allocate specific instance configuration.
 message AllocationSpecificSKUReservation {
   // [Output Only] Indicates how many instances are actually usable currently.

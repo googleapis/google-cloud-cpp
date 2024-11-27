@@ -24,9 +24,9 @@ package google.cloud.cpp.compute.url_maps.v1;
 import "google/api/annotations.proto";
 import "google/api/client.proto";
 import "google/api/field_behavior.proto";
+import "google/cloud/compute/v1/internal/common_016.proto";
 import "google/cloud/compute/v1/internal/common_017.proto";
-import "google/cloud/compute/v1/internal/common_018.proto";
-import "google/cloud/compute/v1/internal/common_020.proto";
+import "google/cloud/compute/v1/internal/common_019.proto";
 import "google/cloud/extended_operations.proto";
 
 // Service for the urlMaps resource.

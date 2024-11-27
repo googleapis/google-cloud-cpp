@@ -856,6 +856,55 @@ class MockContactCenterInsightsConnection
               (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
+      StatusOr<google::cloud::contactcenterinsights::v1::EncryptionSpec>,
+      GetEncryptionSpec,
+      (google::cloud::contactcenterinsights::v1::GetEncryptionSpecRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InitializeEncryptionSpec(Matcher<google::cloud::contactcenterinsights::v1::InitializeEncryptionSpecRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
+                                  InitializeEncryptionSpecResponse>>,
+              InitializeEncryptionSpec,
+              (google::cloud::contactcenterinsights::v1::
+                   InitializeEncryptionSpecRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, InitializeEncryptionSpec(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              InitializeEncryptionSpec,
+              (NoAwaitTag, google::cloud::contactcenterinsights::v1::
+                               InitializeEncryptionSpecRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InitializeEncryptionSpec(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
+                                  InitializeEncryptionSpecResponse>>,
+              InitializeEncryptionSpec,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::contactcenterinsights::v1::View>, CreateView,
       (google::cloud::contactcenterinsights::v1::CreateViewRequest const&
            request),

@@ -45,11 +45,9 @@ std::shared_ptr<AdminServiceStub> CreateDefaultAdminServiceStub(
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       google::cloud::pubsublite::v1::AdminService::NewStub(channel);
-  auto service_operations_stub =
-      google::longrunning::Operations::NewStub(channel);
   std::shared_ptr<AdminServiceStub> stub =
       std::make_shared<DefaultAdminServiceStub>(
-          std::move(service_grpc_stub), std::move(service_operations_stub),
+          std::move(service_grpc_stub),
           google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {

@@ -26,9 +26,8 @@ import "google/api/client.proto";
 import "google/api/field_behavior.proto";
 import "google/cloud/compute/v1/internal/common_016.proto";
 import "google/cloud/compute/v1/internal/common_041.proto";
-import "google/cloud/compute/v1/internal/common_042.proto";
-import "google/cloud/compute/v1/internal/common_103.proto";
-import "google/cloud/compute/v1/internal/common_134.proto";
+import "google/cloud/compute/v1/internal/common_101.proto";
+import "google/cloud/compute/v1/internal/common_132.proto";
 import "google/cloud/extended_operations.proto";
 
 // Service for the forwardingRules resource.

@@ -24,7 +24,7 @@ package google.cloud.cpp.compute.storage_pool_types.v1;
 import "google/api/annotations.proto";
 import "google/api/client.proto";
 import "google/api/field_behavior.proto";
-import "google/cloud/compute/v1/internal/common_125.proto";
+import "google/cloud/compute/v1/internal/common_123.proto";
 
 // Service for the storagePoolTypes resource.
 // https://cloud.google.com/compute/docs/reference/rest/v1/storagePoolTypes

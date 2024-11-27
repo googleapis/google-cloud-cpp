@@ -21,7 +21,7 @@ syntax = "proto3";
 
 package google.cloud.cpp.compute.v1;
 
-import "google/cloud/compute/v1/internal/common_020.proto";
+import "google/cloud/compute/v1/internal/common_006.proto";
 
 // Represents a regional resource-based commitment resource. Creating this
 // commitment resource means that you are purchasing a resource-based committed
@@ -197,14 +197,15 @@ message Commitment {
   optional string type = 20 [json_name = "type"];
 }
 
-message UrlMapsAggregatedList {
+message CommitmentAggregatedList {
   // [Output Only] Unique identifier for the resource; defined by the server.
   optional string id = 1 [json_name = "id"];
 
-  // A list of UrlMapsScopedList resources.
-  map<string, UrlMapsScopedList> items = 2 [json_name = "items"];
+  // A list of CommitmentsScopedList resources.
+  map<string, CommitmentsScopedList> items = 2 [json_name = "items"];
 
-  // Type of resource.
+  // [Output Only] Type of resource. Always compute#commitmentAggregatedList for
+  // aggregated lists of commitments.
   optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
@@ -307,9 +308,27 @@ message UrlMapsAggregatedList {
   optional Warning warning = 7 [json_name = "warning"];
 }
 
-message UrlMapsScopedList {
-  // A list of UrlMaps contained in this scope.
-  repeated UrlMap url_maps = 1 [json_name = "urlMaps"];
+// Contains a list of Commitment resources.
+message CommitmentList {
+  // [Output Only] Unique identifier for the resource; defined by the server.
+  optional string id = 1 [json_name = "id"];
+
+  // A list of Commitment resources.
+  repeated Commitment items = 2 [json_name = "items"];
+
+  // [Output Only] Type of resource. Always compute#commitmentList for lists of
+  // commitments.
+  optional string kind = 3 [json_name = "kind"];
+
+  // [Output Only] This token allows you to get the next page of results for
+  // list requests. If the number of results is larger than maxResults, use the
+  // nextPageToken as a value for the query parameter pageToken in the next list
+  // request. Subsequent list requests will have their own nextPageToken to
+  // continue paging through the results.
+  optional string next_page_token = 4 [json_name = "nextPageToken"];
+
+  // [Output Only] Server-defined URL for this resource.
+  optional string self_link = 5 [json_name = "selfLink"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine

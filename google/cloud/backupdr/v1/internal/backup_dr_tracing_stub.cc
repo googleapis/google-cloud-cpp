@@ -111,6 +111,459 @@ BackupDRTracingStub::DeleteManagementServer(
       child_->DeleteManagementServer(context, options, request));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+BackupDRTracingStub::AsyncCreateBackupVault(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::CreateBackupVaultRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "CreateBackupVault");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncCreateBackupVault(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> BackupDRTracingStub::CreateBackupVault(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::CreateBackupVaultRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "CreateBackupVault");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->CreateBackupVault(context, options, request));
+}
+
+StatusOr<google::cloud::backupdr::v1::ListBackupVaultsResponse>
+BackupDRTracingStub::ListBackupVaults(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::ListBackupVaultsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "ListBackupVaults");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListBackupVaults(context, options, request));
+}
+
+StatusOr<google::cloud::backupdr::v1::FetchUsableBackupVaultsResponse>
+BackupDRTracingStub::FetchUsableBackupVaults(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::FetchUsableBackupVaultsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "FetchUsableBackupVaults");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->FetchUsableBackupVaults(context, options, request));
+}
+
+StatusOr<google::cloud::backupdr::v1::BackupVault>
+BackupDRTracingStub::GetBackupVault(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::GetBackupVaultRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "GetBackupVault");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetBackupVault(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupDRTracingStub::AsyncUpdateBackupVault(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::UpdateBackupVaultRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "UpdateBackupVault");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncUpdateBackupVault(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> BackupDRTracingStub::UpdateBackupVault(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::UpdateBackupVaultRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "UpdateBackupVault");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->UpdateBackupVault(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupDRTracingStub::AsyncDeleteBackupVault(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::DeleteBackupVaultRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "DeleteBackupVault");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncDeleteBackupVault(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> BackupDRTracingStub::DeleteBackupVault(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::DeleteBackupVaultRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "DeleteBackupVault");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->DeleteBackupVault(context, options, request));
+}
+
+StatusOr<google::cloud::backupdr::v1::ListDataSourcesResponse>
+BackupDRTracingStub::ListDataSources(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::ListDataSourcesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "ListDataSources");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListDataSources(context, options, request));
+}
+
+StatusOr<google::cloud::backupdr::v1::DataSource>
+BackupDRTracingStub::GetDataSource(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::GetDataSourceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "GetDataSource");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetDataSource(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupDRTracingStub::AsyncUpdateDataSource(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::UpdateDataSourceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "UpdateDataSource");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncUpdateDataSource(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> BackupDRTracingStub::UpdateDataSource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::UpdateDataSourceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "UpdateDataSource");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateDataSource(context, options, request));
+}
+
+StatusOr<google::cloud::backupdr::v1::ListBackupsResponse>
+BackupDRTracingStub::ListBackups(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::ListBackupsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "ListBackups");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListBackups(context, options, request));
+}
+
+StatusOr<google::cloud::backupdr::v1::Backup> BackupDRTracingStub::GetBackup(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::GetBackupRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR", "GetBackup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetBackup(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupDRTracingStub::AsyncUpdateBackup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::UpdateBackupRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "UpdateBackup");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncUpdateBackup(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> BackupDRTracingStub::UpdateBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::UpdateBackupRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "UpdateBackup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateBackup(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupDRTracingStub::AsyncDeleteBackup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::DeleteBackupRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "DeleteBackup");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncDeleteBackup(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> BackupDRTracingStub::DeleteBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::DeleteBackupRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "DeleteBackup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteBackup(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupDRTracingStub::AsyncRestoreBackup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::RestoreBackupRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "RestoreBackup");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncRestoreBackup(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> BackupDRTracingStub::RestoreBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::RestoreBackupRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "RestoreBackup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->RestoreBackup(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupDRTracingStub::AsyncCreateBackupPlan(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::CreateBackupPlanRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "CreateBackupPlan");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncCreateBackupPlan(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> BackupDRTracingStub::CreateBackupPlan(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::CreateBackupPlanRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "CreateBackupPlan");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateBackupPlan(context, options, request));
+}
+
+StatusOr<google::cloud::backupdr::v1::BackupPlan>
+BackupDRTracingStub::GetBackupPlan(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::GetBackupPlanRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "GetBackupPlan");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetBackupPlan(context, options, request));
+}
+
+StatusOr<google::cloud::backupdr::v1::ListBackupPlansResponse>
+BackupDRTracingStub::ListBackupPlans(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::ListBackupPlansRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "ListBackupPlans");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListBackupPlans(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupDRTracingStub::AsyncDeleteBackupPlan(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::DeleteBackupPlanRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "DeleteBackupPlan");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncDeleteBackupPlan(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> BackupDRTracingStub::DeleteBackupPlan(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::DeleteBackupPlanRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "DeleteBackupPlan");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteBackupPlan(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupDRTracingStub::AsyncCreateBackupPlanAssociation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::CreateBackupPlanAssociationRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "CreateBackupPlanAssociation");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncCreateBackupPlanAssociation(
+      cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRTracingStub::CreateBackupPlanAssociation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::CreateBackupPlanAssociationRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "CreateBackupPlanAssociation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateBackupPlanAssociation(context, options, request));
+}
+
+StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>
+BackupDRTracingStub::GetBackupPlanAssociation(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::GetBackupPlanAssociationRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "GetBackupPlanAssociation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->GetBackupPlanAssociation(context, options, request));
+}
+
+StatusOr<google::cloud::backupdr::v1::ListBackupPlanAssociationsResponse>
+BackupDRTracingStub::ListBackupPlanAssociations(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::ListBackupPlanAssociationsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "ListBackupPlanAssociations");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->ListBackupPlanAssociations(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupDRTracingStub::AsyncDeleteBackupPlanAssociation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::DeleteBackupPlanAssociationRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "DeleteBackupPlanAssociation");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncDeleteBackupPlanAssociation(
+      cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRTracingStub::DeleteBackupPlanAssociation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::DeleteBackupPlanAssociationRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "DeleteBackupPlanAssociation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteBackupPlanAssociation(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupDRTracingStub::AsyncTriggerBackup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::TriggerBackupRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "TriggerBackup");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncTriggerBackup(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> BackupDRTracingStub::TriggerBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::TriggerBackupRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "TriggerBackup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->TriggerBackup(context, options, request));
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 BackupDRTracingStub::ListLocations(
     grpc::ClientContext& context, Options const& options,

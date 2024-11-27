@@ -47,11 +47,9 @@ CreateDefaultAssuredWorkloadsServiceStub(
   auto service_grpc_stub =
       google::cloud::assuredworkloads::v1::AssuredWorkloadsService::NewStub(
           channel);
-  auto service_operations_stub =
-      google::longrunning::Operations::NewStub(channel);
   std::shared_ptr<AssuredWorkloadsServiceStub> stub =
       std::make_shared<DefaultAssuredWorkloadsServiceStub>(
-          std::move(service_grpc_stub), std::move(service_operations_stub),
+          std::move(service_grpc_stub),
           google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {

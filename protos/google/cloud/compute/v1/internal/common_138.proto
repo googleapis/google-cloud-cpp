@@ -21,29 +21,32 @@ syntax = "proto3";
 
 package google.cloud.cpp.compute.v1;
 
-// Represents a Target VPN Gateway resource. The target VPN gateway resource
-// represents a Classic Cloud VPN gateway. For more information, read the the
-// Cloud VPN Overview.
-message TargetVpnGateway {
-  // [Output Only] Creation timestamp in RFC3339 text format.
-  optional string creation_timestamp = 1 [json_name = "creationTimestamp"];
+// Upcoming Maintenance notification information.
+message UpcomingMaintenance {
+  // Indicates if the maintenance can be customer triggered.
+  optional bool can_reschedule = 1 [json_name = "canReschedule"];
 
-  // An optional description of this resource. Provide this property when you
-  // create the resource.
-  optional string description = 2 [json_name = "description"];
+  // The latest time for the planned maintenance window to start. This timestamp
+  // value is in RFC3339 text format.
+  optional string latest_window_start_time = 2
+      [json_name = "latestWindowStartTime"];
 
-  // [Output Only] A list of URLs to the ForwardingRule resources.
-  // ForwardingRules are created using compute.forwardingRules.insert and
-  // associated with a VPN gateway.
-  repeated string forwarding_rules = 3 [json_name = "forwardingRules"];
+  // ONGOING: There is ongoing maintenance on this VM.
+  // PENDING: There is pending maintenance.
+  // UNKNOWN: Unknown maintenance status. Do not use this value.
+  optional string maintenance_status = 3 [json_name = "maintenanceStatus"];
 
-  // [Output Only] The unique identifier for the resource. This identifier is
-  // defined by the server.
-  optional string id = 4 [json_name = "id"];
+  // Defines the type of maintenance.
+  // SCHEDULED: Scheduled maintenance (e.g. maintenance after uptime guarantee
+  // is complete).
+  // UNKNOWN_TYPE: No type specified. Do not use this value.
+  // UNSCHEDULED: Unscheduled maintenance (e.g. emergency maintenance during
+  // uptime guarantee).
+  optional string type = 4 [json_name = "type"];
 
-  // [Output Only] Type of resource. Always compute#targetVpnGateway for target
-  // VPN gateways.
-  optional string kind = 5 [json_name = "kind"];
+  // The time by which the maintenance disruption will be completed. This
+  // timestamp value is in RFC3339 text format.
+  optional string window_end_time = 5 [json_name = "windowEndTime"];
 
   // A fingerprint for the labels being applied to this TargetVpnGateway, which
   // is essentially a hash of the labels set used for optimistic locking. The

@@ -23,14 +23,6 @@ package google.cloud.cpp.compute.v1;
 
 import "google/cloud/compute/v1/internal/common_012.proto";
 
-message RegionNetworkEndpointGroupsAttachEndpointsRequest {
-  // The list of network endpoints to be attached.
-  repeated NetworkEndpoint network_endpoints = 1
-      [json_name = "networkEndpoints"];
-}
-
-message RegionNetworkEndpointGroupsDetachEndpointsRequest {
-  // The list of network endpoints to be detached.
-  repeated NetworkEndpoint network_endpoints = 1
-      [json_name = "networkEndpoints"];
+  // The labels to set for this resource.
+  map<string, string> labels = 2 [json_name = "labels"];
 }

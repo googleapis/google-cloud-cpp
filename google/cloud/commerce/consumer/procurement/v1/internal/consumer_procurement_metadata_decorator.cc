@@ -88,6 +88,52 @@ ConsumerProcurementServiceMetadata::ListOrders(
   return child_->ListOrders(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+ConsumerProcurementServiceMetadata::AsyncModifyOrder(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::commerce::consumer::procurement::v1::
+        ModifyOrderRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncModifyOrder(cq, std::move(context), std::move(options),
+                                  request);
+}
+
+StatusOr<google::longrunning::Operation>
+ConsumerProcurementServiceMetadata::ModifyOrder(
+    grpc::ClientContext& context, Options options,
+    google::cloud::commerce::consumer::procurement::v1::
+        ModifyOrderRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ModifyOrder(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ConsumerProcurementServiceMetadata::AsyncCancelOrder(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::commerce::consumer::procurement::v1::
+        CancelOrderRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncCancelOrder(cq, std::move(context), std::move(options),
+                                  request);
+}
+
+StatusOr<google::longrunning::Operation>
+ConsumerProcurementServiceMetadata::CancelOrder(
+    grpc::ClientContext& context, Options options,
+    google::cloud::commerce::consumer::procurement::v1::
+        CancelOrderRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->CancelOrder(context, options, request);
+}
+
 StatusOr<google::longrunning::Operation>
 ConsumerProcurementServiceMetadata::GetOperation(
     grpc::ClientContext& context, Options const& options,

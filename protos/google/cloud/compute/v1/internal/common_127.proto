@@ -21,12 +21,19 @@ syntax = "proto3";
 
 package google.cloud.cpp.compute.v1;
 
-// Represents a Target gRPC Proxy resource. A target gRPC proxy is a component
-// of load balancers intended for load balancing gRPC traffic. Only global
-// forwarding rules with load balancing scheme INTERNAL_SELF_MANAGED can
-// reference a target gRPC proxy. The target gRPC Proxy references a URL map
-// that specifies how traffic is routed to gRPC backend services.
-message TargetGrpcProxy {
+// Represents a Target HTTP Proxy resource. Google Compute Engine has two Target
+// HTTP Proxy resources: *
+// [Global](/compute/docs/reference/rest/v1/targetHttpProxies) *
+// [Regional](/compute/docs/reference/rest/v1/regionTargetHttpProxies) A target
+// HTTP proxy is a component of Google Cloud HTTP load balancers. *
+// targetHttpProxies are used by global external Application Load Balancers,
+// classic Application Load Balancers, cross-region internal Application Load
+// Balancers, and Traffic Director. * regionTargetHttpProxies are used by
+// regional internal Application Load Balancers and regional external
+// Application Load Balancers. Forwarding rules reference a target HTTP proxy,
+// and the target proxy then references a URL map. For more information, read
+// Using Target Proxies and Forwarding rule concepts.
+message TargetHttpProxy {
   // [Output Only] Creation timestamp in RFC3339 text format.
   optional string creation_timestamp = 1 [json_name = "creationTimestamp"];
 
@@ -36,18 +43,27 @@ message TargetGrpcProxy {
 
   // Fingerprint of this resource. A hash of the contents stored in this object.
   // This field is used in optimistic locking. This field will be ignored when
-  // inserting a TargetGrpcProxy. An up-to-date fingerprint must be provided in
-  // order to patch/update the TargetGrpcProxy; otherwise, the request will fail
+  // inserting a TargetHttpProxy. An up-to-date fingerprint must be provided in
+  // order to patch/update the TargetHttpProxy; otherwise, the request will fail
   // with error 412 conditionNotMet. To see the latest fingerprint, make a get()
-  // request to retrieve the TargetGrpcProxy.
+  // request to retrieve the TargetHttpProxy.
   optional string fingerprint = 3 [json_name = "fingerprint"];
 
-  // [Output Only] The unique identifier for the resource type. The server
-  // generates this identifier.
+  // Specifies how long to keep a connection open, after completing a response,
+  // while there is no matching traffic (in seconds). If an HTTP keep-alive is
+  // not specified, a default value (610 seconds) will be used. For global
+  // external Application Load Balancers, the minimum allowed value is 5 seconds
+  // and the maximum allowed value is 1200 seconds. For classic Application Load
+  // Balancers, this option is not supported.
+  optional int32 http_keep_alive_timeout_sec = 11
+      [json_name = "httpKeepAliveTimeoutSec"];
+
+  // [Output Only] The unique identifier for the resource. This identifier is
+  // defined by the server.
   optional string id = 4 [json_name = "id"];
 
-  // [Output Only] Type of the resource. Always compute#targetGrpcProxy for
-  // target grpc proxies.
+  // [Output Only] Type of resource. Always compute#targetHttpProxy for target
+  // HTTP proxies.
   optional string kind = 5 [json_name = "kind"];
 
   // Name of the resource. Provided by the client when the resource is created.
@@ -59,39 +75,38 @@ message TargetGrpcProxy {
   // dash.
   optional string name = 6 [json_name = "name"];
 
-  // [Output Only] Server-defined URL for the resource.
-  optional string self_link = 7 [json_name = "selfLink"];
+  // This field only applies when the forwarding rule that references this
+  // target proxy has a loadBalancingScheme set to INTERNAL_SELF_MANAGED. When
+  // this field is set to true, Envoy proxies set up inbound traffic
+  // interception and bind to the IP address and port specified in the
+  // forwarding rule. This is generally useful when using Traffic Director to
+  // configure Envoy as a gateway or middle proxy (in other words, not a sidecar
+  // proxy). The Envoy proxy listens for inbound requests and handles requests
+  // when it receives them. The default is false.
+  optional bool proxy_bind = 7 [json_name = "proxyBind"];
 
-  // [Output Only] Server-defined URL with id for the resource.
-  optional string self_link_with_id = 8 [json_name = "selfLinkWithId"];
+  // [Output Only] URL of the region where the regional Target HTTP Proxy
+  // resides. This field is not applicable to global Target HTTP Proxies.
+  optional string region = 8 [json_name = "region"];
+
+  // [Output Only] Server-defined URL for the resource.
+  optional string self_link = 9 [json_name = "selfLink"];
 
   // URL to the UrlMap resource that defines the mapping from URL to the
-  // BackendService. The protocol field in the BackendService must be set to
-  // GRPC.
-  optional string url_map = 9 [json_name = "urlMap"];
-
-  // If true, indicates that the BackendServices referenced by the urlMap may be
-  // accessed by gRPC applications without using a sidecar proxy. This will
-  // enable configuration checks on urlMap and its referenced BackendServices to
-  // not allow unsupported features. A gRPC application must use "xds:///"
-  // scheme in the target URI of the service it is connecting to. If false,
-  // indicates that the BackendServices referenced by the urlMap will be
-  // accessed by gRPC applications via a sidecar proxy. In this case, a gRPC
-  // application must not use "xds:///" scheme in the target URI of the service
-  // it is connecting to
-  optional bool validate_for_proxyless = 10
-      [json_name = "validateForProxyless"];
+  // BackendService.
+  optional string url_map = 10 [json_name = "urlMap"];
 }
 
-message TargetGrpcProxyList {
+// A list of TargetHttpProxy resources.
+message TargetHttpProxyList {
   // [Output Only] Unique identifier for the resource; defined by the server.
   optional string id = 1 [json_name = "id"];
 
-  // A list of TargetGrpcProxy resources.
-  repeated TargetGrpcProxy items = 2 [json_name = "items"];
+  // A list of TargetHttpProxy resources.
+  repeated TargetHttpProxy items = 2 [json_name = "items"];
 
-  // [Output Only] Type of the resource. Always compute#targetGrpcProxy for
-  // target grpc proxies.
+  // Type of resource. Always compute#targetHttpProxyList for lists of target
+  // HTTP proxies.
   optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for

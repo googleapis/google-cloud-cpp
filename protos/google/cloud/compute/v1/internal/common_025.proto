@@ -24,111 +24,34 @@ package google.cloud.cpp.compute.v1;
 import "google/cloud/compute/v1/internal/common_077.proto";
 import "google/cloud/compute/v1/internal/common_094.proto";
 
-// A specification of the desired way to instantiate a disk in the instance
-// template when its created from a source instance.
-message DiskInstantiationConfig {
-  // Specifies whether the disk will be auto-deleted when the instance is
-  // deleted (but not when the disk is detached from the instance).
-  optional bool auto_delete = 1 [json_name = "autoDelete"];
+message DiskMoveRequest {
+  // The URL of the destination zone to move the disk. This can be a full or
+  // partial URL. For example, the following are all valid URLs to a zone: -
+  // https://www.googleapis.com/compute/v1/projects/project/zones/zone -
+  // projects/project/zones/zone - zones/zone
+  optional string destination_zone = 1 [json_name = "destinationZone"];
 
-  // The custom source image to be used to restore this disk when instantiating
-  // this instance template.
-  optional string custom_image = 2 [json_name = "customImage"];
-
-  // Specifies the device name of the disk to which the configurations apply to.
-  optional string device_name = 3 [json_name = "deviceName"];
-
-  // Specifies whether to include the disk and what image to use. Possible
-  // values are: - source-image: to use the same image that was used to create
-  // the source instance's corresponding disk. Applicable to the boot disk and
-  // additional read-write disks. - source-image-family: to use the same image
-  // family that was used to create the source instance's corresponding disk.
-  // Applicable to the boot disk and additional read-write disks. -
-  // custom-image: to use a user-provided image url for disk creation.
-  // Applicable to the boot disk and additional read-write disks. -
-  // attach-read-only: to attach a read-only disk. Applicable to read-only
-  // disks. - do-not-include: to exclude a disk from the template. Applicable to
-  // additional read-write disks, local SSDs, and read-only disks.
-  // ATTACH_READ_ONLY: Attach the existing disk in read-only mode. The request
-  // will fail if the disk was attached in read-write mode on the source
-  // instance. Applicable to: read-only disks.
-  // BLANK: Create a blank disk. The disk will be created unformatted.
-  // Applicable to: additional read-write disks, local SSDs.
-  // CUSTOM_IMAGE: Use the custom image specified in the custom_image field.
-  // Applicable to: boot disk, additional read-write disks.
-  // DEFAULT: Use the default instantiation option for the corresponding type of
-  // disk. For boot disk and any other R/W disks, new custom images will be
-  // created from each disk. For read-only disks, they will be attached in
-  // read-only mode. Local SSD disks will be created as blank volumes.
-  // DO_NOT_INCLUDE: Do not include the disk in the instance template.
-  // Applicable to: additional read-write disks, local SSDs, read-only disks.
-  // SOURCE_IMAGE: Use the same source image used for creation of the source
-  // instance's corresponding disk. The request will fail if the source VM's
-  // disk was created from a snapshot. Applicable to: boot disk, additional
-  // read-write disks.
-  // SOURCE_IMAGE_FAMILY: Use the same source image family used for creation of
-  // the source instance's corresponding disk. The request will fail if the
-  // source image of the source disk does not belong to any image family.
-  // Applicable to: boot disk, additional read-write disks.
-  optional string instantiate_from = 4 [json_name = "instantiateFrom"];
+  // The URL of the target disk to move. This can be a full or partial URL. For
+  // example, the following are all valid URLs to a disk: -
+  // https://www.googleapis.com/compute/v1/projects/project/zones/zone
+  // /disks/disk - projects/project/zones/zone/disks/disk -
+  // zones/zone/disks/disk
+  optional string target_disk = 2 [json_name = "targetDisk"];
 }
 
-// Represents an Instance Template resource. Google Compute Engine has two
-// Instance Template resources: *
-// [Global](/compute/docs/reference/rest/v1/instanceTemplates) *
-// [Regional](/compute/docs/reference/rest/v1/regionInstanceTemplates) You can
-// reuse a global instance template in different regions whereas you can use a
-// regional instance template in a specified region only. If you want to reduce
-// cross-region dependency or achieve data residency, use a regional instance
-// template. To create VMs, managed instance groups, and reservations, you can
-// use either global or regional instance templates. For more information, read
-// Instance Templates.
-message InstanceTemplate {
-  // [Output Only] The creation timestamp for this instance template in RFC3339
-  // text format.
-  optional string creation_timestamp = 1 [json_name = "creationTimestamp"];
+message InstanceMoveRequest {
+  // The URL of the destination zone to move the instance. This can be a full or
+  // partial URL. For example, the following are all valid URLs to a zone: -
+  // https://www.googleapis.com/compute/v1/projects/project/zones/zone -
+  // projects/project/zones/zone - zones/zone
+  optional string destination_zone = 1 [json_name = "destinationZone"];
 
-  // An optional description of this resource. Provide this property when you
-  // create the resource.
-  optional string description = 2 [json_name = "description"];
-
-  // [Output Only] A unique identifier for this instance template. The server
-  // defines this identifier.
-  optional string id = 3 [json_name = "id"];
-
-  // [Output Only] The resource type, which is always compute#instanceTemplate
-  // for instance templates.
-  optional string kind = 4 [json_name = "kind"];
-
-  // Name of the resource; provided by the client when the resource is created.
-  // The name must be 1-63 characters long, and comply with RFC1035.
-  // Specifically, the name must be 1-63 characters long and match the regular
-  // expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character
-  // must be a lowercase letter, and all following characters must be a dash,
-  // lowercase letter, or digit, except the last character, which cannot be a
-  // dash.
-  optional string name = 5 [json_name = "name"];
-
-  // The instance properties for this instance template.
-  optional InstanceProperties properties = 6 [json_name = "properties"];
-
-  // [Output Only] URL of the region where the instance template resides. Only
-  // applicable for regional resources.
-  optional string region = 7 [json_name = "region"];
-
-  // [Output Only] The URL for this instance template. The server defines this
-  // URL.
-  optional string self_link = 8 [json_name = "selfLink"];
-
-  // The source instance used to create the template. You can provide this as a
-  // partial or full URL to the resource. For example, the following are valid
-  // values: - https://www.googleapis.com/compute/v1/projects/project/zones/zone
-  // /instances/instance - projects/project/zones/zone/instances/instance
-  optional string source_instance = 9 [json_name = "sourceInstance"];
-
-  // The source instance params to use to create this instance template.
-  optional SourceInstanceParams source_instance_params = 10
-      [json_name = "sourceInstanceParams"];
+  // The URL of the target instance to move. This can be a full or partial URL.
+  // For example, the following are all valid URLs to an instance: -
+  // https://www.googleapis.com/compute/v1/projects/project/zones/zone
+  // /instances/instance - projects/project/zones/zone/instances/instance -
+  // zones/zone/instances/instance
+  optional string target_instance = 2 [json_name = "targetInstance"];
 }
 
 // Represents a Project resource. A project is used to organize resources in a
@@ -289,11 +212,11 @@ message XpnHostList {
   // [Output Only] Unique identifier for the resource; defined by the server.
   optional string id = 1 [json_name = "id"];
 
-  // A list of InstanceTemplate resources.
-  repeated InstanceTemplate items = 2 [json_name = "items"];
+  // [Output Only] A list of shared VPC host project URLs.
+  repeated Project items = 2 [json_name = "items"];
 
-  // [Output Only] The resource type, which is always
-  // compute#instanceTemplatesListResponse for instance template lists.
+  // [Output Only] Type of resource. Always compute#xpnHostList for lists of
+  // shared VPC hosts.
   optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
@@ -393,12 +316,15 @@ message XpnHostList {
   optional Warning warning = 6 [json_name = "warning"];
 }
 
-// A specification of the parameters to use when creating the instance template
-// from a source instance.
-message SourceInstanceParams {
-  // Attached disks configuration. If not provided, defaults are applied: For
-  // boot disk and any other R/W disks, the source images for each disk will be
-  // used. For read-only disks, they will be attached in read-only mode. Local
-  // SSD disks will be created as blank volumes.
-  repeated DiskInstantiationConfig disk_configs = 1 [json_name = "diskConfigs"];
+// Service resource (a.k.a service project) ID.
+message XpnResourceId {
+  // The ID of the service resource. In the case of projects, this field
+  // supports project id (e.g., my-project-123) and project number (e.g.
+  // 12345678).
+  optional string id = 1 [json_name = "id"];
+
+  // The type of the service resource.
+  // PROJECT:
+  // XPN_RESOURCE_TYPE_UNSPECIFIED:
+  optional string type = 2 [json_name = "type"];
 }

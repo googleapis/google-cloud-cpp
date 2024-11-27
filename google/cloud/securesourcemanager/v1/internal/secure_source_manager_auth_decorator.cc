@@ -219,6 +219,119 @@ SecureSourceManagerAuth::TestIamPermissionsRepo(
   return child_->TestIamPermissionsRepo(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerAuth::AsyncCreateBranchRule(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateBranchRule(cq, *std::move(context),
+                                            std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerAuth::CreateBranchRule(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateBranchRule(context, options, request);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::ListBranchRulesResponse>
+SecureSourceManagerAuth::ListBranchRules(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::ListBranchRulesRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListBranchRules(context, options, request);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::BranchRule>
+SecureSourceManagerAuth::GetBranchRule(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::GetBranchRuleRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetBranchRule(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerAuth::AsyncUpdateBranchRule(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateBranchRule(cq, *std::move(context),
+                                            std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerAuth::UpdateBranchRule(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateBranchRule(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerAuth::AsyncDeleteBranchRule(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteBranchRule(cq, *std::move(context),
+                                            std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerAuth::DeleteBranchRule(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteBranchRule(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 SecureSourceManagerAuth::ListLocations(
     grpc::ClientContext& context, Options const& options,

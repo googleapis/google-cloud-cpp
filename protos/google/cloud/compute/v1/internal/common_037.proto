@@ -21,7 +21,6 @@ syntax = "proto3";
 
 package google.cloud.cpp.compute.v1;
 
-import "google/cloud/compute/v1/internal/common_008.proto";
 import "google/cloud/compute/v1/internal/common_038.proto";
 
 message FirewallPoliciesScopedList {

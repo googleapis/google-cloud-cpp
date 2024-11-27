@@ -117,7 +117,7 @@ class RegionZonesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_zones.v1.ListRegionZonesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_zones/v1/region_zones.proto#L51}
-  /// [google.cloud.cpp.compute.v1.Zone]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_144.proto#L29}
+  /// [google.cloud.cpp.compute.v1.Zone]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_142.proto#L29}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Zone> ListRegionZones(
@@ -158,7 +158,7 @@ class RegionZonesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_zones.v1.ListRegionZonesRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_zones/v1/region_zones.proto#L51}
-  /// [google.cloud.cpp.compute.v1.Zone]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_144.proto#L29}
+  /// [google.cloud.cpp.compute.v1.Zone]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_142.proto#L29}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Zone> ListRegionZones(

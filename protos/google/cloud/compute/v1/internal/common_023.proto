@@ -21,27 +21,18 @@ syntax = "proto3";
 
 package google.cloud.cpp.compute.v1;
 
-// Deprecation status for a public resource.
-message DeprecationStatus {
-  // An optional RFC3339 timestamp on or after which the state of this resource
-  // is intended to change to DELETED. This is only informational and the status
-  // will not change unless the client explicitly changes it.
-  optional string deleted = 1 [json_name = "deleted"];
+import "google/cloud/compute/v1/internal/common_014.proto";
 
-  // An optional RFC3339 timestamp on or after which the state of this resource
-  // is intended to change to DEPRECATED. This is only informational and the
-  // status will not change unless the client explicitly changes it.
-  optional string deprecated = 2 [json_name = "deprecated"];
+message DiskAggregatedList {
+  // [Output Only] Unique identifier for the resource; defined by the server.
+  optional string id = 1 [json_name = "id"];
 
-  // An optional RFC3339 timestamp on or after which the state of this resource
-  // is intended to change to OBSOLETE. This is only informational and the
-  // status will not change unless the client explicitly changes it.
-  optional string obsolete = 3 [json_name = "obsolete"];
+  // A list of DisksScopedList resources.
+  map<string, DisksScopedList> items = 2 [json_name = "items"];
 
-  // The URL of the suggested replacement for a deprecated resource. The
-  // suggested replacement resource must be the same kind of resource as the
-  // deprecated resource.
-  optional string replacement = 4 [json_name = "replacement"];
+  // [Output Only] Type of resource. Always compute#diskAggregatedList for
+  // aggregated lists of persistent disks.
+  optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the

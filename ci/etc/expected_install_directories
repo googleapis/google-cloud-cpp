@@ -256,10 +256,6 @@
 ./include/google/cloud/compute/forwarding_rules/v1
 ./include/google/cloud/compute/forwarding_rules/v1/internal
 ./include/google/cloud/compute/forwarding_rules/v1/mocks
-./include/google/cloud/compute/future_reservations
-./include/google/cloud/compute/future_reservations/v1
-./include/google/cloud/compute/future_reservations/v1/internal
-./include/google/cloud/compute/future_reservations/v1/mocks
 ./include/google/cloud/compute/global_addresses
 ./include/google/cloud/compute/global_addresses/v1
 ./include/google/cloud/compute/global_addresses/v1/internal
