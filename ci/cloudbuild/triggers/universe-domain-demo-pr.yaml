@@ -19,9 +19,9 @@ github:
   pullRequest:
     branch: ^main$
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-name: universe-domain-pr
+name: universe-domain-demo-pr
 substitutions:
-  _BUILD_NAME: universe-domain
+  _BUILD_NAME: universe-domain-demo
   _DISTRO: fedora-latest-bazel
   _TRIGGER_TYPE: pr
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS

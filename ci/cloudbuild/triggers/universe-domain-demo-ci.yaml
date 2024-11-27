@@ -18,9 +18,9 @@ github:
   owner: googleapis
   push:
     branch: ^main$
-name: universe-domain-ci
+name: universe-domain-demo-ci
 substitutions:
-  _BUILD_NAME: universe-domain
+  _BUILD_NAME: universe-domain-demo
   _DISTRO: fedora-latest-bazel
   _TRIGGER_TYPE: ci
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
