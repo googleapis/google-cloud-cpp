@@ -40,5 +40,5 @@ excluded_rules=(
 io::log_h2 "Running the integration tests against prod"
 mapfile -t integration_args < <(integration::bazel_args)
 io::run bazel test "${args[@]}" "${integration_args[@]}" \
-  --cache_test_results="auto" --test_tag_filters="integration-test" \
+  --cache_test_results="auto" --test_tag_filters="integration-test,-ud-only" \
   -- "${BAZEL_TARGETS[@]}" "${excluded_rules[@]}"

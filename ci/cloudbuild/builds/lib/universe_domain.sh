@@ -43,5 +43,7 @@ function ud::bazel_test() {
   bazel test "${args[@]}" --sandbox_add_mount_pair=/tmp \
     --test_env=UD_SA_KEY_FILE="${UD_SA_KEY_FILE}" \
     --test_env=UD_REGION="${UD_REGION}" \
+    --test_env=UD_ZONE="${UD_ZONE}" \
+    --test_env=UD_IMPERSONATED_SERVICE_ACCOUNT_NAME="${UD_IMPERSONATED_SERVICE_ACCOUNT_NAME}" \
     --test_env=UD_PROJECT="${UD_PROJECT}" -- "$@"
 }
