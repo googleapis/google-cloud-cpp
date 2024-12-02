@@ -73,7 +73,7 @@ def gl_cpp_workspace0(name = None):
         urls = [
             "https://github.com/bazelbuild/rules_cc/releases/download/0.0.15/rules_cc-0.0.15.tar.gz",
         ],
-        sha256 = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        sha256 = "f4aadd8387f381033a9ad0500443a52a0cea5f8ad1ede4369d3c614eb7b2682e",
         strip_prefix = "rules_cc-0.0.15",
     )
 
