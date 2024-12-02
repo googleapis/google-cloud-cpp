@@ -6,6 +6,7 @@
 #include "google/cloud/internal/rest_options.h"
 #include "google/cloud/location.h"
 #include "google/cloud/testing_util/integration_test.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/universe_domain.h"
 #include "google/cloud/universe_domain_options.h"
 #include <gmock/gmock.h>
@@ -18,6 +19,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 namespace gc = ::google::cloud;
+using ::google::cloud::testing_util::StatusIs;
 
 class DomainUniverseImpersonationTest
     : public ::google::cloud::testing_util::IntegrationTest {
@@ -64,7 +66,7 @@ TEST_F(DomainUniverseImpersonationTest, SAToSAImpersonationRest) {
   auto client = disks::DisksClient(disks::MakeDisksConnectionRest(*ud_options));
 
   for (auto disk : client.ListDisks(project_id_, zone_id_)) {
-    if (!disk) throw std::move(disk).status();
+    EXPECT_THAT(disk, StatusIs(StatusCode::kOk));
   }
 }
 
@@ -85,7 +87,7 @@ TEST_F(DomainUniverseImpersonationTest, SAToSAImpersonationGrpc) {
       kms::MakeKeyManagementServiceConnection(*ud_options));
 
   for (auto kr : client.ListKeyRings(location.FullName())) {
-    if (!kr) throw std::move(kr).status();
+    EXPECT_THAT(kr, StatusIs(StatusCode::kOk));
   }
 }
 
