@@ -174,7 +174,7 @@ def gl_cpp_workspace0(name = None):
         urls = [
             "https://github.com/grpc/grpc/archive/v1.68.2.tar.gz",
         ],
-        sha256 = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        sha256 = "afbc5d78d6ba6d509cc6e264de0d49dcd7304db435cbf2d630385bacf49e066c",
         strip_prefix = "grpc-1.68.2",
     )
 
