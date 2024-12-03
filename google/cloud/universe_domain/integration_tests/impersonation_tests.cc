@@ -20,6 +20,7 @@
 #include "google/cloud/internal/rest_options.h"
 #include "google/cloud/location.h"
 #include "google/cloud/testing_util/integration_test.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/universe_domain.h"
 #include "google/cloud/universe_domain_options.h"
@@ -33,6 +34,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 namespace gc = ::google::cloud;
+using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
 
 class DomainUniverseImpersonationTest
@@ -45,27 +47,50 @@ class DomainUniverseImpersonationTest
     ASSERT_FALSE(zone_id_.empty());
     region_id_ = gc::internal::GetEnv("UD_REGION").value_or("");
     ASSERT_FALSE(region_id_.empty());
-    impersonated_sa_ =
-        gc::internal::GetEnv("UD_IMPERSONATED_SERVICE_ACCOUNT_NAME")
-            .value_or("");
-    ASSERT_FALSE(impersonated_sa_.empty());
-    std::string const sa_key_file =
-        gc::internal::GetEnv("UD_SA_KEY_FILE").value_or("");
-    ASSERT_FALSE(sa_key_file.empty());
-
-    auto is = std::ifstream(sa_key_file);
-    is.exceptions(std::ios::badbit);
-    credential_ = std::string(std::istreambuf_iterator<char>(is.rdbuf()), {});
   }
 
   std::string project_id_;
   std::string zone_id_;
   std::string region_id_;
+};
+
+class ServiceAccountImpersonationTest : public DomainUniverseImpersonationTest {
+ protected:
+  void SetUp() override {
+    DomainUniverseImpersonationTest::SetUp();
+
+    impersonated_sa_ =
+        gc::internal::GetEnv("UD_IMPERSONATED_SERVICE_ACCOUNT_NAME")
+            .value_or("");
+    ASSERT_FALSE(impersonated_sa_.empty());
+
+    std::string const key_file =
+        gc::internal::GetEnv("UD_SA_KEY_FILE").value_or("");
+    ASSERT_FALSE(key_file.empty());
+
+    auto is = std::ifstream(key_file);
+    is.exceptions(std::ios::badbit);
+    credential_ = std::string(std::istreambuf_iterator<char>(is.rdbuf()), {});
+  }
+
   std::string impersonated_sa_;
   std::string credential_;
 };
 
-TEST_F(DomainUniverseImpersonationTest, SAToSAImpersonationRest) {
+class IdTokenServiceAccountImpersonationTest
+    : public DomainUniverseImpersonationTest {
+ protected:
+  void SetUp() override {
+    DomainUniverseImpersonationTest::SetUp();
+
+    key_file_ = gc::internal::GetEnv("UD_IDTOKEN_SA_KEY_FILE").value_or("");
+    ASSERT_FALSE(key_file_.empty());
+  }
+
+  std::string key_file_;
+};
+
+TEST_F(ServiceAccountImpersonationTest, SAToSAImpersonationRest) {
   namespace disks = ::google::cloud::compute_disks_v1;
 
   gc::Options options;
@@ -84,7 +109,7 @@ TEST_F(DomainUniverseImpersonationTest, SAToSAImpersonationRest) {
   }
 }
 
-TEST_F(DomainUniverseImpersonationTest, SAToSAImpersonationGrpc) {
+TEST_F(ServiceAccountImpersonationTest, SAToSAImpersonationGrpc) {
   namespace kms = ::google::cloud::kms_v1;
 
   auto const location = gc::Location(project_id_, region_id_);
@@ -102,6 +127,21 @@ TEST_F(DomainUniverseImpersonationTest, SAToSAImpersonationGrpc) {
 
   for (auto kr : client.ListKeyRings(location.FullName())) {
     EXPECT_STATUS_OK(kr);
+  }
+}
+
+TEST_F(IdTokenServiceAccountImpersonationTest, SAToSAImpersonationRest) {
+  namespace disks = ::google::cloud::compute_disks_v1;
+  // Use ADC credential
+  ScopedEnvironment env("GOOGLE_APPLICATION_CREDENTIALS", key_file_);
+
+  auto ud_options = gc::AddUniverseDomainOption(gc::ExperimentalTag{});
+  ASSERT_STATUS_OK(ud_options);
+
+  auto client = disks::DisksClient(disks::MakeDisksConnectionRest(*ud_options));
+
+  for (auto disk : client.ListDisks(project_id_, zone_id_)) {
+    EXPECT_STATUS_OK(disk);
   }
 }
 
