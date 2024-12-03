@@ -26,6 +26,7 @@ set(DOXYGEN_EXCLUDE_SYMBOLS
     "benchmarks"
     "bigtable_admin_internal"
     "bigtable_internal"
+    "emulator"
     "internal"
     "testing"
     "examples"
@@ -511,6 +512,8 @@ if (BUILD_TESTING)
     add_subdirectory(test_proxy)
     add_subdirectory(tests)
 endif ()
+
+add_subdirectory(emulator)
 
 # Examples are enabled if possible, but package maintainers may want to disable
 # compilation to speed up their builds.
