@@ -5716,8 +5716,8 @@ void RunAll(bool emulator) {
     CreateDatabaseWithEncryptionKey(database_admin_client, project_id,
                                     instance_id, database_id, encryption_key);
     SampleBanner("spanner_create_database_with_MR_CMEK");
-    CreateDatabaseWithMRCMEK(database_admin_client, project_id,
-                                    instance_id, database_id, encryption_keys);
+    CreateDatabaseWithMRCMEK(database_admin_client, project_id, instance_id,
+                             database_id, encryption_keys);
   }
 
   SampleBanner("spanner_create_table_with_datatypes");
