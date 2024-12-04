@@ -71,23 +71,15 @@ class ServiceAccountImpersonationTest : public DomainUniverseImpersonationTest {
     auto is = std::ifstream(key_file);
     is.exceptions(std::ios::badbit);
     credential_ = std::string(std::istreambuf_iterator<char>(is.rdbuf()), {});
+
+    id_token_key_file_ =
+        gc::internal::GetEnv("UD_IDTOKEN_SA_KEY_FILE").value_or("");
+    ASSERT_FALSE(id_token_key_file_.empty());
   }
 
   std::string impersonated_sa_;
   std::string credential_;
-};
-
-class IdTokenServiceAccountImpersonationTest
-    : public DomainUniverseImpersonationTest {
- protected:
-  void SetUp() override {
-    DomainUniverseImpersonationTest::SetUp();
-
-    key_file_ = gc::internal::GetEnv("UD_IDTOKEN_SA_KEY_FILE").value_or("");
-    ASSERT_FALSE(key_file_.empty());
-  }
-
-  std::string key_file_;
+  std::string id_token_key_file_;
 };
 
 TEST_F(ServiceAccountImpersonationTest, SAToSAImpersonationRest) {
@@ -130,10 +122,10 @@ TEST_F(ServiceAccountImpersonationTest, SAToSAImpersonationGrpc) {
   }
 }
 
-TEST_F(IdTokenServiceAccountImpersonationTest, SAToSAImpersonationRest) {
+TEST_F(ServiceAccountImpersonationTest, IdTokenSAToSAImpersonationRest) {
   namespace disks = ::google::cloud::compute_disks_v1;
   // Use ADC credential
-  ScopedEnvironment env("GOOGLE_APPLICATION_CREDENTIALS", key_file_);
+  ScopedEnvironment env("GOOGLE_APPLICATION_CREDENTIALS", id_token_key_file_);
 
   auto ud_options = gc::AddUniverseDomainOption(gc::ExperimentalTag{});
   ASSERT_STATUS_OK(ud_options);
