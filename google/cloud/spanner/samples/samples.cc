@@ -5452,7 +5452,8 @@ void RunAllSlowInstanceTests(
           project_id, *location, "spanner-cmek2", "spanner-cmek-test-key2");
       google::cloud::KmsKeyName encryption_key3(
           project_id, *location, "spanner-cmek3", "spanner-cmek-test-key3");
-      std::vector<google::cloud::KmsKeyName> encryption_keys = {encryption_key, encryption_key2, encryption_key3};
+      std::vector<google::cloud::KmsKeyName> encryption_keys = {
+          encryption_key, encryption_key2, encryption_key3};
 
       SampleBanner("spanner_drop_database");
       DropDatabase(database_admin_client, project_id, crud_instance_id,
