@@ -1537,7 +1537,7 @@ void CreateDatabaseWithMRCMEK(
           INTERLEAVE IN PARENT Singers ON DELETE CASCADE)""");
   for (google::cloud::KmsKeyName const& encryption_key : encryption_keys) {
     request.mutable_encryption_config()->add_kms_key_names(
-      encryption_key.FullName());
+        encryption_key.FullName());
   }
   auto db = client.CreateDatabase(request).get();
   if (!db) throw std::move(db).status();
@@ -1558,13 +1558,13 @@ void CreateDatabaseWithMRCMEKCommand(std::vector<std::string> argv) {
   std::vector<google::cloud::KmsKeyName> encryption_keys;
   for (int i = 3; i < argv.size(); i += 3) {
     google::cloud::KmsKeyName encryption_key(/*project_id=*/argv[0],
-                                           /*location=*/argv[i],
-                                           /*key_ring=*/argv[i+1],
-                                           /*kms_key_name=*/argv[i+2]);
-    encryption_keys.append(encryption_key);
+                                             /*location=*/argv[i],
+                                             /*key_ring=*/argv[i + 1],
+                                             /*kms_key_name=*/argv[i + 2]);
+    encryption_keys.push_back(encryption_key);
   }
   CreateDatabaseWithMRCMEK(std::move(client), argv[0], argv[1], argv[2],
-                                  encryption_keys);
+                           encryption_keys);
 }
 
 //! [create-backup-with-encryption-key]
