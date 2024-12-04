@@ -309,7 +309,7 @@ ParameterCommentSubstitution substitutions[] = {
     {" projects/<project-id>/locations/<region>/azureClusters/<cluster-id>",
      " `projects/<project-id>/locations/<region>/azureClusters/<cluster-id>`"},
 
-    // From google/cloud/dialogflow/cx/v3/experiment.proto
+    // From google/cloud/dialogflow/cx/v3/transition_route_group.proto
     {"`projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>.",
      "`projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>`."},
 
