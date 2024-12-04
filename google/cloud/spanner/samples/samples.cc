@@ -1304,7 +1304,8 @@ struct BackupIdentifier {
   std::string backup_id;
 };
 
-void PrintKmsKeys(std::vector<google::cloud::KmsKeyName> const& encryption_keys) {
+void PrintKmsKeys(
+    std::vector<google::cloud::KmsKeyName> const& encryption_keys) {
   std::cout << " using encryption keys ";
   for (int i = 0; i < encryption_keys.size(); ++i) {
     std::cout << encryption_keys[i].FullName();
@@ -1315,20 +1316,26 @@ void PrintKmsKeys(std::vector<google::cloud::KmsKeyName> const& encryption_keys)
   std::cout << ".\n";
 }
 
-void CopyBackupWithMRCMEK(google::cloud::spanner_admin::DatabaseAdminClient client,
-                BackupIdentifier const& src,
-                BackupIdentifier const& dst,
-                google::cloud::spanner::Timestamp expire_time,
-                std::vector<google::cloud::KmsKeyName> const& encryption_keys) {
+void CopyBackupWithMRCMEK(
+    google::cloud::spanner_admin::DatabaseAdminClient client,
+    BackupIdentifier const& src, BackupIdentifier const& dst,
+    google::cloud::spanner::Timestamp expire_time,
+    std::vector<google::cloud::KmsKeyName> const& encryption_keys) {
   google::cloud::spanner::Backup source(
       google::cloud::spanner::Instance(src.project_id, src.instance_id),
       src.backup_id);
   google::cloud::spanner::Instance dst_in(dst.project_id, dst.instance_id);
-  auto copy_backup =
-      client
-          .CopyBackup(dst_in.FullName(), dst.backup_id, source.FullName(),
-                      expire_time.get<google::protobuf::Timestamp>().value(), encryption_keys)
-          .get();
+  google::spanner::admin::database::v1::CopyBackupRequest request;
+  request.set_backup_id(dst.backup_id);
+  request.set_parent(dst_in.FullName());
+  request.set_source_backup(source.FullName());
+  *request.mutable_expire_time() =
+      expire_time.get<google::protobuf::Timestamp>().value();
+  for (google::cloud::KmsKeyName const& encryption_key : encryption_keys) {
+    request.mutable_encryption_config()->add_kms_key_names(
+        encryption_key.FullName());
+  }
+  auto copy_backup = client.CopyBackup(request).get();
   if (!copy_backup) throw std::move(copy_backup).status();
   std::cout << "Copy Backup " << copy_backup->name()  //
             << " of " << source.FullName()            //
@@ -1348,7 +1355,8 @@ void CopyBackupWithMRCMEKCommand(std::vector<std::string> argv) {
   if (argv.size() < 8) {
     throw std::runtime_error(
         "copy-backup <project-id> <instance-id> <backup-id>"
-        " <copy-instance-id> <copy-backup-id> <locations> <key-rings> <key-names>");
+        " <copy-instance-id> <copy-backup-id> <locations> <key-rings> "
+        "<key-names>");
   }
   google::cloud::spanner_admin::DatabaseAdminClient client(
       google::cloud::spanner_admin::MakeDatabaseAdminConnection());
@@ -1358,17 +1366,25 @@ void CopyBackupWithMRCMEKCommand(std::vector<std::string> argv) {
   if (!backup) throw std::move(backup).status();
   auto expire_time = TimestampAdd(
       google::cloud::spanner::MakeTimestamp(backup->expire_time()).value(),
-      std::chrono::hours(7));
+      absl::Hours(7));
   std::vector<google::cloud::KmsKeyName> encryption_keys;
   for (int i = 3; i < argv.size(); i += 3) {
     google::cloud::KmsKeyName encryption_key(/*project_id=*/argv[0],
-                                           /*location=*/argv[i],
-                                           /*key_ring=*/argv[i+1],
-                                           /*kms_key_name=*/argv[i+2]);
-    encryption_keys.append(encryption_key);
+                                             /*location=*/argv[i],
+                                             /*key_ring=*/argv[i + 1],
+                                             /*kms_key_name=*/argv[i + 2]);
+    encryption_keys.push_back(encryption_key);
   }
-  CopyBackupWithMRCMEK(std::move(client), argv[0], argv[1], argv[2], argv[0], argv[3],
-             argv[4], expire_time, encryption_keys);
+  BackupIdentifier src;
+  src.project_id = argv[0];
+  src.instance_id = argv[1];
+  src.backup_id = argv[2];
+  BackupIdentifier dst;
+  src.project_id = argv[0];
+  src.instance_id = argv[3];
+  src.backup_id = argv[4];
+  CopyBackupWithMRCMEK(std::move(client), src, dst, expire_time,
+                       encryption_keys);
 }
 
 //! [delete-backup] [START spanner_delete_backup]
