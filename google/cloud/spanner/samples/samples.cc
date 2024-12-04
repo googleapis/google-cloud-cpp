@@ -1787,7 +1787,7 @@ void RestoreDatabaseWithMRCMEKCommand(std::vector<std::string> argv) {
   google::cloud::spanner_admin::DatabaseAdminClient client(
       google::cloud::spanner_admin::MakeDatabaseAdminConnection());
   std::vector<google::cloud::KmsKeyName> encryption_keys;
-  for (int i = 4; i < argv.size(); i += 3) {
+  for (std::size_t i = 4; i < argv.size(); i += 3) {
     google::cloud::KmsKeyName encryption_key(/*project_id=*/argv[0],
                                              /*location=*/argv[i],
                                              /*key_ring=*/argv[i + 1],
