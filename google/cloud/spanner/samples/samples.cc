@@ -1307,7 +1307,7 @@ struct BackupIdentifier {
 void PrintKmsKeys(
     std::vector<google::cloud::KmsKeyName> const& encryption_keys) {
   std::cout << " using encryption keys ";
-  for (int i = 0; i < encryption_keys.size(); ++i) {
+  for (std::size_t i = 0; i < encryption_keys.size(); ++i) {
     std::cout << encryption_keys[i].FullName();
     if (i != encryption_keys.size() - 1) {
       std::cout << ", ";
@@ -1368,7 +1368,7 @@ void CopyBackupWithMRCMEKCommand(std::vector<std::string> argv) {
       google::cloud::spanner::MakeTimestamp(backup->expire_time()).value(),
       absl::Hours(7));
   std::vector<google::cloud::KmsKeyName> encryption_keys;
-  for (int i = 3; i < argv.size(); i += 3) {
+  for (std::size_t i = 3; i < argv.size(); i += 3) {
     google::cloud::KmsKeyName encryption_key(/*project_id=*/argv[0],
                                              /*location=*/argv[i],
                                              /*key_ring=*/argv[i + 1],
@@ -1556,7 +1556,7 @@ void CreateDatabaseWithMRCMEKCommand(std::vector<std::string> argv) {
   google::cloud::spanner_admin::DatabaseAdminClient client(
       google::cloud::spanner_admin::MakeDatabaseAdminConnection());
   std::vector<google::cloud::KmsKeyName> encryption_keys;
-  for (int i = 3; i < argv.size(); i += 3) {
+  for (std::size_t i = 3; i < argv.size(); i += 3) {
     google::cloud::KmsKeyName encryption_key(/*project_id=*/argv[0],
                                              /*location=*/argv[i],
                                              /*key_ring=*/argv[i + 1],
@@ -1670,7 +1670,7 @@ void CreateBackupWithMRCMEKCommand(std::vector<std::string> argv) {
       google::cloud::spanner_admin::MakeDatabaseAdminConnection());
   auto now = DatabaseNow(MakeSampleClient(argv[0], argv[1], argv[2]));
   std::vector<google::cloud::KmsKeyName> encryption_keys;
-  for (int i = 4; i < argv.size(); i += 3) {
+  for (std::size_t i = 4; i < argv.size(); i += 3) {
     google::cloud::KmsKeyName encryption_key(/*project_id=*/argv[0],
                                              /*location=*/argv[i],
                                              /*key_ring=*/argv[i + 1],
@@ -5483,16 +5483,16 @@ void RunAllSlowInstanceTests(
                                crud_instance_id, database_id, encryption_keys);
 
       SampleBanner("spanner_create_backup_with_MR_CMEK");
-      auto now = DatabaseNow(
+      auto mr_now = DatabaseNow(
           MakeSampleClient(project_id, crud_instance_id, database_id));
-      auto expire_time = TimestampAdd(now, absl::Hours(7));
-      auto version_time = now;
+      auto mr_expire_time = TimestampAdd(mr_now, absl::Hours(7));
+      auto mr_version_time = mr_now;
       BackupIdentifier backup_dst;
       backup_dst.project_id = project_id;
       backup_dst.instance_id = crud_instance_id;
       backup_dst.backup_id = backup_id;
       CreateBackupWithMRCMEK(database_admin_client, backup_dst, database_id,
-                             expire_time, version_time, encryption_keys);
+                             mr_expire_time, mr_version_time, encryption_keys);
 
       SampleBanner("spanner_restore_backup_with_MR_CMEK");
       BackupIdentifier restore_src;
@@ -5512,7 +5512,7 @@ void RunAllSlowInstanceTests(
       copy_dst.instance_id = crud_instance_id;
       copy_dst.backup_id = copy_backup_id;
       CopyBackupWithMRCMEK(database_admin_client, copy_src, copy_dst,
-                           expire_time, encryption_keys);
+                           mr_expire_time, encryption_keys);
 
       SampleBanner("spanner_drop_database");
       DropDatabase(database_admin_client, project_id, crud_instance_id,
