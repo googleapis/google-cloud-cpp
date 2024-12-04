@@ -38,6 +38,7 @@
 @com_google_googleapis//google/cloud/aiplatform/v1:accelerator_type.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:annotation.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:annotation_spec.proto
+@com_google_googleapis//google/cloud/aiplatform/v1:api_auth.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:artifact.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:batch_prediction_job.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:completion_stats.proto
@@ -143,4 +144,7 @@
 @com_google_googleapis//google/cloud/aiplatform/v1:unmanaged_container_model.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:user_action_reference.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:value.proto
+@com_google_googleapis//google/cloud/aiplatform/v1:vertex_rag_data.proto
+@com_google_googleapis//google/cloud/aiplatform/v1:vertex_rag_data_service.proto
+@com_google_googleapis//google/cloud/aiplatform/v1:vertex_rag_service.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:vizier_service.proto

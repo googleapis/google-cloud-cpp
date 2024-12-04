@@ -9,6 +9,7 @@
 @com_google_googleapis//google/iam/v1:iam_policy_proto
 @com_google_googleapis//google/iam/v1:options_proto
 @com_google_googleapis//google/iam/v1:policy_proto
+@com_google_googleapis//google/iam/v1:resource_policy_member_proto
 @com_google_googleapis//google/identity/accesscontextmanager/type:type_proto
 @com_google_googleapis//google/identity/accesscontextmanager/v1:accesscontextmanager_proto
 @com_google_googleapis//google/longrunning:operations_proto
