@@ -100,7 +100,7 @@ class TransitionRouteGroupsClient {
   /// @param parent  Required. The flow to list all transition route groups for.
   ///  Format:
   ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/flows/<FlowID>`
-  ///   or `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>.
+  ///   or `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
