@@ -301,6 +301,35 @@ StatusOr<google::longrunning::Operation> DatastreamLogging::DeleteStream(
       context, options, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DatastreamLogging::AsyncRunStream(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::datastream::v1::RunStreamRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::datastream::v1::RunStreamRequest const& request) {
+        return child_->AsyncRunStream(cq, std::move(context),
+                                      std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> DatastreamLogging::RunStream(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::RunStreamRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::datastream::v1::RunStreamRequest const& request) {
+        return child_->RunStream(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::datastream::v1::StreamObject>
 DatastreamLogging::GetStreamObject(
     grpc::ClientContext& context, Options const& options,

@@ -324,6 +324,18 @@ class DataCatalogConnection {
       StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>
   ImportEntries(google::longrunning::Operation const& operation);
 
+  virtual StatusOr<google::cloud::datacatalog::v1::MigrationConfig> SetConfig(
+      google::cloud::datacatalog::v1::SetConfigRequest const& request);
+
+  virtual StatusOr<google::cloud::datacatalog::v1::OrganizationConfig>
+  RetrieveConfig(
+      google::cloud::datacatalog::v1::RetrieveConfigRequest const& request);
+
+  virtual StatusOr<google::cloud::datacatalog::v1::MigrationConfig>
+  RetrieveEffectiveConfig(
+      google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const&
+          request);
+
   virtual StreamRange<google::longrunning::Operation> ListOperations(
       google::longrunning::ListOperationsRequest request);
 

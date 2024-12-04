@@ -69,6 +69,12 @@ Idempotency FeatureRegistryServiceConnectionIdempotencyPolicy::CreateFeature(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency
+FeatureRegistryServiceConnectionIdempotencyPolicy::BatchCreateFeatures(
+    google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency FeatureRegistryServiceConnectionIdempotencyPolicy::GetFeature(
     google::cloud::aiplatform::v1::GetFeatureRequest const&) {
   return Idempotency::kIdempotent;

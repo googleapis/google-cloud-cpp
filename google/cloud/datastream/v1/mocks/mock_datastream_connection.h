@@ -319,6 +319,43 @@ class MockDatastreamConnection : public datastream_v1::DatastreamConnection {
       DeleteStream, (google::longrunning::Operation const& operation),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RunStream(Matcher<google::cloud::datastream::v1::RunStreamRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::datastream::v1::Stream>>,
+              RunStream,
+              (google::cloud::datastream::v1::RunStreamRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, RunStream(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, RunStream,
+              (NoAwaitTag,
+               google::cloud::datastream::v1::RunStreamRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, RunStream(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::datastream::v1::Stream>>,
+              RunStream, (google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::datastream::v1::StreamObject>, GetStreamObject,
       (google::cloud::datastream::v1::GetStreamObjectRequest const& request),

@@ -687,6 +687,31 @@ DataCatalogClient::ImportEntries(
   return connection_->ImportEntries(operation);
 }
 
+StatusOr<google::cloud::datacatalog::v1::MigrationConfig>
+DataCatalogClient::SetConfig(
+    google::cloud::datacatalog::v1::SetConfigRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetConfig(request);
+}
+
+StatusOr<google::cloud::datacatalog::v1::OrganizationConfig>
+DataCatalogClient::RetrieveConfig(
+    google::cloud::datacatalog::v1::RetrieveConfigRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RetrieveConfig(request);
+}
+
+StatusOr<google::cloud::datacatalog::v1::MigrationConfig>
+DataCatalogClient::RetrieveEffectiveConfig(
+    google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RetrieveEffectiveConfig(request);
+}
+
 StreamRange<google::longrunning::Operation> DataCatalogClient::ListOperations(
     std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

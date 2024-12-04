@@ -207,6 +207,21 @@ Idempotency DataCatalogConnectionIdempotencyPolicy::ImportEntries(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency DataCatalogConnectionIdempotencyPolicy::SetConfig(
+    google::cloud::datacatalog::v1::SetConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DataCatalogConnectionIdempotencyPolicy::RetrieveConfig(
+    google::cloud::datacatalog::v1::RetrieveConfigRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DataCatalogConnectionIdempotencyPolicy::RetrieveEffectiveConfig(
+    google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 Idempotency DataCatalogConnectionIdempotencyPolicy::ListOperations(
     google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;

@@ -151,6 +151,51 @@ EndpointServiceClient::UpdateEndpoint(
   return connection_->UpdateEndpoint(request);
 }
 
+future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>
+EndpointServiceClient::UpdateEndpointLongRunning(
+    google::cloud::aiplatform::v1::Endpoint const& endpoint, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::UpdateEndpointLongRunningRequest request;
+  *request.mutable_endpoint() = endpoint;
+  return connection_->UpdateEndpointLongRunning(request);
+}
+
+StatusOr<google::longrunning::Operation>
+EndpointServiceClient::UpdateEndpointLongRunning(
+    NoAwaitTag, google::cloud::aiplatform::v1::Endpoint const& endpoint,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::UpdateEndpointLongRunningRequest request;
+  *request.mutable_endpoint() = endpoint;
+  return connection_->UpdateEndpointLongRunning(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>
+EndpointServiceClient::UpdateEndpointLongRunning(
+    google::cloud::aiplatform::v1::UpdateEndpointLongRunningRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateEndpointLongRunning(request);
+}
+
+StatusOr<google::longrunning::Operation>
+EndpointServiceClient::UpdateEndpointLongRunning(
+    NoAwaitTag,
+    google::cloud::aiplatform::v1::UpdateEndpointLongRunningRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateEndpointLongRunning(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>
+EndpointServiceClient::UpdateEndpointLongRunning(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateEndpointLongRunning(operation);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 EndpointServiceClient::DeleteEndpoint(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

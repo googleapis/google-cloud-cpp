@@ -1129,6 +1129,52 @@ NetAppClient::ReverseReplicationDirection(
   return connection_->ReverseReplicationDirection(operation);
 }
 
+future<StatusOr<google::cloud::netapp::v1::Replication>>
+NetAppClient::EstablishPeering(
+    google::cloud::netapp::v1::EstablishPeeringRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->EstablishPeering(request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppClient::EstablishPeering(
+    NoAwaitTag,
+    google::cloud::netapp::v1::EstablishPeeringRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->EstablishPeering(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::Replication>>
+NetAppClient::EstablishPeering(google::longrunning::Operation const& operation,
+                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->EstablishPeering(operation);
+}
+
+future<StatusOr<google::cloud::netapp::v1::Replication>>
+NetAppClient::SyncReplication(
+    google::cloud::netapp::v1::SyncReplicationRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SyncReplication(request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppClient::SyncReplication(
+    NoAwaitTag,
+    google::cloud::netapp::v1::SyncReplicationRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SyncReplication(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::Replication>>
+NetAppClient::SyncReplication(google::longrunning::Operation const& operation,
+                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SyncReplication(operation);
+}
+
 future<StatusOr<google::cloud::netapp::v1::BackupVault>>
 NetAppClient::CreateBackupVault(
     std::string const& parent,

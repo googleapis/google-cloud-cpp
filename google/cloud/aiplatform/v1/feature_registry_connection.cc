@@ -147,6 +147,30 @@ FeatureRegistryServiceConnection::CreateFeature(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
+FeatureRegistryServiceConnection::BatchCreateFeatures(
+    google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+FeatureRegistryServiceConnection::BatchCreateFeatures(
+    NoAwaitTag,
+    google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
+FeatureRegistryServiceConnection::BatchCreateFeatures(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::aiplatform::v1::Feature>
 FeatureRegistryServiceConnection::GetFeature(
     google::cloud::aiplatform::v1::GetFeatureRequest const&) {

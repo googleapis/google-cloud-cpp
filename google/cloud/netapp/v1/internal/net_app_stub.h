@@ -362,6 +362,27 @@ class NetAppStub {
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncEstablishPeering(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::netapp::v1::EstablishPeeringRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> EstablishPeering(
+      grpc::ClientContext& context, Options options,
+      google::cloud::netapp::v1::EstablishPeeringRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncSyncReplication(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::netapp::v1::SyncReplicationRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> SyncReplication(
+      grpc::ClientContext& context, Options options,
+      google::cloud::netapp::v1::SyncReplicationRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
   AsyncCreateBackupVault(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -864,6 +885,30 @@ class DefaultNetAppStub : public NetAppStub {
       grpc::ClientContext& context, Options options,
       google::cloud::netapp::v1::ReverseReplicationDirectionRequest const&
           request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncEstablishPeering(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::netapp::v1::EstablishPeeringRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> EstablishPeering(
+      grpc::ClientContext& context, Options options,
+      google::cloud::netapp::v1::EstablishPeeringRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncSyncReplication(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::netapp::v1::SyncReplicationRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> SyncReplication(
+      grpc::ClientContext& context, Options options,
+      google::cloud::netapp::v1::SyncReplicationRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateBackupVault(
       google::cloud::CompletionQueue& cq,

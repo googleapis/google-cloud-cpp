@@ -98,6 +98,19 @@ class FeatureRegistryServiceTracingConnection
   future<StatusOr<google::cloud::aiplatform::v1::Feature>> CreateFeature(
       google::longrunning::Operation const& operation) override;
 
+  future<StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
+  BatchCreateFeatures(
+      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> BatchCreateFeatures(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
+  BatchCreateFeatures(google::longrunning::Operation const& operation) override;
+
   StatusOr<google::cloud::aiplatform::v1::Feature> GetFeature(
       google::cloud::aiplatform::v1::GetFeatureRequest const& request) override;
 

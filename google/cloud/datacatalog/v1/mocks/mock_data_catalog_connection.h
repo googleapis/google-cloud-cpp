@@ -290,6 +290,24 @@ class MockDataCatalogConnection : public datacatalog_v1::DataCatalogConnection {
       ImportEntries, (google::longrunning::Operation const& operation),
       (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::MigrationConfig>,
+              SetConfig,
+              (google::cloud::datacatalog::v1::SetConfigRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::datacatalog::v1::OrganizationConfig>,
+      RetrieveConfig,
+      (google::cloud::datacatalog::v1::RetrieveConfigRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::datacatalog::v1::MigrationConfig>,
+      RetrieveEffectiveConfig,
+      (google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const&
+           request),
+      (override));
+
   MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
               (google::longrunning::ListOperationsRequest request), (override));
 

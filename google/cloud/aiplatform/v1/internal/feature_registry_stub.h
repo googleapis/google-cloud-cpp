@@ -99,6 +99,19 @@ class FeatureRegistryServiceStub {
       grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::CreateFeatureRequest const& request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncBatchCreateFeatures(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> BatchCreateFeatures(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const&
+          request) = 0;
+
   virtual StatusOr<google::cloud::aiplatform::v1::Feature> GetFeature(
       grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetFeatureRequest const& request) = 0;
@@ -256,6 +269,18 @@ class DefaultFeatureRegistryServiceStub : public FeatureRegistryServiceStub {
   StatusOr<google::longrunning::Operation> CreateFeature(
       grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::CreateFeatureRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncBatchCreateFeatures(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> BatchCreateFeatures(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::Feature> GetFeature(

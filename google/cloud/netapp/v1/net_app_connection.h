@@ -483,6 +483,28 @@ class NetAppConnection {
   virtual future<StatusOr<google::cloud::netapp::v1::Replication>>
   ReverseReplicationDirection(google::longrunning::Operation const& operation);
 
+  virtual future<StatusOr<google::cloud::netapp::v1::Replication>>
+  EstablishPeering(
+      google::cloud::netapp::v1::EstablishPeeringRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> EstablishPeering(
+      NoAwaitTag,
+      google::cloud::netapp::v1::EstablishPeeringRequest const& request);
+
+  virtual future<StatusOr<google::cloud::netapp::v1::Replication>>
+  EstablishPeering(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::netapp::v1::Replication>>
+  SyncReplication(
+      google::cloud::netapp::v1::SyncReplicationRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> SyncReplication(
+      NoAwaitTag,
+      google::cloud::netapp::v1::SyncReplicationRequest const& request);
+
+  virtual future<StatusOr<google::cloud::netapp::v1::Replication>>
+  SyncReplication(google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::netapp::v1::BackupVault>>
   CreateBackupVault(
       google::cloud::netapp::v1::CreateBackupVaultRequest const& request);

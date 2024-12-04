@@ -916,6 +916,66 @@ NetAppLogging::ReverseReplicationDirection(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+NetAppLogging::AsyncEstablishPeering(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::EstablishPeeringRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::netapp::v1::EstablishPeeringRequest const& request) {
+        return child_->AsyncEstablishPeering(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> NetAppLogging::EstablishPeering(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::EstablishPeeringRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::netapp::v1::EstablishPeeringRequest const& request) {
+        return child_->EstablishPeering(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetAppLogging::AsyncSyncReplication(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::SyncReplicationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::netapp::v1::SyncReplicationRequest const& request) {
+        return child_->AsyncSyncReplication(cq, std::move(context),
+                                            std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> NetAppLogging::SyncReplication(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::SyncReplicationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::SyncReplicationRequest const& request) {
+        return child_->SyncReplication(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 NetAppLogging::AsyncCreateBackupVault(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

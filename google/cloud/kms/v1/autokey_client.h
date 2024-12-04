@@ -564,8 +564,8 @@ class AutokeyClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
@@ -596,8 +596,8 @@ class AutokeyClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(

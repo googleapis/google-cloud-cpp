@@ -206,6 +206,27 @@ DatastreamConnection::DeleteStream(google::longrunning::Operation const&) {
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::datastream::v1::Stream>>
+DatastreamConnection::RunStream(
+    google::cloud::datastream::v1::RunStreamRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::datastream::v1::Stream>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> DatastreamConnection::RunStream(
+    NoAwaitTag, google::cloud::datastream::v1::RunStreamRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::datastream::v1::Stream>>
+DatastreamConnection::RunStream(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::datastream::v1::Stream>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::datastream::v1::StreamObject>
 DatastreamConnection::GetStreamObject(
     google::cloud::datastream::v1::GetStreamObjectRequest const&) {

@@ -150,6 +150,16 @@ class DatastreamConnectionImpl : public datastream_v1::DatastreamConnection {
   future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
   DeleteStream(google::longrunning::Operation const& operation) override;
 
+  future<StatusOr<google::cloud::datastream::v1::Stream>> RunStream(
+      google::cloud::datastream::v1::RunStreamRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> RunStream(
+      NoAwaitTag,
+      google::cloud::datastream::v1::RunStreamRequest const& request) override;
+
+  future<StatusOr<google::cloud::datastream::v1::Stream>> RunStream(
+      google::longrunning::Operation const& operation) override;
+
   StatusOr<google::cloud::datastream::v1::StreamObject> GetStreamObject(
       google::cloud::datastream::v1::GetStreamObjectRequest const& request)
       override;

@@ -380,6 +380,28 @@ DatastreamClient::DeleteStream(google::longrunning::Operation const& operation,
   return connection_->DeleteStream(operation);
 }
 
+future<StatusOr<google::cloud::datastream::v1::Stream>>
+DatastreamClient::RunStream(
+    google::cloud::datastream::v1::RunStreamRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RunStream(request);
+}
+
+StatusOr<google::longrunning::Operation> DatastreamClient::RunStream(
+    NoAwaitTag, google::cloud::datastream::v1::RunStreamRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RunStream(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::datastream::v1::Stream>>
+DatastreamClient::RunStream(google::longrunning::Operation const& operation,
+                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RunStream(operation);
+}
+
 StatusOr<google::cloud::datastream::v1::StreamObject>
 DatastreamClient::GetStreamObject(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
