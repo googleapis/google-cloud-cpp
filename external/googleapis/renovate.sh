@@ -36,9 +36,6 @@ if [[ -z "$COMMIT_DATE" ]]; then
   COMMIT_DATE=$(date +%Y-%m-%d)
 fi
 
-echo $COMMIT $COMMIT_DATE
-echo "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-
 DOWNLOAD="$(mktemp)"
 curl -fsSL "https://github.com/${REPO}/archive/${COMMIT}.tar.gz" -o "${DOWNLOAD}"
 gsutil -q cp "${DOWNLOAD}" "gs://cloud-cpp-community-archive/com_google_googleapis/${COMMIT}.tar.gz"
