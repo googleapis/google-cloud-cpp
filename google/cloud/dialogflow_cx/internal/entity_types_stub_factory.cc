@@ -46,14 +46,11 @@ std::shared_ptr<EntityTypesStub> CreateDefaultEntityTypesStub(
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       google::cloud::dialogflow::cx::v3::EntityTypes::NewStub(channel);
-  auto service_operations_stub =
-      google::longrunning::Operations::NewStub(channel);
   auto service_locations_stub =
       google::cloud::location::Locations::NewStub(channel);
   std::shared_ptr<EntityTypesStub> stub =
       std::make_shared<DefaultEntityTypesStub>(
-          std::move(service_grpc_stub), std::move(service_operations_stub),
-          std::move(service_locations_stub),
+          std::move(service_grpc_stub), std::move(service_locations_stub),
           google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {

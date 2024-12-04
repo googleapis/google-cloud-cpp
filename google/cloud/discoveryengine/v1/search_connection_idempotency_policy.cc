@@ -39,6 +39,11 @@ Idempotency SearchServiceConnectionIdempotencyPolicy::Search(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency SearchServiceConnectionIdempotencyPolicy::SearchLite(
+    google::cloud::discoveryengine::v1::SearchRequest) {  // NOLINT
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency SearchServiceConnectionIdempotencyPolicy::ListOperations(
     google::longrunning::ListOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;

@@ -54,6 +54,18 @@ Idempotency ConsumerProcurementServiceConnectionIdempotencyPolicy::ListOrders(
   return Idempotency::kIdempotent;
 }
 
+Idempotency ConsumerProcurementServiceConnectionIdempotencyPolicy::ModifyOrder(
+    google::cloud::commerce::consumer::procurement::v1::
+        ModifyOrderRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ConsumerProcurementServiceConnectionIdempotencyPolicy::CancelOrder(
+    google::cloud::commerce::consumer::procurement::v1::
+        CancelOrderRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency ConsumerProcurementServiceConnectionIdempotencyPolicy::GetOperation(
     google::longrunning::GetOperationRequest const&) {
   return Idempotency::kIdempotent;

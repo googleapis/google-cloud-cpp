@@ -46,13 +46,10 @@ std::shared_ptr<VersionsStub> CreateDefaultVersionsStub(
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       google::cloud::dialogflow::cx::v3::Versions::NewStub(channel);
-  auto service_operations_stub =
-      google::longrunning::Operations::NewStub(channel);
   auto service_locations_stub =
       google::cloud::location::Locations::NewStub(channel);
   std::shared_ptr<VersionsStub> stub = std::make_shared<DefaultVersionsStub>(
-      std::move(service_grpc_stub), std::move(service_operations_stub),
-      std::move(service_locations_stub),
+      std::move(service_grpc_stub), std::move(service_locations_stub),
       google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {

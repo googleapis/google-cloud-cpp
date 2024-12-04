@@ -104,6 +104,359 @@ BackupDRMetadata::DeleteManagementServer(
   return child_->DeleteManagementServer(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+BackupDRMetadata::AsyncCreateBackupVault(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::CreateBackupVaultRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateBackupVault(cq, std::move(context),
+                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> BackupDRMetadata::CreateBackupVault(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::CreateBackupVaultRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateBackupVault(context, options, request);
+}
+
+StatusOr<google::cloud::backupdr::v1::ListBackupVaultsResponse>
+BackupDRMetadata::ListBackupVaults(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::ListBackupVaultsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListBackupVaults(context, options, request);
+}
+
+StatusOr<google::cloud::backupdr::v1::FetchUsableBackupVaultsResponse>
+BackupDRMetadata::FetchUsableBackupVaults(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::FetchUsableBackupVaultsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->FetchUsableBackupVaults(context, options, request);
+}
+
+StatusOr<google::cloud::backupdr::v1::BackupVault>
+BackupDRMetadata::GetBackupVault(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::GetBackupVaultRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetBackupVault(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupDRMetadata::AsyncUpdateBackupVault(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::UpdateBackupVaultRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("backup_vault.name=",
+                           internal::UrlEncode(request.backup_vault().name())));
+  return child_->AsyncUpdateBackupVault(cq, std::move(context),
+                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> BackupDRMetadata::UpdateBackupVault(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::UpdateBackupVaultRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("backup_vault.name=",
+                           internal::UrlEncode(request.backup_vault().name())));
+  return child_->UpdateBackupVault(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupDRMetadata::AsyncDeleteBackupVault(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::DeleteBackupVaultRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteBackupVault(cq, std::move(context),
+                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> BackupDRMetadata::DeleteBackupVault(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::DeleteBackupVaultRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteBackupVault(context, options, request);
+}
+
+StatusOr<google::cloud::backupdr::v1::ListDataSourcesResponse>
+BackupDRMetadata::ListDataSources(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::ListDataSourcesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListDataSources(context, options, request);
+}
+
+StatusOr<google::cloud::backupdr::v1::DataSource>
+BackupDRMetadata::GetDataSource(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::GetDataSourceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetDataSource(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupDRMetadata::AsyncUpdateDataSource(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::UpdateDataSourceRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("data_source.name=",
+                           internal::UrlEncode(request.data_source().name())));
+  return child_->AsyncUpdateDataSource(cq, std::move(context),
+                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> BackupDRMetadata::UpdateDataSource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::UpdateDataSourceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("data_source.name=",
+                           internal::UrlEncode(request.data_source().name())));
+  return child_->UpdateDataSource(context, options, request);
+}
+
+StatusOr<google::cloud::backupdr::v1::ListBackupsResponse>
+BackupDRMetadata::ListBackups(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::ListBackupsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListBackups(context, options, request);
+}
+
+StatusOr<google::cloud::backupdr::v1::Backup> BackupDRMetadata::GetBackup(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::GetBackupRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetBackup(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupDRMetadata::AsyncUpdateBackup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::UpdateBackupRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("backup.name=",
+                           internal::UrlEncode(request.backup().name())));
+  return child_->AsyncUpdateBackup(cq, std::move(context), std::move(options),
+                                   request);
+}
+
+StatusOr<google::longrunning::Operation> BackupDRMetadata::UpdateBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::UpdateBackupRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("backup.name=",
+                           internal::UrlEncode(request.backup().name())));
+  return child_->UpdateBackup(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupDRMetadata::AsyncDeleteBackup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::DeleteBackupRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteBackup(cq, std::move(context), std::move(options),
+                                   request);
+}
+
+StatusOr<google::longrunning::Operation> BackupDRMetadata::DeleteBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::DeleteBackupRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteBackup(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupDRMetadata::AsyncRestoreBackup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::RestoreBackupRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncRestoreBackup(cq, std::move(context), std::move(options),
+                                    request);
+}
+
+StatusOr<google::longrunning::Operation> BackupDRMetadata::RestoreBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::RestoreBackupRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->RestoreBackup(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupDRMetadata::AsyncCreateBackupPlan(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::CreateBackupPlanRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateBackupPlan(cq, std::move(context),
+                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> BackupDRMetadata::CreateBackupPlan(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::CreateBackupPlanRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateBackupPlan(context, options, request);
+}
+
+StatusOr<google::cloud::backupdr::v1::BackupPlan>
+BackupDRMetadata::GetBackupPlan(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::GetBackupPlanRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetBackupPlan(context, options, request);
+}
+
+StatusOr<google::cloud::backupdr::v1::ListBackupPlansResponse>
+BackupDRMetadata::ListBackupPlans(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::ListBackupPlansRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListBackupPlans(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupDRMetadata::AsyncDeleteBackupPlan(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::DeleteBackupPlanRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteBackupPlan(cq, std::move(context),
+                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> BackupDRMetadata::DeleteBackupPlan(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::DeleteBackupPlanRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteBackupPlan(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupDRMetadata::AsyncCreateBackupPlanAssociation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::CreateBackupPlanAssociationRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateBackupPlanAssociation(cq, std::move(context),
+                                                  std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRMetadata::CreateBackupPlanAssociation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::CreateBackupPlanAssociationRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateBackupPlanAssociation(context, options, request);
+}
+
+StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>
+BackupDRMetadata::GetBackupPlanAssociation(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::GetBackupPlanAssociationRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetBackupPlanAssociation(context, options, request);
+}
+
+StatusOr<google::cloud::backupdr::v1::ListBackupPlanAssociationsResponse>
+BackupDRMetadata::ListBackupPlanAssociations(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::backupdr::v1::ListBackupPlanAssociationsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListBackupPlanAssociations(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupDRMetadata::AsyncDeleteBackupPlanAssociation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::DeleteBackupPlanAssociationRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteBackupPlanAssociation(cq, std::move(context),
+                                                  std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRMetadata::DeleteBackupPlanAssociation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::DeleteBackupPlanAssociationRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteBackupPlanAssociation(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BackupDRMetadata::AsyncTriggerBackup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::TriggerBackupRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncTriggerBackup(cq, std::move(context), std::move(options),
+                                    request);
+}
+
+StatusOr<google::longrunning::Operation> BackupDRMetadata::TriggerBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::TriggerBackupRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->TriggerBackup(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 BackupDRMetadata::ListLocations(
     grpc::ClientContext& context, Options const& options,

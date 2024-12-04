@@ -116,8 +116,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.Connection]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L207}
-  /// [google.cloud.developerconnect.v1.ListConnectionsRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L358}
+  /// [google.cloud.developerconnect.v1.Connection]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L215}
+  /// [google.cloud.developerconnect.v1.ListConnectionsRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L551}
   ///
   // clang-format on
   StreamRange<google::cloud::developerconnect::v1::Connection> ListConnections(
@@ -155,8 +155,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.Connection]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L207}
-  /// [google.cloud.developerconnect.v1.ListConnectionsRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L358}
+  /// [google.cloud.developerconnect.v1.Connection]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L215}
+  /// [google.cloud.developerconnect.v1.ListConnectionsRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L551}
   ///
   // clang-format on
   StreamRange<google::cloud::developerconnect::v1::Connection> ListConnections(
@@ -181,8 +181,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.Connection]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L207}
-  /// [google.cloud.developerconnect.v1.GetConnectionRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L394}
+  /// [google.cloud.developerconnect.v1.Connection]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L215}
+  /// [google.cloud.developerconnect.v1.GetConnectionRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L587}
   ///
   // clang-format on
   StatusOr<google::cloud::developerconnect::v1::Connection> GetConnection(
@@ -211,8 +211,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.Connection]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L207}
-  /// [google.cloud.developerconnect.v1.GetConnectionRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L394}
+  /// [google.cloud.developerconnect.v1.Connection]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L215}
+  /// [google.cloud.developerconnect.v1.GetConnectionRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L587}
   ///
   // clang-format on
   StatusOr<google::cloud::developerconnect::v1::Connection> GetConnection(
@@ -248,8 +248,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.Connection]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L207}
-  /// [google.cloud.developerconnect.v1.CreateConnectionRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L405}
+  /// [google.cloud.developerconnect.v1.Connection]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L215}
+  /// [google.cloud.developerconnect.v1.CreateConnectionRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L598}
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::Connection>>
@@ -304,8 +304,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.Connection]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L207}
-  /// [google.cloud.developerconnect.v1.CreateConnectionRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L405}
+  /// [google.cloud.developerconnect.v1.Connection]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L215}
+  /// [google.cloud.developerconnect.v1.CreateConnectionRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L598}
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::Connection>>
@@ -374,8 +374,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.Connection]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L207}
-  /// [google.cloud.developerconnect.v1.UpdateConnectionRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L445}
+  /// [google.cloud.developerconnect.v1.Connection]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L215}
+  /// [google.cloud.developerconnect.v1.UpdateConnectionRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L638}
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::Connection>>
@@ -429,8 +429,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.Connection]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L207}
-  /// [google.cloud.developerconnect.v1.UpdateConnectionRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L445}
+  /// [google.cloud.developerconnect.v1.Connection]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L215}
+  /// [google.cloud.developerconnect.v1.UpdateConnectionRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L638}
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::Connection>>
@@ -494,8 +494,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.DeleteConnectionRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L487}
-  /// [google.cloud.developerconnect.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L524}
+  /// [google.cloud.developerconnect.v1.DeleteConnectionRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L680}
+  /// [google.cloud.developerconnect.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L717}
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
@@ -545,8 +545,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.DeleteConnectionRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L487}
-  /// [google.cloud.developerconnect.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L524}
+  /// [google.cloud.developerconnect.v1.DeleteConnectionRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L680}
+  /// [google.cloud.developerconnect.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L717}
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
@@ -619,8 +619,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.CreateGitRepositoryLinkRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L606}
-  /// [google.cloud.developerconnect.v1.GitRepositoryLink]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L554}
+  /// [google.cloud.developerconnect.v1.CreateGitRepositoryLinkRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L803}
+  /// [google.cloud.developerconnect.v1.GitRepositoryLink]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L748}
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>>
@@ -681,8 +681,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.CreateGitRepositoryLinkRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L606}
-  /// [google.cloud.developerconnect.v1.GitRepositoryLink]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L554}
+  /// [google.cloud.developerconnect.v1.CreateGitRepositoryLinkRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L803}
+  /// [google.cloud.developerconnect.v1.GitRepositoryLink]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L748}
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>>
@@ -746,8 +746,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.DeleteGitRepositoryLinkRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L648}
-  /// [google.cloud.developerconnect.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L524}
+  /// [google.cloud.developerconnect.v1.DeleteGitRepositoryLinkRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L845}
+  /// [google.cloud.developerconnect.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L717}
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
@@ -797,8 +797,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.DeleteGitRepositoryLinkRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L648}
-  /// [google.cloud.developerconnect.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L524}
+  /// [google.cloud.developerconnect.v1.DeleteGitRepositoryLinkRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L845}
+  /// [google.cloud.developerconnect.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L717}
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
@@ -864,8 +864,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.GitRepositoryLink]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L554}
-  /// [google.cloud.developerconnect.v1.ListGitRepositoryLinksRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L685}
+  /// [google.cloud.developerconnect.v1.GitRepositoryLink]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L748}
+  /// [google.cloud.developerconnect.v1.ListGitRepositoryLinksRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L882}
   ///
   // clang-format on
   StreamRange<google::cloud::developerconnect::v1::GitRepositoryLink>
@@ -903,8 +903,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.GitRepositoryLink]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L554}
-  /// [google.cloud.developerconnect.v1.ListGitRepositoryLinksRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L685}
+  /// [google.cloud.developerconnect.v1.GitRepositoryLink]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L748}
+  /// [google.cloud.developerconnect.v1.ListGitRepositoryLinksRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L882}
   ///
   // clang-format on
   StreamRange<google::cloud::developerconnect::v1::GitRepositoryLink>
@@ -931,8 +931,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.GetGitRepositoryLinkRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L721}
-  /// [google.cloud.developerconnect.v1.GitRepositoryLink]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L554}
+  /// [google.cloud.developerconnect.v1.GetGitRepositoryLinkRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L918}
+  /// [google.cloud.developerconnect.v1.GitRepositoryLink]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L748}
   ///
   // clang-format on
   StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>
@@ -961,8 +961,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.GetGitRepositoryLinkRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L721}
-  /// [google.cloud.developerconnect.v1.GitRepositoryLink]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L554}
+  /// [google.cloud.developerconnect.v1.GetGitRepositoryLinkRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L918}
+  /// [google.cloud.developerconnect.v1.GitRepositoryLink]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L748}
   ///
   // clang-format on
   StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>
@@ -990,8 +990,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.FetchReadWriteTokenRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L732}
-  /// [google.cloud.developerconnect.v1.FetchReadWriteTokenResponse]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L770}
+  /// [google.cloud.developerconnect.v1.FetchReadWriteTokenRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L929}
+  /// [google.cloud.developerconnect.v1.FetchReadWriteTokenResponse]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L967}
   ///
   // clang-format on
   StatusOr<google::cloud::developerconnect::v1::FetchReadWriteTokenResponse>
@@ -1021,8 +1021,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.FetchReadWriteTokenRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L732}
-  /// [google.cloud.developerconnect.v1.FetchReadWriteTokenResponse]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L770}
+  /// [google.cloud.developerconnect.v1.FetchReadWriteTokenRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L929}
+  /// [google.cloud.developerconnect.v1.FetchReadWriteTokenResponse]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L967}
   ///
   // clang-format on
   StatusOr<google::cloud::developerconnect::v1::FetchReadWriteTokenResponse>
@@ -1050,8 +1050,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.FetchReadTokenRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L744}
-  /// [google.cloud.developerconnect.v1.FetchReadTokenResponse]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L756}
+  /// [google.cloud.developerconnect.v1.FetchReadTokenRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L941}
+  /// [google.cloud.developerconnect.v1.FetchReadTokenResponse]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L953}
   ///
   // clang-format on
   StatusOr<google::cloud::developerconnect::v1::FetchReadTokenResponse>
@@ -1080,8 +1080,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.FetchReadTokenRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L744}
-  /// [google.cloud.developerconnect.v1.FetchReadTokenResponse]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L756}
+  /// [google.cloud.developerconnect.v1.FetchReadTokenRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L941}
+  /// [google.cloud.developerconnect.v1.FetchReadTokenResponse]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L953}
   ///
   // clang-format on
   StatusOr<google::cloud::developerconnect::v1::FetchReadTokenResponse>
@@ -1118,8 +1118,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.FetchLinkableGitRepositoriesRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L784}
-  /// [google.cloud.developerconnect.v1.LinkableGitRepository]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L812}
+  /// [google.cloud.developerconnect.v1.FetchLinkableGitRepositoriesRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L981}
+  /// [google.cloud.developerconnect.v1.LinkableGitRepository]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1009}
   ///
   // clang-format on
   StreamRange<google::cloud::developerconnect::v1::LinkableGitRepository>
@@ -1159,8 +1159,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.FetchLinkableGitRepositoriesRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L784}
-  /// [google.cloud.developerconnect.v1.LinkableGitRepository]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L812}
+  /// [google.cloud.developerconnect.v1.FetchLinkableGitRepositoriesRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L981}
+  /// [google.cloud.developerconnect.v1.LinkableGitRepository]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1009}
   ///
   // clang-format on
   StreamRange<google::cloud::developerconnect::v1::LinkableGitRepository>
@@ -1191,8 +1191,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.FetchGitHubInstallationsRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L818}
-  /// [google.cloud.developerconnect.v1.FetchGitHubInstallationsResponse]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L830}
+  /// [google.cloud.developerconnect.v1.FetchGitHubInstallationsRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1015}
+  /// [google.cloud.developerconnect.v1.FetchGitHubInstallationsResponse]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1027}
   ///
   // clang-format on
   StatusOr<
@@ -1225,8 +1225,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.FetchGitHubInstallationsRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L818}
-  /// [google.cloud.developerconnect.v1.FetchGitHubInstallationsResponse]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L830}
+  /// [google.cloud.developerconnect.v1.FetchGitHubInstallationsRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1015}
+  /// [google.cloud.developerconnect.v1.FetchGitHubInstallationsResponse]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1027}
   ///
   // clang-format on
   StatusOr<
@@ -1262,7 +1262,7 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.FetchGitRefsRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L849}
+  /// [google.cloud.developerconnect.v1.FetchGitRefsRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1046}
   ///
   // clang-format on
   StreamRange<std::string> FetchGitRefs(
@@ -1301,7 +1301,7 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.developerconnect.v1.FetchGitRefsRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L849}
+  /// [google.cloud.developerconnect.v1.FetchGitRefsRequest]: @googleapis_reference_link{google/cloud/developerconnect/v1/developer_connect.proto#L1046}
   ///
   // clang-format on
   StreamRange<std::string> FetchGitRefs(
@@ -1383,14 +1383,6 @@ class DeveloperConnectClient {
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
   ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
-  ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1415,8 +1407,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -1426,14 +1418,6 @@ class DeveloperConnectClient {
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1463,8 +1447,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -1490,8 +1474,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
@@ -1522,8 +1506,8 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(
@@ -1549,7 +1533,7 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
   Status DeleteOperation(std::string const& name, Options opts = {});
@@ -1578,7 +1562,7 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
   Status DeleteOperation(
@@ -1595,8 +1579,9 @@ class DeveloperConnectClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1610,9 +1595,9 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
@@ -1628,8 +1613,9 @@ class DeveloperConnectClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1648,9 +1634,9 @@ class DeveloperConnectClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on

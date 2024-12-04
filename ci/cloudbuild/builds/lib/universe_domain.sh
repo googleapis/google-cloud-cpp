@@ -29,6 +29,17 @@ if [[ -n "${UD_SERVICE_ACCOUNT}" ]]; then
   UD_SA_KEY_FILE=$(mktemp)
   echo "${UD_SERVICE_ACCOUNT}" >"${UD_SA_KEY_FILE}"
   umask "${ORIG_UMASK}"
+  io::log "Created SA key file ${UD_SA_KEY_FILE}"
+fi
+
+# Only create the IdToken SA key file if the secret is available.
+if [[ -n "${UD_IDTOKEN_SA_IMPERSONATION_CRED}" ]]; then
+  ORIG_UMASK=$(umask)
+  umask 077
+  UD_IDTOKEN_SA_KEY_FILE=$(mktemp)
+  echo "${UD_IDTOKEN_SA_IMPERSONATION_CRED}" >"${UD_IDTOKEN_SA_KEY_FILE}"
+  umask "${ORIG_UMASK}"
+  io::log "Created IdToken SA key file ${UD_IDTOKEN_SA_KEY_FILE}"
 fi
 
 function ud::bazel_run() {
@@ -42,5 +53,8 @@ function ud::bazel_test() {
   bazel test "${args[@]}" --sandbox_add_mount_pair=/tmp \
     --test_env=UD_SA_KEY_FILE="${UD_SA_KEY_FILE}" \
     --test_env=UD_REGION="${UD_REGION}" \
+    --test_env=UD_ZONE="${UD_ZONE}" \
+    --test_env=UD_IMPERSONATED_SERVICE_ACCOUNT_NAME="${UD_IMPERSONATED_SERVICE_ACCOUNT_NAME}" \
+    --test_env=UD_IDTOKEN_SA_KEY_FILE="${UD_IDTOKEN_SA_KEY_FILE}" \
     --test_env=UD_PROJECT="${UD_PROJECT}" -- "$@"
 }

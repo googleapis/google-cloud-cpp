@@ -801,6 +801,52 @@ DataCatalogConnectionImpl::ImportEntries(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::cloud::datacatalog::v1::MigrationConfig>
+DataCatalogConnectionImpl::SetConfig(
+    google::cloud::datacatalog::v1::SetConfigRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SetConfig(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::datacatalog::v1::SetConfigRequest const& request) {
+        return stub_->SetConfig(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::datacatalog::v1::OrganizationConfig>
+DataCatalogConnectionImpl::RetrieveConfig(
+    google::cloud::datacatalog::v1::RetrieveConfigRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RetrieveConfig(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::datacatalog::v1::RetrieveConfigRequest const&
+                 request) {
+        return stub_->RetrieveConfig(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::datacatalog::v1::MigrationConfig>
+DataCatalogConnectionImpl::RetrieveEffectiveConfig(
+    google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RetrieveEffectiveConfig(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const&
+              request) {
+        return stub_->RetrieveEffectiveConfig(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 StreamRange<google::longrunning::Operation>
 DataCatalogConnectionImpl::ListOperations(
     google::longrunning::ListOperationsRequest request) {

@@ -143,6 +143,18 @@ class NotebookServiceMetadata : public NotebookServiceStub {
       google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncStopNotebookRuntime(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> StopNotebookRuntime(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>>
   AsyncCreateNotebookExecutionJob(
       google::cloud::CompletionQueue& cq,

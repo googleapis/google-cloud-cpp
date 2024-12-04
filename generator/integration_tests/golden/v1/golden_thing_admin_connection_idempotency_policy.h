@@ -22,6 +22,8 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
 #include <generator/integration_tests/test.grpc.pb.h>
+#include <google/cloud/location/locations.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -89,6 +91,12 @@ class GoldenThingAdminConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency
   LongRunningWithoutRouting(google::test::admin::database::v1::RestoreDatabaseRequest const& request);
+
+  virtual google::cloud::Idempotency
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
+
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 };
 
 std::unique_ptr<GoldenThingAdminConnectionIdempotencyPolicy>

@@ -286,15 +286,12 @@ class DefaultWorkstationsStub : public WorkstationsStub {
       std::unique_ptr<
           google::cloud::workstations::v1::Workstations::StubInterface>
           grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub,
       std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub,
       std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations)
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
-        operations_stub_(std::move(operations_stub)),
         iampolicy_stub_(std::move(iampolicy_stub)),
-        operations_(std::move(operations)) {}
+        operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::cloud::workstations::v1::WorkstationCluster>
   GetWorkstationCluster(
@@ -528,10 +525,9 @@ class DefaultWorkstationsStub : public WorkstationsStub {
  private:
   std::unique_ptr<google::cloud::workstations::v1::Workstations::StubInterface>
       grpc_stub_;
+  std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub_;
   std::unique_ptr<google::longrunning::Operations::StubInterface>
       operations_stub_;
-  std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

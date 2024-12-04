@@ -66,6 +66,19 @@ PublisherLogging::PublishEvents(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::eventarc::publishing::v1::PublishResponse>
+PublisherLogging::Publish(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::eventarc::publishing::v1::PublishRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::eventarc::publishing::v1::PublishRequest const&
+                 request) {
+        return child_->Publish(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace eventarc_publishing_v1_internal
 }  // namespace cloud

@@ -216,6 +216,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/oslogin/v1:oslogin_cc_grpc" \
       "@com_google_googleapis//google/cloud/oslogin/common:common_cc_grpc"
   )"
+  ["parallelstore"]="@com_google_googleapis//google/cloud/parallelstore/v1:parallelstore_cc_grpc"
   ["policysimulator"]="@com_google_googleapis//google/cloud/policysimulator/v1:policysimulator_cc_grpc"
   ["policytroubleshooter"]="$(
     printf ",%s" \
@@ -349,12 +350,12 @@ for library in "${keys[@]}"; do
     if [[ -z "${rule}" ]]; then continue; fi
     path="${rule%:*}"
     echo "=== $library $rule $path"
-    bazel query --noshow_progress --noshow_loading_progress \
+    bazelisk query --noshow_progress --noshow_loading_progress \
       "deps(${rule})" |
       grep "${path}" |
       grep -E '\.proto$' \
         >>"external/googleapis/protolists/${library}.list" || true
-    bazel query --noshow_progress --noshow_loading_progress \
+    bazelisk query --noshow_progress --noshow_loading_progress \
       "deps(${rule})" |
       grep "@com_google_googleapis//" | grep _proto |
       grep -v "${path}" \

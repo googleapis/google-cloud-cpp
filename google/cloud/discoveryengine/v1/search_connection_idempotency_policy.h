@@ -41,6 +41,9 @@ class SearchServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency Search(
       google::cloud::discoveryengine::v1::SearchRequest request);
 
+  virtual google::cloud::Idempotency SearchLite(
+      google::cloud::discoveryengine::v1::SearchRequest request);
+
   virtual google::cloud::Idempotency ListOperations(
       google::longrunning::ListOperationsRequest request);
 

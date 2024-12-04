@@ -217,6 +217,21 @@ class DataCatalogMetadata : public DataCatalogStub {
       google::cloud::datacatalog::v1::ImportEntriesRequest const& request)
       override;
 
+  StatusOr<google::cloud::datacatalog::v1::MigrationConfig> SetConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datacatalog::v1::SetConfigRequest const& request) override;
+
+  StatusOr<google::cloud::datacatalog::v1::OrganizationConfig> RetrieveConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datacatalog::v1::RetrieveConfigRequest const& request)
+      override;
+
+  StatusOr<google::cloud::datacatalog::v1::MigrationConfig>
+  RetrieveEffectiveConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const&
+          request) override;
+
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
       grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;

@@ -221,6 +221,12 @@ class ArtifactRegistryStub {
       google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
           request) = 0;
 
+  virtual StatusOr<google::devtools::artifactregistry::v1::Version>
+  UpdateVersion(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::UpdateVersionRequest const&
+          request) = 0;
+
   virtual StatusOr<google::devtools::artifactregistry::v1::ListFilesResponse>
   ListFiles(grpc::ClientContext& context, Options const& options,
             google::devtools::artifactregistry::v1::ListFilesRequest const&
@@ -229,6 +235,23 @@ class ArtifactRegistryStub {
   virtual StatusOr<google::devtools::artifactregistry::v1::File> GetFile(
       grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::GetFileRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteFile(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::devtools::artifactregistry::v1::DeleteFileRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteFile(
+      grpc::ClientContext& context, Options options,
+      google::devtools::artifactregistry::v1::DeleteFileRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::devtools::artifactregistry::v1::File> UpdateFile(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::UpdateFileRequest const&
           request) = 0;
 
   virtual StatusOr<google::devtools::artifactregistry::v1::ListTagsResponse>
@@ -253,6 +276,31 @@ class ArtifactRegistryStub {
   virtual Status DeleteTag(
       grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::DeleteTagRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::devtools::artifactregistry::v1::Rule> CreateRule(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::CreateRuleRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::devtools::artifactregistry::v1::ListRulesResponse>
+  ListRules(grpc::ClientContext& context, Options const& options,
+            google::devtools::artifactregistry::v1::ListRulesRequest const&
+                request) = 0;
+
+  virtual StatusOr<google::devtools::artifactregistry::v1::Rule> GetRule(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::GetRuleRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::devtools::artifactregistry::v1::Rule> UpdateRule(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::UpdateRuleRequest const&
+          request) = 0;
+
+  virtual Status DeleteRule(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::DeleteRuleRequest const&
           request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
@@ -291,6 +339,51 @@ class ArtifactRegistryStub {
       google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const&
           request) = 0;
 
+  virtual StatusOr<google::devtools::artifactregistry::v1::Package>
+  UpdatePackage(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::UpdatePackageRequest const&
+          request) = 0;
+
+  virtual StatusOr<
+      google::devtools::artifactregistry::v1::ListAttachmentsResponse>
+  ListAttachments(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::ListAttachmentsRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::devtools::artifactregistry::v1::Attachment>
+  GetAttachment(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::GetAttachmentRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateAttachment(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> CreateAttachment(
+      grpc::ClientContext& context, Options options,
+      google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteAttachment(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteAttachment(
+      grpc::ClientContext& context, Options options,
+      google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
+          request) = 0;
+
   virtual StatusOr<google::cloud::location::ListLocationsResponse>
   ListLocations(
       grpc::ClientContext& context, Options const& options,
@@ -323,16 +416,13 @@ class DefaultArtifactRegistryStub : public ArtifactRegistryStub {
       std::unique_ptr<google::devtools::artifactregistry::v1::ArtifactRegistry::
                           StubInterface>
           grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub,
       std::unique_ptr<google::cloud::location::Locations::StubInterface>
           locations_stub,
       std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations)
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
-        operations_stub_(std::move(operations_stub)),
         locations_stub_(std::move(locations_stub)),
-        operations_(std::move(operations)) {}
+        operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::devtools::artifactregistry::v1::ListDockerImagesResponse>
   ListDockerImages(
@@ -502,6 +592,11 @@ class DefaultArtifactRegistryStub : public ArtifactRegistryStub {
       google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
           request) override;
 
+  StatusOr<google::devtools::artifactregistry::v1::Version> UpdateVersion(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::UpdateVersionRequest const&
+          request) override;
+
   StatusOr<google::devtools::artifactregistry::v1::ListFilesResponse> ListFiles(
       grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::ListFilesRequest const& request)
@@ -510,6 +605,23 @@ class DefaultArtifactRegistryStub : public ArtifactRegistryStub {
   StatusOr<google::devtools::artifactregistry::v1::File> GetFile(
       grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::GetFileRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteFile(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::devtools::artifactregistry::v1::DeleteFileRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteFile(
+      grpc::ClientContext& context, Options options,
+      google::devtools::artifactregistry::v1::DeleteFileRequest const& request)
+      override;
+
+  StatusOr<google::devtools::artifactregistry::v1::File> UpdateFile(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::UpdateFileRequest const& request)
       override;
 
   StatusOr<google::devtools::artifactregistry::v1::ListTagsResponse> ListTags(
@@ -535,6 +647,31 @@ class DefaultArtifactRegistryStub : public ArtifactRegistryStub {
   Status DeleteTag(
       grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::DeleteTagRequest const& request)
+      override;
+
+  StatusOr<google::devtools::artifactregistry::v1::Rule> CreateRule(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::CreateRuleRequest const& request)
+      override;
+
+  StatusOr<google::devtools::artifactregistry::v1::ListRulesResponse> ListRules(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::ListRulesRequest const& request)
+      override;
+
+  StatusOr<google::devtools::artifactregistry::v1::Rule> GetRule(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::GetRuleRequest const& request)
+      override;
+
+  StatusOr<google::devtools::artifactregistry::v1::Rule> UpdateRule(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::UpdateRuleRequest const& request)
+      override;
+
+  Status DeleteRule(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::DeleteRuleRequest const& request)
       override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
@@ -572,6 +709,46 @@ class DefaultArtifactRegistryStub : public ArtifactRegistryStub {
       google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const&
           request) override;
 
+  StatusOr<google::devtools::artifactregistry::v1::Package> UpdatePackage(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::UpdatePackageRequest const&
+          request) override;
+
+  StatusOr<google::devtools::artifactregistry::v1::ListAttachmentsResponse>
+  ListAttachments(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::ListAttachmentsRequest const&
+          request) override;
+
+  StatusOr<google::devtools::artifactregistry::v1::Attachment> GetAttachment(
+      grpc::ClientContext& context, Options const& options,
+      google::devtools::artifactregistry::v1::GetAttachmentRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateAttachment(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateAttachment(
+      grpc::ClientContext& context, Options options,
+      google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteAttachment(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteAttachment(
+      grpc::ClientContext& context, Options options,
+      google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
+          request) override;
+
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
@@ -600,11 +777,10 @@ class DefaultArtifactRegistryStub : public ArtifactRegistryStub {
   std::unique_ptr<
       google::devtools::artifactregistry::v1::ArtifactRegistry::StubInterface>
       grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
   std::unique_ptr<google::cloud::location::Locations::StubInterface>
       locations_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

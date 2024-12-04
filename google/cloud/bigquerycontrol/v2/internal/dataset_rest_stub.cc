@@ -47,6 +47,8 @@ DefaultDatasetServiceRestStub::GetDataset(
   std::vector<std::pair<std::string, std::string>> query_params;
   query_params.push_back(
       {"dataset_view", std::to_string(request.dataset_view())});
+  query_params.push_back({"access_policy_version",
+                          std::to_string(request.access_policy_version())});
   query_params =
       rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::bigquery::v2::Dataset>(
@@ -64,6 +66,10 @@ DefaultDatasetServiceRestStub::InsertDataset(
     Options const& options,
     google::cloud::bigquery::v2::InsertDatasetRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"access_policy_version",
+                          std::to_string(request.access_policy_version())});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::bigquery::v2::Dataset>(
       *service_, rest_context, request.dataset(), false,
       absl::StrCat("/", "bigquery", "/",
@@ -78,6 +84,10 @@ DefaultDatasetServiceRestStub::PatchDataset(
     Options const& options,
     google::cloud::bigquery::v2::UpdateOrPatchDatasetRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"access_policy_version",
+                          std::to_string(request.access_policy_version())});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Patch<google::cloud::bigquery::v2::Dataset>(
       *service_, rest_context, request.dataset(), false,
       absl::StrCat("/", "bigquery", "/",
@@ -93,6 +103,10 @@ DefaultDatasetServiceRestStub::UpdateDataset(
     Options const& options,
     google::cloud::bigquery::v2::UpdateOrPatchDatasetRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"access_policy_version",
+                          std::to_string(request.access_policy_version())});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Put<google::cloud::bigquery::v2::Dataset>(
       *service_, rest_context, request.dataset(), false,
       absl::StrCat("/", "bigquery", "/",

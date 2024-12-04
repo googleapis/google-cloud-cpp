@@ -61,7 +61,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.dialogflow.cx.v3.Webhook]:
-/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L96}
+/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L95}
 ///
 class WebhooksClient {
  public:
@@ -92,7 +92,7 @@ class WebhooksClient {
   /// Returns the list of all webhooks in the specified agent.
   ///
   /// @param parent  Required. The agent to list all webhooks for.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>`.
+  ///  Format: `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -115,8 +115,8 @@ class WebhooksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.ListWebhooksRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L297}
-  /// [google.cloud.dialogflow.cx.v3.Webhook]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L96}
+  /// [google.cloud.dialogflow.cx.v3.ListWebhooksRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L296}
+  /// [google.cloud.dialogflow.cx.v3.Webhook]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L95}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::Webhook> ListWebhooks(
@@ -154,8 +154,8 @@ class WebhooksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.ListWebhooksRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L297}
-  /// [google.cloud.dialogflow.cx.v3.Webhook]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L96}
+  /// [google.cloud.dialogflow.cx.v3.ListWebhooksRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L296}
+  /// [google.cloud.dialogflow.cx.v3.Webhook]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L95}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::Webhook> ListWebhooks(
@@ -167,7 +167,8 @@ class WebhooksClient {
   /// Retrieves the specified webhook.
   ///
   /// @param name  Required. The name of the webhook.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/webhooks/<Webhook ID>`.
+  ///  Format:
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/webhooks/<WebhookID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -181,8 +182,8 @@ class WebhooksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.GetWebhookRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L329}
-  /// [google.cloud.dialogflow.cx.v3.Webhook]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L96}
+  /// [google.cloud.dialogflow.cx.v3.GetWebhookRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L328}
+  /// [google.cloud.dialogflow.cx.v3.Webhook]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L95}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Webhook> GetWebhook(
@@ -211,8 +212,8 @@ class WebhooksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.GetWebhookRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L329}
-  /// [google.cloud.dialogflow.cx.v3.Webhook]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L96}
+  /// [google.cloud.dialogflow.cx.v3.GetWebhookRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L328}
+  /// [google.cloud.dialogflow.cx.v3.Webhook]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L95}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Webhook> GetWebhook(
@@ -224,7 +225,7 @@ class WebhooksClient {
   /// Creates a webhook in the specified agent.
   ///
   /// @param parent  Required. The agent to create a webhook for.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>`.
+  ///  Format: `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>`.
   /// @param webhook  Required. The webhook to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -239,8 +240,8 @@ class WebhooksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CreateWebhookRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L343}
-  /// [google.cloud.dialogflow.cx.v3.Webhook]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L96}
+  /// [google.cloud.dialogflow.cx.v3.CreateWebhookRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L342}
+  /// [google.cloud.dialogflow.cx.v3.Webhook]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L95}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Webhook> CreateWebhook(
@@ -271,8 +272,8 @@ class WebhooksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CreateWebhookRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L343}
-  /// [google.cloud.dialogflow.cx.v3.Webhook]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L96}
+  /// [google.cloud.dialogflow.cx.v3.CreateWebhookRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L342}
+  /// [google.cloud.dialogflow.cx.v3.Webhook]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L95}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Webhook> CreateWebhook(
@@ -299,8 +300,8 @@ class WebhooksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.UpdateWebhookRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L359}
-  /// [google.cloud.dialogflow.cx.v3.Webhook]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L96}
+  /// [google.cloud.dialogflow.cx.v3.UpdateWebhookRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L358}
+  /// [google.cloud.dialogflow.cx.v3.Webhook]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L95}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Webhook> UpdateWebhook(
@@ -330,8 +331,8 @@ class WebhooksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.UpdateWebhookRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L359}
-  /// [google.cloud.dialogflow.cx.v3.Webhook]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L96}
+  /// [google.cloud.dialogflow.cx.v3.UpdateWebhookRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L358}
+  /// [google.cloud.dialogflow.cx.v3.Webhook]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L95}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Webhook> UpdateWebhook(
@@ -343,7 +344,8 @@ class WebhooksClient {
   /// Deletes the specified webhook.
   ///
   /// @param name  Required. The name of the webhook to delete.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/webhooks/<Webhook ID>`.
+  ///  Format:
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/webhooks/<WebhookID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [`Status`] object. If the request failed, the
@@ -355,7 +357,7 @@ class WebhooksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeleteWebhookRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L370}
+  /// [google.cloud.dialogflow.cx.v3.DeleteWebhookRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L369}
   ///
   // clang-format on
   Status DeleteWebhook(std::string const& name, Options opts = {});
@@ -381,7 +383,7 @@ class WebhooksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeleteWebhookRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L370}
+  /// [google.cloud.dialogflow.cx.v3.DeleteWebhookRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/webhook.proto#L369}
   ///
   // clang-format on
   Status DeleteWebhook(
@@ -463,14 +465,6 @@ class WebhooksClient {
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
   ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
-  ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -495,8 +489,8 @@ class WebhooksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -506,14 +500,6 @@ class WebhooksClient {
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -543,8 +529,8 @@ class WebhooksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -570,8 +556,8 @@ class WebhooksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
@@ -602,8 +588,8 @@ class WebhooksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(
@@ -620,8 +606,9 @@ class WebhooksClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -635,9 +622,9 @@ class WebhooksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
@@ -653,8 +640,9 @@ class WebhooksClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -673,9 +661,9 @@ class WebhooksClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on

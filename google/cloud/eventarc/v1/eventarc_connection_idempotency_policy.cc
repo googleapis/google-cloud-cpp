@@ -124,6 +124,111 @@ Idempotency EventarcConnectionIdempotencyPolicy::UpdateGoogleChannelConfig(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency EventarcConnectionIdempotencyPolicy::GetMessageBus(
+    google::cloud::eventarc::v1::GetMessageBusRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency EventarcConnectionIdempotencyPolicy::ListMessageBuses(
+    google::cloud::eventarc::v1::ListMessageBusesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency EventarcConnectionIdempotencyPolicy::ListMessageBusEnrollments(
+    google::cloud::eventarc::v1::ListMessageBusEnrollmentsRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency EventarcConnectionIdempotencyPolicy::CreateMessageBus(
+    google::cloud::eventarc::v1::CreateMessageBusRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency EventarcConnectionIdempotencyPolicy::UpdateMessageBus(
+    google::cloud::eventarc::v1::UpdateMessageBusRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency EventarcConnectionIdempotencyPolicy::DeleteMessageBus(
+    google::cloud::eventarc::v1::DeleteMessageBusRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency EventarcConnectionIdempotencyPolicy::GetEnrollment(
+    google::cloud::eventarc::v1::GetEnrollmentRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency EventarcConnectionIdempotencyPolicy::ListEnrollments(
+    google::cloud::eventarc::v1::ListEnrollmentsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency EventarcConnectionIdempotencyPolicy::CreateEnrollment(
+    google::cloud::eventarc::v1::CreateEnrollmentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency EventarcConnectionIdempotencyPolicy::UpdateEnrollment(
+    google::cloud::eventarc::v1::UpdateEnrollmentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency EventarcConnectionIdempotencyPolicy::DeleteEnrollment(
+    google::cloud::eventarc::v1::DeleteEnrollmentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency EventarcConnectionIdempotencyPolicy::GetPipeline(
+    google::cloud::eventarc::v1::GetPipelineRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency EventarcConnectionIdempotencyPolicy::ListPipelines(
+    google::cloud::eventarc::v1::ListPipelinesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency EventarcConnectionIdempotencyPolicy::CreatePipeline(
+    google::cloud::eventarc::v1::CreatePipelineRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency EventarcConnectionIdempotencyPolicy::UpdatePipeline(
+    google::cloud::eventarc::v1::UpdatePipelineRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency EventarcConnectionIdempotencyPolicy::DeletePipeline(
+    google::cloud::eventarc::v1::DeletePipelineRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency EventarcConnectionIdempotencyPolicy::GetGoogleApiSource(
+    google::cloud::eventarc::v1::GetGoogleApiSourceRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency EventarcConnectionIdempotencyPolicy::ListGoogleApiSources(
+    google::cloud::eventarc::v1::ListGoogleApiSourcesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency EventarcConnectionIdempotencyPolicy::CreateGoogleApiSource(
+    google::cloud::eventarc::v1::CreateGoogleApiSourceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency EventarcConnectionIdempotencyPolicy::UpdateGoogleApiSource(
+    google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency EventarcConnectionIdempotencyPolicy::DeleteGoogleApiSource(
+    google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency EventarcConnectionIdempotencyPolicy::ListLocations(
     google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;

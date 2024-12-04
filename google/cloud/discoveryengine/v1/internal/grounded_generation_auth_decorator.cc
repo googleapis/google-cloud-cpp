@@ -17,6 +17,7 @@
 // source: google/cloud/discoveryengine/v1/grounded_generation_service.proto
 
 #include "google/cloud/discoveryengine/v1/internal/grounded_generation_auth_decorator.h"
+#include "google/cloud/internal/async_read_write_stream_auth.h"
 #include <google/cloud/discoveryengine/v1/grounded_generation_service.grpc.pb.h>
 #include <memory>
 #include <utility>
@@ -30,6 +31,36 @@ GroundedGenerationServiceAuth::GroundedGenerationServiceAuth(
     std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
     std::shared_ptr<GroundedGenerationServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::discoveryengine::v1::GenerateGroundedContentRequest,
+    google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>>
+GroundedGenerationServiceAuth::AsyncStreamGenerateGroundedContent(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  using StreamAuth = google::cloud::internal::AsyncStreamingReadWriteRpcAuth<
+      google::cloud::discoveryengine::v1::GenerateGroundedContentRequest,
+      google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>;
+
+  auto call = [child = child_, cq, options = std::move(options)](
+                  std::shared_ptr<grpc::ClientContext> ctx) {
+    return child->AsyncStreamGenerateGroundedContent(cq, std::move(ctx),
+                                                     options);
+  };
+  return std::make_unique<StreamAuth>(
+      std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
+}
+
+StatusOr<google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>
+GroundedGenerationServiceAuth::GenerateGroundedContent(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GenerateGroundedContent(context, options, request);
+}
 
 StatusOr<google::cloud::discoveryengine::v1::CheckGroundingResponse>
 GroundedGenerationServiceAuth::CheckGrounding(

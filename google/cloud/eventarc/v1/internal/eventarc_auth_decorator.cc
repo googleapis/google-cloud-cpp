@@ -347,6 +347,421 @@ EventarcAuth::UpdateGoogleChannelConfig(
   return child_->UpdateGoogleChannelConfig(context, options, request);
 }
 
+StatusOr<google::cloud::eventarc::v1::MessageBus> EventarcAuth::GetMessageBus(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::eventarc::v1::GetMessageBusRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetMessageBus(context, options, request);
+}
+
+StatusOr<google::cloud::eventarc::v1::ListMessageBusesResponse>
+EventarcAuth::ListMessageBuses(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::eventarc::v1::ListMessageBusesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListMessageBuses(context, options, request);
+}
+
+StatusOr<google::cloud::eventarc::v1::ListMessageBusEnrollmentsResponse>
+EventarcAuth::ListMessageBusEnrollments(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::eventarc::v1::ListMessageBusEnrollmentsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListMessageBusEnrollments(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+EventarcAuth::AsyncCreateMessageBus(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::eventarc::v1::CreateMessageBusRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateMessageBus(cq, *std::move(context),
+                                            std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> EventarcAuth::CreateMessageBus(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::CreateMessageBusRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateMessageBus(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+EventarcAuth::AsyncUpdateMessageBus(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::eventarc::v1::UpdateMessageBusRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateMessageBus(cq, *std::move(context),
+                                            std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> EventarcAuth::UpdateMessageBus(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::UpdateMessageBusRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateMessageBus(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+EventarcAuth::AsyncDeleteMessageBus(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::eventarc::v1::DeleteMessageBusRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteMessageBus(cq, *std::move(context),
+                                            std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> EventarcAuth::DeleteMessageBus(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::DeleteMessageBusRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteMessageBus(context, options, request);
+}
+
+StatusOr<google::cloud::eventarc::v1::Enrollment> EventarcAuth::GetEnrollment(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::eventarc::v1::GetEnrollmentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetEnrollment(context, options, request);
+}
+
+StatusOr<google::cloud::eventarc::v1::ListEnrollmentsResponse>
+EventarcAuth::ListEnrollments(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::eventarc::v1::ListEnrollmentsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListEnrollments(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+EventarcAuth::AsyncCreateEnrollment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::eventarc::v1::CreateEnrollmentRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateEnrollment(cq, *std::move(context),
+                                            std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> EventarcAuth::CreateEnrollment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::CreateEnrollmentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateEnrollment(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+EventarcAuth::AsyncUpdateEnrollment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::eventarc::v1::UpdateEnrollmentRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateEnrollment(cq, *std::move(context),
+                                            std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> EventarcAuth::UpdateEnrollment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::UpdateEnrollmentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateEnrollment(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+EventarcAuth::AsyncDeleteEnrollment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::eventarc::v1::DeleteEnrollmentRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteEnrollment(cq, *std::move(context),
+                                            std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> EventarcAuth::DeleteEnrollment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::DeleteEnrollmentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteEnrollment(context, options, request);
+}
+
+StatusOr<google::cloud::eventarc::v1::Pipeline> EventarcAuth::GetPipeline(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::eventarc::v1::GetPipelineRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetPipeline(context, options, request);
+}
+
+StatusOr<google::cloud::eventarc::v1::ListPipelinesResponse>
+EventarcAuth::ListPipelines(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::eventarc::v1::ListPipelinesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListPipelines(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+EventarcAuth::AsyncCreatePipeline(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::eventarc::v1::CreatePipelineRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreatePipeline(cq, *std::move(context),
+                                          std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> EventarcAuth::CreatePipeline(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::CreatePipelineRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreatePipeline(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+EventarcAuth::AsyncUpdatePipeline(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::eventarc::v1::UpdatePipelineRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdatePipeline(cq, *std::move(context),
+                                          std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> EventarcAuth::UpdatePipeline(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::UpdatePipelineRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdatePipeline(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+EventarcAuth::AsyncDeletePipeline(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::eventarc::v1::DeletePipelineRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeletePipeline(cq, *std::move(context),
+                                          std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> EventarcAuth::DeletePipeline(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::DeletePipelineRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeletePipeline(context, options, request);
+}
+
+StatusOr<google::cloud::eventarc::v1::GoogleApiSource>
+EventarcAuth::GetGoogleApiSource(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::eventarc::v1::GetGoogleApiSourceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetGoogleApiSource(context, options, request);
+}
+
+StatusOr<google::cloud::eventarc::v1::ListGoogleApiSourcesResponse>
+EventarcAuth::ListGoogleApiSources(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::eventarc::v1::ListGoogleApiSourcesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListGoogleApiSources(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+EventarcAuth::AsyncCreateGoogleApiSource(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::eventarc::v1::CreateGoogleApiSourceRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateGoogleApiSource(cq, *std::move(context),
+                                                 std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> EventarcAuth::CreateGoogleApiSource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::CreateGoogleApiSourceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateGoogleApiSource(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+EventarcAuth::AsyncUpdateGoogleApiSource(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateGoogleApiSource(cq, *std::move(context),
+                                                 std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> EventarcAuth::UpdateGoogleApiSource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateGoogleApiSource(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+EventarcAuth::AsyncDeleteGoogleApiSource(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteGoogleApiSource(cq, *std::move(context),
+                                                 std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> EventarcAuth::DeleteGoogleApiSource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteGoogleApiSource(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 EventarcAuth::ListLocations(
     grpc::ClientContext& context, Options const& options,

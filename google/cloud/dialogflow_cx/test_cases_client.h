@@ -64,9 +64,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.dialogflow.cx.v3.TestCase]:
-/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L215}
+/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L214}
 /// [google.cloud.dialogflow.cx.v3.TestCaseResult]:
-/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L257}
+/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L255}
 ///
 class TestCasesClient {
  public:
@@ -97,7 +97,7 @@ class TestCasesClient {
   /// Fetches a list of test cases for a given agent.
   ///
   /// @param parent  Required. The agent to list all pages for.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>`.
+  ///  Format: `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -120,8 +120,8 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.ListTestCasesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L572}
-  /// [google.cloud.dialogflow.cx.v3.TestCase]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L215}
+  /// [google.cloud.dialogflow.cx.v3.ListTestCasesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L569}
+  /// [google.cloud.dialogflow.cx.v3.TestCase]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L214}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::TestCase> ListTestCases(
@@ -159,8 +159,8 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.ListTestCasesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L572}
-  /// [google.cloud.dialogflow.cx.v3.TestCase]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L215}
+  /// [google.cloud.dialogflow.cx.v3.ListTestCasesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L569}
+  /// [google.cloud.dialogflow.cx.v3.TestCase]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L214}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::TestCase> ListTestCases(
@@ -172,7 +172,7 @@ class TestCasesClient {
   /// Batch deletes test cases.
   ///
   /// @param parent  Required. The agent to delete test cases from.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>`.
+  ///  Format: `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [`Status`] object. If the request failed, the
@@ -184,7 +184,7 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.BatchDeleteTestCasesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L622}
+  /// [google.cloud.dialogflow.cx.v3.BatchDeleteTestCasesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L619}
   ///
   // clang-format on
   Status BatchDeleteTestCases(std::string const& parent, Options opts = {});
@@ -210,7 +210,7 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.BatchDeleteTestCasesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L622}
+  /// [google.cloud.dialogflow.cx.v3.BatchDeleteTestCasesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L619}
   ///
   // clang-format on
   Status BatchDeleteTestCases(
@@ -223,7 +223,8 @@ class TestCasesClient {
   /// Gets a test case.
   ///
   /// @param name  Required. The name of the testcase.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/testCases/<TestCase ID>`.
+  ///  Format:
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/testCases/<TestCaseID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -237,8 +238,8 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.GetTestCaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L674}
-  /// [google.cloud.dialogflow.cx.v3.TestCase]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L215}
+  /// [google.cloud.dialogflow.cx.v3.GetTestCaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L671}
+  /// [google.cloud.dialogflow.cx.v3.TestCase]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L214}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::TestCase> GetTestCase(
@@ -267,8 +268,8 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.GetTestCaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L674}
-  /// [google.cloud.dialogflow.cx.v3.TestCase]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L215}
+  /// [google.cloud.dialogflow.cx.v3.GetTestCaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L671}
+  /// [google.cloud.dialogflow.cx.v3.TestCase]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L214}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::TestCase> GetTestCase(
@@ -280,7 +281,7 @@ class TestCasesClient {
   /// Creates a test case for the given agent.
   ///
   /// @param parent  Required. The agent to create the test case for.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>`.
+  ///  Format: `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>`.
   /// @param test_case  Required. The test case to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -295,8 +296,8 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CreateTestCaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L644}
-  /// [google.cloud.dialogflow.cx.v3.TestCase]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L215}
+  /// [google.cloud.dialogflow.cx.v3.CreateTestCaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L641}
+  /// [google.cloud.dialogflow.cx.v3.TestCase]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L214}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::TestCase> CreateTestCase(
@@ -327,8 +328,8 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CreateTestCaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L644}
-  /// [google.cloud.dialogflow.cx.v3.TestCase]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L215}
+  /// [google.cloud.dialogflow.cx.v3.CreateTestCaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L641}
+  /// [google.cloud.dialogflow.cx.v3.TestCase]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L214}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::TestCase> CreateTestCase(
@@ -357,10 +358,10 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.TestCase]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L215}
-  /// [google.cloud.dialogflow.cx.v3.TestCase.creation_time]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L249}
-  /// [google.cloud.dialogflow.cx.v3.TestCase.last_test_result]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L253}
-  /// [google.cloud.dialogflow.cx.v3.UpdateTestCaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L660}
+  /// [google.cloud.dialogflow.cx.v3.TestCase]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L214}
+  /// [google.cloud.dialogflow.cx.v3.TestCase.creation_time]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L247}
+  /// [google.cloud.dialogflow.cx.v3.TestCase.last_test_result]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L251}
+  /// [google.cloud.dialogflow.cx.v3.UpdateTestCaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L657}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::TestCase> UpdateTestCase(
@@ -390,8 +391,8 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.TestCase]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L215}
-  /// [google.cloud.dialogflow.cx.v3.UpdateTestCaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L660}
+  /// [google.cloud.dialogflow.cx.v3.TestCase]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L214}
+  /// [google.cloud.dialogflow.cx.v3.UpdateTestCaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L657}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::TestCase> UpdateTestCase(
@@ -437,9 +438,9 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.RunTestCaseMetadata]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L719}
-  /// [google.cloud.dialogflow.cx.v3.RunTestCaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L688}
-  /// [google.cloud.dialogflow.cx.v3.RunTestCaseResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L711}
+  /// [google.cloud.dialogflow.cx.v3.RunTestCaseMetadata]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L716}
+  /// [google.cloud.dialogflow.cx.v3.RunTestCaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L685}
+  /// [google.cloud.dialogflow.cx.v3.RunTestCaseResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L708}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>
@@ -515,9 +516,9 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.BatchRunTestCasesMetadata]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L766}
-  /// [google.cloud.dialogflow.cx.v3.BatchRunTestCasesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L723}
-  /// [google.cloud.dialogflow.cx.v3.BatchRunTestCasesResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L755}
+  /// [google.cloud.dialogflow.cx.v3.BatchRunTestCasesMetadata]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L762}
+  /// [google.cloud.dialogflow.cx.v3.BatchRunTestCasesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L720}
+  /// [google.cloud.dialogflow.cx.v3.BatchRunTestCasesResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L751}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>
@@ -579,8 +580,8 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CalculateCoverageRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L519}
-  /// [google.cloud.dialogflow.cx.v3.CalculateCoverageResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L550}
+  /// [google.cloud.dialogflow.cx.v3.CalculateCoverageRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L516}
+  /// [google.cloud.dialogflow.cx.v3.CalculateCoverageResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L547}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::CalculateCoverageResponse>
@@ -630,9 +631,9 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.ImportTestCasesMetadata]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L829}
-  /// [google.cloud.dialogflow.cx.v3.ImportTestCasesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L787}
-  /// [google.cloud.dialogflow.cx.v3.ImportTestCasesResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L817}
+  /// [google.cloud.dialogflow.cx.v3.ImportTestCasesMetadata]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L825}
+  /// [google.cloud.dialogflow.cx.v3.ImportTestCasesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L783}
+  /// [google.cloud.dialogflow.cx.v3.ImportTestCasesResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L813}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>
@@ -709,9 +710,9 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.ExportTestCasesMetadata]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L917}
-  /// [google.cloud.dialogflow.cx.v3.ExportTestCasesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L845}
-  /// [google.cloud.dialogflow.cx.v3.ExportTestCasesResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L901}
+  /// [google.cloud.dialogflow.cx.v3.ExportTestCasesMetadata]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L913}
+  /// [google.cloud.dialogflow.cx.v3.ExportTestCasesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L841}
+  /// [google.cloud.dialogflow.cx.v3.ExportTestCasesResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L897}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>
@@ -754,8 +755,10 @@ class TestCasesClient {
   /// results are kept for each test case.
   ///
   /// @param parent  Required. The test case to list results for.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/testCases/<TestCase ID>`. Specify a `-` as a wildcard for TestCase ID to
-  ///  list results across multiple test cases.
+  ///  Format:
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/testCases/<TestCaseID>`.
+  ///  Specify a `-` as a wildcard for TestCase ID to
+  ///   list results across multiple test cases.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -778,8 +781,8 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.ListTestCaseResultsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L921}
-  /// [google.cloud.dialogflow.cx.v3.TestCaseResult]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L257}
+  /// [google.cloud.dialogflow.cx.v3.ListTestCaseResultsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L917}
+  /// [google.cloud.dialogflow.cx.v3.TestCaseResult]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L255}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::TestCaseResult>
@@ -818,8 +821,8 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.ListTestCaseResultsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L921}
-  /// [google.cloud.dialogflow.cx.v3.TestCaseResult]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L257}
+  /// [google.cloud.dialogflow.cx.v3.ListTestCaseResultsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L917}
+  /// [google.cloud.dialogflow.cx.v3.TestCaseResult]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L255}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::TestCaseResult>
@@ -832,7 +835,8 @@ class TestCasesClient {
   /// Gets a test case result.
   ///
   /// @param name  Required. The name of the testcase.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/testCases/<TestCase ID>/results/<TestCaseResult ID>`.
+  ///  Format:
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/testCases/<TestCaseID>/results/<TestCaseResultID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -846,8 +850,8 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.GetTestCaseResultRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L980}
-  /// [google.cloud.dialogflow.cx.v3.TestCaseResult]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L257}
+  /// [google.cloud.dialogflow.cx.v3.GetTestCaseResultRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L977}
+  /// [google.cloud.dialogflow.cx.v3.TestCaseResult]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L255}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::TestCaseResult> GetTestCaseResult(
@@ -876,8 +880,8 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.GetTestCaseResultRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L980}
-  /// [google.cloud.dialogflow.cx.v3.TestCaseResult]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L257}
+  /// [google.cloud.dialogflow.cx.v3.GetTestCaseResultRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L977}
+  /// [google.cloud.dialogflow.cx.v3.TestCaseResult]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L255}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::TestCaseResult> GetTestCaseResult(
@@ -960,14 +964,6 @@ class TestCasesClient {
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
   ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
-  ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -992,8 +988,8 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -1003,14 +999,6 @@ class TestCasesClient {
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1040,8 +1028,8 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -1067,8 +1055,8 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
@@ -1099,8 +1087,8 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(
@@ -1117,8 +1105,9 @@ class TestCasesClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1132,9 +1121,9 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
@@ -1150,8 +1139,9 @@ class TestCasesClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1170,9 +1160,9 @@ class TestCasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on

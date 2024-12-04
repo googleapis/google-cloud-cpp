@@ -467,6 +467,44 @@ StatusOr<google::longrunning::Operation> DataCatalogTracingStub::ImportEntries(
                            child_->ImportEntries(context, options, request));
 }
 
+StatusOr<google::cloud::datacatalog::v1::MigrationConfig>
+DataCatalogTracingStub::SetConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::datacatalog::v1::SetConfigRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.DataCatalog",
+                                     "SetConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->SetConfig(context, options, request));
+}
+
+StatusOr<google::cloud::datacatalog::v1::OrganizationConfig>
+DataCatalogTracingStub::RetrieveConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::datacatalog::v1::RetrieveConfigRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.DataCatalog",
+                                     "RetrieveConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->RetrieveConfig(context, options, request));
+}
+
+StatusOr<google::cloud::datacatalog::v1::MigrationConfig>
+DataCatalogTracingStub::RetrieveEffectiveConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.DataCatalog",
+                                     "RetrieveEffectiveConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->RetrieveEffectiveConfig(context, options, request));
+}
+
 StatusOr<google::longrunning::ListOperationsResponse>
 DataCatalogTracingStub::ListOperations(
     grpc::ClientContext& context, Options const& options,

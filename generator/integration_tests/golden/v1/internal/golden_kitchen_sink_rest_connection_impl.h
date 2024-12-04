@@ -73,6 +73,15 @@ class GoldenKitchenSinkRestConnectionImpl
   Status
   ExplicitRouting2(google::test::admin::database::v1::ExplicitRoutingRequest const& request) override;
 
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
+
  private:
   static std::unique_ptr<golden_v1::GoldenKitchenSinkRetryPolicy>
   retry_policy(Options const& options) {

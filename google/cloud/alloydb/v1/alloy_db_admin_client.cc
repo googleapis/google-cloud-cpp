@@ -230,6 +230,45 @@ AlloyDBAdminClient::PromoteCluster(
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
+AlloyDBAdminClient::SwitchoverCluster(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::alloydb::v1::SwitchoverClusterRequest request;
+  request.set_name(name);
+  return connection_->SwitchoverCluster(request);
+}
+
+StatusOr<google::longrunning::Operation> AlloyDBAdminClient::SwitchoverCluster(
+    NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::alloydb::v1::SwitchoverClusterRequest request;
+  request.set_name(name);
+  return connection_->SwitchoverCluster(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::alloydb::v1::Cluster>>
+AlloyDBAdminClient::SwitchoverCluster(
+    google::cloud::alloydb::v1::SwitchoverClusterRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SwitchoverCluster(request);
+}
+
+StatusOr<google::longrunning::Operation> AlloyDBAdminClient::SwitchoverCluster(
+    NoAwaitTag,
+    google::cloud::alloydb::v1::SwitchoverClusterRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SwitchoverCluster(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::alloydb::v1::Cluster>>
+AlloyDBAdminClient::SwitchoverCluster(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SwitchoverCluster(operation);
+}
+
+future<StatusOr<google::cloud::alloydb::v1::Cluster>>
 AlloyDBAdminClient::RestoreCluster(
     google::cloud::alloydb::v1::RestoreClusterRequest const& request,
     Options opts) {
@@ -659,6 +698,30 @@ AlloyDBAdminClient::RestartInstance(
   return connection_->RestartInstance(operation);
 }
 
+StatusOr<google::cloud::alloydb::v1::ExecuteSqlResponse>
+AlloyDBAdminClient::ExecuteSql(std::string const& instance,
+                               std::string const& database,
+                               std::string const& user,
+                               std::string const& sql_statement,
+                               std::string const& password, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::alloydb::v1::ExecuteSqlRequest request;
+  request.set_instance(instance);
+  request.set_database(database);
+  request.set_user(user);
+  request.set_sql_statement(sql_statement);
+  request.set_password(password);
+  return connection_->ExecuteSql(request);
+}
+
+StatusOr<google::cloud::alloydb::v1::ExecuteSqlResponse>
+AlloyDBAdminClient::ExecuteSql(
+    google::cloud::alloydb::v1::ExecuteSqlRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExecuteSql(request);
+}
+
 StreamRange<google::cloud::alloydb::v1::Backup> AlloyDBAdminClient::ListBackups(
     std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -939,6 +1002,21 @@ Status AlloyDBAdminClient::DeleteUser(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteUser(request);
+}
+
+StreamRange<google::cloud::alloydb::v1::Database>
+AlloyDBAdminClient::ListDatabases(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::alloydb::v1::ListDatabasesRequest request;
+  request.set_parent(parent);
+  return connection_->ListDatabases(request);
+}
+
+StreamRange<google::cloud::alloydb::v1::Database>
+AlloyDBAdminClient::ListDatabases(
+    google::cloud::alloydb::v1::ListDatabasesRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListDatabases(std::move(request));
 }
 
 StreamRange<google::cloud::location::Location>

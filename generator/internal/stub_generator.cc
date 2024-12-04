@@ -77,9 +77,14 @@ Status StubGenerator::GenerateHeader() {
   std::vector<std::string> mixin_headers =
       absl::StrSplit(vars("mixin_proto_grpc_header_paths"), ',');
   HeaderSystemIncludes(mixin_headers);
+  bool include_lro_header =
+      HasLongrunningMethod() &&
+      std::find(mixin_headers.begin(), mixin_headers.end(),
+                "google/longrunning/operations.grpc.pb.h") ==
+          mixin_headers.end();
   HeaderSystemIncludes(
       {vars("proto_grpc_header_path"),
-       HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
+       include_lro_header ? "google/longrunning/operations.grpc.pb.h" : "",
        "memory", "utility"});
 
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
@@ -218,6 +223,8 @@ Status StubGenerator::GenerateHeader() {
     " public:");
   std::unordered_map<std::string, std::string> mixin_grpc_stubs;
   for (auto const& mixin_method : MixinMethods()) {
+    // We create operations stub for service with LRO no matter it has LRO mixin or not, so we skip creating mixin operations stub for the services with LRO.
+    if (HasLongrunningMethod() && mixin_method.grpc_stub_name == "operations_stub") continue;
     mixin_grpc_stubs[mixin_method.grpc_stub_name] = mixin_method.grpc_stub_fqn;
   }
 
@@ -231,7 +238,7 @@ Status StubGenerator::GenerateHeader() {
       R"""(      std::unique_ptr<%s::StubInterface> %s,
 )""", mixin_grpc_stub.second, mixin_grpc_stub.first));
     }
-    HeaderPrint(R"""(      std::unique_ptr<google::longrunning::Operations::StubInterface> operations)
+    HeaderPrint(R"""(      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
 )""");
     for (auto const& mixin_grpc_stub : mixin_grpc_stubs) {
@@ -239,7 +246,7 @@ Status StubGenerator::GenerateHeader() {
       R"""(        %s_(std::move(%s)),
 )""", mixin_grpc_stub.first, mixin_grpc_stub.first));
     }
-    HeaderPrint(R"""(        operations_(std::move(operations)) {}
+    HeaderPrint(R"""(        operations_stub_(std::move(operations_stub)) {}
 )""");
 
   } else {
@@ -277,7 +284,7 @@ Status StubGenerator::GenerateHeader() {
   if (HasLongrunningMethod()) {
     // TODO(#14746) - clean up operation stubs
     HeaderPrint(  // clang-format off
-    "  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;\n");
+    "  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;\n");
     // clang-format on
   }
   HeaderPrint("};\n");
@@ -560,7 +567,7 @@ Default$stub_class_name$::AsyncGetOperation(
       [this](grpc::ClientContext* context,
              google::longrunning::GetOperationRequest const& request,
              grpc::CompletionQueue* cq) {
-        return operations_->AsyncGetOperation(context, request, cq);
+        return operations_stub_->AsyncGetOperation(context, request, cq);
       },
       request, std::move(context));
 }
@@ -577,7 +584,7 @@ future<Status> Default$stub_class_name$::AsyncCancelOperation(
       [this](grpc::ClientContext* context,
              google::longrunning::CancelOperationRequest const& request,
              grpc::CompletionQueue* cq) {
-        return operations_->AsyncCancelOperation(context, request, cq);
+        return operations_stub_->AsyncCancelOperation(context, request, cq);
       },
       request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {

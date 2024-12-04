@@ -188,6 +188,189 @@ class EventarcConnectionImpl : public eventarc_v1::EventarcConnection {
       google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const&
           request) override;
 
+  StatusOr<google::cloud::eventarc::v1::MessageBus> GetMessageBus(
+      google::cloud::eventarc::v1::GetMessageBusRequest const& request)
+      override;
+
+  StreamRange<google::cloud::eventarc::v1::MessageBus> ListMessageBuses(
+      google::cloud::eventarc::v1::ListMessageBusesRequest request) override;
+
+  StatusOr<google::cloud::eventarc::v1::ListMessageBusEnrollmentsResponse>
+  ListMessageBusEnrollments(
+      google::cloud::eventarc::v1::ListMessageBusEnrollmentsRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::eventarc::v1::MessageBus>> CreateMessageBus(
+      google::cloud::eventarc::v1::CreateMessageBusRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateMessageBus(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::CreateMessageBusRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::eventarc::v1::MessageBus>> CreateMessageBus(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::eventarc::v1::MessageBus>> UpdateMessageBus(
+      google::cloud::eventarc::v1::UpdateMessageBusRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateMessageBus(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::UpdateMessageBusRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::eventarc::v1::MessageBus>> UpdateMessageBus(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::eventarc::v1::MessageBus>> DeleteMessageBus(
+      google::cloud::eventarc::v1::DeleteMessageBusRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteMessageBus(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::DeleteMessageBusRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::eventarc::v1::MessageBus>> DeleteMessageBus(
+      google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::cloud::eventarc::v1::Enrollment> GetEnrollment(
+      google::cloud::eventarc::v1::GetEnrollmentRequest const& request)
+      override;
+
+  StreamRange<google::cloud::eventarc::v1::Enrollment> ListEnrollments(
+      google::cloud::eventarc::v1::ListEnrollmentsRequest request) override;
+
+  future<StatusOr<google::cloud::eventarc::v1::Enrollment>> CreateEnrollment(
+      google::cloud::eventarc::v1::CreateEnrollmentRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateEnrollment(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::CreateEnrollmentRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::eventarc::v1::Enrollment>> CreateEnrollment(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::eventarc::v1::Enrollment>> UpdateEnrollment(
+      google::cloud::eventarc::v1::UpdateEnrollmentRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateEnrollment(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::UpdateEnrollmentRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::eventarc::v1::Enrollment>> UpdateEnrollment(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::eventarc::v1::Enrollment>> DeleteEnrollment(
+      google::cloud::eventarc::v1::DeleteEnrollmentRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteEnrollment(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::DeleteEnrollmentRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::eventarc::v1::Enrollment>> DeleteEnrollment(
+      google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::cloud::eventarc::v1::Pipeline> GetPipeline(
+      google::cloud::eventarc::v1::GetPipelineRequest const& request) override;
+
+  StreamRange<google::cloud::eventarc::v1::Pipeline> ListPipelines(
+      google::cloud::eventarc::v1::ListPipelinesRequest request) override;
+
+  future<StatusOr<google::cloud::eventarc::v1::Pipeline>> CreatePipeline(
+      google::cloud::eventarc::v1::CreatePipelineRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreatePipeline(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::CreatePipelineRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::eventarc::v1::Pipeline>> CreatePipeline(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::eventarc::v1::Pipeline>> UpdatePipeline(
+      google::cloud::eventarc::v1::UpdatePipelineRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdatePipeline(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::UpdatePipelineRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::eventarc::v1::Pipeline>> UpdatePipeline(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::eventarc::v1::Pipeline>> DeletePipeline(
+      google::cloud::eventarc::v1::DeletePipelineRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeletePipeline(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::DeletePipelineRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::eventarc::v1::Pipeline>> DeletePipeline(
+      google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::cloud::eventarc::v1::GoogleApiSource> GetGoogleApiSource(
+      google::cloud::eventarc::v1::GetGoogleApiSourceRequest const& request)
+      override;
+
+  StreamRange<google::cloud::eventarc::v1::GoogleApiSource>
+  ListGoogleApiSources(google::cloud::eventarc::v1::ListGoogleApiSourcesRequest
+                           request) override;
+
+  future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
+  CreateGoogleApiSource(
+      google::cloud::eventarc::v1::CreateGoogleApiSourceRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateGoogleApiSource(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::CreateGoogleApiSourceRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
+  CreateGoogleApiSource(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
+  UpdateGoogleApiSource(
+      google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateGoogleApiSource(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
+  UpdateGoogleApiSource(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
+  DeleteGoogleApiSource(
+      google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteGoogleApiSource(
+      NoAwaitTag,
+      google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::eventarc::v1::GoogleApiSource>>
+  DeleteGoogleApiSource(
+      google::longrunning::Operation const& operation) override;
+
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;
 

@@ -29,7 +29,7 @@ namespace {
 
 using ::google::cloud::bigtable::testing::TableIntegrationTest;
 using ::google::cloud::bigtable::testing::TableTestEnvironment;
-using ::google::cloud::testing_util::chrono_literals::operator"" _ms;  // NOLINT
+using ::google::cloud::testing_util::chrono_literals::operator""_ms;
 using ::std::chrono::duration_cast;
 using ::std::chrono::microseconds;
 using ::std::chrono::milliseconds;

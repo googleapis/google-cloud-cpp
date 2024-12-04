@@ -239,6 +239,16 @@ class RecaptchaEnterpriseServiceConnection {
       google::cloud::recaptchaenterprise::v1::AddIpOverrideRequest const&
           request);
 
+  virtual StatusOr<
+      google::cloud::recaptchaenterprise::v1::RemoveIpOverrideResponse>
+  RemoveIpOverride(
+      google::cloud::recaptchaenterprise::v1::RemoveIpOverrideRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::recaptchaenterprise::v1::IpOverrideData>
+  ListIpOverrides(
+      google::cloud::recaptchaenterprise::v1::ListIpOverridesRequest request);
+
   virtual StatusOr<google::cloud::recaptchaenterprise::v1::Metrics> GetMetrics(
       google::cloud::recaptchaenterprise::v1::GetMetricsRequest const& request);
 

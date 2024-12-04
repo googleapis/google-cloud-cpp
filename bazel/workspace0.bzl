@@ -71,10 +71,21 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "rules_cc",
         urls = [
-            "https://github.com/bazelbuild/rules_cc/releases/download/0.0.9/rules_cc-0.0.9.tar.gz",
+            "https://github.com/bazelbuild/rules_cc/releases/download/0.0.15/rules_cc-0.0.15.tar.gz",
         ],
-        sha256 = "2037875b9a4456dce4a79d112a8ae885bbc4aad968e6587dca6e64f3a0900cdf",
-        strip_prefix = "rules_cc-0.0.9",
+        sha256 = "f4aadd8387f381033a9ad0500443a52a0cea5f8ad1ede4369d3c614eb7b2682e",
+        strip_prefix = "rules_cc-0.0.15",
+    )
+
+    # protobuf requires this
+    maybe(
+        http_archive,
+        name = "bazel_skylib",
+        sha256 = "bc283cdfcd526a52c3201279cda4bc298652efa898b10b4db0837dc51652756f",
+        urls = [
+            "https://mirror.bazel.build/github.com/bazelbuild/bazel-skylib/releases/download/1.7.1/bazel-skylib-1.7.1.tar.gz",
+            "https://github.com/bazelbuild/bazel-skylib/releases/download/1.7.1/bazel-skylib-1.7.1.tar.gz",
+        ],
     )
 
     # The version of `rules_apple` loaded by gRPC is too old for Bazel 7.
@@ -82,9 +93,9 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "build_bazel_rules_apple",
         urls = [
-            "https://github.com/bazelbuild/rules_apple/releases/download/3.9.2/rules_apple.3.9.2.tar.gz",
+            "https://github.com/bazelbuild/rules_apple/releases/download/3.13.0/rules_apple.3.13.0.tar.gz",
         ],
-        sha256 = "86025f64d723a66438787d089bea4a7bc387877229f927dcb72ee26a8db96917",
+        sha256 = "b892911288715b354e05b9a6fe9009635f7155991f24f27e779fe80d435c92bc",
     )
 
     # Load Abseil
@@ -115,10 +126,10 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_google_googleapis",
         urls = [
-            "https://github.com/googleapis/googleapis/archive/69e9dff10df4fa1e338712d38dc26b46791a6e94.tar.gz",
+            "https://github.com/googleapis/googleapis/archive/d675ec222c431e3346ba8aaf0027392fe8b3d90c.tar.gz",
         ],
-        sha256 = "a9fb01eccd8deed5d8d1b9521e0220abcff251cd0ab2489df5993c1f7392e677",
-        strip_prefix = "googleapis-69e9dff10df4fa1e338712d38dc26b46791a6e94",
+        sha256 = "07d0bcc1021e9a74eb014faf460ffddcff35ead8cb2598eb3692e39944fba8e8",
+        strip_prefix = "googleapis-d675ec222c431e3346ba8aaf0027392fe8b3d90c",
         build_file = Label("//bazel:googleapis.BUILD"),
         # Scaffolding for patching googleapis after download. For example:
         #   patches = ["googleapis.patch"]
@@ -135,10 +146,10 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_google_protobuf",
         urls = [
-            "https://github.com/protocolbuffers/protobuf/archive/v28.2.tar.gz",
+            "https://github.com/protocolbuffers/protobuf/archive/v29.1.tar.gz",
         ],
-        sha256 = "b2340aa47faf7ef10a0328190319d3f3bee1b24f426d4ce8f4253b6f27ce16db",
-        strip_prefix = "protobuf-28.2",
+        sha256 = "3d32940e975c4ad9b8ba69640e78f5527075bae33ca2890275bf26b853c0962c",
+        strip_prefix = "protobuf-29.1",
     )
 
     # Load BoringSSL. This could be automatically loaded by gRPC. But as of
@@ -222,10 +233,10 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "io_opentelemetry_cpp",
         urls = [
-            "https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.17.0.tar.gz",
+            "https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.18.0.tar.gz",
         ],
-        sha256 = "13542725463f1ea106edaef078c2276065cf3da998cb1d3dcf92630daa3f64d4",
-        strip_prefix = "opentelemetry-cpp-1.17.0",
+        sha256 = "b149109d5983cf8290d614654a878899a68b0c8902b64c934d06f47cd50ffe2e",
+        strip_prefix = "opentelemetry-cpp-1.18.0",
         repo_mapping = {
             "@curl": "@com_github_curl_curl",
             "@com_github_google_benchmark": "@com_github_benchmark",

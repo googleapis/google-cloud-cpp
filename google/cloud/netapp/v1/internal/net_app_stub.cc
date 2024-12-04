@@ -897,6 +897,64 @@ DefaultNetAppStub::ReverseReplicationDirection(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DefaultNetAppStub::AsyncEstablishPeering(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::EstablishPeeringRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::EstablishPeeringRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::netapp::v1::EstablishPeeringRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncEstablishPeering(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::EstablishPeering(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::EstablishPeeringRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->EstablishPeering(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNetAppStub::AsyncSyncReplication(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::netapp::v1::SyncReplicationRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::netapp::v1::SyncReplicationRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::netapp::v1::SyncReplicationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncSyncReplication(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultNetAppStub::SyncReplication(
+    grpc::ClientContext& context, Options,
+    google::cloud::netapp::v1::SyncReplicationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->SyncReplication(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncCreateBackupVault(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -1312,7 +1370,7 @@ DefaultNetAppStub::AsyncGetOperation(
       [this](grpc::ClientContext* context,
              google::longrunning::GetOperationRequest const& request,
              grpc::CompletionQueue* cq) {
-        return operations_->AsyncGetOperation(context, request, cq);
+        return operations_stub_->AsyncGetOperation(context, request, cq);
       },
       request, std::move(context));
 }
@@ -1329,7 +1387,8 @@ future<Status> DefaultNetAppStub::AsyncCancelOperation(
              [this](grpc::ClientContext* context,
                     google::longrunning::CancelOperationRequest const& request,
                     grpc::CompletionQueue* cq) {
-               return operations_->AsyncCancelOperation(context, request, cq);
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
              },
              request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {

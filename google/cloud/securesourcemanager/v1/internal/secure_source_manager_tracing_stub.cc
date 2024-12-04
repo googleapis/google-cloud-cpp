@@ -250,6 +250,127 @@ SecureSourceManagerTracingStub::TestIamPermissionsRepo(
       child_->TestIamPermissionsRepo(context, options, request));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerTracingStub::AsyncCreateBranchRule(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.securesourcemanager.v1.SecureSourceManager",
+      "CreateBranchRule");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncCreateBranchRule(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerTracingStub::CreateBranchRule(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.securesourcemanager.v1.SecureSourceManager",
+      "CreateBranchRule");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateBranchRule(context, options, request));
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::ListBranchRulesResponse>
+SecureSourceManagerTracingStub::ListBranchRules(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::ListBranchRulesRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.securesourcemanager.v1.SecureSourceManager",
+      "ListBranchRules");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListBranchRules(context, options, request));
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::BranchRule>
+SecureSourceManagerTracingStub::GetBranchRule(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::GetBranchRuleRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.securesourcemanager.v1.SecureSourceManager",
+      "GetBranchRule");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetBranchRule(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerTracingStub::AsyncUpdateBranchRule(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.securesourcemanager.v1.SecureSourceManager",
+      "UpdateBranchRule");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncUpdateBranchRule(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerTracingStub::UpdateBranchRule(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.securesourcemanager.v1.SecureSourceManager",
+      "UpdateBranchRule");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateBranchRule(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerTracingStub::AsyncDeleteBranchRule(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.securesourcemanager.v1.SecureSourceManager",
+      "DeleteBranchRule");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncDeleteBranchRule(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerTracingStub::DeleteBranchRule(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.securesourcemanager.v1.SecureSourceManager",
+      "DeleteBranchRule");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteBranchRule(context, options, request));
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 SecureSourceManagerTracingStub::ListLocations(
     grpc::ClientContext& context, Options const& options,

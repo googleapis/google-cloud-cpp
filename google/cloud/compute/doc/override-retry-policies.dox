@@ -90,7 +90,6 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_firewall_policies_v1::FirewallPoliciesClient](@ref compute_firewall_policies_v1::FirewallPoliciesClient-retry-snippet)
 - [\c compute_firewalls_v1::FirewallsClient](@ref compute_firewalls_v1::FirewallsClient-retry-snippet)
 - [\c compute_forwarding_rules_v1::ForwardingRulesClient](@ref compute_forwarding_rules_v1::ForwardingRulesClient-retry-snippet)
-- [\c compute_future_reservations_v1::FutureReservationsClient](@ref compute_future_reservations_v1::FutureReservationsClient-retry-snippet)
 - [\c compute_global_addresses_v1::GlobalAddressesClient](@ref compute_global_addresses_v1::GlobalAddressesClient-retry-snippet)
 - [\c compute_global_forwarding_rules_v1::GlobalForwardingRulesClient](@ref compute_global_forwarding_rules_v1::GlobalForwardingRulesClient-retry-snippet)
 - [\c compute_global_network_endpoint_groups_v1::GlobalNetworkEndpointGroupsClient](@ref compute_global_network_endpoint_groups_v1::GlobalNetworkEndpointGroupsClient-retry-snippet)
@@ -324,18 +323,6 @@ This shows how to override the retry policies for compute_forwarding_rules_v1::F
 Assuming you have created a custom idempotency policy. Such as:
 
 @snippet google/cloud/compute/forwarding_rules/v1/samples/forwarding_rules_client_samples.cc custom-idempotency-policy
-
-*/
-
-/*! @page compute_future_reservations_v1::FutureReservationsClient-retry-snippet Override compute_future_reservations_v1::FutureReservationsClient Retry Policies
-
-This shows how to override the retry policies for compute_future_reservations_v1::FutureReservationsClient:
-
-@snippet google/cloud/compute/future_reservations/v1/samples/future_reservations_client_samples.cc set-retry-policy
-
-Assuming you have created a custom idempotency policy. Such as:
-
-@snippet google/cloud/compute/future_reservations/v1/samples/future_reservations_client_samples.cc custom-idempotency-policy
 
 */
 

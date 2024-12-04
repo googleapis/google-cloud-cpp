@@ -246,6 +246,36 @@ class ContactCenterInsightsConnectionImpl
       google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>>
   UndeployIssueModel(google::longrunning::Operation const& operation) override;
 
+  future<StatusOr<
+      google::cloud::contactcenterinsights::v1::ExportIssueModelResponse>>
+  ExportIssueModel(
+      google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> ExportIssueModel(
+      NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const&
+          request) override;
+
+  future<StatusOr<
+      google::cloud::contactcenterinsights::v1::ExportIssueModelResponse>>
+  ExportIssueModel(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<
+      google::cloud::contactcenterinsights::v1::ImportIssueModelResponse>>
+  ImportIssueModel(
+      google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> ImportIssueModel(
+      NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const&
+          request) override;
+
+  future<StatusOr<
+      google::cloud::contactcenterinsights::v1::ImportIssueModelResponse>>
+  ImportIssueModel(google::longrunning::Operation const& operation) override;
+
   StatusOr<google::cloud::contactcenterinsights::v1::Issue> GetIssue(
       google::cloud::contactcenterinsights::v1::GetIssueRequest const& request)
       override;
@@ -303,6 +333,50 @@ class ContactCenterInsightsConnectionImpl
       google::cloud::contactcenterinsights::v1::UpdateSettingsRequest const&
           request) override;
 
+  StatusOr<google::cloud::contactcenterinsights::v1::AnalysisRule>
+  CreateAnalysisRule(
+      google::cloud::contactcenterinsights::v1::CreateAnalysisRuleRequest const&
+          request) override;
+
+  StatusOr<google::cloud::contactcenterinsights::v1::AnalysisRule>
+  GetAnalysisRule(
+      google::cloud::contactcenterinsights::v1::GetAnalysisRuleRequest const&
+          request) override;
+
+  StreamRange<google::cloud::contactcenterinsights::v1::AnalysisRule>
+  ListAnalysisRules(
+      google::cloud::contactcenterinsights::v1::ListAnalysisRulesRequest
+          request) override;
+
+  StatusOr<google::cloud::contactcenterinsights::v1::AnalysisRule>
+  UpdateAnalysisRule(
+      google::cloud::contactcenterinsights::v1::UpdateAnalysisRuleRequest const&
+          request) override;
+
+  Status DeleteAnalysisRule(
+      google::cloud::contactcenterinsights::v1::DeleteAnalysisRuleRequest const&
+          request) override;
+
+  StatusOr<google::cloud::contactcenterinsights::v1::EncryptionSpec>
+  GetEncryptionSpec(
+      google::cloud::contactcenterinsights::v1::GetEncryptionSpecRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::contactcenterinsights::v1::
+                      InitializeEncryptionSpecResponse>>
+  InitializeEncryptionSpec(
+      google::cloud::contactcenterinsights::v1::
+          InitializeEncryptionSpecRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> InitializeEncryptionSpec(
+      NoAwaitTag, google::cloud::contactcenterinsights::v1::
+                      InitializeEncryptionSpecRequest const& request) override;
+
+  future<StatusOr<google::cloud::contactcenterinsights::v1::
+                      InitializeEncryptionSpecResponse>>
+  InitializeEncryptionSpec(
+      google::longrunning::Operation const& operation) override;
+
   StatusOr<google::cloud::contactcenterinsights::v1::View> CreateView(
       google::cloud::contactcenterinsights::v1::CreateViewRequest const&
           request) override;
@@ -322,6 +396,170 @@ class ContactCenterInsightsConnectionImpl
   Status DeleteView(
       google::cloud::contactcenterinsights::v1::DeleteViewRequest const&
           request) override;
+
+  future<
+      StatusOr<google::cloud::contactcenterinsights::v1::QueryMetricsResponse>>
+  QueryMetrics(
+      google::cloud::contactcenterinsights::v1::QueryMetricsRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> QueryMetrics(
+      NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::QueryMetricsRequest const&
+          request) override;
+
+  future<
+      StatusOr<google::cloud::contactcenterinsights::v1::QueryMetricsResponse>>
+  QueryMetrics(google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion>
+  CreateQaQuestion(
+      google::cloud::contactcenterinsights::v1::CreateQaQuestionRequest const&
+          request) override;
+
+  StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion> GetQaQuestion(
+      google::cloud::contactcenterinsights::v1::GetQaQuestionRequest const&
+          request) override;
+
+  StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion>
+  UpdateQaQuestion(
+      google::cloud::contactcenterinsights::v1::UpdateQaQuestionRequest const&
+          request) override;
+
+  Status DeleteQaQuestion(
+      google::cloud::contactcenterinsights::v1::DeleteQaQuestionRequest const&
+          request) override;
+
+  StreamRange<google::cloud::contactcenterinsights::v1::QaQuestion>
+  ListQaQuestions(
+      google::cloud::contactcenterinsights::v1::ListQaQuestionsRequest request)
+      override;
+
+  StatusOr<google::cloud::contactcenterinsights::v1::QaScorecard>
+  CreateQaScorecard(
+      google::cloud::contactcenterinsights::v1::CreateQaScorecardRequest const&
+          request) override;
+
+  StatusOr<google::cloud::contactcenterinsights::v1::QaScorecard>
+  GetQaScorecard(
+      google::cloud::contactcenterinsights::v1::GetQaScorecardRequest const&
+          request) override;
+
+  StatusOr<google::cloud::contactcenterinsights::v1::QaScorecard>
+  UpdateQaScorecard(
+      google::cloud::contactcenterinsights::v1::UpdateQaScorecardRequest const&
+          request) override;
+
+  Status DeleteQaScorecard(
+      google::cloud::contactcenterinsights::v1::DeleteQaScorecardRequest const&
+          request) override;
+
+  StreamRange<google::cloud::contactcenterinsights::v1::QaScorecard>
+  ListQaScorecards(
+      google::cloud::contactcenterinsights::v1::ListQaScorecardsRequest request)
+      override;
+
+  StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
+  CreateQaScorecardRevision(
+      google::cloud::contactcenterinsights::v1::
+          CreateQaScorecardRevisionRequest const& request) override;
+
+  StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
+  GetQaScorecardRevision(
+      google::cloud::contactcenterinsights::v1::
+          GetQaScorecardRevisionRequest const& request) override;
+
+  future<StatusOr<google::cloud::contactcenterinsights::v1::
+                      TuneQaScorecardRevisionResponse>>
+  TuneQaScorecardRevision(
+      google::cloud::contactcenterinsights::v1::
+          TuneQaScorecardRevisionRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> TuneQaScorecardRevision(
+      NoAwaitTag, google::cloud::contactcenterinsights::v1::
+                      TuneQaScorecardRevisionRequest const& request) override;
+
+  future<StatusOr<google::cloud::contactcenterinsights::v1::
+                      TuneQaScorecardRevisionResponse>>
+  TuneQaScorecardRevision(
+      google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
+  DeployQaScorecardRevision(
+      google::cloud::contactcenterinsights::v1::
+          DeployQaScorecardRevisionRequest const& request) override;
+
+  StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
+  UndeployQaScorecardRevision(
+      google::cloud::contactcenterinsights::v1::
+          UndeployQaScorecardRevisionRequest const& request) override;
+
+  Status DeleteQaScorecardRevision(
+      google::cloud::contactcenterinsights::v1::
+          DeleteQaScorecardRevisionRequest const& request) override;
+
+  StreamRange<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
+  ListQaScorecardRevisions(
+      google::cloud::contactcenterinsights::v1::ListQaScorecardRevisionsRequest
+          request) override;
+
+  StatusOr<google::cloud::contactcenterinsights::v1::FeedbackLabel>
+  CreateFeedbackLabel(google::cloud::contactcenterinsights::v1::
+                          CreateFeedbackLabelRequest const& request) override;
+
+  StreamRange<google::cloud::contactcenterinsights::v1::FeedbackLabel>
+  ListFeedbackLabels(
+      google::cloud::contactcenterinsights::v1::ListFeedbackLabelsRequest
+          request) override;
+
+  StatusOr<google::cloud::contactcenterinsights::v1::FeedbackLabel>
+  GetFeedbackLabel(
+      google::cloud::contactcenterinsights::v1::GetFeedbackLabelRequest const&
+          request) override;
+
+  StatusOr<google::cloud::contactcenterinsights::v1::FeedbackLabel>
+  UpdateFeedbackLabel(google::cloud::contactcenterinsights::v1::
+                          UpdateFeedbackLabelRequest const& request) override;
+
+  Status DeleteFeedbackLabel(
+      google::cloud::contactcenterinsights::v1::
+          DeleteFeedbackLabelRequest const& request) override;
+
+  StreamRange<google::cloud::contactcenterinsights::v1::FeedbackLabel>
+  ListAllFeedbackLabels(
+      google::cloud::contactcenterinsights::v1::ListAllFeedbackLabelsRequest
+          request) override;
+
+  future<StatusOr<google::cloud::contactcenterinsights::v1::
+                      BulkUploadFeedbackLabelsResponse>>
+  BulkUploadFeedbackLabels(
+      google::cloud::contactcenterinsights::v1::
+          BulkUploadFeedbackLabelsRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> BulkUploadFeedbackLabels(
+      NoAwaitTag, google::cloud::contactcenterinsights::v1::
+                      BulkUploadFeedbackLabelsRequest const& request) override;
+
+  future<StatusOr<google::cloud::contactcenterinsights::v1::
+                      BulkUploadFeedbackLabelsResponse>>
+  BulkUploadFeedbackLabels(
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::contactcenterinsights::v1::
+                      BulkDownloadFeedbackLabelsResponse>>
+  BulkDownloadFeedbackLabels(
+      google::cloud::contactcenterinsights::v1::
+          BulkDownloadFeedbackLabelsRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> BulkDownloadFeedbackLabels(
+      NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::
+          BulkDownloadFeedbackLabelsRequest const& request) override;
+
+  future<StatusOr<google::cloud::contactcenterinsights::v1::
+                      BulkDownloadFeedbackLabelsResponse>>
+  BulkDownloadFeedbackLabels(
+      google::longrunning::Operation const& operation) override;
 
   StreamRange<google::longrunning::Operation> ListOperations(
       google::longrunning::ListOperationsRequest request) override;

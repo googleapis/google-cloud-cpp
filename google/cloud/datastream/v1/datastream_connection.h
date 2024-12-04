@@ -276,6 +276,16 @@ class DatastreamConnection {
   virtual future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
   DeleteStream(google::longrunning::Operation const& operation);
 
+  virtual future<StatusOr<google::cloud::datastream::v1::Stream>> RunStream(
+      google::cloud::datastream::v1::RunStreamRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> RunStream(
+      NoAwaitTag,
+      google::cloud::datastream::v1::RunStreamRequest const& request);
+
+  virtual future<StatusOr<google::cloud::datastream::v1::Stream>> RunStream(
+      google::longrunning::Operation const& operation);
+
   virtual StatusOr<google::cloud::datastream::v1::StreamObject> GetStreamObject(
       google::cloud::datastream::v1::GetStreamObjectRequest const& request);
 

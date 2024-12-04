@@ -335,6 +335,185 @@ SecureSourceManagerClient::TestIamPermissionsRepo(
   return connection_->TestIamPermissionsRepo(request);
 }
 
+future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
+SecureSourceManagerClient::CreateBranchRule(
+    std::string const& parent,
+    google::cloud::securesourcemanager::v1::BranchRule const& branch_rule,
+    std::string const& branch_rule_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::CreateBranchRuleRequest request;
+  request.set_parent(parent);
+  *request.mutable_branch_rule() = branch_rule;
+  request.set_branch_rule_id(branch_rule_id);
+  return connection_->CreateBranchRule(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::CreateBranchRule(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::securesourcemanager::v1::BranchRule const& branch_rule,
+    std::string const& branch_rule_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::CreateBranchRuleRequest request;
+  request.set_parent(parent);
+  *request.mutable_branch_rule() = branch_rule;
+  request.set_branch_rule_id(branch_rule_id);
+  return connection_->CreateBranchRule(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
+SecureSourceManagerClient::CreateBranchRule(
+    google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateBranchRule(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::CreateBranchRule(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateBranchRule(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
+SecureSourceManagerClient::CreateBranchRule(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateBranchRule(operation);
+}
+
+StreamRange<google::cloud::securesourcemanager::v1::BranchRule>
+SecureSourceManagerClient::ListBranchRules(std::string const& parent,
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::ListBranchRulesRequest request;
+  request.set_parent(parent);
+  return connection_->ListBranchRules(request);
+}
+
+StreamRange<google::cloud::securesourcemanager::v1::BranchRule>
+SecureSourceManagerClient::ListBranchRules(
+    google::cloud::securesourcemanager::v1::ListBranchRulesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListBranchRules(std::move(request));
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::BranchRule>
+SecureSourceManagerClient::GetBranchRule(std::string const& name,
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::GetBranchRuleRequest request;
+  request.set_name(name);
+  return connection_->GetBranchRule(request);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::BranchRule>
+SecureSourceManagerClient::GetBranchRule(
+    google::cloud::securesourcemanager::v1::GetBranchRuleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetBranchRule(request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
+SecureSourceManagerClient::UpdateBranchRule(
+    google::cloud::securesourcemanager::v1::BranchRule const& branch_rule,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest request;
+  *request.mutable_branch_rule() = branch_rule;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateBranchRule(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::UpdateBranchRule(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::BranchRule const& branch_rule,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest request;
+  *request.mutable_branch_rule() = branch_rule;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateBranchRule(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
+SecureSourceManagerClient::UpdateBranchRule(
+    google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateBranchRule(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::UpdateBranchRule(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateBranchRule(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
+SecureSourceManagerClient::UpdateBranchRule(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateBranchRule(operation);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerClient::DeleteBranchRule(std::string const& name,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest request;
+  request.set_name(name);
+  return connection_->DeleteBranchRule(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::DeleteBranchRule(NoAwaitTag, std::string const& name,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest request;
+  request.set_name(name);
+  return connection_->DeleteBranchRule(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerClient::DeleteBranchRule(
+    google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteBranchRule(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::DeleteBranchRule(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteBranchRule(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerClient::DeleteBranchRule(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteBranchRule(operation);
+}
+
 StreamRange<google::cloud::location::Location>
 SecureSourceManagerClient::ListLocations(
     google::cloud::location::ListLocationsRequest request, Options opts) {

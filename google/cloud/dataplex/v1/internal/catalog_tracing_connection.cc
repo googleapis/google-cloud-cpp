@@ -428,6 +428,64 @@ CatalogServiceTracingConnection::SearchEntries(
                                                         std::move(sr));
 }
 
+future<StatusOr<google::cloud::dataplex::v1::MetadataJob>>
+CatalogServiceTracingConnection::CreateMetadataJob(
+    google::cloud::dataplex::v1::CreateMetadataJobRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::CatalogServiceConnection::CreateMetadataJob");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateMetadataJob(request));
+}
+
+StatusOr<google::longrunning::Operation>
+CatalogServiceTracingConnection::CreateMetadataJob(
+    NoAwaitTag,
+    google::cloud::dataplex::v1::CreateMetadataJobRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::CatalogServiceConnection::CreateMetadataJob");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->CreateMetadataJob(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::MetadataJob>>
+CatalogServiceTracingConnection::CreateMetadataJob(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::CatalogServiceConnection::CreateMetadataJob");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateMetadataJob(operation));
+}
+
+StatusOr<google::cloud::dataplex::v1::MetadataJob>
+CatalogServiceTracingConnection::GetMetadataJob(
+    google::cloud::dataplex::v1::GetMetadataJobRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::CatalogServiceConnection::GetMetadataJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetMetadataJob(request));
+}
+
+StreamRange<google::cloud::dataplex::v1::MetadataJob>
+CatalogServiceTracingConnection::ListMetadataJobs(
+    google::cloud::dataplex::v1::ListMetadataJobsRequest request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::CatalogServiceConnection::ListMetadataJobs");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListMetadataJobs(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::dataplex::v1::MetadataJob>(std::move(span), std::move(sr));
+}
+
+Status CatalogServiceTracingConnection::CancelMetadataJob(
+    google::cloud::dataplex::v1::CancelMetadataJobRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::CatalogServiceConnection::CancelMetadataJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CancelMetadataJob(request));
+}
+
 StreamRange<google::cloud::location::Location>
 CatalogServiceTracingConnection::ListLocations(
     google::cloud::location::ListLocationsRequest request) {

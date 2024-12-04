@@ -96,6 +96,41 @@ SearchServiceConnectionImpl::Search(
       });
 }
 
+StreamRange<google::cloud::discoveryengine::v1::SearchResponse::SearchResult>
+SearchServiceConnectionImpl::SearchLite(
+    google::cloud::discoveryengine::v1::SearchRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->SearchLite(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<StreamRange<
+      google::cloud::discoveryengine::v1::SearchResponse::SearchResult>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<discoveryengine_v1::SearchServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::discoveryengine::v1::SearchRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::discoveryengine::v1::SearchRequest const&
+                       request) {
+              return stub->SearchLite(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::discoveryengine::v1::SearchResponse r) {
+        std::vector<
+            google::cloud::discoveryengine::v1::SearchResponse::SearchResult>
+            result(r.results().size());
+        auto& messages = *r.mutable_results();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
 StreamRange<google::longrunning::Operation>
 SearchServiceConnectionImpl::ListOperations(
     google::longrunning::ListOperationsRequest request) {

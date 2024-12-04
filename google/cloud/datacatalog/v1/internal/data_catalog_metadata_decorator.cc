@@ -372,6 +372,34 @@ StatusOr<google::longrunning::Operation> DataCatalogMetadata::ImportEntries(
   return child_->ImportEntries(context, options, request);
 }
 
+StatusOr<google::cloud::datacatalog::v1::MigrationConfig>
+DataCatalogMetadata::SetConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::datacatalog::v1::SetConfigRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->SetConfig(context, options, request);
+}
+
+StatusOr<google::cloud::datacatalog::v1::OrganizationConfig>
+DataCatalogMetadata::RetrieveConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::datacatalog::v1::RetrieveConfigRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->RetrieveConfig(context, options, request);
+}
+
+StatusOr<google::cloud::datacatalog::v1::MigrationConfig>
+DataCatalogMetadata::RetrieveEffectiveConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->RetrieveEffectiveConfig(context, options, request);
+}
+
 StatusOr<google::longrunning::ListOperationsResponse>
 DataCatalogMetadata::ListOperations(
     grpc::ClientContext& context, Options const& options,

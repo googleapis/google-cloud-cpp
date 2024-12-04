@@ -395,6 +395,476 @@ DefaultEventarcStub::UpdateGoogleChannelConfig(
   return response;
 }
 
+StatusOr<google::cloud::eventarc::v1::MessageBus>
+DefaultEventarcStub::GetMessageBus(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::eventarc::v1::GetMessageBusRequest const& request) {
+  google::cloud::eventarc::v1::MessageBus response;
+  auto status = grpc_stub_->GetMessageBus(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::eventarc::v1::ListMessageBusesResponse>
+DefaultEventarcStub::ListMessageBuses(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::eventarc::v1::ListMessageBusesRequest const& request) {
+  google::cloud::eventarc::v1::ListMessageBusesResponse response;
+  auto status = grpc_stub_->ListMessageBuses(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::eventarc::v1::ListMessageBusEnrollmentsResponse>
+DefaultEventarcStub::ListMessageBusEnrollments(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::eventarc::v1::ListMessageBusEnrollmentsRequest const&
+        request) {
+  google::cloud::eventarc::v1::ListMessageBusEnrollmentsResponse response;
+  auto status =
+      grpc_stub_->ListMessageBusEnrollments(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultEventarcStub::AsyncCreateMessageBus(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::eventarc::v1::CreateMessageBusRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::eventarc::v1::CreateMessageBusRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::eventarc::v1::CreateMessageBusRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateMessageBus(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultEventarcStub::CreateMessageBus(
+    grpc::ClientContext& context, Options,
+    google::cloud::eventarc::v1::CreateMessageBusRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateMessageBus(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultEventarcStub::AsyncUpdateMessageBus(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::eventarc::v1::UpdateMessageBusRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::eventarc::v1::UpdateMessageBusRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::eventarc::v1::UpdateMessageBusRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateMessageBus(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultEventarcStub::UpdateMessageBus(
+    grpc::ClientContext& context, Options,
+    google::cloud::eventarc::v1::UpdateMessageBusRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateMessageBus(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultEventarcStub::AsyncDeleteMessageBus(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::eventarc::v1::DeleteMessageBusRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::eventarc::v1::DeleteMessageBusRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::eventarc::v1::DeleteMessageBusRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteMessageBus(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultEventarcStub::DeleteMessageBus(
+    grpc::ClientContext& context, Options,
+    google::cloud::eventarc::v1::DeleteMessageBusRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteMessageBus(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::eventarc::v1::Enrollment>
+DefaultEventarcStub::GetEnrollment(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::eventarc::v1::GetEnrollmentRequest const& request) {
+  google::cloud::eventarc::v1::Enrollment response;
+  auto status = grpc_stub_->GetEnrollment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::eventarc::v1::ListEnrollmentsResponse>
+DefaultEventarcStub::ListEnrollments(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::eventarc::v1::ListEnrollmentsRequest const& request) {
+  google::cloud::eventarc::v1::ListEnrollmentsResponse response;
+  auto status = grpc_stub_->ListEnrollments(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultEventarcStub::AsyncCreateEnrollment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::eventarc::v1::CreateEnrollmentRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::eventarc::v1::CreateEnrollmentRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::eventarc::v1::CreateEnrollmentRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateEnrollment(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultEventarcStub::CreateEnrollment(
+    grpc::ClientContext& context, Options,
+    google::cloud::eventarc::v1::CreateEnrollmentRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateEnrollment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultEventarcStub::AsyncUpdateEnrollment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::eventarc::v1::UpdateEnrollmentRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::eventarc::v1::UpdateEnrollmentRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::eventarc::v1::UpdateEnrollmentRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateEnrollment(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultEventarcStub::UpdateEnrollment(
+    grpc::ClientContext& context, Options,
+    google::cloud::eventarc::v1::UpdateEnrollmentRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateEnrollment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultEventarcStub::AsyncDeleteEnrollment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::eventarc::v1::DeleteEnrollmentRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::eventarc::v1::DeleteEnrollmentRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::eventarc::v1::DeleteEnrollmentRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteEnrollment(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultEventarcStub::DeleteEnrollment(
+    grpc::ClientContext& context, Options,
+    google::cloud::eventarc::v1::DeleteEnrollmentRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteEnrollment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::eventarc::v1::Pipeline>
+DefaultEventarcStub::GetPipeline(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::eventarc::v1::GetPipelineRequest const& request) {
+  google::cloud::eventarc::v1::Pipeline response;
+  auto status = grpc_stub_->GetPipeline(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::eventarc::v1::ListPipelinesResponse>
+DefaultEventarcStub::ListPipelines(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::eventarc::v1::ListPipelinesRequest const& request) {
+  google::cloud::eventarc::v1::ListPipelinesResponse response;
+  auto status = grpc_stub_->ListPipelines(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultEventarcStub::AsyncCreatePipeline(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::eventarc::v1::CreatePipelineRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::eventarc::v1::CreatePipelineRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::eventarc::v1::CreatePipelineRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreatePipeline(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultEventarcStub::CreatePipeline(
+    grpc::ClientContext& context, Options,
+    google::cloud::eventarc::v1::CreatePipelineRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreatePipeline(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultEventarcStub::AsyncUpdatePipeline(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::eventarc::v1::UpdatePipelineRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::eventarc::v1::UpdatePipelineRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::eventarc::v1::UpdatePipelineRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdatePipeline(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultEventarcStub::UpdatePipeline(
+    grpc::ClientContext& context, Options,
+    google::cloud::eventarc::v1::UpdatePipelineRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdatePipeline(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultEventarcStub::AsyncDeletePipeline(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::eventarc::v1::DeletePipelineRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::eventarc::v1::DeletePipelineRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::eventarc::v1::DeletePipelineRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeletePipeline(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultEventarcStub::DeletePipeline(
+    grpc::ClientContext& context, Options,
+    google::cloud::eventarc::v1::DeletePipelineRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeletePipeline(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::eventarc::v1::GoogleApiSource>
+DefaultEventarcStub::GetGoogleApiSource(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::eventarc::v1::GetGoogleApiSourceRequest const& request) {
+  google::cloud::eventarc::v1::GoogleApiSource response;
+  auto status = grpc_stub_->GetGoogleApiSource(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::eventarc::v1::ListGoogleApiSourcesResponse>
+DefaultEventarcStub::ListGoogleApiSources(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::eventarc::v1::ListGoogleApiSourcesRequest const& request) {
+  google::cloud::eventarc::v1::ListGoogleApiSourcesResponse response;
+  auto status = grpc_stub_->ListGoogleApiSources(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultEventarcStub::AsyncCreateGoogleApiSource(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::eventarc::v1::CreateGoogleApiSourceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::eventarc::v1::CreateGoogleApiSourceRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::eventarc::v1::CreateGoogleApiSourceRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateGoogleApiSource(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultEventarcStub::CreateGoogleApiSource(
+    grpc::ClientContext& context, Options,
+    google::cloud::eventarc::v1::CreateGoogleApiSourceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateGoogleApiSource(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultEventarcStub::AsyncUpdateGoogleApiSource(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateGoogleApiSource(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultEventarcStub::UpdateGoogleApiSource(
+    grpc::ClientContext& context, Options,
+    google::cloud::eventarc::v1::UpdateGoogleApiSourceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateGoogleApiSource(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultEventarcStub::AsyncDeleteGoogleApiSource(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteGoogleApiSource(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultEventarcStub::DeleteGoogleApiSource(
+    grpc::ClientContext& context, Options,
+    google::cloud::eventarc::v1::DeleteGoogleApiSourceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteGoogleApiSource(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultEventarcStub::ListLocations(
     grpc::ClientContext& context, Options const&,
@@ -511,7 +981,7 @@ DefaultEventarcStub::AsyncGetOperation(
       [this](grpc::ClientContext* context,
              google::longrunning::GetOperationRequest const& request,
              grpc::CompletionQueue* cq) {
-        return operations_->AsyncGetOperation(context, request, cq);
+        return operations_stub_->AsyncGetOperation(context, request, cq);
       },
       request, std::move(context));
 }
@@ -528,7 +998,8 @@ future<Status> DefaultEventarcStub::AsyncCancelOperation(
              [this](grpc::ClientContext* context,
                     google::longrunning::CancelOperationRequest const& request,
                     grpc::CompletionQueue* cq) {
-               return operations_->AsyncCancelOperation(context, request, cq);
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
              },
              request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {

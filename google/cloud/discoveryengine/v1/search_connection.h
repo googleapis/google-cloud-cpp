@@ -186,6 +186,10 @@ class SearchServiceConnection {
       google::cloud::discoveryengine::v1::SearchResponse::SearchResult>
   Search(google::cloud::discoveryengine::v1::SearchRequest request);
 
+  virtual StreamRange<
+      google::cloud::discoveryengine::v1::SearchResponse::SearchResult>
+  SearchLite(google::cloud::discoveryengine::v1::SearchRequest request);
+
   virtual StreamRange<google::longrunning::Operation> ListOperations(
       google::longrunning::ListOperationsRequest request);
 

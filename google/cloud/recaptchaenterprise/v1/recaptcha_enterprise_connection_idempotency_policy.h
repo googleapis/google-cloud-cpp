@@ -71,6 +71,13 @@ class RecaptchaEnterpriseServiceConnectionIdempotencyPolicy {
       google::cloud::recaptchaenterprise::v1::AddIpOverrideRequest const&
           request);
 
+  virtual google::cloud::Idempotency RemoveIpOverride(
+      google::cloud::recaptchaenterprise::v1::RemoveIpOverrideRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListIpOverrides(
+      google::cloud::recaptchaenterprise::v1::ListIpOverridesRequest request);
+
   virtual google::cloud::Idempotency GetMetrics(
       google::cloud::recaptchaenterprise::v1::GetMetricsRequest const& request);
 

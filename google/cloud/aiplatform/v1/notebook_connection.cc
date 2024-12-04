@@ -219,6 +219,30 @@ NotebookServiceConnection::StartNotebookRuntime(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::aiplatform::v1::StopNotebookRuntimeResponse>>
+NotebookServiceConnection::StopNotebookRuntime(
+    google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::aiplatform::v1::StopNotebookRuntimeResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+NotebookServiceConnection::StopNotebookRuntime(
+    NoAwaitTag,
+    google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::StopNotebookRuntimeResponse>>
+NotebookServiceConnection::StopNotebookRuntime(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::aiplatform::v1::StopNotebookRuntimeResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>>
 NotebookServiceConnection::CreateNotebookExecutionJob(
     google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const&) {

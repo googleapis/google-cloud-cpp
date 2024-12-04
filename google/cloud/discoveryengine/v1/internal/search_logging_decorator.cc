@@ -47,6 +47,18 @@ SearchServiceLogging::Search(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::discoveryengine::v1::SearchResponse>
+SearchServiceLogging::SearchLite(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::SearchRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::SearchRequest const& request) {
+        return child_->SearchLite(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::longrunning::ListOperationsResponse>
 SearchServiceLogging::ListOperations(
     grpc::ClientContext& context, Options const& options,

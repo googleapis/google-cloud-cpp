@@ -46,6 +46,7 @@ service {
     {rpc_name: "GoldenKitchenSink.ListLogs", idempotency: NON_IDEMPOTENT}
   ]
   omit_repo_metadata: true
+  override_service_config_yaml_name: "generator/integration_tests/test.yaml"
 }
 
 service {
@@ -70,4 +71,15 @@ service {
     "CreateFoo"
   ]
   override_service_config_yaml_name: "generator/integration_tests/test_request_id.yaml"
+}
+
+service {
+  service_proto_path: "generator/integration_tests/test_deprecated.proto"
+  product_path: "generator/integration_tests/golden/v1"
+  initial_copyright_year: "2024"
+  generate_rest_transport: true
+  generate_grpc_transport: true
+  retryable_status_codes: [
+    "kUnavailable"
+  ]
 }

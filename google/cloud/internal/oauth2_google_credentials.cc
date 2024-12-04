@@ -22,6 +22,7 @@
 #include "google/cloud/internal/oauth2_external_account_credentials.h"
 #include "google/cloud/internal/oauth2_google_application_default_credentials_file.h"
 #include "google/cloud/internal/oauth2_http_client_factory.h"
+#include "google/cloud/internal/oauth2_impersonate_service_account_credentials.h"
 #include "google/cloud/internal/oauth2_service_account_credentials.h"
 #include "google/cloud/internal/parse_service_account_p12_file.h"
 #include "google/cloud/internal/throw_delegate.h"
@@ -35,6 +36,68 @@ namespace cloud {
 namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
+
+// NOLINTNEXTLINE(misc-no-recursion)
+StatusOr<std::unique_ptr<Credentials>> LoadCredsFromString(
+    std::string const& contents, std::string const& path,
+    Options const& options, HttpClientFactory client_factory) {
+  auto const cred_json = nlohmann::json::parse(contents, nullptr, false);
+  auto const cred_type = cred_json.value("type", "no type given");
+  // If non_service_account_ok==false and the cred_type is authorized_user,
+  // we'll return "Unsupported credential type (authorized_user)".
+  if (cred_type == "authorized_user") {
+    auto info = ParseAuthorizedUserCredentials(contents, path);
+    if (!info) return std::move(info).status();
+    return std::unique_ptr<Credentials>(
+        std::make_unique<AuthorizedUserCredentials>(*info, options,
+                                                    std::move(client_factory)));
+  }
+  if (cred_type == "external_account") {
+    auto info =
+        ParseExternalAccountConfiguration(contents, internal::ErrorContext{});
+    if (!info) return std::move(info).status();
+    return std::unique_ptr<Credentials>(
+        std::make_unique<ExternalAccountCredentials>(
+            *std::move(info), std::move(client_factory), options));
+  }
+  if (cred_type == "service_account") {
+    auto info = ParseServiceAccountCredentials(contents, path);
+    if (!info) return std::move(info).status();
+    return std::unique_ptr<Credentials>(
+        std::make_unique<ServiceAccountCredentials>(*info, options,
+                                                    std::move(client_factory)));
+  }
+  if (cred_type == "impersonated_service_account") {
+    auto info = ParseImpersonatedServiceAccountCredentials(contents, path);
+    if (!info) return std::move(info).status();
+    auto source_creds = LoadCredsFromString(std::move(info->source_credentials),
+                                            path, options, client_factory);
+    if (!source_creds) return std::move(source_creds).status();
+
+    auto opts = options;
+    auto& delegates = opts.lookup<DelegatesOption>();
+    for (auto& delegate : info->delegates) {
+      delegates.push_back(std::move(delegate));
+    }
+
+    internal::ImpersonateServiceAccountConfig config(
+        // The base credentials (GUAC) are used to create the IAM REST Stub. We
+        // are going to override them by supplying our own IAM REST Stub,
+        // constructed using `oauth2_internal::Credentials`.
+        nullptr, std::move(info->service_account), opts);
+    auto rest_stub = MakeMinimalIamCredentialsRestStub(
+        *std::move(source_creds), opts, std::move(client_factory));
+    return std::unique_ptr<Credentials>(
+        std::make_unique<ImpersonateServiceAccountCredentials>(
+            config, std::move(rest_stub)));
+  }
+  return internal::InvalidArgumentError(
+      "Unsupported credential type (" + cred_type +
+          ") when reading Application Default Credentials file "
+          "from " +
+          path + ".",
+      GCP_ERROR_INFO());
+}
 
 // Parses the JSON at `path` and creates the appropriate
 // Credentials type.
@@ -72,37 +135,8 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
         std::make_unique<ServiceAccountCredentials>(*info, options,
                                                     std::move(client_factory)));
   }
-  auto const cred_type = cred_json.value("type", "no type given");
-  // If non_service_account_ok==false and the cred_type is authorized_user,
-  // we'll return "Unsupported credential type (authorized_user)".
-  if (cred_type == "authorized_user") {
-    auto info = ParseAuthorizedUserCredentials(contents, path);
-    if (!info) return std::move(info).status();
-    return std::unique_ptr<Credentials>(
-        std::make_unique<AuthorizedUserCredentials>(*info, options,
-                                                    std::move(client_factory)));
-  }
-  if (cred_type == "external_account") {
-    auto info =
-        ParseExternalAccountConfiguration(contents, internal::ErrorContext{});
-    if (!info) return std::move(info).status();
-    return std::unique_ptr<Credentials>(
-        std::make_unique<ExternalAccountCredentials>(
-            *std::move(info), std::move(client_factory), options));
-  }
-  if (cred_type == "service_account") {
-    auto info = ParseServiceAccountCredentials(contents, path);
-    if (!info) return std::move(info).status();
-    return std::unique_ptr<Credentials>(
-        std::make_unique<ServiceAccountCredentials>(*info, options,
-                                                    std::move(client_factory)));
-  }
-  return internal::InvalidArgumentError(
-      "Unsupported credential type (" + cred_type +
-          ") when reading Application Default Credentials file "
-          "from " +
-          path + ".",
-      GCP_ERROR_INFO());
+  return LoadCredsFromString(contents, path, options,
+                             std::move(client_factory));
 }
 
 // Tries to load the file at the path specified by the value of the Application

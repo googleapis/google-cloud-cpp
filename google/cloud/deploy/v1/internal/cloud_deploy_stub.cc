@@ -457,6 +457,123 @@ DefaultCloudDeployStub::AbandonRelease(
   return response;
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultCloudDeployStub::AsyncCreateDeployPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::deploy::v1::CreateDeployPolicyRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::deploy::v1::CreateDeployPolicyRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::deploy::v1::CreateDeployPolicyRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateDeployPolicy(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCloudDeployStub::CreateDeployPolicy(
+    grpc::ClientContext& context, Options,
+    google::cloud::deploy::v1::CreateDeployPolicyRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateDeployPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultCloudDeployStub::AsyncUpdateDeployPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::deploy::v1::UpdateDeployPolicyRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::deploy::v1::UpdateDeployPolicyRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::deploy::v1::UpdateDeployPolicyRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateDeployPolicy(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCloudDeployStub::UpdateDeployPolicy(
+    grpc::ClientContext& context, Options,
+    google::cloud::deploy::v1::UpdateDeployPolicyRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateDeployPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultCloudDeployStub::AsyncDeleteDeployPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::deploy::v1::DeleteDeployPolicyRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::deploy::v1::DeleteDeployPolicyRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::deploy::v1::DeleteDeployPolicyRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteDeployPolicy(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCloudDeployStub::DeleteDeployPolicy(
+    grpc::ClientContext& context, Options,
+    google::cloud::deploy::v1::DeleteDeployPolicyRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteDeployPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::deploy::v1::ListDeployPoliciesResponse>
+DefaultCloudDeployStub::ListDeployPolicies(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::deploy::v1::ListDeployPoliciesRequest const& request) {
+  google::cloud::deploy::v1::ListDeployPoliciesResponse response;
+  auto status = grpc_stub_->ListDeployPolicies(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::deploy::v1::DeployPolicy>
+DefaultCloudDeployStub::GetDeployPolicy(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::deploy::v1::GetDeployPolicyRequest const& request) {
+  google::cloud::deploy::v1::DeployPolicy response;
+  auto status = grpc_stub_->GetDeployPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::deploy::v1::ApproveRolloutResponse>
 DefaultCloudDeployStub::ApproveRollout(
     grpc::ClientContext& context, Options const&,
@@ -881,7 +998,7 @@ DefaultCloudDeployStub::AsyncGetOperation(
       [this](grpc::ClientContext* context,
              google::longrunning::GetOperationRequest const& request,
              grpc::CompletionQueue* cq) {
-        return operations_->AsyncGetOperation(context, request, cq);
+        return operations_stub_->AsyncGetOperation(context, request, cq);
       },
       request, std::move(context));
 }
@@ -898,7 +1015,8 @@ future<Status> DefaultCloudDeployStub::AsyncCancelOperation(
              [this](grpc::ClientContext* context,
                     google::longrunning::CancelOperationRequest const& request,
                     grpc::CompletionQueue* cq) {
-               return operations_->AsyncCancelOperation(context, request, cq);
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
              },
              request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {

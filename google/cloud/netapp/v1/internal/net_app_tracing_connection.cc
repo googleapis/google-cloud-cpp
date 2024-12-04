@@ -833,6 +833,65 @@ NetAppTracingConnection::ReverseReplicationDirection(
                            child_->ReverseReplicationDirection(operation));
 }
 
+future<StatusOr<google::cloud::netapp::v1::Replication>>
+NetAppTracingConnection::EstablishPeering(
+    google::cloud::netapp::v1::EstablishPeeringRequest const& request) {
+  auto span =
+      internal::MakeSpan("netapp_v1::NetAppConnection::EstablishPeering");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->EstablishPeering(request));
+}
+
+StatusOr<google::longrunning::Operation>
+NetAppTracingConnection::EstablishPeering(
+    NoAwaitTag,
+    google::cloud::netapp::v1::EstablishPeeringRequest const& request) {
+  auto span =
+      internal::MakeSpan("netapp_v1::NetAppConnection::EstablishPeering");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->EstablishPeering(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::netapp::v1::Replication>>
+NetAppTracingConnection::EstablishPeering(
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("netapp_v1::NetAppConnection::EstablishPeering");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->EstablishPeering(operation));
+}
+
+future<StatusOr<google::cloud::netapp::v1::Replication>>
+NetAppTracingConnection::SyncReplication(
+    google::cloud::netapp::v1::SyncReplicationRequest const& request) {
+  auto span =
+      internal::MakeSpan("netapp_v1::NetAppConnection::SyncReplication");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->SyncReplication(request));
+}
+
+StatusOr<google::longrunning::Operation>
+NetAppTracingConnection::SyncReplication(
+    NoAwaitTag,
+    google::cloud::netapp::v1::SyncReplicationRequest const& request) {
+  auto span =
+      internal::MakeSpan("netapp_v1::NetAppConnection::SyncReplication");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->SyncReplication(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::netapp::v1::Replication>>
+NetAppTracingConnection::SyncReplication(
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("netapp_v1::NetAppConnection::SyncReplication");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->SyncReplication(operation));
+}
+
 future<StatusOr<google::cloud::netapp::v1::BackupVault>>
 NetAppTracingConnection::CreateBackupVault(
     google::cloud::netapp::v1::CreateBackupVaultRequest const& request) {

@@ -75,6 +75,20 @@ class EndpointServiceConnectionImpl
       google::cloud::aiplatform::v1::UpdateEndpointRequest const& request)
       override;
 
+  future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>
+  UpdateEndpointLongRunning(
+      google::cloud::aiplatform::v1::UpdateEndpointLongRunningRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateEndpointLongRunning(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::UpdateEndpointLongRunningRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>
+  UpdateEndpointLongRunning(
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteEndpoint(google::cloud::aiplatform::v1::DeleteEndpointRequest const&
                      request) override;

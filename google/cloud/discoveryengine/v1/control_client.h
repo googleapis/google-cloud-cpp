@@ -98,9 +98,9 @@ class ControlServiceClient {
   /// exists, an ALREADY_EXISTS error is returned.
   ///
   /// @param parent  Required. Full resource name of parent data store. Format:
-  ///  `projects/{project_number}/locations/{location_id}/collections/{collection_id}/dataStores/{data_store_id}`
+  ///  `projects/{project}/locations/{location}/collections/{collection_id}/dataStores/{data_store_id}`
   ///  or
-  ///  `projects/{project_number}/locations/{location_id}/collections/{collection_id}/engines/{engine_id}`.
+  ///  `projects/{project}/locations/{location}/collections/{collection_id}/engines/{engine_id}`.
   /// @param control  Required. The Control to create.
   /// @param control_id  Required. The ID to use for the Control, which will become the final
   ///  component of the Control's resource name.
@@ -120,7 +120,7 @@ class ControlServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.Control]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L79}
+  /// [google.cloud.discoveryengine.v1.Control]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L88}
   /// [google.cloud.discoveryengine.v1.CreateControlRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control_service.proto#L136}
   ///
   // clang-format on
@@ -157,7 +157,7 @@ class ControlServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.Control]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L79}
+  /// [google.cloud.discoveryengine.v1.Control]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L88}
   /// [google.cloud.discoveryengine.v1.CreateControlRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control_service.proto#L136}
   ///
   // clang-format on
@@ -173,7 +173,7 @@ class ControlServiceClient {
   /// not exist, a NOT_FOUND error is returned.
   ///
   /// @param name  Required. The resource name of the Control to delete. Format:
-  ///  `projects/{project_number}/locations/{location_id}/collections/{collection_id}/dataStores/{data_store_id}/controls/{control_id}`
+  ///  `projects/{project}/locations/{location}/collections/{collection_id}/dataStores/{data_store_id}/controls/{control_id}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [`Status`] object. If the request failed, the
@@ -185,7 +185,7 @@ class ControlServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.Control]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L79}
+  /// [google.cloud.discoveryengine.v1.Control]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L88}
   /// [google.cloud.discoveryengine.v1.DeleteControlRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control_service.proto#L177}
   ///
   // clang-format on
@@ -215,7 +215,7 @@ class ControlServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.Control]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L79}
+  /// [google.cloud.discoveryengine.v1.Control]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L88}
   /// [google.cloud.discoveryengine.v1.DeleteControlRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control_service.proto#L177}
   ///
   // clang-format on
@@ -253,9 +253,9 @@ class ControlServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.Control]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L79}
-  /// [google.cloud.discoveryengine.v1.Control.name]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L178}
-  /// [google.cloud.discoveryengine.v1.Control.solution_type]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L196}
+  /// [google.cloud.discoveryengine.v1.Control]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L88}
+  /// [google.cloud.discoveryengine.v1.Control.name]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L187}
+  /// [google.cloud.discoveryengine.v1.Control.solution_type]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L205}
   /// [google.cloud.discoveryengine.v1.UpdateControlRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control_service.proto#L160}
   ///
   // clang-format on
@@ -290,7 +290,7 @@ class ControlServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.Control]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L79}
+  /// [google.cloud.discoveryengine.v1.Control]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L88}
   /// [google.cloud.discoveryengine.v1.UpdateControlRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control_service.proto#L160}
   ///
   // clang-format on
@@ -303,7 +303,7 @@ class ControlServiceClient {
   /// Gets a Control.
   ///
   /// @param name  Required. The resource name of the Control to get. Format:
-  ///  `projects/{project_number}/locations/{location_id}/collections/{collection_id}/dataStores/{data_store_id}/controls/{control_id}`
+  ///  `projects/{project}/locations/{location}/collections/{collection_id}/dataStores/{data_store_id}/controls/{control_id}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -317,7 +317,7 @@ class ControlServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.Control]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L79}
+  /// [google.cloud.discoveryengine.v1.Control]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L88}
   /// [google.cloud.discoveryengine.v1.GetControlRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control_service.proto#L189}
   ///
   // clang-format on
@@ -347,7 +347,7 @@ class ControlServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.Control]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L79}
+  /// [google.cloud.discoveryengine.v1.Control]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L88}
   /// [google.cloud.discoveryengine.v1.GetControlRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control_service.proto#L189}
   ///
   // clang-format on
@@ -361,9 +361,9 @@ class ControlServiceClient {
   /// [DataStore][google.cloud.discoveryengine.v1.DataStore].
   ///
   /// @param parent  Required. The data store resource name. Format:
-  ///  `projects/{project_number}/locations/{location_id}/collections/{collection_id}/dataStores/{data_store_id}`
+  ///  `projects/{project}/locations/{location}/collections/{collection_id}/dataStores/{data_store_id}`
   ///  or
-  ///  `projects/{project_number}/locations/{location_id}/collections/{collection_id}/engines/{engine_id}`.
+  ///  `projects/{project}/locations/{location}/collections/{collection_id}/engines/{engine_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -386,7 +386,7 @@ class ControlServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.Control]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L79}
+  /// [google.cloud.discoveryengine.v1.Control]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L88}
   /// [google.cloud.discoveryengine.v1.ListControlsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control_service.proto#L201}
   ///
   // clang-format on
@@ -426,7 +426,7 @@ class ControlServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.Control]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L79}
+  /// [google.cloud.discoveryengine.v1.Control]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control.proto#L88}
   /// [google.cloud.discoveryengine.v1.ListControlsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/control_service.proto#L201}
   ///
   // clang-format on
@@ -438,14 +438,6 @@ class ControlServiceClient {
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
@@ -471,8 +463,8 @@ class ControlServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -482,14 +474,6 @@ class ControlServiceClient {
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -519,8 +503,8 @@ class ControlServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -546,8 +530,8 @@ class ControlServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
@@ -578,8 +562,8 @@ class ControlServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(
@@ -596,8 +580,9 @@ class ControlServiceClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -611,9 +596,9 @@ class ControlServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
@@ -629,8 +614,9 @@ class ControlServiceClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -649,9 +635,9 @@ class ControlServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on

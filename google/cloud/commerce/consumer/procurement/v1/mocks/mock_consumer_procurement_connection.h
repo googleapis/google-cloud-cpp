@@ -105,6 +105,90 @@ class MockConsumerProcurementServiceConnection
            request),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ModifyOrder(Matcher<google::cloud::commerce::consumer::procurement::v1::ModifyOrderRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>,
+      ModifyOrder,
+      (google::cloud::commerce::consumer::procurement::v1::
+           ModifyOrderRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ModifyOrder(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, ModifyOrder,
+              (NoAwaitTag, google::cloud::commerce::consumer::procurement::v1::
+                               ModifyOrderRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, ModifyOrder(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>,
+      ModifyOrder, (google::longrunning::Operation const& operation),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CancelOrder(Matcher<google::cloud::commerce::consumer::procurement::v1::CancelOrderRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>,
+      CancelOrder,
+      (google::cloud::commerce::consumer::procurement::v1::
+           CancelOrderRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CancelOrder(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CancelOrder,
+              (NoAwaitTag, google::cloud::commerce::consumer::procurement::v1::
+                               CancelOrderRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CancelOrder(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>,
+      CancelOrder, (google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
               (google::longrunning::GetOperationRequest const& request),
               (override));

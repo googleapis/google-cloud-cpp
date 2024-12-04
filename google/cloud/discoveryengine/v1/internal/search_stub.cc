@@ -42,6 +42,18 @@ DefaultSearchServiceStub::Search(
   return response;
 }
 
+StatusOr<google::cloud::discoveryengine::v1::SearchResponse>
+DefaultSearchServiceStub::SearchLite(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::discoveryengine::v1::SearchRequest const& request) {
+  google::cloud::discoveryengine::v1::SearchResponse response;
+  auto status = grpc_stub_->SearchLite(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultSearchServiceStub::ListOperations(
     grpc::ClientContext& context, Options const&,

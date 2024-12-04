@@ -1026,6 +1026,83 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
   /// using ::testing::_;
   /// using ::testing::Matcher;
   /// EXPECT_CALL(*mock,
+  /// EstablishPeering(Matcher<google::cloud::netapp::v1::EstablishPeeringRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::netapp::v1::Replication>>,
+      EstablishPeering,
+      (google::cloud::netapp::v1::EstablishPeeringRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, EstablishPeering(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, EstablishPeering,
+      (NoAwaitTag,
+       google::cloud::netapp::v1::EstablishPeeringRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, EstablishPeering(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::Replication>>,
+              EstablishPeering,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// SyncReplication(Matcher<google::cloud::netapp::v1::SyncReplicationRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::netapp::v1::Replication>>, SyncReplication,
+      (google::cloud::netapp::v1::SyncReplicationRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, SyncReplication(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, SyncReplication,
+      (NoAwaitTag,
+       google::cloud::netapp::v1::SyncReplicationRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, SyncReplication(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::Replication>>,
+              SyncReplication,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
   /// CreateBackupVault(Matcher<google::cloud::netapp::v1::CreateBackupVaultRequest
   /// const&>(_)))
   /// @endcode

@@ -134,6 +134,31 @@ Idempotency CloudDeployConnectionIdempotencyPolicy::AbandonRelease(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency CloudDeployConnectionIdempotencyPolicy::CreateDeployPolicy(
+    google::cloud::deploy::v1::CreateDeployPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency CloudDeployConnectionIdempotencyPolicy::UpdateDeployPolicy(
+    google::cloud::deploy::v1::UpdateDeployPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency CloudDeployConnectionIdempotencyPolicy::DeleteDeployPolicy(
+    google::cloud::deploy::v1::DeleteDeployPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency CloudDeployConnectionIdempotencyPolicy::ListDeployPolicies(
+    google::cloud::deploy::v1::ListDeployPoliciesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency CloudDeployConnectionIdempotencyPolicy::GetDeployPolicy(
+    google::cloud::deploy::v1::GetDeployPolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 Idempotency CloudDeployConnectionIdempotencyPolicy::ApproveRollout(
     google::cloud::deploy::v1::ApproveRolloutRequest const&) {
   return Idempotency::kNonIdempotent;

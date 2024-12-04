@@ -46,6 +46,14 @@ SearchServiceConnection::Search(
       google::cloud::discoveryengine::v1::SearchResponse::SearchResult>>();
 }
 
+StreamRange<google::cloud::discoveryengine::v1::SearchResponse::SearchResult>
+SearchServiceConnection::SearchLite(
+    google::cloud::discoveryengine::v1::
+        SearchRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      google::cloud::discoveryengine::v1::SearchResponse::SearchResult>>();
+}
+
 StreamRange<google::longrunning::Operation>
 SearchServiceConnection::ListOperations(
     google::longrunning::

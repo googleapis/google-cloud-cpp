@@ -116,7 +116,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CreateNotebookRuntimeTemplateRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L236}
+  /// [google.cloud.aiplatform.v1.CreateNotebookRuntimeTemplateRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L250}
   /// [google.cloud.aiplatform.v1.NotebookRuntimeTemplate]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L53}
   ///
   // clang-format on
@@ -174,7 +174,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CreateNotebookRuntimeTemplateRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L236}
+  /// [google.cloud.aiplatform.v1.CreateNotebookRuntimeTemplateRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L250}
   /// [google.cloud.aiplatform.v1.NotebookRuntimeTemplate]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L53}
   ///
   // clang-format on
@@ -234,7 +234,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.GetNotebookRuntimeTemplateRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L264}
+  /// [google.cloud.aiplatform.v1.GetNotebookRuntimeTemplateRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L278}
   /// [google.cloud.aiplatform.v1.NotebookRuntimeTemplate]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L53}
   ///
   // clang-format on
@@ -264,7 +264,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.GetNotebookRuntimeTemplateRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L264}
+  /// [google.cloud.aiplatform.v1.GetNotebookRuntimeTemplateRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L278}
   /// [google.cloud.aiplatform.v1.NotebookRuntimeTemplate]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L53}
   ///
   // clang-format on
@@ -303,7 +303,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ListNotebookRuntimeTemplatesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L278}
+  /// [google.cloud.aiplatform.v1.ListNotebookRuntimeTemplatesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L292}
   /// [google.cloud.aiplatform.v1.NotebookRuntimeTemplate]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L53}
   ///
   // clang-format on
@@ -342,7 +342,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ListNotebookRuntimeTemplatesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L278}
+  /// [google.cloud.aiplatform.v1.ListNotebookRuntimeTemplatesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L292}
   /// [google.cloud.aiplatform.v1.NotebookRuntimeTemplate]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L53}
   ///
   // clang-format on
@@ -379,7 +379,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteNotebookRuntimeTemplateRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L353}
+  /// [google.cloud.aiplatform.v1.DeleteNotebookRuntimeTemplateRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L367}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
@@ -430,7 +430,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteNotebookRuntimeTemplateRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L353}
+  /// [google.cloud.aiplatform.v1.DeleteNotebookRuntimeTemplateRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L367}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
@@ -495,7 +495,7 @@ class NotebookServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.NotebookRuntimeTemplate]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L53}
-  /// [google.cloud.aiplatform.v1.UpdateNotebookRuntimeTemplateRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L367}
+  /// [google.cloud.aiplatform.v1.UpdateNotebookRuntimeTemplateRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L381}
   /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L242}
   ///
   // clang-format on
@@ -529,7 +529,7 @@ class NotebookServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.NotebookRuntimeTemplate]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L53}
-  /// [google.cloud.aiplatform.v1.UpdateNotebookRuntimeTemplateRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L367}
+  /// [google.cloud.aiplatform.v1.UpdateNotebookRuntimeTemplateRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L381}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
@@ -570,7 +570,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.AssignNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L384}
+  /// [google.cloud.aiplatform.v1.AssignNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L398}
   /// [google.cloud.aiplatform.v1.NotebookRuntime]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L151}
   ///
   // clang-format on
@@ -628,7 +628,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.AssignNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L384}
+  /// [google.cloud.aiplatform.v1.AssignNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L398}
   /// [google.cloud.aiplatform.v1.NotebookRuntime]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L151}
   ///
   // clang-format on
@@ -689,7 +689,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.GetNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L424}
+  /// [google.cloud.aiplatform.v1.GetNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L438}
   /// [google.cloud.aiplatform.v1.NotebookRuntime]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L151}
   ///
   // clang-format on
@@ -719,7 +719,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.GetNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L424}
+  /// [google.cloud.aiplatform.v1.GetNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L438}
   /// [google.cloud.aiplatform.v1.NotebookRuntime]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L151}
   ///
   // clang-format on
@@ -756,7 +756,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ListNotebookRuntimesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L439}
+  /// [google.cloud.aiplatform.v1.ListNotebookRuntimesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L453}
   /// [google.cloud.aiplatform.v1.NotebookRuntime]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L151}
   ///
   // clang-format on
@@ -795,7 +795,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ListNotebookRuntimesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L439}
+  /// [google.cloud.aiplatform.v1.ListNotebookRuntimesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L453}
   /// [google.cloud.aiplatform.v1.NotebookRuntime]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L151}
   ///
   // clang-format on
@@ -832,7 +832,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L528}
+  /// [google.cloud.aiplatform.v1.DeleteNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L542}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
@@ -883,7 +883,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L528}
+  /// [google.cloud.aiplatform.v1.DeleteNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L542}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
@@ -951,8 +951,8 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.UpgradeNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L543}
-  /// [google.cloud.aiplatform.v1.UpgradeNotebookRuntimeResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L569}
+  /// [google.cloud.aiplatform.v1.UpgradeNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L557}
+  /// [google.cloud.aiplatform.v1.UpgradeNotebookRuntimeResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L583}
   ///
   // clang-format on
   future<
@@ -1003,8 +1003,8 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.UpgradeNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L543}
-  /// [google.cloud.aiplatform.v1.UpgradeNotebookRuntimeResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L569}
+  /// [google.cloud.aiplatform.v1.UpgradeNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L557}
+  /// [google.cloud.aiplatform.v1.UpgradeNotebookRuntimeResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L583}
   ///
   // clang-format on
   future<
@@ -1073,8 +1073,8 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.StartNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L573}
-  /// [google.cloud.aiplatform.v1.StartNotebookRuntimeResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L599}
+  /// [google.cloud.aiplatform.v1.StartNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L587}
+  /// [google.cloud.aiplatform.v1.StartNotebookRuntimeResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L613}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::StartNotebookRuntimeResponse>>
@@ -1124,8 +1124,8 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.StartNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L573}
-  /// [google.cloud.aiplatform.v1.StartNotebookRuntimeResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L599}
+  /// [google.cloud.aiplatform.v1.StartNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L587}
+  /// [google.cloud.aiplatform.v1.StartNotebookRuntimeResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L613}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::StartNotebookRuntimeResponse>>
@@ -1164,6 +1164,123 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
+  /// Stops a NotebookRuntime.
+  ///
+  /// @param name  Required. The name of the NotebookRuntime resource to be stopped.
+  ///  Instead of checking whether the name is in valid NotebookRuntime resource
+  ///  name format, directly throw NotFound exception if there is no such
+  ///  NotebookRuntime in spanner.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.aiplatform.v1.StopNotebookRuntimeResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.aiplatform.v1.StopNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L617}
+  /// [google.cloud.aiplatform.v1.StopNotebookRuntimeResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L639}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::aiplatform::v1::StopNotebookRuntimeResponse>>
+  StopNotebookRuntime(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief StopNotebookRuntime
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> StopNotebookRuntime(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Stops a NotebookRuntime.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.aiplatform.v1.StopNotebookRuntimeRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.aiplatform.v1.StopNotebookRuntimeResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.aiplatform.v1.StopNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L617}
+  /// [google.cloud.aiplatform.v1.StopNotebookRuntimeResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L639}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::aiplatform::v1::StopNotebookRuntimeResponse>>
+  StopNotebookRuntime(
+      google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief StopNotebookRuntime
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> StopNotebookRuntime(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief StopNotebookRuntime
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::aiplatform::v1::StopNotebookRuntimeResponse>>
+  StopNotebookRuntime(google::longrunning::Operation const& operation,
+                      Options opts = {});
+
+  // clang-format off
+  ///
   /// Creates a NotebookExecutionJob.
   ///
   /// @param parent  Required. The resource name of the Location to create the
@@ -1190,8 +1307,8 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CreateNotebookExecutionJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L602}
-  /// [google.cloud.aiplatform.v1.NotebookExecutionJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_execution_job.proto#L36}
+  /// [google.cloud.aiplatform.v1.CreateNotebookExecutionJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L642}
+  /// [google.cloud.aiplatform.v1.NotebookExecutionJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_execution_job.proto#L38}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>>
@@ -1248,8 +1365,8 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CreateNotebookExecutionJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L602}
-  /// [google.cloud.aiplatform.v1.NotebookExecutionJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_execution_job.proto#L36}
+  /// [google.cloud.aiplatform.v1.CreateNotebookExecutionJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L642}
+  /// [google.cloud.aiplatform.v1.NotebookExecutionJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_execution_job.proto#L38}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>>
@@ -1306,8 +1423,8 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.GetNotebookExecutionJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L632}
-  /// [google.cloud.aiplatform.v1.NotebookExecutionJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_execution_job.proto#L36}
+  /// [google.cloud.aiplatform.v1.GetNotebookExecutionJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L672}
+  /// [google.cloud.aiplatform.v1.NotebookExecutionJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_execution_job.proto#L38}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>
@@ -1336,8 +1453,8 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.GetNotebookExecutionJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L632}
-  /// [google.cloud.aiplatform.v1.NotebookExecutionJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_execution_job.proto#L36}
+  /// [google.cloud.aiplatform.v1.GetNotebookExecutionJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L672}
+  /// [google.cloud.aiplatform.v1.NotebookExecutionJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_execution_job.proto#L38}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>
@@ -1375,8 +1492,8 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ListNotebookExecutionJobsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L646}
-  /// [google.cloud.aiplatform.v1.NotebookExecutionJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_execution_job.proto#L36}
+  /// [google.cloud.aiplatform.v1.ListNotebookExecutionJobsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L686}
+  /// [google.cloud.aiplatform.v1.NotebookExecutionJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_execution_job.proto#L38}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::NotebookExecutionJob>
@@ -1414,8 +1531,8 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ListNotebookExecutionJobsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L646}
-  /// [google.cloud.aiplatform.v1.NotebookExecutionJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_execution_job.proto#L36}
+  /// [google.cloud.aiplatform.v1.ListNotebookExecutionJobsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L686}
+  /// [google.cloud.aiplatform.v1.NotebookExecutionJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_execution_job.proto#L38}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::NotebookExecutionJob>
@@ -1448,7 +1565,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteNotebookExecutionJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L707}
+  /// [google.cloud.aiplatform.v1.DeleteNotebookExecutionJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L749}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
@@ -1499,7 +1616,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteNotebookExecutionJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L707}
+  /// [google.cloud.aiplatform.v1.DeleteNotebookExecutionJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L749}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
@@ -1636,7 +1753,7 @@ class NotebookServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
-  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
+  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
@@ -1703,8 +1820,8 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
-  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
+  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L137}
+  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
@@ -1715,14 +1832,6 @@ class NotebookServiceClient {
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
@@ -1748,8 +1857,8 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -1759,14 +1868,6 @@ class NotebookServiceClient {
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1796,8 +1897,8 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -1823,8 +1924,8 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
@@ -1855,8 +1956,8 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(
@@ -1882,7 +1983,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
   Status DeleteOperation(std::string const& name, Options opts = {});
@@ -1911,7 +2012,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
   Status DeleteOperation(
@@ -1928,8 +2029,9 @@ class NotebookServiceClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1943,9 +2045,9 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
@@ -1961,8 +2063,9 @@ class NotebookServiceClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1981,9 +2084,9 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
@@ -2022,7 +2125,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   /// [google.longrunning.WaitOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L207}
   ///
   // clang-format on

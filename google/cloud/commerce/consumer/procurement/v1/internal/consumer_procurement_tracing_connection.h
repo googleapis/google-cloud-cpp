@@ -64,6 +64,28 @@ class ConsumerProcurementServiceTracingConnection
       google::cloud::commerce::consumer::procurement::v1::ListOrdersRequest
           request) override;
 
+  future<StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>
+  ModifyOrder(google::cloud::commerce::consumer::procurement::v1::
+                  ModifyOrderRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> ModifyOrder(
+      NoAwaitTag, google::cloud::commerce::consumer::procurement::v1::
+                      ModifyOrderRequest const& request) override;
+
+  future<StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>
+  ModifyOrder(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>
+  CancelOrder(google::cloud::commerce::consumer::procurement::v1::
+                  CancelOrderRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> CancelOrder(
+      NoAwaitTag, google::cloud::commerce::consumer::procurement::v1::
+                      CancelOrderRequest const& request) override;
+
+  future<StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>
+  CancelOrder(google::longrunning::Operation const& operation) override;
+
   StatusOr<google::longrunning::Operation> GetOperation(
       google::longrunning::GetOperationRequest const& request) override;
 

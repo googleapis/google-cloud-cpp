@@ -181,6 +181,33 @@ GoldenKitchenSinkClient::ExplicitRouting2(google::test::admin::database::v1::Exp
   return connection_->ExplicitRouting2(request);
 }
 
+StatusOr<google::cloud::location::Location>
+GoldenKitchenSinkClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetLocation(request);
+}
+
+StatusOr<google::iam::v1::Policy>
+GoldenKitchenSinkClient::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetIamPolicy(request);
+}
+
+StreamRange<google::longrunning::Operation>
+GoldenKitchenSinkClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::longrunning::ListOperationsRequest request;
+  request.set_name(name);
+  request.set_filter(filter);
+  return connection_->ListOperations(request);
+}
+
+StreamRange<google::longrunning::Operation>
+GoldenKitchenSinkClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListOperations(std::move(request));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_v1
 }  // namespace cloud

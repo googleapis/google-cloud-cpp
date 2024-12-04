@@ -159,6 +159,33 @@ Status GoldenKitchenSinkAuth::ExplicitRouting2(
   return child_->ExplicitRouting2(context, options, request);
 }
 
+StatusOr<google::cloud::location::Location> GoldenKitchenSinkAuth::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::location::GetLocationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetLocation(context, options, request);
+}
+
+StatusOr<google::iam::v1::Policy> GoldenKitchenSinkAuth::GetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetIamPolicy(context, options, request);
+}
+
+StatusOr<google::longrunning::ListOperationsResponse> GoldenKitchenSinkAuth::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::longrunning::ListOperationsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListOperations(context, options, request);
+}
+
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
     google::test::admin::database::v1::Response>>
 GoldenKitchenSinkAuth::AsyncStreamingRead(

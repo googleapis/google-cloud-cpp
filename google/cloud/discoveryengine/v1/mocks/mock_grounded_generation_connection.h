@@ -48,6 +48,21 @@ class MockGroundedGenerationServiceConnection
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
+      (std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+           google::cloud::discoveryengine::v1::GenerateGroundedContentRequest,
+           google::cloud::discoveryengine::v1::
+               GenerateGroundedContentResponse>>),
+      AsyncStreamGenerateGroundedContent, (), (override));
+
+  MOCK_METHOD(
+      StatusOr<
+          google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>,
+      GenerateGroundedContent,
+      (google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::discoveryengine::v1::CheckGroundingResponse>,
       CheckGrounding,
       (google::cloud::discoveryengine::v1::CheckGroundingRequest const&

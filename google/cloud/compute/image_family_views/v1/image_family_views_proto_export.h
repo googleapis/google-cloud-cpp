@@ -26,11 +26,11 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_IMAGE_FAMILY_VIEWS_V1_IMAGE_FAMILY_VIEWS_PROTO_EXPORT_H
 
 // IWYU pragma: begin_exports
-#include <google/cloud/compute/v1/internal/common_021.pb.h>
-#include <google/cloud/compute/v1/internal/common_023.pb.h>
-#include <google/cloud/compute/v1/internal/common_034.pb.h>
-#include <google/cloud/compute/v1/internal/common_055.pb.h>
-#include <google/cloud/compute/v1/internal/common_056.pb.h>
+#include <google/cloud/compute/v1/internal/common_020.pb.h>
+#include <google/cloud/compute/v1/internal/common_022.pb.h>
+#include <google/cloud/compute/v1/internal/common_033.pb.h>
+#include <google/cloud/compute/v1/internal/common_053.pb.h>
+#include <google/cloud/compute/v1/internal/common_054.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_IMAGE_FAMILY_VIEWS_V1_IMAGE_FAMILY_VIEWS_PROTO_EXPORT_H

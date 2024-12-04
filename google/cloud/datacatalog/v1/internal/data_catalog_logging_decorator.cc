@@ -501,6 +501,46 @@ StatusOr<google::longrunning::Operation> DataCatalogLogging::ImportEntries(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::datacatalog::v1::MigrationConfig>
+DataCatalogLogging::SetConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::datacatalog::v1::SetConfigRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::datacatalog::v1::SetConfigRequest const& request) {
+        return child_->SetConfig(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::datacatalog::v1::OrganizationConfig>
+DataCatalogLogging::RetrieveConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::datacatalog::v1::RetrieveConfigRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::datacatalog::v1::RetrieveConfigRequest const&
+                 request) {
+        return child_->RetrieveConfig(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::datacatalog::v1::MigrationConfig>
+DataCatalogLogging::RetrieveEffectiveConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const&
+              request) {
+        return child_->RetrieveEffectiveConfig(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::longrunning::ListOperationsResponse>
 DataCatalogLogging::ListOperations(
     grpc::ClientContext& context, Options const& options,

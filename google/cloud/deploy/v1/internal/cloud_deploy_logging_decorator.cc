@@ -465,6 +465,124 @@ CloudDeployLogging::AbandonRelease(
       context, options, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+CloudDeployLogging::AsyncCreateDeployPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::deploy::v1::CreateDeployPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::deploy::v1::CreateDeployPolicyRequest const& request) {
+        return child_->AsyncCreateDeployPolicy(cq, std::move(context),
+                                               std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> CloudDeployLogging::CreateDeployPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::deploy::v1::CreateDeployPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::deploy::v1::CreateDeployPolicyRequest const& request) {
+        return child_->CreateDeployPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudDeployLogging::AsyncUpdateDeployPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::deploy::v1::UpdateDeployPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::deploy::v1::UpdateDeployPolicyRequest const& request) {
+        return child_->AsyncUpdateDeployPolicy(cq, std::move(context),
+                                               std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> CloudDeployLogging::UpdateDeployPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::deploy::v1::UpdateDeployPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::deploy::v1::UpdateDeployPolicyRequest const& request) {
+        return child_->UpdateDeployPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudDeployLogging::AsyncDeleteDeployPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::deploy::v1::DeleteDeployPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::deploy::v1::DeleteDeployPolicyRequest const& request) {
+        return child_->AsyncDeleteDeployPolicy(cq, std::move(context),
+                                               std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> CloudDeployLogging::DeleteDeployPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::deploy::v1::DeleteDeployPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::deploy::v1::DeleteDeployPolicyRequest const& request) {
+        return child_->DeleteDeployPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::deploy::v1::ListDeployPoliciesResponse>
+CloudDeployLogging::ListDeployPolicies(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::deploy::v1::ListDeployPoliciesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::deploy::v1::ListDeployPoliciesRequest const& request) {
+        return child_->ListDeployPolicies(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::deploy::v1::DeployPolicy>
+CloudDeployLogging::GetDeployPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::deploy::v1::GetDeployPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::deploy::v1::GetDeployPolicyRequest const& request) {
+        return child_->GetDeployPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::deploy::v1::ApproveRolloutResponse>
 CloudDeployLogging::ApproveRollout(
     grpc::ClientContext& context, Options const& options,

@@ -472,6 +472,133 @@ class MockCloudDeployConnection : public deploy_v1::CloudDeployConnection {
               (google::cloud::deploy::v1::AbandonReleaseRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateDeployPolicy(Matcher<google::cloud::deploy::v1::CreateDeployPolicyRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::deploy::v1::DeployPolicy>>,
+      CreateDeployPolicy,
+      (google::cloud::deploy::v1::CreateDeployPolicyRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateDeployPolicy(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateDeployPolicy,
+      (NoAwaitTag,
+       google::cloud::deploy::v1::CreateDeployPolicyRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateDeployPolicy(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::deploy::v1::DeployPolicy>>,
+              CreateDeployPolicy,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateDeployPolicy(Matcher<google::cloud::deploy::v1::UpdateDeployPolicyRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::deploy::v1::DeployPolicy>>,
+      UpdateDeployPolicy,
+      (google::cloud::deploy::v1::UpdateDeployPolicyRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateDeployPolicy(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateDeployPolicy,
+      (NoAwaitTag,
+       google::cloud::deploy::v1::UpdateDeployPolicyRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateDeployPolicy(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::deploy::v1::DeployPolicy>>,
+              UpdateDeployPolicy,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteDeployPolicy(Matcher<google::cloud::deploy::v1::DeleteDeployPolicyRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>,
+      DeleteDeployPolicy,
+      (google::cloud::deploy::v1::DeleteDeployPolicyRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteDeployPolicy(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteDeployPolicy,
+      (NoAwaitTag,
+       google::cloud::deploy::v1::DeleteDeployPolicyRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteDeployPolicy(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>,
+              DeleteDeployPolicy,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::deploy::v1::DeployPolicy>),
+              ListDeployPolicies,
+              (google::cloud::deploy::v1::ListDeployPoliciesRequest request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::deploy::v1::DeployPolicy>, GetDeployPolicy,
+      (google::cloud::deploy::v1::GetDeployPolicyRequest const& request),
+      (override));
+
   MOCK_METHOD(StatusOr<google::cloud::deploy::v1::ApproveRolloutResponse>,
               ApproveRollout,
               (google::cloud::deploy::v1::ApproveRolloutRequest const& request),

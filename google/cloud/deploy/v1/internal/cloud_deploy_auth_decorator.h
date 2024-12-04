@@ -197,6 +197,52 @@ class CloudDeployAuth : public CloudDeployStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::deploy::v1::AbandonReleaseRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateDeployPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::deploy::v1::CreateDeployPolicyRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateDeployPolicy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::deploy::v1::CreateDeployPolicyRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateDeployPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::deploy::v1::UpdateDeployPolicyRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateDeployPolicy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::deploy::v1::UpdateDeployPolicyRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteDeployPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::deploy::v1::DeleteDeployPolicyRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteDeployPolicy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::deploy::v1::DeleteDeployPolicyRequest const& request)
+      override;
+
+  StatusOr<google::cloud::deploy::v1::ListDeployPoliciesResponse>
+  ListDeployPolicies(grpc::ClientContext& context, Options const& options,
+                     google::cloud::deploy::v1::ListDeployPoliciesRequest const&
+                         request) override;
+
+  StatusOr<google::cloud::deploy::v1::DeployPolicy> GetDeployPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::deploy::v1::GetDeployPolicyRequest const& request)
+      override;
+
   StatusOr<google::cloud::deploy::v1::ApproveRolloutResponse> ApproveRollout(
       grpc::ClientContext& context, Options const& options,
       google::cloud::deploy::v1::ApproveRolloutRequest const& request) override;

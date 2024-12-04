@@ -344,6 +344,34 @@ GoldenThingAdminRestLogging::ListBackupOperations(
       rest_context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::location::Location>
+GoldenThingAdminRestLogging::GetLocation(
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::location::GetLocationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::location::GetLocationRequest const& request) {
+        return child_->GetLocation(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::longrunning::ListOperationsResponse>
+GoldenThingAdminRestLogging::ListOperations(
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::longrunning::ListOperationsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::longrunning::ListOperationsRequest const& request) {
+        return child_->ListOperations(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::test::admin::database::v1::Database>>
 GoldenThingAdminRestLogging::AsyncGetDatabase(
     google::cloud::CompletionQueue& cq,

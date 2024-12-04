@@ -66,6 +66,16 @@ PublisherMetadata::PublishEvents(
   return child_->PublishEvents(context, options, request);
 }
 
+StatusOr<google::cloud::eventarc::publishing::v1::PublishResponse>
+PublisherMetadata::Publish(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::eventarc::publishing::v1::PublishRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("message_bus=", internal::UrlEncode(request.message_bus())));
+  return child_->Publish(context, options, request);
+}
+
 void PublisherMetadata::SetMetadata(grpc::ClientContext& context,
                                     Options const& options,
                                     std::string const& request_params) {

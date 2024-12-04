@@ -86,7 +86,7 @@ matches the name of the client it is intended for. For example,
 In the case of data operations, only mutations need to be considered.
 The [`Table`] class uses [`IdempotentMutationPolicy`]. Mutations that use
 server-assigned timestamps are not considered idempotent by default. Mutations
-that use client-assigned timestamps are idempontent by default.
+that use client-assigned timestamps are idempotent by default.
 
 @see google::cloud::bigtable::IdempotentMutationPolicy
 @see google::cloud::bigtable::IdempotentMutationPolicyOption

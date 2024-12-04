@@ -63,6 +63,19 @@ class EndpointServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::UpdateEndpointRequest const& request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateEndpointLongRunning(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::UpdateEndpointLongRunningRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> UpdateEndpointLongRunning(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::UpdateEndpointLongRunningRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteEndpoint(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -167,18 +180,15 @@ class DefaultEndpointServiceStub : public EndpointServiceStub {
       std::unique_ptr<
           google::cloud::aiplatform::v1::EndpointService::StubInterface>
           grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub,
       std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub,
       std::unique_ptr<google::cloud::location::Locations::StubInterface>
           locations_stub,
       std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations)
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
-        operations_stub_(std::move(operations_stub)),
         iampolicy_stub_(std::move(iampolicy_stub)),
         locations_stub_(std::move(locations_stub)),
-        operations_(std::move(operations)) {}
+        operations_stub_(std::move(operations_stub)) {}
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateEndpoint(
       google::cloud::CompletionQueue& cq,
@@ -206,6 +216,19 @@ class DefaultEndpointServiceStub : public EndpointServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::UpdateEndpointRequest const& request)
       override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateEndpointLongRunning(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::UpdateEndpointLongRunningRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateEndpointLongRunning(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::UpdateEndpointLongRunningRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteEndpoint(
       google::cloud::CompletionQueue& cq,
@@ -310,12 +333,11 @@ class DefaultEndpointServiceStub : public EndpointServiceStub {
  private:
   std::unique_ptr<google::cloud::aiplatform::v1::EndpointService::StubInterface>
       grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
   std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub_;
   std::unique_ptr<google::cloud::location::Locations::StubInterface>
       locations_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

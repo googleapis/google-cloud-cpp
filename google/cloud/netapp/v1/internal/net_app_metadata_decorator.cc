@@ -655,6 +655,46 @@ NetAppMetadata::ReverseReplicationDirection(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+NetAppMetadata::AsyncEstablishPeering(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::EstablishPeeringRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncEstablishPeering(cq, std::move(context),
+                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppMetadata::EstablishPeering(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::EstablishPeeringRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->EstablishPeering(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetAppMetadata::AsyncSyncReplication(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::SyncReplicationRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncSyncReplication(cq, std::move(context),
+                                      std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppMetadata::SyncReplication(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::SyncReplicationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->SyncReplication(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 NetAppMetadata::AsyncCreateBackupVault(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

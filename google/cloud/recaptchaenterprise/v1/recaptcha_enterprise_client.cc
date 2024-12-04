@@ -214,6 +214,45 @@ RecaptchaEnterpriseServiceClient::AddIpOverride(
   return connection_->AddIpOverride(request);
 }
 
+StatusOr<google::cloud::recaptchaenterprise::v1::RemoveIpOverrideResponse>
+RecaptchaEnterpriseServiceClient::RemoveIpOverride(
+    std::string const& name,
+    google::cloud::recaptchaenterprise::v1::IpOverrideData const&
+        ip_override_data,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::recaptchaenterprise::v1::RemoveIpOverrideRequest request;
+  request.set_name(name);
+  *request.mutable_ip_override_data() = ip_override_data;
+  return connection_->RemoveIpOverride(request);
+}
+
+StatusOr<google::cloud::recaptchaenterprise::v1::RemoveIpOverrideResponse>
+RecaptchaEnterpriseServiceClient::RemoveIpOverride(
+    google::cloud::recaptchaenterprise::v1::RemoveIpOverrideRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RemoveIpOverride(request);
+}
+
+StreamRange<google::cloud::recaptchaenterprise::v1::IpOverrideData>
+RecaptchaEnterpriseServiceClient::ListIpOverrides(std::string const& parent,
+                                                  Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::recaptchaenterprise::v1::ListIpOverridesRequest request;
+  request.set_parent(parent);
+  return connection_->ListIpOverrides(request);
+}
+
+StreamRange<google::cloud::recaptchaenterprise::v1::IpOverrideData>
+RecaptchaEnterpriseServiceClient::ListIpOverrides(
+    google::cloud::recaptchaenterprise::v1::ListIpOverridesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListIpOverrides(std::move(request));
+}
+
 StatusOr<google::cloud::recaptchaenterprise::v1::Metrics>
 RecaptchaEnterpriseServiceClient::GetMetrics(std::string const& name,
                                              Options opts) {

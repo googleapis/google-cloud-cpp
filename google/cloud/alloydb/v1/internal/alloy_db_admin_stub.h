@@ -88,6 +88,17 @@ class AlloyDBAdminStub {
       grpc::ClientContext& context, Options options,
       google::cloud::alloydb::v1::PromoteClusterRequest const& request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncSwitchoverCluster(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::alloydb::v1::SwitchoverClusterRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> SwitchoverCluster(
+      grpc::ClientContext& context, Options options,
+      google::cloud::alloydb::v1::SwitchoverClusterRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncRestoreCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -207,6 +218,10 @@ class AlloyDBAdminStub {
       grpc::ClientContext& context, Options options,
       google::cloud::alloydb::v1::RestartInstanceRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::alloydb::v1::ExecuteSqlResponse> ExecuteSql(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::alloydb::v1::ExecuteSqlRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::alloydb::v1::ListBackupsResponse> ListBackups(
       grpc::ClientContext& context, Options const& options,
       google::cloud::alloydb::v1::ListBackupsRequest const& request) = 0;
@@ -284,6 +299,11 @@ class AlloyDBAdminStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::alloydb::v1::DeleteUserRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::alloydb::v1::ListDatabasesResponse>
+  ListDatabases(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::alloydb::v1::ListDatabasesRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::location::ListLocationsResponse>
   ListLocations(
       grpc::ClientContext& context, Options const& options,
@@ -327,16 +347,13 @@ class DefaultAlloyDBAdminStub : public AlloyDBAdminStub {
   DefaultAlloyDBAdminStub(
       std::unique_ptr<google::cloud::alloydb::v1::AlloyDBAdmin::StubInterface>
           grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub,
       std::unique_ptr<google::cloud::location::Locations::StubInterface>
           locations_stub,
       std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations)
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
-        operations_stub_(std::move(operations_stub)),
         locations_stub_(std::move(locations_stub)),
-        operations_(std::move(operations)) {}
+        operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::cloud::alloydb::v1::ListClustersResponse> ListClusters(
       grpc::ClientContext& context, Options const& options,
@@ -386,6 +403,18 @@ class DefaultAlloyDBAdminStub : public AlloyDBAdminStub {
   StatusOr<google::longrunning::Operation> PromoteCluster(
       grpc::ClientContext& context, Options options,
       google::cloud::alloydb::v1::PromoteClusterRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncSwitchoverCluster(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::alloydb::v1::SwitchoverClusterRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> SwitchoverCluster(
+      grpc::ClientContext& context, Options options,
+      google::cloud::alloydb::v1::SwitchoverClusterRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRestoreCluster(
@@ -514,6 +543,10 @@ class DefaultAlloyDBAdminStub : public AlloyDBAdminStub {
       google::cloud::alloydb::v1::RestartInstanceRequest const& request)
       override;
 
+  StatusOr<google::cloud::alloydb::v1::ExecuteSqlResponse> ExecuteSql(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::alloydb::v1::ExecuteSqlRequest const& request) override;
+
   StatusOr<google::cloud::alloydb::v1::ListBackupsResponse> ListBackups(
       grpc::ClientContext& context, Options const& options,
       google::cloud::alloydb::v1::ListBackupsRequest const& request) override;
@@ -589,6 +622,10 @@ class DefaultAlloyDBAdminStub : public AlloyDBAdminStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::alloydb::v1::DeleteUserRequest const& request) override;
 
+  StatusOr<google::cloud::alloydb::v1::ListDatabasesResponse> ListDatabases(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::alloydb::v1::ListDatabasesRequest const& request) override;
+
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
@@ -628,11 +665,10 @@ class DefaultAlloyDBAdminStub : public AlloyDBAdminStub {
  private:
   std::unique_ptr<google::cloud::alloydb::v1::AlloyDBAdmin::StubInterface>
       grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
   std::unique_ptr<google::cloud::location::Locations::StubInterface>
       locations_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

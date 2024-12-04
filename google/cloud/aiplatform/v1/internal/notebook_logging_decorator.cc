@@ -306,6 +306,38 @@ NotebookServiceLogging::StartNotebookRuntime(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+NotebookServiceLogging::AsyncStopNotebookRuntime(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const&
+                 request) {
+        return child_->AsyncStopNotebookRuntime(cq, std::move(context),
+                                                std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+NotebookServiceLogging::StopNotebookRuntime(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const&
+                 request) {
+        return child_->StopNotebookRuntime(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 NotebookServiceLogging::AsyncCreateNotebookExecutionJob(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

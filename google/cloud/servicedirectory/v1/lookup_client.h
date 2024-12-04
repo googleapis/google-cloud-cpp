@@ -111,9 +111,9 @@ class LookupServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.servicedirectory.v1.ResolveServiceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/lookup_service.proto#L54}
-  /// [google.cloud.servicedirectory.v1.ResolveServiceResponse]: @googleapis_reference_link{google/cloud/servicedirectory/v1/lookup_service.proto#L109}
-  /// [google.cloud.servicedirectory.v1.Service]: @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L36}
+  /// [google.cloud.servicedirectory.v1.ResolveServiceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/lookup_service.proto#L53}
+  /// [google.cloud.servicedirectory.v1.ResolveServiceResponse]: @googleapis_reference_link{google/cloud/servicedirectory/v1/lookup_service.proto#L108}
+  /// [google.cloud.servicedirectory.v1.Service]: @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L35}
   ///
   // clang-format on
   StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>

@@ -533,6 +533,94 @@ class MockContactCenterInsightsConnection
               UndeployIssueModel,
               (google::longrunning::Operation const& operation), (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ExportIssueModel(Matcher<google::cloud::contactcenterinsights::v1::ExportIssueModelRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::contactcenterinsights::v1::ExportIssueModelResponse>>,
+      ExportIssueModel,
+      (google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ExportIssueModel(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ExportIssueModel,
+      (NoAwaitTag,
+       google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, ExportIssueModel(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::contactcenterinsights::v1::ExportIssueModelResponse>>,
+      ExportIssueModel, (google::longrunning::Operation const& operation),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ImportIssueModel(Matcher<google::cloud::contactcenterinsights::v1::ImportIssueModelRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::contactcenterinsights::v1::ImportIssueModelResponse>>,
+      ImportIssueModel,
+      (google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ImportIssueModel(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ImportIssueModel,
+      (NoAwaitTag,
+       google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, ImportIssueModel(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::contactcenterinsights::v1::ImportIssueModelResponse>>,
+      ImportIssueModel, (google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD(StatusOr<google::cloud::contactcenterinsights::v1::Issue>,
               GetIssue,
               (google::cloud::contactcenterinsights::v1::GetIssueRequest const&
@@ -617,6 +705,86 @@ class MockContactCenterInsightsConnection
            request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::contactcenterinsights::v1::AnalysisRule>,
+              CreateAnalysisRule,
+              (google::cloud::contactcenterinsights::v1::
+                   CreateAnalysisRuleRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::contactcenterinsights::v1::AnalysisRule>,
+      GetAnalysisRule,
+      (google::cloud::contactcenterinsights::v1::GetAnalysisRuleRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::contactcenterinsights::v1::AnalysisRule>),
+      ListAnalysisRules,
+      (google::cloud::contactcenterinsights::v1::ListAnalysisRulesRequest
+           request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::contactcenterinsights::v1::AnalysisRule>,
+              UpdateAnalysisRule,
+              (google::cloud::contactcenterinsights::v1::
+                   UpdateAnalysisRuleRequest const& request),
+              (override));
+
+  MOCK_METHOD(Status, DeleteAnalysisRule,
+              (google::cloud::contactcenterinsights::v1::
+                   DeleteAnalysisRuleRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::contactcenterinsights::v1::EncryptionSpec>,
+      GetEncryptionSpec,
+      (google::cloud::contactcenterinsights::v1::GetEncryptionSpecRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InitializeEncryptionSpec(Matcher<google::cloud::contactcenterinsights::v1::InitializeEncryptionSpecRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
+                                  InitializeEncryptionSpecResponse>>,
+              InitializeEncryptionSpec,
+              (google::cloud::contactcenterinsights::v1::
+                   InitializeEncryptionSpecRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, InitializeEncryptionSpec(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              InitializeEncryptionSpec,
+              (NoAwaitTag, google::cloud::contactcenterinsights::v1::
+                               InitializeEncryptionSpecRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InitializeEncryptionSpec(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
+                                  InitializeEncryptionSpecResponse>>,
+              InitializeEncryptionSpec,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::contactcenterinsights::v1::View>, CreateView,
       (google::cloud::contactcenterinsights::v1::CreateViewRequest const&
@@ -644,6 +812,323 @@ class MockContactCenterInsightsConnection
       (google::cloud::contactcenterinsights::v1::DeleteViewRequest const&
            request),
       (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// QueryMetrics(Matcher<google::cloud::contactcenterinsights::v1::QueryMetricsRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::contactcenterinsights::v1::QueryMetricsResponse>>,
+      QueryMetrics,
+      (google::cloud::contactcenterinsights::v1::QueryMetricsRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, QueryMetrics(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, QueryMetrics,
+      (NoAwaitTag,
+       google::cloud::contactcenterinsights::v1::QueryMetricsRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, QueryMetrics(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::contactcenterinsights::v1::QueryMetricsResponse>>,
+      QueryMetrics, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion>,
+      CreateQaQuestion,
+      (google::cloud::contactcenterinsights::v1::CreateQaQuestionRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion>,
+      GetQaQuestion,
+      (google::cloud::contactcenterinsights::v1::GetQaQuestionRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion>,
+      UpdateQaQuestion,
+      (google::cloud::contactcenterinsights::v1::UpdateQaQuestionRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      Status, DeleteQaQuestion,
+      (google::cloud::contactcenterinsights::v1::DeleteQaQuestionRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::contactcenterinsights::v1::QaQuestion>),
+      ListQaQuestions,
+      (google::cloud::contactcenterinsights::v1::ListQaQuestionsRequest
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::contactcenterinsights::v1::QaScorecard>,
+      CreateQaScorecard,
+      (google::cloud::contactcenterinsights::v1::CreateQaScorecardRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::contactcenterinsights::v1::QaScorecard>,
+      GetQaScorecard,
+      (google::cloud::contactcenterinsights::v1::GetQaScorecardRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::contactcenterinsights::v1::QaScorecard>,
+      UpdateQaScorecard,
+      (google::cloud::contactcenterinsights::v1::UpdateQaScorecardRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      Status, DeleteQaScorecard,
+      (google::cloud::contactcenterinsights::v1::DeleteQaScorecardRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::contactcenterinsights::v1::QaScorecard>),
+      ListQaScorecards,
+      (google::cloud::contactcenterinsights::v1::ListQaScorecardsRequest
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>,
+      CreateQaScorecardRevision,
+      (google::cloud::contactcenterinsights::v1::
+           CreateQaScorecardRevisionRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>,
+      GetQaScorecardRevision,
+      (google::cloud::contactcenterinsights::v1::
+           GetQaScorecardRevisionRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// TuneQaScorecardRevision(Matcher<google::cloud::contactcenterinsights::v1::TuneQaScorecardRevisionRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
+                                  TuneQaScorecardRevisionResponse>>,
+              TuneQaScorecardRevision,
+              (google::cloud::contactcenterinsights::v1::
+                   TuneQaScorecardRevisionRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, TuneQaScorecardRevision(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, TuneQaScorecardRevision,
+              (NoAwaitTag, google::cloud::contactcenterinsights::v1::
+                               TuneQaScorecardRevisionRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// TuneQaScorecardRevision(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
+                                  TuneQaScorecardRevisionResponse>>,
+              TuneQaScorecardRevision,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>,
+      DeployQaScorecardRevision,
+      (google::cloud::contactcenterinsights::v1::
+           DeployQaScorecardRevisionRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>,
+      UndeployQaScorecardRevision,
+      (google::cloud::contactcenterinsights::v1::
+           UndeployQaScorecardRevisionRequest const& request),
+      (override));
+
+  MOCK_METHOD(Status, DeleteQaScorecardRevision,
+              (google::cloud::contactcenterinsights::v1::
+                   DeleteQaScorecardRevisionRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      (StreamRange<
+          google::cloud::contactcenterinsights::v1::QaScorecardRevision>),
+      ListQaScorecardRevisions,
+      (google::cloud::contactcenterinsights::v1::ListQaScorecardRevisionsRequest
+           request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::contactcenterinsights::v1::FeedbackLabel>,
+              CreateFeedbackLabel,
+              (google::cloud::contactcenterinsights::v1::
+                   CreateFeedbackLabelRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::contactcenterinsights::v1::FeedbackLabel>),
+      ListFeedbackLabels,
+      (google::cloud::contactcenterinsights::v1::ListFeedbackLabelsRequest
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::contactcenterinsights::v1::FeedbackLabel>,
+      GetFeedbackLabel,
+      (google::cloud::contactcenterinsights::v1::GetFeedbackLabelRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::contactcenterinsights::v1::FeedbackLabel>,
+              UpdateFeedbackLabel,
+              (google::cloud::contactcenterinsights::v1::
+                   UpdateFeedbackLabelRequest const& request),
+              (override));
+
+  MOCK_METHOD(Status, DeleteFeedbackLabel,
+              (google::cloud::contactcenterinsights::v1::
+                   DeleteFeedbackLabelRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::contactcenterinsights::v1::FeedbackLabel>),
+      ListAllFeedbackLabels,
+      (google::cloud::contactcenterinsights::v1::ListAllFeedbackLabelsRequest
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BulkUploadFeedbackLabels(Matcher<google::cloud::contactcenterinsights::v1::BulkUploadFeedbackLabelsRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
+                                  BulkUploadFeedbackLabelsResponse>>,
+              BulkUploadFeedbackLabels,
+              (google::cloud::contactcenterinsights::v1::
+                   BulkUploadFeedbackLabelsRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, BulkUploadFeedbackLabels(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              BulkUploadFeedbackLabels,
+              (NoAwaitTag, google::cloud::contactcenterinsights::v1::
+                               BulkUploadFeedbackLabelsRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BulkUploadFeedbackLabels(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
+                                  BulkUploadFeedbackLabelsResponse>>,
+              BulkUploadFeedbackLabels,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BulkDownloadFeedbackLabels(Matcher<google::cloud::contactcenterinsights::v1::BulkDownloadFeedbackLabelsRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
+                                  BulkDownloadFeedbackLabelsResponse>>,
+              BulkDownloadFeedbackLabels,
+              (google::cloud::contactcenterinsights::v1::
+                   BulkDownloadFeedbackLabelsRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, BulkDownloadFeedbackLabels(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              BulkDownloadFeedbackLabels,
+              (NoAwaitTag,
+               google::cloud::contactcenterinsights::v1::
+                   BulkDownloadFeedbackLabelsRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BulkDownloadFeedbackLabels(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
+                                  BulkDownloadFeedbackLabelsResponse>>,
+              BulkDownloadFeedbackLabels,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
               (google::longrunning::ListOperationsRequest request), (override));

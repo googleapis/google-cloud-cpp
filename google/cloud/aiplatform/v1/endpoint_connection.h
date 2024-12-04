@@ -208,6 +208,19 @@ class EndpointServiceConnection {
   virtual StatusOr<google::cloud::aiplatform::v1::Endpoint> UpdateEndpoint(
       google::cloud::aiplatform::v1::UpdateEndpointRequest const& request);
 
+  virtual future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>
+  UpdateEndpointLongRunning(
+      google::cloud::aiplatform::v1::UpdateEndpointLongRunningRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateEndpointLongRunning(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::UpdateEndpointLongRunningRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>
+  UpdateEndpointLongRunning(google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteEndpoint(

@@ -324,6 +324,27 @@ class CatalogServiceConnection {
   virtual StreamRange<google::cloud::dataplex::v1::SearchEntriesResult>
   SearchEntries(google::cloud::dataplex::v1::SearchEntriesRequest request);
 
+  virtual future<StatusOr<google::cloud::dataplex::v1::MetadataJob>>
+  CreateMetadataJob(
+      google::cloud::dataplex::v1::CreateMetadataJobRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateMetadataJob(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::CreateMetadataJobRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataplex::v1::MetadataJob>>
+  CreateMetadataJob(google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::cloud::dataplex::v1::MetadataJob> GetMetadataJob(
+      google::cloud::dataplex::v1::GetMetadataJobRequest const& request);
+
+  virtual StreamRange<google::cloud::dataplex::v1::MetadataJob>
+  ListMetadataJobs(
+      google::cloud::dataplex::v1::ListMetadataJobsRequest request);
+
+  virtual Status CancelMetadataJob(
+      google::cloud::dataplex::v1::CancelMetadataJobRequest const& request);
+
   virtual StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

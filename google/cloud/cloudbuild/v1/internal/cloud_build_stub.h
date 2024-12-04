@@ -199,8 +199,9 @@ class DefaultCloudBuildStub : public CloudBuildStub {
           google::devtools::cloudbuild::v1::CloudBuild::StubInterface>
           grpc_stub,
       std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations)
-      : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
+          operations_stub)
+      : grpc_stub_(std::move(grpc_stub)),
+        operations_stub_(std::move(operations_stub)) {}
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateBuild(
       google::cloud::CompletionQueue& cq,
@@ -359,7 +360,8 @@ class DefaultCloudBuildStub : public CloudBuildStub {
  private:
   std::unique_ptr<google::devtools::cloudbuild::v1::CloudBuild::StubInterface>
       grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

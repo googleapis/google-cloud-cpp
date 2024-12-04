@@ -99,6 +99,21 @@ class CloudDeployConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency AbandonRelease(
       google::cloud::deploy::v1::AbandonReleaseRequest const& request);
 
+  virtual google::cloud::Idempotency CreateDeployPolicy(
+      google::cloud::deploy::v1::CreateDeployPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateDeployPolicy(
+      google::cloud::deploy::v1::UpdateDeployPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteDeployPolicy(
+      google::cloud::deploy::v1::DeleteDeployPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency ListDeployPolicies(
+      google::cloud::deploy::v1::ListDeployPoliciesRequest request);
+
+  virtual google::cloud::Idempotency GetDeployPolicy(
+      google::cloud::deploy::v1::GetDeployPolicyRequest const& request);
+
   virtual google::cloud::Idempotency ApproveRollout(
       google::cloud::deploy::v1::ApproveRolloutRequest const& request);
 

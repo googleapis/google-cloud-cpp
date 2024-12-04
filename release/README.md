@@ -331,7 +331,7 @@ PR, similar to [PR#138]. If you want, subscribe to notifications in the
 [conda feedstock repository] or just look at the PRs in that repository over the
 next 24 hours.
 
-## 8. \[optional\] Push the release to Conan
+## 8. [optional] Push the release to Conan
 
 The documentation has moved to the
 [How-To Guide: Update Conan Package](/release/howto-update-conan-package.md).

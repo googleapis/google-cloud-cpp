@@ -26,6 +26,19 @@ namespace cloud {
 namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+struct ImpersonatedServiceAccountCredentialsInfo {
+  std::string service_account;
+  std::vector<std::string> delegates;
+  absl::optional<std::string> quota_project_id;
+  std::string source_credentials;
+};
+
+/// Parses the contents of a JSON keyfile into an
+/// ImpersonatedServiceAccountCredentialsInfo.
+StatusOr<ImpersonatedServiceAccountCredentialsInfo>
+ParseImpersonatedServiceAccountCredentials(std::string const& content,
+                                           std::string const& source);
+
 /**
  * Provides Credentials when impersonating an existing service account.
  */

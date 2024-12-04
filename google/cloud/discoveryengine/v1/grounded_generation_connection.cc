@@ -39,6 +39,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 GroundedGenerationServiceConnection::~GroundedGenerationServiceConnection() =
     default;
 
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::discoveryengine::v1::GenerateGroundedContentRequest,
+    google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>>
+GroundedGenerationServiceConnection::AsyncStreamGenerateGroundedContent() {
+  return std::make_unique<
+      ::google::cloud::internal::AsyncStreamingReadWriteRpcError<
+          google::cloud::discoveryengine::v1::GenerateGroundedContentRequest,
+          google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>
+GroundedGenerationServiceConnection::GenerateGroundedContent(
+    google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::cloud::discoveryengine::v1::CheckGroundingResponse>
 GroundedGenerationServiceConnection::CheckGrounding(
     google::cloud::discoveryengine::v1::CheckGroundingRequest const&) {

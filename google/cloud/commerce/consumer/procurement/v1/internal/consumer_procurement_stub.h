@@ -63,6 +63,30 @@ class ConsumerProcurementServiceStub {
              google::cloud::commerce::consumer::procurement::v1::
                  ListOrdersRequest const& request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncModifyOrder(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::commerce::consumer::procurement::v1::
+          ModifyOrderRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> ModifyOrder(
+      grpc::ClientContext& context, Options options,
+      google::cloud::commerce::consumer::procurement::v1::
+          ModifyOrderRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncCancelOrder(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::commerce::consumer::procurement::v1::
+          CancelOrderRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> CancelOrder(
+      grpc::ClientContext& context, Options options,
+      google::cloud::commerce::consumer::procurement::v1::
+          CancelOrderRequest const& request) = 0;
+
   virtual StatusOr<google::longrunning::Operation> GetOperation(
       grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
@@ -88,12 +112,9 @@ class DefaultConsumerProcurementServiceStub
                           ConsumerProcurementService::StubInterface>
           grpc_stub,
       std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations)
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
-        operations_stub_(std::move(operations_stub)),
-        operations_(std::move(operations)) {}
+        operations_stub_(std::move(operations_stub)) {}
 
   future<StatusOr<google::longrunning::Operation>> AsyncPlaceOrder(
       google::cloud::CompletionQueue& cq,
@@ -118,6 +139,30 @@ class DefaultConsumerProcurementServiceStub
              google::cloud::commerce::consumer::procurement::v1::
                  ListOrdersRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncModifyOrder(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::commerce::consumer::procurement::v1::
+          ModifyOrderRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> ModifyOrder(
+      grpc::ClientContext& context, Options options,
+      google::cloud::commerce::consumer::procurement::v1::
+          ModifyOrderRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCancelOrder(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::commerce::consumer::procurement::v1::
+          CancelOrderRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> CancelOrder(
+      grpc::ClientContext& context, Options options,
+      google::cloud::commerce::consumer::procurement::v1::
+          CancelOrderRequest const& request) override;
+
   StatusOr<google::longrunning::Operation> GetOperation(
       grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
@@ -140,7 +185,6 @@ class DefaultConsumerProcurementServiceStub
       grpc_stub_;
   std::unique_ptr<google::longrunning::Operations::StubInterface>
       operations_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

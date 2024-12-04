@@ -16,7 +16,7 @@
 
 module(
     name = "google_cloud_cpp",
-    version = "2.31.0-rc",  # Updated by CMake
+    version = "2.32.0-rc",  # Updated by CMake
     compatibility_level = 2,  # Updated by CMake
 )
 
@@ -24,15 +24,15 @@ bazel_dep(name = "platforms", version = "0.0.10")
 bazel_dep(name = "bazel_skylib", version = "1.7.1")
 bazel_dep(name = "rules_cc", version = "0.0.9")
 bazel_dep(name = "abseil-cpp", version = "20240722.0", repo_name = "com_google_absl")
-bazel_dep(name = "protobuf", version = "28.2", repo_name = "com_google_protobuf")
+bazel_dep(name = "protobuf", version = "29.0", repo_name = "com_google_protobuf")
 bazel_dep(name = "boringssl", version = "0.0.0-20230215-5c22014")
 bazel_dep(name = "grpc", version = "1.66.0", repo_name = "com_github_grpc_grpc")
 bazel_dep(name = "nlohmann_json", version = "3.11.3", repo_name = "com_github_nlohmann_json")
 bazel_dep(name = "curl", version = "8.8.0.bcr.1", repo_name = "com_github_curl_curl")
 bazel_dep(name = "crc32c", version = "1.1.0", repo_name = "com_github_google_crc32c")
 bazel_dep(name = "opentelemetry-cpp", version = "1.16.0", repo_name = "io_opentelemetry_cpp")
-bazel_dep(name = "rules_proto", version = "6.0.2")
-bazel_dep(name = "rules_python", version = "0.36.0")
+bazel_dep(name = "rules_proto", version = "7.0.2")
+bazel_dep(name = "rules_python", version = "0.40.0")
 
 bazel_dep(name = "googletest", version = "1.15.2", dev_dependency = True, repo_name = "com_google_googletest")
 bazel_dep(name = "google_benchmark", version = "1.8.5", dev_dependency = True, repo_name = "com_google_benchmark")
@@ -52,12 +52,12 @@ python.toolchain(
 bazel_dep(name = "googleapis", version = "0.0.0", repo_name = "com_google_googleapis")
 archive_override(
     module_name = "googleapis",
-    integrity = "sha256-qfsB7M2N7tXY0blSHgIgq8/yUc0Kskid9Zk8H3OS5nc=",
+    integrity = "sha256-B9C8wQIemnTrAU+vRg/93P816tjLJZjrNpLjmUT7qOg=",
     patch_strip = 1,
     patches = ["//bazel:googleapis.modules.patch"],
-    strip_prefix = "googleapis-69e9dff10df4fa1e338712d38dc26b46791a6e94",
+    strip_prefix = "googleapis-d675ec222c431e3346ba8aaf0027392fe8b3d90c",
     urls = [
-        "https://github.com/googleapis/googleapis/archive/69e9dff10df4fa1e338712d38dc26b46791a6e94.tar.gz",
+        "https://github.com/googleapis/googleapis/archive/d675ec222c431e3346ba8aaf0027392fe8b3d90c.tar.gz",
     ],
 )
 

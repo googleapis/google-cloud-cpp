@@ -24,6 +24,7 @@
 #include "google/cloud/discoveryengine/v1/grounded_generation_options.h"
 #include "google/cloud/discoveryengine/v1/internal/grounded_generation_retry_traits.h"
 #include "google/cloud/discoveryengine/v1/internal/grounded_generation_stub.h"
+#include "google/cloud/async_streaming_read_write_rpc.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
@@ -50,6 +51,16 @@ class GroundedGenerationServiceConnectionImpl
       Options options);
 
   Options options() override { return options_; }
+
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::discoveryengine::v1::GenerateGroundedContentRequest,
+      google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>>
+  AsyncStreamGenerateGroundedContent() override;
+
+  StatusOr<google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>
+  GenerateGroundedContent(
+      google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const&
+          request) override;
 
   StatusOr<google::cloud::discoveryengine::v1::CheckGroundingResponse>
   CheckGrounding(

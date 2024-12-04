@@ -128,6 +128,58 @@ class SecureSourceManagerStub {
       grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateBranchRule(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> CreateBranchRule(
+      grpc::ClientContext& context, Options options,
+      google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
+          request) = 0;
+
+  virtual StatusOr<
+      google::cloud::securesourcemanager::v1::ListBranchRulesResponse>
+  ListBranchRules(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securesourcemanager::v1::ListBranchRulesRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::securesourcemanager::v1::BranchRule>
+  GetBranchRule(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securesourcemanager::v1::GetBranchRuleRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateBranchRule(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> UpdateBranchRule(
+      grpc::ClientContext& context, Options options,
+      google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteBranchRule(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteBranchRule(
+      grpc::ClientContext& context, Options options,
+      google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
+          request) = 0;
+
   virtual StatusOr<google::cloud::location::ListLocationsResponse>
   ListLocations(
       grpc::ClientContext& context, Options const& options,
@@ -185,18 +237,15 @@ class DefaultSecureSourceManagerStub : public SecureSourceManagerStub {
       std::unique_ptr<google::cloud::securesourcemanager::v1::
                           SecureSourceManager::StubInterface>
           grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub,
       std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub,
       std::unique_ptr<google::cloud::location::Locations::StubInterface>
           locations_stub,
       std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations)
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
-        operations_stub_(std::move(operations_stub)),
         iampolicy_stub_(std::move(iampolicy_stub)),
         locations_stub_(std::move(locations_stub)),
-        operations_(std::move(operations)) {}
+        operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::cloud::securesourcemanager::v1::ListInstancesResponse>
   ListInstances(
@@ -280,6 +329,53 @@ class DefaultSecureSourceManagerStub : public SecureSourceManagerStub {
       grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateBranchRule(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateBranchRule(
+      grpc::ClientContext& context, Options options,
+      google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
+          request) override;
+
+  StatusOr<google::cloud::securesourcemanager::v1::ListBranchRulesResponse>
+  ListBranchRules(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securesourcemanager::v1::ListBranchRulesRequest const&
+          request) override;
+
+  StatusOr<google::cloud::securesourcemanager::v1::BranchRule> GetBranchRule(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securesourcemanager::v1::GetBranchRuleRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateBranchRule(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateBranchRule(
+      grpc::ClientContext& context, Options options,
+      google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteBranchRule(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteBranchRule(
+      grpc::ClientContext& context, Options options,
+      google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
+          request) override;
+
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
@@ -332,12 +428,11 @@ class DefaultSecureSourceManagerStub : public SecureSourceManagerStub {
   std::unique_ptr<google::cloud::securesourcemanager::v1::SecureSourceManager::
                       StubInterface>
       grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
   std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub_;
   std::unique_ptr<google::cloud::location::Locations::StubInterface>
       locations_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -269,6 +269,143 @@ SecureSourceManagerLogging::TestIamPermissionsRepo(
       context, options, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerLogging::AsyncCreateBranchRule(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
+              request) {
+        return child_->AsyncCreateBranchRule(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerLogging::CreateBranchRule(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
+              request) {
+        return child_->CreateBranchRule(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::ListBranchRulesResponse>
+SecureSourceManagerLogging::ListBranchRules(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::ListBranchRulesRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securesourcemanager::v1::ListBranchRulesRequest const&
+              request) {
+        return child_->ListBranchRules(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::BranchRule>
+SecureSourceManagerLogging::GetBranchRule(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securesourcemanager::v1::GetBranchRuleRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securesourcemanager::v1::GetBranchRuleRequest const&
+                 request) {
+        return child_->GetBranchRule(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerLogging::AsyncUpdateBranchRule(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
+              request) {
+        return child_->AsyncUpdateBranchRule(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerLogging::UpdateBranchRule(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
+              request) {
+        return child_->UpdateBranchRule(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SecureSourceManagerLogging::AsyncDeleteBranchRule(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
+              request) {
+        return child_->AsyncDeleteBranchRule(cq, std::move(context),
+                                             std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerLogging::DeleteBranchRule(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
+              request) {
+        return child_->DeleteBranchRule(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 SecureSourceManagerLogging::ListLocations(
     grpc::ClientContext& context, Options const& options,

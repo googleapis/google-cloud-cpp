@@ -29,8 +29,8 @@ namespace btproto = ::google::bigtable::v2;
 
 using ::google::cloud::bigtable::testing::MockBackoffPolicy;
 using ::google::cloud::testing_util::IsOk;
-using ::google::cloud::testing_util::chrono_literals::operator"" _ms;  // NOLINT
-using ::google::cloud::testing_util::chrono_literals::operator"" _us;  // NOLINT
+using ::google::cloud::testing_util::chrono_literals::operator""_ms;
+using ::google::cloud::testing_util::chrono_literals::operator""_us;
 using ::testing::An;
 using ::testing::Not;
 using ::testing::Return;

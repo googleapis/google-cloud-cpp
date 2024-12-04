@@ -1,7 +1,7 @@
-# Apache Kafka for BigQuery API C++ Client Library
+# Managed Service for Apache Kafka API C++ Client Library
 
 This directory contains an idiomatic C++ client library for the
-[Apache Kafka for BigQuery API][cloud-service-docs].
+[Managed Service for Apache Kafka API][cloud-service-docs].
 
 Manage Apache Kafka clusters and resources.
 
@@ -51,7 +51,7 @@ int main(int argc, char* argv[]) try {
 ## More Information
 
 - Official documentation about the
-  [Apache Kafka for BigQuery API][cloud-service-docs] service
+  [Managed Service for Apache Kafka API][cloud-service-docs] service
 - [Reference doxygen documentation][doxygen-link] for each release of this
   client library
 - Detailed header comments in our [public `.h`][source-link] files

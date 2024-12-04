@@ -38,6 +38,20 @@ class GroundedGenerationServiceLogging : public GroundedGenerationServiceStub {
       std::shared_ptr<GroundedGenerationServiceStub> child,
       TracingOptions tracing_options, std::set<std::string> const& components);
 
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::discoveryengine::v1::GenerateGroundedContentRequest,
+      google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>>
+  AsyncStreamGenerateGroundedContent(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
+
+  StatusOr<google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>
+  GenerateGroundedContent(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const&
+          request) override;
+
   StatusOr<google::cloud::discoveryengine::v1::CheckGroundingResponse>
   CheckGrounding(
       grpc::ClientContext& context, Options const& options,
@@ -59,6 +73,7 @@ class GroundedGenerationServiceLogging : public GroundedGenerationServiceStub {
  private:
   std::shared_ptr<GroundedGenerationServiceStub> child_;
   TracingOptions tracing_options_;
+  bool stream_logging_;
 };  // GroundedGenerationServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -46,6 +46,11 @@ Idempotency PublisherConnectionIdempotencyPolicy::PublishEvents(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency PublisherConnectionIdempotencyPolicy::Publish(
+    google::cloud::eventarc::publishing::v1::PublishRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<PublisherConnectionIdempotencyPolicy>
 MakeDefaultPublisherConnectionIdempotencyPolicy() {
   return std::make_unique<PublisherConnectionIdempotencyPolicy>();

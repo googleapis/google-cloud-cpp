@@ -427,6 +427,119 @@ CloudDeployTracingConnection::AbandonRelease(
   return internal::EndSpan(*span, child_->AbandonRelease(request));
 }
 
+future<StatusOr<google::cloud::deploy::v1::DeployPolicy>>
+CloudDeployTracingConnection::CreateDeployPolicy(
+    google::cloud::deploy::v1::CreateDeployPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "deploy_v1::CloudDeployConnection::CreateDeployPolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateDeployPolicy(request));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudDeployTracingConnection::CreateDeployPolicy(
+    NoAwaitTag,
+    google::cloud::deploy::v1::CreateDeployPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "deploy_v1::CloudDeployConnection::CreateDeployPolicy");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->CreateDeployPolicy(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::deploy::v1::DeployPolicy>>
+CloudDeployTracingConnection::CreateDeployPolicy(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "deploy_v1::CloudDeployConnection::CreateDeployPolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateDeployPolicy(operation));
+}
+
+future<StatusOr<google::cloud::deploy::v1::DeployPolicy>>
+CloudDeployTracingConnection::UpdateDeployPolicy(
+    google::cloud::deploy::v1::UpdateDeployPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "deploy_v1::CloudDeployConnection::UpdateDeployPolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateDeployPolicy(request));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudDeployTracingConnection::UpdateDeployPolicy(
+    NoAwaitTag,
+    google::cloud::deploy::v1::UpdateDeployPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "deploy_v1::CloudDeployConnection::UpdateDeployPolicy");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->UpdateDeployPolicy(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::deploy::v1::DeployPolicy>>
+CloudDeployTracingConnection::UpdateDeployPolicy(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "deploy_v1::CloudDeployConnection::UpdateDeployPolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateDeployPolicy(operation));
+}
+
+future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
+CloudDeployTracingConnection::DeleteDeployPolicy(
+    google::cloud::deploy::v1::DeleteDeployPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "deploy_v1::CloudDeployConnection::DeleteDeployPolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteDeployPolicy(request));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudDeployTracingConnection::DeleteDeployPolicy(
+    NoAwaitTag,
+    google::cloud::deploy::v1::DeleteDeployPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "deploy_v1::CloudDeployConnection::DeleteDeployPolicy");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->DeleteDeployPolicy(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
+CloudDeployTracingConnection::DeleteDeployPolicy(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "deploy_v1::CloudDeployConnection::DeleteDeployPolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteDeployPolicy(operation));
+}
+
+StreamRange<google::cloud::deploy::v1::DeployPolicy>
+CloudDeployTracingConnection::ListDeployPolicies(
+    google::cloud::deploy::v1::ListDeployPoliciesRequest request) {
+  auto span = internal::MakeSpan(
+      "deploy_v1::CloudDeployConnection::ListDeployPolicies");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListDeployPolicies(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::deploy::v1::DeployPolicy>(std::move(span), std::move(sr));
+}
+
+StatusOr<google::cloud::deploy::v1::DeployPolicy>
+CloudDeployTracingConnection::GetDeployPolicy(
+    google::cloud::deploy::v1::GetDeployPolicyRequest const& request) {
+  auto span =
+      internal::MakeSpan("deploy_v1::CloudDeployConnection::GetDeployPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetDeployPolicy(request));
+}
+
 StatusOr<google::cloud::deploy::v1::ApproveRolloutResponse>
 CloudDeployTracingConnection::ApproveRollout(
     google::cloud::deploy::v1::ApproveRolloutRequest const& request) {

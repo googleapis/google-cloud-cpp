@@ -1,6 +1,7 @@
 @com_google_googleapis//google/cloud/dataplex/v1:analyze.proto
 @com_google_googleapis//google/cloud/dataplex/v1:catalog.proto
 @com_google_googleapis//google/cloud/dataplex/v1:content.proto
+@com_google_googleapis//google/cloud/dataplex/v1:data_discovery.proto
 @com_google_googleapis//google/cloud/dataplex/v1:data_profile.proto
 @com_google_googleapis//google/cloud/dataplex/v1:data_quality.proto
 @com_google_googleapis//google/cloud/dataplex/v1:data_taxonomy.proto

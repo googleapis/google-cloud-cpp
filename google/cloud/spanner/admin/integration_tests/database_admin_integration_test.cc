@@ -684,6 +684,25 @@ TEST_F(DatabaseAdminClientTest, LROStartAwait) {
   EXPECT_FALSE(DatabaseExists()) << "Database " << database_;
 }
 
+/// @test Verify the LRO Mixin method GetOperation.
+TEST_F(DatabaseAdminClientTest, LROMixin) {
+  auto operation = client_.CreateDatabase(
+      NoAwaitTag{}, database_.instance().FullName(),
+      absl::StrCat("CREATE DATABASE `", database_.database_id(), "`"));
+  ASSERT_STATUS_OK(operation);
+
+  auto get_operation = client_.GetOperation(operation->name());
+  ASSERT_STATUS_OK(get_operation);
+
+  EXPECT_EQ(get_operation->name(), operation->name());
+
+  (void)client_.CreateDatabase(*operation).get();
+  EXPECT_TRUE(DatabaseExists()) << "Database " << database_;
+  auto drop_status = client_.DropDatabase(database_.FullName());
+  EXPECT_STATUS_OK(drop_status);
+  EXPECT_FALSE(DatabaseExists()) << "Database " << database_;
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner

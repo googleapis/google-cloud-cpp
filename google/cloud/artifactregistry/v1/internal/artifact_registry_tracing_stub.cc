@@ -444,6 +444,19 @@ ArtifactRegistryTracingStub::BatchDeleteVersions(
       context, *span, child_->BatchDeleteVersions(context, options, request));
 }
 
+StatusOr<google::devtools::artifactregistry::v1::Version>
+ArtifactRegistryTracingStub::UpdateVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::UpdateVersionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry", "UpdateVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateVersion(context, options, request));
+}
+
 StatusOr<google::devtools::artifactregistry::v1::ListFilesResponse>
 ArtifactRegistryTracingStub::ListFiles(
     grpc::ClientContext& context, Options const& options,
@@ -466,6 +479,44 @@ ArtifactRegistryTracingStub::GetFile(
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetFile(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ArtifactRegistryTracingStub::AsyncDeleteFile(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::devtools::artifactregistry::v1::DeleteFileRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry", "DeleteFile");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncDeleteFile(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryTracingStub::DeleteFile(
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::DeleteFileRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry", "DeleteFile");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteFile(context, options, request));
+}
+
+StatusOr<google::devtools::artifactregistry::v1::File>
+ArtifactRegistryTracingStub::UpdateFile(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::UpdateFileRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry", "UpdateFile");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateFile(context, options, request));
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListTagsResponse>
@@ -525,6 +576,65 @@ Status ArtifactRegistryTracingStub::DeleteTag(
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteTag(context, options, request));
+}
+
+StatusOr<google::devtools::artifactregistry::v1::Rule>
+ArtifactRegistryTracingStub::CreateRule(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::CreateRuleRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry", "CreateRule");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateRule(context, options, request));
+}
+
+StatusOr<google::devtools::artifactregistry::v1::ListRulesResponse>
+ArtifactRegistryTracingStub::ListRules(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::ListRulesRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry", "ListRules");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListRules(context, options, request));
+}
+
+StatusOr<google::devtools::artifactregistry::v1::Rule>
+ArtifactRegistryTracingStub::GetRule(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::GetRuleRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry", "GetRule");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetRule(context, options, request));
+}
+
+StatusOr<google::devtools::artifactregistry::v1::Rule>
+ArtifactRegistryTracingStub::UpdateRule(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::UpdateRuleRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry", "UpdateRule");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateRule(context, options, request));
+}
+
+Status ArtifactRegistryTracingStub::DeleteRule(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::DeleteRuleRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry", "DeleteRule");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteRule(context, options, request));
 }
 
 StatusOr<google::iam::v1::Policy> ArtifactRegistryTracingStub::SetIamPolicy(
@@ -615,6 +725,108 @@ ArtifactRegistryTracingStub::UpdateVPCSCConfig(
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span, child_->UpdateVPCSCConfig(context, options, request));
+}
+
+StatusOr<google::devtools::artifactregistry::v1::Package>
+ArtifactRegistryTracingStub::UpdatePackage(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::UpdatePackageRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry", "UpdatePackage");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdatePackage(context, options, request));
+}
+
+StatusOr<google::devtools::artifactregistry::v1::ListAttachmentsResponse>
+ArtifactRegistryTracingStub::ListAttachments(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::ListAttachmentsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry",
+      "ListAttachments");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListAttachments(context, options, request));
+}
+
+StatusOr<google::devtools::artifactregistry::v1::Attachment>
+ArtifactRegistryTracingStub::GetAttachment(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::GetAttachmentRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry", "GetAttachment");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetAttachment(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ArtifactRegistryTracingStub::AsyncCreateAttachment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry",
+      "CreateAttachment");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncCreateAttachment(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryTracingStub::CreateAttachment(
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry",
+      "CreateAttachment");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateAttachment(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ArtifactRegistryTracingStub::AsyncDeleteAttachment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry",
+      "DeleteAttachment");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncDeleteAttachment(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryTracingStub::DeleteAttachment(
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry",
+      "DeleteAttachment");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteAttachment(context, options, request));
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>

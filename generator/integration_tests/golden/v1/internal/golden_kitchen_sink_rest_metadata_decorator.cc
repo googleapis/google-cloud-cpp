@@ -158,6 +158,30 @@ GoldenKitchenSinkRestMetadata::ExplicitRouting2(
   return child_->ExplicitRouting2(rest_context, options, request);
 }
 
+StatusOr<google::cloud::location::Location>
+GoldenKitchenSinkRestMetadata::GetLocation(
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::location::GetLocationRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->GetLocation(rest_context, options, request);
+}
+
+StatusOr<google::iam::v1::Policy>
+GoldenKitchenSinkRestMetadata::GetIamPolicy(
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::iam::v1::GetIamPolicyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->GetIamPolicy(rest_context, options, request);
+}
+
+StatusOr<google::longrunning::ListOperationsResponse>
+GoldenKitchenSinkRestMetadata::ListOperations(
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::longrunning::ListOperationsRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->ListOperations(rest_context, options, request);
+}
+
 void GoldenKitchenSinkRestMetadata::SetMetadata(
       rest_internal::RestContext& rest_context,
       Options const& options, std::vector<std::string> const& params) {

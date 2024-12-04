@@ -150,6 +150,12 @@ class NetAppConnectionIdempotencyPolicy {
       google::cloud::netapp::v1::ReverseReplicationDirectionRequest const&
           request);
 
+  virtual google::cloud::Idempotency EstablishPeering(
+      google::cloud::netapp::v1::EstablishPeeringRequest const& request);
+
+  virtual google::cloud::Idempotency SyncReplication(
+      google::cloud::netapp::v1::SyncReplicationRequest const& request);
+
   virtual google::cloud::Idempotency CreateBackupVault(
       google::cloud::netapp::v1::CreateBackupVaultRequest const& request);
 

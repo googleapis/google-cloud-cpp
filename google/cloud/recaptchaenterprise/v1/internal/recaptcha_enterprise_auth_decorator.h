@@ -92,6 +92,18 @@ class RecaptchaEnterpriseServiceAuth : public RecaptchaEnterpriseServiceStub {
       google::cloud::recaptchaenterprise::v1::AddIpOverrideRequest const&
           request) override;
 
+  StatusOr<google::cloud::recaptchaenterprise::v1::RemoveIpOverrideResponse>
+  RemoveIpOverride(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::recaptchaenterprise::v1::RemoveIpOverrideRequest const&
+          request) override;
+
+  StatusOr<google::cloud::recaptchaenterprise::v1::ListIpOverridesResponse>
+  ListIpOverrides(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::recaptchaenterprise::v1::ListIpOverridesRequest const&
+          request) override;
+
   StatusOr<google::cloud::recaptchaenterprise::v1::Metrics> GetMetrics(
       grpc::ClientContext& context, Options const& options,
       google::cloud::recaptchaenterprise::v1::GetMetricsRequest const& request)

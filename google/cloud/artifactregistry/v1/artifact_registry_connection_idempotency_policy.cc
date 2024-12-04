@@ -148,6 +148,11 @@ Idempotency ArtifactRegistryConnectionIdempotencyPolicy::BatchDeleteVersions(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::UpdateVersion(
+    google::devtools::artifactregistry::v1::UpdateVersionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListFiles(
     google::devtools::artifactregistry::v1::ListFilesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
@@ -156,6 +161,16 @@ Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListFiles(
 Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetFile(
     google::devtools::artifactregistry::v1::GetFileRequest const&) {
   return Idempotency::kIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::DeleteFile(
+    google::devtools::artifactregistry::v1::DeleteFileRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::UpdateFile(
+    google::devtools::artifactregistry::v1::UpdateFileRequest const&) {
+  return Idempotency::kNonIdempotent;
 }
 
 Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListTags(
@@ -180,6 +195,31 @@ Idempotency ArtifactRegistryConnectionIdempotencyPolicy::UpdateTag(
 
 Idempotency ArtifactRegistryConnectionIdempotencyPolicy::DeleteTag(
     google::devtools::artifactregistry::v1::DeleteTagRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::CreateRule(
+    google::devtools::artifactregistry::v1::CreateRuleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListRules(
+    google::devtools::artifactregistry::v1::ListRulesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetRule(
+    google::devtools::artifactregistry::v1::GetRuleRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::UpdateRule(
+    google::devtools::artifactregistry::v1::UpdateRuleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::DeleteRule(
+    google::devtools::artifactregistry::v1::DeleteRuleRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -217,6 +257,31 @@ Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetVPCSCConfig(
 
 Idempotency ArtifactRegistryConnectionIdempotencyPolicy::UpdateVPCSCConfig(
     google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::UpdatePackage(
+    google::devtools::artifactregistry::v1::UpdatePackageRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListAttachments(
+    google::devtools::artifactregistry::v1::ListAttachmentsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetAttachment(
+    google::devtools::artifactregistry::v1::GetAttachmentRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::CreateAttachment(
+    google::devtools::artifactregistry::v1::CreateAttachmentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::DeleteAttachment(
+    google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

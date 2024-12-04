@@ -173,6 +173,37 @@ DefaultAlloyDBAdminStub::PromoteCluster(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DefaultAlloyDBAdminStub::AsyncSwitchoverCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::alloydb::v1::SwitchoverClusterRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::alloydb::v1::SwitchoverClusterRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::alloydb::v1::SwitchoverClusterRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncSwitchoverCluster(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultAlloyDBAdminStub::SwitchoverCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::alloydb::v1::SwitchoverClusterRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->SwitchoverCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DefaultAlloyDBAdminStub::AsyncRestoreCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -500,6 +531,18 @@ DefaultAlloyDBAdminStub::RestartInstance(
   return response;
 }
 
+StatusOr<google::cloud::alloydb::v1::ExecuteSqlResponse>
+DefaultAlloyDBAdminStub::ExecuteSql(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::alloydb::v1::ExecuteSqlRequest const& request) {
+  google::cloud::alloydb::v1::ExecuteSqlResponse response;
+  auto status = grpc_stub_->ExecuteSql(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::alloydb::v1::ListBackupsResponse>
 DefaultAlloyDBAdminStub::ListBackups(
     grpc::ClientContext& context, Options const&,
@@ -706,6 +749,18 @@ Status DefaultAlloyDBAdminStub::DeleteUser(
   return google::cloud::Status();
 }
 
+StatusOr<google::cloud::alloydb::v1::ListDatabasesResponse>
+DefaultAlloyDBAdminStub::ListDatabases(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::alloydb::v1::ListDatabasesRequest const& request) {
+  google::cloud::alloydb::v1::ListDatabasesResponse response;
+  auto status = grpc_stub_->ListDatabases(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultAlloyDBAdminStub::ListLocations(
     grpc::ClientContext& context, Options const&,
@@ -788,7 +843,7 @@ DefaultAlloyDBAdminStub::AsyncGetOperation(
       [this](grpc::ClientContext* context,
              google::longrunning::GetOperationRequest const& request,
              grpc::CompletionQueue* cq) {
-        return operations_->AsyncGetOperation(context, request, cq);
+        return operations_stub_->AsyncGetOperation(context, request, cq);
       },
       request, std::move(context));
 }
@@ -805,7 +860,8 @@ future<Status> DefaultAlloyDBAdminStub::AsyncCancelOperation(
              [this](grpc::ClientContext* context,
                     google::longrunning::CancelOperationRequest const& request,
                     grpc::CompletionQueue* cq) {
-               return operations_->AsyncCancelOperation(context, request, cq);
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
              },
              request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {

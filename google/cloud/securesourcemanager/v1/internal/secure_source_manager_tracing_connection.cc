@@ -240,6 +240,133 @@ SecureSourceManagerTracingConnection::TestIamPermissionsRepo(
   return internal::EndSpan(*span, child_->TestIamPermissionsRepo(request));
 }
 
+future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
+SecureSourceManagerTracingConnection::CreateBranchRule(
+    google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "CreateBranchRule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateBranchRule(request));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerTracingConnection::CreateBranchRule(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "CreateBranchRule");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->CreateBranchRule(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
+SecureSourceManagerTracingConnection::CreateBranchRule(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "CreateBranchRule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateBranchRule(operation));
+}
+
+StreamRange<google::cloud::securesourcemanager::v1::BranchRule>
+SecureSourceManagerTracingConnection::ListBranchRules(
+    google::cloud::securesourcemanager::v1::ListBranchRulesRequest request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::ListBranchRules");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListBranchRules(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::securesourcemanager::v1::BranchRule>(std::move(span),
+                                                          std::move(sr));
+}
+
+StatusOr<google::cloud::securesourcemanager::v1::BranchRule>
+SecureSourceManagerTracingConnection::GetBranchRule(
+    google::cloud::securesourcemanager::v1::GetBranchRuleRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::GetBranchRule");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetBranchRule(request));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
+SecureSourceManagerTracingConnection::UpdateBranchRule(
+    google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "UpdateBranchRule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateBranchRule(request));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerTracingConnection::UpdateBranchRule(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "UpdateBranchRule");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->UpdateBranchRule(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::BranchRule>>
+SecureSourceManagerTracingConnection::UpdateBranchRule(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "UpdateBranchRule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateBranchRule(operation));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerTracingConnection::DeleteBranchRule(
+    google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "DeleteBranchRule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteBranchRule(request));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerTracingConnection::DeleteBranchRule(
+    NoAwaitTag,
+    google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "DeleteBranchRule");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->DeleteBranchRule(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerTracingConnection::DeleteBranchRule(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "DeleteBranchRule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteBranchRule(operation));
+}
+
 StreamRange<google::cloud::location::Location>
 SecureSourceManagerTracingConnection::ListLocations(
     google::cloud::location::ListLocationsRequest request) {

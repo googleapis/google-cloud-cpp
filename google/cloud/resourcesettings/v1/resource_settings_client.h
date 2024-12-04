@@ -73,7 +73,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-class ResourceSettingsServiceClient {
+class GOOGLE_CLOUD_CPP_DEPRECATED(
+    "ResourceSettingsService has been deprecated and will be turned down in "
+    "the future.") ResourceSettingsServiceClient {
  public:
   explicit ResourceSettingsServiceClient(
       std::shared_ptr<ResourceSettingsServiceConnection> connection,

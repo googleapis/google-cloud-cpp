@@ -160,6 +160,16 @@ class GoldenThingAdminMetadata : public GoldenThingAdminStub {
       Options options,
       google::test::admin::database::v1::RestoreDatabaseRequest const& request) override;
 
+  StatusOr<google::cloud::location::Location> GetLocation(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::location::GetLocationRequest const& request) override;
+
+  StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::longrunning::ListOperationsRequest const& request) override;
+
   future<StatusOr<google::test::admin::database::v1::Database>> AsyncGetDatabase(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

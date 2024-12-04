@@ -212,6 +212,21 @@ class DataCatalogStub {
       grpc::ClientContext& context, Options options,
       google::cloud::datacatalog::v1::ImportEntriesRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::datacatalog::v1::MigrationConfig> SetConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datacatalog::v1::SetConfigRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::datacatalog::v1::OrganizationConfig>
+  RetrieveConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datacatalog::v1::RetrieveConfigRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::datacatalog::v1::MigrationConfig>
+  RetrieveEffectiveConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const&
+          request) = 0;
+
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
       grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
@@ -248,12 +263,9 @@ class DefaultDataCatalogStub : public DataCatalogStub {
           google::cloud::datacatalog::v1::DataCatalog::StubInterface>
           grpc_stub,
       std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations)
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
-        operations_stub_(std::move(operations_stub)),
-        operations_(std::move(operations)) {}
+        operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::cloud::datacatalog::v1::SearchCatalogResponse> SearchCatalog(
       grpc::ClientContext& context, Options const& options,
@@ -433,6 +445,21 @@ class DefaultDataCatalogStub : public DataCatalogStub {
       google::cloud::datacatalog::v1::ImportEntriesRequest const& request)
       override;
 
+  StatusOr<google::cloud::datacatalog::v1::MigrationConfig> SetConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datacatalog::v1::SetConfigRequest const& request) override;
+
+  StatusOr<google::cloud::datacatalog::v1::OrganizationConfig> RetrieveConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datacatalog::v1::RetrieveConfigRequest const& request)
+      override;
+
+  StatusOr<google::cloud::datacatalog::v1::MigrationConfig>
+  RetrieveEffectiveConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const&
+          request) override;
+
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
       grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
@@ -466,7 +493,6 @@ class DefaultDataCatalogStub : public DataCatalogStub {
       grpc_stub_;
   std::unique_ptr<google::longrunning::Operations::StubInterface>
       operations_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

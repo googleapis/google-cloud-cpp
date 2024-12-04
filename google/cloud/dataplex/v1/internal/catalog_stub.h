@@ -193,6 +193,30 @@ class CatalogServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::SearchEntriesRequest const& request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateMetadataJob(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataplex::v1::CreateMetadataJobRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> CreateMetadataJob(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::CreateMetadataJobRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::dataplex::v1::MetadataJob> GetMetadataJob(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataplex::v1::GetMetadataJobRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::dataplex::v1::ListMetadataJobsResponse>
+  ListMetadataJobs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataplex::v1::ListMetadataJobsRequest const& request) = 0;
+
+  virtual Status CancelMetadataJob(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataplex::v1::CancelMetadataJobRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::location::ListLocationsResponse>
   ListLocations(
       grpc::ClientContext& context, Options const& options,
@@ -250,18 +274,15 @@ class DefaultCatalogServiceStub : public CatalogServiceStub {
       std::unique_ptr<
           google::cloud::dataplex::v1::CatalogService::StubInterface>
           grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub,
       std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub,
       std::unique_ptr<google::cloud::location::Locations::StubInterface>
           locations_stub,
       std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations)
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
-        operations_stub_(std::move(operations_stub)),
         iampolicy_stub_(std::move(iampolicy_stub)),
         locations_stub_(std::move(locations_stub)),
-        operations_(std::move(operations)) {}
+        operations_stub_(std::move(operations_stub)) {}
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateEntryType(
       google::cloud::CompletionQueue& cq,
@@ -429,6 +450,33 @@ class DefaultCatalogServiceStub : public CatalogServiceStub {
       google::cloud::dataplex::v1::SearchEntriesRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateMetadataJob(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataplex::v1::CreateMetadataJobRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateMetadataJob(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::CreateMetadataJobRequest const& request)
+      override;
+
+  StatusOr<google::cloud::dataplex::v1::MetadataJob> GetMetadataJob(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataplex::v1::GetMetadataJobRequest const& request)
+      override;
+
+  StatusOr<google::cloud::dataplex::v1::ListMetadataJobsResponse>
+  ListMetadataJobs(grpc::ClientContext& context, Options const& options,
+                   google::cloud::dataplex::v1::ListMetadataJobsRequest const&
+                       request) override;
+
+  Status CancelMetadataJob(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dataplex::v1::CancelMetadataJobRequest const& request)
+      override;
+
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
@@ -480,12 +528,11 @@ class DefaultCatalogServiceStub : public CatalogServiceStub {
  private:
   std::unique_ptr<google::cloud::dataplex::v1::CatalogService::StubInterface>
       grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
   std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub_;
   std::unique_ptr<google::cloud::location::Locations::StubInterface>
       locations_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

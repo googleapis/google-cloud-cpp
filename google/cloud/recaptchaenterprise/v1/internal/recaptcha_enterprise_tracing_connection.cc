@@ -141,6 +141,30 @@ RecaptchaEnterpriseServiceTracingConnection::AddIpOverride(
   return internal::EndSpan(*span, child_->AddIpOverride(request));
 }
 
+StatusOr<google::cloud::recaptchaenterprise::v1::RemoveIpOverrideResponse>
+RecaptchaEnterpriseServiceTracingConnection::RemoveIpOverride(
+    google::cloud::recaptchaenterprise::v1::RemoveIpOverrideRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "recaptchaenterprise_v1::RecaptchaEnterpriseServiceConnection::"
+      "RemoveIpOverride");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->RemoveIpOverride(request));
+}
+
+StreamRange<google::cloud::recaptchaenterprise::v1::IpOverrideData>
+RecaptchaEnterpriseServiceTracingConnection::ListIpOverrides(
+    google::cloud::recaptchaenterprise::v1::ListIpOverridesRequest request) {
+  auto span = internal::MakeSpan(
+      "recaptchaenterprise_v1::RecaptchaEnterpriseServiceConnection::"
+      "ListIpOverrides");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListIpOverrides(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::recaptchaenterprise::v1::IpOverrideData>(std::move(span),
+                                                              std::move(sr));
+}
+
 StatusOr<google::cloud::recaptchaenterprise::v1::Metrics>
 RecaptchaEnterpriseServiceTracingConnection::GetMetrics(
     google::cloud::recaptchaenterprise::v1::GetMetricsRequest const& request) {

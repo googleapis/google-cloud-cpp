@@ -168,6 +168,36 @@ RecaptchaEnterpriseServiceLogging::AddIpOverride(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::recaptchaenterprise::v1::RemoveIpOverrideResponse>
+RecaptchaEnterpriseServiceLogging::RemoveIpOverride(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::recaptchaenterprise::v1::RemoveIpOverrideRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::recaptchaenterprise::v1::RemoveIpOverrideRequest const&
+              request) {
+        return child_->RemoveIpOverride(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::recaptchaenterprise::v1::ListIpOverridesResponse>
+RecaptchaEnterpriseServiceLogging::ListIpOverrides(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::recaptchaenterprise::v1::ListIpOverridesRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::recaptchaenterprise::v1::ListIpOverridesRequest const&
+              request) {
+        return child_->ListIpOverrides(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::recaptchaenterprise::v1::Metrics>
 RecaptchaEnterpriseServiceLogging::GetMetrics(
     grpc::ClientContext& context, Options const& options,

@@ -418,6 +418,111 @@ CloudDeployTracingStub::AbandonRelease(
                            child_->AbandonRelease(context, options, request));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+CloudDeployTracingStub::AsyncCreateDeployPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::deploy::v1::CreateDeployPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
+                                     "CreateDeployPolicy");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncCreateDeployPolicy(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudDeployTracingStub::CreateDeployPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::deploy::v1::CreateDeployPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
+                                     "CreateDeployPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->CreateDeployPolicy(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudDeployTracingStub::AsyncUpdateDeployPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::deploy::v1::UpdateDeployPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
+                                     "UpdateDeployPolicy");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncUpdateDeployPolicy(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudDeployTracingStub::UpdateDeployPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::deploy::v1::UpdateDeployPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
+                                     "UpdateDeployPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->UpdateDeployPolicy(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudDeployTracingStub::AsyncDeleteDeployPolicy(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::deploy::v1::DeleteDeployPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
+                                     "DeleteDeployPolicy");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncDeleteDeployPolicy(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudDeployTracingStub::DeleteDeployPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::deploy::v1::DeleteDeployPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
+                                     "DeleteDeployPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->DeleteDeployPolicy(context, options, request));
+}
+
+StatusOr<google::cloud::deploy::v1::ListDeployPoliciesResponse>
+CloudDeployTracingStub::ListDeployPolicies(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::deploy::v1::ListDeployPoliciesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
+                                     "ListDeployPolicies");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ListDeployPolicies(context, options, request));
+}
+
+StatusOr<google::cloud::deploy::v1::DeployPolicy>
+CloudDeployTracingStub::GetDeployPolicy(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::deploy::v1::GetDeployPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
+                                     "GetDeployPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetDeployPolicy(context, options, request));
+}
+
 StatusOr<google::cloud::deploy::v1::ApproveRolloutResponse>
 CloudDeployTracingStub::ApproveRollout(
     grpc::ClientContext& context, Options const& options,

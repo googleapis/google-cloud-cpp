@@ -88,6 +88,18 @@ class AlloyDBAdminTracingStub : public AlloyDBAdminStub {
       google::cloud::alloydb::v1::PromoteClusterRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncSwitchoverCluster(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::alloydb::v1::SwitchoverClusterRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> SwitchoverCluster(
+      grpc::ClientContext& context, Options options,
+      google::cloud::alloydb::v1::SwitchoverClusterRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncRestoreCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -214,6 +226,10 @@ class AlloyDBAdminTracingStub : public AlloyDBAdminStub {
       google::cloud::alloydb::v1::RestartInstanceRequest const& request)
       override;
 
+  StatusOr<google::cloud::alloydb::v1::ExecuteSqlResponse> ExecuteSql(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::alloydb::v1::ExecuteSqlRequest const& request) override;
+
   StatusOr<google::cloud::alloydb::v1::ListBackupsResponse> ListBackups(
       grpc::ClientContext& context, Options const& options,
       google::cloud::alloydb::v1::ListBackupsRequest const& request) override;
@@ -288,6 +304,10 @@ class AlloyDBAdminTracingStub : public AlloyDBAdminStub {
   Status DeleteUser(
       grpc::ClientContext& context, Options const& options,
       google::cloud::alloydb::v1::DeleteUserRequest const& request) override;
+
+  StatusOr<google::cloud::alloydb::v1::ListDatabasesResponse> ListDatabases(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::alloydb::v1::ListDatabasesRequest const& request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,

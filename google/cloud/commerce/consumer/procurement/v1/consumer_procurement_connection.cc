@@ -80,6 +80,56 @@ ConsumerProcurementServiceConnection::ListOrders(
       StreamRange<google::cloud::commerce::consumer::procurement::v1::Order>>();
 }
 
+future<StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>
+ConsumerProcurementServiceConnection::ModifyOrder(
+    google::cloud::commerce::consumer::procurement::v1::
+        ModifyOrderRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+ConsumerProcurementServiceConnection::ModifyOrder(
+    NoAwaitTag, google::cloud::commerce::consumer::procurement::v1::
+                    ModifyOrderRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>
+ConsumerProcurementServiceConnection::ModifyOrder(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>
+ConsumerProcurementServiceConnection::CancelOrder(
+    google::cloud::commerce::consumer::procurement::v1::
+        CancelOrderRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+ConsumerProcurementServiceConnection::CancelOrder(
+    NoAwaitTag, google::cloud::commerce::consumer::procurement::v1::
+                    CancelOrderRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>
+ConsumerProcurementServiceConnection::CancelOrder(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::longrunning::Operation>
 ConsumerProcurementServiceConnection::GetOperation(
     google::longrunning::GetOperationRequest const&) {

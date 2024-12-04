@@ -39,6 +39,13 @@ SearchServiceClient::Search(
   return connection_->Search(std::move(request));
 }
 
+StreamRange<google::cloud::discoveryengine::v1::SearchResponse::SearchResult>
+SearchServiceClient::SearchLite(
+    google::cloud::discoveryengine::v1::SearchRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SearchLite(std::move(request));
+}
+
 StreamRange<google::longrunning::Operation> SearchServiceClient::ListOperations(
     std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

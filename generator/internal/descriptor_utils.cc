@@ -236,30 +236,17 @@ ParameterCommentSubstitution substitutions[] = {
     //
     // Doxygen thinks these are unrecognized HTML tags. To work around this, we
     // remove the line breaks, so the code quotes occupy a single line.
-    {"agents/\n <Agent ID>", "agents/<Agent ID>"},
-    {"<Agent\n ID>", "<Agent ID>"},
-    {"<Agent ID>/\n testCases/", "<Agent ID>/testCases/"},
-    {"<Agent ID>/\n environments/", "<Agent ID>/environments/"},
     {"<Conversation\n ID>", "<Conversation ID>"},
     {"<Conversation Model\n ID>", "<Conversation Model ID>"},
     {"<Entity Type Display\n Name>", "<Entity Type Display Name>"},
     {"<Entity Type\n Display Name>", "<Entity Type Display Name>"},
-    {"<Entity\n Type ID>", "<Entity Type ID>"},
     {"<Environment\n ID>", "<Environment ID>"},
     {"<Location\n ID>", "<Location ID>"},
     {"<Project\n ID>", "<Project ID>"},
     {"<Project\n Number>", "<Project Number>"},
     {"<Session\n ID>", "<Session ID>"},
-    {"<Transition\n Route Group ID>", "<Transition Route Group ID>"},
     {"<User\n ID>", "<User ID>"},
     {"<User ID>/\n sessions/", "<User ID>/sessions/"},
-
-    // Missing closed quote in dialogflow
-    {"<Agent ID>.", "<Agent ID>`."},
-
-    // Extra closed quote in dialogflow
-    {R"""(`projects/<Project ID>/locations/<Location ID>`/generators/<Generator ID>`)""",
-     R"""(`projects/<Project ID>/locations/<Location ID>/generators/<Generator ID>`)"""},
 
     // From logging/v2.
     {kLoggingConfigClientProto1, kLoggingConfigClientCpp1},
@@ -321,6 +308,10 @@ ParameterCommentSubstitution substitutions[] = {
     // From google/cloud/gkemulticloud/v1/azure_service.proto
     {" projects/<project-id>/locations/<region>/azureClusters/<cluster-id>",
      " `projects/<project-id>/locations/<region>/azureClusters/<cluster-id>`"},
+
+    // From google/cloud/dialogflow/cx/v3/transition_route_group.proto
+    {"`projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>.",
+     "`projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>`."},
 
     // Some comments include multiple newlines in a row. We need to preserve
     // these because they are paragraph separators. When used in `@param`

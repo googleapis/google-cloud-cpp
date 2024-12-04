@@ -48,15 +48,13 @@ CreateDefaultManagedNotebookServiceStub(
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       google::cloud::notebooks::v1::ManagedNotebookService::NewStub(channel);
-  auto service_operations_stub =
-      google::longrunning::Operations::NewStub(channel);
   auto service_iampolicy_stub = google::iam::v1::IAMPolicy::NewStub(channel);
   auto service_locations_stub =
       google::cloud::location::Locations::NewStub(channel);
   std::shared_ptr<ManagedNotebookServiceStub> stub =
       std::make_shared<DefaultManagedNotebookServiceStub>(
-          std::move(service_grpc_stub), std::move(service_operations_stub),
-          std::move(service_iampolicy_stub), std::move(service_locations_stub),
+          std::move(service_grpc_stub), std::move(service_iampolicy_stub),
+          std::move(service_locations_stub),
           google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {

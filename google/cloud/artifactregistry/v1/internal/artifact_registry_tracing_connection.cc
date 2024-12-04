@@ -424,6 +424,16 @@ ArtifactRegistryTracingConnection::BatchDeleteVersions(
                            child_->BatchDeleteVersions(operation));
 }
 
+StatusOr<google::devtools::artifactregistry::v1::Version>
+ArtifactRegistryTracingConnection::UpdateVersion(
+    google::devtools::artifactregistry::v1::UpdateVersionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::UpdateVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateVersion(request));
+}
+
 StreamRange<google::devtools::artifactregistry::v1::File>
 ArtifactRegistryTracingConnection::ListFiles(
     google::devtools::artifactregistry::v1::ListFilesRequest request) {
@@ -443,6 +453,43 @@ ArtifactRegistryTracingConnection::GetFile(
       "artifactregistry_v1::ArtifactRegistryConnection::GetFile");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetFile(request));
+}
+
+future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+ArtifactRegistryTracingConnection::DeleteFile(
+    google::devtools::artifactregistry::v1::DeleteFileRequest const& request) {
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::DeleteFile");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteFile(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryTracingConnection::DeleteFile(
+    NoAwaitTag,
+    google::devtools::artifactregistry::v1::DeleteFileRequest const& request) {
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::DeleteFile");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->DeleteFile(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+ArtifactRegistryTracingConnection::DeleteFile(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::DeleteFile");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteFile(operation));
+}
+
+StatusOr<google::devtools::artifactregistry::v1::File>
+ArtifactRegistryTracingConnection::UpdateFile(
+    google::devtools::artifactregistry::v1::UpdateFileRequest const& request) {
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::UpdateFile");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateFile(request));
 }
 
 StreamRange<google::devtools::artifactregistry::v1::Tag>
@@ -490,6 +537,53 @@ Status ArtifactRegistryTracingConnection::DeleteTag(
       "artifactregistry_v1::ArtifactRegistryConnection::DeleteTag");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteTag(request));
+}
+
+StatusOr<google::devtools::artifactregistry::v1::Rule>
+ArtifactRegistryTracingConnection::CreateRule(
+    google::devtools::artifactregistry::v1::CreateRuleRequest const& request) {
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::CreateRule");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateRule(request));
+}
+
+StreamRange<google::devtools::artifactregistry::v1::Rule>
+ArtifactRegistryTracingConnection::ListRules(
+    google::devtools::artifactregistry::v1::ListRulesRequest request) {
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::ListRules");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListRules(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::devtools::artifactregistry::v1::Rule>(std::move(span),
+                                                    std::move(sr));
+}
+
+StatusOr<google::devtools::artifactregistry::v1::Rule>
+ArtifactRegistryTracingConnection::GetRule(
+    google::devtools::artifactregistry::v1::GetRuleRequest const& request) {
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::GetRule");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetRule(request));
+}
+
+StatusOr<google::devtools::artifactregistry::v1::Rule>
+ArtifactRegistryTracingConnection::UpdateRule(
+    google::devtools::artifactregistry::v1::UpdateRuleRequest const& request) {
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::UpdateRule");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateRule(request));
+}
+
+Status ArtifactRegistryTracingConnection::DeleteRule(
+    google::devtools::artifactregistry::v1::DeleteRuleRequest const& request) {
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::DeleteRule");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteRule(request));
 }
 
 StatusOr<google::iam::v1::Policy>
@@ -557,6 +651,102 @@ ArtifactRegistryTracingConnection::UpdateVPCSCConfig(
       "artifactregistry_v1::ArtifactRegistryConnection::UpdateVPCSCConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateVPCSCConfig(request));
+}
+
+StatusOr<google::devtools::artifactregistry::v1::Package>
+ArtifactRegistryTracingConnection::UpdatePackage(
+    google::devtools::artifactregistry::v1::UpdatePackageRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::UpdatePackage");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdatePackage(request));
+}
+
+StreamRange<google::devtools::artifactregistry::v1::Attachment>
+ArtifactRegistryTracingConnection::ListAttachments(
+    google::devtools::artifactregistry::v1::ListAttachmentsRequest request) {
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::ListAttachments");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListAttachments(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::devtools::artifactregistry::v1::Attachment>(std::move(span),
+                                                          std::move(sr));
+}
+
+StatusOr<google::devtools::artifactregistry::v1::Attachment>
+ArtifactRegistryTracingConnection::GetAttachment(
+    google::devtools::artifactregistry::v1::GetAttachmentRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::GetAttachment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAttachment(request));
+}
+
+future<StatusOr<google::devtools::artifactregistry::v1::Attachment>>
+ArtifactRegistryTracingConnection::CreateAttachment(
+    google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::CreateAttachment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateAttachment(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryTracingConnection::CreateAttachment(
+    NoAwaitTag,
+    google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::CreateAttachment");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->CreateAttachment(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::devtools::artifactregistry::v1::Attachment>>
+ArtifactRegistryTracingConnection::CreateAttachment(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::CreateAttachment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateAttachment(operation));
+}
+
+future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+ArtifactRegistryTracingConnection::DeleteAttachment(
+    google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::DeleteAttachment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteAttachment(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryTracingConnection::DeleteAttachment(
+    NoAwaitTag,
+    google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::DeleteAttachment");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->DeleteAttachment(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+ArtifactRegistryTracingConnection::DeleteAttachment(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::DeleteAttachment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteAttachment(operation));
 }
 
 StreamRange<google::cloud::location::Location>

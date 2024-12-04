@@ -55,6 +55,15 @@ PublisherTracingConnection::PublishEvents(
   return internal::EndSpan(*span, child_->PublishEvents(request));
 }
 
+StatusOr<google::cloud::eventarc::publishing::v1::PublishResponse>
+PublisherTracingConnection::Publish(
+    google::cloud::eventarc::publishing::v1::PublishRequest const& request) {
+  auto span = internal::MakeSpan(
+      "eventarc_publishing_v1::PublisherConnection::Publish");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->Publish(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<eventarc_publishing_v1::PublisherConnection>

@@ -113,6 +113,29 @@ GoldenKitchenSinkTracingConnection::ExplicitRouting2(google::test::admin::databa
   return internal::EndSpan(*span, child_->ExplicitRouting2(request));
 }
 
+StatusOr<google::cloud::location::Location>
+GoldenKitchenSinkTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan("golden_v1::GoldenKitchenSinkConnection::GetLocation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetLocation(request));
+}
+
+StatusOr<google::iam::v1::Policy>
+GoldenKitchenSinkTracingConnection::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("golden_v1::GoldenKitchenSinkConnection::GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIamPolicy(request));
+}
+
+StreamRange<google::longrunning::Operation>
+GoldenKitchenSinkTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("golden_v1::GoldenKitchenSinkConnection::ListOperations");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListOperations(std::move(request));
+  return internal::MakeTracedStreamRange<google::longrunning::Operation>(
+        std::move(span), std::move(sr));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<golden_v1::GoldenKitchenSinkConnection>

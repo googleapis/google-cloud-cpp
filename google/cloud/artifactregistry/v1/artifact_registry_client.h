@@ -813,8 +813,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.ListRepositoriesRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L508}
-  /// [google.devtools.artifactregistry.v1.Repository]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L344}
+  /// [google.devtools.artifactregistry.v1.ListRepositoriesRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L657}
+  /// [google.devtools.artifactregistry.v1.Repository]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L426}
   ///
   // clang-format on
   StreamRange<google::devtools::artifactregistry::v1::Repository>
@@ -852,8 +852,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.ListRepositoriesRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L508}
-  /// [google.devtools.artifactregistry.v1.Repository]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L344}
+  /// [google.devtools.artifactregistry.v1.ListRepositoriesRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L657}
+  /// [google.devtools.artifactregistry.v1.Repository]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L426}
   ///
   // clang-format on
   StreamRange<google::devtools::artifactregistry::v1::Repository>
@@ -879,8 +879,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.GetRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L536}
-  /// [google.devtools.artifactregistry.v1.Repository]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L344}
+  /// [google.devtools.artifactregistry.v1.GetRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L709}
+  /// [google.devtools.artifactregistry.v1.Repository]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L426}
   ///
   // clang-format on
   StatusOr<google::devtools::artifactregistry::v1::Repository> GetRepository(
@@ -909,8 +909,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.GetRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L536}
-  /// [google.devtools.artifactregistry.v1.Repository]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L344}
+  /// [google.devtools.artifactregistry.v1.GetRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L709}
+  /// [google.devtools.artifactregistry.v1.Repository]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L426}
   ///
   // clang-format on
   StatusOr<google::devtools::artifactregistry::v1::Repository> GetRepository(
@@ -947,8 +947,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.CreateRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L547}
-  /// [google.devtools.artifactregistry.v1.Repository]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L344}
+  /// [google.devtools.artifactregistry.v1.CreateRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L720}
+  /// [google.devtools.artifactregistry.v1.Repository]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L426}
   ///
   // clang-format on
   future<StatusOr<google::devtools::artifactregistry::v1::Repository>>
@@ -1004,8 +1004,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.CreateRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L547}
-  /// [google.devtools.artifactregistry.v1.Repository]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L344}
+  /// [google.devtools.artifactregistry.v1.CreateRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L720}
+  /// [google.devtools.artifactregistry.v1.Repository]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L426}
   ///
   // clang-format on
   future<StatusOr<google::devtools::artifactregistry::v1::Repository>>
@@ -1065,8 +1065,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.Repository]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L344}
-  /// [google.devtools.artifactregistry.v1.UpdateRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L565}
+  /// [google.devtools.artifactregistry.v1.Repository]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L426}
+  /// [google.devtools.artifactregistry.v1.UpdateRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L738}
   ///
   // clang-format on
   StatusOr<google::devtools::artifactregistry::v1::Repository> UpdateRepository(
@@ -1096,8 +1096,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.Repository]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L344}
-  /// [google.devtools.artifactregistry.v1.UpdateRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L565}
+  /// [google.devtools.artifactregistry.v1.Repository]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L426}
+  /// [google.devtools.artifactregistry.v1.UpdateRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L738}
   ///
   // clang-format on
   StatusOr<google::devtools::artifactregistry::v1::Repository> UpdateRepository(
@@ -1132,8 +1132,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.DeleteRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L576}
-  /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L415}
+  /// [google.devtools.artifactregistry.v1.DeleteRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L749}
+  /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L547}
   ///
   // clang-format on
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
@@ -1185,8 +1185,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.DeleteRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L576}
-  /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L415}
+  /// [google.devtools.artifactregistry.v1.DeleteRepositoryRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L749}
+  /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L547}
   ///
   // clang-format on
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
@@ -1252,8 +1252,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.ListPackagesRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L55}
-  /// [google.devtools.artifactregistry.v1.Package]: @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L32}
+  /// [google.devtools.artifactregistry.v1.ListPackagesRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L59}
+  /// [google.devtools.artifactregistry.v1.Package]: @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L33}
   ///
   // clang-format on
   StreamRange<google::devtools::artifactregistry::v1::Package> ListPackages(
@@ -1291,8 +1291,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.ListPackagesRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L55}
-  /// [google.devtools.artifactregistry.v1.Package]: @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L32}
+  /// [google.devtools.artifactregistry.v1.ListPackagesRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L59}
+  /// [google.devtools.artifactregistry.v1.Package]: @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L33}
   ///
   // clang-format on
   StreamRange<google::devtools::artifactregistry::v1::Package> ListPackages(
@@ -1317,8 +1317,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.GetPackageRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L82}
-  /// [google.devtools.artifactregistry.v1.Package]: @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L32}
+  /// [google.devtools.artifactregistry.v1.GetPackageRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L136}
+  /// [google.devtools.artifactregistry.v1.Package]: @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L33}
   ///
   // clang-format on
   StatusOr<google::devtools::artifactregistry::v1::Package> GetPackage(
@@ -1347,8 +1347,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.GetPackageRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L82}
-  /// [google.devtools.artifactregistry.v1.Package]: @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L32}
+  /// [google.devtools.artifactregistry.v1.GetPackageRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L136}
+  /// [google.devtools.artifactregistry.v1.Package]: @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L33}
   ///
   // clang-format on
   StatusOr<google::devtools::artifactregistry::v1::Package> GetPackage(
@@ -1381,8 +1381,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.DeletePackageRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L93}
-  /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L415}
+  /// [google.devtools.artifactregistry.v1.DeletePackageRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L147}
+  /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L547}
   ///
   // clang-format on
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
@@ -1433,8 +1433,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.DeletePackageRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L93}
-  /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L415}
+  /// [google.devtools.artifactregistry.v1.DeletePackageRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L147}
+  /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L547}
   ///
   // clang-format on
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
@@ -1500,8 +1500,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.ListVersionsRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L85}
-  /// [google.devtools.artifactregistry.v1.Version]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L50}
+  /// [google.devtools.artifactregistry.v1.ListVersionsRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L89}
+  /// [google.devtools.artifactregistry.v1.Version]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L51}
   ///
   // clang-format on
   StreamRange<google::devtools::artifactregistry::v1::Version> ListVersions(
@@ -1539,8 +1539,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.ListVersionsRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L85}
-  /// [google.devtools.artifactregistry.v1.Version]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L50}
+  /// [google.devtools.artifactregistry.v1.ListVersionsRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L89}
+  /// [google.devtools.artifactregistry.v1.Version]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L51}
   ///
   // clang-format on
   StreamRange<google::devtools::artifactregistry::v1::Version> ListVersions(
@@ -1565,8 +1565,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.GetVersionRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L113}
-  /// [google.devtools.artifactregistry.v1.Version]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L50}
+  /// [google.devtools.artifactregistry.v1.GetVersionRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L164}
+  /// [google.devtools.artifactregistry.v1.Version]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L51}
   ///
   // clang-format on
   StatusOr<google::devtools::artifactregistry::v1::Version> GetVersion(
@@ -1595,8 +1595,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.GetVersionRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L113}
-  /// [google.devtools.artifactregistry.v1.Version]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L50}
+  /// [google.devtools.artifactregistry.v1.GetVersionRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L164}
+  /// [google.devtools.artifactregistry.v1.Version]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L51}
   ///
   // clang-format on
   StatusOr<google::devtools::artifactregistry::v1::Version> GetVersion(
@@ -1629,8 +1629,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.DeleteVersionRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L122}
-  /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L415}
+  /// [google.devtools.artifactregistry.v1.DeleteVersionRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L173}
+  /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L547}
   ///
   // clang-format on
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
@@ -1681,8 +1681,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.DeleteVersionRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L122}
-  /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L415}
+  /// [google.devtools.artifactregistry.v1.DeleteVersionRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L173}
+  /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L547}
   ///
   // clang-format on
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
@@ -1749,8 +1749,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.BatchDeleteVersionsMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L152}
-  /// [google.devtools.artifactregistry.v1.BatchDeleteVersionsRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L132}
+  /// [google.devtools.artifactregistry.v1.BatchDeleteVersionsMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L203}
+  /// [google.devtools.artifactregistry.v1.BatchDeleteVersionsRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L183}
   ///
   // clang-format on
   future<StatusOr<
@@ -1804,8 +1804,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.BatchDeleteVersionsMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L152}
-  /// [google.devtools.artifactregistry.v1.BatchDeleteVersionsRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L132}
+  /// [google.devtools.artifactregistry.v1.BatchDeleteVersionsMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L203}
+  /// [google.devtools.artifactregistry.v1.BatchDeleteVersionsRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L183}
   ///
   // clang-format on
   future<StatusOr<
@@ -1848,6 +1848,67 @@ class ArtifactRegistryClient {
 
   // clang-format off
   ///
+  /// Updates a version.
+  ///
+  /// @param version  Required. The Version that replaces the resource on the server.
+  /// @param update_mask  The update mask applies to the resource. For the `FieldMask` definition,
+  ///  see
+  ///  https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.artifactregistry.v1.Version])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.artifactregistry.v1.UpdateVersionRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L209}
+  /// [google.devtools.artifactregistry.v1.Version]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L51}
+  ///
+  // clang-format on
+  StatusOr<google::devtools::artifactregistry::v1::Version> UpdateVersion(
+      google::devtools::artifactregistry::v1::Version const& version,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a version.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.artifactregistry.v1.UpdateVersionRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.artifactregistry.v1.Version])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.artifactregistry.v1.UpdateVersionRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L209}
+  /// [google.devtools.artifactregistry.v1.Version]: @googleapis_reference_link{google/devtools/artifactregistry/v1/version.proto#L51}
+  ///
+  // clang-format on
+  StatusOr<google::devtools::artifactregistry::v1::Version> UpdateVersion(
+      google::devtools::artifactregistry::v1::UpdateVersionRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
   /// Lists files.
   ///
   /// @param parent  Required. The name of the repository whose files will be listed. For
@@ -1874,8 +1935,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.File]: @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L53}
-  /// [google.devtools.artifactregistry.v1.ListFilesRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L88}
+  /// [google.devtools.artifactregistry.v1.File]: @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L54}
+  /// [google.devtools.artifactregistry.v1.ListFilesRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L92}
   ///
   // clang-format on
   StreamRange<google::devtools::artifactregistry::v1::File> ListFiles(
@@ -1913,8 +1974,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.File]: @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L53}
-  /// [google.devtools.artifactregistry.v1.ListFilesRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L88}
+  /// [google.devtools.artifactregistry.v1.File]: @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L54}
+  /// [google.devtools.artifactregistry.v1.ListFilesRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L92}
   ///
   // clang-format on
   StreamRange<google::devtools::artifactregistry::v1::File> ListFiles(
@@ -1939,8 +2000,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.File]: @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L53}
-  /// [google.devtools.artifactregistry.v1.GetFileRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L133}
+  /// [google.devtools.artifactregistry.v1.File]: @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L54}
+  /// [google.devtools.artifactregistry.v1.GetFileRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L175}
   ///
   // clang-format on
   StatusOr<google::devtools::artifactregistry::v1::File> GetFile(
@@ -1969,12 +2030,191 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.File]: @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L53}
-  /// [google.devtools.artifactregistry.v1.GetFileRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L133}
+  /// [google.devtools.artifactregistry.v1.File]: @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L54}
+  /// [google.devtools.artifactregistry.v1.GetFileRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L175}
   ///
   // clang-format on
   StatusOr<google::devtools::artifactregistry::v1::File> GetFile(
       google::devtools::artifactregistry::v1::GetFileRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a file and all of its content. It is only allowed on generic
+  /// repositories. The returned operation will complete once the file has been
+  /// deleted.
+  ///
+  /// @param name  Required. The name of the file to delete.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.devtools.artifactregistry.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.artifactregistry.v1.DeleteFileRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L186}
+  /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L547}
+  ///
+  // clang-format on
+  future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+  DeleteFile(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteFile
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteFile(NoAwaitTag,
+                                                      std::string const& name,
+                                                      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a file and all of its content. It is only allowed on generic
+  /// repositories. The returned operation will complete once the file has been
+  /// deleted.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.artifactregistry.v1.DeleteFileRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.devtools.artifactregistry.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.artifactregistry.v1.DeleteFileRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L186}
+  /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L547}
+  ///
+  // clang-format on
+  future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+  DeleteFile(
+      google::devtools::artifactregistry::v1::DeleteFileRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteFile
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteFile(
+      NoAwaitTag,
+      google::devtools::artifactregistry::v1::DeleteFileRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteFile
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+  DeleteFile(google::longrunning::Operation const& operation,
+             Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a file.
+  ///
+  /// @param file  Required. The File that replaces the resource on the server.
+  /// @param update_mask  Required. The update mask applies to the resource. For the `FieldMask`
+  ///  definition, see
+  ///  https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.artifactregistry.v1.File])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.artifactregistry.v1.File]: @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L54}
+  /// [google.devtools.artifactregistry.v1.UpdateFileRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L197}
+  ///
+  // clang-format on
+  StatusOr<google::devtools::artifactregistry::v1::File> UpdateFile(
+      google::devtools::artifactregistry::v1::File const& file,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a file.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.artifactregistry.v1.UpdateFileRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.artifactregistry.v1.File])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.artifactregistry.v1.File]: @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L54}
+  /// [google.devtools.artifactregistry.v1.UpdateFileRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L197}
+  ///
+  // clang-format on
+  StatusOr<google::devtools::artifactregistry::v1::File> UpdateFile(
+      google::devtools::artifactregistry::v1::UpdateFileRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -2071,7 +2311,7 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.GetTagRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/tag.proto#L88}
+  /// [google.devtools.artifactregistry.v1.GetTagRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/tag.proto#L106}
   /// [google.devtools.artifactregistry.v1.Tag]: @googleapis_reference_link{google/devtools/artifactregistry/v1/tag.proto#L32}
   ///
   // clang-format on
@@ -2101,7 +2341,7 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.GetTagRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/tag.proto#L88}
+  /// [google.devtools.artifactregistry.v1.GetTagRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/tag.proto#L106}
   /// [google.devtools.artifactregistry.v1.Tag]: @googleapis_reference_link{google/devtools/artifactregistry/v1/tag.proto#L32}
   ///
   // clang-format on
@@ -2129,7 +2369,7 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.CreateTagRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/tag.proto#L94}
+  /// [google.devtools.artifactregistry.v1.CreateTagRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/tag.proto#L112}
   /// [google.devtools.artifactregistry.v1.Tag]: @googleapis_reference_link{google/devtools/artifactregistry/v1/tag.proto#L32}
   ///
   // clang-format on
@@ -2161,7 +2401,7 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.CreateTagRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/tag.proto#L94}
+  /// [google.devtools.artifactregistry.v1.CreateTagRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/tag.proto#L112}
   /// [google.devtools.artifactregistry.v1.Tag]: @googleapis_reference_link{google/devtools/artifactregistry/v1/tag.proto#L32}
   ///
   // clang-format on
@@ -2191,7 +2431,7 @@ class ArtifactRegistryClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.devtools.artifactregistry.v1.Tag]: @googleapis_reference_link{google/devtools/artifactregistry/v1/tag.proto#L32}
-  /// [google.devtools.artifactregistry.v1.UpdateTagRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/tag.proto#L106}
+  /// [google.devtools.artifactregistry.v1.UpdateTagRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/tag.proto#L124}
   ///
   // clang-format on
   StatusOr<google::devtools::artifactregistry::v1::Tag> UpdateTag(
@@ -2222,7 +2462,7 @@ class ArtifactRegistryClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.devtools.artifactregistry.v1.Tag]: @googleapis_reference_link{google/devtools/artifactregistry/v1/tag.proto#L32}
-  /// [google.devtools.artifactregistry.v1.UpdateTagRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/tag.proto#L106}
+  /// [google.devtools.artifactregistry.v1.UpdateTagRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/tag.proto#L124}
   ///
   // clang-format on
   StatusOr<google::devtools::artifactregistry::v1::Tag> UpdateTag(
@@ -2245,7 +2485,7 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.DeleteTagRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/tag.proto#L117}
+  /// [google.devtools.artifactregistry.v1.DeleteTagRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/tag.proto#L135}
   ///
   // clang-format on
   Status DeleteTag(std::string const& name, Options opts = {});
@@ -2271,11 +2511,312 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.DeleteTagRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/tag.proto#L117}
+  /// [google.devtools.artifactregistry.v1.DeleteTagRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/tag.proto#L135}
   ///
   // clang-format on
   Status DeleteTag(
       google::devtools::artifactregistry::v1::DeleteTagRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a rule.
+  ///
+  /// @param parent  Required. The name of the parent resource where the rule will be created.
+  /// @param rule  The rule to be created.
+  /// @param rule_id  The rule id to use for this repository.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.artifactregistry.v1.Rule])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.artifactregistry.v1.CreateRuleRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/rule.proto#L121}
+  /// [google.devtools.artifactregistry.v1.Rule]: @googleapis_reference_link{google/devtools/artifactregistry/v1/rule.proto#L35}
+  ///
+  // clang-format on
+  StatusOr<google::devtools::artifactregistry::v1::Rule> CreateRule(
+      std::string const& parent,
+      google::devtools::artifactregistry::v1::Rule const& rule,
+      std::string const& rule_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a rule.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.artifactregistry.v1.CreateRuleRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.artifactregistry.v1.Rule])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.artifactregistry.v1.CreateRuleRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/rule.proto#L121}
+  /// [google.devtools.artifactregistry.v1.Rule]: @googleapis_reference_link{google/devtools/artifactregistry/v1/rule.proto#L35}
+  ///
+  // clang-format on
+  StatusOr<google::devtools::artifactregistry::v1::Rule> CreateRule(
+      google::devtools::artifactregistry::v1::CreateRuleRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists rules.
+  ///
+  /// @param parent  Required. The name of the parent repository whose rules will be listed.
+  ///  For example:
+  ///  `projects/p1/locations/us-central1/repositories/repo1`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.devtools.artifactregistry.v1.Rule], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.artifactregistry.v1.ListRulesRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/rule.proto#L81}
+  /// [google.devtools.artifactregistry.v1.Rule]: @googleapis_reference_link{google/devtools/artifactregistry/v1/rule.proto#L35}
+  ///
+  // clang-format on
+  StreamRange<google::devtools::artifactregistry::v1::Rule> ListRules(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists rules.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.artifactregistry.v1.ListRulesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.devtools.artifactregistry.v1.Rule], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.artifactregistry.v1.ListRulesRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/rule.proto#L81}
+  /// [google.devtools.artifactregistry.v1.Rule]: @googleapis_reference_link{google/devtools/artifactregistry/v1/rule.proto#L35}
+  ///
+  // clang-format on
+  StreamRange<google::devtools::artifactregistry::v1::Rule> ListRules(
+      google::devtools::artifactregistry::v1::ListRulesRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a rule.
+  ///
+  /// @param name  Required. The name of the rule to retrieve.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.artifactregistry.v1.Rule])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.artifactregistry.v1.GetRuleRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/rule.proto#L110}
+  /// [google.devtools.artifactregistry.v1.Rule]: @googleapis_reference_link{google/devtools/artifactregistry/v1/rule.proto#L35}
+  ///
+  // clang-format on
+  StatusOr<google::devtools::artifactregistry::v1::Rule> GetRule(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets a rule.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.artifactregistry.v1.GetRuleRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.artifactregistry.v1.Rule])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.artifactregistry.v1.GetRuleRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/rule.proto#L110}
+  /// [google.devtools.artifactregistry.v1.Rule]: @googleapis_reference_link{google/devtools/artifactregistry/v1/rule.proto#L35}
+  ///
+  // clang-format on
+  StatusOr<google::devtools::artifactregistry::v1::Rule> GetRule(
+      google::devtools::artifactregistry::v1::GetRuleRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a rule.
+  ///
+  /// @param rule  The rule that replaces the resource on the server.
+  /// @param update_mask  The update mask applies to the resource. For the `FieldMask` definition,
+  ///  see
+  ///  https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.artifactregistry.v1.Rule])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.artifactregistry.v1.Rule]: @googleapis_reference_link{google/devtools/artifactregistry/v1/rule.proto#L35}
+  /// [google.devtools.artifactregistry.v1.UpdateRuleRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/rule.proto#L138}
+  ///
+  // clang-format on
+  StatusOr<google::devtools::artifactregistry::v1::Rule> UpdateRule(
+      google::devtools::artifactregistry::v1::Rule const& rule,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a rule.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.artifactregistry.v1.UpdateRuleRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.artifactregistry.v1.Rule])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.artifactregistry.v1.Rule]: @googleapis_reference_link{google/devtools/artifactregistry/v1/rule.proto#L35}
+  /// [google.devtools.artifactregistry.v1.UpdateRuleRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/rule.proto#L138}
+  ///
+  // clang-format on
+  StatusOr<google::devtools::artifactregistry::v1::Rule> UpdateRule(
+      google::devtools::artifactregistry::v1::UpdateRuleRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a rule.
+  ///
+  /// @param name  Required. The name of the rule to delete.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.artifactregistry.v1.DeleteRuleRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/rule.proto#L149}
+  ///
+  // clang-format on
+  Status DeleteRule(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a rule.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.artifactregistry.v1.DeleteRuleRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.artifactregistry.v1.DeleteRuleRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/rule.proto#L149}
+  ///
+  // clang-format on
+  Status DeleteRule(
+      google::devtools::artifactregistry::v1::DeleteRuleRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -2302,7 +2843,7 @@ class ArtifactRegistryClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
-  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
+  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
@@ -2361,8 +2902,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
-  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
+  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L137}
+  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
@@ -2387,7 +2928,7 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.GetProjectSettingsRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/settings.proto#L67}
+  /// [google.devtools.artifactregistry.v1.GetProjectSettingsRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/settings.proto#L77}
   /// [google.devtools.artifactregistry.v1.ProjectSettings]: @googleapis_reference_link{google/devtools/artifactregistry/v1/settings.proto#L32}
   ///
   // clang-format on
@@ -2417,7 +2958,7 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.artifactregistry.v1.GetProjectSettingsRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/settings.proto#L67}
+  /// [google.devtools.artifactregistry.v1.GetProjectSettingsRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/settings.proto#L77}
   /// [google.devtools.artifactregistry.v1.ProjectSettings]: @googleapis_reference_link{google/devtools/artifactregistry/v1/settings.proto#L32}
   ///
   // clang-format on
@@ -2447,7 +2988,7 @@ class ArtifactRegistryClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.devtools.artifactregistry.v1.ProjectSettings]: @googleapis_reference_link{google/devtools/artifactregistry/v1/settings.proto#L32}
-  /// [google.devtools.artifactregistry.v1.UpdateProjectSettingsRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/settings.proto#L78}
+  /// [google.devtools.artifactregistry.v1.UpdateProjectSettingsRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/settings.proto#L88}
   ///
   // clang-format on
   StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
@@ -2480,7 +3021,7 @@ class ArtifactRegistryClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.devtools.artifactregistry.v1.ProjectSettings]: @googleapis_reference_link{google/devtools/artifactregistry/v1/settings.proto#L32}
-  /// [google.devtools.artifactregistry.v1.UpdateProjectSettingsRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/settings.proto#L78}
+  /// [google.devtools.artifactregistry.v1.UpdateProjectSettingsRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/settings.proto#L88}
   ///
   // clang-format on
   StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
@@ -2608,6 +3149,445 @@ class ArtifactRegistryClient {
 
   // clang-format off
   ///
+  /// Updates a package.
+  ///
+  /// @param package  The package that replaces the resource on the server.
+  /// @param update_mask  The update mask applies to the resource. For the `FieldMask` definition,
+  ///  see
+  ///  https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.artifactregistry.v1.Package])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.artifactregistry.v1.Package]: @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L33}
+  /// [google.devtools.artifactregistry.v1.UpdatePackageRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L158}
+  ///
+  // clang-format on
+  StatusOr<google::devtools::artifactregistry::v1::Package> UpdatePackage(
+      google::devtools::artifactregistry::v1::Package const& package,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a package.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.artifactregistry.v1.UpdatePackageRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.artifactregistry.v1.Package])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.artifactregistry.v1.Package]: @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L33}
+  /// [google.devtools.artifactregistry.v1.UpdatePackageRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/package.proto#L158}
+  ///
+  // clang-format on
+  StatusOr<google::devtools::artifactregistry::v1::Package> UpdatePackage(
+      google::devtools::artifactregistry::v1::UpdatePackageRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists attachments.
+  ///
+  /// @param parent  Required. The name of the parent resource whose attachments will be listed.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.devtools.artifactregistry.v1.Attachment], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.artifactregistry.v1.Attachment]: @googleapis_reference_link{google/devtools/artifactregistry/v1/attachment.proto#L33}
+  /// [google.devtools.artifactregistry.v1.ListAttachmentsRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/attachment.proto#L88}
+  ///
+  // clang-format on
+  StreamRange<google::devtools::artifactregistry::v1::Attachment>
+  ListAttachments(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists attachments.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.artifactregistry.v1.ListAttachmentsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.devtools.artifactregistry.v1.Attachment], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.artifactregistry.v1.Attachment]: @googleapis_reference_link{google/devtools/artifactregistry/v1/attachment.proto#L33}
+  /// [google.devtools.artifactregistry.v1.ListAttachmentsRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/attachment.proto#L88}
+  ///
+  // clang-format on
+  StreamRange<google::devtools::artifactregistry::v1::Attachment>
+  ListAttachments(
+      google::devtools::artifactregistry::v1::ListAttachmentsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets an attachment.
+  ///
+  /// @param name  Required. The name of the attachment to retrieve.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.artifactregistry.v1.Attachment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.artifactregistry.v1.Attachment]: @googleapis_reference_link{google/devtools/artifactregistry/v1/attachment.proto#L33}
+  /// [google.devtools.artifactregistry.v1.GetAttachmentRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/attachment.proto#L123}
+  ///
+  // clang-format on
+  StatusOr<google::devtools::artifactregistry::v1::Attachment> GetAttachment(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets an attachment.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.artifactregistry.v1.GetAttachmentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.devtools.artifactregistry.v1.Attachment])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.artifactregistry.v1.Attachment]: @googleapis_reference_link{google/devtools/artifactregistry/v1/attachment.proto#L33}
+  /// [google.devtools.artifactregistry.v1.GetAttachmentRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/attachment.proto#L123}
+  ///
+  // clang-format on
+  StatusOr<google::devtools::artifactregistry::v1::Attachment> GetAttachment(
+      google::devtools::artifactregistry::v1::GetAttachmentRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates an attachment. The returned Operation will finish once the
+  /// attachment has been created. Its response will be the created attachment.
+  ///
+  /// @param parent  Required. The name of the parent resource where the attachment will be
+  ///  created.
+  /// @param attachment  Required. The attachment to be created.
+  /// @param attachment_id  Required. The attachment id to use for this attachment.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.devtools.artifactregistry.v1.Attachment] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.artifactregistry.v1.Attachment]: @googleapis_reference_link{google/devtools/artifactregistry/v1/attachment.proto#L33}
+  /// [google.devtools.artifactregistry.v1.CreateAttachmentRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/attachment.proto#L134}
+  ///
+  // clang-format on
+  future<StatusOr<google::devtools::artifactregistry::v1::Attachment>>
+  CreateAttachment(
+      std::string const& parent,
+      google::devtools::artifactregistry::v1::Attachment const& attachment,
+      std::string const& attachment_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateAttachment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateAttachment(
+      NoAwaitTag, std::string const& parent,
+      google::devtools::artifactregistry::v1::Attachment const& attachment,
+      std::string const& attachment_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates an attachment. The returned Operation will finish once the
+  /// attachment has been created. Its response will be the created attachment.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.artifactregistry.v1.CreateAttachmentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.devtools.artifactregistry.v1.Attachment] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.artifactregistry.v1.Attachment]: @googleapis_reference_link{google/devtools/artifactregistry/v1/attachment.proto#L33}
+  /// [google.devtools.artifactregistry.v1.CreateAttachmentRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/attachment.proto#L134}
+  ///
+  // clang-format on
+  future<StatusOr<google::devtools::artifactregistry::v1::Attachment>>
+  CreateAttachment(
+      google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateAttachment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateAttachment(
+      NoAwaitTag,
+      google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateAttachment
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::devtools::artifactregistry::v1::Attachment>>
+  CreateAttachment(google::longrunning::Operation const& operation,
+                   Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes an attachment. The returned Operation will
+  /// finish once the attachments has been deleted. It will not have any
+  /// Operation metadata and will return a `google.protobuf.Empty` response.
+  ///
+  /// @param name  Required. The name of the attachment to delete.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.devtools.artifactregistry.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.artifactregistry.v1.DeleteAttachmentRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/attachment.proto#L152}
+  /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L547}
+  ///
+  // clang-format on
+  future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+  DeleteAttachment(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteAttachment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteAttachment(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes an attachment. The returned Operation will
+  /// finish once the attachments has been deleted. It will not have any
+  /// Operation metadata and will return a `google.protobuf.Empty` response.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.devtools.artifactregistry.v1.DeleteAttachmentRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.devtools.artifactregistry.v1.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.devtools.artifactregistry.v1.DeleteAttachmentRequest]: @googleapis_reference_link{google/devtools/artifactregistry/v1/attachment.proto#L152}
+  /// [google.devtools.artifactregistry.v1.OperationMetadata]: @googleapis_reference_link{google/devtools/artifactregistry/v1/service.proto#L547}
+  ///
+  // clang-format on
+  future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+  DeleteAttachment(
+      google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteAttachment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteAttachment(
+      NoAwaitTag,
+      google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteAttachment
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+  DeleteAttachment(google::longrunning::Operation const& operation,
+                   Options opts = {});
+
+  // clang-format off
+  ///
   /// Lists information about the supported locations for this service.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -2696,8 +3676,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
@@ -2728,8 +3708,8 @@ class ArtifactRegistryClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(

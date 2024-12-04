@@ -1129,7 +1129,7 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteEntityTypeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L935}
+  /// [google.cloud.aiplatform.v1.DeleteEntityTypeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L936}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
@@ -1180,7 +1180,7 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteEntityTypeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L935}
+  /// [google.cloud.aiplatform.v1.DeleteEntityTypeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L936}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
@@ -1232,7 +1232,7 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteEntityTypeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L935}
+  /// [google.cloud.aiplatform.v1.DeleteEntityTypeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L936}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
@@ -1300,7 +1300,7 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CreateFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L955}
+  /// [google.cloud.aiplatform.v1.CreateFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L956}
   /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L34}
   ///
   // clang-format on
@@ -1360,7 +1360,7 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CreateFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L955}
+  /// [google.cloud.aiplatform.v1.CreateFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L956}
   /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L34}
   ///
   // clang-format on
@@ -1415,7 +1415,7 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CreateFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L955}
+  /// [google.cloud.aiplatform.v1.CreateFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L956}
   /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L34}
   ///
   // clang-format on
@@ -1455,14 +1455,15 @@ class FeaturestoreServiceClient {
   ///
   /// Creates a batch of Features in a given EntityType.
   ///
-  /// @param parent  Required. The resource name of the EntityType to create the batch of
-  ///  Features under. Format:
+  /// @param parent  Required. The resource name of the EntityType/FeatureGroup to create the
+  ///  batch of Features under. Format:
   ///  `projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}`
+  ///  `projects/{project}/locations/{location}/featureGroups/{feature_group}`
   /// @param requests  Required. The request message specifying the Features to create. All
-  ///  Features must be created under the same parent EntityType. The `parent`
-  ///  field in each child request message can be omitted. If `parent` is set in a
-  ///  child request, then the value must match the `parent` value in this request
-  ///  message.
+  ///  Features must be created under the same parent EntityType / FeatureGroup.
+  ///  The `parent` field in each child request message can be omitted. If
+  ///  `parent` is set in a child request, then the value must match the `parent`
+  ///  value in this request message.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -1483,8 +1484,8 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.BatchCreateFeaturesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L983}
-  /// [google.cloud.aiplatform.v1.BatchCreateFeaturesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1005}
+  /// [google.cloud.aiplatform.v1.BatchCreateFeaturesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L986}
+  /// [google.cloud.aiplatform.v1.BatchCreateFeaturesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1009}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
@@ -1541,8 +1542,8 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.BatchCreateFeaturesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L983}
-  /// [google.cloud.aiplatform.v1.BatchCreateFeaturesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1005}
+  /// [google.cloud.aiplatform.v1.BatchCreateFeaturesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L986}
+  /// [google.cloud.aiplatform.v1.BatchCreateFeaturesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1009}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
@@ -1602,7 +1603,7 @@ class FeaturestoreServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L34}
-  /// [google.cloud.aiplatform.v1.GetFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1014}
+  /// [google.cloud.aiplatform.v1.GetFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1018}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::Feature> GetFeature(
@@ -1632,7 +1633,7 @@ class FeaturestoreServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L34}
-  /// [google.cloud.aiplatform.v1.GetFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1014}
+  /// [google.cloud.aiplatform.v1.GetFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1018}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::Feature> GetFeature(
@@ -1671,7 +1672,7 @@ class FeaturestoreServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L34}
-  /// [google.cloud.aiplatform.v1.ListFeaturesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1032}
+  /// [google.cloud.aiplatform.v1.ListFeaturesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1036}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::Feature> ListFeatures(
@@ -1710,7 +1711,7 @@ class FeaturestoreServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L34}
-  /// [google.cloud.aiplatform.v1.ListFeaturesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1032}
+  /// [google.cloud.aiplatform.v1.ListFeaturesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1036}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::Feature> ListFeatures(
@@ -1754,7 +1755,7 @@ class FeaturestoreServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L34}
-  /// [google.cloud.aiplatform.v1.UpdateFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1240}
+  /// [google.cloud.aiplatform.v1.UpdateFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1244}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::Feature> UpdateFeature(
@@ -1785,7 +1786,7 @@ class FeaturestoreServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L34}
-  /// [google.cloud.aiplatform.v1.UpdateFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1240}
+  /// [google.cloud.aiplatform.v1.UpdateFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1244}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::Feature> UpdateFeature(
@@ -1820,7 +1821,7 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1269}
+  /// [google.cloud.aiplatform.v1.DeleteFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1273}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
@@ -1871,7 +1872,7 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1269}
+  /// [google.cloud.aiplatform.v1.DeleteFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1273}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
@@ -2346,8 +2347,8 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteFeatureValuesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1362}
-  /// [google.cloud.aiplatform.v1.DeleteFeatureValuesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1419}
+  /// [google.cloud.aiplatform.v1.DeleteFeatureValuesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1366}
+  /// [google.cloud.aiplatform.v1.DeleteFeatureValuesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1423}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteFeatureValuesResponse>>
@@ -2406,8 +2407,8 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteFeatureValuesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1362}
-  /// [google.cloud.aiplatform.v1.DeleteFeatureValuesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1419}
+  /// [google.cloud.aiplatform.v1.DeleteFeatureValuesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1366}
+  /// [google.cloud.aiplatform.v1.DeleteFeatureValuesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1423}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteFeatureValuesResponse>>
@@ -2474,7 +2475,7 @@ class FeaturestoreServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L34}
-  /// [google.cloud.aiplatform.v1.SearchFeaturesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1126}
+  /// [google.cloud.aiplatform.v1.SearchFeaturesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1130}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::Feature> SearchFeatures(
@@ -2515,7 +2516,7 @@ class FeaturestoreServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L34}
-  /// [google.cloud.aiplatform.v1.SearchFeaturesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1126}
+  /// [google.cloud.aiplatform.v1.SearchFeaturesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1130}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::Feature> SearchFeatures(
@@ -2554,7 +2555,7 @@ class FeaturestoreServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L34}
-  /// [google.cloud.aiplatform.v1.SearchFeaturesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1126}
+  /// [google.cloud.aiplatform.v1.SearchFeaturesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1130}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::Feature> SearchFeatures(
@@ -2658,7 +2659,7 @@ class FeaturestoreServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
-  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
+  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
@@ -2725,8 +2726,8 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
-  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
+  /// [google.iam.v1.TestIamPermissionsRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L137}
+  /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
@@ -2737,14 +2738,6 @@ class FeaturestoreServiceClient {
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
@@ -2770,8 +2763,8 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -2781,14 +2774,6 @@ class FeaturestoreServiceClient {
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -2818,8 +2803,8 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -2845,8 +2830,8 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
@@ -2877,8 +2862,8 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(
@@ -2904,7 +2889,7 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
   Status DeleteOperation(std::string const& name, Options opts = {});
@@ -2933,7 +2918,7 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
   Status DeleteOperation(
@@ -2950,8 +2935,9 @@ class FeaturestoreServiceClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -2965,9 +2951,9 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
@@ -2983,8 +2969,9 @@ class FeaturestoreServiceClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -3003,9 +2990,9 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
@@ -3044,7 +3031,7 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   /// [google.longrunning.WaitOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L207}
   ///
   // clang-format on

@@ -25,8 +25,9 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <generator/integration_tests/backup.pb.h>
-#include <generator/integration_tests/test.pb.h>
+#include <google/cloud/location/locations.pb.h>
 #include <google/longrunning/operations.pb.h>
+#include <generator/integration_tests/test.pb.h>
 #include <memory>
 
 namespace google {
@@ -129,6 +130,14 @@ class GoldenThingAdminRestStub {
   virtual StatusOr<google::test::admin::database::v1::ListBackupOperationsResponse> ListBackupOperations(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options, google::test::admin::database::v1::ListBackupOperationsRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::location::GetLocationRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual future<StatusOr<google::test::admin::database::v1::Database>> AsyncGetDatabase(
       google::cloud::CompletionQueue& cq,
@@ -256,6 +265,14 @@ class DefaultGoldenThingAdminRestStub : public GoldenThingAdminRestStub {
   StatusOr<google::test::admin::database::v1::ListBackupOperationsResponse> ListBackupOperations(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options, google::test::admin::database::v1::ListBackupOperationsRequest const& request) override;
+
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::location::GetLocationRequest const& request) override;
+
+  StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::longrunning::ListOperationsRequest const& request) override;
 
   future<StatusOr<google::test::admin::database::v1::Database>> AsyncGetDatabase(
       google::cloud::CompletionQueue& cq,

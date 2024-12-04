@@ -303,6 +303,24 @@ GoldenThingAdminMetadata::LongRunningWithoutRouting(
   return child_->LongRunningWithoutRouting(context, options, request);
 }
 
+StatusOr<google::cloud::location::Location>
+GoldenThingAdminMetadata::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::location::GetLocationRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetLocation(context, options, request);
+}
+
+StatusOr<google::longrunning::ListOperationsResponse>
+GoldenThingAdminMetadata::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::longrunning::ListOperationsRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ListOperations(context, options, request);
+}
+
 future<StatusOr<google::test::admin::database::v1::Database>>
 GoldenThingAdminMetadata::AsyncGetDatabase(
       google::cloud::CompletionQueue& cq,

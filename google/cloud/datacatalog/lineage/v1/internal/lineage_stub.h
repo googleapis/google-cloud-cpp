@@ -185,12 +185,9 @@ class DefaultLineageStub : public LineageStub {
           google::cloud::datacatalog::lineage::v1::Lineage::StubInterface>
           grpc_stub,
       std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations)
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
-        operations_stub_(std::move(operations_stub)),
-        operations_(std::move(operations)) {}
+        operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::cloud::datacatalog::lineage::v1::
                ProcessOpenLineageRunEventResponse>
@@ -333,7 +330,6 @@ class DefaultLineageStub : public LineageStub {
       grpc_stub_;
   std::unique_ptr<google::longrunning::Operations::StubInterface>
       operations_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

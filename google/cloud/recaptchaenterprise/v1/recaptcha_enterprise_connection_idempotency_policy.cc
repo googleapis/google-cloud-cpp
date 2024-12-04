@@ -90,6 +90,18 @@ RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::AddIpOverride(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency
+RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::RemoveIpOverride(
+    google::cloud::recaptchaenterprise::v1::RemoveIpOverrideRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::ListIpOverrides(
+    google::cloud::recaptchaenterprise::v1::ListIpOverridesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
 Idempotency RecaptchaEnterpriseServiceConnectionIdempotencyPolicy::GetMetrics(
     google::cloud::recaptchaenterprise::v1::GetMetricsRequest const&) {
   return Idempotency::kIdempotent;

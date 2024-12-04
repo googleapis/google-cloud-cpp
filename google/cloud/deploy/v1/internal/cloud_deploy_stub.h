@@ -207,6 +207,48 @@ class CloudDeployStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::deploy::v1::AbandonReleaseRequest const& request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateDeployPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::deploy::v1::CreateDeployPolicyRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> CreateDeployPolicy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::deploy::v1::CreateDeployPolicyRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateDeployPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::deploy::v1::UpdateDeployPolicyRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> UpdateDeployPolicy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::deploy::v1::UpdateDeployPolicyRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteDeployPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::deploy::v1::DeleteDeployPolicyRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteDeployPolicy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::deploy::v1::DeleteDeployPolicyRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::deploy::v1::ListDeployPoliciesResponse>
+  ListDeployPolicies(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::deploy::v1::ListDeployPoliciesRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::deploy::v1::DeployPolicy> GetDeployPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::deploy::v1::GetDeployPolicyRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::deploy::v1::ApproveRolloutResponse>
   ApproveRollout(
       grpc::ClientContext& context, Options const& options,
@@ -378,18 +420,15 @@ class DefaultCloudDeployStub : public CloudDeployStub {
   DefaultCloudDeployStub(
       std::unique_ptr<google::cloud::deploy::v1::CloudDeploy::StubInterface>
           grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub,
       std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub,
       std::unique_ptr<google::cloud::location::Locations::StubInterface>
           locations_stub,
       std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations)
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
-        operations_stub_(std::move(operations_stub)),
         iampolicy_stub_(std::move(iampolicy_stub)),
         locations_stub_(std::move(locations_stub)),
-        operations_(std::move(operations)) {}
+        operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::cloud::deploy::v1::ListDeliveryPipelinesResponse>
   ListDeliveryPipelines(
@@ -548,6 +587,52 @@ class DefaultCloudDeployStub : public CloudDeployStub {
   StatusOr<google::cloud::deploy::v1::AbandonReleaseResponse> AbandonRelease(
       grpc::ClientContext& context, Options const& options,
       google::cloud::deploy::v1::AbandonReleaseRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateDeployPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::deploy::v1::CreateDeployPolicyRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateDeployPolicy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::deploy::v1::CreateDeployPolicyRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateDeployPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::deploy::v1::UpdateDeployPolicyRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateDeployPolicy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::deploy::v1::UpdateDeployPolicyRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteDeployPolicy(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::deploy::v1::DeleteDeployPolicyRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteDeployPolicy(
+      grpc::ClientContext& context, Options options,
+      google::cloud::deploy::v1::DeleteDeployPolicyRequest const& request)
+      override;
+
+  StatusOr<google::cloud::deploy::v1::ListDeployPoliciesResponse>
+  ListDeployPolicies(grpc::ClientContext& context, Options const& options,
+                     google::cloud::deploy::v1::ListDeployPoliciesRequest const&
+                         request) override;
+
+  StatusOr<google::cloud::deploy::v1::DeployPolicy> GetDeployPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::deploy::v1::GetDeployPolicyRequest const& request)
+      override;
 
   StatusOr<google::cloud::deploy::v1::ApproveRolloutResponse> ApproveRollout(
       grpc::ClientContext& context, Options const& options,
@@ -716,12 +801,11 @@ class DefaultCloudDeployStub : public CloudDeployStub {
  private:
   std::unique_ptr<google::cloud::deploy::v1::CloudDeploy::StubInterface>
       grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
   std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub_;
   std::unique_ptr<google::cloud::location::Locations::StubInterface>
       locations_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

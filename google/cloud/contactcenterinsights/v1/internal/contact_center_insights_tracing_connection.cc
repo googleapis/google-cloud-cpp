@@ -524,6 +524,80 @@ ContactCenterInsightsTracingConnection::UndeployIssueModel(
                            child_->UndeployIssueModel(operation));
 }
 
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::ExportIssueModelResponse>>
+ContactCenterInsightsTracingConnection::ExportIssueModel(
+    google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "ExportIssueModel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->ExportIssueModel(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsTracingConnection::ExportIssueModel(
+    NoAwaitTag,
+    google::cloud::contactcenterinsights::v1::ExportIssueModelRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "ExportIssueModel");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->ExportIssueModel(NoAwaitTag{}, request));
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::ExportIssueModelResponse>>
+ContactCenterInsightsTracingConnection::ExportIssueModel(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "ExportIssueModel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ExportIssueModel(operation));
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::ImportIssueModelResponse>>
+ContactCenterInsightsTracingConnection::ImportIssueModel(
+    google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "ImportIssueModel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->ImportIssueModel(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsTracingConnection::ImportIssueModel(
+    NoAwaitTag,
+    google::cloud::contactcenterinsights::v1::ImportIssueModelRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "ImportIssueModel");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->ImportIssueModel(NoAwaitTag{}, request));
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::ImportIssueModelResponse>>
+ContactCenterInsightsTracingConnection::ImportIssueModel(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "ImportIssueModel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ImportIssueModel(operation));
+}
+
 StatusOr<google::cloud::contactcenterinsights::v1::Issue>
 ContactCenterInsightsTracingConnection::GetIssue(
     google::cloud::contactcenterinsights::v1::GetIssueRequest const& request) {
@@ -663,6 +737,111 @@ ContactCenterInsightsTracingConnection::UpdateSettings(
   return internal::EndSpan(*span, child_->UpdateSettings(request));
 }
 
+StatusOr<google::cloud::contactcenterinsights::v1::AnalysisRule>
+ContactCenterInsightsTracingConnection::CreateAnalysisRule(
+    google::cloud::contactcenterinsights::v1::CreateAnalysisRuleRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "CreateAnalysisRule");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateAnalysisRule(request));
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::AnalysisRule>
+ContactCenterInsightsTracingConnection::GetAnalysisRule(
+    google::cloud::contactcenterinsights::v1::GetAnalysisRuleRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "GetAnalysisRule");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAnalysisRule(request));
+}
+
+StreamRange<google::cloud::contactcenterinsights::v1::AnalysisRule>
+ContactCenterInsightsTracingConnection::ListAnalysisRules(
+    google::cloud::contactcenterinsights::v1::ListAnalysisRulesRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "ListAnalysisRules");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListAnalysisRules(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::contactcenterinsights::v1::AnalysisRule>(std::move(span),
+                                                              std::move(sr));
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::AnalysisRule>
+ContactCenterInsightsTracingConnection::UpdateAnalysisRule(
+    google::cloud::contactcenterinsights::v1::UpdateAnalysisRuleRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "UpdateAnalysisRule");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateAnalysisRule(request));
+}
+
+Status ContactCenterInsightsTracingConnection::DeleteAnalysisRule(
+    google::cloud::contactcenterinsights::v1::DeleteAnalysisRuleRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "DeleteAnalysisRule");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteAnalysisRule(request));
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::EncryptionSpec>
+ContactCenterInsightsTracingConnection::GetEncryptionSpec(
+    google::cloud::contactcenterinsights::v1::GetEncryptionSpecRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "GetEncryptionSpec");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetEncryptionSpec(request));
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::InitializeEncryptionSpecResponse>>
+ContactCenterInsightsTracingConnection::InitializeEncryptionSpec(
+    google::cloud::contactcenterinsights::v1::
+        InitializeEncryptionSpecRequest const& request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "InitializeEncryptionSpec");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->InitializeEncryptionSpec(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsTracingConnection::InitializeEncryptionSpec(
+    NoAwaitTag, google::cloud::contactcenterinsights::v1::
+                    InitializeEncryptionSpecRequest const& request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "InitializeEncryptionSpec");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->InitializeEncryptionSpec(NoAwaitTag{}, request));
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::InitializeEncryptionSpecResponse>>
+ContactCenterInsightsTracingConnection::InitializeEncryptionSpec(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "InitializeEncryptionSpec");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->InitializeEncryptionSpec(operation));
+}
+
 StatusOr<google::cloud::contactcenterinsights::v1::View>
 ContactCenterInsightsTracingConnection::CreateView(
     google::cloud::contactcenterinsights::v1::CreateViewRequest const&
@@ -711,6 +890,401 @@ Status ContactCenterInsightsTracingConnection::DeleteView(
       "contactcenterinsights_v1::ContactCenterInsightsConnection::DeleteView");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteView(request));
+}
+
+future<StatusOr<google::cloud::contactcenterinsights::v1::QueryMetricsResponse>>
+ContactCenterInsightsTracingConnection::QueryMetrics(
+    google::cloud::contactcenterinsights::v1::QueryMetricsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "QueryMetrics");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->QueryMetrics(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsTracingConnection::QueryMetrics(
+    NoAwaitTag,
+    google::cloud::contactcenterinsights::v1::QueryMetricsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "QueryMetrics");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->QueryMetrics(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::contactcenterinsights::v1::QueryMetricsResponse>>
+ContactCenterInsightsTracingConnection::QueryMetrics(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "QueryMetrics");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->QueryMetrics(operation));
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion>
+ContactCenterInsightsTracingConnection::CreateQaQuestion(
+    google::cloud::contactcenterinsights::v1::CreateQaQuestionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "CreateQaQuestion");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateQaQuestion(request));
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion>
+ContactCenterInsightsTracingConnection::GetQaQuestion(
+    google::cloud::contactcenterinsights::v1::GetQaQuestionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "GetQaQuestion");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetQaQuestion(request));
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion>
+ContactCenterInsightsTracingConnection::UpdateQaQuestion(
+    google::cloud::contactcenterinsights::v1::UpdateQaQuestionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "UpdateQaQuestion");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateQaQuestion(request));
+}
+
+Status ContactCenterInsightsTracingConnection::DeleteQaQuestion(
+    google::cloud::contactcenterinsights::v1::DeleteQaQuestionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "DeleteQaQuestion");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteQaQuestion(request));
+}
+
+StreamRange<google::cloud::contactcenterinsights::v1::QaQuestion>
+ContactCenterInsightsTracingConnection::ListQaQuestions(
+    google::cloud::contactcenterinsights::v1::ListQaQuestionsRequest request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "ListQaQuestions");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListQaQuestions(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::contactcenterinsights::v1::QaQuestion>(std::move(span),
+                                                            std::move(sr));
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::QaScorecard>
+ContactCenterInsightsTracingConnection::CreateQaScorecard(
+    google::cloud::contactcenterinsights::v1::CreateQaScorecardRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "CreateQaScorecard");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateQaScorecard(request));
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::QaScorecard>
+ContactCenterInsightsTracingConnection::GetQaScorecard(
+    google::cloud::contactcenterinsights::v1::GetQaScorecardRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "GetQaScorecard");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetQaScorecard(request));
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::QaScorecard>
+ContactCenterInsightsTracingConnection::UpdateQaScorecard(
+    google::cloud::contactcenterinsights::v1::UpdateQaScorecardRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "UpdateQaScorecard");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateQaScorecard(request));
+}
+
+Status ContactCenterInsightsTracingConnection::DeleteQaScorecard(
+    google::cloud::contactcenterinsights::v1::DeleteQaScorecardRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "DeleteQaScorecard");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteQaScorecard(request));
+}
+
+StreamRange<google::cloud::contactcenterinsights::v1::QaScorecard>
+ContactCenterInsightsTracingConnection::ListQaScorecards(
+    google::cloud::contactcenterinsights::v1::ListQaScorecardsRequest request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "ListQaScorecards");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListQaScorecards(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::contactcenterinsights::v1::QaScorecard>(std::move(span),
+                                                             std::move(sr));
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
+ContactCenterInsightsTracingConnection::CreateQaScorecardRevision(
+    google::cloud::contactcenterinsights::v1::
+        CreateQaScorecardRevisionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "CreateQaScorecardRevision");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateQaScorecardRevision(request));
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
+ContactCenterInsightsTracingConnection::GetQaScorecardRevision(
+    google::cloud::contactcenterinsights::v1::
+        GetQaScorecardRevisionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "GetQaScorecardRevision");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetQaScorecardRevision(request));
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::TuneQaScorecardRevisionResponse>>
+ContactCenterInsightsTracingConnection::TuneQaScorecardRevision(
+    google::cloud::contactcenterinsights::v1::
+        TuneQaScorecardRevisionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "TuneQaScorecardRevision");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->TuneQaScorecardRevision(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsTracingConnection::TuneQaScorecardRevision(
+    NoAwaitTag, google::cloud::contactcenterinsights::v1::
+                    TuneQaScorecardRevisionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "TuneQaScorecardRevision");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->TuneQaScorecardRevision(NoAwaitTag{}, request));
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::TuneQaScorecardRevisionResponse>>
+ContactCenterInsightsTracingConnection::TuneQaScorecardRevision(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "TuneQaScorecardRevision");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->TuneQaScorecardRevision(operation));
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
+ContactCenterInsightsTracingConnection::DeployQaScorecardRevision(
+    google::cloud::contactcenterinsights::v1::
+        DeployQaScorecardRevisionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "DeployQaScorecardRevision");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeployQaScorecardRevision(request));
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
+ContactCenterInsightsTracingConnection::UndeployQaScorecardRevision(
+    google::cloud::contactcenterinsights::v1::
+        UndeployQaScorecardRevisionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "UndeployQaScorecardRevision");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UndeployQaScorecardRevision(request));
+}
+
+Status ContactCenterInsightsTracingConnection::DeleteQaScorecardRevision(
+    google::cloud::contactcenterinsights::v1::
+        DeleteQaScorecardRevisionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "DeleteQaScorecardRevision");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteQaScorecardRevision(request));
+}
+
+StreamRange<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
+ContactCenterInsightsTracingConnection::ListQaScorecardRevisions(
+    google::cloud::contactcenterinsights::v1::ListQaScorecardRevisionsRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "ListQaScorecardRevisions");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListQaScorecardRevisions(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::contactcenterinsights::v1::QaScorecardRevision>(
+      std::move(span), std::move(sr));
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::FeedbackLabel>
+ContactCenterInsightsTracingConnection::CreateFeedbackLabel(
+    google::cloud::contactcenterinsights::v1::CreateFeedbackLabelRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "CreateFeedbackLabel");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateFeedbackLabel(request));
+}
+
+StreamRange<google::cloud::contactcenterinsights::v1::FeedbackLabel>
+ContactCenterInsightsTracingConnection::ListFeedbackLabels(
+    google::cloud::contactcenterinsights::v1::ListFeedbackLabelsRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "ListFeedbackLabels");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListFeedbackLabels(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::contactcenterinsights::v1::FeedbackLabel>(std::move(span),
+                                                               std::move(sr));
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::FeedbackLabel>
+ContactCenterInsightsTracingConnection::GetFeedbackLabel(
+    google::cloud::contactcenterinsights::v1::GetFeedbackLabelRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "GetFeedbackLabel");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetFeedbackLabel(request));
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::FeedbackLabel>
+ContactCenterInsightsTracingConnection::UpdateFeedbackLabel(
+    google::cloud::contactcenterinsights::v1::UpdateFeedbackLabelRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "UpdateFeedbackLabel");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateFeedbackLabel(request));
+}
+
+Status ContactCenterInsightsTracingConnection::DeleteFeedbackLabel(
+    google::cloud::contactcenterinsights::v1::DeleteFeedbackLabelRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "DeleteFeedbackLabel");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteFeedbackLabel(request));
+}
+
+StreamRange<google::cloud::contactcenterinsights::v1::FeedbackLabel>
+ContactCenterInsightsTracingConnection::ListAllFeedbackLabels(
+    google::cloud::contactcenterinsights::v1::ListAllFeedbackLabelsRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "ListAllFeedbackLabels");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListAllFeedbackLabels(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::contactcenterinsights::v1::FeedbackLabel>(std::move(span),
+                                                               std::move(sr));
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::BulkUploadFeedbackLabelsResponse>>
+ContactCenterInsightsTracingConnection::BulkUploadFeedbackLabels(
+    google::cloud::contactcenterinsights::v1::
+        BulkUploadFeedbackLabelsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "BulkUploadFeedbackLabels");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->BulkUploadFeedbackLabels(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsTracingConnection::BulkUploadFeedbackLabels(
+    NoAwaitTag, google::cloud::contactcenterinsights::v1::
+                    BulkUploadFeedbackLabelsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "BulkUploadFeedbackLabels");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->BulkUploadFeedbackLabels(NoAwaitTag{}, request));
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::BulkUploadFeedbackLabelsResponse>>
+ContactCenterInsightsTracingConnection::BulkUploadFeedbackLabels(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "BulkUploadFeedbackLabels");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->BulkUploadFeedbackLabels(operation));
+}
+
+future<StatusOr<google::cloud::contactcenterinsights::v1::
+                    BulkDownloadFeedbackLabelsResponse>>
+ContactCenterInsightsTracingConnection::BulkDownloadFeedbackLabels(
+    google::cloud::contactcenterinsights::v1::
+        BulkDownloadFeedbackLabelsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "BulkDownloadFeedbackLabels");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->BulkDownloadFeedbackLabels(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsTracingConnection::BulkDownloadFeedbackLabels(
+    NoAwaitTag, google::cloud::contactcenterinsights::v1::
+                    BulkDownloadFeedbackLabelsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "BulkDownloadFeedbackLabels");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->BulkDownloadFeedbackLabels(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::contactcenterinsights::v1::
+                    BulkDownloadFeedbackLabelsResponse>>
+ContactCenterInsightsTracingConnection::BulkDownloadFeedbackLabels(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "BulkDownloadFeedbackLabels");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->BulkDownloadFeedbackLabels(operation));
 }
 
 StreamRange<google::longrunning::Operation>

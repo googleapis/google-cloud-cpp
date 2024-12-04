@@ -57,7 +57,10 @@ class ProtoEnum {
   explicit operator enum_type() const { return v_; }
 
   /// The fully-qualified name of the enum type, scope delimited by periods.
-  static std::string const& TypeName() { return Descriptor()->full_name(); }
+  static std::string const& TypeName() {
+    static std::string const kName(Descriptor()->full_name());
+    return kName;
+  }
 
   /// @name Relational operators
   ///@{

@@ -211,6 +211,20 @@ GoldenThingAdminRoundRobin::LongRunningWithoutRouting(
   return Child()->LongRunningWithoutRouting(context, options, request);
 }
 
+StatusOr<google::cloud::location::Location> GoldenThingAdminRoundRobin::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::location::GetLocationRequest const& request) {
+  return Child()->GetLocation(context, options, request);
+}
+
+StatusOr<google::longrunning::ListOperationsResponse> GoldenThingAdminRoundRobin::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::longrunning::ListOperationsRequest const& request) {
+  return Child()->ListOperations(context, options, request);
+}
+
 future<StatusOr<google::test::admin::database::v1::Database>>
 GoldenThingAdminRoundRobin::AsyncGetDatabase(
     google::cloud::CompletionQueue& cq,

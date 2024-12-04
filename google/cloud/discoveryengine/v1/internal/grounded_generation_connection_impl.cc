@@ -69,6 +69,31 @@ GroundedGenerationServiceConnectionImpl::
           std::move(options), GroundedGenerationServiceConnection::options())) {
 }
 
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::discoveryengine::v1::GenerateGroundedContentRequest,
+    google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>>
+GroundedGenerationServiceConnectionImpl::AsyncStreamGenerateGroundedContent() {
+  return stub_->AsyncStreamGenerateGroundedContent(
+      background_->cq(), std::make_shared<grpc::ClientContext>(),
+      internal::SaveCurrentOptions());
+}
+
+StatusOr<google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>
+GroundedGenerationServiceConnectionImpl::GenerateGroundedContent(
+    google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GenerateGroundedContent(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::
+                 GenerateGroundedContentRequest const& request) {
+        return stub_->GenerateGroundedContent(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 StatusOr<google::cloud::discoveryengine::v1::CheckGroundingResponse>
 GroundedGenerationServiceConnectionImpl::CheckGrounding(
     google::cloud::discoveryengine::v1::CheckGroundingRequest const& request) {

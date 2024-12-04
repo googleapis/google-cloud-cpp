@@ -105,6 +105,42 @@ EndpointServiceLogging::UpdateEndpoint(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+EndpointServiceLogging::AsyncUpdateEndpointLongRunning(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::UpdateEndpointLongRunningRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::aiplatform::v1::UpdateEndpointLongRunningRequest const&
+              request) {
+        return child_->AsyncUpdateEndpointLongRunning(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+EndpointServiceLogging::UpdateEndpointLongRunning(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UpdateEndpointLongRunningRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::UpdateEndpointLongRunningRequest const&
+              request) {
+        return child_->UpdateEndpointLongRunning(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 EndpointServiceLogging::AsyncDeleteEndpoint(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

@@ -17,6 +17,7 @@
 // source: google/cloud/discoveryengine/v1/grounded_generation_service.proto
 
 #include "google/cloud/discoveryengine/v1/internal/grounded_generation_tracing_stub.h"
+#include "google/cloud/internal/async_read_write_stream_tracing.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
 #include <memory>
 #include <utility>
@@ -31,6 +32,40 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 GroundedGenerationServiceTracingStub::GroundedGenerationServiceTracingStub(
     std::shared_ptr<GroundedGenerationServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
+
+std::unique_ptr<AsyncStreamingReadWriteRpc<
+    google::cloud::discoveryengine::v1::GenerateGroundedContentRequest,
+    google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>>
+GroundedGenerationServiceTracingStub::AsyncStreamGenerateGroundedContent(
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.GroundedGenerationService",
+      "StreamGenerateGroundedContent");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto stream = child_->AsyncStreamGenerateGroundedContent(cq, context,
+                                                           std::move(options));
+  return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
+      google::cloud::discoveryengine::v1::GenerateGroundedContentRequest,
+      google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>>(
+      std::move(context), std::move(stream), std::move(span));
+}
+
+StatusOr<google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>
+GroundedGenerationServiceTracingStub::GenerateGroundedContent(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.GroundedGenerationService",
+      "GenerateGroundedContent");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->GenerateGroundedContent(context, options, request));
+}
 
 StatusOr<google::cloud::discoveryengine::v1::CheckGroundingResponse>
 GroundedGenerationServiceTracingStub::CheckGrounding(

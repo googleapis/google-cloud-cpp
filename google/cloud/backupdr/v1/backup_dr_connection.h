@@ -217,6 +217,178 @@ class BackupDRConnection {
   virtual future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
   DeleteManagementServer(google::longrunning::Operation const& operation);
 
+  virtual future<StatusOr<google::cloud::backupdr::v1::BackupVault>>
+  CreateBackupVault(
+      google::cloud::backupdr::v1::CreateBackupVaultRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateBackupVault(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::CreateBackupVaultRequest const& request);
+
+  virtual future<StatusOr<google::cloud::backupdr::v1::BackupVault>>
+  CreateBackupVault(google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::cloud::backupdr::v1::BackupVault>
+  ListBackupVaults(
+      google::cloud::backupdr::v1::ListBackupVaultsRequest request);
+
+  virtual StreamRange<google::cloud::backupdr::v1::BackupVault>
+  FetchUsableBackupVaults(
+      google::cloud::backupdr::v1::FetchUsableBackupVaultsRequest request);
+
+  virtual StatusOr<google::cloud::backupdr::v1::BackupVault> GetBackupVault(
+      google::cloud::backupdr::v1::GetBackupVaultRequest const& request);
+
+  virtual future<StatusOr<google::cloud::backupdr::v1::BackupVault>>
+  UpdateBackupVault(
+      google::cloud::backupdr::v1::UpdateBackupVaultRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateBackupVault(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::UpdateBackupVaultRequest const& request);
+
+  virtual future<StatusOr<google::cloud::backupdr::v1::BackupVault>>
+  UpdateBackupVault(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
+  DeleteBackupVault(
+      google::cloud::backupdr::v1::DeleteBackupVaultRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteBackupVault(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::DeleteBackupVaultRequest const& request);
+
+  virtual future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
+  DeleteBackupVault(google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::cloud::backupdr::v1::DataSource> ListDataSources(
+      google::cloud::backupdr::v1::ListDataSourcesRequest request);
+
+  virtual StatusOr<google::cloud::backupdr::v1::DataSource> GetDataSource(
+      google::cloud::backupdr::v1::GetDataSourceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::backupdr::v1::DataSource>>
+  UpdateDataSource(
+      google::cloud::backupdr::v1::UpdateDataSourceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateDataSource(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::UpdateDataSourceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::backupdr::v1::DataSource>>
+  UpdateDataSource(google::longrunning::Operation const& operation);
+
+  virtual StreamRange<google::cloud::backupdr::v1::Backup> ListBackups(
+      google::cloud::backupdr::v1::ListBackupsRequest request);
+
+  virtual StatusOr<google::cloud::backupdr::v1::Backup> GetBackup(
+      google::cloud::backupdr::v1::GetBackupRequest const& request);
+
+  virtual future<StatusOr<google::cloud::backupdr::v1::Backup>> UpdateBackup(
+      google::cloud::backupdr::v1::UpdateBackupRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateBackup(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::UpdateBackupRequest const& request);
+
+  virtual future<StatusOr<google::cloud::backupdr::v1::Backup>> UpdateBackup(
+      google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::backupdr::v1::Backup>> DeleteBackup(
+      google::cloud::backupdr::v1::DeleteBackupRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteBackup(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::DeleteBackupRequest const& request);
+
+  virtual future<StatusOr<google::cloud::backupdr::v1::Backup>> DeleteBackup(
+      google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::backupdr::v1::RestoreBackupResponse>>
+  RestoreBackup(
+      google::cloud::backupdr::v1::RestoreBackupRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> RestoreBackup(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::RestoreBackupRequest const& request);
+
+  virtual future<StatusOr<google::cloud::backupdr::v1::RestoreBackupResponse>>
+  RestoreBackup(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::backupdr::v1::BackupPlan>>
+  CreateBackupPlan(
+      google::cloud::backupdr::v1::CreateBackupPlanRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateBackupPlan(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::CreateBackupPlanRequest const& request);
+
+  virtual future<StatusOr<google::cloud::backupdr::v1::BackupPlan>>
+  CreateBackupPlan(google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::cloud::backupdr::v1::BackupPlan> GetBackupPlan(
+      google::cloud::backupdr::v1::GetBackupPlanRequest const& request);
+
+  virtual StreamRange<google::cloud::backupdr::v1::BackupPlan> ListBackupPlans(
+      google::cloud::backupdr::v1::ListBackupPlansRequest request);
+
+  virtual future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
+  DeleteBackupPlan(
+      google::cloud::backupdr::v1::DeleteBackupPlanRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteBackupPlan(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::DeleteBackupPlanRequest const& request);
+
+  virtual future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
+  DeleteBackupPlan(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
+  CreateBackupPlanAssociation(
+      google::cloud::backupdr::v1::CreateBackupPlanAssociationRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateBackupPlanAssociation(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::CreateBackupPlanAssociationRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
+  CreateBackupPlanAssociation(google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>
+  GetBackupPlanAssociation(
+      google::cloud::backupdr::v1::GetBackupPlanAssociationRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::backupdr::v1::BackupPlanAssociation>
+  ListBackupPlanAssociations(
+      google::cloud::backupdr::v1::ListBackupPlanAssociationsRequest request);
+
+  virtual future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
+  DeleteBackupPlanAssociation(
+      google::cloud::backupdr::v1::DeleteBackupPlanAssociationRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteBackupPlanAssociation(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::DeleteBackupPlanAssociationRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
+  DeleteBackupPlanAssociation(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
+  TriggerBackup(
+      google::cloud::backupdr::v1::TriggerBackupRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> TriggerBackup(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::TriggerBackupRequest const& request);
+
+  virtual future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
+  TriggerBackup(google::longrunning::Operation const& operation);
+
   virtual StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

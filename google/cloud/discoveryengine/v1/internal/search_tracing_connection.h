@@ -43,6 +43,10 @@ class SearchServiceTracingConnection
   StreamRange<google::cloud::discoveryengine::v1::SearchResponse::SearchResult>
   Search(google::cloud::discoveryengine::v1::SearchRequest request) override;
 
+  StreamRange<google::cloud::discoveryengine::v1::SearchResponse::SearchResult>
+  SearchLite(
+      google::cloud::discoveryengine::v1::SearchRequest request) override;
+
   StreamRange<google::longrunning::Operation> ListOperations(
       google::longrunning::ListOperationsRequest request) override;
 

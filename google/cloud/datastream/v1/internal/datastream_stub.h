@@ -137,6 +137,16 @@ class DatastreamStub {
       grpc::ClientContext& context, Options options,
       google::cloud::datastream::v1::DeleteStreamRequest const& request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncRunStream(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::datastream::v1::RunStreamRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> RunStream(
+      grpc::ClientContext& context, Options options,
+      google::cloud::datastream::v1::RunStreamRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::datastream::v1::StreamObject> GetStreamObject(
       grpc::ClientContext& context, Options const& options,
       google::cloud::datastream::v1::GetStreamObjectRequest const& request) = 0;
@@ -279,16 +289,13 @@ class DefaultDatastreamStub : public DatastreamStub {
   DefaultDatastreamStub(
       std::unique_ptr<google::cloud::datastream::v1::Datastream::StubInterface>
           grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub,
       std::unique_ptr<google::cloud::location::Locations::StubInterface>
           locations_stub,
       std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations)
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
-        operations_stub_(std::move(operations_stub)),
         locations_stub_(std::move(locations_stub)),
-        operations_(std::move(operations)) {}
+        operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::cloud::datastream::v1::ListConnectionProfilesResponse>
   ListConnectionProfiles(
@@ -388,6 +395,16 @@ class DefaultDatastreamStub : public DatastreamStub {
       grpc::ClientContext& context, Options options,
       google::cloud::datastream::v1::DeleteStreamRequest const& request)
       override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncRunStream(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::datastream::v1::RunStreamRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> RunStream(
+      grpc::ClientContext& context, Options options,
+      google::cloud::datastream::v1::RunStreamRequest const& request) override;
 
   StatusOr<google::cloud::datastream::v1::StreamObject> GetStreamObject(
       grpc::ClientContext& context, Options const& options,
@@ -527,11 +544,10 @@ class DefaultDatastreamStub : public DatastreamStub {
  private:
   std::unique_ptr<google::cloud::datastream::v1::Datastream::StubInterface>
       grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
   std::unique_ptr<google::cloud::location::Locations::StubInterface>
       locations_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

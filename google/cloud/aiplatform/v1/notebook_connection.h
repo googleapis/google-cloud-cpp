@@ -303,6 +303,19 @@ class NotebookServiceConnection {
       StatusOr<google::cloud::aiplatform::v1::StartNotebookRuntimeResponse>>
   StartNotebookRuntime(google::longrunning::Operation const& operation);
 
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::StopNotebookRuntimeResponse>>
+  StopNotebookRuntime(
+      google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> StopNotebookRuntime(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::StopNotebookRuntimeResponse>>
+  StopNotebookRuntime(google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>>
   CreateNotebookExecutionJob(
       google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const&

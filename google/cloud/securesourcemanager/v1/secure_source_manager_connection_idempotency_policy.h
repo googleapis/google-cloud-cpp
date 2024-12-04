@@ -79,6 +79,25 @@ class SecureSourceManagerConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency TestIamPermissionsRepo(
       google::iam::v1::TestIamPermissionsRequest const& request);
 
+  virtual google::cloud::Idempotency CreateBranchRule(
+      google::cloud::securesourcemanager::v1::CreateBranchRuleRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListBranchRules(
+      google::cloud::securesourcemanager::v1::ListBranchRulesRequest request);
+
+  virtual google::cloud::Idempotency GetBranchRule(
+      google::cloud::securesourcemanager::v1::GetBranchRuleRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateBranchRule(
+      google::cloud::securesourcemanager::v1::UpdateBranchRuleRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteBranchRule(
+      google::cloud::securesourcemanager::v1::DeleteBranchRuleRequest const&
+          request);
+
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

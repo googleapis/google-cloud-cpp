@@ -355,6 +355,32 @@ DefaultGoldenThingAdminStub::LongRunningWithoutRouting(
     return response;
 }
 
+StatusOr<google::cloud::location::Location>
+DefaultGoldenThingAdminStub::GetLocation(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::location::GetLocationRequest const& request) {
+    google::cloud::location::Location response;
+    auto status =
+        locations_stub_->GetLocation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
+}
+
+StatusOr<google::longrunning::ListOperationsResponse>
+DefaultGoldenThingAdminStub::ListOperations(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::ListOperationsRequest const& request) {
+    google::longrunning::ListOperationsResponse response;
+    auto status =
+        operations_stub_->ListOperations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
+}
+
 future<StatusOr<google::test::admin::database::v1::Database>>
 DefaultGoldenThingAdminStub::AsyncGetDatabase(
     google::cloud::CompletionQueue& cq,
@@ -407,7 +433,7 @@ DefaultGoldenThingAdminStub::AsyncGetOperation(
       [this](grpc::ClientContext* context,
              google::longrunning::GetOperationRequest const& request,
              grpc::CompletionQueue* cq) {
-        return operations_->AsyncGetOperation(context, request, cq);
+        return operations_stub_->AsyncGetOperation(context, request, cq);
       },
       request, std::move(context));
 }
@@ -424,7 +450,7 @@ future<Status> DefaultGoldenThingAdminStub::AsyncCancelOperation(
       [this](grpc::ClientContext* context,
              google::longrunning::CancelOperationRequest const& request,
              grpc::CompletionQueue* cq) {
-        return operations_->AsyncCancelOperation(context, request, cq);
+        return operations_stub_->AsyncCancelOperation(context, request, cq);
       },
       request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {

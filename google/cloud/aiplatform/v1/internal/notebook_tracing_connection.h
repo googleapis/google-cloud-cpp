@@ -150,6 +150,19 @@ class NotebookServiceTracingConnection
   StartNotebookRuntime(
       google::longrunning::Operation const& operation) override;
 
+  future<StatusOr<google::cloud::aiplatform::v1::StopNotebookRuntimeResponse>>
+  StopNotebookRuntime(
+      google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> StopNotebookRuntime(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::StopNotebookRuntimeResponse>>
+  StopNotebookRuntime(google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>>
   CreateNotebookExecutionJob(
       google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const&

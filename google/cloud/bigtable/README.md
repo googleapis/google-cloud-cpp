@@ -71,7 +71,7 @@ int main(int argc, char* argv[]) try {
 - Official documentation about the [Cloud Bigtable][cloud-bigtable-docs] service
 - [Reference doxygen documentation][doxygen-link] for each release of this
   client library
-- Detailed header comments in our \[public `.h`\]\[source-link\] files
+- Detailed header comments in our \[public `.h`\][source-link] files
 
 [cloud-bigtable-docs]: https://cloud.google.com/bigtable/docs/
 [doxygen-link]: https://cloud.google.com/cpp/docs/reference/bigtable/latest/

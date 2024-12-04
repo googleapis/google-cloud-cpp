@@ -332,6 +332,89 @@ CloudDeployConnection::AbandonRelease(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+future<StatusOr<google::cloud::deploy::v1::DeployPolicy>>
+CloudDeployConnection::CreateDeployPolicy(
+    google::cloud::deploy::v1::CreateDeployPolicyRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::deploy::v1::DeployPolicy>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudDeployConnection::CreateDeployPolicy(
+    NoAwaitTag, google::cloud::deploy::v1::CreateDeployPolicyRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::deploy::v1::DeployPolicy>>
+CloudDeployConnection::CreateDeployPolicy(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::deploy::v1::DeployPolicy>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::deploy::v1::DeployPolicy>>
+CloudDeployConnection::UpdateDeployPolicy(
+    google::cloud::deploy::v1::UpdateDeployPolicyRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::deploy::v1::DeployPolicy>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudDeployConnection::UpdateDeployPolicy(
+    NoAwaitTag, google::cloud::deploy::v1::UpdateDeployPolicyRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::deploy::v1::DeployPolicy>>
+CloudDeployConnection::UpdateDeployPolicy(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::deploy::v1::DeployPolicy>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
+CloudDeployConnection::DeleteDeployPolicy(
+    google::cloud::deploy::v1::DeleteDeployPolicyRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::deploy::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudDeployConnection::DeleteDeployPolicy(
+    NoAwaitTag, google::cloud::deploy::v1::DeleteDeployPolicyRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
+CloudDeployConnection::DeleteDeployPolicy(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::deploy::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::deploy::v1::DeployPolicy>
+CloudDeployConnection::ListDeployPolicies(
+    google::cloud::deploy::v1::
+        ListDeployPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::deploy::v1::DeployPolicy>>();
+}
+
+StatusOr<google::cloud::deploy::v1::DeployPolicy>
+CloudDeployConnection::GetDeployPolicy(
+    google::cloud::deploy::v1::GetDeployPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::cloud::deploy::v1::ApproveRolloutResponse>
 CloudDeployConnection::ApproveRollout(
     google::cloud::deploy::v1::ApproveRolloutRequest const&) {

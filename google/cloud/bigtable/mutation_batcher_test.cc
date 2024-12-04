@@ -35,7 +35,7 @@ using ::google::cloud::bigtable_mocks::MockDataConnection;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
-using ::google::cloud::testing_util::chrono_literals::operator"" _ms;  // NOLINT
+using ::google::cloud::testing_util::chrono_literals::operator""_ms;
 using ::testing::Not;
 using ::testing::Return;
 using ::testing::WithParamInterface;

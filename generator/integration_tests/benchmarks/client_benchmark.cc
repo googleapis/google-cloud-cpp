@@ -24,6 +24,9 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
 #include "google/cloud/version.h"
+#include <google/cloud/location/locations.grpc.pb.h>
+#include <google/iam/v1/iam_policy.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <benchmark/benchmark.h>
 #include <memory>
 
@@ -142,6 +145,24 @@ class TestStub : public GoldenKitchenSinkStub {
       google::test::admin::database::v1::ExplicitRoutingRequest const&)
       override {
     return Status();
+  }
+
+  StatusOr<::google::cloud::location::Location> GetLocation(
+      grpc::ClientContext&, Options const&,
+      ::google::cloud::location::GetLocationRequest const&) override {
+    return internal::UnimplementedError("unimplemented");
+  }
+
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      grpc::ClientContext&, Options const&,
+      google::iam::v1::GetIamPolicyRequest const&) override {
+    return internal::UnimplementedError("unimplemented");
+  }
+
+  StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
+      grpc::ClientContext&, Options const&,
+      google::longrunning::ListOperationsRequest const&) override {
+    return internal::UnimplementedError("unimplemented");
   }
 
   std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<

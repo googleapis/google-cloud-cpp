@@ -39,6 +39,20 @@ class GroundedGenerationServiceMetadata : public GroundedGenerationServiceStub {
       std::multimap<std::string, std::string> fixed_metadata,
       std::string api_client_header = "");
 
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::discoveryengine::v1::GenerateGroundedContentRequest,
+      google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>>
+  AsyncStreamGenerateGroundedContent(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
+
+  StatusOr<google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>
+  GenerateGroundedContent(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const&
+          request) override;
+
   StatusOr<google::cloud::discoveryengine::v1::CheckGroundingResponse>
   CheckGrounding(
       grpc::ClientContext& context, Options const& options,

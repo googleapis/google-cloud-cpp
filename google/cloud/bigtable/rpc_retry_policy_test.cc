@@ -46,7 +46,7 @@ Status PermanentError() {
   return Status(StatusCode::kFailedPrecondition, "failed");
 }
 
-using ::google::cloud::testing_util::chrono_literals::operator"" _ms;  // NOLINT
+using ::google::cloud::testing_util::chrono_literals::operator""_ms;
 
 auto const kLimitedTimeTestPeriod = 100_ms;
 auto const kLimitedTimeTolerance = 20_ms;

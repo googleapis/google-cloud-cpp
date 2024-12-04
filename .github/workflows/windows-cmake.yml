@@ -61,7 +61,7 @@ jobs:
         - arch: x86
           build_type: Debug
     steps:
-    - uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4
+    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
       with:
         ref: ${{ inputs.checkout-ref }}
     - uses: google-github-actions/auth@v2
@@ -211,12 +211,6 @@ jobs:
     - name: Pre Build Disk Space
       shell: bash
       run: df -m
-    - name: Download and Install CMake
-      shell: bash
-      run: |
-        choco install -y cmake --version 3.29.2 || \
-        (sleep 60  ; choco install -y cmake --version 3.29.2) || \
-        (sleep 120 ; choco install -y cmake --version 3.29.2)
     - name: Download and Install sccache
       if: ${{ inputs.sccache-mode != 'DISABLED' }}
       working-directory: "${{runner.temp}}"

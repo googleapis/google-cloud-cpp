@@ -133,6 +133,12 @@ class GoldenThingAdminRestConnectionImpl
   StreamRange<google::longrunning::Operation>
   ListBackupOperations(google::test::admin::database::v1::ListBackupOperationsRequest request) override;
 
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
+
   future<StatusOr<google::test::admin::database::v1::Database>>
   AsyncGetDatabase(google::test::admin::database::v1::GetDatabaseRequest const& request) override;
 

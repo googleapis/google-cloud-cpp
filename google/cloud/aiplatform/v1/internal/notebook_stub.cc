@@ -299,6 +299,37 @@ DefaultNotebookServiceStub::StartNotebookRuntime(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DefaultNotebookServiceStub::AsyncStopNotebookRuntime(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::aiplatform::v1::StopNotebookRuntimeRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncStopNotebookRuntime(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNotebookServiceStub::StopNotebookRuntime(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::StopNotebookRuntimeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->StopNotebookRuntime(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DefaultNotebookServiceStub::AsyncCreateNotebookExecutionJob(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -526,7 +557,7 @@ DefaultNotebookServiceStub::AsyncGetOperation(
       [this](grpc::ClientContext* context,
              google::longrunning::GetOperationRequest const& request,
              grpc::CompletionQueue* cq) {
-        return operations_->AsyncGetOperation(context, request, cq);
+        return operations_stub_->AsyncGetOperation(context, request, cq);
       },
       request, std::move(context));
 }
@@ -543,7 +574,8 @@ future<Status> DefaultNotebookServiceStub::AsyncCancelOperation(
              [this](grpc::ClientContext* context,
                     google::longrunning::CancelOperationRequest const& request,
                     grpc::CompletionQueue* cq) {
-               return operations_->AsyncCancelOperation(context, request, cq);
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
              },
              request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {

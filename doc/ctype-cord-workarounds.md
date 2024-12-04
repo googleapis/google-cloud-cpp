@@ -77,7 +77,7 @@ present, this is the correct default with **any** Protobuf version.
 
 Once the `[ctype = CORD]` annotation is included in the proto files then the
 correct default depends on the Protobuf version. If `google-cloud-cpp` is using
-Protobuf \< v23 and the annotation is included in the proto files, then
+Protobuf < v23 and the annotation is included in the proto files, then
 `google-cloud-cpp` will enable the workarounds by default.
 
 It is very likely that the default value for this option is incorrect during the

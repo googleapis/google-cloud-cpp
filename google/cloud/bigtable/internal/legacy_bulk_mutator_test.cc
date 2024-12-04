@@ -27,7 +27,7 @@ namespace {
 
 namespace btproto = ::google::bigtable::v2;
 using ::testing::Return;
-using ::google::cloud::testing_util::chrono_literals::operator"" _ms;  // NOLINT
+using ::google::cloud::testing_util::chrono_literals::operator""_ms;
 using ::google::cloud::bigtable::testing::MockMutateRowsReader;
 
 auto constexpr kTableName = "projects/blah/instances/blah2/tables/table";

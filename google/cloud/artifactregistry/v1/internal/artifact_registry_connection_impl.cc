@@ -1128,6 +1128,22 @@ ArtifactRegistryConnectionImpl::BatchDeleteVersions(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::devtools::artifactregistry::v1::Version>
+ArtifactRegistryConnectionImpl::UpdateVersion(
+    google::devtools::artifactregistry::v1::UpdateVersionRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateVersion(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::UpdateVersionRequest const&
+                 request) {
+        return stub_->UpdateVersion(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 StreamRange<google::devtools::artifactregistry::v1::File>
 ArtifactRegistryConnectionImpl::ListFiles(
     google::devtools::artifactregistry::v1::ListFilesRequest request) {
@@ -1174,6 +1190,115 @@ ArtifactRegistryConnectionImpl::GetFile(
       [this](grpc::ClientContext& context, Options const& options,
              google::devtools::artifactregistry::v1::GetFileRequest const&
                  request) { return stub_->GetFile(context, options, request); },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+ArtifactRegistryConnectionImpl::DeleteFile(
+    google::devtools::artifactregistry::v1::DeleteFileRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteFile(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::devtools::artifactregistry::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::devtools::artifactregistry::v1::DeleteFileRequest const&
+              request) {
+        return stub->AsyncDeleteFile(cq, std::move(context), std::move(options),
+                                     request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::devtools::artifactregistry::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryConnectionImpl::DeleteFile(
+    NoAwaitTag,
+    google::devtools::artifactregistry::v1::DeleteFileRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteFile(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::DeleteFileRequest const&
+                 request) {
+        return stub_->DeleteFile(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+ArtifactRegistryConnectionImpl::DeleteFile(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::devtools::artifactregistry::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteFile",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::devtools::artifactregistry::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::devtools::artifactregistry::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::File>
+ArtifactRegistryConnectionImpl::UpdateFile(
+    google::devtools::artifactregistry::v1::UpdateFileRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateFile(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::UpdateFileRequest const&
+                 request) {
+        return stub_->UpdateFile(context, options, request);
+      },
       *current, request, __func__);
 }
 
@@ -1266,6 +1391,99 @@ Status ArtifactRegistryConnectionImpl::DeleteTag(
              google::devtools::artifactregistry::v1::DeleteTagRequest const&
                  request) {
         return stub_->DeleteTag(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::Rule>
+ArtifactRegistryConnectionImpl::CreateRule(
+    google::devtools::artifactregistry::v1::CreateRuleRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateRule(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::CreateRuleRequest const&
+                 request) {
+        return stub_->CreateRule(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StreamRange<google::devtools::artifactregistry::v1::Rule>
+ArtifactRegistryConnectionImpl::ListRules(
+    google::devtools::artifactregistry::v1::ListRulesRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListRules(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::devtools::artifactregistry::v1::Rule>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry =
+           std::shared_ptr<artifactregistry_v1::ArtifactRegistryRetryPolicy>(
+               retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::devtools::artifactregistry::v1::ListRulesRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::devtools::artifactregistry::v1::ListRulesRequest const&
+                    request) {
+              return stub->ListRules(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::devtools::artifactregistry::v1::ListRulesResponse r) {
+        std::vector<google::devtools::artifactregistry::v1::Rule> result(
+            r.rules().size());
+        auto& messages = *r.mutable_rules();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::devtools::artifactregistry::v1::Rule>
+ArtifactRegistryConnectionImpl::GetRule(
+    google::devtools::artifactregistry::v1::GetRuleRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetRule(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::GetRuleRequest const&
+                 request) { return stub_->GetRule(context, options, request); },
+      *current, request, __func__);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::Rule>
+ArtifactRegistryConnectionImpl::UpdateRule(
+    google::devtools::artifactregistry::v1::UpdateRuleRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateRule(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::UpdateRuleRequest const&
+                 request) {
+        return stub_->UpdateRule(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+Status ArtifactRegistryConnectionImpl::DeleteRule(
+    google::devtools::artifactregistry::v1::DeleteRuleRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteRule(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::DeleteRuleRequest const&
+                 request) {
+        return stub_->DeleteRule(context, options, request);
       },
       *current, request, __func__);
 }
@@ -1373,6 +1591,268 @@ ArtifactRegistryConnectionImpl::UpdateVPCSCConfig(
         return stub_->UpdateVPCSCConfig(context, options, request);
       },
       *current, request, __func__);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::Package>
+ArtifactRegistryConnectionImpl::UpdatePackage(
+    google::devtools::artifactregistry::v1::UpdatePackageRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdatePackage(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::UpdatePackageRequest const&
+                 request) {
+        return stub_->UpdatePackage(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StreamRange<google::devtools::artifactregistry::v1::Attachment>
+ArtifactRegistryConnectionImpl::ListAttachments(
+    google::devtools::artifactregistry::v1::ListAttachmentsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListAttachments(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::devtools::artifactregistry::v1::Attachment>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry =
+           std::shared_ptr<artifactregistry_v1::ArtifactRegistryRetryPolicy>(
+               retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::devtools::artifactregistry::v1::ListAttachmentsRequest const&
+              r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::devtools::artifactregistry::v1::
+                       ListAttachmentsRequest const& request) {
+              return stub->ListAttachments(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::devtools::artifactregistry::v1::ListAttachmentsResponse r) {
+        std::vector<google::devtools::artifactregistry::v1::Attachment> result(
+            r.attachments().size());
+        auto& messages = *r.mutable_attachments();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::devtools::artifactregistry::v1::Attachment>
+ArtifactRegistryConnectionImpl::GetAttachment(
+    google::devtools::artifactregistry::v1::GetAttachmentRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetAttachment(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::GetAttachmentRequest const&
+                 request) {
+        return stub_->GetAttachment(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::devtools::artifactregistry::v1::Attachment>>
+ArtifactRegistryConnectionImpl::CreateAttachment(
+    google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateAttachment(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::devtools::artifactregistry::v1::Attachment>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
+              request) {
+        return stub->AsyncCreateAttachment(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::devtools::artifactregistry::v1::Attachment>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryConnectionImpl::CreateAttachment(
+    NoAwaitTag,
+    google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateAttachment(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
+              request) {
+        return stub_->CreateAttachment(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::devtools::artifactregistry::v1::Attachment>>
+ArtifactRegistryConnectionImpl::CreateAttachment(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::devtools::artifactregistry::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::devtools::artifactregistry::v1::Attachment>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateAttachment",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::devtools::artifactregistry::v1::Attachment>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::devtools::artifactregistry::v1::Attachment>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+ArtifactRegistryConnectionImpl::DeleteAttachment(
+    google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteAttachment(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::devtools::artifactregistry::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
+              request) {
+        return stub->AsyncDeleteAttachment(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::devtools::artifactregistry::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryConnectionImpl::DeleteAttachment(
+    NoAwaitTag,
+    google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteAttachment(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
+              request) {
+        return stub_->DeleteAttachment(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+ArtifactRegistryConnectionImpl::DeleteAttachment(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::devtools::artifactregistry::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteAttachment",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::devtools::artifactregistry::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::devtools::artifactregistry::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::location::Location>

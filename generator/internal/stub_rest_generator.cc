@@ -55,11 +55,18 @@ Status StubRestGenerator::GenerateHeader() {
   std::vector<std::string> additional_pb_header_paths =
       absl::StrSplit(vars("additional_pb_header_paths"), absl::ByChar(','));
   HeaderSystemIncludes(additional_pb_header_paths);
-  HeaderSystemIncludes({vars("proto_header_path"),
-                        HasLongrunningMethod()
-                            ? vars("longrunning_operation_include_header")
-                            : "",
-                        "memory"});
+  std::vector<std::string> mixin_headers =
+      absl::StrSplit(vars("mixin_proto_header_paths"), ',');
+  HeaderSystemIncludes(mixin_headers);
+  bool include_lro_header =
+      HasLongrunningMethod() &&
+      std::find(mixin_headers.begin(), mixin_headers.end(),
+                vars("longrunning_operation_include_header")) ==
+          mixin_headers.end();
+  HeaderSystemIncludes(
+      {vars("proto_header_path"),
+       include_lro_header ? vars("longrunning_operation_include_header") : "",
+       "memory"});
 
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;

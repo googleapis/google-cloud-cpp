@@ -60,7 +60,7 @@ jobs:
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
           shard: Other
     steps:
-    - uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4
+    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
       with:
         ref: ${{ inputs.checkout-ref }}
     - uses: google-github-actions/auth@v2
@@ -68,7 +68,13 @@ jobs:
       with:
         create_credentials_file: true
         credentials_json: ${{ secrets.BUILD_CACHE_KEY }}
+    - uses: actions/setup-python@v5
+      id: py311
+      with:
+        python-version: '3.11'
     - uses: google-github-actions/setup-gcloud@v2
+      env:
+        CLOUDSDK_PYTHON: ${{ steps.py311.outputs.python-path }}
     - name: Dynamic Configuration
       id: dynamic
       shell: bash

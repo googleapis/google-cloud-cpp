@@ -99,6 +99,19 @@ class FeatureRegistryServiceStub {
       grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::CreateFeatureRequest const& request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncBatchCreateFeatures(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> BatchCreateFeatures(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const&
+          request) = 0;
+
   virtual StatusOr<google::cloud::aiplatform::v1::Feature> GetFeature(
       grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetFeatureRequest const& request) = 0;
@@ -189,18 +202,15 @@ class DefaultFeatureRegistryServiceStub : public FeatureRegistryServiceStub {
       std::unique_ptr<
           google::cloud::aiplatform::v1::FeatureRegistryService::StubInterface>
           grpc_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations_stub,
       std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub,
       std::unique_ptr<google::cloud::location::Locations::StubInterface>
           locations_stub,
       std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations)
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
-        operations_stub_(std::move(operations_stub)),
         iampolicy_stub_(std::move(iampolicy_stub)),
         locations_stub_(std::move(locations_stub)),
-        operations_(std::move(operations)) {}
+        operations_stub_(std::move(operations_stub)) {}
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateFeatureGroup(
       google::cloud::CompletionQueue& cq,
@@ -259,6 +269,18 @@ class DefaultFeatureRegistryServiceStub : public FeatureRegistryServiceStub {
   StatusOr<google::longrunning::Operation> CreateFeature(
       grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::CreateFeatureRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncBatchCreateFeatures(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> BatchCreateFeatures(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::Feature> GetFeature(
@@ -350,12 +372,11 @@ class DefaultFeatureRegistryServiceStub : public FeatureRegistryServiceStub {
   std::unique_ptr<
       google::cloud::aiplatform::v1::FeatureRegistryService::StubInterface>
       grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface>
-      operations_stub_;
   std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub_;
   std::unique_ptr<google::cloud::location::Locations::StubInterface>
       locations_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

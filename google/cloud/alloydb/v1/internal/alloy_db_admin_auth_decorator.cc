@@ -161,6 +161,34 @@ StatusOr<google::longrunning::Operation> AlloyDBAdminAuth::PromoteCluster(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+AlloyDBAdminAuth::AsyncSwitchoverCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::alloydb::v1::SwitchoverClusterRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncSwitchoverCluster(cq, *std::move(context),
+                                             std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> AlloyDBAdminAuth::SwitchoverCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::SwitchoverClusterRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->SwitchoverCluster(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminAuth::AsyncRestoreCluster(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -459,6 +487,15 @@ StatusOr<google::longrunning::Operation> AlloyDBAdminAuth::RestartInstance(
   return child_->RestartInstance(context, options, request);
 }
 
+StatusOr<google::cloud::alloydb::v1::ExecuteSqlResponse>
+AlloyDBAdminAuth::ExecuteSql(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::alloydb::v1::ExecuteSqlRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ExecuteSql(context, options, request);
+}
+
 StatusOr<google::cloud::alloydb::v1::ListBackupsResponse>
 AlloyDBAdminAuth::ListBackups(
     grpc::ClientContext& context, Options const& options,
@@ -628,6 +665,15 @@ Status AlloyDBAdminAuth::DeleteUser(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteUser(context, options, request);
+}
+
+StatusOr<google::cloud::alloydb::v1::ListDatabasesResponse>
+AlloyDBAdminAuth::ListDatabases(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::alloydb::v1::ListDatabasesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListDatabases(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>

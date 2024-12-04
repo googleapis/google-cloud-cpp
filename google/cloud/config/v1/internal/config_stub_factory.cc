@@ -46,14 +46,12 @@ std::shared_ptr<ConfigStub> CreateDefaultConfigStub(
   auto channel = auth->CreateChannel(options.get<EndpointOption>(),
                                      internal::MakeChannelArguments(options));
   auto service_grpc_stub = google::cloud::config::v1::Config::NewStub(channel);
-  auto service_operations_stub =
-      google::longrunning::Operations::NewStub(channel);
   auto service_iampolicy_stub = google::iam::v1::IAMPolicy::NewStub(channel);
   auto service_locations_stub =
       google::cloud::location::Locations::NewStub(channel);
   std::shared_ptr<ConfigStub> stub = std::make_shared<DefaultConfigStub>(
-      std::move(service_grpc_stub), std::move(service_operations_stub),
-      std::move(service_iampolicy_stub), std::move(service_locations_stub),
+      std::move(service_grpc_stub), std::move(service_iampolicy_stub),
+      std::move(service_locations_stub),
       google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {

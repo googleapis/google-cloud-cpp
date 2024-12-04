@@ -52,6 +52,10 @@ class EndpointServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency UpdateEndpoint(
       google::cloud::aiplatform::v1::UpdateEndpointRequest const& request);
 
+  virtual google::cloud::Idempotency UpdateEndpointLongRunning(
+      google::cloud::aiplatform::v1::UpdateEndpointLongRunningRequest const&
+          request);
+
   virtual google::cloud::Idempotency DeleteEndpoint(
       google::cloud::aiplatform::v1::DeleteEndpointRequest const& request);
 

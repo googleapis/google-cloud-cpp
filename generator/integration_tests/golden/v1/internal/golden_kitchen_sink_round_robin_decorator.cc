@@ -120,6 +120,27 @@ Status GoldenKitchenSinkRoundRobin::ExplicitRouting2(
   return Child()->ExplicitRouting2(context, options, request);
 }
 
+StatusOr<google::cloud::location::Location> GoldenKitchenSinkRoundRobin::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::location::GetLocationRequest const& request) {
+  return Child()->GetLocation(context, options, request);
+}
+
+StatusOr<google::iam::v1::Policy> GoldenKitchenSinkRoundRobin::GetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  return Child()->GetIamPolicy(context, options, request);
+}
+
+StatusOr<google::longrunning::ListOperationsResponse> GoldenKitchenSinkRoundRobin::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::longrunning::ListOperationsRequest const& request) {
+  return Child()->ListOperations(context, options, request);
+}
+
 std::unique_ptr<google::cloud::internal::AsyncStreamingReadRpc<
     google::test::admin::database::v1::Response>>
 GoldenKitchenSinkRoundRobin::AsyncStreamingRead(

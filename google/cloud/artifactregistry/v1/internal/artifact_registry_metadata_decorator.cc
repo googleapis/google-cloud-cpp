@@ -354,6 +354,17 @@ ArtifactRegistryMetadata::BatchDeleteVersions(
   return child_->BatchDeleteVersions(context, options, request);
 }
 
+StatusOr<google::devtools::artifactregistry::v1::Version>
+ArtifactRegistryMetadata::UpdateVersion(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::UpdateVersionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("version.name=",
+                           internal::UrlEncode(request.version().name())));
+  return child_->UpdateVersion(context, options, request);
+}
+
 StatusOr<google::devtools::artifactregistry::v1::ListFilesResponse>
 ArtifactRegistryMetadata::ListFiles(
     grpc::ClientContext& context, Options const& options,
@@ -370,6 +381,36 @@ ArtifactRegistryMetadata::GetFile(
   SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetFile(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ArtifactRegistryMetadata::AsyncDeleteFile(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::devtools::artifactregistry::v1::DeleteFileRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteFile(cq, std::move(context), std::move(options),
+                                 request);
+}
+
+StatusOr<google::longrunning::Operation> ArtifactRegistryMetadata::DeleteFile(
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::DeleteFileRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteFile(context, options, request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::File>
+ArtifactRegistryMetadata::UpdateFile(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::UpdateFileRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("file.name=", internal::UrlEncode(request.file().name())));
+  return child_->UpdateFile(context, options, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListTagsResponse>
@@ -415,6 +456,51 @@ Status ArtifactRegistryMetadata::DeleteTag(
   SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteTag(context, options, request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::Rule>
+ArtifactRegistryMetadata::CreateRule(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::CreateRuleRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateRule(context, options, request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::ListRulesResponse>
+ArtifactRegistryMetadata::ListRules(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::ListRulesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListRules(context, options, request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::Rule>
+ArtifactRegistryMetadata::GetRule(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::GetRuleRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetRule(context, options, request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::Rule>
+ArtifactRegistryMetadata::UpdateRule(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::UpdateRuleRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("rule.name=", internal::UrlEncode(request.rule().name())));
+  return child_->UpdateRule(context, options, request);
+}
+
+Status ArtifactRegistryMetadata::DeleteRule(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::DeleteRuleRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteRule(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> ArtifactRegistryMetadata::SetIamPolicy(
@@ -486,6 +572,83 @@ ArtifactRegistryMetadata::UpdateVPCSCConfig(
               absl::StrCat("vpcsc_config.name=",
                            internal::UrlEncode(request.vpcsc_config().name())));
   return child_->UpdateVPCSCConfig(context, options, request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::Package>
+ArtifactRegistryMetadata::UpdatePackage(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::UpdatePackageRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("package.name=",
+                           internal::UrlEncode(request.package().name())));
+  return child_->UpdatePackage(context, options, request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::ListAttachmentsResponse>
+ArtifactRegistryMetadata::ListAttachments(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::ListAttachmentsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListAttachments(context, options, request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::Attachment>
+ArtifactRegistryMetadata::GetAttachment(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::artifactregistry::v1::GetAttachmentRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetAttachment(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ArtifactRegistryMetadata::AsyncCreateAttachment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateAttachment(cq, std::move(context),
+                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryMetadata::CreateAttachment(
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::CreateAttachmentRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateAttachment(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ArtifactRegistryMetadata::AsyncDeleteAttachment(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteAttachment(cq, std::move(context),
+                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryMetadata::DeleteAttachment(
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::DeleteAttachmentRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteAttachment(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>

@@ -18,6 +18,7 @@
 
 #include "google/cloud/discoveryengine/v1/internal/grounded_generation_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/discoveryengine/v1/grounded_generation_service.grpc.pb.h>
 #include <memory>
@@ -29,6 +30,37 @@ namespace discoveryengine_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 GroundedGenerationServiceStub::~GroundedGenerationServiceStub() = default;
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::discoveryengine::v1::GenerateGroundedContentRequest,
+    google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>>
+DefaultGroundedGenerationServiceStub::AsyncStreamGenerateGroundedContent(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  return google::cloud::internal::MakeStreamingReadWriteRpc<
+      google::cloud::discoveryengine::v1::GenerateGroundedContentRequest,
+      google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>(
+      cq, std::move(context), std::move(options),
+      [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
+        return grpc_stub_->PrepareAsyncStreamGenerateGroundedContent(context,
+                                                                     cq);
+      });
+}
+
+StatusOr<google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>
+DefaultGroundedGenerationServiceStub::GenerateGroundedContent(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const&
+        request) {
+  google::cloud::discoveryengine::v1::GenerateGroundedContentResponse response;
+  auto status =
+      grpc_stub_->GenerateGroundedContent(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
 
 StatusOr<google::cloud::discoveryengine::v1::CheckGroundingResponse>
 DefaultGroundedGenerationServiceStub::CheckGrounding(

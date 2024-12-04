@@ -112,7 +112,7 @@ class EssentialContactsServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.essentialcontacts.v1.Contact]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L139}
-  /// [google.cloud.essentialcontacts.v1.CreateContactRequest]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L242}
+  /// [google.cloud.essentialcontacts.v1.CreateContactRequest]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L243}
   ///
   // clang-format on
   StatusOr<google::cloud::essentialcontacts::v1::Contact> CreateContact(
@@ -144,7 +144,7 @@ class EssentialContactsServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.essentialcontacts.v1.Contact]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L139}
-  /// [google.cloud.essentialcontacts.v1.CreateContactRequest]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L242}
+  /// [google.cloud.essentialcontacts.v1.CreateContactRequest]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L243}
   ///
   // clang-format on
   StatusOr<google::cloud::essentialcontacts::v1::Contact> CreateContact(
@@ -175,7 +175,7 @@ class EssentialContactsServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.essentialcontacts.v1.Contact]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L139}
-  /// [google.cloud.essentialcontacts.v1.UpdateContactRequest]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L259}
+  /// [google.cloud.essentialcontacts.v1.UpdateContactRequest]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L260}
   ///
   // clang-format on
   StatusOr<google::cloud::essentialcontacts::v1::Contact> UpdateContact(
@@ -207,7 +207,7 @@ class EssentialContactsServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.essentialcontacts.v1.Contact]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L139}
-  /// [google.cloud.essentialcontacts.v1.UpdateContactRequest]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L259}
+  /// [google.cloud.essentialcontacts.v1.UpdateContactRequest]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L260}
   ///
   // clang-format on
   StatusOr<google::cloud::essentialcontacts::v1::Contact> UpdateContact(
@@ -244,7 +244,7 @@ class EssentialContactsServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.essentialcontacts.v1.Contact]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L139}
-  /// [google.cloud.essentialcontacts.v1.ListContactsRequest]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L177}
+  /// [google.cloud.essentialcontacts.v1.ListContactsRequest]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L178}
   ///
   // clang-format on
   StreamRange<google::cloud::essentialcontacts::v1::Contact> ListContacts(
@@ -283,7 +283,7 @@ class EssentialContactsServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.essentialcontacts.v1.Contact]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L139}
-  /// [google.cloud.essentialcontacts.v1.ListContactsRequest]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L177}
+  /// [google.cloud.essentialcontacts.v1.ListContactsRequest]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L178}
   ///
   // clang-format on
   StreamRange<google::cloud::essentialcontacts::v1::Contact> ListContacts(
@@ -312,7 +312,7 @@ class EssentialContactsServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.essentialcontacts.v1.Contact]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L139}
-  /// [google.cloud.essentialcontacts.v1.GetContactRequest]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L214}
+  /// [google.cloud.essentialcontacts.v1.GetContactRequest]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L215}
   ///
   // clang-format on
   StatusOr<google::cloud::essentialcontacts::v1::Contact> GetContact(
@@ -342,7 +342,7 @@ class EssentialContactsServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.essentialcontacts.v1.Contact]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L139}
-  /// [google.cloud.essentialcontacts.v1.GetContactRequest]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L214}
+  /// [google.cloud.essentialcontacts.v1.GetContactRequest]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L215}
   ///
   // clang-format on
   StatusOr<google::cloud::essentialcontacts::v1::Contact> GetContact(
@@ -368,7 +368,7 @@ class EssentialContactsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.essentialcontacts.v1.DeleteContactRequest]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L228}
+  /// [google.cloud.essentialcontacts.v1.DeleteContactRequest]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L229}
   ///
   // clang-format on
   Status DeleteContact(std::string const& name, Options opts = {});
@@ -394,7 +394,7 @@ class EssentialContactsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.essentialcontacts.v1.DeleteContactRequest]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L228}
+  /// [google.cloud.essentialcontacts.v1.DeleteContactRequest]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L229}
   ///
   // clang-format on
   Status DeleteContact(
@@ -435,7 +435,7 @@ class EssentialContactsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.essentialcontacts.v1.ComputeContactsRequest]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L272}
+  /// [google.cloud.essentialcontacts.v1.ComputeContactsRequest]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L273}
   /// [google.cloud.essentialcontacts.v1.Contact]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L139}
   ///
   // clang-format on
@@ -465,7 +465,7 @@ class EssentialContactsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.essentialcontacts.v1.SendTestMessageRequest]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L316}
+  /// [google.cloud.essentialcontacts.v1.SendTestMessageRequest]: @googleapis_reference_link{google/cloud/essentialcontacts/v1/service.proto#L317}
   ///
   // clang-format on
   Status SendTestMessage(

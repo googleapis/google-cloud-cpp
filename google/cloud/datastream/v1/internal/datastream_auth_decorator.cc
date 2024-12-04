@@ -254,6 +254,33 @@ StatusOr<google::longrunning::Operation> DatastreamAuth::DeleteStream(
   return child_->DeleteStream(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>> DatastreamAuth::AsyncRunStream(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::datastream::v1::RunStreamRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncRunStream(cq, *std::move(context),
+                                     std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> DatastreamAuth::RunStream(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::RunStreamRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RunStream(context, options, request);
+}
+
 StatusOr<google::cloud::datastream::v1::StreamObject>
 DatastreamAuth::GetStreamObject(
     grpc::ClientContext& context, Options const& options,

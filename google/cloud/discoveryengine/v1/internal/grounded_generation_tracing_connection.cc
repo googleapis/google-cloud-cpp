@@ -35,6 +35,25 @@ GroundedGenerationServiceTracingConnection::
             child)
     : child_(std::move(child)) {}
 
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::discoveryengine::v1::GenerateGroundedContentRequest,
+    google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>>
+GroundedGenerationServiceTracingConnection::
+    AsyncStreamGenerateGroundedContent() {
+  return child_->AsyncStreamGenerateGroundedContent();
+}
+
+StatusOr<google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>
+GroundedGenerationServiceTracingConnection::GenerateGroundedContent(
+    google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::GroundedGenerationServiceConnection::"
+      "GenerateGroundedContent");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GenerateGroundedContent(request));
+}
+
 StatusOr<google::cloud::discoveryengine::v1::CheckGroundingResponse>
 GroundedGenerationServiceTracingConnection::CheckGrounding(
     google::cloud::discoveryengine::v1::CheckGroundingRequest const& request) {

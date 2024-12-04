@@ -44,6 +44,18 @@ SearchServiceTracingStub::Search(
                            child_->Search(context, options, request));
 }
 
+StatusOr<google::cloud::discoveryengine::v1::SearchResponse>
+SearchServiceTracingStub::SearchLite(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::SearchRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.SearchService", "SearchLite");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->SearchLite(context, options, request));
+}
+
 StatusOr<google::longrunning::ListOperationsResponse>
 SearchServiceTracingStub::ListOperations(
     grpc::ClientContext& context, Options const& options,

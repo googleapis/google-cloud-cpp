@@ -176,6 +176,37 @@ FeatureRegistryServiceTracingConnection::CreateFeature(
   return internal::EndSpan(std::move(span), child_->CreateFeature(operation));
 }
 
+future<StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
+FeatureRegistryServiceTracingConnection::BatchCreateFeatures(
+    google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::FeatureRegistryServiceConnection::BatchCreateFeatures");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->BatchCreateFeatures(request));
+}
+
+StatusOr<google::longrunning::Operation>
+FeatureRegistryServiceTracingConnection::BatchCreateFeatures(
+    NoAwaitTag,
+    google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::FeatureRegistryServiceConnection::BatchCreateFeatures");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->BatchCreateFeatures(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
+FeatureRegistryServiceTracingConnection::BatchCreateFeatures(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::FeatureRegistryServiceConnection::BatchCreateFeatures");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->BatchCreateFeatures(operation));
+}
+
 StatusOr<google::cloud::aiplatform::v1::Feature>
 FeatureRegistryServiceTracingConnection::GetFeature(
     google::cloud::aiplatform::v1::GetFeatureRequest const& request) {

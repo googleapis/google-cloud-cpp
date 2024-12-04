@@ -463,6 +463,72 @@ DefaultCatalogServiceStub::SearchEntries(
   return response;
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultCatalogServiceStub::AsyncCreateMetadataJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::dataplex::v1::CreateMetadataJobRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::dataplex::v1::CreateMetadataJobRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::dataplex::v1::CreateMetadataJobRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateMetadataJob(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCatalogServiceStub::CreateMetadataJob(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataplex::v1::CreateMetadataJobRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateMetadataJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::dataplex::v1::MetadataJob>
+DefaultCatalogServiceStub::GetMetadataJob(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::GetMetadataJobRequest const& request) {
+  google::cloud::dataplex::v1::MetadataJob response;
+  auto status = grpc_stub_->GetMetadataJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::dataplex::v1::ListMetadataJobsResponse>
+DefaultCatalogServiceStub::ListMetadataJobs(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::ListMetadataJobsRequest const& request) {
+  google::cloud::dataplex::v1::ListMetadataJobsResponse response;
+  auto status = grpc_stub_->ListMetadataJobs(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+Status DefaultCatalogServiceStub::CancelMetadataJob(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dataplex::v1::CancelMetadataJobRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->CancelMetadataJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultCatalogServiceStub::ListLocations(
     grpc::ClientContext& context, Options const&,
@@ -581,7 +647,7 @@ DefaultCatalogServiceStub::AsyncGetOperation(
       [this](grpc::ClientContext* context,
              google::longrunning::GetOperationRequest const& request,
              grpc::CompletionQueue* cq) {
-        return operations_->AsyncGetOperation(context, request, cq);
+        return operations_stub_->AsyncGetOperation(context, request, cq);
       },
       request, std::move(context));
 }
@@ -598,7 +664,8 @@ future<Status> DefaultCatalogServiceStub::AsyncCancelOperation(
              [this](grpc::ClientContext* context,
                     google::longrunning::CancelOperationRequest const& request,
                     grpc::CompletionQueue* cq) {
-               return operations_->AsyncCancelOperation(context, request, cq);
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
              },
              request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {

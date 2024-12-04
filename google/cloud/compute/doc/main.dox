@@ -42,7 +42,6 @@ application.
 - [\c compute_firewall_policies_v1::FirewallPoliciesClient](@ref google::cloud::compute_firewall_policies_v1::FirewallPoliciesClient)
 - [\c compute_firewalls_v1::FirewallsClient](@ref google::cloud::compute_firewalls_v1::FirewallsClient)
 - [\c compute_forwarding_rules_v1::ForwardingRulesClient](@ref google::cloud::compute_forwarding_rules_v1::ForwardingRulesClient)
-- [\c compute_future_reservations_v1::FutureReservationsClient](@ref google::cloud::compute_future_reservations_v1::FutureReservationsClient)
 - [\c compute_global_addresses_v1::GlobalAddressesClient](@ref google::cloud::compute_global_addresses_v1::GlobalAddressesClient)
 - [\c compute_global_forwarding_rules_v1::GlobalForwardingRulesClient](@ref google::cloud::compute_global_forwarding_rules_v1::GlobalForwardingRulesClient)
 - [\c compute_global_network_endpoint_groups_v1::GlobalNetworkEndpointGroupsClient](@ref google::cloud::compute_global_network_endpoint_groups_v1::GlobalNetworkEndpointGroupsClient)

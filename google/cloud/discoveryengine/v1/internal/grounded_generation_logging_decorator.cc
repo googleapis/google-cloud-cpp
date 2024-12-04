@@ -17,6 +17,7 @@
 // source: google/cloud/discoveryengine/v1/grounded_generation_service.proto
 
 #include "google/cloud/discoveryengine/v1/internal/grounded_generation_logging_decorator.h"
+#include "google/cloud/internal/async_read_write_stream_logging.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/discoveryengine/v1/grounded_generation_service.grpc.pb.h>
@@ -32,8 +33,47 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 GroundedGenerationServiceLogging::GroundedGenerationServiceLogging(
     std::shared_ptr<GroundedGenerationServiceStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options, std::set<std::string> const& components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
+      stream_logging_(components.find("rpc-streams") != components.end()) {}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::discoveryengine::v1::GenerateGroundedContentRequest,
+    google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>>
+GroundedGenerationServiceLogging::AsyncStreamGenerateGroundedContent(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  using LoggingStream =
+      ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<
+          google::cloud::discoveryengine::v1::GenerateGroundedContentRequest,
+          google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>;
+
+  auto request_id = google::cloud::internal::RequestIdForLogging();
+  GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
+  auto stream = child_->AsyncStreamGenerateGroundedContent(
+      cq, std::move(context), std::move(options));
+  if (stream_logging_) {
+    stream = std::make_unique<LoggingStream>(
+        std::move(stream), tracing_options_, std::move(request_id));
+  }
+  return stream;
+}
+
+StatusOr<google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>
+GroundedGenerationServiceLogging::GenerateGroundedContent(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::GenerateGroundedContentRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::
+                 GenerateGroundedContentRequest const& request) {
+        return child_->GenerateGroundedContent(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
 
 StatusOr<google::cloud::discoveryengine::v1::CheckGroundingResponse>
 GroundedGenerationServiceLogging::CheckGrounding(
