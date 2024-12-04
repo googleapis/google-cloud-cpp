@@ -23,7 +23,10 @@ source module ci/cloudbuild/builds/lib/integration.sh
 source module ci/lib/io.sh
 
 mapfile -t args < <(bazel::common_args)
-args+=(--config=asan)
+args+=(--config=asan
+  # TODO(#14874): re-enable bzlmod once BCR grpc module is fixed.
+  --noenable_bzlmod
+)
 io::run bazel test "${args[@]}" --test_tag_filters=-integration-test "${BAZEL_TARGETS[@]}"
 
 mapfile -t integration_args < <(integration::bazel_args)
