@@ -1626,8 +1626,7 @@ void CreateBackupWithEncryptionKeyCommand(std::vector<std::string> argv) {
 // [START spanner_create_backup_with_MR_CMEK]
 void CreateBackupWithMRCMEK(
     google::cloud::spanner_admin::DatabaseAdminClient client,
-    BackupIdentifier dst,
-    std::string const& database_id,
+    BackupIdentifier dst, std::string const& database_id,
     google::cloud::spanner::Timestamp expire_time,
     google::cloud::spanner::Timestamp version_time,
     std::vector<google::cloud::KmsKeyName> const& encryption_keys) {
@@ -1645,8 +1644,8 @@ void CreateBackupWithMRCMEK(
       google::spanner::admin::database::v1::CreateBackupEncryptionConfig::
           CUSTOMER_MANAGED_ENCRYPTION);
   for (google::cloud::KmsKeyName const& encryption_key : encryption_keys) {
-    request.mutable_encryption_config()->add_kms_key_name(
-      encryption_key.FullName());
+    request.mutable_encryption_config()->add_kms_key_names(
+        encryption_key.FullName());
   }
   auto backup = client.CreateBackup(request).get();
   if (!backup) throw std::move(backup).status();
@@ -1673,14 +1672,18 @@ void CreateBackupWithMRCMEKCommand(std::vector<std::string> argv) {
   std::vector<google::cloud::KmsKeyName> encryption_keys;
   for (int i = 4; i < argv.size(); i += 3) {
     google::cloud::KmsKeyName encryption_key(/*project_id=*/argv[0],
-                                           /*location=*/argv[i],
-                                           /*key_ring=*/argv[i+1],
-                                           /*kms_key_name=*/argv[i+2]);
-    encryption_keys.append(encryption_key);
+                                             /*location=*/argv[i],
+                                             /*key_ring=*/argv[i + 1],
+                                             /*kms_key_name=*/argv[i + 2]);
+    encryption_keys.push_back(encryption_key);
   }
-  CreateBackupWithMRCMEK(std::move(client), argv[0], argv[1], argv[2],
-                                argv[3], TimestampAdd(now, std::chrono::hours(7)), now,
-                                encryption_keys);
+  BackupIdentifier dst;
+  dst.project_id = argv[0];
+  dst.instance_id = argv[1];
+  dst.backup_id = argv[3];
+  CreateBackupWithMRCMEK(std::move(client), dst, argv[2],
+                         TimestampAdd(now, absl::Hours(7)), now,
+                         encryption_keys);
 }
 
 //! [restore-database-with-encryption-key]
