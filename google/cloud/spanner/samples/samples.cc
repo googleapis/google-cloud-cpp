@@ -1744,8 +1744,7 @@ void RestoreDatabaseWithEncryptionKeyCommand(std::vector<std::string> argv) {
 // [START spanner_restore_backup_with_MR_CMEK]
 void RestoreDatabaseWithMRCMEK(
     google::cloud::spanner_admin::DatabaseAdminClient client,
-    BackupIdentifier src,
-    std::string const& database_id,
+    BackupIdentifier src, std::string const& database_id,
     std::vector<google::cloud::KmsKeyName> const& encryption_keys) {
   google::cloud::spanner::Database database(src.project_id, src.instance_id,
                                             database_id);
@@ -1758,8 +1757,8 @@ void RestoreDatabaseWithMRCMEK(
       google::spanner::admin::database::v1::RestoreDatabaseEncryptionConfig::
           CUSTOMER_MANAGED_ENCRYPTION);
   for (google::cloud::KmsKeyName const& encryption_key : encryption_keys) {
-    request.mutable_encryption_config()->add_kms_key_name(
-      encryption_key.FullName());
+    request.mutable_encryption_config()->add_kms_key_names(
+        encryption_key.FullName());
   }
   auto restored_db = client.RestoreDatabase(request).get();
   if (!restored_db) throw std::move(restored_db).status();
@@ -1790,15 +1789,17 @@ void RestoreDatabaseWithMRCMEKCommand(std::vector<std::string> argv) {
   std::vector<google::cloud::KmsKeyName> encryption_keys;
   for (int i = 4; i < argv.size(); i += 3) {
     google::cloud::KmsKeyName encryption_key(/*project_id=*/argv[0],
-                                           /*location=*/argv[i],
-                                           /*key_ring=*/argv[i+1],
-                                           /*kms_key_name=*/argv[i+2]);
-    encryption_keys.append(encryption_key);
+                                             /*location=*/argv[i],
+                                             /*key_ring=*/argv[i + 1],
+                                             /*kms_key_name=*/argv[i + 2]);
+    encryption_keys.push_back(encryption_key);
   }
-  RestoreDatabaseWithMRCMEK(std::move(client), argv[0], argv[1], argv[2],
-                                   argv[3], encryption_keys);
+  BackupIdentifier src;
+  src.project_id = argv[0];
+  src.instance_id = argv[1];
+  src.backup_id = argv[3];
+  RestoreDatabaseWithMRCMEK(std::move(client), src, argv[2], encryption_keys);
 }
-
 //! [list-backups] [START spanner_list_backups]
 void ListBackups(google::cloud::spanner_admin::DatabaseAdminClient client,
                  std::string const& project_id,
