@@ -52,6 +52,8 @@ fi
 # [2]: https://stackoverflow.com/questions/3775406
 args+=("-DCMAKE_EXE_LINKER_FLAGS=/MANIFEST:NO")
 
+args+=("-DCMAKE_CXX_FLAGS=/wd4996")
+
 io::log_h1 "Starting Build"
 TIMEFORMAT="==> 🕑 CMake configuration done in %R seconds"
 time {
