@@ -150,6 +150,27 @@ FeatureRegistryServiceMetadata::CreateFeature(
   return child_->CreateFeature(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+FeatureRegistryServiceMetadata::AsyncBatchCreateFeatures(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncBatchCreateFeatures(cq, std::move(context),
+                                          std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+FeatureRegistryServiceMetadata::BatchCreateFeatures(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->BatchCreateFeatures(context, options, request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::Feature>
 FeatureRegistryServiceMetadata::GetFeature(
     grpc::ClientContext& context, Options const& options,

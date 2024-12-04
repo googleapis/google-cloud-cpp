@@ -180,6 +180,26 @@ class ContactCenterInsightsConnectionIdempotencyPolicy {
       google::cloud::contactcenterinsights::v1::UpdateSettingsRequest const&
           request);
 
+  virtual google::cloud::Idempotency CreateAnalysisRule(
+      google::cloud::contactcenterinsights::v1::CreateAnalysisRuleRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetAnalysisRule(
+      google::cloud::contactcenterinsights::v1::GetAnalysisRuleRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListAnalysisRules(
+      google::cloud::contactcenterinsights::v1::ListAnalysisRulesRequest
+          request);
+
+  virtual google::cloud::Idempotency UpdateAnalysisRule(
+      google::cloud::contactcenterinsights::v1::UpdateAnalysisRuleRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteAnalysisRule(
+      google::cloud::contactcenterinsights::v1::DeleteAnalysisRuleRequest const&
+          request);
+
   virtual google::cloud::Idempotency GetEncryptionSpec(
       google::cloud::contactcenterinsights::v1::GetEncryptionSpecRequest const&
           request);
@@ -205,6 +225,109 @@ class ContactCenterInsightsConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteView(
       google::cloud::contactcenterinsights::v1::DeleteViewRequest const&
           request);
+
+  virtual google::cloud::Idempotency QueryMetrics(
+      google::cloud::contactcenterinsights::v1::QueryMetricsRequest const&
+          request);
+
+  virtual google::cloud::Idempotency CreateQaQuestion(
+      google::cloud::contactcenterinsights::v1::CreateQaQuestionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetQaQuestion(
+      google::cloud::contactcenterinsights::v1::GetQaQuestionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateQaQuestion(
+      google::cloud::contactcenterinsights::v1::UpdateQaQuestionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteQaQuestion(
+      google::cloud::contactcenterinsights::v1::DeleteQaQuestionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListQaQuestions(
+      google::cloud::contactcenterinsights::v1::ListQaQuestionsRequest request);
+
+  virtual google::cloud::Idempotency CreateQaScorecard(
+      google::cloud::contactcenterinsights::v1::CreateQaScorecardRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetQaScorecard(
+      google::cloud::contactcenterinsights::v1::GetQaScorecardRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateQaScorecard(
+      google::cloud::contactcenterinsights::v1::UpdateQaScorecardRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteQaScorecard(
+      google::cloud::contactcenterinsights::v1::DeleteQaScorecardRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListQaScorecards(
+      google::cloud::contactcenterinsights::v1::ListQaScorecardsRequest
+          request);
+
+  virtual google::cloud::Idempotency CreateQaScorecardRevision(
+      google::cloud::contactcenterinsights::v1::
+          CreateQaScorecardRevisionRequest const& request);
+
+  virtual google::cloud::Idempotency GetQaScorecardRevision(
+      google::cloud::contactcenterinsights::v1::
+          GetQaScorecardRevisionRequest const& request);
+
+  virtual google::cloud::Idempotency TuneQaScorecardRevision(
+      google::cloud::contactcenterinsights::v1::
+          TuneQaScorecardRevisionRequest const& request);
+
+  virtual google::cloud::Idempotency DeployQaScorecardRevision(
+      google::cloud::contactcenterinsights::v1::
+          DeployQaScorecardRevisionRequest const& request);
+
+  virtual google::cloud::Idempotency UndeployQaScorecardRevision(
+      google::cloud::contactcenterinsights::v1::
+          UndeployQaScorecardRevisionRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteQaScorecardRevision(
+      google::cloud::contactcenterinsights::v1::
+          DeleteQaScorecardRevisionRequest const& request);
+
+  virtual google::cloud::Idempotency ListQaScorecardRevisions(
+      google::cloud::contactcenterinsights::v1::ListQaScorecardRevisionsRequest
+          request);
+
+  virtual google::cloud::Idempotency CreateFeedbackLabel(
+      google::cloud::contactcenterinsights::v1::
+          CreateFeedbackLabelRequest const& request);
+
+  virtual google::cloud::Idempotency ListFeedbackLabels(
+      google::cloud::contactcenterinsights::v1::ListFeedbackLabelsRequest
+          request);
+
+  virtual google::cloud::Idempotency GetFeedbackLabel(
+      google::cloud::contactcenterinsights::v1::GetFeedbackLabelRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateFeedbackLabel(
+      google::cloud::contactcenterinsights::v1::
+          UpdateFeedbackLabelRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteFeedbackLabel(
+      google::cloud::contactcenterinsights::v1::
+          DeleteFeedbackLabelRequest const& request);
+
+  virtual google::cloud::Idempotency ListAllFeedbackLabels(
+      google::cloud::contactcenterinsights::v1::ListAllFeedbackLabelsRequest
+          request);
+
+  virtual google::cloud::Idempotency BulkUploadFeedbackLabels(
+      google::cloud::contactcenterinsights::v1::
+          BulkUploadFeedbackLabelsRequest const& request);
+
+  virtual google::cloud::Idempotency BulkDownloadFeedbackLabels(
+      google::cloud::contactcenterinsights::v1::
+          BulkDownloadFeedbackLabelsRequest const& request);
 
   virtual google::cloud::Idempotency ListOperations(
       google::longrunning::ListOperationsRequest request);

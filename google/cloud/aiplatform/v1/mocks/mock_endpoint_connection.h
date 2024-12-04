@@ -106,6 +106,48 @@ class MockEndpointServiceConnection
   /// using ::testing::_;
   /// using ::testing::Matcher;
   /// EXPECT_CALL(*mock,
+  /// UpdateEndpointLongRunning(Matcher<google::cloud::aiplatform::v1::UpdateEndpointLongRunningRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>,
+      UpdateEndpointLongRunning,
+      (google::cloud::aiplatform::v1::UpdateEndpointLongRunningRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateEndpointLongRunning(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateEndpointLongRunning,
+      (NoAwaitTag,
+       google::cloud::aiplatform::v1::UpdateEndpointLongRunningRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateEndpointLongRunning(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>,
+              UpdateEndpointLongRunning,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
   /// DeleteEndpoint(Matcher<google::cloud::aiplatform::v1::DeleteEndpointRequest
   /// const&>(_)))
   /// @endcode

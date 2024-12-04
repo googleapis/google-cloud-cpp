@@ -178,6 +178,37 @@ DefaultFeatureRegistryServiceStub::CreateFeature(
   return response;
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultFeatureRegistryServiceStub::AsyncBatchCreateFeatures(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncBatchCreateFeatures(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultFeatureRegistryServiceStub::BatchCreateFeatures(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->BatchCreateFeatures(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::aiplatform::v1::Feature>
 DefaultFeatureRegistryServiceStub::GetFeature(
     grpc::ClientContext& context, Options const&,

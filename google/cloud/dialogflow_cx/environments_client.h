@@ -64,7 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.dialogflow.cx.v3.Environment]:
-/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L196}
+/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L195}
 ///
 class EnvironmentsClient {
  public:
@@ -98,7 +98,8 @@ class EnvironmentsClient {
   /// [Agent][google.cloud.dialogflow.cx.v3.Agent].
   ///
   /// @param parent  Required. The [Agent][google.cloud.dialogflow.cx.v3.Agent] to list all
-  ///  environments for. Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>`.
+  ///  environments for. Format:
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -121,8 +122,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.Environment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L196}
-  /// [google.cloud.dialogflow.cx.v3.ListEnvironmentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L276}
+  /// [google.cloud.dialogflow.cx.v3.Environment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L195}
+  /// [google.cloud.dialogflow.cx.v3.ListEnvironmentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L278}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::Environment> ListEnvironments(
@@ -161,8 +162,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.Environment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L196}
-  /// [google.cloud.dialogflow.cx.v3.ListEnvironmentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L276}
+  /// [google.cloud.dialogflow.cx.v3.Environment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L195}
+  /// [google.cloud.dialogflow.cx.v3.ListEnvironmentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L278}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::Environment> ListEnvironments(
@@ -176,7 +177,7 @@ class EnvironmentsClient {
   ///
   /// @param name  Required. The name of the
   ///  [Environment][google.cloud.dialogflow.cx.v3.Environment]. Format:
-  ///  `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>`.
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/environments/<EnvironmentID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -190,8 +191,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.Environment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L196}
-  /// [google.cloud.dialogflow.cx.v3.GetEnvironmentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L311}
+  /// [google.cloud.dialogflow.cx.v3.Environment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L195}
+  /// [google.cloud.dialogflow.cx.v3.GetEnvironmentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L313}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Environment> GetEnvironment(
@@ -221,8 +222,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.Environment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L196}
-  /// [google.cloud.dialogflow.cx.v3.GetEnvironmentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L311}
+  /// [google.cloud.dialogflow.cx.v3.Environment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L195}
+  /// [google.cloud.dialogflow.cx.v3.GetEnvironmentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L313}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Environment> GetEnvironment(
@@ -244,7 +245,7 @@ class EnvironmentsClient {
   ///
   /// @param parent  Required. The [Agent][google.cloud.dialogflow.cx.v3.Agent] to create an
   ///  [Environment][google.cloud.dialogflow.cx.v3.Environment] for. Format:
-  ///  `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>`.
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>`.
   /// @param environment  Required. The environment to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -266,8 +267,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CreateEnvironmentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L326}
-  /// [google.cloud.dialogflow.cx.v3.Environment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L196}
+  /// [google.cloud.dialogflow.cx.v3.CreateEnvironmentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L327}
+  /// [google.cloud.dialogflow.cx.v3.Environment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L195}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
@@ -331,8 +332,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CreateEnvironmentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L326}
-  /// [google.cloud.dialogflow.cx.v3.Environment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L196}
+  /// [google.cloud.dialogflow.cx.v3.CreateEnvironmentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L327}
+  /// [google.cloud.dialogflow.cx.v3.Environment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L195}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
@@ -406,8 +407,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.Environment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L196}
-  /// [google.cloud.dialogflow.cx.v3.UpdateEnvironmentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L343}
+  /// [google.cloud.dialogflow.cx.v3.Environment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L195}
+  /// [google.cloud.dialogflow.cx.v3.UpdateEnvironmentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L344}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
@@ -470,8 +471,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.Environment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L196}
-  /// [google.cloud.dialogflow.cx.v3.UpdateEnvironmentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L343}
+  /// [google.cloud.dialogflow.cx.v3.Environment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L195}
+  /// [google.cloud.dialogflow.cx.v3.UpdateEnvironmentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L344}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
@@ -517,7 +518,7 @@ class EnvironmentsClient {
   ///
   /// @param name  Required. The name of the
   ///  [Environment][google.cloud.dialogflow.cx.v3.Environment] to delete. Format:
-  ///  `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>`.
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/environments/<EnvironmentID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [`Status`] object. If the request failed, the
@@ -529,8 +530,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeleteEnvironmentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L354}
-  /// [google.cloud.dialogflow.cx.v3.Environment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L196}
+  /// [google.cloud.dialogflow.cx.v3.DeleteEnvironmentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L355}
+  /// [google.cloud.dialogflow.cx.v3.Environment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L195}
   ///
   // clang-format on
   Status DeleteEnvironment(std::string const& name, Options opts = {});
@@ -557,8 +558,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeleteEnvironmentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L354}
-  /// [google.cloud.dialogflow.cx.v3.Environment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L196}
+  /// [google.cloud.dialogflow.cx.v3.DeleteEnvironmentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L355}
+  /// [google.cloud.dialogflow.cx.v3.Environment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L195}
   ///
   // clang-format on
   Status DeleteEnvironment(
@@ -572,7 +573,8 @@ class EnvironmentsClient {
   /// [Environment][google.cloud.dialogflow.cx.v3.Environment].
   ///
   /// @param name  Required. Resource name of the environment to look up the history for.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>`.
+  ///  Format:
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/environments/<EnvironmentID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -595,7 +597,7 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.Environment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L196}
+  /// [google.cloud.dialogflow.cx.v3.Environment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L195}
   /// [google.cloud.dialogflow.cx.v3.LookupEnvironmentHistoryRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L369}
   ///
   // clang-format on
@@ -635,7 +637,7 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.Environment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L196}
+  /// [google.cloud.dialogflow.cx.v3.Environment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L195}
   /// [google.cloud.dialogflow.cx.v3.LookupEnvironmentHistoryRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L369}
   ///
   // clang-format on
@@ -685,10 +687,10 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.Environment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L196}
-  /// [google.cloud.dialogflow.cx.v3.RunContinuousTestMetadata]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L462}
-  /// [google.cloud.dialogflow.cx.v3.RunContinuousTestRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L441}
-  /// [google.cloud.dialogflow.cx.v3.RunContinuousTestResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L454}
+  /// [google.cloud.dialogflow.cx.v3.Environment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L195}
+  /// [google.cloud.dialogflow.cx.v3.RunContinuousTestMetadata]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L460}
+  /// [google.cloud.dialogflow.cx.v3.RunContinuousTestRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L439}
+  /// [google.cloud.dialogflow.cx.v3.RunContinuousTestResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L452}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>
@@ -732,7 +734,8 @@ class EnvironmentsClient {
   /// Fetches a list of continuous test results for a given environment.
   ///
   /// @param parent  Required. The environment to list results for.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>`.
+  ///  Format:
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/environments/<EnvironmentID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -756,7 +759,7 @@ class EnvironmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.ContinuousTestResult]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L402}
-  /// [google.cloud.dialogflow.cx.v3.ListContinuousTestResultsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L469}
+  /// [google.cloud.dialogflow.cx.v3.ListContinuousTestResultsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L467}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::ContinuousTestResult>
@@ -795,7 +798,7 @@ class EnvironmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.ContinuousTestResult]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L402}
-  /// [google.cloud.dialogflow.cx.v3.ListContinuousTestResultsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L469}
+  /// [google.cloud.dialogflow.cx.v3.ListContinuousTestResultsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L467}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::ContinuousTestResult>
@@ -844,10 +847,10 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeployFlowMetadata]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L538}
-  /// [google.cloud.dialogflow.cx.v3.DeployFlowRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L500}
-  /// [google.cloud.dialogflow.cx.v3.DeployFlowResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L524}
-  /// [google.cloud.dialogflow.cx.v3.Environment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L196}
+  /// [google.cloud.dialogflow.cx.v3.DeployFlowMetadata]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L535}
+  /// [google.cloud.dialogflow.cx.v3.DeployFlowRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L498}
+  /// [google.cloud.dialogflow.cx.v3.DeployFlowResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L522}
+  /// [google.cloud.dialogflow.cx.v3.Environment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L195}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>
@@ -959,14 +962,6 @@ class EnvironmentsClient {
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
   ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
-  ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -991,8 +986,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -1002,14 +997,6 @@ class EnvironmentsClient {
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1039,8 +1026,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListOperations(
@@ -1066,8 +1053,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
@@ -1098,8 +1085,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(
@@ -1116,8 +1103,9 @@ class EnvironmentsClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1131,9 +1119,9 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
@@ -1149,8 +1137,9 @@ class EnvironmentsClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1169,9 +1158,9 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on

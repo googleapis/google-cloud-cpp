@@ -91,6 +91,39 @@ EndpointServiceTracingConnection::UpdateEndpoint(
   return internal::EndSpan(*span, child_->UpdateEndpoint(request));
 }
 
+future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>
+EndpointServiceTracingConnection::UpdateEndpointLongRunning(
+    google::cloud::aiplatform::v1::UpdateEndpointLongRunningRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::EndpointServiceConnection::UpdateEndpointLongRunning");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateEndpointLongRunning(request));
+}
+
+StatusOr<google::longrunning::Operation>
+EndpointServiceTracingConnection::UpdateEndpointLongRunning(
+    NoAwaitTag,
+    google::cloud::aiplatform::v1::UpdateEndpointLongRunningRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::EndpointServiceConnection::UpdateEndpointLongRunning");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateEndpointLongRunning(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>
+EndpointServiceTracingConnection::UpdateEndpointLongRunning(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::EndpointServiceConnection::UpdateEndpointLongRunning");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateEndpointLongRunning(operation));
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 EndpointServiceTracingConnection::DeleteEndpoint(
     google::cloud::aiplatform::v1::DeleteEndpointRequest const& request) {

@@ -246,6 +246,19 @@ class FeatureRegistryServiceConnection {
   virtual future<StatusOr<google::cloud::aiplatform::v1::Feature>>
   CreateFeature(google::longrunning::Operation const& operation);
 
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
+  BatchCreateFeatures(
+      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> BatchCreateFeatures(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
+  BatchCreateFeatures(google::longrunning::Operation const& operation);
+
   virtual StatusOr<google::cloud::aiplatform::v1::Feature> GetFeature(
       google::cloud::aiplatform::v1::GetFeatureRequest const& request);
 

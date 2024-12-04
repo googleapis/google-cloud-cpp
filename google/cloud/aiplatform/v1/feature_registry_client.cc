@@ -258,6 +258,56 @@ FeatureRegistryServiceClient::CreateFeature(
   return connection_->CreateFeature(operation);
 }
 
+future<StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
+FeatureRegistryServiceClient::BatchCreateFeatures(
+    std::string const& parent,
+    std::vector<google::cloud::aiplatform::v1::CreateFeatureRequest> const&
+        requests,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::BatchCreateFeaturesRequest request;
+  request.set_parent(parent);
+  *request.mutable_requests() = {requests.begin(), requests.end()};
+  return connection_->BatchCreateFeatures(request);
+}
+
+StatusOr<google::longrunning::Operation>
+FeatureRegistryServiceClient::BatchCreateFeatures(
+    NoAwaitTag, std::string const& parent,
+    std::vector<google::cloud::aiplatform::v1::CreateFeatureRequest> const&
+        requests,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::BatchCreateFeaturesRequest request;
+  request.set_parent(parent);
+  *request.mutable_requests() = {requests.begin(), requests.end()};
+  return connection_->BatchCreateFeatures(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
+FeatureRegistryServiceClient::BatchCreateFeatures(
+    google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BatchCreateFeatures(request);
+}
+
+StatusOr<google::longrunning::Operation>
+FeatureRegistryServiceClient::BatchCreateFeatures(
+    NoAwaitTag,
+    google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BatchCreateFeatures(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
+FeatureRegistryServiceClient::BatchCreateFeatures(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BatchCreateFeatures(operation);
+}
+
 StatusOr<google::cloud::aiplatform::v1::Feature>
 FeatureRegistryServiceClient::GetFeature(std::string const& name,
                                          Options opts) {

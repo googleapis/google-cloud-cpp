@@ -640,6 +640,48 @@ NetAppConnection::ReverseReplicationDirection(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::netapp::v1::Replication>>
+NetAppConnection::EstablishPeering(
+    google::cloud::netapp::v1::EstablishPeeringRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::netapp::v1::Replication>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> NetAppConnection::EstablishPeering(
+    NoAwaitTag, google::cloud::netapp::v1::EstablishPeeringRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::netapp::v1::Replication>>
+NetAppConnection::EstablishPeering(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::netapp::v1::Replication>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::netapp::v1::Replication>>
+NetAppConnection::SyncReplication(
+    google::cloud::netapp::v1::SyncReplicationRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::netapp::v1::Replication>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> NetAppConnection::SyncReplication(
+    NoAwaitTag, google::cloud::netapp::v1::SyncReplicationRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::netapp::v1::Replication>>
+NetAppConnection::SyncReplication(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::netapp::v1::Replication>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::netapp::v1::BackupVault>>
 NetAppConnection::CreateBackupVault(
     google::cloud::netapp::v1::CreateBackupVaultRequest const&) {

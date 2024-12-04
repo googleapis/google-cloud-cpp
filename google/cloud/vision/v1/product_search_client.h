@@ -1441,7 +1441,7 @@ class ProductSearchClient {
   /// [google.cloud.vision.v1.ImportProductSetsGcsSource.csv_file_uri]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L913}
   /// [google.cloud.vision.v1.ImportProductSetsRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L927}
   /// [google.cloud.vision.v1.ImportProductSetsResponse]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L950}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>
@@ -1511,7 +1511,7 @@ class ProductSearchClient {
   /// [google.cloud.vision.v1.ImportProductSetsGcsSource.csv_file_uri]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L913}
   /// [google.cloud.vision.v1.ImportProductSetsRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L927}
   /// [google.cloud.vision.v1.ImportProductSetsResponse]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L950}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>
@@ -1600,7 +1600,7 @@ class ProductSearchClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vision.v1.BatchOperationMetadata]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L967}
   /// [google.cloud.vision.v1.PurgeProductsRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L1010}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
@@ -1675,7 +1675,7 @@ class ProductSearchClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.vision.v1.BatchOperationMetadata]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L967}
   /// [google.cloud.vision.v1.PurgeProductsRequest]: @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L1010}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
@@ -1731,8 +1731,8 @@ class ProductSearchClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
@@ -1763,8 +1763,8 @@ class ProductSearchClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> GetOperation(

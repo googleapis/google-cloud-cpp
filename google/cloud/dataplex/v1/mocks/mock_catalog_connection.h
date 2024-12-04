@@ -454,6 +454,60 @@ class MockCatalogServiceConnection
               (google::cloud::dataplex::v1::SearchEntriesRequest request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateMetadataJob(Matcher<google::cloud::dataplex::v1::CreateMetadataJobRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dataplex::v1::MetadataJob>>,
+      CreateMetadataJob,
+      (google::cloud::dataplex::v1::CreateMetadataJobRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CreateMetadataJob(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateMetadataJob,
+      (NoAwaitTag,
+       google::cloud::dataplex::v1::CreateMetadataJobRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CreateMetadataJob(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::MetadataJob>>,
+              CreateMetadataJob,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::dataplex::v1::MetadataJob>, GetMetadataJob,
+      (google::cloud::dataplex::v1::GetMetadataJobRequest const& request),
+      (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::MetadataJob>),
+              ListMetadataJobs,
+              (google::cloud::dataplex::v1::ListMetadataJobsRequest request),
+              (override));
+
+  MOCK_METHOD(
+      Status, CancelMetadataJob,
+      (google::cloud::dataplex::v1::CancelMetadataJobRequest const& request),
+      (override));
+
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
               (google::cloud::location::ListLocationsRequest request),
               (override));

@@ -94,6 +94,31 @@ EndpointServiceMetadata::UpdateEndpoint(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+EndpointServiceMetadata::AsyncUpdateEndpointLongRunning(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::UpdateEndpointLongRunningRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("endpoint.name=",
+                           internal::UrlEncode(request.endpoint().name())));
+  return child_->AsyncUpdateEndpointLongRunning(cq, std::move(context),
+                                                std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+EndpointServiceMetadata::UpdateEndpointLongRunning(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UpdateEndpointLongRunningRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("endpoint.name=",
+                           internal::UrlEncode(request.endpoint().name())));
+  return child_->UpdateEndpointLongRunning(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 EndpointServiceMetadata::AsyncDeleteEndpoint(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

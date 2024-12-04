@@ -138,6 +138,16 @@ class DatastreamMetadata : public DatastreamStub {
       google::cloud::datastream::v1::DeleteStreamRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncRunStream(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::datastream::v1::RunStreamRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> RunStream(
+      grpc::ClientContext& context, Options options,
+      google::cloud::datastream::v1::RunStreamRequest const& request) override;
+
   StatusOr<google::cloud::datastream::v1::StreamObject> GetStreamObject(
       grpc::ClientContext& context, Options const& options,
       google::cloud::datastream::v1::GetStreamObjectRequest const& request)

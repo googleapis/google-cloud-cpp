@@ -476,6 +476,44 @@ StatusOr<google::longrunning::Operation> DefaultDataCatalogStub::ImportEntries(
   return response;
 }
 
+StatusOr<google::cloud::datacatalog::v1::MigrationConfig>
+DefaultDataCatalogStub::SetConfig(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::datacatalog::v1::SetConfigRequest const& request) {
+  google::cloud::datacatalog::v1::MigrationConfig response;
+  auto status = grpc_stub_->SetConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::datacatalog::v1::OrganizationConfig>
+DefaultDataCatalogStub::RetrieveConfig(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::datacatalog::v1::RetrieveConfigRequest const& request) {
+  google::cloud::datacatalog::v1::OrganizationConfig response;
+  auto status = grpc_stub_->RetrieveConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::datacatalog::v1::MigrationConfig>
+DefaultDataCatalogStub::RetrieveEffectiveConfig(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const&
+        request) {
+  google::cloud::datacatalog::v1::MigrationConfig response;
+  auto status =
+      grpc_stub_->RetrieveEffectiveConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultDataCatalogStub::ListOperations(
     grpc::ClientContext& context, Options const&,

@@ -267,6 +267,33 @@ DatastreamTracingConnection::DeleteStream(
   return internal::EndSpan(std::move(span), child_->DeleteStream(operation));
 }
 
+future<StatusOr<google::cloud::datastream::v1::Stream>>
+DatastreamTracingConnection::RunStream(
+    google::cloud::datastream::v1::RunStreamRequest const& request) {
+  auto span =
+      internal::MakeSpan("datastream_v1::DatastreamConnection::RunStream");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->RunStream(request));
+}
+
+StatusOr<google::longrunning::Operation> DatastreamTracingConnection::RunStream(
+    NoAwaitTag,
+    google::cloud::datastream::v1::RunStreamRequest const& request) {
+  auto span =
+      internal::MakeSpan("datastream_v1::DatastreamConnection::RunStream");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->RunStream(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::datastream::v1::Stream>>
+DatastreamTracingConnection::RunStream(
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("datastream_v1::DatastreamConnection::RunStream");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->RunStream(operation));
+}
+
 StatusOr<google::cloud::datastream::v1::StreamObject>
 DatastreamTracingConnection::GetStreamObject(
     google::cloud::datastream::v1::GetStreamObjectRequest const& request) {

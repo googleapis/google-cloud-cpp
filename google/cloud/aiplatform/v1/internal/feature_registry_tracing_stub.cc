@@ -169,6 +169,35 @@ FeatureRegistryServiceTracingStub::CreateFeature(
                            child_->CreateFeature(context, options, request));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+FeatureRegistryServiceTracingStub::AsyncBatchCreateFeatures(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.FeatureRegistryService",
+      "BatchCreateFeatures");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncBatchCreateFeatures(cq, context, std::move(options),
+                                            request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+FeatureRegistryServiceTracingStub::BatchCreateFeatures(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.FeatureRegistryService",
+      "BatchCreateFeatures");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->BatchCreateFeatures(context, options, request));
+}
+
 StatusOr<google::cloud::aiplatform::v1::Feature>
 FeatureRegistryServiceTracingStub::GetFeature(
     grpc::ClientContext& context, Options const& options,

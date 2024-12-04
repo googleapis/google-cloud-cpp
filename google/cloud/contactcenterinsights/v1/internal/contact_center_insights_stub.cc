@@ -740,6 +740,70 @@ DefaultContactCenterInsightsStub::UpdateSettings(
   return response;
 }
 
+StatusOr<google::cloud::contactcenterinsights::v1::AnalysisRule>
+DefaultContactCenterInsightsStub::CreateAnalysisRule(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contactcenterinsights::v1::CreateAnalysisRuleRequest const&
+        request) {
+  google::cloud::contactcenterinsights::v1::AnalysisRule response;
+  auto status = grpc_stub_->CreateAnalysisRule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::AnalysisRule>
+DefaultContactCenterInsightsStub::GetAnalysisRule(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contactcenterinsights::v1::GetAnalysisRuleRequest const&
+        request) {
+  google::cloud::contactcenterinsights::v1::AnalysisRule response;
+  auto status = grpc_stub_->GetAnalysisRule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::ListAnalysisRulesResponse>
+DefaultContactCenterInsightsStub::ListAnalysisRules(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contactcenterinsights::v1::ListAnalysisRulesRequest const&
+        request) {
+  google::cloud::contactcenterinsights::v1::ListAnalysisRulesResponse response;
+  auto status = grpc_stub_->ListAnalysisRules(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::AnalysisRule>
+DefaultContactCenterInsightsStub::UpdateAnalysisRule(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contactcenterinsights::v1::UpdateAnalysisRuleRequest const&
+        request) {
+  google::cloud::contactcenterinsights::v1::AnalysisRule response;
+  auto status = grpc_stub_->UpdateAnalysisRule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+Status DefaultContactCenterInsightsStub::DeleteAnalysisRule(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contactcenterinsights::v1::DeleteAnalysisRuleRequest const&
+        request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteAnalysisRule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
 StatusOr<google::cloud::contactcenterinsights::v1::EncryptionSpec>
 DefaultContactCenterInsightsStub::GetEncryptionSpec(
     grpc::ClientContext& context, Options const&,
@@ -847,6 +911,435 @@ Status DefaultContactCenterInsightsStub::DeleteView(
     return google::cloud::MakeStatusFromRpcError(status);
   }
   return google::cloud::Status();
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultContactCenterInsightsStub::AsyncQueryMetrics(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::contactcenterinsights::v1::QueryMetricsRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::contactcenterinsights::v1::QueryMetricsRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::contactcenterinsights::v1::QueryMetricsRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncQueryMetrics(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultContactCenterInsightsStub::QueryMetrics(
+    grpc::ClientContext& context, Options,
+    google::cloud::contactcenterinsights::v1::QueryMetricsRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->QueryMetrics(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion>
+DefaultContactCenterInsightsStub::CreateQaQuestion(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contactcenterinsights::v1::CreateQaQuestionRequest const&
+        request) {
+  google::cloud::contactcenterinsights::v1::QaQuestion response;
+  auto status = grpc_stub_->CreateQaQuestion(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion>
+DefaultContactCenterInsightsStub::GetQaQuestion(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contactcenterinsights::v1::GetQaQuestionRequest const&
+        request) {
+  google::cloud::contactcenterinsights::v1::QaQuestion response;
+  auto status = grpc_stub_->GetQaQuestion(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::QaQuestion>
+DefaultContactCenterInsightsStub::UpdateQaQuestion(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contactcenterinsights::v1::UpdateQaQuestionRequest const&
+        request) {
+  google::cloud::contactcenterinsights::v1::QaQuestion response;
+  auto status = grpc_stub_->UpdateQaQuestion(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+Status DefaultContactCenterInsightsStub::DeleteQaQuestion(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contactcenterinsights::v1::DeleteQaQuestionRequest const&
+        request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteQaQuestion(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::ListQaQuestionsResponse>
+DefaultContactCenterInsightsStub::ListQaQuestions(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contactcenterinsights::v1::ListQaQuestionsRequest const&
+        request) {
+  google::cloud::contactcenterinsights::v1::ListQaQuestionsResponse response;
+  auto status = grpc_stub_->ListQaQuestions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::QaScorecard>
+DefaultContactCenterInsightsStub::CreateQaScorecard(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contactcenterinsights::v1::CreateQaScorecardRequest const&
+        request) {
+  google::cloud::contactcenterinsights::v1::QaScorecard response;
+  auto status = grpc_stub_->CreateQaScorecard(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::QaScorecard>
+DefaultContactCenterInsightsStub::GetQaScorecard(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contactcenterinsights::v1::GetQaScorecardRequest const&
+        request) {
+  google::cloud::contactcenterinsights::v1::QaScorecard response;
+  auto status = grpc_stub_->GetQaScorecard(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::QaScorecard>
+DefaultContactCenterInsightsStub::UpdateQaScorecard(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contactcenterinsights::v1::UpdateQaScorecardRequest const&
+        request) {
+  google::cloud::contactcenterinsights::v1::QaScorecard response;
+  auto status = grpc_stub_->UpdateQaScorecard(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+Status DefaultContactCenterInsightsStub::DeleteQaScorecard(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contactcenterinsights::v1::DeleteQaScorecardRequest const&
+        request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteQaScorecard(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::ListQaScorecardsResponse>
+DefaultContactCenterInsightsStub::ListQaScorecards(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contactcenterinsights::v1::ListQaScorecardsRequest const&
+        request) {
+  google::cloud::contactcenterinsights::v1::ListQaScorecardsResponse response;
+  auto status = grpc_stub_->ListQaScorecards(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
+DefaultContactCenterInsightsStub::CreateQaScorecardRevision(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contactcenterinsights::v1::
+        CreateQaScorecardRevisionRequest const& request) {
+  google::cloud::contactcenterinsights::v1::QaScorecardRevision response;
+  auto status =
+      grpc_stub_->CreateQaScorecardRevision(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
+DefaultContactCenterInsightsStub::GetQaScorecardRevision(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contactcenterinsights::v1::
+        GetQaScorecardRevisionRequest const& request) {
+  google::cloud::contactcenterinsights::v1::QaScorecardRevision response;
+  auto status =
+      grpc_stub_->GetQaScorecardRevision(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultContactCenterInsightsStub::AsyncTuneQaScorecardRevision(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::contactcenterinsights::v1::
+        TuneQaScorecardRevisionRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::contactcenterinsights::v1::TuneQaScorecardRevisionRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::contactcenterinsights::v1::
+                 TuneQaScorecardRevisionRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncTuneQaScorecardRevision(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultContactCenterInsightsStub::TuneQaScorecardRevision(
+    grpc::ClientContext& context, Options,
+    google::cloud::contactcenterinsights::v1::
+        TuneQaScorecardRevisionRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->TuneQaScorecardRevision(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
+DefaultContactCenterInsightsStub::DeployQaScorecardRevision(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contactcenterinsights::v1::
+        DeployQaScorecardRevisionRequest const& request) {
+  google::cloud::contactcenterinsights::v1::QaScorecardRevision response;
+  auto status =
+      grpc_stub_->DeployQaScorecardRevision(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::QaScorecardRevision>
+DefaultContactCenterInsightsStub::UndeployQaScorecardRevision(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contactcenterinsights::v1::
+        UndeployQaScorecardRevisionRequest const& request) {
+  google::cloud::contactcenterinsights::v1::QaScorecardRevision response;
+  auto status =
+      grpc_stub_->UndeployQaScorecardRevision(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+Status DefaultContactCenterInsightsStub::DeleteQaScorecardRevision(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contactcenterinsights::v1::
+        DeleteQaScorecardRevisionRequest const& request) {
+  google::protobuf::Empty response;
+  auto status =
+      grpc_stub_->DeleteQaScorecardRevision(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
+StatusOr<
+    google::cloud::contactcenterinsights::v1::ListQaScorecardRevisionsResponse>
+DefaultContactCenterInsightsStub::ListQaScorecardRevisions(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contactcenterinsights::v1::
+        ListQaScorecardRevisionsRequest const& request) {
+  google::cloud::contactcenterinsights::v1::ListQaScorecardRevisionsResponse
+      response;
+  auto status =
+      grpc_stub_->ListQaScorecardRevisions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::FeedbackLabel>
+DefaultContactCenterInsightsStub::CreateFeedbackLabel(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contactcenterinsights::v1::CreateFeedbackLabelRequest const&
+        request) {
+  google::cloud::contactcenterinsights::v1::FeedbackLabel response;
+  auto status = grpc_stub_->CreateFeedbackLabel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::ListFeedbackLabelsResponse>
+DefaultContactCenterInsightsStub::ListFeedbackLabels(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contactcenterinsights::v1::ListFeedbackLabelsRequest const&
+        request) {
+  google::cloud::contactcenterinsights::v1::ListFeedbackLabelsResponse response;
+  auto status = grpc_stub_->ListFeedbackLabels(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::FeedbackLabel>
+DefaultContactCenterInsightsStub::GetFeedbackLabel(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contactcenterinsights::v1::GetFeedbackLabelRequest const&
+        request) {
+  google::cloud::contactcenterinsights::v1::FeedbackLabel response;
+  auto status = grpc_stub_->GetFeedbackLabel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::contactcenterinsights::v1::FeedbackLabel>
+DefaultContactCenterInsightsStub::UpdateFeedbackLabel(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contactcenterinsights::v1::UpdateFeedbackLabelRequest const&
+        request) {
+  google::cloud::contactcenterinsights::v1::FeedbackLabel response;
+  auto status = grpc_stub_->UpdateFeedbackLabel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+Status DefaultContactCenterInsightsStub::DeleteFeedbackLabel(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contactcenterinsights::v1::DeleteFeedbackLabelRequest const&
+        request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteFeedbackLabel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
+StatusOr<
+    google::cloud::contactcenterinsights::v1::ListAllFeedbackLabelsResponse>
+DefaultContactCenterInsightsStub::ListAllFeedbackLabels(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::contactcenterinsights::v1::
+        ListAllFeedbackLabelsRequest const& request) {
+  google::cloud::contactcenterinsights::v1::ListAllFeedbackLabelsResponse
+      response;
+  auto status = grpc_stub_->ListAllFeedbackLabels(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultContactCenterInsightsStub::AsyncBulkUploadFeedbackLabels(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::contactcenterinsights::v1::
+        BulkUploadFeedbackLabelsRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::contactcenterinsights::v1::BulkUploadFeedbackLabelsRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::contactcenterinsights::v1::
+                 BulkUploadFeedbackLabelsRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncBulkUploadFeedbackLabels(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultContactCenterInsightsStub::BulkUploadFeedbackLabels(
+    grpc::ClientContext& context, Options,
+    google::cloud::contactcenterinsights::v1::
+        BulkUploadFeedbackLabelsRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->BulkUploadFeedbackLabels(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultContactCenterInsightsStub::AsyncBulkDownloadFeedbackLabels(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::contactcenterinsights::v1::
+        BulkDownloadFeedbackLabelsRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::contactcenterinsights::v1::
+                                        BulkDownloadFeedbackLabelsRequest,
+                                    google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::contactcenterinsights::v1::
+                 BulkDownloadFeedbackLabelsRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncBulkDownloadFeedbackLabels(context, request,
+                                                           cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultContactCenterInsightsStub::BulkDownloadFeedbackLabels(
+    grpc::ClientContext& context, Options,
+    google::cloud::contactcenterinsights::v1::
+        BulkDownloadFeedbackLabelsRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->BulkDownloadFeedbackLabels(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>

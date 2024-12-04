@@ -213,6 +213,49 @@ class MockFeatureRegistryServiceConnection
               CreateFeature, (google::longrunning::Operation const& operation),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchCreateFeatures(Matcher<google::cloud::aiplatform::v1::BatchCreateFeaturesRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>,
+      BatchCreateFeatures,
+      (google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const&
+           request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, BatchCreateFeatures(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, BatchCreateFeatures,
+              (NoAwaitTag,
+               google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BatchCreateFeatures(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>,
+      BatchCreateFeatures, (google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Feature>, GetFeature,
               (google::cloud::aiplatform::v1::GetFeatureRequest const& request),
               (override));

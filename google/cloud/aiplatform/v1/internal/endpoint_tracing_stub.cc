@@ -96,6 +96,38 @@ EndpointServiceTracingStub::UpdateEndpoint(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+EndpointServiceTracingStub::AsyncUpdateEndpointLongRunning(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::UpdateEndpointLongRunningRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.aiplatform.v1.EndpointService",
+                             "UpdateEndpointLongRunning");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncUpdateEndpointLongRunning(cq, context,
+                                                  std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+EndpointServiceTracingStub::UpdateEndpointLongRunning(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UpdateEndpointLongRunningRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.aiplatform.v1.EndpointService",
+                             "UpdateEndpointLongRunning");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->UpdateEndpointLongRunning(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
 EndpointServiceTracingStub::AsyncDeleteEndpoint(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

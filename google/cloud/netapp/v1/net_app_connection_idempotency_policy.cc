@@ -219,6 +219,16 @@ Idempotency NetAppConnectionIdempotencyPolicy::ReverseReplicationDirection(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency NetAppConnectionIdempotencyPolicy::EstablishPeering(
+    google::cloud::netapp::v1::EstablishPeeringRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetAppConnectionIdempotencyPolicy::SyncReplication(
+    google::cloud::netapp::v1::SyncReplicationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency NetAppConnectionIdempotencyPolicy::CreateBackupVault(
     google::cloud::netapp::v1::CreateBackupVaultRequest const&) {
   return Idempotency::kNonIdempotent;
