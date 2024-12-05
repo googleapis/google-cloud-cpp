@@ -8,6 +8,7 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
 
 ### [Common Libraries](/google/cloud/README.md)
 
+- docs(release): update changelog for the 2024-12 release
 - feat(rest): support generateIdToken in impersonation url ([#14853](https://github.com/googleapis/google-cloud-cpp/pull/14853))
 - feat(rest): support impersonated ADC ([#14815](https://github.com/googleapis/google-cloud-cpp/pull/14815))
 
