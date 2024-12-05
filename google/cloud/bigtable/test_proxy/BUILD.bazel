@@ -22,7 +22,6 @@ cc_library(
     testonly = True,
     srcs = ["cbt_test_proxy.cc"],
     hdrs = ["cbt_test_proxy.h"],
-    copts = ["-Wno-deprecated-declarations"],
     deps = [
         "//:bigtable",
         "//protos:system_includes",
