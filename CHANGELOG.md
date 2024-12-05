@@ -6,9 +6,12 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
 
 ## v2.32.0 - 2024-12
 
+### [Spanner](/google/cloud/spanner/README.md)
+
+- feat(spanner): add samples for MR CMEK ([#14674](https://github.com/googleapis/google-cloud-cpp/pull/14674))
+
 ### [Common Libraries](/google/cloud/README.md)
 
-- docs(release): update changelog for the 2024-12 release
 - feat(rest): support generateIdToken in impersonation url ([#14853](https://github.com/googleapis/google-cloud-cpp/pull/14853))
 - feat(rest): support impersonated ADC ([#14815](https://github.com/googleapis/google-cloud-cpp/pull/14815))
 
