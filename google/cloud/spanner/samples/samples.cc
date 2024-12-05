@@ -1355,8 +1355,8 @@ void CopyBackupWithMRCMEKCommand(std::vector<std::string> argv) {
   if (argv.size() < 8) {
     throw std::runtime_error(
         "copy-backup <project-id> <instance-id> <backup-id>"
-        " <copy-instance-id> <copy-backup-id> <locations> <key-rings> "
-        "<key-names>");
+        " <copy-instance-id> <copy-backup-id> <<location> <key-ring> "
+        "<key-name>>+");
   }
   google::cloud::spanner_admin::DatabaseAdminClient client(
       google::cloud::spanner_admin::MakeDatabaseAdminConnection());
@@ -1551,7 +1551,7 @@ void CreateDatabaseWithMRCMEKCommand(std::vector<std::string> argv) {
   if (argv.size() < 6) {
     throw std::runtime_error(
         "create-database-with-MR-CMEK <project-id> <instance-id>"
-        " <database-id> <locations> <key-rings> <key-names>");
+        " <database-id> <<location> <key-ring> <key-name>>+");
   }
   google::cloud::spanner_admin::DatabaseAdminClient client(
       google::cloud::spanner_admin::MakeDatabaseAdminConnection());
@@ -1664,7 +1664,7 @@ void CreateBackupWithMRCMEKCommand(std::vector<std::string> argv) {
   if (argv.size() < 7) {
     throw std::runtime_error(
         "create-backup-with-MR-CMEK <project-id> <instance-id>"
-        " <database-id> <backup-id> <locations> <key-rings> <key-names>");
+        " <database-id> <backup-id> <<location> <key-ring> <key-name>>+");
   }
   google::cloud::spanner_admin::DatabaseAdminClient client(
       google::cloud::spanner_admin::MakeDatabaseAdminConnection());
@@ -1782,7 +1782,7 @@ void RestoreDatabaseWithMRCMEKCommand(std::vector<std::string> argv) {
   if (argv.size() < 7) {
     throw std::runtime_error(
         "restore-database-with-MR-CMEK <project-id> <instance-id>"
-        " <database-id> <backup-id> <locations> <key-rings> <key-names>");
+        " <database-id> <backup-id> <<location> <key-ring> <key-name>>+");
   }
   google::cloud::spanner_admin::DatabaseAdminClient client(
       google::cloud::spanner_admin::MakeDatabaseAdminConnection());
@@ -5445,12 +5445,7 @@ void RunAllSlowInstanceTests(
       }
       google::cloud::KmsKeyName encryption_key(
           project_id, *location, "spanner-cmek", "spanner-cmek-test-key");
-      google::cloud::KmsKeyName encryption_key2(
-          project_id, *location, "spanner-cmek2", "spanner-cmek-test-key2");
-      google::cloud::KmsKeyName encryption_key3(
-          project_id, *location, "spanner-cmek3", "spanner-cmek-test-key3");
-      std::vector<google::cloud::KmsKeyName> encryption_keys = {
-          encryption_key, encryption_key2, encryption_key3};
+      std::vector<google::cloud::KmsKeyName> encryption_keys = {encryption_key};
 
       SampleBanner("spanner_drop_database");
       DropDatabase(database_admin_client, project_id, crud_instance_id,
@@ -5702,12 +5697,7 @@ void RunAll(bool emulator) {
     }
     google::cloud::KmsKeyName encryption_key(
         project_id, *location, "spanner-cmek", "spanner-cmek-test-key");
-    google::cloud::KmsKeyName encryption_key2(
-        project_id, *location, "spanner-cmek2", "spanner-cmek-test-key2");
-    google::cloud::KmsKeyName encryption_key3(
-        project_id, *location, "spanner-cmek3", "spanner-cmek-test-key3");
-    std::vector<google::cloud::KmsKeyName> encryption_keys = {
-        encryption_key, encryption_key2, encryption_key3};
+    std::vector<google::cloud::KmsKeyName> encryption_keys = {encryption_key};
 
     SampleBanner("spanner_drop_database");
     DropDatabase(database_admin_client, project_id, instance_id, database_id);
