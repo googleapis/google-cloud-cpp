@@ -18,7 +18,7 @@ ARG ARCH=amd64
 
 # Install the minimal packages needed to install Bazel, and then compile our
 # code.
-RUN dnf install -y clang diffutils findutils gcc-c++ git lcov libcxx-devel \
+RUN dnf install -y clang diffutils findutils gcc-c++ git jq lcov libcxx-devel \
         libcxxabi-devel libasan libubsan libtsan llvm patch python python3 \
         python-pip tar unzip w3m wget which zip zlib-devel
 
