@@ -5470,29 +5470,30 @@ void RunAllSlowInstanceTests(
                                        crud_instance_id, restore_database_id,
                                        backup_id, encryption_key);
 
+      SampleBanner("spanner_drop_database");
+      DropDatabase(database_admin_client, project_id, crud_instance_id,
+                   restore_database_id);
+
+      SampleBanner("spanner_delete_backup");
+      DeleteBackup(database_admin_client, project_id, crud_instance_id,
+                   backup_id);
+
+      SampleBanner("spanner_drop_database");
+      DropDatabase(database_admin_client, project_id, crud_instance_id,
+                   database_id);
+
+      // mr-cmek
       SampleBanner("spanner_create_database_with_MR_CMEK");
       CreateDatabaseWithMRCMEK(database_admin_client, project_id,
                                crud_instance_id, database_id, encryption_keys);
 
       SampleBanner("spanner_create_backup_with_MR_CMEK");
-      auto mr_now = DatabaseNow(
-          MakeSampleClient(project_id, crud_instance_id, database_id));
-      auto mr_expire_time = TimestampAdd(mr_now, absl::Hours(7));
-      auto mr_version_time = mr_now;
       BackupIdentifier backup_dst;
       backup_dst.project_id = project_id;
       backup_dst.instance_id = crud_instance_id;
       backup_dst.backup_id = backup_id;
       CreateBackupWithMRCMEK(database_admin_client, backup_dst, database_id,
-                             mr_expire_time, mr_version_time, encryption_keys);
-
-      SampleBanner("spanner_restore_backup_with_MR_CMEK");
-      BackupIdentifier restore_src;
-      restore_src.project_id = project_id;
-      restore_src.instance_id = crud_instance_id;
-      restore_src.backup_id = backup_id;
-      RestoreDatabaseWithMRCMEK(database_admin_client, restore_src,
-                                restore_database_id, encryption_keys);
+                             expire_time, version_time, encryption_keys);
 
       SampleBanner("spanner_copy_backup_with_MR_CMEK");
       BackupIdentifier copy_src;
@@ -5504,7 +5505,19 @@ void RunAllSlowInstanceTests(
       copy_dst.instance_id = crud_instance_id;
       copy_dst.backup_id = copy_backup_id;
       CopyBackupWithMRCMEK(database_admin_client, copy_src, copy_dst,
-                           mr_expire_time, encryption_keys);
+                           expire_time, encryption_keys);
+
+      SampleBanner("spanner_delete_backup");
+      DeleteBackup(database_admin_client, project_id, crud_instance_id,
+                   copy_backup_id);
+
+      SampleBanner("spanner_restore_backup_with_MR_CMEK");
+      BackupIdentifier restore_src;
+      restore_src.project_id = project_id;
+      restore_src.instance_id = crud_instance_id;
+      restore_src.backup_id = backup_id;
+      RestoreDatabaseWithMRCMEK(database_admin_client, restore_src,
+                                restore_database_id, encryption_keys);
 
       SampleBanner("spanner_drop_database");
       DropDatabase(database_admin_client, project_id, crud_instance_id,
@@ -5513,10 +5526,6 @@ void RunAllSlowInstanceTests(
       SampleBanner("spanner_delete_backup");
       DeleteBackup(database_admin_client, project_id, crud_instance_id,
                    backup_id);
-
-      SampleBanner("spanner_delete_backup");
-      DeleteBackup(database_admin_client, project_id, crud_instance_id,
-                   copy_backup_id);
     }
   }
 
@@ -5705,6 +5714,10 @@ void RunAll(bool emulator) {
     SampleBanner("spanner_create_database_with_encryption_key");
     CreateDatabaseWithEncryptionKey(database_admin_client, project_id,
                                     instance_id, database_id, encryption_key);
+
+    SampleBanner("spanner_drop_database");
+    DropDatabase(database_admin_client, project_id, instance_id, database_id);
+
     SampleBanner("spanner_create_database_with_MR_CMEK");
     CreateDatabaseWithMRCMEK(database_admin_client, project_id, instance_id,
                              database_id, encryption_keys);
