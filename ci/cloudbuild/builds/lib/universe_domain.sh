@@ -42,7 +42,7 @@ if [[ -n "${UD_EXTERNAL_ACCOUNT_CRED}" ]]; then
   response=$(eval "${UD_FETCH_OIDC_TOKEN}")
   id_token=$(echo "${response}" | jq -r '.id_token')
   id_token_file=$(mktemp)
-  echo "${id_token}" >"${id_token_file}" 
+  echo "${id_token}" >"${id_token_file}"
 
   printf "${external_account_cred_template}" "${id_token_file}" >"${UD_EA_KEY_FILE}"
   umask "${ORIG_UMASK}"
