@@ -4,7 +4,16 @@
 breaking changes in the upcoming 3.x release. This release is scheduled for
 2024-12 or 2025-01.
 
-## v2.32.0 - TBD
+## v2.32.0 - 2024-12
+
+### [Common Libraries](/google/cloud/README.md)
+
+- feat(rest): support generateIdToken in impersonation url ([#14853](https://github.com/googleapis/google-cloud-cpp/pull/14853))
+- feat(rest): support impersonated ADC ([#14815](https://github.com/googleapis/google-cloud-cpp/pull/14815))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2024-11-28T13:52:13-08:00](https://github.com/googleapis/googleapis/tree/d675ec222c431e3346ba8aaf0027392fe8b3d90c)
 
 ## v2.31.0 - 2024-11
 
