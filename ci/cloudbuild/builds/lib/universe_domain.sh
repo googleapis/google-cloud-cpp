@@ -44,6 +44,7 @@ if [[ -n "${UD_EXTERNAL_ACCOUNT_CRED}" ]]; then
   id_token_file=$(mktemp)
   echo "${id_token}" >"${id_token_file}"
 
+  # shellcheck disable=SC2059
   printf "${external_account_cred_template}" "${id_token_file}" >"${UD_EA_KEY_FILE}"
   umask "${ORIG_UMASK}"
   io::log "Created EA key file ${UD_EA_KEY_FILE}"

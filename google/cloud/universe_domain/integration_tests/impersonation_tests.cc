@@ -77,7 +77,8 @@ class ServiceAccountImpersonationTest : public DomainUniverseImpersonationTest {
   std::string credential_;
 };
 
-class ExternalAccountImpersonationTest : public DomainUniverseImpersonationTest {
+class ExternalAccountImpersonationTest
+    : public DomainUniverseImpersonationTest {
  protected:
   void SetUp() override {
     DomainUniverseImpersonationTest::SetUp();
@@ -182,7 +183,8 @@ TEST_F(ExternalAccountImpersonationTest, EAToSAImpersonationGrpc) {
 
 TEST_F(DomainUniverseImpersonationTest, IdTokenSAToSAImpersonationRest) {
   namespace disks = ::google::cloud::compute_disks_v1;
-  auto id_token_key_file = gc::internal::GetEnv("UD_IDTOKEN_SA_KEY_FILE").value_or("");
+  auto id_token_key_file =
+      gc::internal::GetEnv("UD_IDTOKEN_SA_KEY_FILE").value_or("");
   ASSERT_FALSE(id_token_key_file.empty());
   // Use ADC credential
   ScopedEnvironment env("GOOGLE_APPLICATION_CREDENTIALS", id_token_key_file);
