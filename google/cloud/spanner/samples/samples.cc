@@ -5492,6 +5492,8 @@ void RunAllSlowInstanceTests(
       backup_dst.project_id = project_id;
       backup_dst.instance_id = crud_instance_id;
       backup_dst.backup_id = backup_id;
+      version_time = DatabaseNow(
+          MakeSampleClient(project_id, crud_instance_id, database_id));
       CreateBackupWithMRCMEK(database_admin_client, backup_dst, database_id,
                              expire_time, version_time, encryption_keys);
 
