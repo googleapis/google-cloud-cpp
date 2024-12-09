@@ -84,7 +84,7 @@ cc_library(
     srcs = [sample],
     tags = ["integration-test"],
     deps = [
-        "//:experimental-bigquerycontrol",
+        "//:bigquerycontrol",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
     ],
 ) for sample in glob([d + "samples/*.cc" for d in service_dirs])]
