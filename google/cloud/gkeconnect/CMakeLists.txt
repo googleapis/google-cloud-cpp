@@ -17,7 +17,11 @@
 include(GoogleCloudCppLibrary)
 
 google_cloud_cpp_add_gapic_library(gkeconnect "Connect Gateway API"
+<<<<<<< HEAD
                                    SERVICE_DIRS "gateway/v1/")
+=======
+                                   REST_TRANSPORT SERVICE_DIRS "gateway/v1/")
+>>>>>>> b81a9d7c33 (update CMakeLists.txt)
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(gkeconnect_quickstart "quickstart/quickstart.cc")
