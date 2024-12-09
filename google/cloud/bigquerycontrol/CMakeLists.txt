@@ -79,13 +79,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_bigquerycontrol)
 set_target_properties(
     google_cloud_cpp_bigquerycontrol
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-bigquerycontrol
+    PROPERTIES EXPORT_NAME google-cloud-cpp::bigquerycontrol
                VERSION "${PROJECT_VERSION}"
                SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_bigquerycontrol
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-bigquerycontrol ALIAS
+add_library(google-cloud-cpp::bigquerycontrol ALIAS
             google_cloud_cpp_bigquerycontrol)
 
 # Get the destination directories based on the GNU recommendations.
@@ -167,8 +167,7 @@ if (GOOGLE_CLOUD_CPP_WITH_MOCKS)
                    INTERFACE ${mock_files})
     target_link_libraries(
         google_cloud_cpp_bigquerycontrol_mocks
-        INTERFACE google-cloud-cpp::experimental-bigquerycontrol GTest::gmock
-                  GTest::gtest)
+        INTERFACE google-cloud-cpp::bigquerycontrol GTest::gmock GTest::gtest)
     set_target_properties(
         google_cloud_cpp_bigquerycontrol_mocks
         PROPERTIES EXPORT_NAME google-cloud-cpp::bigquerycontrol_mocks)
@@ -185,9 +184,8 @@ endif ()
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(bigquerycontrol_quickstart "quickstart/quickstart.cc")
-    target_link_libraries(
-        bigquerycontrol_quickstart
-        PRIVATE google-cloud-cpp::experimental-bigquerycontrol)
+    target_link_libraries(bigquerycontrol_quickstart
+                          PRIVATE google-cloud-cpp::bigquerycontrol)
     google_cloud_cpp_add_common_options(bigquerycontrol_quickstart)
     add_test(
         NAME bigquerycontrol_quickstart
@@ -199,11 +197,11 @@ endif ()
 
 add_subdirectory(integration_tests)
 
-# google-cloud-cpp::experimental-bigquerycontrol must be defined before we can
-# add the samples.
+# google-cloud-cpp::bigquerycontrol must be defined before we can add the
+# samples.
 foreach (dir IN LISTS service_dirs)
     if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
-        google_cloud_cpp_add_samples_relative("experimental-bigquerycontrol"
+        google_cloud_cpp_add_samples_relative("bigquerycontrol"
                                               "${dir}samples/")
     endif ()
 endforeach ()
