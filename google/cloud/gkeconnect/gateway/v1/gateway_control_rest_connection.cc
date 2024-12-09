@@ -16,15 +16,16 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/gkeconnect/gateway/v1/control.proto
 
-#include "google/cloud/gkeconnect/gateway/v1/gateway_control_connection.h"
+#include "google/cloud/gkeconnect/gateway/v1/gateway_control_rest_connection.h"
 #include "google/cloud/gkeconnect/gateway/v1/gateway_control_options.h"
 #include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_option_defaults.h"
+#include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_rest_connection_impl.h"
+#include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_rest_stub_factory.h"
 #include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_tracing_connection.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
-#include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/internal/rest_background_threads_impl.h"
+#include "google/cloud/internal/rest_options.h"
 #include <memory>
 #include <utility>
 
@@ -33,12 +34,23 @@ namespace cloud {
 namespace gkeconnect_gateway_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-GatewayControlConnection::~GatewayControlConnection() = default;
-
-StatusOr<google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse>
-GatewayControlConnection::GenerateCredentials(
-    google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+std::shared_ptr<GatewayControlConnection> MakeGatewayControlConnectionRest(
+    Options options) {
+  internal::CheckExpectedOptions<
+      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
+      rest_internal::TargetApiVersionOption, GatewayControlPolicyOptionList>(
+      options, __func__);
+  options = gkeconnect_gateway_v1_internal::GatewayControlDefaultOptions(
+      std::move(options));
+  auto background = std::make_unique<
+      rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
+  auto stub =
+      gkeconnect_gateway_v1_internal::CreateDefaultGatewayControlRestStub(
+          options);
+  return gkeconnect_gateway_v1_internal::MakeGatewayControlTracingConnection(
+      std::make_shared<
+          gkeconnect_gateway_v1_internal::GatewayControlRestConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

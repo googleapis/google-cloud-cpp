@@ -16,51 +16,53 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/gkeconnect/gateway/v1/control.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKECONNECT_GATEWAY_V1_INTERNAL_GATEWAY_CONTROL_STUB_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKECONNECT_GATEWAY_V1_INTERNAL_GATEWAY_CONTROL_STUB_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKECONNECT_GATEWAY_V1_INTERNAL_GATEWAY_CONTROL_REST_STUB_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKECONNECT_GATEWAY_V1_INTERNAL_GATEWAY_CONTROL_REST_STUB_H
 
-#include "google/cloud/options.h"
+#include "google/cloud/completion_queue.h"
+#include "google/cloud/internal/rest_client.h"
+#include "google/cloud/internal/rest_context.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/cloud/gkeconnect/gateway/v1/control.grpc.pb.h>
+#include <google/cloud/gkeconnect/gateway/v1/control.pb.h>
 #include <memory>
-#include <utility>
 
 namespace google {
 namespace cloud {
 namespace gkeconnect_gateway_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class GatewayControlStub {
+class GatewayControlRestStub {
  public:
-  virtual ~GatewayControlStub() = 0;
+  virtual ~GatewayControlRestStub() = default;
 
   virtual StatusOr<
       google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse>
   GenerateCredentials(
-      grpc::ClientContext& context, Options const& options,
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const&
           request) = 0;
 };
 
-class DefaultGatewayControlStub : public GatewayControlStub {
+class DefaultGatewayControlRestStub : public GatewayControlRestStub {
  public:
-  explicit DefaultGatewayControlStub(
-      std::unique_ptr<
-          google::cloud::gkeconnect::gateway::v1::GatewayControl::StubInterface>
-          grpc_stub)
-      : grpc_stub_(std::move(grpc_stub)) {}
+  ~DefaultGatewayControlRestStub() override = default;
+
+  explicit DefaultGatewayControlRestStub(Options options);
+  DefaultGatewayControlRestStub(
+      std::shared_ptr<rest_internal::RestClient> service, Options options);
 
   StatusOr<google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse>
   GenerateCredentials(
-      grpc::ClientContext& context, Options const& options,
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const&
           request) override;
 
  private:
-  std::unique_ptr<
-      google::cloud::gkeconnect::gateway::v1::GatewayControl::StubInterface>
-      grpc_stub_;
+  std::shared_ptr<rest_internal::RestClient> service_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -68,4 +70,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKECONNECT_GATEWAY_V1_INTERNAL_GATEWAY_CONTROL_STUB_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKECONNECT_GATEWAY_V1_INTERNAL_GATEWAY_CONTROL_REST_STUB_H

@@ -16,34 +16,25 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/gkeconnect/gateway/v1/control.proto
 
-#include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_stub.h"
-#include "google/cloud/grpc_error_delegate.h"
-#include "google/cloud/status_or.h"
-#include <google/cloud/gkeconnect/gateway/v1/control.grpc.pb.h>
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKECONNECT_GATEWAY_V1_INTERNAL_GATEWAY_CONTROL_REST_STUB_FACTORY_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKECONNECT_GATEWAY_V1_INTERNAL_GATEWAY_CONTROL_REST_STUB_FACTORY_H
+
+#include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_rest_stub.h"
+#include "google/cloud/options.h"
+#include "google/cloud/version.h"
 #include <memory>
-#include <utility>
 
 namespace google {
 namespace cloud {
 namespace gkeconnect_gateway_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-GatewayControlStub::~GatewayControlStub() = default;
-
-StatusOr<google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse>
-DefaultGatewayControlStub::GenerateCredentials(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const&
-        request) {
-  google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse response;
-  auto status = grpc_stub_->GenerateCredentials(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
-}
+std::shared_ptr<GatewayControlRestStub> CreateDefaultGatewayControlRestStub(
+    Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkeconnect_gateway_v1_internal
 }  // namespace cloud
 }  // namespace google
+
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKECONNECT_GATEWAY_V1_INTERNAL_GATEWAY_CONTROL_REST_STUB_FACTORY_H

@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/gkeconnect/gateway/v1/control.proto
 
-#include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_connection_impl.h"
-#include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_option_defaults.h"
-#include "google/cloud/background_threads.h"
+#include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_rest_connection_impl.h"
+#include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_rest_stub_factory.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/internal/rest_retry_loop.h"
+#include "google/cloud/rest_options.h"
 #include <memory>
 #include <utility>
 
@@ -29,34 +29,11 @@ namespace google {
 namespace cloud {
 namespace gkeconnect_gateway_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace {
 
-std::unique_ptr<gkeconnect_gateway_v1::GatewayControlRetryPolicy> retry_policy(
-    Options const& options) {
-  return options.get<gkeconnect_gateway_v1::GatewayControlRetryPolicyOption>()
-      ->clone();
-}
-
-std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-  return options
-      .get<gkeconnect_gateway_v1::GatewayControlBackoffPolicyOption>()
-      ->clone();
-}
-
-std::unique_ptr<
-    gkeconnect_gateway_v1::GatewayControlConnectionIdempotencyPolicy>
-idempotency_policy(Options const& options) {
-  return options
-      .get<gkeconnect_gateway_v1::
-               GatewayControlConnectionIdempotencyPolicyOption>()
-      ->clone();
-}
-
-}  // namespace
-
-GatewayControlConnectionImpl::GatewayControlConnectionImpl(
+GatewayControlRestConnectionImpl::GatewayControlRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<gkeconnect_gateway_v1_internal::GatewayControlStub> stub,
+    std::shared_ptr<gkeconnect_gateway_v1_internal::GatewayControlRestStub>
+        stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -64,17 +41,17 @@ GatewayControlConnectionImpl::GatewayControlConnectionImpl(
                                       GatewayControlConnection::options())) {}
 
 StatusOr<google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse>
-GatewayControlConnectionImpl::GenerateCredentials(
+GatewayControlRestConnectionImpl::GenerateCredentials(
     google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  return google::cloud::internal::RetryLoop(
+  return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GenerateCredentials(request),
-      [this](grpc::ClientContext& context, Options const& options,
+      [this](rest_internal::RestContext& rest_context, Options const& options,
              google::cloud::gkeconnect::gateway::v1::
                  GenerateCredentialsRequest const& request) {
-        return stub_->GenerateCredentials(context, options, request);
+        return stub_->GenerateCredentials(rest_context, options, request);
       },
       *current, request, __func__);
 }

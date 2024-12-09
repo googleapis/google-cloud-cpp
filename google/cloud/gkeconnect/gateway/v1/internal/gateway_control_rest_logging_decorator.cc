@@ -16,8 +16,9 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/gkeconnect/gateway/v1/control.proto
 
-#include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_auth_decorator.h"
-#include <google/cloud/gkeconnect/gateway/v1/control.grpc.pb.h>
+#include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_rest_logging_decorator.h"
+#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/status_or.h"
 #include <memory>
 #include <utility>
 
@@ -26,19 +27,25 @@ namespace cloud {
 namespace gkeconnect_gateway_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-GatewayControlAuth::GatewayControlAuth(
-    std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
-    std::shared_ptr<GatewayControlStub> child)
-    : auth_(std::move(auth)), child_(std::move(child)) {}
+GatewayControlRestLogging::GatewayControlRestLogging(
+    std::shared_ptr<GatewayControlRestStub> child,
+    TracingOptions tracing_options, std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
+      components_(std::move(components)) {}
 
 StatusOr<google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse>
-GatewayControlAuth::GenerateCredentials(
-    grpc::ClientContext& context, Options const& options,
+GatewayControlRestLogging::GenerateCredentials(
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const&
         request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->GenerateCredentials(context, options, request);
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::gkeconnect::gateway::v1::
+                 GenerateCredentialsRequest const& request) {
+        return child_->GenerateCredentials(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

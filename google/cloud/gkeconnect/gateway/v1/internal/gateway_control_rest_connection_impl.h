@@ -16,14 +16,14 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/gkeconnect/gateway/v1/control.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKECONNECT_GATEWAY_V1_INTERNAL_GATEWAY_CONTROL_CONNECTION_IMPL_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKECONNECT_GATEWAY_V1_INTERNAL_GATEWAY_CONTROL_CONNECTION_IMPL_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKECONNECT_GATEWAY_V1_INTERNAL_GATEWAY_CONTROL_REST_CONNECTION_IMPL_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKECONNECT_GATEWAY_V1_INTERNAL_GATEWAY_CONTROL_REST_CONNECTION_IMPL_H
 
 #include "google/cloud/gkeconnect/gateway/v1/gateway_control_connection.h"
 #include "google/cloud/gkeconnect/gateway/v1/gateway_control_connection_idempotency_policy.h"
 #include "google/cloud/gkeconnect/gateway/v1/gateway_control_options.h"
+#include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_rest_stub.h"
 #include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_retry_traits.h"
-#include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_stub.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
@@ -36,14 +36,15 @@ namespace cloud {
 namespace gkeconnect_gateway_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class GatewayControlConnectionImpl
+class GatewayControlRestConnectionImpl
     : public gkeconnect_gateway_v1::GatewayControlConnection {
  public:
-  ~GatewayControlConnectionImpl() override = default;
+  ~GatewayControlRestConnectionImpl() override = default;
 
-  GatewayControlConnectionImpl(
+  GatewayControlRestConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<gkeconnect_gateway_v1_internal::GatewayControlStub> stub,
+      std::shared_ptr<gkeconnect_gateway_v1_internal::GatewayControlRestStub>
+          stub,
       Options options);
 
   Options options() override { return options_; }
@@ -54,8 +55,30 @@ class GatewayControlConnectionImpl
           request) override;
 
  private:
+  static std::unique_ptr<gkeconnect_gateway_v1::GatewayControlRetryPolicy>
+  retry_policy(Options const& options) {
+    return options
+        .get<gkeconnect_gateway_v1::GatewayControlRetryPolicyOption>()
+        ->clone();
+  }
+
+  static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+    return options
+        .get<gkeconnect_gateway_v1::GatewayControlBackoffPolicyOption>()
+        ->clone();
+  }
+
+  static std::unique_ptr<
+      gkeconnect_gateway_v1::GatewayControlConnectionIdempotencyPolicy>
+  idempotency_policy(Options const& options) {
+    return options
+        .get<gkeconnect_gateway_v1::
+                 GatewayControlConnectionIdempotencyPolicyOption>()
+        ->clone();
+  }
+
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<gkeconnect_gateway_v1_internal::GatewayControlStub> stub_;
+  std::shared_ptr<gkeconnect_gateway_v1_internal::GatewayControlRestStub> stub_;
   Options options_;
 };
 
@@ -64,4 +87,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKECONNECT_GATEWAY_V1_INTERNAL_GATEWAY_CONTROL_CONNECTION_IMPL_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKECONNECT_GATEWAY_V1_INTERNAL_GATEWAY_CONTROL_REST_CONNECTION_IMPL_H
