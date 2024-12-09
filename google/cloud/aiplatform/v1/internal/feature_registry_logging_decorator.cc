@@ -189,6 +189,38 @@ FeatureRegistryServiceLogging::CreateFeature(
       context, options, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+FeatureRegistryServiceLogging::AsyncBatchCreateFeatures(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const&
+                 request) {
+        return child_->AsyncBatchCreateFeatures(cq, std::move(context),
+                                                std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+FeatureRegistryServiceLogging::BatchCreateFeatures(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const&
+                 request) {
+        return child_->BatchCreateFeatures(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::aiplatform::v1::Feature>
 FeatureRegistryServiceLogging::GetFeature(
     grpc::ClientContext& context, Options const& options,

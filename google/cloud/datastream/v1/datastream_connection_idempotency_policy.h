@@ -76,6 +76,9 @@ class DatastreamConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteStream(
       google::cloud::datastream::v1::DeleteStreamRequest const& request);
 
+  virtual google::cloud::Idempotency RunStream(
+      google::cloud::datastream::v1::RunStreamRequest const& request);
+
   virtual google::cloud::Idempotency GetStreamObject(
       google::cloud::datastream::v1::GetStreamObjectRequest const& request);
 

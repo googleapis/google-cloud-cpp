@@ -287,6 +287,35 @@ StatusOr<google::longrunning::Operation> DefaultDatastreamStub::DeleteStream(
   return response;
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultDatastreamStub::AsyncRunStream(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::datastream::v1::RunStreamRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::datastream::v1::RunStreamRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::datastream::v1::RunStreamRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncRunStream(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultDatastreamStub::RunStream(
+    grpc::ClientContext& context, Options,
+    google::cloud::datastream::v1::RunStreamRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RunStream(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::datastream::v1::StreamObject>
 DefaultDatastreamStub::GetStreamObject(
     grpc::ClientContext& context, Options const&,
@@ -617,7 +646,7 @@ DefaultDatastreamStub::AsyncGetOperation(
       [this](grpc::ClientContext* context,
              google::longrunning::GetOperationRequest const& request,
              grpc::CompletionQueue* cq) {
-        return operations_->AsyncGetOperation(context, request, cq);
+        return operations_stub_->AsyncGetOperation(context, request, cq);
       },
       request, std::move(context));
 }
@@ -634,7 +663,8 @@ future<Status> DefaultDatastreamStub::AsyncCancelOperation(
              [this](grpc::ClientContext* context,
                     google::longrunning::CancelOperationRequest const& request,
                     grpc::CompletionQueue* cq) {
-               return operations_->AsyncCancelOperation(context, request, cq);
+               return operations_stub_->AsyncCancelOperation(context, request,
+                                                             cq);
              },
              request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {

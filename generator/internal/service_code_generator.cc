@@ -293,7 +293,7 @@ VarsDictionary ServiceCodeGenerator::MergeServiceAndMethodVars(
 
 void ServiceCodeGenerator::HeaderLocalIncludes(
     std::vector<std::string> const& local_includes) {
-  GenerateLocalIncludes(header_, local_includes);
+  GenerateLocalIncludes(header_, local_includes, FileType::kHeaderFile);
 }
 
 void ServiceCodeGenerator::CcLocalIncludes(
@@ -505,6 +505,10 @@ bool ServiceCodeGenerator::IsDiscoveryDocumentProto() const {
 
 std::vector<MixinMethod> const& ServiceCodeGenerator::MixinMethods() const {
   return mixin_methods_;
+}
+
+bool ServiceCodeGenerator::IsDeprecated() const {
+  return service_descriptor_->options().deprecated();
 }
 
 }  // namespace generator_internal

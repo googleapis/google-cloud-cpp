@@ -386,6 +386,34 @@ DataCatalogTracingConnection::ImportEntries(
   return internal::EndSpan(std::move(span), child_->ImportEntries(operation));
 }
 
+StatusOr<google::cloud::datacatalog::v1::MigrationConfig>
+DataCatalogTracingConnection::SetConfig(
+    google::cloud::datacatalog::v1::SetConfigRequest const& request) {
+  auto span =
+      internal::MakeSpan("datacatalog_v1::DataCatalogConnection::SetConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetConfig(request));
+}
+
+StatusOr<google::cloud::datacatalog::v1::OrganizationConfig>
+DataCatalogTracingConnection::RetrieveConfig(
+    google::cloud::datacatalog::v1::RetrieveConfigRequest const& request) {
+  auto span = internal::MakeSpan(
+      "datacatalog_v1::DataCatalogConnection::RetrieveConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->RetrieveConfig(request));
+}
+
+StatusOr<google::cloud::datacatalog::v1::MigrationConfig>
+DataCatalogTracingConnection::RetrieveEffectiveConfig(
+    google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "datacatalog_v1::DataCatalogConnection::RetrieveEffectiveConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->RetrieveEffectiveConfig(request));
+}
+
 StreamRange<google::longrunning::Operation>
 DataCatalogTracingConnection::ListOperations(
     google::longrunning::ListOperationsRequest request) {

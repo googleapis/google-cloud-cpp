@@ -26,11 +26,10 @@ export CC=clang
 export CXX=clang++
 
 if [[ -n "${UD_SA_KEY_FILE}" ]]; then
-  # Testing environment has changed such that authentication is failing. Ignore
-  # failures for now.
   ud::bazel_run //google/cloud/universe_domain/demo:kms_demo \
-    "${UD_PROJECT}" "${UD_REGION}" "${UD_SA_KEY_FILE}" || true
-  ud::bazel_test //google/cloud/storage/tests:universe_domain_integration_test || true
+    "${UD_PROJECT}" "${UD_REGION}" "${UD_SA_KEY_FILE}"
+  ud::bazel_test //google/cloud/storage/tests:universe_domain_integration_test
+  ud::bazel_test //google/cloud/universe_domain/integration_tests:impersonation_tests
 else
   source module ci/etc/integration-tests-config.sh
   bazel run -- //google/cloud/universe_domain/demo:kms_demo \

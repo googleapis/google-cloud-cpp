@@ -225,6 +225,26 @@ StatusOr<google::longrunning::Operation> DatastreamMetadata::DeleteStream(
   return child_->DeleteStream(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DatastreamMetadata::AsyncRunStream(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::datastream::v1::RunStreamRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncRunStream(cq, std::move(context), std::move(options),
+                                request);
+}
+
+StatusOr<google::longrunning::Operation> DatastreamMetadata::RunStream(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::RunStreamRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->RunStream(context, options, request);
+}
+
 StatusOr<google::cloud::datastream::v1::StreamObject>
 DatastreamMetadata::GetStreamObject(
     grpc::ClientContext& context, Options const& options,

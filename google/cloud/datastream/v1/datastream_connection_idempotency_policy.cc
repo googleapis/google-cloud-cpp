@@ -89,6 +89,11 @@ Idempotency DatastreamConnectionIdempotencyPolicy::DeleteStream(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency DatastreamConnectionIdempotencyPolicy::RunStream(
+    google::cloud::datastream::v1::RunStreamRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency DatastreamConnectionIdempotencyPolicy::GetStreamObject(
     google::cloud::datastream::v1::GetStreamObjectRequest const&) {
   return Idempotency::kIdempotent;

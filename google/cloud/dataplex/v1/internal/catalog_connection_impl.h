@@ -201,6 +201,29 @@ class CatalogServiceConnectionImpl
   StreamRange<google::cloud::dataplex::v1::SearchEntriesResult> SearchEntries(
       google::cloud::dataplex::v1::SearchEntriesRequest request) override;
 
+  future<StatusOr<google::cloud::dataplex::v1::MetadataJob>> CreateMetadataJob(
+      google::cloud::dataplex::v1::CreateMetadataJobRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateMetadataJob(
+      NoAwaitTag,
+      google::cloud::dataplex::v1::CreateMetadataJobRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::dataplex::v1::MetadataJob>> CreateMetadataJob(
+      google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::cloud::dataplex::v1::MetadataJob> GetMetadataJob(
+      google::cloud::dataplex::v1::GetMetadataJobRequest const& request)
+      override;
+
+  StreamRange<google::cloud::dataplex::v1::MetadataJob> ListMetadataJobs(
+      google::cloud::dataplex::v1::ListMetadataJobsRequest request) override;
+
+  Status CancelMetadataJob(
+      google::cloud::dataplex::v1::CancelMetadataJobRequest const& request)
+      override;
+
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;
 

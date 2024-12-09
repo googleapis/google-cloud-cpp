@@ -57,6 +57,7 @@ function integration::bazel_args() {
     # Common settings
     "--test_env=GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT}"
     "--test_env=GOOGLE_CLOUD_CPP_TEST_REGION=${GOOGLE_CLOUD_CPP_TEST_REGION}"
+    "--test_env=GOOGLE_CLOUD_CPP_NON_US_TEST_REGION=${GOOGLE_CLOUD_CPP_NON_US_TEST_REGION}"
     "--test_env=GOOGLE_CLOUD_CPP_TEST_ZONE=${GOOGLE_CLOUD_CPP_TEST_ZONE}"
     "--test_env=GOOGLE_CLOUD_CPP_TEST_ORGANIZATION=${GOOGLE_CLOUD_CPP_TEST_ORGANIZATION}"
     "--test_env=GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE=${GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE}"
@@ -177,30 +178,30 @@ function integration::bazel_with_emulators() {
     "google/cloud:internal_unified_rest_credentials_integration_test"
   )
 
-  production_tests_tag_filters="integration-test"
+  production_tests_tag_filters="integration-test,-ud-only"
   if echo "${args[@]}" | grep -w -q -- "--config=msan"; then
-    production_tests_tag_filters="integration-test,-no-msan"
+    production_tests_tag_filters="integration-test,-no-msan,-ud-only"
   fi
 
   io::log_h2 "Running Pub/Sub integration tests (with emulator)"
   "google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
-    bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test"
+    bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test,-ud-only"
 
   io::log_h2 "Running Storage integration tests (with emulator)"
   "google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
-    bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test"
+    bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test,-ud-only"
 
   io::log_h2 "Running Spanner integration tests (with emulator)"
   "google/cloud/spanner/ci/${EMULATOR_SCRIPT}" \
-    bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test"
+    bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test,-ud-only"
 
   io::log_h2 "Running Bigtable integration tests (with emulator)"
   "google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
-    bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test"
+    bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test,-ud-only"
 
   io::log_h2 "Running REST integration tests (with emulator)"
   "google/cloud/internal/ci/${EMULATOR_SCRIPT}" \
-    bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test"
+    bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test,-ud-only"
 
   if [[ "${BAZEL_TARGETS[*]}" != "..." ]]; then
     io::log_h2 "Skipping some integration tests because BAZEL_TARGETS is not the default"

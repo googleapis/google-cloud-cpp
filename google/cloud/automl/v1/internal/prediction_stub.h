@@ -73,8 +73,9 @@ class DefaultPredictionServiceStub : public PredictionServiceStub {
           google::cloud::automl::v1::PredictionService::StubInterface>
           grpc_stub,
       std::unique_ptr<google::longrunning::Operations::StubInterface>
-          operations)
-      : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
+          operations_stub)
+      : grpc_stub_(std::move(grpc_stub)),
+        operations_stub_(std::move(operations_stub)) {}
 
   StatusOr<google::cloud::automl::v1::PredictResponse> Predict(
       grpc::ClientContext& context, Options const& options,
@@ -105,7 +106,8 @@ class DefaultPredictionServiceStub : public PredictionServiceStub {
  private:
   std::unique_ptr<google::cloud::automl::v1::PredictionService::StubInterface>
       grpc_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -84,6 +84,7 @@ set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     "google/iam/v1/iam_policy.proto"
     "google/iam/v1/options.proto"
     "google/iam/v1/policy.proto"
+    "google/iam/v1/resource_policy_member.proto"
     "google/longrunning/operations.proto"
     "google/rpc/code.proto"
     "google/rpc/context/attribute_context.proto"
@@ -228,6 +229,7 @@ set(external_googleapis_installed_libraries_list
     google_cloud_cpp_iam_v1_iam_policy_protos
     google_cloud_cpp_iam_v1_options_protos
     google_cloud_cpp_iam_v1_policy_protos
+    google_cloud_cpp_iam_v1_resource_policy_member_protos
     google_cloud_cpp_longrunning_operations_protos)
 
 # These proto files cannot be added in the foreach() loop because they have
@@ -324,6 +326,8 @@ external_googleapis_add_library("google/iam/v1/options.proto"
                                 api_annotations_protos)
 external_googleapis_add_library("google/iam/v1/policy.proto"
                                 api_annotations_protos type_expr_protos)
+external_googleapis_add_library("google/iam/v1/resource_policy_member.proto"
+                                api_field_behavior_protos)
 external_googleapis_add_library("google/rpc/status.proto"
                                 rpc_error_details_protos)
 

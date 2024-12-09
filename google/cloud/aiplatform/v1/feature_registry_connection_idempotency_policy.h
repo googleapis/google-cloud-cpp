@@ -58,6 +58,9 @@ class FeatureRegistryServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency CreateFeature(
       google::cloud::aiplatform::v1::CreateFeatureRequest const& request);
 
+  virtual google::cloud::Idempotency BatchCreateFeatures(
+      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request);
+
   virtual google::cloud::Idempotency GetFeature(
       google::cloud::aiplatform::v1::GetFeatureRequest const& request);
 

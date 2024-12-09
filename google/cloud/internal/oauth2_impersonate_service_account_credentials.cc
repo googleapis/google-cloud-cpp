@@ -67,24 +67,7 @@ ParseImpersonatedServiceAccountCredentials(std::string const& content,
   }
   // We strip the service account from the path URL.
   auto url = it->get<std::string>();
-  auto colon = url.rfind(':');
-  if (colon == std::string::npos) {
-    return internal::InvalidArgumentError(
-        "Malformed `service_account_impersonation_url` field contents on data "
-        "from " +
-            source,
-        GCP_ERROR_INFO());
-  }
-  if (url.substr(colon) != ":generateAccessToken") {
-    // While `generateIdToken` is a valid RPC, we do not currently support ID
-    // token flow. So we might as well error when parsing the credentials.
-    return internal::InvalidArgumentError(
-        "Only access token authentication is supported for impersonated "
-        "service accounts from " +
-            source,
-        GCP_ERROR_INFO());
-  }
-  auto slash = url.rfind('/', colon);
+  auto slash = url.rfind('/');
   if (slash == std::string::npos) {
     return internal::InvalidArgumentError(
         "Malformed `service_account_impersonation_url` field contents on data "
@@ -92,7 +75,13 @@ ParseImpersonatedServiceAccountCredentials(std::string const& content,
             source,
         GCP_ERROR_INFO());
   }
-  info.service_account = std::string{url.substr(slash + 1, colon - slash - 1)};
+
+  // In the url, after the last slash, it is in the format of
+  // `service_account[:action]`
+  auto service_account_action = url.substr(slash + 1);
+  auto colon = service_account_action.rfind(':');
+  auto end = colon == std::string::npos ? service_account_action.size() : colon;
+  info.service_account = service_account_action.substr(0, end);
 
   it = credentials.find("delegates");
   if (it != credentials.end()) {

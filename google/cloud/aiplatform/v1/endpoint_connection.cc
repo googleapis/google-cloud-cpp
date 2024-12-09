@@ -81,6 +81,30 @@ EndpointServiceConnection::UpdateEndpoint(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>
+EndpointServiceConnection::UpdateEndpointLongRunning(
+    google::cloud::aiplatform::v1::UpdateEndpointLongRunningRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::aiplatform::v1::Endpoint>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+EndpointServiceConnection::UpdateEndpointLongRunning(
+    NoAwaitTag,
+    google::cloud::aiplatform::v1::UpdateEndpointLongRunningRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>
+EndpointServiceConnection::UpdateEndpointLongRunning(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::aiplatform::v1::Endpoint>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 EndpointServiceConnection::DeleteEndpoint(
     google::cloud::aiplatform::v1::DeleteEndpointRequest const&) {

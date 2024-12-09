@@ -14,6 +14,7 @@
 
 #include "google/cloud/spanner/testing/status_utils.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include <google/rpc/error_details.pb.h>
 #include <google/rpc/status.pb.h>
 #include <google/spanner/v1/spanner.pb.h>
@@ -25,7 +26,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 grpc::Status SessionNotFoundRpcError(std::string name) {
   google::spanner::v1::Session session;
-  auto session_url = "type.googleapis.com/" + session.GetTypeName();
+  auto session_url =
+      absl::StrCat("type.googleapis.com/", session.GetTypeName());
 
   google::rpc::ResourceInfo resource_info;
   resource_info.set_resource_type(session_url);
