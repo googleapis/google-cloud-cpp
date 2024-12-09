@@ -1331,6 +1331,9 @@ void CopyBackupWithMRCMEK(
   request.set_source_backup(source.FullName());
   *request.mutable_expire_time() =
       expire_time.get<google::protobuf::Timestamp>().value();
+  request.mutable_encryption_config()->set_encryption_type(
+      google::spanner::admin::database::v1::CopyBackupEncryptionConfig::
+          CUSTOMER_MANAGED_ENCRYPTION);
   for (google::cloud::KmsKeyName const& encryption_key : encryption_keys) {
     request.mutable_encryption_config()->add_kms_key_names(
         encryption_key.FullName());
