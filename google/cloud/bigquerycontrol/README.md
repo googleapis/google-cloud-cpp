@@ -7,10 +7,8 @@ This directory contains an idiomatic C++ client library for the
 
 A data platform for customers to create, manage, share and query data.
 
-This library is **experimental**. Its APIs are subject to change without notice.
-
-Please, note that the Google Cloud C++ client libraries do **not** follow
-[Semantic Versioning](https://semver.org/).
+While this library is **GA**, please note Google Cloud C++ client libraries do
+ **not** follow [Semantic Versioning](https://semver.org/).
 
 ## Quickstart
 
