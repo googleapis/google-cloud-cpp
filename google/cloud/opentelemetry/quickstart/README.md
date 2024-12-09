@@ -117,8 +117,9 @@ To enable these features, add the following to your CMake configuration command:
 
 #### Details
 
-We must supply the `-DWITH_ABSEIL=ON` flag when compiling `opentelemetry-cpp`
-for compatibility with Abseil.
+If our version of `opentelemetry-cpp` is < v1.16.0, we must supply the
+`-DWITH_ABSEIL=ON` flag when compiling `opentelemetry-cpp` for compatibility
+with Abseil.
 
 We must also ensure that the `-DCMAKE_CXX_STANDARD` used to compile
 `opentelemetry-cpp` matches the language standard used to compile `abseil-cpp`.
