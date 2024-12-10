@@ -1,14 +1,12 @@
 # BigQuery API C++ Client Library
 
-:construction:
-
 This directory contains an idiomatic C++ client library for the
 [BigQuery API][cloud-service-docs].
 
 A data platform for customers to create, manage, share and query data.
 
 While this library is **GA**, please note Google Cloud C++ client libraries do
- **not** follow [Semantic Versioning](https://semver.org/).
+**not** follow [Semantic Versioning](https://semver.org/).
 
 ## Quickstart
 

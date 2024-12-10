@@ -22,3 +22,8 @@ find_dependency(google_cloud_cpp_rest_protobuf_internal)
 find_dependency(absl)
 
 include("${CMAKE_CURRENT_LIST_DIR}/google_cloud_cpp_bigquerycontrol-targets.cmake")
+
+# Remove this after bigquerycontrol is promoted from transitional to GA.
+if (NOT TARGET google-cloud-cpp::experimental-bigquerycontrol)
+    add_library(google-cloud-cpp::experimental-bigquerycontrol ALIAS google-cloud-cpp::bigquerycontrol)
+endif ()
