@@ -108,6 +108,7 @@ function (google_cloud_cpp_add_library_protos library)
     # Create and install the CMake configuration files.
     include(CMakePackageConfigHelpers)
     set(GOOGLE_CLOUD_CPP_CONFIG_LIBRARY "${library_target}")
+    set(GOOGLE_CLOUD_CPP_TRANSPORT "grpc_utils")
     configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.cmake.in"
                    "${library_target}-config.cmake" @ONLY)
     write_basic_package_version_file(
