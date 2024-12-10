@@ -15,15 +15,22 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPENTELEMETRY_INTERNAL_MONITORED_RESOURCE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPENTELEMETRY_INTERNAL_MONITORED_RESOURCE_H
 
+#include "absl/types/optional.h"
 #include "google/cloud/version.h"
 #include <opentelemetry/sdk/resource/resource.h>
 #include <string>
 #include <unordered_map>
+#include <vector>
 
 namespace google {
 namespace cloud {
 namespace otel_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+struct OTelKeyMatch {
+  std::vector<std::string> otel_keys;
+  absl::optional<std::string> fallback = absl::nullopt;
+};
 
 std::string AsString(
     opentelemetry::sdk::common::OwnedAttributeValue const& attribute);

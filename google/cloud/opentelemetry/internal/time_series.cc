@@ -21,6 +21,8 @@
 #include <opentelemetry/sdk/metrics/data/metric_data.h>
 #include <opentelemetry/sdk/metrics/export/metric_producer.h>
 #include <cctype>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -215,6 +217,7 @@ std::vector<google::monitoring::v3::TimeSeries> ToTimeSeries(
       }
     }
   }
+  WithExtraLabels(data, tss);
   return tss;
 }
 
@@ -234,6 +237,41 @@ std::vector<google::monitoring::v3::CreateTimeSeriesRequest> ToRequests(
     *requests.back().add_time_series() = std::move(ts);
   }
   return requests;
+}
+
+void WithExtraLabels(
+    opentelemetry::sdk::metrics::ResourceMetrics const& data,
+    std::vector<google::monitoring::v3::TimeSeries>& tss,
+    std::unordered_map<std::string, OTelKeyMatch> const& extra_labels) {
+  if (!data.resource_) {
+    return;
+  }
+
+  opentelemetry::sdk::resource::ResourceAttributes const& attributes =
+      data.resource_->GetAttributes();
+  for (auto const& kv : extra_labels) {
+    auto const& oks = kv.second.otel_keys;
+    auto found = std::find_first_of(
+        oks.begin(), oks.end(), attributes.begin(), attributes.end(),
+        [](auto const& key, auto const& attr) { return key == attr.first; });
+
+    std::string value;
+    if (found != oks.end()) {
+      value = AsString(attributes.at(*found));
+    } else if (kv.second.fallback) {
+      value = *kv.second.fallback;
+    }
+    if (value.empty()) {
+      continue;
+    }
+
+    for (auto& ts : tss) {
+      auto& labels = *((*ts.mutable_metric()).mutable_labels());
+      if (labels.find(kv.first) == labels.end()) {
+        labels[kv.first] = value;
+      }
+    }
+  }
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
