@@ -78,7 +78,8 @@ google_cloud_cpp_add_pkgconfig(
     rest_protobuf_internal
     "REST/Protobuf Utilities for the Google Cloud C++ Client Library"
     "Provides REST and Protobuf Utilities for the Google Cloud C++ Client Library."
-    "google_cloud_cpp_common")
+    "google_cloud_cpp_common"
+    "google_cloud_cpp_grpc_utils")
 
 # Create and install the CMake configuration files.
 configure_file("config-rest-protobuf.cmake.in"
