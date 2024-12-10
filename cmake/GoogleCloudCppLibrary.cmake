@@ -108,6 +108,7 @@ function (google_cloud_cpp_add_library_protos library)
     # Create and install the CMake configuration files.
     include(CMakePackageConfigHelpers)
     set(GOOGLE_CLOUD_CPP_CONFIG_LIBRARY "${library_target}")
+    set(GOOGLE_CLOUD_CPP_TRANSPORT "grpc_utils")
     configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.cmake.in"
                    "${library_target}-config.cmake" @ONLY)
     write_basic_package_version_file(
@@ -148,7 +149,7 @@ endfunction ()
 function (google_cloud_cpp_add_gapic_library library display_name)
     cmake_parse_arguments(
         _opt
-        "EXPERIMENTAL;TRANSITION"
+        "EXPERIMENTAL;TRANSITION;REST_TRANSPORT"
         ""
         "ADDITIONAL_PROTO_LISTS;BACKWARDS_COMPAT_PROTO_TARGETS;CROSS_LIB_DEPS;SERVICE_DIRS;SHARED_PROTO_DEPS"
         ${ARGN})
@@ -166,6 +167,10 @@ function (google_cloud_cpp_add_gapic_library library display_name)
     set(experimental_alias "google-cloud-cpp::experimental-${library}")
     if (_opt_EXPERIMENTAL)
         set(library_alias "${experimental_alias}")
+    endif ()
+    set(transport "grpc_utils")
+    if (_opt_REST_TRANSPORT)
+        set(transport "rest_protobuf_internal")
     endif ()
 
     include(GoogleapisConfig)
@@ -241,7 +246,7 @@ function (google_cloud_cpp_add_gapic_library library display_name)
                $<INSTALL_INTERFACE:include>)
     target_link_libraries(
         ${library_target}
-        PUBLIC google-cloud-cpp::grpc_utils google-cloud-cpp::common
+        PUBLIC google-cloud-cpp::${transport} google-cloud-cpp::common
                google-cloud-cpp::${library}_protos ${shared_proto_dep_targets})
     google_cloud_cpp_add_common_options(${library_target})
     set_target_properties(
@@ -300,13 +305,14 @@ function (google_cloud_cpp_add_gapic_library library display_name)
         ${library}
         "The ${display_name} C++ Client Library"
         "Provides C++ APIs to use the ${display_name}"
-        "google_cloud_cpp_grpc_utils"
+        "google_cloud_cpp_${transport}"
         "${protos_target}"
         ${shared_proto_dep_targets})
 
     # Create and install the CMake configuration files.
     include(CMakePackageConfigHelpers)
     set(GOOGLE_CLOUD_CPP_CONFIG_LIBRARY "${library_target}")
+    set(GOOGLE_CLOUD_CPP_TRANSPORT "${transport}")
     foreach (lib IN LISTS _opt_CROSS_LIB_DEPS _opt_SHARED_PROTO_DEPS)
         list(APPEND find_dependencies
              "find_dependency(google_cloud_cpp_${lib})")
