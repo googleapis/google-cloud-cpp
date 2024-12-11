@@ -17,7 +17,7 @@
 include(GoogleCloudCppLibrary)
 
 google_cloud_cpp_add_gapic_library(bigquerycontrol "Cloud BigQuery Control API"
-                                   REST_TRANSPORT SERVICE_DIRS "v2/")
+                                   TRANSITION REST_TRANSPORT SERVICE_DIRS "v2/")
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(bigquerycontrol_quickstart "quickstart/quickstart.cc")
