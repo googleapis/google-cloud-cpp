@@ -356,6 +356,53 @@ CatalogServiceMetadata::SearchEntries(
   return child_->SearchEntries(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+CatalogServiceMetadata::AsyncCreateMetadataJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataplex::v1::CreateMetadataJobRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateMetadataJob(cq, std::move(context),
+                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+CatalogServiceMetadata::CreateMetadataJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateMetadataJobRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateMetadataJob(context, options, request);
+}
+
+StatusOr<google::cloud::dataplex::v1::MetadataJob>
+CatalogServiceMetadata::GetMetadataJob(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::GetMetadataJobRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetMetadataJob(context, options, request);
+}
+
+StatusOr<google::cloud::dataplex::v1::ListMetadataJobsResponse>
+CatalogServiceMetadata::ListMetadataJobs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::ListMetadataJobsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListMetadataJobs(context, options, request);
+}
+
+Status CatalogServiceMetadata::CancelMetadataJob(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::CancelMetadataJobRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->CancelMetadataJob(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 CatalogServiceMetadata::ListLocations(
     grpc::ClientContext& context, Options const& options,

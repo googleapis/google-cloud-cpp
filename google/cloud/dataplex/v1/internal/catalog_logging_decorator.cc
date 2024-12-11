@@ -474,6 +474,76 @@ CatalogServiceLogging::SearchEntries(
       context, options, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+CatalogServiceLogging::AsyncCreateMetadataJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataplex::v1::CreateMetadataJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::dataplex::v1::CreateMetadataJobRequest const&
+                 request) {
+        return child_->AsyncCreateMetadataJob(cq, std::move(context),
+                                              std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+CatalogServiceLogging::CreateMetadataJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateMetadataJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataplex::v1::CreateMetadataJobRequest const&
+                 request) {
+        return child_->CreateMetadataJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::dataplex::v1::MetadataJob>
+CatalogServiceLogging::GetMetadataJob(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::GetMetadataJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::GetMetadataJobRequest const& request) {
+        return child_->GetMetadataJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::dataplex::v1::ListMetadataJobsResponse>
+CatalogServiceLogging::ListMetadataJobs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::ListMetadataJobsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::ListMetadataJobsRequest const& request) {
+        return child_->ListMetadataJobs(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+Status CatalogServiceLogging::CancelMetadataJob(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::CancelMetadataJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataplex::v1::CancelMetadataJobRequest const&
+                 request) {
+        return child_->CancelMetadataJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 CatalogServiceLogging::ListLocations(
     grpc::ClientContext& context, Options const& options,
