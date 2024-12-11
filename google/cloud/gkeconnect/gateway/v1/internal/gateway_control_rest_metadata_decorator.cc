@@ -16,55 +16,43 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/gkeconnect/gateway/v1/control.proto
 
-#include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_metadata_decorator.h"
-#include "google/cloud/grpc_options.h"
+#include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_rest_metadata_decorator.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
-#include "google/cloud/internal/url_encode.h"
+#include "google/cloud/internal/rest_set_metadata.h"
 #include "google/cloud/status_or.h"
-#include <google/cloud/gkeconnect/gateway/v1/control.grpc.pb.h>
+#include "absl/strings/str_format.h"
 #include <memory>
-#include <string>
 #include <utility>
-#include <vector>
 
 namespace google {
 namespace cloud {
 namespace gkeconnect_gateway_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-GatewayControlMetadata::GatewayControlMetadata(
-    std::shared_ptr<GatewayControlStub> child,
-    std::multimap<std::string, std::string> fixed_metadata,
+GatewayControlRestMetadata::GatewayControlRestMetadata(
+    std::shared_ptr<GatewayControlRestStub> child,
     std::string api_client_header)
     : child_(std::move(child)),
-      fixed_metadata_(std::move(fixed_metadata)),
       api_client_header_(
           api_client_header.empty()
               ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
 StatusOr<google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse>
-GatewayControlMetadata::GenerateCredentials(
-    grpc::ClientContext& context, Options const& options,
+GatewayControlRestMetadata::GenerateCredentials(
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const&
         request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GenerateCredentials(context, options, request);
+  SetMetadata(rest_context, options);
+  return child_->GenerateCredentials(rest_context, options, request);
 }
 
-void GatewayControlMetadata::SetMetadata(grpc::ClientContext& context,
-                                         Options const& options,
-                                         std::string const& request_params) {
-  context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context, options);
-}
-
-void GatewayControlMetadata::SetMetadata(grpc::ClientContext& context,
-                                         Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+void GatewayControlRestMetadata::SetMetadata(
+    rest_internal::RestContext& rest_context, Options const& options,
+    std::vector<std::string> const& params) {
+  google::cloud::rest_internal::SetMetadata(rest_context, options, params,
+                                            api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

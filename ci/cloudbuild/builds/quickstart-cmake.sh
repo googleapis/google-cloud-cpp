@@ -47,6 +47,8 @@ readonly SED_ARGS=(
   # The vcpkg maintainers introduced an `rpc` feature to just compile
   # `grpc-common`.
   -e '/^rpc$/d'
+  # TODO:(#14896) Skip gkeconnect as it transitions from grpc to REST transport.
+  -e '/^gkeconnect/d'
 )
 mapfile -t features < <(
   env -C "${vcpkg_dir}" ./vcpkg search google-cloud-cpp |

@@ -16,54 +16,47 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/gkeconnect/gateway/v1/control.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKECONNECT_GATEWAY_V1_INTERNAL_GATEWAY_CONTROL_TRACING_STUB_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKECONNECT_GATEWAY_V1_INTERNAL_GATEWAY_CONTROL_TRACING_STUB_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKECONNECT_GATEWAY_V1_INTERNAL_GATEWAY_CONTROL_REST_LOGGING_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKECONNECT_GATEWAY_V1_INTERNAL_GATEWAY_CONTROL_REST_LOGGING_DECORATOR_H
 
-#include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_stub.h"
-#include "google/cloud/internal/trace_propagator.h"
-#include "google/cloud/options.h"
+#include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_rest_stub.h"
+#include "google/cloud/future.h"
+#include "google/cloud/internal/rest_context.h"
+#include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
+#include <google/cloud/gkeconnect/gateway/v1/control.pb.h>
 #include <memory>
+#include <set>
+#include <string>
 
 namespace google {
 namespace cloud {
 namespace gkeconnect_gateway_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-class GatewayControlTracingStub : public GatewayControlStub {
+class GatewayControlRestLogging : public GatewayControlRestStub {
  public:
-  ~GatewayControlTracingStub() override = default;
-
-  explicit GatewayControlTracingStub(std::shared_ptr<GatewayControlStub> child);
+  ~GatewayControlRestLogging() override = default;
+  GatewayControlRestLogging(std::shared_ptr<GatewayControlRestStub> child,
+                            TracingOptions tracing_options,
+                            std::set<std::string> components);
 
   StatusOr<google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse>
   GenerateCredentials(
-      grpc::ClientContext& context, Options const& options,
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const&
           request) override;
 
  private:
-  std::shared_ptr<GatewayControlStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<GatewayControlRestStub> child_;
+  TracingOptions tracing_options_;
+  std::set<std::string> components_;
 };
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-/**
- * Applies the tracing decorator to the given stub.
- *
- * The stub is only decorated if the library has been compiled with
- * OpenTelemetry.
- */
-std::shared_ptr<GatewayControlStub> MakeGatewayControlTracingStub(
-    std::shared_ptr<GatewayControlStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkeconnect_gateway_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKECONNECT_GATEWAY_V1_INTERNAL_GATEWAY_CONTROL_TRACING_STUB_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKECONNECT_GATEWAY_V1_INTERNAL_GATEWAY_CONTROL_REST_LOGGING_DECORATOR_H

@@ -188,30 +188,6 @@ class GatewayControlConnection {
           request);
 };
 
-/**
- * A factory function to construct an object of type `GatewayControlConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of GatewayControlClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `GatewayControlConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::gkeconnect_gateway_v1::GatewayControlPolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `GatewayControlConnection` created by
- * this function.
- */
-std::shared_ptr<GatewayControlConnection> MakeGatewayControlConnection(
-    Options options = {});
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkeconnect_gateway_v1
 }  // namespace cloud

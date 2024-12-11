@@ -26,6 +26,10 @@ googleapis_deps = [
 
 cc_gapic_library(
     name = "gkeconnect",
+    additional_deps = [
+        "//google/cloud:google_cloud_cpp_rest_internal",
+        "//google/cloud:google_cloud_cpp_rest_protobuf_internal",
+    ],
     googleapis_deps = googleapis_deps,
     service_dirs = service_dirs,
 )

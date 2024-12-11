@@ -16,14 +16,15 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/gkeconnect/gateway/v1/control.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKECONNECT_GATEWAY_V1_INTERNAL_GATEWAY_CONTROL_LOGGING_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKECONNECT_GATEWAY_V1_INTERNAL_GATEWAY_CONTROL_LOGGING_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKECONNECT_GATEWAY_V1_INTERNAL_GATEWAY_CONTROL_REST_METADATA_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKECONNECT_GATEWAY_V1_INTERNAL_GATEWAY_CONTROL_REST_METADATA_DECORATOR_H
 
-#include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_stub.h"
-#include "google/cloud/tracing_options.h"
+#include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_rest_stub.h"
+#include "google/cloud/future.h"
+#include "google/cloud/rest_options.h"
 #include "google/cloud/version.h"
+#include <google/cloud/gkeconnect/gateway/v1/control.pb.h>
 #include <memory>
-#include <set>
 #include <string>
 
 namespace google {
@@ -31,27 +32,32 @@ namespace cloud {
 namespace gkeconnect_gateway_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class GatewayControlLogging : public GatewayControlStub {
+class GatewayControlRestMetadata : public GatewayControlRestStub {
  public:
-  ~GatewayControlLogging() override = default;
-  GatewayControlLogging(std::shared_ptr<GatewayControlStub> child,
-                        TracingOptions tracing_options,
-                        std::set<std::string> const& components);
+  ~GatewayControlRestMetadata() override = default;
+  explicit GatewayControlRestMetadata(
+      std::shared_ptr<GatewayControlRestStub> child,
+      std::string api_client_header = "");
 
   StatusOr<google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse>
   GenerateCredentials(
-      grpc::ClientContext& context, Options const& options,
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const&
           request) override;
 
  private:
-  std::shared_ptr<GatewayControlStub> child_;
-  TracingOptions tracing_options_;
-};  // GatewayControlLogging
+  void SetMetadata(rest_internal::RestContext& rest_context,
+                   Options const& options,
+                   std::vector<std::string> const& params = {});
+
+  std::shared_ptr<GatewayControlRestStub> child_;
+  std::string api_client_header_;
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkeconnect_gateway_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKECONNECT_GATEWAY_V1_INTERNAL_GATEWAY_CONTROL_LOGGING_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKECONNECT_GATEWAY_V1_INTERNAL_GATEWAY_CONTROL_REST_METADATA_DECORATOR_H
