@@ -93,7 +93,7 @@ cc_binary(
 ## gRPC+OpenTelemetry
 
 The gRPC client will default to enabling OpenTelemetry metrics. This means that 
-the library must be built with support for OpenTelemetry and support for the gRPC 
+the library must be built with support for OpenTelemetry and support for the gRPC
 OpenTelemetry plugin. Please note metrics require using a version of gRPC > 1.64.
 
 If you are using CMake to compile your application:
