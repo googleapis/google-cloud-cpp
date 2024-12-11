@@ -16,15 +16,13 @@
 
 include(GoogleCloudCppLibrary)
 
-google_cloud_cpp_add_gapic_library(
-    bigquerycontrol "Cloud BigQuery Control API" EXPERIMENTAL REST_TRANSPORT
-    SERVICE_DIRS "v2/")
+google_cloud_cpp_add_gapic_library(bigquerycontrol "Cloud BigQuery Control API"
+                                   TRANSITION REST_TRANSPORT SERVICE_DIRS "v2/")
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(bigquerycontrol_quickstart "quickstart/quickstart.cc")
-    target_link_libraries(
-        bigquerycontrol_quickstart
-        PRIVATE google-cloud-cpp::experimental-bigquerycontrol)
+    target_link_libraries(bigquerycontrol_quickstart
+                          PRIVATE google-cloud-cpp::bigquerycontrol)
     google_cloud_cpp_add_common_options(bigquerycontrol_quickstart)
     add_test(
         NAME bigquerycontrol_quickstart
