@@ -29,4 +29,5 @@ endif ()
 
 # Define your targets.
 add_executable(quickstart quickstart.cc)
-target_link_libraries(quickstart google-cloud-cpp::bigquerycontrol)
+# TODO(#14891): switch to GA target.
+target_link_libraries(quickstart google-cloud-cpp::experimental-bigquerycontrol)

@@ -20,6 +20,7 @@ cc_binary(
         "quickstart.cc",
     ],
     deps = [
-        "@google_cloud_cpp//:bigquerycontrol",
+        # TODO(#14891): switch to GA target
+        "@google_cloud_cpp//:experimental-bigquerycontrol",
     ],
 )

@@ -47,8 +47,6 @@ readonly SED_ARGS=(
   # The vcpkg maintainers introduced an `rpc` feature to just compile
   # `grpc-common`.
   -e '/^rpc$/d'
-  # TODO(#14891) - skip until next release
-  -e '/^bigquerycontrol/d'
 )
 mapfile -t features < <(
   env -C "${vcpkg_dir}" ./vcpkg search google-cloud-cpp |
