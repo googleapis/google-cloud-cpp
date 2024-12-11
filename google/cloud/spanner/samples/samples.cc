@@ -1747,7 +1747,7 @@ void RestoreDatabaseWithEncryptionKeyCommand(std::vector<std::string> argv) {
 // [START spanner_restore_backup_with_MR_CMEK]
 void RestoreDatabaseWithMRCMEK(
     google::cloud::spanner_admin::DatabaseAdminClient client,
-    BackupIdentifier src, std::string const& database_id,
+    BackupIdentifier const& src, std::string const& database_id,
     std::vector<google::cloud::KmsKeyName> const& encryption_keys) {
   google::cloud::spanner::Database database(src.project_id, src.instance_id,
                                             database_id);

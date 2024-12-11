@@ -20,6 +20,6 @@ cc_binary(
         "quickstart.cc",
     ],
     deps = [
-        "@google_cloud_cpp//:experimental-bigquerycontrol",
+        "@google_cloud_cpp//:bigquerycontrol",
     ],
 )

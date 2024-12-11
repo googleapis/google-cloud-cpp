@@ -54,7 +54,7 @@ void ExecuteQueryJob(std::vector<std::string> const& argv) {
 
     bigquery_v2_proto::JobConfiguration config;
     *config.mutable_query() = query_config;
-    config.mutable_labels()->emplace("type", "sample");
+    (*config.mutable_labels())["type"] = "sample";
     bigquery_v2_proto::Job job;
     *job.mutable_configuration() = config;
     bigquery_v2_proto::InsertJobRequest job_request;
