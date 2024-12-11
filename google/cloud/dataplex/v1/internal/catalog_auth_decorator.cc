@@ -395,6 +395,60 @@ CatalogServiceAuth::SearchEntries(
   return child_->SearchEntries(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+CatalogServiceAuth::AsyncCreateMetadataJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::dataplex::v1::CreateMetadataJobRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateMetadataJob(cq, *std::move(context),
+                                             std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> CatalogServiceAuth::CreateMetadataJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateMetadataJobRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateMetadataJob(context, options, request);
+}
+
+StatusOr<google::cloud::dataplex::v1::MetadataJob>
+CatalogServiceAuth::GetMetadataJob(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::GetMetadataJobRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetMetadataJob(context, options, request);
+}
+
+StatusOr<google::cloud::dataplex::v1::ListMetadataJobsResponse>
+CatalogServiceAuth::ListMetadataJobs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::ListMetadataJobsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListMetadataJobs(context, options, request);
+}
+
+Status CatalogServiceAuth::CancelMetadataJob(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dataplex::v1::CancelMetadataJobRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CancelMetadataJob(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 CatalogServiceAuth::ListLocations(
     grpc::ClientContext& context, Options const& options,

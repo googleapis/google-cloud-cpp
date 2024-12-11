@@ -10,5 +10,6 @@
 @com_google_googleapis//google/iam/v1:policy_proto
 @com_google_googleapis//google/iam/v1:resource_policy_member_proto
 @com_google_googleapis//google/rpc:status_proto
+@com_google_googleapis//google/iam/v1:resource_policy_member_proto
 @com_google_googleapis//google/type:date_proto
 @com_google_googleapis//google/type:expr_proto
