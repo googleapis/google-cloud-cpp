@@ -21,6 +21,7 @@
 #include <opentelemetry/common/attribute_value.h>
 #include <opentelemetry/sdk/resource/resource.h>
 #include <opentelemetry/sdk/resource/semantic_conventions.h>
+#include <algorithm>
 #include <numeric>
 #include <unordered_map>
 
