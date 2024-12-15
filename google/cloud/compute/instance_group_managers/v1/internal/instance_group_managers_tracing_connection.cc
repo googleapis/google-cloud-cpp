@@ -495,6 +495,39 @@ InstanceGroupManagersTracingConnection::Resize(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstanceGroupManagersTracingConnection::ResumeInstances(
+    google::cloud::cpp::compute::instance_group_managers::v1::
+        ResumeInstancesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_instance_group_managers_v1::InstanceGroupManagersConnection::"
+      "ResumeInstances");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->ResumeInstances(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceGroupManagersTracingConnection::ResumeInstances(
+    NoAwaitTag, google::cloud::cpp::compute::instance_group_managers::v1::
+                    ResumeInstancesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_instance_group_managers_v1::InstanceGroupManagersConnection::"
+      "ResumeInstances");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->ResumeInstances(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstanceGroupManagersTracingConnection::ResumeInstances(
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_instance_group_managers_v1::InstanceGroupManagersConnection::"
+      "ResumeInstances");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->ResumeInstances(operation));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupManagersTracingConnection::SetInstanceTemplate(
     google::cloud::cpp::compute::instance_group_managers::v1::
         SetInstanceTemplateRequest const& request) {
@@ -560,6 +593,105 @@ InstanceGroupManagersTracingConnection::SetTargetPools(
       "SetTargetPools");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetTargetPools(operation));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstanceGroupManagersTracingConnection::StartInstances(
+    google::cloud::cpp::compute::instance_group_managers::v1::
+        StartInstancesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_instance_group_managers_v1::InstanceGroupManagersConnection::"
+      "StartInstances");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->StartInstances(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceGroupManagersTracingConnection::StartInstances(
+    NoAwaitTag, google::cloud::cpp::compute::instance_group_managers::v1::
+                    StartInstancesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_instance_group_managers_v1::InstanceGroupManagersConnection::"
+      "StartInstances");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->StartInstances(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstanceGroupManagersTracingConnection::StartInstances(
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_instance_group_managers_v1::InstanceGroupManagersConnection::"
+      "StartInstances");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->StartInstances(operation));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstanceGroupManagersTracingConnection::StopInstances(
+    google::cloud::cpp::compute::instance_group_managers::v1::
+        StopInstancesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_instance_group_managers_v1::InstanceGroupManagersConnection::"
+      "StopInstances");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->StopInstances(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceGroupManagersTracingConnection::StopInstances(
+    NoAwaitTag, google::cloud::cpp::compute::instance_group_managers::v1::
+                    StopInstancesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_instance_group_managers_v1::InstanceGroupManagersConnection::"
+      "StopInstances");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->StopInstances(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstanceGroupManagersTracingConnection::StopInstances(
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_instance_group_managers_v1::InstanceGroupManagersConnection::"
+      "StopInstances");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->StopInstances(operation));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstanceGroupManagersTracingConnection::SuspendInstances(
+    google::cloud::cpp::compute::instance_group_managers::v1::
+        SuspendInstancesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_instance_group_managers_v1::InstanceGroupManagersConnection::"
+      "SuspendInstances");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->SuspendInstances(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceGroupManagersTracingConnection::SuspendInstances(
+    NoAwaitTag, google::cloud::cpp::compute::instance_group_managers::v1::
+                    SuspendInstancesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_instance_group_managers_v1::InstanceGroupManagersConnection::"
+      "SuspendInstances");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->SuspendInstances(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstanceGroupManagersTracingConnection::SuspendInstances(
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_instance_group_managers_v1::InstanceGroupManagersConnection::"
+      "SuspendInstances");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->SuspendInstances(operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

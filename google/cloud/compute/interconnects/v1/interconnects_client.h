@@ -295,7 +295,7 @@ class InterconnectsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.interconnects.v1.GetDiagnosticsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L167}
-  /// [google.cloud.cpp.compute.v1.InterconnectsGetDiagnosticsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_066.proto#L594}
+  /// [google.cloud.cpp.compute.v1.InterconnectsGetDiagnosticsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_066.proto#L596}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse>
@@ -331,7 +331,7 @@ class InterconnectsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.interconnects.v1.GetDiagnosticsRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L167}
-  /// [google.cloud.cpp.compute.v1.InterconnectsGetDiagnosticsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_066.proto#L594}
+  /// [google.cloud.cpp.compute.v1.InterconnectsGetDiagnosticsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_066.proto#L596}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse>
@@ -360,7 +360,7 @@ class InterconnectsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.interconnects.v1.GetMacsecConfigRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L189}
-  /// [google.cloud.cpp.compute.v1.InterconnectsGetMacsecConfigResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_066.proto#L599}
+  /// [google.cloud.cpp.compute.v1.InterconnectsGetMacsecConfigResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_066.proto#L601}
   ///
   // clang-format on
   StatusOr<
@@ -393,7 +393,7 @@ class InterconnectsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.interconnects.v1.GetMacsecConfigRequest]: @cloud_cpp_reference_link{google/cloud/compute/interconnects/v1/interconnects.proto#L189}
-  /// [google.cloud.cpp.compute.v1.InterconnectsGetMacsecConfigResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_066.proto#L599}
+  /// [google.cloud.cpp.compute.v1.InterconnectsGetMacsecConfigResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_066.proto#L601}
   ///
   // clang-format on
   StatusOr<

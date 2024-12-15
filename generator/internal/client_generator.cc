@@ -275,8 +275,7 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                  {deprecation_macro},
                  {"  $return_type$\n"},
                  // clang-format off
-   {"  $method_name$($request_type$ const& request, Options opts = {});\n"}
-                 // clang-format on
+   {"  $method_name$($request_type$ const& request, Options opts = {});\n"}  // clang-format on
              },
              All(IsNonStreaming, Not(IsLongrunningOperation),
                  Not(IsPaginated))),
@@ -307,8 +306,7 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                   // clang-format off
     "  future<Status>\n",
     "  future<StatusOr<$longrunning_deduced_response_type$>>\n"},
-   {"  $method_name$($longrunning_operation_type$ const& operation, Options opts = {});\n"}
-                 // clang-format on
+   {"  $method_name$($longrunning_operation_type$ const& operation, Options opts = {});\n"}  // clang-format on
              },
              All(IsNonStreaming, IsLongrunningOperation, Not(IsPaginated))),
          MethodPattern(
@@ -364,21 +362,21 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                              Not(IsPaginated)))},
           __FILE__, __LINE__);
     }
-    HeaderPrintMethod(method,
-                      {MethodPattern(
-                          {
-                              {"\n"},
-                              {FormatMethodCommentsProtobufRequest(
-                                  method, IsDiscoveryDocumentProto())},
-                              {deprecation_macro},
-                              {"  future<$return_type$>\n"},
-                              // clang-format off
-   {"  Async$method_name$($request_type$ const& request, Options opts = {});\n"}
-                              // clang-format on
-                          },
-                          All(IsNonStreaming, Not(IsLongrunningOperation),
-                              Not(IsPaginated)))},
-                      __FILE__, __LINE__);
+    HeaderPrintMethod(
+        method,
+        {MethodPattern(
+            {
+                {"\n"},
+                {FormatMethodCommentsProtobufRequest(
+                    method, IsDiscoveryDocumentProto())},
+                {deprecation_macro},
+                {"  future<$return_type$>\n"},
+                // clang-format off
+   {"  Async$method_name$($request_type$ const& request, Options opts = {});\n"}  // clang-format on
+            },
+            All(IsNonStreaming, Not(IsLongrunningOperation),
+                Not(IsPaginated)))},
+        __FILE__, __LINE__);
   }
 
   HeaderPrint(  // clang-format off
@@ -473,8 +471,7 @@ $client_class_name$::Async$method_name$(Options opts) {
                   {"  $request_type$ request;\n"},
                    {method_request_string},
                   {"  return connection_->$method_name$(request);\n"
-                   "}\n"}
-                   // clang-format on
+                   "}\n"}  // clang-format on
                },
                All(IsNonStreaming, Not(IsLongrunningOperation),
                    Not(IsPaginated))),
@@ -502,8 +499,7 @@ $client_class_name$::Async$method_name$(Options opts) {
                   {"  $request_type$ request;\n"},
                    {method_request_string},
                   {"  return connection_->$method_name$(NoAwaitTag{}, request);\n"
-                  "}\n"}
-                   // clang-format on
+                  "}\n"}  // clang-format on
                },
                All(IsNonStreaming, IsLongrunningOperation, Not(IsPaginated))),
            MethodPattern(
@@ -516,8 +512,7 @@ $client_class_name$::Async$method_name$(Options opts) {
                   {"  $request_type$ request;\n"},
                    {method_request_string},
                   {"  return connection_->$method_name$(request);\n"
-                  "}\n"}
-                   // clang-format on
+                  "}\n"}  // clang-format on
                },
                All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated)),
            MethodPattern(
@@ -530,8 +525,7 @@ $client_class_name$::Async$method_name$(Options opts) {
                   {"  $request_type$ request;\n"},
                    {method_request_string},
                   {"  return connection_->$method_name$(request);\n"
-                  "}\n"}
-                   // clang-format on
+                  "}\n"}  // clang-format on
                },
                IsStreamingRead)},
           __FILE__, __LINE__);
@@ -606,8 +600,7 @@ $client_class_name$::Async$method_name$(Options opts) {
     "  internal::OptionsSpan span(internal::MergeOptions("
     "std::move(opts), options_));\n"
     "  return connection_->$method_name$(request);\n"
-    "}\n"}
-                 // clang-format on
+    "}\n"}  // clang-format on
              },
              All(IsNonStreaming, Not(IsLongrunningOperation),
                  Not(IsPaginated))),
@@ -645,8 +638,7 @@ $client_class_name$::Async$method_name$(Options opts) {
     "  internal::OptionsSpan span(internal::MergeOptions("
     "std::move(opts), options_));\n"
     "  return connection_->$method_name$(operation);\n"},
-   {"}\n"}
-                 // clang-format on
+   {"}\n"}  // clang-format on
              },
              All(IsNonStreaming, IsLongrunningOperation, Not(IsPaginated))),
          MethodPattern(
@@ -658,8 +650,7 @@ $client_class_name$::Async$method_name$(Options opts) {
     "  internal::OptionsSpan span(internal::MergeOptions("
     "std::move(opts), options_));\n"
     "  return connection_->$method_name$(std::move(request));\n"
-    "}\n"}
-                 // clang-format on
+    "}\n"}  // clang-format on
              },
              All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated)),
          MethodPattern(
@@ -671,8 +662,7 @@ $client_class_name$::Async$method_name$(Options opts) {
     "  internal::OptionsSpan span(internal::MergeOptions("
     "std::move(opts), options_));\n"
     "  return connection_->$method_name$(request);\n"
-    "}\n"}
-                 // clang-format on
+    "}\n"}  // clang-format on
              },
              IsStreamingRead)},
         __FILE__, __LINE__);
@@ -701,8 +691,7 @@ $client_class_name$::Async$method_name$(Options opts) {
                   {"  $request_type$ request;\n"},
                    {method_request_string},
                   {"  return connection_->Async$method_name$(request);\n"
-                   "}\n"}
-                  // clang-format on
+                   "}\n"}  // clang-format on
               },
               All(IsNonStreaming, Not(IsLongrunningOperation),
                   Not(IsPaginated)))},
@@ -719,8 +708,7 @@ $client_class_name$::Async$method_name$(Options opts) {
     "  internal::OptionsSpan span(internal::MergeOptions("
     "std::move(opts), options_));\n"
     "  return connection_->Async$method_name$(request);\n"
-    "}\n"}
-                // clang-format on
+    "}\n"}  // clang-format on
             },
             All(IsNonStreaming, Not(IsLongrunningOperation),
                 Not(IsPaginated)))},

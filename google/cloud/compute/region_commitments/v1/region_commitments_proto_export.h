@@ -30,7 +30,7 @@
 #include <google/cloud/compute/v1/internal/common_006.pb.h>
 #include <google/cloud/compute/v1/internal/common_016.pb.h>
 #include <google/cloud/compute/v1/internal/common_018.pb.h>
-#include <google/cloud/compute/v1/internal/common_112.pb.h>
+#include <google/cloud/compute/v1/internal/common_113.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_COMMITMENTS_V1_REGION_COMMITMENTS_PROTO_EXPORT_H

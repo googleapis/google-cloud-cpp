@@ -27,7 +27,7 @@
 
 // IWYU pragma: begin_exports
 #include <google/cloud/compute/v1/internal/common_072.pb.h>
-#include <google/cloud/compute/v1/internal/common_137.pb.h>
+#include <google/cloud/compute/v1/internal/common_138.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_LICENSE_CODES_V1_LICENSE_CODES_PROTO_EXPORT_H

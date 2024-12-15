@@ -279,6 +279,17 @@ class RegionSecurityPoliciesConnection {
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   RemoveRule(google::cloud::cpp::compute::v1::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetLabels(google::cloud::cpp::compute::region_security_policies::v1::
+                SetLabelsRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      NoAwaitTag, google::cloud::cpp::compute::region_security_policies::v1::
+                      SetLabelsRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetLabels(google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

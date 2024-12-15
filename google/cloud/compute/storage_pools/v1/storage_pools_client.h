@@ -118,7 +118,7 @@ class StoragePoolsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.storage_pools.v1.AggregatedListStoragePoolsRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L167}
-  /// [google.cloud.cpp.compute.v1.StoragePoolsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_122.proto#L554}
+  /// [google.cloud.cpp.compute.v1.StoragePoolsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_123.proto#L560}
   ///
   // clang-format on
   StreamRange<std::pair<
@@ -160,7 +160,7 @@ class StoragePoolsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.storage_pools.v1.AggregatedListStoragePoolsRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L167}
-  /// [google.cloud.cpp.compute.v1.StoragePoolsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_122.proto#L554}
+  /// [google.cloud.cpp.compute.v1.StoragePoolsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_123.proto#L560}
   ///
   // clang-format on
   StreamRange<std::pair<
@@ -317,7 +317,7 @@ class StoragePoolsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.storage_pools.v1.GetStoragePoolRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L300}
-  /// [google.cloud.cpp.compute.v1.StoragePool]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_122.proto#L25}
+  /// [google.cloud.cpp.compute.v1.StoragePool]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_123.proto#L25}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::StoragePool> GetStoragePool(
@@ -350,7 +350,7 @@ class StoragePoolsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.storage_pools.v1.GetStoragePoolRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L300}
-  /// [google.cloud.cpp.compute.v1.StoragePool]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_122.proto#L25}
+  /// [google.cloud.cpp.compute.v1.StoragePool]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_123.proto#L25}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::StoragePool> GetStoragePool(
@@ -576,7 +576,7 @@ class StoragePoolsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.storage_pools.v1.ListStoragePoolsRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L422}
-  /// [google.cloud.cpp.compute.v1.StoragePool]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_122.proto#L25}
+  /// [google.cloud.cpp.compute.v1.StoragePool]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_123.proto#L25}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::StoragePool> ListStoragePools(
@@ -616,7 +616,7 @@ class StoragePoolsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.storage_pools.v1.ListStoragePoolsRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L422}
-  /// [google.cloud.cpp.compute.v1.StoragePool]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_122.proto#L25}
+  /// [google.cloud.cpp.compute.v1.StoragePool]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_123.proto#L25}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::StoragePool> ListStoragePools(
@@ -655,7 +655,7 @@ class StoragePoolsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.storage_pools.v1.ListDisksRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L347}
-  /// [google.cloud.cpp.compute.v1.StoragePoolDisk]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_122.proto#L237}
+  /// [google.cloud.cpp.compute.v1.StoragePoolDisk]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_123.proto#L239}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::StoragePoolDisk> ListDisks(
@@ -696,7 +696,7 @@ class StoragePoolsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.storage_pools.v1.ListDisksRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L347}
-  /// [google.cloud.cpp.compute.v1.StoragePoolDisk]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_122.proto#L237}
+  /// [google.cloud.cpp.compute.v1.StoragePoolDisk]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_123.proto#L239}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::StoragePoolDisk> ListDisks(
@@ -794,7 +794,7 @@ class StoragePoolsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.storage_pools.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L511}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_137.proto#L30}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_138.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -830,7 +830,7 @@ class StoragePoolsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.storage_pools.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/storage_pools/v1/storage_pools.proto#L511}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_137.proto#L30}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_138.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

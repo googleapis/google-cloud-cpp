@@ -426,8 +426,7 @@ $connection_class_name$::Async$method_name$() {
     "    StatusOr<$longrunning_deduced_response_type$>>(\n"
     "    Status(StatusCode::kUnimplemented, \"not implemented\"));\n"
     "}\n"
-    }
-                 // clang-format on
+    }  // clang-format on
              },
              All(IsNonStreaming, IsLongrunningOperation, Not(IsPaginated))),
          MethodPattern(

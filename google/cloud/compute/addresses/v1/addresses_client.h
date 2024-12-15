@@ -116,7 +116,7 @@ class AddressesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.addresses.v1.AggregatedListAddressesRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L125}
-  /// [google.cloud.cpp.compute.v1.AddressesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_005.proto#L135}
+  /// [google.cloud.cpp.compute.v1.AddressesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_005.proto#L137}
   ///
   // clang-format on
   StreamRange<std::pair<std::string,
@@ -158,7 +158,7 @@ class AddressesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.addresses.v1.AggregatedListAddressesRequest]: @cloud_cpp_reference_link{google/cloud/compute/addresses/v1/addresses.proto#L125}
-  /// [google.cloud.cpp.compute.v1.AddressesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_005.proto#L135}
+  /// [google.cloud.cpp.compute.v1.AddressesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_005.proto#L137}
   ///
   // clang-format on
   StreamRange<std::pair<std::string,

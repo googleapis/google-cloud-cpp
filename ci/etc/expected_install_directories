@@ -376,6 +376,10 @@
 ./include/google/cloud/compute/network_firewall_policies/v1
 ./include/google/cloud/compute/network_firewall_policies/v1/internal
 ./include/google/cloud/compute/network_firewall_policies/v1/mocks
+./include/google/cloud/compute/network_profiles
+./include/google/cloud/compute/network_profiles/v1
+./include/google/cloud/compute/network_profiles/v1/internal
+./include/google/cloud/compute/network_profiles/v1/mocks
 ./include/google/cloud/compute/networks
 ./include/google/cloud/compute/networks/v1
 ./include/google/cloud/compute/networks/v1/internal

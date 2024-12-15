@@ -32,10 +32,10 @@
 #include <google/cloud/compute/v1/internal/common_020.pb.h>
 #include <google/cloud/compute/v1/internal/common_023.pb.h>
 #include <google/cloud/compute/v1/internal/common_031.pb.h>
-#include <google/cloud/compute/v1/internal/common_114.pb.h>
-#include <google/cloud/compute/v1/internal/common_137.pb.h>
-#include <google/cloud/compute/v1/internal/common_143.pb.h>
+#include <google/cloud/compute/v1/internal/common_115.pb.h>
+#include <google/cloud/compute/v1/internal/common_138.pb.h>
 #include <google/cloud/compute/v1/internal/common_144.pb.h>
+#include <google/cloud/compute/v1/internal/common_145.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_DISKS_V1_DISKS_PROTO_EXPORT_H

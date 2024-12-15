@@ -29,7 +29,7 @@
 #include <google/cloud/compute/v1/internal/common_008.pb.h>
 #include <google/cloud/compute/v1/internal/common_016.pb.h>
 #include <google/cloud/compute/v1/internal/common_039.pb.h>
-#include <google/cloud/compute/v1/internal/common_094.pb.h>
+#include <google/cloud/compute/v1/internal/common_095.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_AUTOSCALERS_V1_REGION_AUTOSCALERS_PROTO_EXPORT_H

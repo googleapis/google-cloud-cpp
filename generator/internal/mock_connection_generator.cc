@@ -149,8 +149,7 @@ class $mock_connection_class_name$ : public $product_namespace$::$connection_cla
     "  MOCK_METHOD(future<Status>,\n",
     "  MOCK_METHOD(future<StatusOr<$longrunning_deduced_response_type$>>,\n"},
    {"  $method_name$, (\n"
-    "    $longrunning_operation_type$ const& operation), (override));\n"}
-                 // clang-format on
+    "    $longrunning_operation_type$ const& operation), (override));\n"}  // clang-format on
              },
              All(IsNonStreaming, IsLongrunningOperation, Not(IsPaginated))),
          MethodPattern(

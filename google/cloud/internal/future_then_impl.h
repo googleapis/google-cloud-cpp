@@ -225,9 +225,8 @@ future<T>::future(future<U>&& rhs)
 
 template <typename T>
 template <typename F>
-auto future<T>::then(F&& functor)
-    -> future<
-        internal::UnwrappedType<internal::invoke_result_t<F, future<T>>>> {
+auto future<T>::then(F&& functor) -> future<
+    internal::UnwrappedType<internal::invoke_result_t<F, future<T>>>> {
   return internal::FutureThenImpl::then_impl(*this, std::forward<F>(functor));
 }
 
@@ -240,9 +239,8 @@ future<void>::future(future<T>&& rhs)
           internal::FutureThenImpl::ctor_convert<void>(std::move(rhs))) {}
 
 template <typename F>
-auto future<void>::then(F&& functor)
-    -> future<
-        internal::UnwrappedType<internal::invoke_result_t<F, future<void>>>> {
+auto future<void>::then(F&& functor) -> future<
+    internal::UnwrappedType<internal::invoke_result_t<F, future<void>>>> {
   return internal::FutureThenImpl::then_impl(*this, std::forward<F>(functor));
 }
 

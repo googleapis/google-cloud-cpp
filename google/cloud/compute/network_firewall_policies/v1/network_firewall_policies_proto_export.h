@@ -32,7 +32,7 @@
 #include <google/cloud/compute/v1/internal/common_037.pb.h>
 #include <google/cloud/compute/v1/internal/common_038.pb.h>
 #include <google/cloud/compute/v1/internal/common_046.pb.h>
-#include <google/cloud/compute/v1/internal/common_137.pb.h>
+#include <google/cloud/compute/v1/internal/common_138.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NETWORK_FIREWALL_POLICIES_V1_NETWORK_FIREWALL_POLICIES_PROTO_EXPORT_H

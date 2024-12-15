@@ -30,9 +30,9 @@
 #include <google/cloud/compute/v1/internal/common_047.pb.h>
 #include <google/cloud/compute/v1/internal/common_050.pb.h>
 #include <google/cloud/compute/v1/internal/common_061.pb.h>
-#include <google/cloud/compute/v1/internal/common_110.pb.h>
-#include <google/cloud/compute/v1/internal/common_131.pb.h>
+#include <google/cloud/compute/v1/internal/common_111.pb.h>
 #include <google/cloud/compute/v1/internal/common_132.pb.h>
+#include <google/cloud/compute/v1/internal/common_133.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_POOLS_V1_TARGET_POOLS_PROTO_EXPORT_H

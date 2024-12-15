@@ -103,6 +103,10 @@ class RegionInstanceGroupManagersConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::region_instance_group_managers::v1::
           ResizeRequest const& request);
 
+  virtual google::cloud::Idempotency ResumeInstances(
+      google::cloud::cpp::compute::region_instance_group_managers::v1::
+          ResumeInstancesRequest const& request);
+
   virtual google::cloud::Idempotency SetInstanceTemplate(
       google::cloud::cpp::compute::region_instance_group_managers::v1::
           SetInstanceTemplateRequest const& request);
@@ -110,6 +114,18 @@ class RegionInstanceGroupManagersConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency SetTargetPools(
       google::cloud::cpp::compute::region_instance_group_managers::v1::
           SetTargetPoolsRequest const& request);
+
+  virtual google::cloud::Idempotency StartInstances(
+      google::cloud::cpp::compute::region_instance_group_managers::v1::
+          StartInstancesRequest const& request);
+
+  virtual google::cloud::Idempotency StopInstances(
+      google::cloud::cpp::compute::region_instance_group_managers::v1::
+          StopInstancesRequest const& request);
+
+  virtual google::cloud::Idempotency SuspendInstances(
+      google::cloud::cpp::compute::region_instance_group_managers::v1::
+          SuspendInstancesRequest const& request);
 
   virtual google::cloud::Idempotency UpdatePerInstanceConfigs(
       google::cloud::cpp::compute::region_instance_group_managers::v1::
