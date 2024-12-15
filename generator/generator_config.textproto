@@ -1655,6 +1655,15 @@ discovery_products {
     generate_grpc_transport: false
   }
 
+  rest_services {
+    service_proto_path: "google/cloud/compute/network_profiles/v1/network_profiles.proto"
+    product_path: "google/cloud/compute/network_profiles/v1"
+    initial_copyright_year: "2024"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    generate_grpc_transport: false
+  }
+
   # update_discovery_doc.sh additions
 }
 
