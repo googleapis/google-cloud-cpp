@@ -17,5 +17,8 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 bigtable_emulator_unit_tests = [
+    "column_family_test.cc",
+    "row_iterators_test.cc",
     "server_test.cc",
+    "sorted_row_set_test.cc",
 ]

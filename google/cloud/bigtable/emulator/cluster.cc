@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/emulator/cluster.h"
+#include "google/cloud/status.h"
+#include "google/cloud/status_or.h"
 #include "google/cloud/internal/make_status.h"
 #include "absl/strings/match.h"
 
@@ -20,7 +22,7 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 namespace emulator {
-namespace{
+namespace {
 
 namespace btadmin = google::bigtable::admin::v2;
 
@@ -33,7 +35,7 @@ StatusOr<btadmin::Table> ApplyView(std::string const& table_name,
   }
   switch (view) {
     case btadmin::Table::VIEW_UNSPECIFIED:
-      return internal::InternalError(
+      return google::cloud::internal::InternalError(
           "VIEW_UNSPECIFIED cannot be the default view");
     case btadmin::Table::NAME_ONLY: {
       btadmin::Table res;
@@ -61,7 +63,7 @@ StatusOr<btadmin::Table> ApplyView(std::string const& table_name,
     case btadmin::Table::FULL:
       return table.GetSchema();
     default:
-      return internal::UnimplementedError(
+      return google::cloud::internal::UnimplementedError(
           "Unsupported view.",
           GCP_ERROR_INFO().WithMetadata("view", Table_View_Name(view)));
   }
@@ -73,20 +75,19 @@ StatusOr<btadmin::Table> Cluster::CreateTable(std::string const& table_name,
                                               btadmin::Table schema) {
   schema.set_name(table_name);
   std::cout << "Creating table " << table_name << std::endl;
-  auto to_insert = std::make_shared<Table>();
-  auto status = to_insert->Construct(std::move(schema));
-  if (!status.ok()) {
-    return status;
+  auto maybe_table = Table::Create(std::move(schema));
+  if (!maybe_table) {
+    return maybe_table.status();
   }
   {
     std::lock_guard lock(mu_);
-    if (!table_by_name_.emplace(table_name, to_insert).second) {
-      return internal::AlreadyExistsError(
+    if (!table_by_name_.emplace(table_name, *maybe_table).second) {
+      return google::cloud::internal::AlreadyExistsError(
           "Table already exists.",
           GCP_ERROR_INFO().WithMetadata("table_name", table_name));
     }
   }
-  return to_insert->GetSchema();
+  return (*maybe_table)->GetSchema();
 }
 
 StatusOr<std::vector<btadmin::Table>> Cluster::ListTables(
@@ -147,26 +148,6 @@ Status Cluster::DeleteTable(std::string const& table_name) {
   }
   return Status();
 }
-
-Status Cluster::UpdateTable(btadmin::Table const& new_schema,
-                            google::protobuf::FieldMask const& to_update) {
-  auto maybe_table = FindTable(new_schema.name());
-  if (!maybe_table) {
-    return maybe_table.status();
-  }
-  (*maybe_table)->Update(new_schema, to_update);
-  return Status();
-}
-
-StatusOr<google::bigtable::admin::v2::Table> Cluster::ModifyColumnFamilies(
-    btadmin::ModifyColumnFamiliesRequest const& request) {
-  auto maybe_table = FindTable(request.name());
-  if (!maybe_table) {
-    return maybe_table.status();
-  }
-  return (*maybe_table)->ModifyColumnFamilies(request);
-}
-
 
 bool Cluster::HasTable(std::string const& table_name) const {
   std::lock_guard lock(mu_);

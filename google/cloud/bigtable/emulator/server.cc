@@ -34,14 +34,19 @@ class EmulatorService final : public btproto::Bigtable::Service {
  public:
   EmulatorService(std::shared_ptr<Cluster> cluster)
       : cluster_(std::move(cluster)) {}
+
   grpc::Status ReadRows(
       grpc::ServerContext* /* context */,
-      btproto::ReadRowsRequest const* /* request */,
+      btproto::ReadRowsRequest const* request,
       grpc::ServerWriter<btproto::ReadRowsResponse>* writer) override {
-    btproto::ReadRowsResponse msg;
-    writer->WriteLast(msg, grpc::WriteOptions());
-    return grpc::Status::OK;
+    auto maybe_table = cluster_->FindTable(request->table_name());
+    if (!maybe_table) {
+      return ToGrpcStatus(maybe_table.status());
+    }
+    RowStreamer row_streamer(*writer);
+    return ToGrpcStatus((*maybe_table)->ReadRows(*request, row_streamer));
   }
+
   grpc::Status SampleRowKeys(
       grpc::ServerContext* /* context */,
       btproto::SampleRowKeysRequest const* /* request */,
@@ -148,8 +153,12 @@ class EmulatorTableService final : public btadmin::BigtableTableAdmin::Service {
       grpc::ServerContext* /* context */,
       btadmin::UpdateTableRequest const* request,
       google::longrunning::Operation* response) override {
+    auto maybe_table = cluster_->FindTable(request->table().name());
+    if (!maybe_table) {
+      return ToGrpcStatus(maybe_table.status());
+    }
     auto status =
-        cluster_->UpdateTable(request->table(), request->update_mask());
+        (*maybe_table)->Update(request->table(), request->update_mask());
     if (!status.ok()) {
       return ToGrpcStatus(status);
     }
@@ -177,11 +186,15 @@ class EmulatorTableService final : public btadmin::BigtableTableAdmin::Service {
       grpc::ServerContext* /* context */,
       btadmin::ModifyColumnFamiliesRequest const* request,
       btadmin::Table* response) override {
-    auto maybe_table = cluster_->ModifyColumnFamilies(*request);
+    auto maybe_table = cluster_->FindTable(request->name());
     if (!maybe_table) {
       return ToGrpcStatus(maybe_table.status());
     }
-    *response = *std::move(maybe_table);
+    auto maybe_table_res = (*maybe_table)->ModifyColumnFamilies(*request);
+    if (!maybe_table_res) {
+      return ToGrpcStatus(maybe_table_res.status());
+    }
+    *response = *std::move(maybe_table_res);
 
     return grpc::Status::OK;
   }

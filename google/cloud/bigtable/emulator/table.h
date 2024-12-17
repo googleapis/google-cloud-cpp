@@ -22,6 +22,8 @@
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <google/protobuf/field_mask.pb.h>
 #include <google/protobuf/util/time_util.h>
+#include "google/cloud/bigtable/emulator/column_family.h"
+#include "google/cloud/bigtable/emulator/row_streamer.h"
 #include <map>
 
 namespace google {
@@ -29,47 +31,15 @@ namespace cloud {
 namespace bigtable {
 namespace emulator {
 
-class ColumnRow {
- public:
-  void SetCell(std::int64_t timestamp_micros, std::string const& value);
-  std::size_t DeleteTimeRange(
-      ::google::bigtable::v2::TimestampRange const& time_range);
-
-  bool HasCells() const { return !cells_.empty(); }
-
- private:
-  std::map<std::int64_t, std::string> cells_;
-};
-  
-class ColumnFamilyRow {
- public:
-  void SetCell(std::string const& column_qualifier,
-               std::int64_t timestamp_micros, std::string const& value);
-  std::size_t DeleteColumn(
-      std::string const& column_qualifier,
-      ::google::bigtable::v2::TimestampRange const& time_range);
-  bool HasColumns() { return !columns_.empty(); }
-
- private:
-  std::map<std::string, ColumnRow> columns_;
-};
-
-class ColumnFamily {
- public:
-  void SetCell(std::string const& row_key, std::string const& column_qualifier,
-               std::int64_t timestamp_micros, std::string const& value);
-  bool DeleteRow(std::string const& row_key);
-  std::size_t DeleteColumn(
-      std::string const& row_key, std::string const& column_qualifier,
-      ::google::bigtable::v2::TimestampRange const& time_range);
-
- private:
-  std::map<std::string, ColumnFamilyRow> rows_;
+struct CellView {
+  std::int64_t timestamp;
+  std::string const& value;
 };
 
 class Table {
  public:
-  Status Construct(google::bigtable::admin::v2::Table schema);
+  static StatusOr<std::shared_ptr<Table>> Create(
+      google::bigtable::admin::v2::Table schema);
 
   google::bigtable::admin::v2::Table GetSchema() const;
 
@@ -83,11 +53,18 @@ class Table {
 
   Status MutateRow(google::bigtable::v2::MutateRowRequest const & request);
 
+  Status ReadRows(google::bigtable::v2::ReadRowsRequest const& request,
+                  RowStreamer& row_streamer) const;
+
  private:
+  Table() = default;
+  friend class RowSetIterator;
+
   template <typename MESSAGE>
   StatusOr<std::reference_wrapper<ColumnFamily>> FindColumnFamily(
       MESSAGE const& message) const;
   bool IsDeleteProtectedNoLock() const;
+  Status Construct(google::bigtable::admin::v2::Table schema);
 
   mutable std::mutex mu_;
   google::bigtable::admin::v2::Table schema_;

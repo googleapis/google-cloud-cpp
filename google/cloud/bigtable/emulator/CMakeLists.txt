@@ -18,10 +18,18 @@ add_library(
     bigtable_emulator_common # cmake-format: sort
     cluster.cc
     cluster.h
+    column_family.cc
+    column_family.h
     table.cc
     table.h
     server.cc
     server.h
+    sorted_row_set.cc
+    sorted_row_set.h
+    row_iterators.cc
+    row_iterators.h
+    row_streamer.cc
+    row_streamer.h
     to_grpc_status.cc
     to_grpc_status.h)
 target_link_libraries(
@@ -42,12 +50,15 @@ if (BUILD_TESTING)
     # List the unit tests, then setup the targets and dependencies.
     set(bigtable_emulator_unit_tests
         # cmake-format: sort
-        server_test.cc)
+        column_family_test.cc
+        row_iterators_test.cc
+        server_test.cc
+        sorted_row_set_test.cc)
     export_list_to_bazel("bigtable_emulator_unit_tests.bzl"
                          "bigtable_emulator_unit_tests" YEAR "2024")
 
-    foreach (fname ${bigtable_emulators_unit_tests})
-        google_cloud_cpp_add_executable(target "bigtable" "${fname}")
+    foreach (fname ${bigtable_emulator_unit_tests})
+        google_cloud_cpp_add_executable(target "bigtable_emulator" "${fname}")
         target_link_libraries(
             ${target}
             PRIVATE bigtable_emulator_common

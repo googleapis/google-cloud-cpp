@@ -44,12 +44,6 @@ class Cluster {
 
   Status DeleteTable(std::string const &table_name);
 
-  Status UpdateTable(google::bigtable::admin::v2::Table const& new_schema,
-                     google::protobuf::FieldMask const& to_update);
-
-  StatusOr<google::bigtable::admin::v2::Table> ModifyColumnFamilies(
-      google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request);
-
   bool HasTable(std::string const &table_name) const;
 
   StatusOr<std::shared_ptr<Table>> FindTable(std::string const& table_name);

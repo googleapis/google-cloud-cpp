@@ -14,6 +14,7 @@
 
 #include <chrono>
 #include "google/cloud/bigtable/emulator/table.h"
+#include "google/cloud/bigtable/emulator/row_iterators.h"
 #include "google/protobuf/util/field_mask_util.h"
 #include "google/cloud/internal/make_status.h"
 
@@ -25,73 +26,14 @@ namespace emulator {
 namespace btadmin = ::google::bigtable::admin::v2;
 namespace btproto = ::google::bigtable::v2;
 
-void ColumnRow::SetCell(std::int64_t timestamp_micros, std::string const& value) {
-  if (timestamp_micros == -1) {
-    // Time since epoch expressed in microseconds but rounded to milliseconds.
-    timestamp_micros = std::chrono::duration_cast<std::chrono::milliseconds>(
-                    std::chrono::system_clock::now().time_since_epoch())
-                    .count() *
-                1000LL;
+StatusOr<std::shared_ptr<Table>> Table::Create(
+    google::bigtable::admin::v2::Table schema) {
+  std::shared_ptr<Table> res(new Table);
+  auto status = res->Construct(std::move(schema));
+  if (!status.ok()) {
+    return status;
   }
-  cells_[timestamp_micros] = std::move(value);
-}
-
-std::size_t ColumnRow::DeleteTimeRange(
-    ::google::bigtable::v2::TimestampRange const& time_range) {
-  std::size_t num_erased = 0;
-  for (auto cell_it = cells_.lower_bound(time_range.start_timestamp_micros());
-       cell_it != cells_.end() &&
-       (time_range.end_timestamp_micros() == 0 ||
-        cell_it->first < time_range.end_timestamp_micros());) {
-    cells_.erase(cell_it++);
-    ++num_erased;
-  }
-  return num_erased;
-}
-
-void ColumnFamilyRow::SetCell(std::string const& column_qualifier,
-                              std::int64_t timestamp_micros,
-                              std::string const& value) {
-  columns_[column_qualifier].SetCell(timestamp_micros, value);
-}
-
-std::size_t ColumnFamilyRow::DeleteColumn(
-    std::string const& column_qualifier,
-    ::google::bigtable::v2::TimestampRange const& time_range) {
-  auto column_it = columns_.find(column_qualifier);
-  if (column_it != columns_.end()) {
-    return column_it->second.DeleteTimeRange(time_range);
-  }
-  if (!column_it->second.HasCells()) {
-    columns_.erase(column_it);
-  }
-  return 0;
-}
-
-void ColumnFamily::SetCell(std::string const& row_key,
-                           std::string const& column_qualifier,
-                           std::int64_t timestamp_micros,
-                           std::string const& value) {
-  rows_[row_key].SetCell(column_qualifier, timestamp_micros, value);
-}
-
-bool ColumnFamily::DeleteRow(std::string const& row_key) {
-  return rows_.erase(row_key) > 0;
-}
-
-std::size_t ColumnFamily::DeleteColumn(
-    std::string const& row_key, std::string const& column_qualifier,
-    ::google::bigtable::v2::TimestampRange const& time_range) {
-  auto row_it = rows_.find(row_key);
-  if (row_it != rows_.end()) {
-    auto num_erased_cells =
-        row_it->second.DeleteColumn(column_qualifier, time_range);
-    if (!row_it->second.HasColumns()) {
-      rows_.erase(row_it);
-    }
-    return num_erased_cells;
-  }
-  return 0;
+  return res;
 }
 
 Status Table::Construct(google::bigtable::admin::v2::Table schema) {
@@ -332,6 +274,153 @@ Status Table::MutateRow(
           GCP_ERROR_INFO().WithMetadata("mutation", mutation.DebugString()));
     }
   }
+  return Status();
+}
+
+class ExtendWithColumnFamilyName {
+ public:
+  using ExtendedType = std::tuple<std::string const&, std::string const&,
+                                  ColumnFamilyRow const&> const;
+
+  explicit ExtendWithColumnFamilyName(std::string const& column_family_name)
+      : column_family_name_(std::cref(column_family_name)) {}
+  ExtendWithColumnFamilyName(ExtendWithColumnFamilyName const&) = default;
+  ExtendWithColumnFamilyName(ExtendWithColumnFamilyName&&) = default;
+  ExtendWithColumnFamilyName& operator=(ExtendWithColumnFamilyName const&) =
+      default;
+  ExtendWithColumnFamilyName& operator=(ExtendWithColumnFamilyName&) = default;
+
+  ExtendedType operator()(
+      std::iterator_traits<ColumnFamily::iterator>::value_type const&
+          row_key_and_column) const {
+    return ExtendedType(row_key_and_column.first, column_family_name_.get(),
+                            row_key_and_column.second);
+  }
+
+ private:
+  std::reference_wrapper<std::string const> column_family_name_;
+};
+
+struct RowKeyLess {
+  bool operator()(
+      TransformIterator<ColumnFamily::iterator,
+                        ExtendWithColumnFamilyName>::value_type const& lhs,
+      TransformIterator<ColumnFamily::iterator,
+                        ExtendWithColumnFamilyName>::value_type const& rhs)
+      const {
+    auto row_key_cmp =
+        internal::CompareRowKey(std::get<0>(lhs), std::get<0>(rhs));
+    if (row_key_cmp == 0) {
+      return internal::CompareColumnQualifiers(std::get<1>(lhs),
+                                               std::get<1>(rhs)) < 0;
+    }
+    return row_key_cmp < 0;
+  }
+};
+
+struct DescendToColumn {
+  ColumnFamilyRow const& operator()(
+      std::tuple<std::string const&, std::string const&,
+                 ColumnFamilyRow const&> const& column_family_row) const {
+    return std::get<2>(column_family_row);
+  }
+};
+
+struct CombineColumnIterators {
+  using ReturnType =
+      std::tuple<std::string const&, std::string const&, std::string const&,
+                 ColumnRow const&> const;
+  ReturnType operator()(
+      std::tuple<std::string const&, std::string const&,
+                 ColumnFamilyRow const&> const& column_family_row,
+      std::pair<std::string const, ColumnRow> const& column_row) {
+    return ReturnType(std::get<0>(column_family_row),
+                      std::get<1>(column_family_row), column_row.first,
+                      column_row.second);
+  }
+};
+
+
+struct DescendToCell {
+  ColumnRow const& operator()(
+                CombineColumnIterators::ReturnType const &column_row) const {
+    return std::get<3>(column_row);
+  }
+};
+
+struct CombineCellIterators {
+  using ReturnType =
+      std::tuple<std::string const&, std::string const&, std::string const&,
+                 std::int64_t, std::string const&> const;
+  ReturnType operator()(
+      CombineColumnIterators::ReturnType const &column_row,
+      std::pair<std::int64_t const, std::string> const& cell) {
+    static_assert(std::is_same<std::pair<std::int64_t const, std::string>,
+                               ColumnRow::iterator::value_type>::value);
+    return ReturnType(std::get<0>(column_row),
+                      std::get<1>(column_row),
+                      std::get<2>(column_row),
+                      cell.first,
+                      cell.second);
+  }
+};
+
+Status Table::ReadRows(google::bigtable::v2::ReadRowsRequest const& request,
+                       RowStreamer& row_streamer) const {
+  std::shared_ptr<SortedRowSet> row_set;
+  if (request.has_rows()) {
+    auto maybe_row_set = SortedRowSet::Create(request.rows());
+    if (!maybe_row_set) {
+      return maybe_row_set.status();
+    }
+    row_set = std::make_shared<SortedRowSet>(*std::move(maybe_row_set));
+  } else {
+    row_set = std::make_shared<SortedRowSet>(SortedRowSet::AllRows());
+  }
+  std::lock_guard lock(mu_);
+  std::vector<std::pair<
+      TransformIterator<ColumnFamily::iterator, ExtendWithColumnFamilyName>,
+      TransformIterator<ColumnFamily::iterator, ExtendWithColumnFamilyName>>>
+      cf_ranges;
+  for (auto const &column_family : column_families_) {
+    cf_ranges.emplace_back(
+        TransformIteratorRange(
+            column_family.second->begin(row_set), column_family.second->end(),
+            ExtendWithColumnFamilyName(column_family.first)));
+  }
+  using CFRowsIt = MergedSortedIterator<
+      TransformIterator<ColumnFamily::iterator, ExtendWithColumnFamilyName>,
+      RowKeyLess>;
+  CFRowsIt cfrows_begin(std::move(cf_ranges));
+  CFRowsIt cfrows_end;
+
+  using ColRowsIt =
+      FlattenedIterator<CFRowsIt, DescendToColumn, CombineColumnIterators>;
+  ColRowsIt colrows_begin(std::move(cfrows_begin), cfrows_end);
+  ColRowsIt colrows_end(cfrows_end, cfrows_end);
+
+  using CellRowsIt =
+      FlattenedIterator<ColRowsIt, DescendToCell, CombineCellIterators>;
+  CellRowsIt cellrows_begin(std::move(colrows_begin), colrows_end);
+  CellRowsIt cellrows_end(colrows_end, colrows_end);
+  std::cout << "Print start" << std::endl;
+
+  for (; cellrows_begin != cellrows_end; ++cellrows_begin) {
+    std::cout << "Row: " << std::get<0>(*cellrows_begin)
+              << " column_family: " << std::get<1>(*cellrows_begin)
+              << " column_qualifier: " << std::get<2>(*cellrows_begin)
+              << " column_timestamp: " << std::get<3>(*cellrows_begin)
+              << " column_value: " << std::get<4>(*cellrows_begin)
+              << std::endl;
+    if (!row_streamer.Stream(*cellrows_begin)) {
+      std::cout << "HOW?" << std::endl;
+      return AbortedError("Stream closed by the client.", GCP_ERROR_INFO());
+    }
+  }
+  if (!row_streamer.Flush(true)) {
+    return AbortedError("Stream closed by the client.", GCP_ERROR_INFO());
+  }
+  std::cout << "Print stop" << std::endl;
   return Status();
 }
 
