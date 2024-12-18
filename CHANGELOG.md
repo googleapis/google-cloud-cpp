@@ -4,7 +4,23 @@
 breaking changes in the upcoming 3.x release. This release is scheduled for
 2024-12 or 2025-01.
 
-## v2.33.0 - TBD
+## v2.33.0 - 2024-12
+
+### [BigQuery Control](/google/cloud/bigquerycontrol/README.md)
+
+ - Has been promoted from an `experimental` library to GA.
+
+### [Storage](/google/cloud/storage/README.md)
+
+- docs(storage): Update build instructions for gcs+grpc ([#14833](https://github.com/googleapis/google-cloud-cpp/pull/14833))
+
+### [GKE Connect Gateway](/google/cloud/gkeconnect/README.md)
+
+- fix(gkeconnect): service only supports REST endpoint ([#14897](https://github.com/googleapis/google-cloud-cpp/pull/14897))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2024-12-13T14:53:44-08:00](https://github.com/googleapis/googleapis/tree/f4eff5440fd07389f820d22d2a55690c6390dc6d)
 
 ## v2.32.0 - 2024-12
 
