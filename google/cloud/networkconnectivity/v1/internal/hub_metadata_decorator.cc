@@ -134,6 +134,16 @@ HubServiceMetadata::ListHubSpokes(
   return child_->ListHubSpokes(context, options, request);
 }
 
+StatusOr<google::cloud::networkconnectivity::v1::QueryHubStatusResponse>
+HubServiceMetadata::QueryHubStatus(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkconnectivity::v1::QueryHubStatusRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->QueryHubStatus(context, options, request);
+}
+
 StatusOr<google::cloud::networkconnectivity::v1::ListSpokesResponse>
 HubServiceMetadata::ListSpokes(
     grpc::ClientContext& context, Options const& options,
@@ -312,6 +322,28 @@ HubServiceMetadata::ListGroups(
   SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListGroups(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+HubServiceMetadata::AsyncUpdateGroup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkconnectivity::v1::UpdateGroupRequest const& request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("group.name=", internal::UrlEncode(request.group().name())));
+  return child_->AsyncUpdateGroup(cq, std::move(context), std::move(options),
+                                  request);
+}
+
+StatusOr<google::longrunning::Operation> HubServiceMetadata::UpdateGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::UpdateGroupRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("group.name=", internal::UrlEncode(request.group().name())));
+  return child_->UpdateGroup(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>

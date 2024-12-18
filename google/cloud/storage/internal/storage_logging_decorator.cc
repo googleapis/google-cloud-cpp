@@ -322,6 +322,17 @@ StorageLogging::QueryWriteStatus(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::storage::v2::Object> StorageLogging::MoveObject(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::v2::MoveObjectRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::v2::MoveObjectRequest const& request) {
+        return child_->MoveObject(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::storage::v2::Object>>
 StorageLogging::AsyncComposeObject(
     google::cloud::CompletionQueue& cq,

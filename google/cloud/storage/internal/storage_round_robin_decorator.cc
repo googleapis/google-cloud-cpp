@@ -178,6 +178,12 @@ StorageRoundRobin::QueryWriteStatus(
   return Child()->QueryWriteStatus(context, options, request);
 }
 
+StatusOr<google::storage::v2::Object> StorageRoundRobin::MoveObject(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::v2::MoveObjectRequest const& request) {
+  return Child()->MoveObject(context, options, request);
+}
+
 future<StatusOr<google::storage::v2::Object>>
 StorageRoundRobin::AsyncComposeObject(
     google::cloud::CompletionQueue& cq,

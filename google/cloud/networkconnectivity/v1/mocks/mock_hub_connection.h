@@ -181,6 +181,12 @@ class MockHubServiceConnection
       (override));
 
   MOCK_METHOD(
+      (StreamRange<google::cloud::networkconnectivity::v1::HubStatusEntry>),
+      QueryHubStatus,
+      (google::cloud::networkconnectivity::v1::QueryHubStatusRequest request),
+      (override));
+
+  MOCK_METHOD(
       (StreamRange<google::cloud::networkconnectivity::v1::Spoke>), ListSpokes,
       (google::cloud::networkconnectivity::v1::ListSpokesRequest request),
       (override));
@@ -431,6 +437,45 @@ class MockHubServiceConnection
       (StreamRange<google::cloud::networkconnectivity::v1::Group>), ListGroups,
       (google::cloud::networkconnectivity::v1::ListGroupsRequest request),
       (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// UpdateGroup(Matcher<google::cloud::networkconnectivity::v1::UpdateGroupRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::Group>>,
+              UpdateGroup,
+              (google::cloud::networkconnectivity::v1::UpdateGroupRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, UpdateGroup(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateGroup,
+              (NoAwaitTag,
+               google::cloud::networkconnectivity::v1::UpdateGroupRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, UpdateGroup(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::Group>>,
+              UpdateGroup, (google::longrunning::Operation const& operation),
+              (override));
 
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
               (google::cloud::location::ListLocationsRequest request),

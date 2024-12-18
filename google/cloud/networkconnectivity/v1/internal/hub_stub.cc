@@ -158,6 +158,19 @@ DefaultHubServiceStub::ListHubSpokes(
   return response;
 }
 
+StatusOr<google::cloud::networkconnectivity::v1::QueryHubStatusResponse>
+DefaultHubServiceStub::QueryHubStatus(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::networkconnectivity::v1::QueryHubStatusRequest const&
+        request) {
+  google::cloud::networkconnectivity::v1::QueryHubStatusResponse response;
+  auto status = grpc_stub_->QueryHubStatus(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::networkconnectivity::v1::ListSpokesResponse>
 DefaultHubServiceStub::ListSpokes(
     grpc::ClientContext& context, Options const&,
@@ -406,6 +419,36 @@ DefaultHubServiceStub::ListGroups(
     google::cloud::networkconnectivity::v1::ListGroupsRequest const& request) {
   google::cloud::networkconnectivity::v1::ListGroupsResponse response;
   auto status = grpc_stub_->ListGroups(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultHubServiceStub::AsyncUpdateGroup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networkconnectivity::v1::UpdateGroupRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networkconnectivity::v1::UpdateGroupRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::networkconnectivity::v1::UpdateGroupRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateGroup(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultHubServiceStub::UpdateGroup(
+    grpc::ClientContext& context, Options,
+    google::cloud::networkconnectivity::v1::UpdateGroupRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateGroup(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

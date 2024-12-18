@@ -99,6 +99,10 @@ class HubServiceConnectionImpl
       google::cloud::networkconnectivity::v1::ListHubSpokesRequest request)
       override;
 
+  StreamRange<google::cloud::networkconnectivity::v1::HubStatusEntry>
+  QueryHubStatus(google::cloud::networkconnectivity::v1::QueryHubStatusRequest
+                     request) override;
+
   StreamRange<google::cloud::networkconnectivity::v1::Spoke> ListSpokes(
       google::cloud::networkconnectivity::v1::ListSpokesRequest request)
       override;
@@ -196,6 +200,18 @@ class HubServiceConnectionImpl
   StreamRange<google::cloud::networkconnectivity::v1::Group> ListGroups(
       google::cloud::networkconnectivity::v1::ListGroupsRequest request)
       override;
+
+  future<StatusOr<google::cloud::networkconnectivity::v1::Group>> UpdateGroup(
+      google::cloud::networkconnectivity::v1::UpdateGroupRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateGroup(
+      NoAwaitTag,
+      google::cloud::networkconnectivity::v1::UpdateGroupRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::networkconnectivity::v1::Group>> UpdateGroup(
+      google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;

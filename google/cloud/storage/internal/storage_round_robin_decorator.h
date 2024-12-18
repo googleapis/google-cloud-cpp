@@ -135,6 +135,10 @@ class StorageRoundRobin : public StorageStub {
       grpc::ClientContext& context, Options const& options,
       google::storage::v2::QueryWriteStatusRequest const& request) override;
 
+  StatusOr<google::storage::v2::Object> MoveObject(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::v2::MoveObjectRequest const& request) override;
+
   future<StatusOr<google::storage::v2::Object>> AsyncComposeObject(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

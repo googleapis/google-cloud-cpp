@@ -235,6 +235,14 @@ StorageAuth::QueryWriteStatus(
   return child_->QueryWriteStatus(context, options, request);
 }
 
+StatusOr<google::storage::v2::Object> StorageAuth::MoveObject(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::v2::MoveObjectRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->MoveObject(context, options, request);
+}
+
 future<StatusOr<google::storage::v2::Object>> StorageAuth::AsyncComposeObject(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

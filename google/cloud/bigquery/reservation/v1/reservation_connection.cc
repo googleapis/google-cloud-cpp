@@ -69,6 +69,13 @@ ReservationServiceConnection::UpdateReservation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
+ReservationServiceConnection::FailoverReservation(
+    google::cloud::bigquery::reservation::v1::
+        FailoverReservationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
 ReservationServiceConnection::CreateCapacityCommitment(
     google::cloud::bigquery::reservation::v1::

@@ -90,6 +90,12 @@ class HubServiceTracingStub : public HubServiceStub {
       google::cloud::networkconnectivity::v1::ListHubSpokesRequest const&
           request) override;
 
+  StatusOr<google::cloud::networkconnectivity::v1::QueryHubStatusResponse>
+  QueryHubStatus(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkconnectivity::v1::QueryHubStatusRequest const&
+          request) override;
+
   StatusOr<google::cloud::networkconnectivity::v1::ListSpokesResponse>
   ListSpokes(grpc::ClientContext& context, Options const& options,
              google::cloud::networkconnectivity::v1::ListSpokesRequest const&
@@ -190,6 +196,18 @@ class HubServiceTracingStub : public HubServiceStub {
   ListGroups(grpc::ClientContext& context, Options const& options,
              google::cloud::networkconnectivity::v1::ListGroupsRequest const&
                  request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateGroup(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkconnectivity::v1::UpdateGroupRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateGroup(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkconnectivity::v1::UpdateGroupRequest const& request)
+      override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,

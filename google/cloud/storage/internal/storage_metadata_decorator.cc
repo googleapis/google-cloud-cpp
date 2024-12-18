@@ -494,6 +494,25 @@ StorageMetadata::QueryWriteStatus(
   return child_->QueryWriteStatus(context, options, request);
 }
 
+StatusOr<google::storage::v2::Object> StorageMetadata::MoveObject(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::v2::MoveObjectRequest const& request) {
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  if (!request.bucket().empty()) {
+    params.push_back(
+        absl::StrCat("bucket=", internal::UrlEncode(request.bucket())));
+  }
+
+  if (params.empty()) {
+    SetMetadata(context, options);
+  } else {
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
+  }
+  return child_->MoveObject(context, options, request);
+}
+
 future<StatusOr<google::storage::v2::Object>>
 StorageMetadata::AsyncComposeObject(
     google::cloud::CompletionQueue& cq,

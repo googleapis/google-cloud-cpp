@@ -65,6 +65,11 @@ class ReservationServiceStub {
       google::cloud::bigquery::reservation::v1::UpdateReservationRequest const&
           request) = 0;
 
+  virtual StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
+  FailoverReservation(grpc::ClientContext& context, Options const& options,
+                      google::cloud::bigquery::reservation::v1::
+                          FailoverReservationRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
   CreateCapacityCommitment(
       grpc::ClientContext& context, Options const& options,
@@ -198,6 +203,11 @@ class DefaultReservationServiceStub : public ReservationServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::reservation::v1::UpdateReservationRequest const&
           request) override;
+
+  StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
+  FailoverReservation(grpc::ClientContext& context, Options const& options,
+                      google::cloud::bigquery::reservation::v1::
+                          FailoverReservationRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
   CreateCapacityCommitment(

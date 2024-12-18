@@ -427,6 +427,41 @@ HubServiceConnectionImpl::ListHubSpokes(
       });
 }
 
+StreamRange<google::cloud::networkconnectivity::v1::HubStatusEntry>
+HubServiceConnectionImpl::QueryHubStatus(
+    google::cloud::networkconnectivity::v1::QueryHubStatusRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->QueryHubStatus(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::networkconnectivity::v1::HubStatusEntry>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<networkconnectivity_v1::HubServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::networkconnectivity::v1::QueryHubStatusRequest const&
+              r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::networkconnectivity::v1::
+                       QueryHubStatusRequest const& request) {
+              return stub->QueryHubStatus(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::networkconnectivity::v1::QueryHubStatusResponse r) {
+        std::vector<google::cloud::networkconnectivity::v1::HubStatusEntry>
+            result(r.hub_status_entries().size());
+        auto& messages = *r.mutable_hub_status_entries();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
 StreamRange<google::cloud::networkconnectivity::v1::Spoke>
 HubServiceConnectionImpl::ListSpokes(
     google::cloud::networkconnectivity::v1::ListSpokesRequest request) {
@@ -1099,6 +1134,99 @@ HubServiceConnectionImpl::ListGroups(
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
+}
+
+future<StatusOr<google::cloud::networkconnectivity::v1::Group>>
+HubServiceConnectionImpl::UpdateGroup(
+    google::cloud::networkconnectivity::v1::UpdateGroupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateGroup(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::networkconnectivity::v1::Group>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::networkconnectivity::v1::UpdateGroupRequest const&
+              request) {
+        return stub->AsyncUpdateGroup(cq, std::move(context),
+                                      std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::networkconnectivity::v1::Group>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation> HubServiceConnectionImpl::UpdateGroup(
+    NoAwaitTag,
+    google::cloud::networkconnectivity::v1::UpdateGroupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateGroup(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkconnectivity::v1::UpdateGroupRequest const&
+                 request) {
+        return stub_->UpdateGroup(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::networkconnectivity::v1::Group>>
+HubServiceConnectionImpl::UpdateGroup(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::networkconnectivity::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::networkconnectivity::v1::Group>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateGroup",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::networkconnectivity::v1::Group>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::networkconnectivity::v1::Group>,
+      polling_policy(*current), __func__);
 }
 
 StreamRange<google::cloud::location::Location>

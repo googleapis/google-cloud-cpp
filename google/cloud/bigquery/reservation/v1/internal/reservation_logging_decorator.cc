@@ -105,6 +105,20 @@ ReservationServiceLogging::UpdateReservation(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
+ReservationServiceLogging::FailoverReservation(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::reservation::v1::FailoverReservationRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::reservation::v1::
+                 FailoverReservationRequest const& request) {
+        return child_->FailoverReservation(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
 ReservationServiceLogging::CreateCapacityCommitment(
     grpc::ClientContext& context, Options const& options,

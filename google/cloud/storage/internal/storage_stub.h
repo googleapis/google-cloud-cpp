@@ -141,6 +141,10 @@ class StorageStub {
       grpc::ClientContext& context, Options const& options,
       google::storage::v2::QueryWriteStatusRequest const& request) = 0;
 
+  virtual StatusOr<google::storage::v2::Object> MoveObject(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::v2::MoveObjectRequest const& request) = 0;
+
   virtual future<StatusOr<google::storage::v2::Object>> AsyncComposeObject(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -293,6 +297,10 @@ class DefaultStorageStub : public StorageStub {
   StatusOr<google::storage::v2::QueryWriteStatusResponse> QueryWriteStatus(
       grpc::ClientContext& context, Options const& options,
       google::storage::v2::QueryWriteStatusRequest const& request) override;
+
+  StatusOr<google::storage::v2::Object> MoveObject(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::v2::MoveObjectRequest const& request) override;
 
   future<StatusOr<google::storage::v2::Object>> AsyncComposeObject(
       google::cloud::CompletionQueue& cq,
