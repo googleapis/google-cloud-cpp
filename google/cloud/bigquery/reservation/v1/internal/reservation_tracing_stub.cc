@@ -101,6 +101,20 @@ ReservationServiceTracingStub::UpdateReservation(
       context, *span, child_->UpdateReservation(context, options, request));
 }
 
+StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
+ReservationServiceTracingStub::FailoverReservation(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::reservation::v1::FailoverReservationRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.reservation.v1.ReservationService",
+      "FailoverReservation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->FailoverReservation(context, options, request));
+}
+
 StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
 ReservationServiceTracingStub::CreateCapacityCommitment(
     grpc::ClientContext& context, Options const& options,

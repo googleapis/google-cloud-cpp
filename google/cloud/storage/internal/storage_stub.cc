@@ -292,6 +292,17 @@ DefaultStorageStub::QueryWriteStatus(
   return response;
 }
 
+StatusOr<google::storage::v2::Object> DefaultStorageStub::MoveObject(
+    grpc::ClientContext& context, Options const&,
+    google::storage::v2::MoveObjectRequest const& request) {
+  google::storage::v2::Object response;
+  auto status = grpc_stub_->MoveObject(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::storage::v2::Object>>
 DefaultStorageStub::AsyncComposeObject(
     google::cloud::CompletionQueue& cq,

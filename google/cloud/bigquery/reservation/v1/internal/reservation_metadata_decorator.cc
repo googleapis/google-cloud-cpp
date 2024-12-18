@@ -94,6 +94,16 @@ ReservationServiceMetadata::UpdateReservation(
   return child_->UpdateReservation(context, options, request);
 }
 
+StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
+ReservationServiceMetadata::FailoverReservation(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::bigquery::reservation::v1::FailoverReservationRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->FailoverReservation(context, options, request);
+}
+
 StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
 ReservationServiceMetadata::CreateCapacityCommitment(
     grpc::ClientContext& context, Options const& options,

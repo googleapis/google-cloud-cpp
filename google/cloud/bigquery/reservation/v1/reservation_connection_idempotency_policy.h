@@ -57,6 +57,10 @@ class ReservationServiceConnectionIdempotencyPolicy {
       google::cloud::bigquery::reservation::v1::UpdateReservationRequest const&
           request);
 
+  virtual google::cloud::Idempotency FailoverReservation(
+      google::cloud::bigquery::reservation::v1::
+          FailoverReservationRequest const& request);
+
   virtual google::cloud::Idempotency CreateCapacityCommitment(
       google::cloud::bigquery::reservation::v1::
           CreateCapacityCommitmentRequest const& request);

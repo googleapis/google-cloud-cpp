@@ -210,6 +210,22 @@ HubServiceClient::ListHubSpokes(
   return connection_->ListHubSpokes(std::move(request));
 }
 
+StreamRange<google::cloud::networkconnectivity::v1::HubStatusEntry>
+HubServiceClient::QueryHubStatus(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkconnectivity::v1::QueryHubStatusRequest request;
+  request.set_name(name);
+  return connection_->QueryHubStatus(request);
+}
+
+StreamRange<google::cloud::networkconnectivity::v1::HubStatusEntry>
+HubServiceClient::QueryHubStatus(
+    google::cloud::networkconnectivity::v1::QueryHubStatusRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->QueryHubStatus(std::move(request));
+}
+
 StreamRange<google::cloud::networkconnectivity::v1::Spoke>
 HubServiceClient::ListSpokes(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -557,6 +573,50 @@ HubServiceClient::ListGroups(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListGroups(std::move(request));
+}
+
+future<StatusOr<google::cloud::networkconnectivity::v1::Group>>
+HubServiceClient::UpdateGroup(
+    google::cloud::networkconnectivity::v1::Group const& group,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkconnectivity::v1::UpdateGroupRequest request;
+  *request.mutable_group() = group;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateGroup(request);
+}
+
+StatusOr<google::longrunning::Operation> HubServiceClient::UpdateGroup(
+    NoAwaitTag, google::cloud::networkconnectivity::v1::Group const& group,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkconnectivity::v1::UpdateGroupRequest request;
+  *request.mutable_group() = group;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateGroup(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::networkconnectivity::v1::Group>>
+HubServiceClient::UpdateGroup(
+    google::cloud::networkconnectivity::v1::UpdateGroupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateGroup(request);
+}
+
+StatusOr<google::longrunning::Operation> HubServiceClient::UpdateGroup(
+    NoAwaitTag,
+    google::cloud::networkconnectivity::v1::UpdateGroupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateGroup(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::networkconnectivity::v1::Group>>
+HubServiceClient::UpdateGroup(google::longrunning::Operation const& operation,
+                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateGroup(operation);
 }
 
 StreamRange<google::cloud::location::Location> HubServiceClient::ListLocations(

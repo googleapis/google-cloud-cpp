@@ -60,6 +60,12 @@ Idempotency ReservationServiceConnectionIdempotencyPolicy::UpdateReservation(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency ReservationServiceConnectionIdempotencyPolicy::FailoverReservation(
+    google::cloud::bigquery::reservation::v1::
+        FailoverReservationRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency
 ReservationServiceConnectionIdempotencyPolicy::CreateCapacityCommitment(
     google::cloud::bigquery::reservation::v1::

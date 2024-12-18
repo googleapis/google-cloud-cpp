@@ -94,6 +94,19 @@ DefaultReservationServiceStub::UpdateReservation(
   return response;
 }
 
+StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
+DefaultReservationServiceStub::FailoverReservation(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::bigquery::reservation::v1::FailoverReservationRequest const&
+        request) {
+  google::cloud::bigquery::reservation::v1::Reservation response;
+  auto status = grpc_stub_->FailoverReservation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
 DefaultReservationServiceStub::CreateCapacityCommitment(
     grpc::ClientContext& context, Options const&,

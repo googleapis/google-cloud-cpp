@@ -131,7 +131,7 @@ class NotificationChannelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.monitoring.v3.ListNotificationChannelDescriptorsRequest]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L193}
-  /// [google.monitoring.v3.NotificationChannelDescriptor]: @googleapis_reference_link{google/monitoring/v3/notification.proto#L37}
+  /// [google.monitoring.v3.NotificationChannelDescriptor]: @googleapis_reference_link{google/monitoring/v3/notification.proto#L38}
   /// [google.monitoring.v3.NotificationChannelService.GetNotificationChannelDescriptor]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L58}
   ///
   // clang-format on
@@ -173,7 +173,7 @@ class NotificationChannelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.monitoring.v3.ListNotificationChannelDescriptorsRequest]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L193}
-  /// [google.monitoring.v3.NotificationChannelDescriptor]: @googleapis_reference_link{google/monitoring/v3/notification.proto#L37}
+  /// [google.monitoring.v3.NotificationChannelDescriptor]: @googleapis_reference_link{google/monitoring/v3/notification.proto#L38}
   ///
   // clang-format on
   StreamRange<google::monitoring::v3::NotificationChannelDescriptor>
@@ -203,7 +203,7 @@ class NotificationChannelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.monitoring.v3.GetNotificationChannelDescriptorRequest]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L237}
-  /// [google.monitoring.v3.NotificationChannelDescriptor]: @googleapis_reference_link{google/monitoring/v3/notification.proto#L37}
+  /// [google.monitoring.v3.NotificationChannelDescriptor]: @googleapis_reference_link{google/monitoring/v3/notification.proto#L38}
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::NotificationChannelDescriptor>
@@ -234,7 +234,7 @@ class NotificationChannelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.monitoring.v3.GetNotificationChannelDescriptorRequest]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L237}
-  /// [google.monitoring.v3.NotificationChannelDescriptor]: @googleapis_reference_link{google/monitoring/v3/notification.proto#L37}
+  /// [google.monitoring.v3.NotificationChannelDescriptor]: @googleapis_reference_link{google/monitoring/v3/notification.proto#L38}
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::NotificationChannelDescriptor>
@@ -284,7 +284,7 @@ class NotificationChannelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.monitoring.v3.ListNotificationChannelsRequest]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L274}
-  /// [google.monitoring.v3.NotificationChannel]: @googleapis_reference_link{google/monitoring/v3/notification.proto#L87}
+  /// [google.monitoring.v3.NotificationChannel]: @googleapis_reference_link{google/monitoring/v3/notification.proto#L88}
   /// [google.monitoring.v3.NotificationChannelService.GetNotificationChannel]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L82}
   ///
   // clang-format on
@@ -326,7 +326,7 @@ class NotificationChannelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.monitoring.v3.ListNotificationChannelsRequest]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L274}
-  /// [google.monitoring.v3.NotificationChannel]: @googleapis_reference_link{google/monitoring/v3/notification.proto#L87}
+  /// [google.monitoring.v3.NotificationChannel]: @googleapis_reference_link{google/monitoring/v3/notification.proto#L88}
   ///
   // clang-format on
   StreamRange<google::monitoring::v3::NotificationChannel>
@@ -359,7 +359,7 @@ class NotificationChannelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.monitoring.v3.GetNotificationChannelRequest]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L337}
-  /// [google.monitoring.v3.NotificationChannel]: @googleapis_reference_link{google/monitoring/v3/notification.proto#L87}
+  /// [google.monitoring.v3.NotificationChannel]: @googleapis_reference_link{google/monitoring/v3/notification.proto#L88}
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::NotificationChannel> GetNotificationChannel(
@@ -393,7 +393,7 @@ class NotificationChannelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.monitoring.v3.GetNotificationChannelRequest]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L337}
-  /// [google.monitoring.v3.NotificationChannel]: @googleapis_reference_link{google/monitoring/v3/notification.proto#L87}
+  /// [google.monitoring.v3.NotificationChannel]: @googleapis_reference_link{google/monitoring/v3/notification.proto#L88}
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::NotificationChannel> GetNotificationChannel(
@@ -435,7 +435,7 @@ class NotificationChannelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.monitoring.v3.CreateNotificationChannelRequest]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L250}
-  /// [google.monitoring.v3.NotificationChannel]: @googleapis_reference_link{google/monitoring/v3/notification.proto#L87}
+  /// [google.monitoring.v3.NotificationChannel]: @googleapis_reference_link{google/monitoring/v3/notification.proto#L88}
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::NotificationChannel>
@@ -474,7 +474,7 @@ class NotificationChannelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.monitoring.v3.CreateNotificationChannelRequest]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L250}
-  /// [google.monitoring.v3.NotificationChannel]: @googleapis_reference_link{google/monitoring/v3/notification.proto#L87}
+  /// [google.monitoring.v3.NotificationChannel]: @googleapis_reference_link{google/monitoring/v3/notification.proto#L88}
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::NotificationChannel>
@@ -492,7 +492,7 @@ class NotificationChannelServiceClient {
   /// CreateNotificationChannel, DeleteNotificationChannel and
   /// UpdateNotificationChannel.
   ///
-  /// @param update_mask  The fields to update.
+  /// @param update_mask  Optional. The fields to update.
   /// @param notification_channel  Required. A description of the changes to be applied to the specified
   ///  notification channel. The description must provide a definition for
   ///  fields to be updated; the names of these fields should also be
@@ -510,7 +510,7 @@ class NotificationChannelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.NotificationChannel]: @googleapis_reference_link{google/monitoring/v3/notification.proto#L87}
+  /// [google.monitoring.v3.NotificationChannel]: @googleapis_reference_link{google/monitoring/v3/notification.proto#L88}
   /// [google.monitoring.v3.UpdateNotificationChannelRequest]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L350}
   ///
   // clang-format on
@@ -549,7 +549,7 @@ class NotificationChannelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.NotificationChannel]: @googleapis_reference_link{google/monitoring/v3/notification.proto#L87}
+  /// [google.monitoring.v3.NotificationChannel]: @googleapis_reference_link{google/monitoring/v3/notification.proto#L88}
   /// [google.monitoring.v3.UpdateNotificationChannelRequest]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L350}
   ///
   // clang-format on
@@ -572,8 +572,8 @@ class NotificationChannelServiceClient {
   ///      projects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID]
   /// @param force  If true, the notification channel will be deleted regardless of its
   ///  use in alert policies (the policies will be updated to remove the
-  ///  channel). If false, channels that are still referenced by an existing
-  ///  alerting policy will fail to be deleted in a delete operation.
+  ///  channel). If false, this operation will fail if the notification channel
+  ///  is referenced by existing alerting policies.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [`Status`] object. If the request failed, the
@@ -585,7 +585,7 @@ class NotificationChannelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.DeleteNotificationChannelRequest]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L363}
+  /// [google.monitoring.v3.DeleteNotificationChannelRequest]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L364}
   ///
   // clang-format on
   Status DeleteNotificationChannel(std::string const& name, bool force,
@@ -617,7 +617,7 @@ class NotificationChannelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.DeleteNotificationChannelRequest]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L363}
+  /// [google.monitoring.v3.DeleteNotificationChannelRequest]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L364}
   ///
   // clang-format on
   Status DeleteNotificationChannel(
@@ -641,7 +641,7 @@ class NotificationChannelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.SendNotificationChannelVerificationCodeRequest]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L382}
+  /// [google.monitoring.v3.SendNotificationChannelVerificationCodeRequest]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L383}
   ///
   // clang-format on
   Status SendNotificationChannelVerificationCode(std::string const& name,
@@ -669,7 +669,7 @@ class NotificationChannelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.SendNotificationChannelVerificationCodeRequest]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L382}
+  /// [google.monitoring.v3.SendNotificationChannelVerificationCodeRequest]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L383}
   ///
   // clang-format on
   Status SendNotificationChannelVerificationCode(
@@ -717,8 +717,8 @@ class NotificationChannelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.GetNotificationChannelVerificationCodeRequest]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L393}
-  /// [google.monitoring.v3.GetNotificationChannelVerificationCodeResponse]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L417}
+  /// [google.monitoring.v3.GetNotificationChannelVerificationCodeRequest]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L394}
+  /// [google.monitoring.v3.GetNotificationChannelVerificationCodeResponse]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L418}
   ///
   // clang-format on
   StatusOr<
@@ -769,8 +769,8 @@ class NotificationChannelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.GetNotificationChannelVerificationCodeRequest]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L393}
-  /// [google.monitoring.v3.GetNotificationChannelVerificationCodeResponse]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L417}
+  /// [google.monitoring.v3.GetNotificationChannelVerificationCodeRequest]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L394}
+  /// [google.monitoring.v3.GetNotificationChannelVerificationCodeResponse]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L418}
   ///
   // clang-format on
   StatusOr<
@@ -807,8 +807,8 @@ class NotificationChannelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.NotificationChannel]: @googleapis_reference_link{google/monitoring/v3/notification.proto#L87}
-  /// [google.monitoring.v3.VerifyNotificationChannelRequest]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L431}
+  /// [google.monitoring.v3.NotificationChannel]: @googleapis_reference_link{google/monitoring/v3/notification.proto#L88}
+  /// [google.monitoring.v3.VerifyNotificationChannelRequest]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L432}
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::NotificationChannel>
@@ -840,8 +840,8 @@ class NotificationChannelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.NotificationChannel]: @googleapis_reference_link{google/monitoring/v3/notification.proto#L87}
-  /// [google.monitoring.v3.VerifyNotificationChannelRequest]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L431}
+  /// [google.monitoring.v3.NotificationChannel]: @googleapis_reference_link{google/monitoring/v3/notification.proto#L88}
+  /// [google.monitoring.v3.VerifyNotificationChannelRequest]: @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L432}
   ///
   // clang-format on
   StatusOr<google::monitoring::v3::NotificationChannel>

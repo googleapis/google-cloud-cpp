@@ -299,6 +299,16 @@ StorageTracingStub::QueryWriteStatus(
                            child_->QueryWriteStatus(context, options, request));
 }
 
+StatusOr<google::storage::v2::Object> StorageTracingStub::MoveObject(
+    grpc::ClientContext& context, Options const& options,
+    google::storage::v2::MoveObjectRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.storage.v2.Storage", "MoveObject");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->MoveObject(context, options, request));
+}
+
 future<StatusOr<google::storage::v2::Object>>
 StorageTracingStub::AsyncComposeObject(
     google::cloud::CompletionQueue& cq,

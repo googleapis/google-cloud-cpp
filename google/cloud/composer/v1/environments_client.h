@@ -116,7 +116,7 @@ class EnvironmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.orchestration.airflow.service.v1.CreateEnvironmentRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L328}
-  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1886}
+  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1902}
   ///
   // clang-format on
   future<
@@ -175,7 +175,7 @@ class EnvironmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.orchestration.airflow.service.v1.CreateEnvironmentRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L328}
-  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1886}
+  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1902}
   ///
   // clang-format on
   future<
@@ -234,7 +234,7 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1886}
+  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1902}
   /// [google.cloud.orchestration.airflow.service.v1.GetEnvironmentRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L338}
   ///
   // clang-format on
@@ -264,7 +264,7 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1886}
+  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1902}
   /// [google.cloud.orchestration.airflow.service.v1.GetEnvironmentRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L338}
   ///
   // clang-format on
@@ -301,7 +301,7 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1886}
+  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1902}
   /// [google.cloud.orchestration.airflow.service.v1.ListEnvironmentsRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L345}
   ///
   // clang-format on
@@ -340,7 +340,7 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1886}
+  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1902}
   /// [google.cloud.orchestration.airflow.service.v1.ListEnvironmentsRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L345}
   ///
   // clang-format on
@@ -386,7 +386,7 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1886}
+  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1902}
   /// [google.cloud.orchestration.airflow.service.v1.UpdateEnvironmentRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L374}
   ///
   // clang-format on
@@ -445,7 +445,7 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1886}
+  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1902}
   /// [google.cloud.orchestration.airflow.service.v1.UpdateEnvironmentRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L374}
   ///
   // clang-format on
@@ -736,8 +736,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.ListWorkloadsRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L814}
-  /// [google.cloud.orchestration.airflow.service.v1.ListWorkloadsResponse.ComposerWorkload]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L843}
+  /// [google.cloud.orchestration.airflow.service.v1.ListWorkloadsRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L828}
+  /// [google.cloud.orchestration.airflow.service.v1.ListWorkloadsResponse.ComposerWorkload]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L857}
   ///
   // clang-format on
   StreamRange<google::cloud::orchestration::airflow::service::v1::
@@ -780,8 +780,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.ListWorkloadsRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L814}
-  /// [google.cloud.orchestration.airflow.service.v1.ListWorkloadsResponse.ComposerWorkload]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L843}
+  /// [google.cloud.orchestration.airflow.service.v1.ListWorkloadsRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L828}
+  /// [google.cloud.orchestration.airflow.service.v1.ListWorkloadsResponse.ComposerWorkload]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L857}
   ///
   // clang-format on
   StreamRange<google::cloud::orchestration::airflow::service::v1::
@@ -823,8 +823,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.CheckUpgradeRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1958}
-  /// [google.cloud.orchestration.airflow.service.v1.CheckUpgradeResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1993}
+  /// [google.cloud.orchestration.airflow.service.v1.CheckUpgradeRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1974}
+  /// [google.cloud.orchestration.airflow.service.v1.CheckUpgradeResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L2009}
   ///
   // clang-format on
   future<StatusOr<
@@ -1236,7 +1236,7 @@ class EnvironmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.orchestration.airflow.service.v1.CreateUserWorkloadsConfigMapRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L689}
-  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L786}
+  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L793}
   ///
   // clang-format on
   StatusOr<google::cloud::orchestration::airflow::service::v1::
@@ -1274,7 +1274,7 @@ class EnvironmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.orchestration.airflow.service.v1.CreateUserWorkloadsConfigMapRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L689}
-  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L786}
+  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L793}
   ///
   // clang-format on
   StatusOr<google::cloud::orchestration::airflow::service::v1::
@@ -1307,7 +1307,7 @@ class EnvironmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.orchestration.airflow.service.v1.GetUserWorkloadsConfigMapRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L705}
-  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L786}
+  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L793}
   ///
   // clang-format on
   StatusOr<google::cloud::orchestration::airflow::service::v1::
@@ -1341,7 +1341,7 @@ class EnvironmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.orchestration.airflow.service.v1.GetUserWorkloadsConfigMapRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L705}
-  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L786}
+  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L793}
   ///
   // clang-format on
   StatusOr<google::cloud::orchestration::airflow::service::v1::
@@ -1382,7 +1382,7 @@ class EnvironmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.orchestration.airflow.service.v1.ListUserWorkloadsConfigMapsRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L717}
-  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L786}
+  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L793}
   ///
   // clang-format on
   StreamRange<google::cloud::orchestration::airflow::service::v1::
@@ -1425,7 +1425,7 @@ class EnvironmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.orchestration.airflow.service.v1.ListUserWorkloadsConfigMapsRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L717}
-  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L786}
+  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L793}
   ///
   // clang-format on
   StreamRange<google::cloud::orchestration::airflow::service::v1::
@@ -1457,7 +1457,7 @@ class EnvironmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.orchestration.airflow.service.v1.UpdateUserWorkloadsConfigMapRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L736}
-  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L786}
+  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L793}
   ///
   // clang-format on
   StatusOr<google::cloud::orchestration::airflow::service::v1::
@@ -1494,7 +1494,7 @@ class EnvironmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.orchestration.airflow.service.v1.UpdateUserWorkloadsConfigMapRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L736}
-  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L786}
+  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L793}
   ///
   // clang-format on
   StatusOr<google::cloud::orchestration::airflow::service::v1::
@@ -1595,8 +1595,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.SaveSnapshotRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L930}
-  /// [google.cloud.orchestration.airflow.service.v1.SaveSnapshotResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L941}
+  /// [google.cloud.orchestration.airflow.service.v1.SaveSnapshotRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L944}
+  /// [google.cloud.orchestration.airflow.service.v1.SaveSnapshotResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L955}
   ///
   // clang-format on
   future<StatusOr<
@@ -1669,8 +1669,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.LoadSnapshotRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L950}
-  /// [google.cloud.orchestration.airflow.service.v1.LoadSnapshotResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L977}
+  /// [google.cloud.orchestration.airflow.service.v1.LoadSnapshotRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L964}
+  /// [google.cloud.orchestration.airflow.service.v1.LoadSnapshotResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L991}
   ///
   // clang-format on
   future<StatusOr<
@@ -1740,8 +1740,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.DatabaseFailoverRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L981}
-  /// [google.cloud.orchestration.airflow.service.v1.DatabaseFailoverResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L988}
+  /// [google.cloud.orchestration.airflow.service.v1.DatabaseFailoverRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L995}
+  /// [google.cloud.orchestration.airflow.service.v1.DatabaseFailoverResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1002}
   ///
   // clang-format on
   future<StatusOr<google::cloud::orchestration::airflow::service::v1::
@@ -1804,8 +1804,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.FetchDatabasePropertiesRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L991}
-  /// [google.cloud.orchestration.airflow.service.v1.FetchDatabasePropertiesResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1003}
+  /// [google.cloud.orchestration.airflow.service.v1.FetchDatabasePropertiesRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1005}
+  /// [google.cloud.orchestration.airflow.service.v1.FetchDatabasePropertiesResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1017}
   ///
   // clang-format on
   StatusOr<google::cloud::orchestration::airflow::service::v1::
