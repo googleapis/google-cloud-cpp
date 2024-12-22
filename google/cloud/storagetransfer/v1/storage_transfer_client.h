@@ -122,8 +122,8 @@ class StorageTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storagetransfer.v1.GetGoogleServiceAccountRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L184}
-  /// [google.storagetransfer.v1.GoogleServiceAccount]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L36}
+  /// [google.storagetransfer.v1.GetGoogleServiceAccountRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L183}
+  /// [google.storagetransfer.v1.GoogleServiceAccount]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L35}
   ///
   // clang-format on
   StatusOr<google::storagetransfer::v1::GoogleServiceAccount>
@@ -155,8 +155,8 @@ class StorageTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storagetransfer.v1.CreateTransferJobRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L191}
-  /// [google.storagetransfer.v1.TransferJob]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L980}
+  /// [google.storagetransfer.v1.CreateTransferJobRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L190}
+  /// [google.storagetransfer.v1.TransferJob]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L1008}
   ///
   // clang-format on
   StatusOr<google::storagetransfer::v1::TransferJob> CreateTransferJob(
@@ -193,12 +193,12 @@ class StorageTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storagetransfer.v1.TransferJob]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L980}
-  /// [google.storagetransfer.v1.TransferJob.Status.DELETED]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L996}
-  /// [google.storagetransfer.v1.TransferJob.Status.DISABLED]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L990}
-  /// [google.storagetransfer.v1.TransferJob.Status.ENABLED]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L987}
-  /// [google.storagetransfer.v1.TransferJob.status]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L1061}
-  /// [google.storagetransfer.v1.UpdateTransferJobRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L197}
+  /// [google.storagetransfer.v1.TransferJob]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L1008}
+  /// [google.storagetransfer.v1.TransferJob.Status.DELETED]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L1024}
+  /// [google.storagetransfer.v1.TransferJob.Status.DISABLED]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L1018}
+  /// [google.storagetransfer.v1.TransferJob.Status.ENABLED]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L1015}
+  /// [google.storagetransfer.v1.TransferJob.status]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L1092}
+  /// [google.storagetransfer.v1.UpdateTransferJobRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L196}
   ///
   // clang-format on
   StatusOr<google::storagetransfer::v1::TransferJob> UpdateTransferJob(
@@ -228,8 +228,8 @@ class StorageTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storagetransfer.v1.GetTransferJobRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L234}
-  /// [google.storagetransfer.v1.TransferJob]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L980}
+  /// [google.storagetransfer.v1.GetTransferJobRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L233}
+  /// [google.storagetransfer.v1.TransferJob]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L1008}
   ///
   // clang-format on
   StatusOr<google::storagetransfer::v1::TransferJob> GetTransferJob(
@@ -268,8 +268,8 @@ class StorageTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storagetransfer.v1.ListTransferJobsRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L255}
-  /// [google.storagetransfer.v1.TransferJob]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L980}
+  /// [google.storagetransfer.v1.ListTransferJobsRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L254}
+  /// [google.storagetransfer.v1.TransferJob]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L1008}
   ///
   // clang-format on
   StreamRange<google::storagetransfer::v1::TransferJob> ListTransferJobs(
@@ -297,7 +297,7 @@ class StorageTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storagetransfer.v1.PauseTransferOperationRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L287}
+  /// [google.storagetransfer.v1.PauseTransferOperationRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L301}
   ///
   // clang-format on
   Status PauseTransferOperation(
@@ -325,7 +325,7 @@ class StorageTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storagetransfer.v1.ResumeTransferOperationRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L293}
+  /// [google.storagetransfer.v1.ResumeTransferOperationRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L307}
   ///
   // clang-format on
   Status ResumeTransferOperation(
@@ -366,8 +366,8 @@ class StorageTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storagetransfer.v1.RunTransferJobRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L299}
-  /// [google.storagetransfer.v1.TransferOperation]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L1319}
+  /// [google.storagetransfer.v1.RunTransferJobRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L313}
+  /// [google.storagetransfer.v1.TransferOperation]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L1350}
   ///
   // clang-format on
   future<StatusOr<google::storagetransfer::v1::TransferOperation>>
@@ -426,8 +426,8 @@ class StorageTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storagetransfer.v1.DeleteTransferJobRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L244}
-  /// [google.storagetransfer.v1.TransferJob.Status.DELETED]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L996}
+  /// [google.storagetransfer.v1.DeleteTransferJobRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L243}
+  /// [google.storagetransfer.v1.TransferJob.Status.DELETED]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L1024}
   ///
   // clang-format on
   Status DeleteTransferJob(
@@ -467,8 +467,8 @@ class StorageTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storagetransfer.v1.AgentPool]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L520}
-  /// [google.storagetransfer.v1.CreateAgentPoolRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L309}
+  /// [google.storagetransfer.v1.AgentPool]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L519}
+  /// [google.storagetransfer.v1.CreateAgentPoolRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L323}
   ///
   // clang-format on
   StatusOr<google::storagetransfer::v1::AgentPool> CreateAgentPool(
@@ -499,8 +499,8 @@ class StorageTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storagetransfer.v1.AgentPool]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L520}
-  /// [google.storagetransfer.v1.CreateAgentPoolRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L309}
+  /// [google.storagetransfer.v1.AgentPool]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L519}
+  /// [google.storagetransfer.v1.CreateAgentPoolRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L323}
   ///
   // clang-format on
   StatusOr<google::storagetransfer::v1::AgentPool> CreateAgentPool(
@@ -543,11 +543,11 @@ class StorageTransferServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.rpc.Code.INVALID_ARGUMENT]: @googleapis_reference_link{google/rpc/code.proto#L58}
-  /// [google.storagetransfer.v1.AgentPool]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L520}
-  /// [google.storagetransfer.v1.AgentPool.bandwidth_limit]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L564}
-  /// [google.storagetransfer.v1.AgentPool.display_name]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L557}
-  /// [google.storagetransfer.v1.AgentPool.name]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L554}
-  /// [google.storagetransfer.v1.UpdateAgentPoolRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L334}
+  /// [google.storagetransfer.v1.AgentPool]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L519}
+  /// [google.storagetransfer.v1.AgentPool.bandwidth_limit]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L563}
+  /// [google.storagetransfer.v1.AgentPool.display_name]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L556}
+  /// [google.storagetransfer.v1.AgentPool.name]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L553}
+  /// [google.storagetransfer.v1.UpdateAgentPoolRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L348}
   ///
   // clang-format on
   StatusOr<google::storagetransfer::v1::AgentPool> UpdateAgentPool(
@@ -577,8 +577,8 @@ class StorageTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storagetransfer.v1.AgentPool]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L520}
-  /// [google.storagetransfer.v1.UpdateAgentPoolRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L334}
+  /// [google.storagetransfer.v1.AgentPool]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L519}
+  /// [google.storagetransfer.v1.UpdateAgentPoolRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L348}
   ///
   // clang-format on
   StatusOr<google::storagetransfer::v1::AgentPool> UpdateAgentPool(
@@ -603,8 +603,8 @@ class StorageTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storagetransfer.v1.AgentPool]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L520}
-  /// [google.storagetransfer.v1.GetAgentPoolRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L359}
+  /// [google.storagetransfer.v1.AgentPool]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L519}
+  /// [google.storagetransfer.v1.GetAgentPoolRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L373}
   ///
   // clang-format on
   StatusOr<google::storagetransfer::v1::AgentPool> GetAgentPool(
@@ -633,8 +633,8 @@ class StorageTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storagetransfer.v1.AgentPool]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L520}
-  /// [google.storagetransfer.v1.GetAgentPoolRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L359}
+  /// [google.storagetransfer.v1.AgentPool]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L519}
+  /// [google.storagetransfer.v1.GetAgentPoolRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L373}
   ///
   // clang-format on
   StatusOr<google::storagetransfer::v1::AgentPool> GetAgentPool(
@@ -668,8 +668,8 @@ class StorageTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storagetransfer.v1.AgentPool]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L520}
-  /// [google.storagetransfer.v1.ListAgentPoolsRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L371}
+  /// [google.storagetransfer.v1.AgentPool]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L519}
+  /// [google.storagetransfer.v1.ListAgentPoolsRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L385}
   ///
   // clang-format on
   StreamRange<google::storagetransfer::v1::AgentPool> ListAgentPools(
@@ -707,8 +707,8 @@ class StorageTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storagetransfer.v1.AgentPool]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L520}
-  /// [google.storagetransfer.v1.ListAgentPoolsRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L371}
+  /// [google.storagetransfer.v1.AgentPool]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L519}
+  /// [google.storagetransfer.v1.ListAgentPoolsRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L385}
   ///
   // clang-format on
   StreamRange<google::storagetransfer::v1::AgentPool> ListAgentPools(
@@ -731,7 +731,7 @@ class StorageTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storagetransfer.v1.DeleteAgentPoolRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L365}
+  /// [google.storagetransfer.v1.DeleteAgentPoolRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L379}
   ///
   // clang-format on
   Status DeleteAgentPool(std::string const& name, Options opts = {});
@@ -757,7 +757,7 @@ class StorageTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storagetransfer.v1.DeleteAgentPoolRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L365}
+  /// [google.storagetransfer.v1.DeleteAgentPoolRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L379}
   ///
   // clang-format on
   Status DeleteAgentPool(
