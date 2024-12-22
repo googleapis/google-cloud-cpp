@@ -491,7 +491,7 @@ class ServiceHealthClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.servicehealth.v1.GetOrganizationImpactRequest]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L709}
+  /// [google.cloud.servicehealth.v1.GetOrganizationImpactRequest]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L710}
   /// [google.cloud.servicehealth.v1.OrganizationImpact]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L406}
   ///
   // clang-format on
@@ -522,7 +522,7 @@ class ServiceHealthClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.servicehealth.v1.GetOrganizationImpactRequest]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L709}
+  /// [google.cloud.servicehealth.v1.GetOrganizationImpactRequest]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L710}
   /// [google.cloud.servicehealth.v1.OrganizationImpact]: @googleapis_reference_link{google/cloud/servicehealth/v1/event_resources.proto#L406}
   ///
   // clang-format on

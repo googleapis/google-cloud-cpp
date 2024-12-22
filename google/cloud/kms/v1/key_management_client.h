@@ -138,7 +138,7 @@ class KeyManagementServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.kms.v1.KeyRing]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L34}
-  /// [google.cloud.kms.v1.ListKeyRingsRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L409}
+  /// [google.cloud.kms.v1.ListKeyRingsRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L408}
   ///
   // clang-format on
   StreamRange<google::cloud::kms::v1::KeyRing> ListKeyRings(
@@ -177,7 +177,7 @@ class KeyManagementServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.kms.v1.KeyRing]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L34}
-  /// [google.cloud.kms.v1.ListKeyRingsRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L409}
+  /// [google.cloud.kms.v1.ListKeyRingsRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L408}
   ///
   // clang-format on
   StreamRange<google::cloud::kms::v1::KeyRing> ListKeyRings(
@@ -213,7 +213,7 @@ class KeyManagementServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.kms.v1.CryptoKey]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L57}
   /// [google.cloud.kms.v1.KeyRing]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L34}
-  /// [google.cloud.kms.v1.ListCryptoKeysRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L448}
+  /// [google.cloud.kms.v1.ListCryptoKeysRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L447}
   ///
   // clang-format on
   StreamRange<google::cloud::kms::v1::CryptoKey> ListCryptoKeys(
@@ -252,7 +252,7 @@ class KeyManagementServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.kms.v1.CryptoKey]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L57}
-  /// [google.cloud.kms.v1.ListCryptoKeysRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L448}
+  /// [google.cloud.kms.v1.ListCryptoKeysRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L447}
   ///
   // clang-format on
   StreamRange<google::cloud::kms::v1::CryptoKey> ListCryptoKeys(
@@ -289,7 +289,7 @@ class KeyManagementServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.kms.v1.CryptoKey]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L57}
   /// [google.cloud.kms.v1.CryptoKeyVersion]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L301}
-  /// [google.cloud.kms.v1.ListCryptoKeyVersionsRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L489}
+  /// [google.cloud.kms.v1.ListCryptoKeyVersionsRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L488}
   ///
   // clang-format on
   StreamRange<google::cloud::kms::v1::CryptoKeyVersion> ListCryptoKeyVersions(
@@ -328,7 +328,7 @@ class KeyManagementServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.kms.v1.CryptoKeyVersion]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L301}
-  /// [google.cloud.kms.v1.ListCryptoKeyVersionsRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L489}
+  /// [google.cloud.kms.v1.ListCryptoKeyVersionsRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L488}
   ///
   // clang-format on
   StreamRange<google::cloud::kms::v1::CryptoKeyVersion> ListCryptoKeyVersions(
@@ -365,7 +365,7 @@ class KeyManagementServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.kms.v1.ImportJob]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L742}
   /// [google.cloud.kms.v1.KeyRing]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L34}
-  /// [google.cloud.kms.v1.ListImportJobsRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L531}
+  /// [google.cloud.kms.v1.ListImportJobsRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L530}
   ///
   // clang-format on
   StreamRange<google::cloud::kms::v1::ImportJob> ListImportJobs(
@@ -404,7 +404,7 @@ class KeyManagementServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.kms.v1.ImportJob]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L742}
-  /// [google.cloud.kms.v1.ListImportJobsRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L531}
+  /// [google.cloud.kms.v1.ListImportJobsRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L530}
   ///
   // clang-format on
   StreamRange<google::cloud::kms::v1::ImportJob> ListImportJobs(
@@ -429,7 +429,7 @@ class KeyManagementServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.v1.GetKeyRingRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L634}
+  /// [google.cloud.kms.v1.GetKeyRingRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L633}
   /// [google.cloud.kms.v1.KeyRing]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L34}
   /// [google.cloud.kms.v1.KeyRing.name]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L43}
   ///
@@ -460,7 +460,7 @@ class KeyManagementServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.v1.GetKeyRingRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L634}
+  /// [google.cloud.kms.v1.GetKeyRingRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L633}
   /// [google.cloud.kms.v1.KeyRing]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L34}
   ///
   // clang-format on
@@ -493,7 +493,7 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.CryptoKey.name]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L106}
   /// [google.cloud.kms.v1.CryptoKey.primary]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L121}
   /// [google.cloud.kms.v1.CryptoKeyVersion]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L301}
-  /// [google.cloud.kms.v1.GetCryptoKeyRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L647}
+  /// [google.cloud.kms.v1.GetCryptoKeyRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L646}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::CryptoKey> GetCryptoKey(
@@ -527,7 +527,7 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.CryptoKey]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L57}
   /// [google.cloud.kms.v1.CryptoKey.primary]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L121}
   /// [google.cloud.kms.v1.CryptoKeyVersion]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L301}
-  /// [google.cloud.kms.v1.GetCryptoKeyRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L647}
+  /// [google.cloud.kms.v1.GetCryptoKeyRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L646}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::CryptoKey> GetCryptoKey(
@@ -556,7 +556,7 @@ class KeyManagementServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.kms.v1.CryptoKeyVersion]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L301}
   /// [google.cloud.kms.v1.CryptoKeyVersion.name]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L563}
-  /// [google.cloud.kms.v1.GetCryptoKeyVersionRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L660}
+  /// [google.cloud.kms.v1.GetCryptoKeyVersionRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L659}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::CryptoKeyVersion> GetCryptoKeyVersion(
@@ -587,7 +587,7 @@ class KeyManagementServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.kms.v1.CryptoKeyVersion]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L301}
-  /// [google.cloud.kms.v1.GetCryptoKeyVersionRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L660}
+  /// [google.cloud.kms.v1.GetCryptoKeyVersionRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L659}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::CryptoKeyVersion> GetCryptoKeyVersion(
@@ -623,7 +623,7 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.CryptoKey.purpose]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L125}
   /// [google.cloud.kms.v1.CryptoKeyVersion]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L301}
   /// [google.cloud.kms.v1.CryptoKeyVersion.name]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L563}
-  /// [google.cloud.kms.v1.GetPublicKeyRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L673}
+  /// [google.cloud.kms.v1.GetPublicKeyRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L672}
   /// [google.cloud.kms.v1.PublicKey]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L663}
   ///
   // clang-format on
@@ -662,7 +662,7 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.CryptoKey.CryptoKeyPurpose.ASYMMETRIC_SIGN]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L82}
   /// [google.cloud.kms.v1.CryptoKey.purpose]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L125}
   /// [google.cloud.kms.v1.CryptoKeyVersion]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L301}
-  /// [google.cloud.kms.v1.GetPublicKeyRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L673}
+  /// [google.cloud.kms.v1.GetPublicKeyRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L672}
   /// [google.cloud.kms.v1.PublicKey]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L663}
   ///
   // clang-format on
@@ -689,7 +689,7 @@ class KeyManagementServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.v1.GetImportJobRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L686}
+  /// [google.cloud.kms.v1.GetImportJobRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L685}
   /// [google.cloud.kms.v1.ImportJob]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L742}
   /// [google.cloud.kms.v1.ImportJob.name]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L838}
   ///
@@ -720,7 +720,7 @@ class KeyManagementServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.v1.GetImportJobRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L686}
+  /// [google.cloud.kms.v1.GetImportJobRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L685}
   /// [google.cloud.kms.v1.ImportJob]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L742}
   ///
   // clang-format on
@@ -753,7 +753,7 @@ class KeyManagementServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.v1.CreateKeyRingRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L699}
+  /// [google.cloud.kms.v1.CreateKeyRingRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L698}
   /// [google.cloud.kms.v1.KeyRing]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L34}
   ///
   // clang-format on
@@ -785,7 +785,7 @@ class KeyManagementServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.v1.CreateKeyRingRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L699}
+  /// [google.cloud.kms.v1.CreateKeyRingRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L698}
   /// [google.cloud.kms.v1.KeyRing]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L34}
   ///
   // clang-format on
@@ -821,7 +821,7 @@ class KeyManagementServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.v1.CreateCryptoKeyRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L721}
+  /// [google.cloud.kms.v1.CreateCryptoKeyRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L720}
   /// [google.cloud.kms.v1.CryptoKey]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L57}
   /// [google.cloud.kms.v1.CryptoKey.purpose]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L125}
   /// [google.cloud.kms.v1.CryptoKeyVersionTemplate.algorithm]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L240}
@@ -861,7 +861,7 @@ class KeyManagementServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.v1.CreateCryptoKeyRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L721}
+  /// [google.cloud.kms.v1.CreateCryptoKeyRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L720}
   /// [google.cloud.kms.v1.CryptoKey]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L57}
   /// [google.cloud.kms.v1.CryptoKey.purpose]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L125}
   /// [google.cloud.kms.v1.CryptoKeyVersionTemplate.algorithm]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L240}
@@ -899,7 +899,7 @@ class KeyManagementServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.v1.CreateCryptoKeyVersionRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L752}
+  /// [google.cloud.kms.v1.CreateCryptoKeyVersionRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L751}
   /// [google.cloud.kms.v1.CryptoKey]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L57}
   /// [google.cloud.kms.v1.CryptoKey.name]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L106}
   /// [google.cloud.kms.v1.CryptoKeyVersion]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L301}
@@ -940,7 +940,7 @@ class KeyManagementServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.v1.CreateCryptoKeyVersionRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L752}
+  /// [google.cloud.kms.v1.CreateCryptoKeyVersionRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L751}
   /// [google.cloud.kms.v1.CryptoKey]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L57}
   /// [google.cloud.kms.v1.CryptoKeyVersion]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L301}
   /// [google.cloud.kms.v1.CryptoKeyVersion.CryptoKeyVersionState.ENABLED]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L485}
@@ -983,7 +983,7 @@ class KeyManagementServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.kms.v1.CryptoKey]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L57}
   /// [google.cloud.kms.v1.CryptoKeyVersion]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L301}
-  /// [google.cloud.kms.v1.ImportCryptoKeyVersionRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L771}
+  /// [google.cloud.kms.v1.ImportCryptoKeyVersionRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L770}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::CryptoKeyVersion> ImportCryptoKeyVersion(
@@ -1018,7 +1018,7 @@ class KeyManagementServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.v1.CreateImportJobRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L879}
+  /// [google.cloud.kms.v1.CreateImportJobRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L880}
   /// [google.cloud.kms.v1.ImportJob]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L742}
   /// [google.cloud.kms.v1.ImportJob.import_method]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L842}
   /// [google.cloud.kms.v1.KeyRing]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L34}
@@ -1056,7 +1056,7 @@ class KeyManagementServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.v1.CreateImportJobRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L879}
+  /// [google.cloud.kms.v1.CreateImportJobRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L880}
   /// [google.cloud.kms.v1.ImportJob]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L742}
   /// [google.cloud.kms.v1.ImportJob.import_method]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L842}
   /// [google.cloud.kms.v1.KeyRing]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L34}
@@ -1086,7 +1086,7 @@ class KeyManagementServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.kms.v1.CryptoKey]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L57}
-  /// [google.cloud.kms.v1.UpdateCryptoKeyRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L901}
+  /// [google.cloud.kms.v1.UpdateCryptoKeyRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L902}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::CryptoKey> UpdateCryptoKey(
@@ -1117,7 +1117,7 @@ class KeyManagementServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.kms.v1.CryptoKey]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L57}
-  /// [google.cloud.kms.v1.UpdateCryptoKeyRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L901}
+  /// [google.cloud.kms.v1.UpdateCryptoKeyRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L902}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::CryptoKey> UpdateCryptoKey(
@@ -1159,9 +1159,9 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.CryptoKeyVersion.CryptoKeyVersionState.DISABLED]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L491}
   /// [google.cloud.kms.v1.CryptoKeyVersion.CryptoKeyVersionState.ENABLED]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L485}
   /// [google.cloud.kms.v1.CryptoKeyVersion.state]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L567}
-  /// [google.cloud.kms.v1.KeyManagementService.DestroyCryptoKeyVersion]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L269}
-  /// [google.cloud.kms.v1.KeyManagementService.RestoreCryptoKeyVersion]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L287}
-  /// [google.cloud.kms.v1.UpdateCryptoKeyVersionRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L912}
+  /// [google.cloud.kms.v1.KeyManagementService.DestroyCryptoKeyVersion]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L268}
+  /// [google.cloud.kms.v1.KeyManagementService.RestoreCryptoKeyVersion]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L286}
+  /// [google.cloud.kms.v1.UpdateCryptoKeyVersionRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L913}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::CryptoKeyVersion> UpdateCryptoKeyVersion(
@@ -1206,9 +1206,9 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.CryptoKeyVersion.CryptoKeyVersionState.DISABLED]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L491}
   /// [google.cloud.kms.v1.CryptoKeyVersion.CryptoKeyVersionState.ENABLED]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L485}
   /// [google.cloud.kms.v1.CryptoKeyVersion.state]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L567}
-  /// [google.cloud.kms.v1.KeyManagementService.DestroyCryptoKeyVersion]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L269}
-  /// [google.cloud.kms.v1.KeyManagementService.RestoreCryptoKeyVersion]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L287}
-  /// [google.cloud.kms.v1.UpdateCryptoKeyVersionRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L912}
+  /// [google.cloud.kms.v1.KeyManagementService.DestroyCryptoKeyVersion]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L268}
+  /// [google.cloud.kms.v1.KeyManagementService.RestoreCryptoKeyVersion]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L286}
+  /// [google.cloud.kms.v1.UpdateCryptoKeyVersionRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L913}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::CryptoKeyVersion> UpdateCryptoKeyVersion(
@@ -1244,8 +1244,8 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.CryptoKey]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L57}
   /// [google.cloud.kms.v1.CryptoKey.CryptoKeyPurpose.ENCRYPT_DECRYPT]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L75}
   /// [google.cloud.kms.v1.CryptoKeyVersion]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L301}
-  /// [google.cloud.kms.v1.KeyManagementService.Encrypt]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L300}
-  /// [google.cloud.kms.v1.UpdateCryptoKeyPrimaryVersionRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L925}
+  /// [google.cloud.kms.v1.KeyManagementService.Encrypt]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L299}
+  /// [google.cloud.kms.v1.UpdateCryptoKeyPrimaryVersionRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L926}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::CryptoKey> UpdateCryptoKeyPrimaryVersion(
@@ -1282,8 +1282,8 @@ class KeyManagementServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.kms.v1.CryptoKey]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L57}
   /// [google.cloud.kms.v1.CryptoKey.CryptoKeyPurpose.ENCRYPT_DECRYPT]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L75}
-  /// [google.cloud.kms.v1.KeyManagementService.Encrypt]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L300}
-  /// [google.cloud.kms.v1.UpdateCryptoKeyPrimaryVersionRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L925}
+  /// [google.cloud.kms.v1.KeyManagementService.Encrypt]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L299}
+  /// [google.cloud.kms.v1.UpdateCryptoKeyPrimaryVersionRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L926}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::CryptoKey> UpdateCryptoKeyPrimaryVersion(
@@ -1336,8 +1336,8 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.CryptoKeyVersion.CryptoKeyVersionState.DESTROY_SCHEDULED]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L508}
   /// [google.cloud.kms.v1.CryptoKeyVersion.destroy_time]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L606}
   /// [google.cloud.kms.v1.CryptoKeyVersion.state]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L567}
-  /// [google.cloud.kms.v1.DestroyCryptoKeyVersionRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L942}
-  /// [google.cloud.kms.v1.KeyManagementService.RestoreCryptoKeyVersion]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L287}
+  /// [google.cloud.kms.v1.DestroyCryptoKeyVersionRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L943}
+  /// [google.cloud.kms.v1.KeyManagementService.RestoreCryptoKeyVersion]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L286}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::CryptoKeyVersion> DestroyCryptoKeyVersion(
@@ -1392,8 +1392,8 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.CryptoKeyVersion.CryptoKeyVersionState.DESTROY_SCHEDULED]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L508}
   /// [google.cloud.kms.v1.CryptoKeyVersion.destroy_time]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L606}
   /// [google.cloud.kms.v1.CryptoKeyVersion.state]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L567}
-  /// [google.cloud.kms.v1.DestroyCryptoKeyVersionRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L942}
-  /// [google.cloud.kms.v1.KeyManagementService.RestoreCryptoKeyVersion]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L287}
+  /// [google.cloud.kms.v1.DestroyCryptoKeyVersionRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L943}
+  /// [google.cloud.kms.v1.KeyManagementService.RestoreCryptoKeyVersion]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L286}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::CryptoKeyVersion> DestroyCryptoKeyVersion(
@@ -1432,7 +1432,7 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.CryptoKeyVersion.CryptoKeyVersionState.DISABLED]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L491}
   /// [google.cloud.kms.v1.CryptoKeyVersion.destroy_time]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L606}
   /// [google.cloud.kms.v1.CryptoKeyVersion.state]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L567}
-  /// [google.cloud.kms.v1.RestoreCryptoKeyVersionRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L955}
+  /// [google.cloud.kms.v1.RestoreCryptoKeyVersionRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L956}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::CryptoKeyVersion> RestoreCryptoKeyVersion(
@@ -1474,7 +1474,7 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.CryptoKeyVersion.CryptoKeyVersionState.DISABLED]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L491}
   /// [google.cloud.kms.v1.CryptoKeyVersion.destroy_time]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L606}
   /// [google.cloud.kms.v1.CryptoKeyVersion.state]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L567}
-  /// [google.cloud.kms.v1.RestoreCryptoKeyVersionRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L955}
+  /// [google.cloud.kms.v1.RestoreCryptoKeyVersionRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L956}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::CryptoKeyVersion> RestoreCryptoKeyVersion(
@@ -1525,9 +1525,9 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.CryptoKey.purpose]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L125}
   /// [google.cloud.kms.v1.CryptoKeyVersion]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L301}
   /// [google.cloud.kms.v1.CryptoKeyVersionTemplate.protection_level]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L228}
-  /// [google.cloud.kms.v1.EncryptRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L968}
-  /// [google.cloud.kms.v1.EncryptResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1539}
-  /// [google.cloud.kms.v1.KeyManagementService.Decrypt]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L312}
+  /// [google.cloud.kms.v1.EncryptRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L969}
+  /// [google.cloud.kms.v1.EncryptResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1541}
+  /// [google.cloud.kms.v1.KeyManagementService.Decrypt]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L311}
   /// [google.cloud.kms.v1.ProtectionLevel.EXTERNAL]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L945}
   /// [google.cloud.kms.v1.ProtectionLevel.EXTERNAL_VPC]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L948}
   /// [google.cloud.kms.v1.ProtectionLevel.HSM]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L942}
@@ -1565,9 +1565,9 @@ class KeyManagementServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.kms.v1.CryptoKey.CryptoKeyPurpose.ENCRYPT_DECRYPT]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L75}
   /// [google.cloud.kms.v1.CryptoKey.purpose]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L125}
-  /// [google.cloud.kms.v1.EncryptRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L968}
-  /// [google.cloud.kms.v1.EncryptResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1539}
-  /// [google.cloud.kms.v1.KeyManagementService.Decrypt]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L312}
+  /// [google.cloud.kms.v1.EncryptRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L969}
+  /// [google.cloud.kms.v1.EncryptResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1541}
+  /// [google.cloud.kms.v1.KeyManagementService.Decrypt]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L311}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::EncryptResponse> Encrypt(
@@ -1601,10 +1601,10 @@ class KeyManagementServiceClient {
   /// [google.cloud.kms.v1.CryptoKey]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L57}
   /// [google.cloud.kms.v1.CryptoKey.CryptoKeyPurpose.ENCRYPT_DECRYPT]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L75}
   /// [google.cloud.kms.v1.CryptoKey.purpose]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L125}
-  /// [google.cloud.kms.v1.DecryptRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1057}
-  /// [google.cloud.kms.v1.DecryptResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1604}
-  /// [google.cloud.kms.v1.EncryptResponse.ciphertext]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1547}
-  /// [google.cloud.kms.v1.KeyManagementService.Encrypt]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L300}
+  /// [google.cloud.kms.v1.DecryptRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1058}
+  /// [google.cloud.kms.v1.DecryptResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1606}
+  /// [google.cloud.kms.v1.EncryptResponse.ciphertext]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1549}
+  /// [google.cloud.kms.v1.KeyManagementService.Encrypt]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L299}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::DecryptResponse> Decrypt(
@@ -1639,9 +1639,9 @@ class KeyManagementServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.kms.v1.CryptoKey.CryptoKeyPurpose.ENCRYPT_DECRYPT]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L75}
   /// [google.cloud.kms.v1.CryptoKey.purpose]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L125}
-  /// [google.cloud.kms.v1.DecryptRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1057}
-  /// [google.cloud.kms.v1.DecryptResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1604}
-  /// [google.cloud.kms.v1.KeyManagementService.Encrypt]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L300}
+  /// [google.cloud.kms.v1.DecryptRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1058}
+  /// [google.cloud.kms.v1.DecryptResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1606}
+  /// [google.cloud.kms.v1.KeyManagementService.Encrypt]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L299}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::DecryptResponse> Decrypt(
@@ -1677,10 +1677,10 @@ class KeyManagementServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.kms.v1.CryptoKey.CryptoKeyPurpose.RAW_ENCRYPT_DECRYPT]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L96}
   /// [google.cloud.kms.v1.CryptoKey.purpose]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L125}
-  /// [google.cloud.kms.v1.KeyManagementService.Decrypt]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L312}
-  /// [google.cloud.kms.v1.KeyManagementService.Encrypt]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L300}
-  /// [google.cloud.kms.v1.RawEncryptRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1124}
-  /// [google.cloud.kms.v1.RawEncryptResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1639}
+  /// [google.cloud.kms.v1.KeyManagementService.Decrypt]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L311}
+  /// [google.cloud.kms.v1.KeyManagementService.Encrypt]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L299}
+  /// [google.cloud.kms.v1.RawEncryptRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1125}
+  /// [google.cloud.kms.v1.RawEncryptResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1641}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::RawEncryptResponse> RawEncrypt(
@@ -1715,8 +1715,8 @@ class KeyManagementServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.kms.v1.CryptoKey.CryptoKeyPurpose.RAW_ENCRYPT_DECRYPT]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L96}
   /// [google.cloud.kms.v1.CryptoKey.purpose]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L125}
-  /// [google.cloud.kms.v1.RawDecryptRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1224}
-  /// [google.cloud.kms.v1.RawDecryptResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1738}
+  /// [google.cloud.kms.v1.RawDecryptRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1225}
+  /// [google.cloud.kms.v1.RawDecryptResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1740}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::RawDecryptResponse> RawDecrypt(
@@ -1754,13 +1754,13 @@ class KeyManagementServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.v1.AsymmetricSignRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1307}
-  /// [google.cloud.kms.v1.AsymmetricSignRequest.data]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1353}
-  /// [google.cloud.kms.v1.AsymmetricSignResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1812}
+  /// [google.cloud.kms.v1.AsymmetricSignRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1308}
+  /// [google.cloud.kms.v1.AsymmetricSignRequest.data]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1354}
+  /// [google.cloud.kms.v1.AsymmetricSignResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1814}
   /// [google.cloud.kms.v1.CryptoKey.purpose]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L125}
   /// [google.cloud.kms.v1.CryptoKeyVersion]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L301}
   /// [google.cloud.kms.v1.CryptoKeyVersion.algorithm]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L579}
-  /// [google.cloud.kms.v1.KeyManagementService.GetPublicKey]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L120}
+  /// [google.cloud.kms.v1.KeyManagementService.GetPublicKey]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L119}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::AsymmetricSignResponse> AsymmetricSign(
@@ -1794,11 +1794,11 @@ class KeyManagementServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.v1.AsymmetricSignRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1307}
-  /// [google.cloud.kms.v1.AsymmetricSignResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1812}
+  /// [google.cloud.kms.v1.AsymmetricSignRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1308}
+  /// [google.cloud.kms.v1.AsymmetricSignResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1814}
   /// [google.cloud.kms.v1.CryptoKey.purpose]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L125}
   /// [google.cloud.kms.v1.CryptoKeyVersion]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L301}
-  /// [google.cloud.kms.v1.KeyManagementService.GetPublicKey]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L120}
+  /// [google.cloud.kms.v1.KeyManagementService.GetPublicKey]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L119}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::AsymmetricSignResponse> AsymmetricSign(
@@ -1832,11 +1832,11 @@ class KeyManagementServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.v1.AsymmetricDecryptRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1380}
-  /// [google.cloud.kms.v1.AsymmetricDecryptResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1875}
+  /// [google.cloud.kms.v1.AsymmetricDecryptRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1381}
+  /// [google.cloud.kms.v1.AsymmetricDecryptResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1877}
   /// [google.cloud.kms.v1.CryptoKey.purpose]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L125}
   /// [google.cloud.kms.v1.CryptoKeyVersion]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L301}
-  /// [google.cloud.kms.v1.KeyManagementService.GetPublicKey]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L120}
+  /// [google.cloud.kms.v1.KeyManagementService.GetPublicKey]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L119}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::AsymmetricDecryptResponse> AsymmetricDecrypt(
@@ -1870,11 +1870,11 @@ class KeyManagementServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.v1.AsymmetricDecryptRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1380}
-  /// [google.cloud.kms.v1.AsymmetricDecryptResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1875}
+  /// [google.cloud.kms.v1.AsymmetricDecryptRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1381}
+  /// [google.cloud.kms.v1.AsymmetricDecryptResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1877}
   /// [google.cloud.kms.v1.CryptoKey.purpose]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L125}
   /// [google.cloud.kms.v1.CryptoKeyVersion]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L301}
-  /// [google.cloud.kms.v1.KeyManagementService.GetPublicKey]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L120}
+  /// [google.cloud.kms.v1.KeyManagementService.GetPublicKey]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L119}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::AsymmetricDecryptResponse> AsymmetricDecrypt(
@@ -1907,8 +1907,8 @@ class KeyManagementServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.kms.v1.CryptoKey.purpose]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L125}
   /// [google.cloud.kms.v1.CryptoKeyVersion]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L301}
-  /// [google.cloud.kms.v1.MacSignRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1421}
-  /// [google.cloud.kms.v1.MacSignResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1918}
+  /// [google.cloud.kms.v1.MacSignRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1422}
+  /// [google.cloud.kms.v1.MacSignResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1920}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::MacSignResponse> MacSign(
@@ -1941,8 +1941,8 @@ class KeyManagementServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.kms.v1.CryptoKey.purpose]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L125}
   /// [google.cloud.kms.v1.CryptoKeyVersion]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L301}
-  /// [google.cloud.kms.v1.MacSignRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1421}
-  /// [google.cloud.kms.v1.MacSignResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1918}
+  /// [google.cloud.kms.v1.MacSignRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1422}
+  /// [google.cloud.kms.v1.MacSignResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1920}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::MacSignResponse> MacSign(
@@ -1977,9 +1977,9 @@ class KeyManagementServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.kms.v1.CryptoKey.purpose]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L125}
   /// [google.cloud.kms.v1.CryptoKeyVersion]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L301}
-  /// [google.cloud.kms.v1.MacSignRequest.data]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1434}
-  /// [google.cloud.kms.v1.MacVerifyRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1459}
-  /// [google.cloud.kms.v1.MacVerifyResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1965}
+  /// [google.cloud.kms.v1.MacSignRequest.data]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1435}
+  /// [google.cloud.kms.v1.MacVerifyRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1460}
+  /// [google.cloud.kms.v1.MacVerifyResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1967}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::MacVerifyResponse> MacVerify(
@@ -2014,8 +2014,8 @@ class KeyManagementServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.kms.v1.CryptoKey.purpose]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L125}
   /// [google.cloud.kms.v1.CryptoKeyVersion]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L301}
-  /// [google.cloud.kms.v1.MacVerifyRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1459}
-  /// [google.cloud.kms.v1.MacVerifyResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1965}
+  /// [google.cloud.kms.v1.MacVerifyRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1460}
+  /// [google.cloud.kms.v1.MacVerifyResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1967}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::MacVerifyResponse> MacVerify(
@@ -2048,8 +2048,8 @@ class KeyManagementServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.v1.GenerateRandomBytesRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1521}
-  /// [google.cloud.kms.v1.GenerateRandomBytesResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L2024}
+  /// [google.cloud.kms.v1.GenerateRandomBytesRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1523}
+  /// [google.cloud.kms.v1.GenerateRandomBytesResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L2026}
   /// [google.cloud.kms.v1.ProtectionLevel]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L934}
   /// [google.cloud.kms.v1.ProtectionLevel.HSM]: @googleapis_reference_link{google/cloud/kms/v1/resources.proto#L942}
   ///
@@ -2083,8 +2083,8 @@ class KeyManagementServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.kms.v1.GenerateRandomBytesRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1521}
-  /// [google.cloud.kms.v1.GenerateRandomBytesResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L2024}
+  /// [google.cloud.kms.v1.GenerateRandomBytesRequest]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L1523}
+  /// [google.cloud.kms.v1.GenerateRandomBytesResponse]: @googleapis_reference_link{google/cloud/kms/v1/service.proto#L2026}
   ///
   // clang-format on
   StatusOr<google::cloud::kms::v1::GenerateRandomBytesResponse>
