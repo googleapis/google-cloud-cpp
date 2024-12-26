@@ -36,9 +36,6 @@ if [[ -z "$COMMIT_DATE" ]]; then
   COMMIT_DATE=$(date +%Y-%m-%d)
 fi
 
-COMMIT=f4eff5440fd07389f820d22d2a55690c6390dc6d
-COMMIT_DATE="2024-12-13"
-
 DOWNLOAD="$(mktemp)"
 curl -fsSL "https://github.com/${REPO}/archive/${COMMIT}.tar.gz" -o "${DOWNLOAD}"
 gsutil -q cp "${DOWNLOAD}" "gs://cloud-cpp-community-archive/com_google_googleapis/${COMMIT}.tar.gz"
@@ -54,8 +51,8 @@ until grep -q "/googleapis/archive/${REV_COMMIT}\.tar" bazel/workspace0.bzl; do
 done
 rm -f "${DOWNLOAD}"
 
-#banner "Updating Cache for Bazel"
-#bazel/deps-cache.py -p
+banner "Updating Cache for Bazel"
+bazel/deps-cache.py -p
 
 banner "Updating Bazel/CMake dependencies"
 sed -i -f - bazel/workspace0.bzl <<EOT
