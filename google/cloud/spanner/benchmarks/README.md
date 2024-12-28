@@ -48,6 +48,10 @@ of this README, we assume the reader is familiar with the topic, and refer them
 to the [Authentication Overview][authentication-quickstart] if they need a more
 in-depth discussion.
 
+Examine the [spanner roles][spanner-roles-link] to chose a role for the
+principal used to run these benchmarks. The principa should have (at least) the
+permissions granted by the `roles/spanner.databaseAdmin` role.
+
 ### Running the benchmark
 
 By default the benchmarks run simple smoke tests, the intention is for these
