@@ -34,6 +34,12 @@ accessing any data. If you are not familiar with GCP authentication please take
 this opportunity to review the
 [Authentication Overview][authentication-quickstart].
 
+If you use `GOOGLE_APPLICATION_CREDENTIALS` to configure authentication, **and**
+the file referenced by this environment variable contains the `universe_domain`
+field, that value is used to determine service endpoints. If the
+`universe_domain` field is not present, the library defaults to
+`googleapis.com`.
+
 ## Using with Bazel
 
 > :warning: If you are using Windows or macOS there are additional instructions
