@@ -24,17 +24,19 @@ namespace bigtable {
 namespace emulator {
 namespace {
 
+using namespace std::chrono_literals;
+
 TEST(ColumnFamilyIterator, Simple) {
   ColumnFamily fam;
-  fam.SetCell("row1", "col1", 123, "foo");
-  fam.SetCell("row1", "col1", 124, "fo");
-  fam.SetCell("row1", "col2", 123, "bar");
-  fam.SetCell("row2", "col1", 123, "foo");
-  fam.SetCell("row2", "col3", 120, "baz");
-  fam.SetCell("row2", "col3", 120, "baz");
+  fam.SetCell("row1", "col1", 123ms, "foo");
+  fam.SetCell("row1", "col1", 124ms, "fo");
+  fam.SetCell("row1", "col2", 123ms, "bar");
+  fam.SetCell("row2", "col1", 123ms, "foo");
+  fam.SetCell("row2", "col3", 120ms, "baz");
+  fam.SetCell("row2", "col3", 120ms, "baz");
   std::vector<std::string> rows;
   std::transform(
-      fam.begin(std::shared_ptr<SortedRowSet>(
+      fam.FindRows(std::shared_ptr<SortedRowSet>(
           new SortedRowSet(SortedRowSet::AllRows()))),
       fam.end(),
       std::back_inserter(rows),
@@ -44,6 +46,14 @@ TEST(ColumnFamilyIterator, Simple) {
   std::vector<std::string> expected{"row1", "row2"};
   EXPECT_EQ(expected, rows);
 }
+
+class Foo {
+ public:
+  Foo(std::string const& foo) : foo_(foo) {}
+
+ private:
+  std::reference_wrapper<std::string const> foo_;
+};
 
 }  // anonymous namespace
 }  // namespace emulator

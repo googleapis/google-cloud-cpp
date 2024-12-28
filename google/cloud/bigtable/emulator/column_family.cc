@@ -13,17 +13,18 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/emulator/column_family.h"
+#include <chrono>
 
 namespace google {
 namespace cloud {
 namespace bigtable {
 namespace emulator {
 
-ColumnFamily::iterator::iterator(
+ColumnFamily::const_iterator::const_iterator(
     ColumnFamily const& column_family, std::shared_ptr<SortedRowSet> row_set)
     : column_family_(std::cref(column_family)), row_set_(std::move(row_set)) {
   if (row_set_) {
-    std::cout << "ColumnFamily::iterator::iterator():" << std::endl;
+    std::cout << "ColumnFamily::const_iterator::const_iterator():" << std::endl;
     for (auto const& range : row_set_->disjoint_ranges()) {
       std::cout << "  ";
       if (range.has_start_key_closed()) {
@@ -54,7 +55,7 @@ ColumnFamily::iterator::iterator(
   }
 }
 
-void ColumnFamily::iterator::AdvanceToNextRange() {
+void ColumnFamily::const_iterator::AdvanceToNextRange() {
   if (row_set_pos_ == row_set_->disjoint_ranges().end()) {
     // We've reached the end.
     row_pos_ = column_family_.get().rows_.end();
@@ -80,7 +81,7 @@ void ColumnFamily::iterator::AdvanceToNextRange() {
   }
 }
 
-void ColumnFamily::iterator::EnsureIteratorValid() {
+void ColumnFamily::const_iterator::EnsureIteratorValid() {
   // `row_pos_` may point to a row which is past the end of the range pointed by
   // row_set_pos_. Make sure this only happens when the iteration reaches its
   // end.
@@ -96,8 +97,8 @@ void ColumnFamily::iterator::EnsureIteratorValid() {
   // following ranges, i.e. we've reached the end.
 }
 
-ColumnFamily::iterator& ColumnFamily::iterator::operator++() {
-  std::cout << "ColumnFamily::iterator::operator++ this="
+ColumnFamily::const_iterator& ColumnFamily::const_iterator::operator++() {
+  std::cout << "ColumnFamily::const_iterator::operator++ this="
             << reinterpret_cast<void*>(this) << " val before: "
             << (row_pos_ == column_family_.get().rows_.end()
                     ? std::string("end")
@@ -108,30 +109,32 @@ ColumnFamily::iterator& ColumnFamily::iterator::operator++() {
   return *this;
 }
 
-ColumnFamily::iterator ColumnFamily::iterator::operator++(int) {
-  ColumnFamily::iterator retval = *this;
+ColumnFamily::const_iterator ColumnFamily::const_iterator::operator++(int) {
+  ColumnFamily::const_iterator retval = *this;
   ++(*this);
   return retval;
 }
 
-void ColumnRow::SetCell(std::int64_t timestamp_micros, std::string const& value) {
-  if (timestamp_micros < 0) {
-    // Time since epoch expressed in microseconds but rounded to milliseconds.
-    timestamp_micros = std::chrono::duration_cast<std::chrono::milliseconds>(
-                    std::chrono::system_clock::now().time_since_epoch())
-                    .count() *
-                1000LL;
+void ColumnRow::SetCell(std::chrono::milliseconds timestamp,
+                        std::string const& value) {
+  if (timestamp <= std::chrono::milliseconds::zero()) {
+    timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
+        std::chrono::system_clock::now().time_since_epoch());
   }
-  cells_[timestamp_micros] = std::move(value);
+  cells_[timestamp] = std::move(value);
 }
 
 std::size_t ColumnRow::DeleteTimeRange(
     ::google::bigtable::v2::TimestampRange const& time_range) {
   std::size_t num_erased = 0;
-  for (auto cell_it = cells_.lower_bound(time_range.start_timestamp_micros());
+  for (auto cell_it = cells_.lower_bound(
+           std::chrono::duration_cast<std::chrono::milliseconds>(
+               std::chrono::microseconds(time_range.start_timestamp_micros())));
        cell_it != cells_.end() &&
        (time_range.end_timestamp_micros() == 0 ||
-        cell_it->first < time_range.end_timestamp_micros());) {
+        cell_it->first < std::chrono::duration_cast<std::chrono::milliseconds>(
+                             std::chrono::microseconds(
+                                 time_range.end_timestamp_micros())));) {
     cells_.erase(cell_it++);
     ++num_erased;
   }
@@ -139,9 +142,9 @@ std::size_t ColumnRow::DeleteTimeRange(
 }
 
 void ColumnFamilyRow::SetCell(std::string const& column_qualifier,
-                              std::int64_t timestamp_micros,
+                              std::chrono::milliseconds timestamp,
                               std::string const& value) {
-  columns_[column_qualifier].SetCell(timestamp_micros, value);
+  columns_[column_qualifier].SetCell(timestamp, value);
 }
 
 std::size_t ColumnFamilyRow::DeleteColumn(
@@ -159,9 +162,9 @@ std::size_t ColumnFamilyRow::DeleteColumn(
 
 void ColumnFamily::SetCell(std::string const& row_key,
                            std::string const& column_qualifier,
-                           std::int64_t timestamp_micros,
+                           std::chrono::milliseconds timestamp,
                            std::string const& value) {
-  rows_[row_key].SetCell(column_qualifier, timestamp_micros, value);
+  rows_[row_key].SetCell(column_qualifier, timestamp, value);
 }
 
 bool ColumnFamily::DeleteRow(std::string const& row_key) {

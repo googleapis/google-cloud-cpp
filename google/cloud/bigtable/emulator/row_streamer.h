@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EMULATOR_ROW_STREAMER_H
 
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
+#include "google/cloud/bigtable/emulator/cell_view.h"
 #include <grpcpp/server.h>
 #include "absl/types/optional.h"
 
@@ -28,9 +29,7 @@ class RowStreamer {
  public:
   RowStreamer(
       grpc::ServerWriter<google::bigtable::v2::ReadRowsResponse>& writer);
-  bool Stream(
-      std::tuple<std::string const&, std::string const&, std::string const&,
-                 std::int64_t, std::string const&> const&);
+  bool Stream(CellView const& cell_view);
 
   bool Flush(bool stream_finished);
 

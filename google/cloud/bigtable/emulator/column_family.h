@@ -28,30 +28,31 @@ namespace emulator {
 
 class ColumnRow {
  public:
-  void SetCell(std::int64_t timestamp_micros, std::string const& value);
+  void SetCell(std::chrono::milliseconds timestamp, std::string const& value);
   std::size_t DeleteTimeRange(
       ::google::bigtable::v2::TimestampRange const& time_range);
 
   bool HasCells() const { return !cells_.empty(); }
-  using iterator = std::map<std::int64_t, std::string>::const_iterator;
-  iterator begin() const { return cells_.begin(); }
-  iterator end() const { return cells_.end(); }
+  using const_iterator =
+      std::map<std::chrono::milliseconds, std::string>::const_iterator;
+  const_iterator begin() const { return cells_.begin(); }
+  const_iterator end() const { return cells_.end(); }
 
  private:
-  std::map<std::int64_t, std::string> cells_;
+  std::map<std::chrono::milliseconds, std::string> cells_;
 };
   
 class ColumnFamilyRow {
  public:
   void SetCell(std::string const& column_qualifier,
-               std::int64_t timestamp_micros, std::string const& value);
+               std::chrono::milliseconds timestamp, std::string const& value);
   std::size_t DeleteColumn(
       std::string const& column_qualifier,
       ::google::bigtable::v2::TimestampRange const& time_range);
   bool HasColumns() { return !columns_.empty(); }
-  using iterator = std::map<std::string, ColumnRow>::const_iterator;
-  iterator begin() const { return columns_.begin(); }
-  iterator end() const { return columns_.end(); }
+  using const_iterator = std::map<std::string, ColumnRow>::const_iterator;
+  const_iterator begin() const { return columns_.begin(); }
+  const_iterator end() const { return columns_.end(); }
 
  private:
   std::map<std::string, ColumnRow> columns_;
@@ -59,46 +60,44 @@ class ColumnFamilyRow {
 
 class ColumnFamily {
  public:
-  class iterator;
+  class const_iterator;
 
   void SetCell(std::string const& row_key, std::string const& column_qualifier,
-               std::int64_t timestamp_micros, std::string const& value);
+               std::chrono::milliseconds timestamp, std::string const& value);
   bool DeleteRow(std::string const& row_key);
   std::size_t DeleteColumn(
       std::string const& row_key, std::string const& column_qualifier,
       ::google::bigtable::v2::TimestampRange const& time_range);
 
-  iterator begin(std::shared_ptr<SortedRowSet> row_set) const {
-    return iterator(*this, std::move(row_set));
+  const_iterator FindRows(std::shared_ptr<SortedRowSet> row_set) const {
+    return const_iterator(*this, std::move(row_set));
   }
-  iterator end() const { return iterator(*this, {}); }
+  const_iterator end() const { return const_iterator(*this, {}); }
 
-  class iterator {
+  class const_iterator {
    public:
     using iterator_category = std::input_iterator_tag;
-    using value_type = std::pair<std::string const, ColumnFamilyRow>;
-    using difference_type = std::size_t;
+    using value_type = std::pair<std::string const, ColumnFamilyRow> const;
+    using difference_type = std::ptrdiff_t;
     using reference = value_type&;
     using pointer = value_type*;
-    using const_reference = value_type const&;
-    using const_pointer = value_type const*;
 
-    iterator& operator++();
-    iterator operator++(int);
-    bool operator==(iterator const& other) const {
+    const_iterator& operator++();
+    const_iterator operator++(int);
+    bool operator==(const_iterator const& other) const {
       return row_pos_ == other.row_pos_;
     }
 
-    bool operator!=(iterator const& other) const {
+    bool operator!=(const_iterator const& other) const {
       return !(*this == other);
     }
 
-    const_reference operator*() const { return *row_pos_; }
+    reference operator*() const { return *row_pos_; }
 
-    friend iterator ColumnFamily::begin(std::shared_ptr<SortedRowSet>) const;
-    friend iterator ColumnFamily::end() const;
+    friend const_iterator ColumnFamily::FindRows(std::shared_ptr<SortedRowSet>) const;
+    friend const_iterator ColumnFamily::end() const;
    private:
-    iterator(ColumnFamily const& column_family,
+    const_iterator(ColumnFamily const& column_family,
                            std::shared_ptr<SortedRowSet> row_set);
 
     void AdvanceToNextRange();
@@ -112,7 +111,7 @@ class ColumnFamily {
   };
 
  private:
-  friend class iterator;
+  friend class const_iterator;
   std::map<std::string, ColumnFamilyRow> rows_;
 };
 

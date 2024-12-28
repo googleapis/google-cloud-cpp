@@ -31,11 +31,6 @@ namespace cloud {
 namespace bigtable {
 namespace emulator {
 
-struct CellView {
-  std::int64_t timestamp;
-  std::string const& value;
-};
-
 class Table {
  public:
   static StatusOr<std::shared_ptr<Table>> Create(

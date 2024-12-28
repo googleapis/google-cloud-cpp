@@ -234,7 +234,9 @@ Status Table::MutateRow(
       }
       maybe_column_family->get().SetCell(
           request.row_key(), set_cell.column_qualifier(),
-          set_cell.timestamp_micros(), set_cell.value());
+          std::chrono::duration_cast<std::chrono::milliseconds>(
+              std::chrono::microseconds(set_cell.timestamp_micros())),
+          set_cell.value());
     } else if (mutation.has_add_to_cell()) {
       // FIXME
     } else if (mutation.has_merge_to_cell()) {
@@ -284,14 +286,9 @@ class ExtendWithColumnFamilyName {
 
   explicit ExtendWithColumnFamilyName(std::string const& column_family_name)
       : column_family_name_(std::cref(column_family_name)) {}
-  ExtendWithColumnFamilyName(ExtendWithColumnFamilyName const&) = default;
-  ExtendWithColumnFamilyName(ExtendWithColumnFamilyName&&) = default;
-  ExtendWithColumnFamilyName& operator=(ExtendWithColumnFamilyName const&) =
-      default;
-  ExtendWithColumnFamilyName& operator=(ExtendWithColumnFamilyName&) = default;
 
   ExtendedType operator()(
-      std::iterator_traits<ColumnFamily::iterator>::value_type const&
+      std::iterator_traits<ColumnFamily::const_iterator>::reference
           row_key_and_column) const {
     return ExtendedType(row_key_and_column.first, column_family_name_.get(),
                             row_key_and_column.second);
@@ -303,9 +300,9 @@ class ExtendWithColumnFamilyName {
 
 struct RowKeyLess {
   bool operator()(
-      TransformIterator<ColumnFamily::iterator,
+      TransformIterator<ColumnFamily::const_iterator,
                         ExtendWithColumnFamilyName>::value_type const& lhs,
-      TransformIterator<ColumnFamily::iterator,
+      TransformIterator<ColumnFamily::const_iterator,
                         ExtendWithColumnFamilyName>::value_type const& rhs)
       const {
     auto row_key_cmp =
@@ -333,7 +330,7 @@ struct CombineColumnIterators {
   ReturnType operator()(
       std::tuple<std::string const&, std::string const&,
                  ColumnFamilyRow const&> const& column_family_row,
-      std::pair<std::string const, ColumnRow> const& column_row) {
+      std::pair<std::string const, ColumnRow> const& column_row) const {
     return ReturnType(std::get<0>(column_family_row),
                       std::get<1>(column_family_row), column_row.first,
                       column_row.second);
@@ -349,14 +346,13 @@ struct DescendToCell {
 };
 
 struct CombineCellIterators {
-  using ReturnType =
-      std::tuple<std::string const&, std::string const&, std::string const&,
-                 std::int64_t, std::string const&> const;
-  ReturnType operator()(
-      CombineColumnIterators::ReturnType const &column_row,
-      std::pair<std::int64_t const, std::string> const& cell) {
-    static_assert(std::is_same<std::pair<std::int64_t const, std::string>,
-                               ColumnRow::iterator::value_type>::value);
+  using ReturnType = CellView;
+  ReturnType operator()(CombineColumnIterators::ReturnType const& column_row,
+                        std::pair<std::chrono::milliseconds const,
+                                  std::string> const& cell) const {
+    static_assert(
+        std::is_same<std::pair<std::chrono::milliseconds const, std::string>,
+                     ColumnRow::const_iterator::value_type>::value);
     return ReturnType(std::get<0>(column_row),
                       std::get<1>(column_row),
                       std::get<2>(column_row),
@@ -379,17 +375,17 @@ Status Table::ReadRows(google::bigtable::v2::ReadRowsRequest const& request,
   }
   std::lock_guard lock(mu_);
   std::vector<std::pair<
-      TransformIterator<ColumnFamily::iterator, ExtendWithColumnFamilyName>,
-      TransformIterator<ColumnFamily::iterator, ExtendWithColumnFamilyName>>>
+      TransformIterator<ColumnFamily::const_iterator, ExtendWithColumnFamilyName>,
+      TransformIterator<ColumnFamily::const_iterator, ExtendWithColumnFamilyName>>>
       cf_ranges;
   for (auto const &column_family : column_families_) {
     cf_ranges.emplace_back(
         TransformIteratorRange(
-            column_family.second->begin(row_set), column_family.second->end(),
+            column_family.second->FindRows(row_set), column_family.second->end(),
             ExtendWithColumnFamilyName(column_family.first)));
   }
   using CFRowsIt = MergedSortedIterator<
-      TransformIterator<ColumnFamily::iterator, ExtendWithColumnFamilyName>,
+      TransformIterator<ColumnFamily::const_iterator, ExtendWithColumnFamilyName>,
       RowKeyLess>;
   CFRowsIt cfrows_begin(std::move(cf_ranges));
   CFRowsIt cfrows_end;
@@ -406,11 +402,11 @@ Status Table::ReadRows(google::bigtable::v2::ReadRowsRequest const& request,
   std::cout << "Print start" << std::endl;
 
   for (; cellrows_begin != cellrows_end; ++cellrows_begin) {
-    std::cout << "Row: " << std::get<0>(*cellrows_begin)
-              << " column_family: " << std::get<1>(*cellrows_begin)
-              << " column_qualifier: " << std::get<2>(*cellrows_begin)
-              << " column_timestamp: " << std::get<3>(*cellrows_begin)
-              << " column_value: " << std::get<4>(*cellrows_begin)
+    std::cout << "Row: " << (*cellrows_begin).row_key()
+              << " column_family: " << (*cellrows_begin).column_family()
+              << " column_qualifier: " << (*cellrows_begin).column_qualifier()
+              << " column_timestamp: " << (*cellrows_begin).timestamp().count()
+              << " column_value: " << (*cellrows_begin).value()
               << std::endl;
     if (!row_streamer.Stream(*cellrows_begin)) {
       std::cout << "HOW?" << std::endl;
