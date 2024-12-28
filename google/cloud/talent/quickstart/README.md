@@ -34,7 +34,6 @@ require that your application authenticates with the service before accessing
 any data. If you are not familiar with GCP authentication please take this
 opportunity to review the [Authentication Overview][authentication-quickstart].
 
-
 ## Using with Bazel
 
 > :warning: If you are using Windows or macOS there are additional instructions
