@@ -256,18 +256,6 @@ class TransformIterator {
   mutable absl::optional<std::decay_t<value_type>> cached_value_;
 };
 
-// Helper function to create a TransformIterator
-template <typename InputIterator, typename Functor>
-std::pair<TransformIterator<InputIterator, Functor>,
-          TransformIterator<InputIterator, Functor>>
-TransformIteratorRange(InputIterator begin, InputIterator end, Functor func) {
-  Functor func_copy(func);  // avoid two copies
-  return std::make_pair(TransformIterator<InputIterator, Functor>(
-                            std::move(begin), std::move(func)),
-                        TransformIterator<InputIterator, Functor>(
-                            std::move(end), std::move(func_copy)));
-}
-
 }  // namespace emulator
 }  // namespace bigtable
 }  // namespace cloud

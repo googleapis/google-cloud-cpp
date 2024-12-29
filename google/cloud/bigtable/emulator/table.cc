@@ -14,6 +14,7 @@
 
 #include <chrono>
 #include "google/cloud/bigtable/emulator/table.h"
+#include "google/cloud/bigtable/emulator/filter.h"
 #include "google/cloud/bigtable/emulator/row_iterators.h"
 #include "google/protobuf/util/field_mask_util.h"
 #include "google/cloud/internal/make_status.h"
@@ -361,32 +362,22 @@ struct CombineCellIterators {
   }
 };
 
-Status Table::ReadRows(google::bigtable::v2::ReadRowsRequest const& request,
-                       RowStreamer& row_streamer) const {
-  std::shared_ptr<SortedRowSet> row_set;
-  if (request.has_rows()) {
-    auto maybe_row_set = SortedRowSet::Create(request.rows());
-    if (!maybe_row_set) {
-      return maybe_row_set.status();
-    }
-    row_set = std::make_shared<SortedRowSet>(*std::move(maybe_row_set));
-  } else {
-    row_set = std::make_shared<SortedRowSet>(SortedRowSet::AllRows());
-  }
-  std::lock_guard lock(mu_);
-  std::vector<std::pair<
-      TransformIterator<ColumnFamily::const_iterator, ExtendWithColumnFamilyName>,
-      TransformIterator<ColumnFamily::const_iterator, ExtendWithColumnFamilyName>>>
-      cf_ranges;
-  for (auto const &column_family : column_families_) {
-    cf_ranges.emplace_back(
-        TransformIteratorRange(
-            column_family.second->FindRows(row_set), column_family.second->end(),
-            ExtendWithColumnFamilyName(column_family.first)));
-  }
-  using CFRowsIt = MergedSortedIterator<
-      TransformIterator<ColumnFamily::const_iterator, ExtendWithColumnFamilyName>,
-      RowKeyLess>;
+CellStream Table::ReadRowsInternal(
+    std::shared_ptr<SortedRowSet> row_set) const {
+  using CFWithNameIt = TransformIterator<ColumnFamily::const_iterator,
+                                         ExtendWithColumnFamilyName>;
+  std::vector<std::pair<CFWithNameIt, CFWithNameIt>> cf_ranges;
+
+  std::transform(
+      column_families_.begin(), column_families_.end(),
+      std::back_inserter(cf_ranges), [&](auto const& column_family) {
+        ExtendWithColumnFamilyName transformer(column_family.first);
+        return std::make_pair(
+            CFWithNameIt(column_family.second->FindRows(row_set), transformer),
+            CFWithNameIt(column_family.second->end(), transformer));
+      });
+
+  using CFRowsIt = MergedSortedIterator<CFWithNameIt, RowKeyLess>;
   CFRowsIt cfrows_begin(std::move(cf_ranges));
   CFRowsIt cfrows_end;
 
@@ -401,19 +392,50 @@ Status Table::ReadRows(google::bigtable::v2::ReadRowsRequest const& request,
   CellRowsIt cellrows_end(colrows_end, colrows_end);
   std::cout << "Print start" << std::endl;
 
-  for (; cellrows_begin != cellrows_end; ++cellrows_begin) {
-    std::cout << "Row: " << (*cellrows_begin).row_key()
-              << " column_family: " << (*cellrows_begin).column_family()
-              << " column_qualifier: " << (*cellrows_begin).column_qualifier()
-              << " column_timestamp: " << (*cellrows_begin).timestamp().count()
-              << " column_value: " << (*cellrows_begin).value()
+  return CellStream ([cellrows_begin, cellrows_end]() mutable
+                    -> absl::optional<CellView> {
+    if (cellrows_begin == cellrows_end) {
+      return {};
+    }
+    return *cellrows_begin++;
+  });
+}
+
+Status Table::ReadRows(google::bigtable::v2::ReadRowsRequest const& request,
+                       RowStreamer& row_streamer) const {
+  std::shared_ptr<SortedRowSet> row_set;
+  if (request.has_rows()) {
+    auto maybe_row_set = SortedRowSet::Create(request.rows());
+    if (!maybe_row_set) {
+      return maybe_row_set.status();
+    }
+    row_set = std::make_shared<SortedRowSet>(*std::move(maybe_row_set));
+  } else {
+    row_set = std::make_shared<SortedRowSet>(SortedRowSet::AllRows());
+  }
+  std::lock_guard lock(mu_);
+  auto stream = ReadRowsInternal(std::move(row_set));
+  if (request.has_filter()) {
+    auto maybe_stream = CreateFilter(request.filter(), std::move(stream));
+    if (!maybe_stream) {
+      return maybe_stream.status();
+    }
+    stream = *maybe_stream;
+  }
+  for (; stream; ++stream) {
+    std::cout << "Row: " << stream->row_key()
+              << " column_family: " << stream->column_family()
+              << " column_qualifier: " << stream->column_qualifier()
+              << " column_timestamp: " << stream->timestamp().count()
+              << " column_value: " << stream->value()
               << std::endl;
-    if (!row_streamer.Stream(*cellrows_begin)) {
+    if (!row_streamer.Stream(*stream)) {
       std::cout << "HOW?" << std::endl;
       return AbortedError("Stream closed by the client.", GCP_ERROR_INFO());
     }
   }
   if (!row_streamer.Flush(true)) {
+    std::cout << "Flush failed?" << std::endl;
     return AbortedError("Stream closed by the client.", GCP_ERROR_INFO());
   }
   std::cout << "Print stop" << std::endl;

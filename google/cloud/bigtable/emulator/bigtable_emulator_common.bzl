@@ -17,23 +17,27 @@
 """Automatically generated source lists for bigtable_emulator_common - DO NOT EDIT."""
 
 bigtable_emulator_common_hdrs = [
+    "cell_view.h",
     "cluster.h",
     "column_family.h",
-    "table.h",
-    "server.h",
-    "sorted_row_set.h",
+    "filter.h",
     "row_iterators.h",
     "row_streamer.h",
+    "server.h",
+    "sorted_row_set.h",
+    "table.h",
     "to_grpc_status.h",
 ]
 
 bigtable_emulator_common_srcs = [
     "cluster.cc",
     "column_family.cc",
-    "table.cc",
-    "server.cc",
-    "sorted_row_set.cc",
+    "column_family_test.cc",
+    "filter.cc",
     "row_iterators.cc",
     "row_streamer.cc",
+    "server.cc",
+    "sorted_row_set.cc",
+    "table.cc",
     "to_grpc_status.cc",
 ]

@@ -22,6 +22,7 @@
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <google/protobuf/field_mask.pb.h>
 #include <google/protobuf/util/time_util.h>
+#include "google/cloud/bigtable/emulator/filter.h"
 #include "google/cloud/bigtable/emulator/column_family.h"
 #include "google/cloud/bigtable/emulator/row_streamer.h"
 #include <map>
@@ -59,6 +60,7 @@ class Table {
   StatusOr<std::reference_wrapper<ColumnFamily>> FindColumnFamily(
       MESSAGE const& message) const;
   bool IsDeleteProtectedNoLock() const;
+  CellStream ReadRowsInternal(std::shared_ptr<SortedRowSet> row_set) const;
   Status Construct(google::bigtable::admin::v2::Table schema);
 
   mutable std::mutex mu_;

@@ -16,22 +16,28 @@
 
 add_library(
     bigtable_emulator_common # cmake-format: sort
+    cell_view.h
     cluster.cc
     cluster.h
     column_family.cc
     column_family.h
-    table.cc
-    table.h
-    server.cc
-    server.h
-    sorted_row_set.cc
-    sorted_row_set.h
+    column_family_test.cc
+    filter.cc
+    filter.h
     row_iterators.cc
     row_iterators.h
     row_streamer.cc
     row_streamer.h
+    server.cc
+    server.h
+    sorted_row_set.cc
+    sorted_row_set.h
+    table.cc
+    table.h
     to_grpc_status.cc
     to_grpc_status.h)
+
+
 target_link_libraries(
     bigtable_emulator_common
     google-cloud-cpp::bigtable
@@ -51,6 +57,7 @@ if (BUILD_TESTING)
     set(bigtable_emulator_unit_tests
         # cmake-format: sort
         column_family_test.cc
+        filter_test.cc
         row_iterators_test.cc
         server_test.cc
         sorted_row_set_test.cc)
