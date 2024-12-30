@@ -45,19 +45,12 @@ information.
 You need to configure the Cloud Spanner client library so it can authenticate
 with Cloud Spanner. While covering authentication in detail is beyond the scope
 of this README, we assume the reader is familiar with the topic, and refer them
-to the [Authentication Overview][authentication-quickstart] if they need a more
-in-depth discussion.
+to the [Authentication methods at Google][authentication-quickstart] if they
+need a more in-depth discussion.
 
-Save the credentials you want to use to a file. Then set the
-`GOOGLE_APPLICATION_CREDENTIALS` environment variable to the path of this file.
-
-If you are running the benchmarks in a virtual machine, the library can
-automatically use the GCE instance service account (when you do **not** set
-`GOOGLE_APPLICATION_CREDENTIALS`). You may need to grant this service account
-permissions to work with Cloud Spanner. Examine the
-[spanner roles][spanner-roles-link] to chose a role for this account, the
-principal used to run these benchmark should have (at least) the permissions
-granted by the `roles/spanner.databaseAdmin` role.
+Examine the [spanner roles][spanner-roles-link] to chose a role for the
+principal used to run these benchmarks. The principa should have (at least) the
+permissions granted by the `roles/spanner.databaseAdmin` role.
 
 ### Running the benchmark
 
@@ -140,6 +133,6 @@ To run the experiment reading data for approximately 5 minutes use 20 samples of
     --experiment=read | tee srtp-read.csv
 ```
 
-[authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started "Authentication Getting Started"
+[authentication-quickstart]: https://cloud.google.com/docs/authentication "Authentication methods at Google"
 [packaging-doc-link]: /doc/packaging.md
 [spanner-roles-link]: https://cloud.google.com/spanner/docs/iam#roles

@@ -29,24 +29,7 @@ detail.
 Like most Google Cloud Platform (GCP) services, Cloud Document AI API requires
 that your application authenticates with the service before accessing any data.
 If you are not familiar with GCP authentication please take this opportunity to
-review the [Authentication Overview][authentication-quickstart]. This library
-uses the `GOOGLE_APPLICATION_CREDENTIALS` environment variable to find the
-credentials file. For example:
-
-| Shell              | Command                                                                              |
-| :----------------- | ------------------------------------------------------------------------------------ |
-| Bash/zsh/ksh/etc.  | `export GOOGLE_APPLICATION_CREDENTIALS=[PATH]`                                       |
-| sh                 | `GOOGLE_APPLICATION_CREDENTIALS=[PATH];`<br> `export GOOGLE_APPLICATION_CREDENTIALS` |
-| csh/tsch           | `setenv GOOGLE_APPLICATION_CREDENTIALS [PATH]`                                       |
-| Windows Powershell | `$env:GOOGLE_APPLICATION_CREDENTIALS=[PATH]`                                         |
-| Windows cmd.exe    | `set GOOGLE_APPLICATION_CREDENTIALS=[PATH]`                                          |
-
-Setting this environment variable is the recommended way to configure the
-authentication preferences, though if the environment variable is not set, the
-library searches for a credentials file in the same location as the
-[Cloud SDK](https://cloud.google.com/sdk/). For more information about
-*Application Default Credentials*, see
-https://cloud.google.com/docs/authentication/production
+review the [Authentication methods at Google][authentication-quickstart].
 
 ## Using with Bazel
 
@@ -142,7 +125,7 @@ trust store for SSL certificates, you can download and configure this using:
 set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 ```
 
-[authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started "Authentication Getting Started"
+[authentication-quickstart]: https://cloud.google.com/docs/authentication "Authentication methods at Google"
 [bazel-install]: https://docs.bazel.build/versions/main/install.html
 [choco-cmake-link]: https://chocolatey.org/packages/cmake
 [grpc-roots-pem-bug]: https://github.com/grpc/grpc/issues/16571

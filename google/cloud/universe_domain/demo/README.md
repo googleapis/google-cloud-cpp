@@ -32,29 +32,13 @@ These examples uses several different Google Cloud Platform (GCP) services. All
 of which require that your application authenticates with the service before
 accessing any data. If you are not familiar with GCP authentication please take
 this opportunity to review the
-[Authentication Overview][authentication-quickstart]. This library uses the
-`GOOGLE_APPLICATION_CREDENTIALS` environment variable to find the credentials
-file. For example:
+[Authentication methods at Google][authentication-quickstart].
 
-| Shell              | Command                                                                              |
-| :----------------- | ------------------------------------------------------------------------------------ |
-| Bash/zsh/ksh/etc.  | `export GOOGLE_APPLICATION_CREDENTIALS=[PATH]`                                       |
-| sh                 | `GOOGLE_APPLICATION_CREDENTIALS=[PATH];`<br> `export GOOGLE_APPLICATION_CREDENTIALS` |
-| csh/tsch           | `setenv GOOGLE_APPLICATION_CREDENTIALS [PATH]`                                       |
-| Windows Powershell | `$env:GOOGLE_APPLICATION_CREDENTIALS=[PATH]`                                         |
-| Windows cmd.exe    | `set GOOGLE_APPLICATION_CREDENTIALS=[PATH]`                                          |
-
-Setting this environment variable is the recommended way to configure the
-authentication preferences, though if the environment variable is not set, the
-library searches for a credentials file in the same location as the
-[Cloud SDK](https://cloud.google.com/sdk/). For more information about
-*Application Default Credentials*, see
-https://cloud.google.com/docs/authentication/production
-
-If the file found at `GOOGLE_APPLICATION_CREDENTIALS` contains the
-`universe_domain` field, that value is used to determine service endpoints. If
-the `universe_domain` field is not present, the default value of
-`googleapis.com` is used.
+If you use `GOOGLE_APPLICATION_CREDENTIALS` to configure authentication, **and**
+the file referenced by this environment variable contains the `universe_domain`
+field, that value is used to determine service endpoints. If the
+`universe_domain` field is not present, the library defaults to
+`googleapis.com`.
 
 ## Using with Bazel
 
@@ -150,7 +134,7 @@ trust store for SSL certificates, you can download and configure this using:
 set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 ```
 
-[authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started "Authentication Getting Started"
+[authentication-quickstart]: https://cloud.google.com/docs/authentication/ "Authentication methods at Google"
 [bazel-install]: https://docs.bazel.build/versions/main/install.html
 [choco-cmake-link]: https://chocolatey.org/packages/cmake
 [grpc-roots-pem-bug]: https://github.com/grpc/grpc/issues/16571
