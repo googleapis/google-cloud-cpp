@@ -114,6 +114,9 @@ class InstanceAdminClient {
   ///
   /// Lists the supported instance configurations for a given project.
   ///
+  /// Returns both Google-managed configurations and user-managed
+  /// configurations.
+  ///
   /// @param parent  Required. The name of the project for which a list of supported instance
   ///  configurations is requested. Values are of the form
   ///  `projects/<project>`.
@@ -140,7 +143,7 @@ class InstanceAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.spanner.admin.instance.v1.InstanceConfig]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L694}
-  /// [google.spanner.admin.instance.v1.ListInstanceConfigsRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1130}
+  /// [google.spanner.admin.instance.v1.ListInstanceConfigsRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1217}
   ///
   // clang-format on
   StreamRange<google::spanner::admin::instance::v1::InstanceConfig>
@@ -149,6 +152,9 @@ class InstanceAdminClient {
   // clang-format off
   ///
   /// Lists the supported instance configurations for a given project.
+  ///
+  /// Returns both Google-managed configurations and user-managed
+  /// configurations.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -179,7 +185,7 @@ class InstanceAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.spanner.admin.instance.v1.InstanceConfig]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L694}
-  /// [google.spanner.admin.instance.v1.ListInstanceConfigsRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1130}
+  /// [google.spanner.admin.instance.v1.ListInstanceConfigsRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1217}
   ///
   // clang-format on
   StreamRange<google::spanner::admin::instance::v1::InstanceConfig>
@@ -206,7 +212,7 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.GetInstanceConfigRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1166}
+  /// [google.spanner.admin.instance.v1.GetInstanceConfigRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1253}
   /// [google.spanner.admin.instance.v1.InstanceConfig]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L694}
   ///
   // clang-format on
@@ -236,7 +242,7 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.GetInstanceConfigRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1166}
+  /// [google.spanner.admin.instance.v1.GetInstanceConfigRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1253}
   /// [google.spanner.admin.instance.v1.InstanceConfig]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L694}
   ///
   // clang-format on
@@ -249,7 +255,7 @@ class InstanceAdminClient {
   // clang-format off
   ///
   /// Creates an instance configuration and begins preparing it to be used. The
-  /// returned [long-running operation][google.longrunning.Operation]
+  /// returned long-running operation
   /// can be used to track the progress of preparing the new
   /// instance configuration. The instance configuration name is assigned by the
   /// caller. If the named instance configuration already exists,
@@ -276,13 +282,13 @@ class InstanceAdminClient {
   ///   [reconciling][google.spanner.admin.instance.v1.InstanceConfig.reconciling]
   ///   field becomes false. Its state becomes `READY`.
   ///
-  /// The returned [long-running operation][google.longrunning.Operation] will
+  /// The returned long-running operation will
   /// have a name of the format
   /// `<instance_config_name>/operations/<operation_id>` and can be used to track
   /// creation of the instance configuration. The
-  /// [metadata][google.longrunning.Operation.metadata] field type is
+  /// metadata field type is
   /// [CreateInstanceConfigMetadata][google.spanner.admin.instance.v1.CreateInstanceConfigMetadata].
-  /// The [response][google.longrunning.Operation.response] field type is
+  /// The response field type is
   /// [InstanceConfig][google.spanner.admin.instance.v1.InstanceConfig], if
   /// successful.
   ///
@@ -292,10 +298,10 @@ class InstanceAdminClient {
   ///
   /// @param parent  Required. The name of the project in which to create the instance
   ///  configuration. Values are of the form `projects/<project>`.
-  /// @param instance_config  Required. The InstanceConfig proto of the configuration to create.
-  ///  instance_config.name must be
+  /// @param instance_config  Required. The `InstanceConfig` proto of the configuration to create.
+  ///  `instance_config.name` must be
   ///  `<parent>/instanceConfigs/<instance_config_id>`.
-  ///  instance_config.base_config must be a Google managed configuration name,
+  ///  `instance_config.base_config` must be a Google-managed configuration name,
   ///  e.g. `<parent>/instanceConfigs/us-east1`, `<parent>/instanceConfigs/nam3`.
   /// @param instance_config_id  Required. The ID of the instance configuration to create. Valid identifiers
   ///  are of the form `custom-[-a-z0-9]*[a-z0-9]` and must be between 2 and 64
@@ -321,14 +327,11 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
-  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
-  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
-  /// [google.spanner.admin.instance.v1.CreateInstanceConfigMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1535}
-  /// [google.spanner.admin.instance.v1.CreateInstanceConfigRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1179}
-  /// [google.spanner.admin.instance.v1.CreateInstanceConfigRequest.parent]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1182}
+  /// [google.spanner.admin.instance.v1.CreateInstanceConfigMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1656}
+  /// [google.spanner.admin.instance.v1.CreateInstanceConfigRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1266}
+  /// [google.spanner.admin.instance.v1.CreateInstanceConfigRequest.parent]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1269}
   /// [google.spanner.admin.instance.v1.InstanceConfig]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L694}
-  /// [google.spanner.admin.instance.v1.InstanceConfig.reconciling]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L799}
+  /// [google.spanner.admin.instance.v1.InstanceConfig.reconciling]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L853}
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
@@ -358,7 +361,7 @@ class InstanceAdminClient {
   // clang-format off
   ///
   /// Creates an instance configuration and begins preparing it to be used. The
-  /// returned [long-running operation][google.longrunning.Operation]
+  /// returned long-running operation
   /// can be used to track the progress of preparing the new
   /// instance configuration. The instance configuration name is assigned by the
   /// caller. If the named instance configuration already exists,
@@ -385,13 +388,13 @@ class InstanceAdminClient {
   ///   [reconciling][google.spanner.admin.instance.v1.InstanceConfig.reconciling]
   ///   field becomes false. Its state becomes `READY`.
   ///
-  /// The returned [long-running operation][google.longrunning.Operation] will
+  /// The returned long-running operation will
   /// have a name of the format
   /// `<instance_config_name>/operations/<operation_id>` and can be used to track
   /// creation of the instance configuration. The
-  /// [metadata][google.longrunning.Operation.metadata] field type is
+  /// metadata field type is
   /// [CreateInstanceConfigMetadata][google.spanner.admin.instance.v1.CreateInstanceConfigMetadata].
-  /// The [response][google.longrunning.Operation.response] field type is
+  /// The response field type is
   /// [InstanceConfig][google.spanner.admin.instance.v1.InstanceConfig], if
   /// successful.
   ///
@@ -425,14 +428,11 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
-  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
-  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
-  /// [google.spanner.admin.instance.v1.CreateInstanceConfigMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1535}
-  /// [google.spanner.admin.instance.v1.CreateInstanceConfigRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1179}
-  /// [google.spanner.admin.instance.v1.CreateInstanceConfigRequest.parent]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1182}
+  /// [google.spanner.admin.instance.v1.CreateInstanceConfigMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1656}
+  /// [google.spanner.admin.instance.v1.CreateInstanceConfigRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1266}
+  /// [google.spanner.admin.instance.v1.CreateInstanceConfigRequest.parent]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1269}
   /// [google.spanner.admin.instance.v1.InstanceConfig]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L694}
-  /// [google.spanner.admin.instance.v1.InstanceConfig.reconciling]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L799}
+  /// [google.spanner.admin.instance.v1.InstanceConfig.reconciling]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L853}
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
@@ -474,7 +474,7 @@ class InstanceAdminClient {
   // clang-format off
   ///
   /// Updates an instance configuration. The returned
-  /// [long-running operation][google.longrunning.Operation] can be used to track
+  /// long-running operation can be used to track
   /// the progress of updating the instance. If the named instance configuration
   /// does not exist, returns `NOT_FOUND`.
   ///
@@ -505,13 +505,13 @@ class InstanceAdminClient {
   ///   [reconciling][google.spanner.admin.instance.v1.InstanceConfig.reconciling]
   ///   field becomes false.
   ///
-  /// The returned [long-running operation][google.longrunning.Operation] will
+  /// The returned long-running operation will
   /// have a name of the format
   /// `<instance_config_name>/operations/<operation_id>` and can be used to track
   /// the instance configuration modification.  The
-  /// [metadata][google.longrunning.Operation.metadata] field type is
+  /// metadata field type is
   /// [UpdateInstanceConfigMetadata][google.spanner.admin.instance.v1.UpdateInstanceConfigMetadata].
-  /// The [response][google.longrunning.Operation.response] field type is
+  /// The response field type is
   /// [InstanceConfig][google.spanner.admin.instance.v1.InstanceConfig], if
   /// successful.
   ///
@@ -551,16 +551,13 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
-  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
-  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
   /// [google.spanner.admin.instance.v1.InstanceConfig]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L694}
-  /// [google.spanner.admin.instance.v1.InstanceConfig.name]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L730}
-  /// [google.spanner.admin.instance.v1.InstanceConfig.reconciling]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L799}
-  /// [google.spanner.admin.instance.v1.UpdateInstanceConfigMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1550}
-  /// [google.spanner.admin.instance.v1.UpdateInstanceConfigMetadata.cancel_time]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1560}
-  /// [google.spanner.admin.instance.v1.UpdateInstanceConfigRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1209}
-  /// [google.spanner.admin.instance.v1.UpdateInstanceConfigRequest.update_mask]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1225}
+  /// [google.spanner.admin.instance.v1.InstanceConfig.name]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L779}
+  /// [google.spanner.admin.instance.v1.InstanceConfig.reconciling]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L853}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceConfigMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1671}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceConfigMetadata.cancel_time]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1681}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceConfigRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1296}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceConfigRequest.update_mask]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1312}
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
@@ -589,7 +586,7 @@ class InstanceAdminClient {
   // clang-format off
   ///
   /// Updates an instance configuration. The returned
-  /// [long-running operation][google.longrunning.Operation] can be used to track
+  /// long-running operation can be used to track
   /// the progress of updating the instance. If the named instance configuration
   /// does not exist, returns `NOT_FOUND`.
   ///
@@ -620,13 +617,13 @@ class InstanceAdminClient {
   ///   [reconciling][google.spanner.admin.instance.v1.InstanceConfig.reconciling]
   ///   field becomes false.
   ///
-  /// The returned [long-running operation][google.longrunning.Operation] will
+  /// The returned long-running operation will
   /// have a name of the format
   /// `<instance_config_name>/operations/<operation_id>` and can be used to track
   /// the instance configuration modification.  The
-  /// [metadata][google.longrunning.Operation.metadata] field type is
+  /// metadata field type is
   /// [UpdateInstanceConfigMetadata][google.spanner.admin.instance.v1.UpdateInstanceConfigMetadata].
-  /// The [response][google.longrunning.Operation.response] field type is
+  /// The response field type is
   /// [InstanceConfig][google.spanner.admin.instance.v1.InstanceConfig], if
   /// successful.
   ///
@@ -659,15 +656,12 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
-  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
-  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
   /// [google.spanner.admin.instance.v1.InstanceConfig]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L694}
-  /// [google.spanner.admin.instance.v1.InstanceConfig.name]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L730}
-  /// [google.spanner.admin.instance.v1.InstanceConfig.reconciling]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L799}
-  /// [google.spanner.admin.instance.v1.UpdateInstanceConfigMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1550}
-  /// [google.spanner.admin.instance.v1.UpdateInstanceConfigMetadata.cancel_time]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1560}
-  /// [google.spanner.admin.instance.v1.UpdateInstanceConfigRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1209}
+  /// [google.spanner.admin.instance.v1.InstanceConfig.name]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L779}
+  /// [google.spanner.admin.instance.v1.InstanceConfig.reconciling]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L853}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceConfigMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1671}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceConfigMetadata.cancel_time]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1681}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceConfigRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1296}
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
@@ -731,8 +725,8 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.DeleteInstanceConfigRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1235}
-  /// [google.spanner.admin.instance.v1.InstanceConfig.name]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L730}
+  /// [google.spanner.admin.instance.v1.DeleteInstanceConfigRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1322}
+  /// [google.spanner.admin.instance.v1.InstanceConfig.name]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L779}
   ///
   // clang-format on
   Status DeleteInstanceConfig(std::string const& name, Options opts = {});
@@ -765,8 +759,8 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.DeleteInstanceConfigRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1235}
-  /// [google.spanner.admin.instance.v1.InstanceConfig.name]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L730}
+  /// [google.spanner.admin.instance.v1.DeleteInstanceConfigRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1322}
+  /// [google.spanner.admin.instance.v1.InstanceConfig.name]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L779}
   ///
   // clang-format on
   Status DeleteInstanceConfig(
@@ -776,12 +770,12 @@ class InstanceAdminClient {
 
   // clang-format off
   ///
-  /// Lists the user-managed instance configuration [long-running
-  /// operations][google.longrunning.Operation] in the given project. An instance
+  /// Lists the user-managed instance configuration long-running
+  /// operations in the given project. An instance
   /// configuration operation has a name of the form
   /// `projects/<project>/instanceConfigs/<instance_config>/operations/<operation>`.
   /// The long-running operation
-  /// [metadata][google.longrunning.Operation.metadata] field type
+  /// metadata field type
   /// `metadata.type_url` describes the type of the metadata. Operations returned
   /// include those that have completed/failed/canceled within the last 7 days,
   /// and pending operations. Operations returned are ordered by
@@ -813,8 +807,7 @@ class InstanceAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
-  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
-  /// [google.spanner.admin.instance.v1.ListInstanceConfigOperationsRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1262}
+  /// [google.spanner.admin.instance.v1.ListInstanceConfigOperationsRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1349}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListInstanceConfigOperations(
@@ -822,12 +815,12 @@ class InstanceAdminClient {
 
   // clang-format off
   ///
-  /// Lists the user-managed instance configuration [long-running
-  /// operations][google.longrunning.Operation] in the given project. An instance
+  /// Lists the user-managed instance configuration long-running
+  /// operations in the given project. An instance
   /// configuration operation has a name of the form
   /// `projects/<project>/instanceConfigs/<instance_config>/operations/<operation>`.
   /// The long-running operation
-  /// [metadata][google.longrunning.Operation.metadata] field type
+  /// metadata field type
   /// `metadata.type_url` describes the type of the metadata. Operations returned
   /// include those that have completed/failed/canceled within the last 7 days,
   /// and pending operations. Operations returned are ordered by
@@ -863,8 +856,7 @@ class InstanceAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
-  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
-  /// [google.spanner.admin.instance.v1.ListInstanceConfigOperationsRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1262}
+  /// [google.spanner.admin.instance.v1.ListInstanceConfigOperationsRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1349}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListInstanceConfigOperations(
@@ -900,8 +892,8 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.Instance]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L938}
-  /// [google.spanner.admin.instance.v1.ListInstancesRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1388}
+  /// [google.spanner.admin.instance.v1.Instance]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1004}
+  /// [google.spanner.admin.instance.v1.ListInstancesRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1474}
   ///
   // clang-format on
   StreamRange<google::spanner::admin::instance::v1::Instance> ListInstances(
@@ -939,8 +931,8 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.Instance]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L938}
-  /// [google.spanner.admin.instance.v1.ListInstancesRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1388}
+  /// [google.spanner.admin.instance.v1.Instance]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1004}
+  /// [google.spanner.admin.instance.v1.ListInstancesRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1474}
   ///
   // clang-format on
   StreamRange<google::spanner::admin::instance::v1::Instance> ListInstances(
@@ -952,7 +944,9 @@ class InstanceAdminClient {
   /// Lists all instance partitions for the given instance.
   ///
   /// @param parent  Required. The instance whose instance partitions should be listed. Values
-  ///  are of the form `projects/<project>/instances/<instance>`.
+  ///  are of the form `projects/<project>/instances/<instance>`. Use `{instance}
+  ///  = '-'` to list instance partitions for all Instances in a project, e.g.,
+  ///  `projects/myproject/instances/-`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -975,8 +969,8 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.InstancePartition]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1565}
-  /// [google.spanner.admin.instance.v1.ListInstancePartitionsRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1794}
+  /// [google.spanner.admin.instance.v1.InstancePartition]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1686}
+  /// [google.spanner.admin.instance.v1.ListInstancePartitionsRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1919}
   ///
   // clang-format on
   StreamRange<google::spanner::admin::instance::v1::InstancePartition>
@@ -1014,8 +1008,8 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.InstancePartition]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1565}
-  /// [google.spanner.admin.instance.v1.ListInstancePartitionsRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1794}
+  /// [google.spanner.admin.instance.v1.InstancePartition]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1686}
+  /// [google.spanner.admin.instance.v1.ListInstancePartitionsRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1919}
   ///
   // clang-format on
   StreamRange<google::spanner::admin::instance::v1::InstancePartition>
@@ -1043,8 +1037,8 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.GetInstanceRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1347}
-  /// [google.spanner.admin.instance.v1.Instance]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L938}
+  /// [google.spanner.admin.instance.v1.GetInstanceRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1433}
+  /// [google.spanner.admin.instance.v1.Instance]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1004}
   ///
   // clang-format on
   StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
@@ -1073,8 +1067,8 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.GetInstanceRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1347}
-  /// [google.spanner.admin.instance.v1.Instance]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L938}
+  /// [google.spanner.admin.instance.v1.GetInstanceRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1433}
+  /// [google.spanner.admin.instance.v1.Instance]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1004}
   ///
   // clang-format on
   StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
@@ -1084,7 +1078,7 @@ class InstanceAdminClient {
   // clang-format off
   ///
   /// Creates an instance and begins preparing it to begin serving. The
-  /// returned [long-running operation][google.longrunning.Operation]
+  /// returned long-running operation
   /// can be used to track the progress of preparing the new
   /// instance. The instance name is assigned by the caller. If the
   /// named instance already exists, `CreateInstance` returns
@@ -1110,12 +1104,12 @@ class InstanceAdminClient {
   ///   * The instance's allocated resource levels are readable via the API.
   ///   * The instance's state becomes `READY`.
   ///
-  /// The returned [long-running operation][google.longrunning.Operation] will
+  /// The returned long-running operation will
   /// have a name of the format `<instance_name>/operations/<operation_id>` and
   /// can be used to track creation of the instance.  The
-  /// [metadata][google.longrunning.Operation.metadata] field type is
+  /// metadata field type is
   /// [CreateInstanceMetadata][google.spanner.admin.instance.v1.CreateInstanceMetadata].
-  /// The [response][google.longrunning.Operation.response] field type is
+  /// The response field type is
   /// [Instance][google.spanner.admin.instance.v1.Instance], if successful.
   ///
   /// @param parent  Required. The name of the project in which to create the instance. Values
@@ -1145,12 +1139,9 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
-  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
-  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
-  /// [google.spanner.admin.instance.v1.CreateInstanceMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1489}
-  /// [google.spanner.admin.instance.v1.CreateInstanceRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1366}
-  /// [google.spanner.admin.instance.v1.Instance]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L938}
+  /// [google.spanner.admin.instance.v1.CreateInstanceMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1575}
+  /// [google.spanner.admin.instance.v1.CreateInstanceRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1452}
+  /// [google.spanner.admin.instance.v1.Instance]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1004}
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
@@ -1177,7 +1168,7 @@ class InstanceAdminClient {
   // clang-format off
   ///
   /// Creates an instance and begins preparing it to begin serving. The
-  /// returned [long-running operation][google.longrunning.Operation]
+  /// returned long-running operation
   /// can be used to track the progress of preparing the new
   /// instance. The instance name is assigned by the caller. If the
   /// named instance already exists, `CreateInstance` returns
@@ -1203,12 +1194,12 @@ class InstanceAdminClient {
   ///   * The instance's allocated resource levels are readable via the API.
   ///   * The instance's state becomes `READY`.
   ///
-  /// The returned [long-running operation][google.longrunning.Operation] will
+  /// The returned long-running operation will
   /// have a name of the format `<instance_name>/operations/<operation_id>` and
   /// can be used to track creation of the instance.  The
-  /// [metadata][google.longrunning.Operation.metadata] field type is
+  /// metadata field type is
   /// [CreateInstanceMetadata][google.spanner.admin.instance.v1.CreateInstanceMetadata].
-  /// The [response][google.longrunning.Operation.response] field type is
+  /// The response field type is
   /// [Instance][google.spanner.admin.instance.v1.Instance], if successful.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -1237,12 +1228,9 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
-  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
-  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
-  /// [google.spanner.admin.instance.v1.CreateInstanceMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1489}
-  /// [google.spanner.admin.instance.v1.CreateInstanceRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1366}
-  /// [google.spanner.admin.instance.v1.Instance]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L938}
+  /// [google.spanner.admin.instance.v1.CreateInstanceMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1575}
+  /// [google.spanner.admin.instance.v1.CreateInstanceRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1452}
+  /// [google.spanner.admin.instance.v1.Instance]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1004}
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
@@ -1284,8 +1272,7 @@ class InstanceAdminClient {
   // clang-format off
   ///
   /// Updates an instance, and begins allocating or releasing resources
-  /// as requested. The returned [long-running
-  /// operation][google.longrunning.Operation] can be used to track the
+  /// as requested. The returned long-running operation can be used to track the
   /// progress of updating the instance. If the named instance does not
   /// exist, returns `NOT_FOUND`.
   ///
@@ -1313,12 +1300,12 @@ class InstanceAdminClient {
   ///     tables.
   ///   * The instance's new resource levels are readable via the API.
   ///
-  /// The returned [long-running operation][google.longrunning.Operation] will
+  /// The returned long-running operation will
   /// have a name of the format `<instance_name>/operations/<operation_id>` and
   /// can be used to track the instance modification.  The
-  /// [metadata][google.longrunning.Operation.metadata] field type is
+  /// metadata field type is
   /// [UpdateInstanceMetadata][google.spanner.admin.instance.v1.UpdateInstanceMetadata].
-  /// The [response][google.longrunning.Operation.response] field type is
+  /// The response field type is
   /// [Instance][google.spanner.admin.instance.v1.Instance], if successful.
   ///
   /// Authorization requires `spanner.instances.update` permission on
@@ -1353,15 +1340,12 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
-  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
-  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
-  /// [google.spanner.admin.instance.v1.Instance]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L938}
-  /// [google.spanner.admin.instance.v1.Instance.name]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L997}
-  /// [google.spanner.admin.instance.v1.UpdateInstanceMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1512}
-  /// [google.spanner.admin.instance.v1.UpdateInstanceMetadata.cancel_time]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1524}
-  /// [google.spanner.admin.instance.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1458}
-  /// [google.spanner.admin.instance.v1.UpdateInstanceRequest.field_mask]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1470}
+  /// [google.spanner.admin.instance.v1.Instance]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1004}
+  /// [google.spanner.admin.instance.v1.Instance.name]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1084}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1598}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceMetadata.cancel_time]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1610}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1544}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceRequest.field_mask]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1556}
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
@@ -1388,8 +1372,7 @@ class InstanceAdminClient {
   // clang-format off
   ///
   /// Updates an instance, and begins allocating or releasing resources
-  /// as requested. The returned [long-running
-  /// operation][google.longrunning.Operation] can be used to track the
+  /// as requested. The returned long-running operation can be used to track the
   /// progress of updating the instance. If the named instance does not
   /// exist, returns `NOT_FOUND`.
   ///
@@ -1417,12 +1400,12 @@ class InstanceAdminClient {
   ///     tables.
   ///   * The instance's new resource levels are readable via the API.
   ///
-  /// The returned [long-running operation][google.longrunning.Operation] will
+  /// The returned long-running operation will
   /// have a name of the format `<instance_name>/operations/<operation_id>` and
   /// can be used to track the instance modification.  The
-  /// [metadata][google.longrunning.Operation.metadata] field type is
+  /// metadata field type is
   /// [UpdateInstanceMetadata][google.spanner.admin.instance.v1.UpdateInstanceMetadata].
-  /// The [response][google.longrunning.Operation.response] field type is
+  /// The response field type is
   /// [Instance][google.spanner.admin.instance.v1.Instance], if successful.
   ///
   /// Authorization requires `spanner.instances.update` permission on
@@ -1454,14 +1437,11 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
-  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
-  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
-  /// [google.spanner.admin.instance.v1.Instance]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L938}
-  /// [google.spanner.admin.instance.v1.Instance.name]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L997}
-  /// [google.spanner.admin.instance.v1.UpdateInstanceMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1512}
-  /// [google.spanner.admin.instance.v1.UpdateInstanceMetadata.cancel_time]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1524}
-  /// [google.spanner.admin.instance.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1458}
+  /// [google.spanner.admin.instance.v1.Instance]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1004}
+  /// [google.spanner.admin.instance.v1.Instance.name]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1084}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1598}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceMetadata.cancel_time]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1610}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1544}
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
@@ -1527,7 +1507,7 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1476}
+  /// [google.spanner.admin.instance.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1562}
   ///
   // clang-format on
   Status DeleteInstance(std::string const& name, Options opts = {});
@@ -1563,7 +1543,7 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1476}
+  /// [google.spanner.admin.instance.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1562}
   ///
   // clang-format on
   Status DeleteInstance(
@@ -1824,8 +1804,8 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.GetInstancePartitionRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1740}
-  /// [google.spanner.admin.instance.v1.InstancePartition]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1565}
+  /// [google.spanner.admin.instance.v1.GetInstancePartitionRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1865}
+  /// [google.spanner.admin.instance.v1.InstancePartition]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1686}
   ///
   // clang-format on
   StatusOr<google::spanner::admin::instance::v1::InstancePartition>
@@ -1854,8 +1834,8 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.GetInstancePartitionRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1740}
-  /// [google.spanner.admin.instance.v1.InstancePartition]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1565}
+  /// [google.spanner.admin.instance.v1.GetInstancePartitionRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1865}
+  /// [google.spanner.admin.instance.v1.InstancePartition]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1686}
   ///
   // clang-format on
   StatusOr<google::spanner::admin::instance::v1::InstancePartition>
@@ -1867,7 +1847,7 @@ class InstanceAdminClient {
   // clang-format off
   ///
   /// Creates an instance partition and begins preparing it to be used. The
-  /// returned [long-running operation][google.longrunning.Operation]
+  /// returned long-running operation
   /// can be used to track the progress of preparing the new instance partition.
   /// The instance partition name is assigned by the caller. If the named
   /// instance partition already exists, `CreateInstancePartition` returns
@@ -1894,13 +1874,13 @@ class InstanceAdminClient {
   ///     API.
   ///   * The instance partition's state becomes `READY`.
   ///
-  /// The returned [long-running operation][google.longrunning.Operation] will
+  /// The returned long-running operation will
   /// have a name of the format
   /// `<instance_partition_name>/operations/<operation_id>` and can be used to
   /// track creation of the instance partition.  The
-  /// [metadata][google.longrunning.Operation.metadata] field type is
+  /// metadata field type is
   /// [CreateInstancePartitionMetadata][google.spanner.admin.instance.v1.CreateInstancePartitionMetadata].
-  /// The [response][google.longrunning.Operation.response] field type is
+  /// The response field type is
   /// [InstancePartition][google.spanner.admin.instance.v1.InstancePartition], if
   /// successful.
   ///
@@ -1933,12 +1913,9 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
-  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
-  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
-  /// [google.spanner.admin.instance.v1.CreateInstancePartitionMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1675}
-  /// [google.spanner.admin.instance.v1.CreateInstancePartitionRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1695}
-  /// [google.spanner.admin.instance.v1.InstancePartition]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1565}
+  /// [google.spanner.admin.instance.v1.CreateInstancePartitionMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1800}
+  /// [google.spanner.admin.instance.v1.CreateInstancePartitionRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1820}
+  /// [google.spanner.admin.instance.v1.InstancePartition]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1686}
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
@@ -1968,7 +1945,7 @@ class InstanceAdminClient {
   // clang-format off
   ///
   /// Creates an instance partition and begins preparing it to be used. The
-  /// returned [long-running operation][google.longrunning.Operation]
+  /// returned long-running operation
   /// can be used to track the progress of preparing the new instance partition.
   /// The instance partition name is assigned by the caller. If the named
   /// instance partition already exists, `CreateInstancePartition` returns
@@ -1995,13 +1972,13 @@ class InstanceAdminClient {
   ///     API.
   ///   * The instance partition's state becomes `READY`.
   ///
-  /// The returned [long-running operation][google.longrunning.Operation] will
+  /// The returned long-running operation will
   /// have a name of the format
   /// `<instance_partition_name>/operations/<operation_id>` and can be used to
   /// track creation of the instance partition.  The
-  /// [metadata][google.longrunning.Operation.metadata] field type is
+  /// metadata field type is
   /// [CreateInstancePartitionMetadata][google.spanner.admin.instance.v1.CreateInstancePartitionMetadata].
-  /// The [response][google.longrunning.Operation.response] field type is
+  /// The response field type is
   /// [InstancePartition][google.spanner.admin.instance.v1.InstancePartition], if
   /// successful.
   ///
@@ -2031,12 +2008,9 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
-  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
-  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
-  /// [google.spanner.admin.instance.v1.CreateInstancePartitionMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1675}
-  /// [google.spanner.admin.instance.v1.CreateInstancePartitionRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1695}
-  /// [google.spanner.admin.instance.v1.InstancePartition]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1565}
+  /// [google.spanner.admin.instance.v1.CreateInstancePartitionMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1800}
+  /// [google.spanner.admin.instance.v1.CreateInstancePartitionRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1820}
+  /// [google.spanner.admin.instance.v1.InstancePartition]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1686}
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
@@ -2098,8 +2072,8 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.DeleteInstancePartitionRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1720}
-  /// [google.spanner.admin.instance.v1.InstancePartition.name]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1592}
+  /// [google.spanner.admin.instance.v1.DeleteInstancePartitionRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1845}
+  /// [google.spanner.admin.instance.v1.InstancePartition.name]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1715}
   ///
   // clang-format on
   Status DeleteInstancePartition(std::string const& name, Options opts = {});
@@ -2131,8 +2105,8 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.spanner.admin.instance.v1.DeleteInstancePartitionRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1720}
-  /// [google.spanner.admin.instance.v1.InstancePartition.name]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1592}
+  /// [google.spanner.admin.instance.v1.DeleteInstancePartitionRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1845}
+  /// [google.spanner.admin.instance.v1.InstancePartition.name]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1715}
   ///
   // clang-format on
   Status DeleteInstancePartition(
@@ -2143,8 +2117,7 @@ class InstanceAdminClient {
   // clang-format off
   ///
   /// Updates an instance partition, and begins allocating or releasing resources
-  /// as requested. The returned [long-running
-  /// operation][google.longrunning.Operation] can be used to track the
+  /// as requested. The returned long-running operation can be used to track the
   /// progress of updating the instance partition. If the named instance
   /// partition does not exist, returns `NOT_FOUND`.
   ///
@@ -2173,13 +2146,13 @@ class InstanceAdminClient {
   ///     partition's tables.
   ///   * The instance partition's new resource levels are readable via the API.
   ///
-  /// The returned [long-running operation][google.longrunning.Operation] will
+  /// The returned long-running operation will
   /// have a name of the format
   /// `<instance_partition_name>/operations/<operation_id>` and can be used to
   /// track the instance partition modification. The
-  /// [metadata][google.longrunning.Operation.metadata] field type is
+  /// metadata field type is
   /// [UpdateInstancePartitionMetadata][google.spanner.admin.instance.v1.UpdateInstancePartitionMetadata].
-  /// The [response][google.longrunning.Operation.response] field type is
+  /// The response field type is
   /// [InstancePartition][google.spanner.admin.instance.v1.InstancePartition], if
   /// successful.
   ///
@@ -2217,15 +2190,12 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
-  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
-  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
-  /// [google.spanner.admin.instance.v1.InstancePartition]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1565}
-  /// [google.spanner.admin.instance.v1.InstancePartition.name]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1592}
-  /// [google.spanner.admin.instance.v1.UpdateInstancePartitionMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1774}
-  /// [google.spanner.admin.instance.v1.UpdateInstancePartitionMetadata.cancel_time]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1786}
-  /// [google.spanner.admin.instance.v1.UpdateInstancePartitionRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1754}
-  /// [google.spanner.admin.instance.v1.UpdateInstancePartitionRequest.field_mask]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1768}
+  /// [google.spanner.admin.instance.v1.InstancePartition]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1686}
+  /// [google.spanner.admin.instance.v1.InstancePartition.name]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1715}
+  /// [google.spanner.admin.instance.v1.UpdateInstancePartitionMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1899}
+  /// [google.spanner.admin.instance.v1.UpdateInstancePartitionMetadata.cancel_time]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1911}
+  /// [google.spanner.admin.instance.v1.UpdateInstancePartitionRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1879}
+  /// [google.spanner.admin.instance.v1.UpdateInstancePartitionRequest.field_mask]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1893}
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
@@ -2254,8 +2224,7 @@ class InstanceAdminClient {
   // clang-format off
   ///
   /// Updates an instance partition, and begins allocating or releasing resources
-  /// as requested. The returned [long-running
-  /// operation][google.longrunning.Operation] can be used to track the
+  /// as requested. The returned long-running operation can be used to track the
   /// progress of updating the instance partition. If the named instance
   /// partition does not exist, returns `NOT_FOUND`.
   ///
@@ -2284,13 +2253,13 @@ class InstanceAdminClient {
   ///     partition's tables.
   ///   * The instance partition's new resource levels are readable via the API.
   ///
-  /// The returned [long-running operation][google.longrunning.Operation] will
+  /// The returned long-running operation will
   /// have a name of the format
   /// `<instance_partition_name>/operations/<operation_id>` and can be used to
   /// track the instance partition modification. The
-  /// [metadata][google.longrunning.Operation.metadata] field type is
+  /// metadata field type is
   /// [UpdateInstancePartitionMetadata][google.spanner.admin.instance.v1.UpdateInstancePartitionMetadata].
-  /// The [response][google.longrunning.Operation.response] field type is
+  /// The response field type is
   /// [InstancePartition][google.spanner.admin.instance.v1.InstancePartition], if
   /// successful.
   ///
@@ -2324,14 +2293,11 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
-  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
-  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
-  /// [google.spanner.admin.instance.v1.InstancePartition]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1565}
-  /// [google.spanner.admin.instance.v1.InstancePartition.name]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1592}
-  /// [google.spanner.admin.instance.v1.UpdateInstancePartitionMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1774}
-  /// [google.spanner.admin.instance.v1.UpdateInstancePartitionMetadata.cancel_time]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1786}
-  /// [google.spanner.admin.instance.v1.UpdateInstancePartitionRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1754}
+  /// [google.spanner.admin.instance.v1.InstancePartition]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1686}
+  /// [google.spanner.admin.instance.v1.InstancePartition.name]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1715}
+  /// [google.spanner.admin.instance.v1.UpdateInstancePartitionMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1899}
+  /// [google.spanner.admin.instance.v1.UpdateInstancePartitionMetadata.cancel_time]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1911}
+  /// [google.spanner.admin.instance.v1.UpdateInstancePartitionRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1879}
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
@@ -2371,12 +2337,11 @@ class InstanceAdminClient {
 
   // clang-format off
   ///
-  /// Lists instance partition [long-running
-  /// operations][google.longrunning.Operation] in the given instance.
+  /// Lists instance partition long-running operations in the given instance.
   /// An instance partition operation has a name of the form
   /// `projects/<project>/instances/<instance>/instancePartitions/<instance_partition>/operations/<operation>`.
   /// The long-running operation
-  /// [metadata][google.longrunning.Operation.metadata] field type
+  /// metadata field type
   /// `metadata.type_url` describes the type of the metadata. Operations returned
   /// include those that have completed/failed/canceled within the last 7 days,
   /// and pending operations. Operations returned are ordered by
@@ -2412,9 +2377,8 @@ class InstanceAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
-  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
-  /// [google.spanner.admin.instance.v1.ListInstancePartitionOperationsRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1844}
-  /// [google.spanner.admin.instance.v1.ListInstancePartitionOperationsRequest.parent]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1847}
+  /// [google.spanner.admin.instance.v1.ListInstancePartitionOperationsRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1971}
+  /// [google.spanner.admin.instance.v1.ListInstancePartitionOperationsRequest.parent]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1974}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListInstancePartitionOperations(
@@ -2422,12 +2386,11 @@ class InstanceAdminClient {
 
   // clang-format off
   ///
-  /// Lists instance partition [long-running
-  /// operations][google.longrunning.Operation] in the given instance.
+  /// Lists instance partition long-running operations in the given instance.
   /// An instance partition operation has a name of the form
   /// `projects/<project>/instances/<instance>/instancePartitions/<instance_partition>/operations/<operation>`.
   /// The long-running operation
-  /// [metadata][google.longrunning.Operation.metadata] field type
+  /// metadata field type
   /// `metadata.type_url` describes the type of the metadata. Operations returned
   /// include those that have completed/failed/canceled within the last 7 days,
   /// and pending operations. Operations returned are ordered by
@@ -2467,9 +2430,8 @@ class InstanceAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
-  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
-  /// [google.spanner.admin.instance.v1.ListInstancePartitionOperationsRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1844}
-  /// [google.spanner.admin.instance.v1.ListInstancePartitionOperationsRequest.parent]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1847}
+  /// [google.spanner.admin.instance.v1.ListInstancePartitionOperationsRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1971}
+  /// [google.spanner.admin.instance.v1.ListInstancePartitionOperationsRequest.parent]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1974}
   ///
   // clang-format on
   StreamRange<google::longrunning::Operation> ListInstancePartitionOperations(
@@ -2480,7 +2442,7 @@ class InstanceAdminClient {
   // clang-format off
   ///
   /// Moves an instance to the target instance configuration. You can use the
-  /// returned [long-running operation][google.longrunning.Operation] to track
+  /// returned long-running operation to track
   /// the progress of moving the instance.
   ///
   /// `MoveInstance` returns `FAILED_PRECONDITION` if the instance meets any of
@@ -2511,13 +2473,13 @@ class InstanceAdminClient {
   ///     transaction abort rate. However, moving an instance doesn't cause any
   ///     downtime.
   ///
-  /// The returned [long-running operation][google.longrunning.Operation] has
+  /// The returned long-running operation has
   /// a name of the format
   /// `<instance_name>/operations/<operation_id>` and can be used to track
   /// the move instance operation. The
-  /// [metadata][google.longrunning.Operation.metadata] field type is
+  /// metadata field type is
   /// [MoveInstanceMetadata][google.spanner.admin.instance.v1.MoveInstanceMetadata].
-  /// The [response][google.longrunning.Operation.response] field type is
+  /// The response field type is
   /// [Instance][google.spanner.admin.instance.v1.Instance],
   /// if successful.
   /// Cancelling the operation sets its metadata's
@@ -2567,14 +2529,11 @@ class InstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
-  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
-  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
-  /// [google.spanner.admin.instance.v1.Instance]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L938}
-  /// [google.spanner.admin.instance.v1.MoveInstanceMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1969}
-  /// [google.spanner.admin.instance.v1.MoveInstanceMetadata.cancel_time]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1982}
-  /// [google.spanner.admin.instance.v1.MoveInstanceRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1943}
-  /// [google.spanner.admin.instance.v1.MoveInstanceResponse]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1965}
+  /// [google.spanner.admin.instance.v1.Instance]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1004}
+  /// [google.spanner.admin.instance.v1.MoveInstanceMetadata]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L2096}
+  /// [google.spanner.admin.instance.v1.MoveInstanceMetadata.cancel_time]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L2109}
+  /// [google.spanner.admin.instance.v1.MoveInstanceRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L2070}
+  /// [google.spanner.admin.instance.v1.MoveInstanceResponse]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L2092}
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::MoveInstanceResponse>>
