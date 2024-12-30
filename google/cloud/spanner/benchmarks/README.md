@@ -45,7 +45,7 @@ information.
 You need to configure the Cloud Spanner client library so it can authenticate
 with Cloud Spanner. While covering authentication in detail is beyond the scope
 of this README, we assume the reader is familiar with the topic, and refer them
-to the [Authentication Overview][authentication-quickstart] if they need a more
+to the [Authentication methods at Google][authentication-quickstart] if they need a more
 in-depth discussion.
 
 Examine the [spanner roles][spanner-roles-link] to chose a role for the
@@ -133,6 +133,6 @@ To run the experiment reading data for approximately 5 minutes use 20 samples of
     --experiment=read | tee srtp-read.csv
 ```
 
-[authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started "Authentication Getting Started"
+[authentication-quickstart]: https://cloud.google.com/docs/authentication/ "Authentication methods at Google"
 [packaging-doc-link]: /doc/packaging.md
 [spanner-roles-link]: https://cloud.google.com/spanner/docs/iam#roles
