@@ -33,7 +33,7 @@ project name as you will need them later.
 Like most Google Cloud Platform (GCP) services, Cloud BigQuery requires that
 your application authenticates with the service before accessing any data. If
 you are not familiar with GCP authentication please take this opportunity to
-review the [Authentication Overview][authentication-quickstart].
+review the [Authentication methods at Google][authentication-quickstart].
 
 ## Using with Bazel
 
@@ -128,7 +128,7 @@ trust store for SSL certificates, you can download and configure this using:
 set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 ```
 
-[authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started "Authentication Getting Started"
+[authentication-quickstart]: https://cloud.google.com/docs/authentication "Authentication methods at Google"
 [bazel-install]: https://docs.bazel.build/versions/main/install.html
 [bigquery-quickstart-link]: https://cloud.google.com/bigquery/docs/quickstarts/quickstart-web-ui
 [choco-cmake-link]: https://chocolatey.org/packages/cmake
