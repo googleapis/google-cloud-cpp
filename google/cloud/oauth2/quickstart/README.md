@@ -26,7 +26,8 @@ etc.) installed on your platform.
 Using this library to create OAuth2 tokens requires that you configure your
 development (or production) environment to work with Google Cloud
 authentication. If you are not familiar with GCP authentication please take this
-opportunity to review the [Authentication methods at Google][authentication-quickstart].
+opportunity to review the
+[Authentication methods at Google][authentication-quickstart].
 
 The most common configuration is to use *Application Default Credentials*, see
 [Authentication methods at Google] for more information.

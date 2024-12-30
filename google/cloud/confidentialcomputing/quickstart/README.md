@@ -33,7 +33,8 @@ To run the quickstart examples you will need a working Google Cloud Platform
 Like most Google Cloud Platform (GCP) services, Confidential Computing API
 requires that your application authenticates with the service before accessing
 any data. If you are not familiar with GCP authentication please take this
-opportunity to review the [Authentication methods at Google][authentication-quickstart].
+opportunity to review the
+[Authentication methods at Google][authentication-quickstart].
 
 ## Using with Bazel
 

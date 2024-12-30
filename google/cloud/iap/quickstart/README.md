@@ -33,7 +33,8 @@ detail.
 Like most Google Cloud Platform (GCP) services, Cloud Identity-Aware Proxy API
 requires that your application authenticates with the service before accessing
 any data. If you are not familiar with GCP authentication please take this
-opportunity to review the [Authentication methods at Google][authentication-quickstart].
+opportunity to review the
+[Authentication methods at Google][authentication-quickstart].
 
 ## Using with Bazel
 
