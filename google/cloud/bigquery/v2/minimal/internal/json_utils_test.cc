@@ -315,6 +315,8 @@ TEST(JsonUtilsTest, SafeGetToWithNullableStringAsFloat) {
 
 TEST(JsonUtilsTest, SafeGetToWithNullableStringAsArray) {
   auto const* const key = "v";
+  auto constexpr kExpectedJsonText =
+      R"([{"v":"1"},{"v":"2"},{"v":"3"},{"v":"4"},{"v":"5"}])";
   auto constexpr kJsonText =
       R"({"v":[{"v":"1"},{"v":"2"},{"v":"3"},{"v":"4"},{"v":"5"}]})";
   auto json = nlohmann::json::parse(kJsonText, nullptr, false);
@@ -323,9 +325,7 @@ TEST(JsonUtilsTest, SafeGetToWithNullableStringAsArray) {
   std::string val;
   bool is_null;
   EXPECT_TRUE(SafeGetToWithNullable(val, is_null, json, key));
-  auto constexpr expected_json_text =
-      R"([{"v":"1"},{"v":"2"},{"v":"3"},{"v":"4"},{"v":"5"}])";
-  EXPECT_EQ(val, expected_json_text);
+  EXPECT_EQ(val, kExpectedJsonText);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
