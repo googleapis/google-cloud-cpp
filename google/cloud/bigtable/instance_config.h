@@ -67,6 +67,11 @@ class InstanceConfig {
     return *this;
   }
 
+  InstanceConfig& insert_tag(std::string const& key, std::string const& value) {
+    (*proto_.mutable_instance()->mutable_tags())[key] = value;
+    return *this;
+  }
+
   // NOLINT: accessors can (and should) be snake_case.
   google::bigtable::admin::v2::CreateInstanceRequest const& as_proto() const& {
     return proto_;

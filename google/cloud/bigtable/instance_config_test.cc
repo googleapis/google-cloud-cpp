@@ -75,6 +75,23 @@ TEST(InstanceConfigTest, SetLabels) {
   EXPECT_EQ("qux", proto.instance().labels().at("baz"));
 }
 
+TEST(InstanceConfigTest, InsertTags) {
+  InstanceConfig config("my-instance", "pretty name",
+                        {
+                            {"cluster-1", {"somewhere", 7, ClusterConfig::SSD}},
+                        });
+
+  config.insert_tag("tag_key", "tag_value");
+
+  auto proto = config.as_proto();
+  EXPECT_EQ("my-instance", proto.instance_id());
+  EXPECT_EQ("pretty name", proto.instance().display_name());
+  ASSERT_EQ(1, proto.clusters_size());
+
+  ASSERT_EQ(1, proto.instance().tags_size());
+  EXPECT_EQ("tag_value", proto.instance().tags().at("tag_key"));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
