@@ -52,7 +52,7 @@ struct AsStringVisitor {
 
 struct OTelKeyMatch {
   std::vector<std::string> otel_keys;
-  absl::optional<std::string> fallback = absl::nullopt;
+  std::string fallback;
 };
 
 class MonitoredResourceProvider {
@@ -72,8 +72,8 @@ class MonitoredResourceProvider {
           [](auto const& key, auto const& attr) { return key == attr.first; });
       if (found != oks.end()) {
         mr.labels[kv.first] = AsString(attributes.at(*found));
-      } else if (kv.second.fallback) {
-        mr.labels[kv.first] = *kv.second.fallback;
+      } else {
+        mr.labels[kv.first] = kv.second.fallback;
       }
     }
     return mr;
@@ -162,8 +162,8 @@ MonitoredResourceProvider GenericTask() {
           {"location",
            {{sc::kCloudAvailabilityZone, sc::kCloudRegion}, "global"}},
           {"namespace", {{sc::kServiceNamespace}}},
-          {"job", {{sc::kServiceName}}},
-          {"task_id", {{sc::kServiceInstanceId}}},
+          {"job", {{sc::kServiceName, sc::kFaasName}}},
+          {"task_id", {{sc::kServiceInstanceId, sc::kFaasInstance}}},
       });
 }
 
@@ -174,7 +174,7 @@ MonitoredResourceProvider GenericNode() {
           {"location",
            {{sc::kCloudAvailabilityZone, sc::kCloudRegion}, "global"}},
           {"namespace", {{sc::kServiceNamespace}}},
-          {"node_id", {{sc::kHostId}}},
+          {"node_id", {{sc::kHostId, sc::kHostName}}},
       });
 }
 

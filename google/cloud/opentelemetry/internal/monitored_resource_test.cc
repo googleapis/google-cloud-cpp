@@ -284,7 +284,11 @@ TEST(MonitoredResource, GenericTaskFaas) {
     auto mr = ToMonitoredResource(attributes);
     EXPECT_EQ(mr.type, "generic_task");
     EXPECT_THAT(mr.labels,
-                UnorderedElementsAre(Pair("location", test.expected_location)));
+                UnorderedElementsAre(Pair("location", test.expected_location),
+                                     // Verify fallback to empty string.
+                                     Pair("namespace", ""),
+                                     Pair("job", "faas-name"),
+                                     Pair("task_id", "faas-instance")));
   }
 }
 
@@ -320,18 +324,18 @@ TEST(MonitoredResource, GenericTaskService) {
 }
 
 TEST(MonitoredResource, GenericNode) {
-  struct TestCase {
+  struct LocationTestCase {
     absl::optional<std::string> zone;
     absl::optional<std::string> region;
     std::string expected_location;
   };
-  auto tests = std::vector<TestCase>{
+  auto location_tests = std::vector<LocationTestCase>{
       {"us-central1-a", "us-central1", "us-central1-a"},
       {"us-central1-a", absl::nullopt, "us-central1-a"},
       {absl::nullopt, "us-central1", "us-central1"},
       {absl::nullopt, absl::nullopt, "global"},
-  };
-  for (auto const& test : tests) {
+   };
+  for (auto const& test : location_tests) {
     auto attributes = opentelemetry::sdk::resource::ResourceAttributes{
         {sc::kServiceNamespace, "test-namespace"},
         {sc::kHostId, "test-instance"},
@@ -345,6 +349,31 @@ TEST(MonitoredResource, GenericNode) {
                 UnorderedElementsAre(Pair("location", test.expected_location),
                                      Pair("namespace", "test-namespace"),
                                      Pair("node_id", "test-instance")));
+  }
+
+  struct NodeIDTestCase {
+    absl::optional<std::string> host_id;
+    std::string expected_node_id;
+  };
+  auto node_id_tests = std::vector<NodeIDTestCase>{
+    {"test-instance", "test-instance"},
+    {absl::nullopt, "test-name"},
+  };
+  for (auto const& test : node_id_tests) {
+    auto attributes = opentelemetry::sdk::resource::ResourceAttributes{
+        {sc::kCloudAvailabilityZone, "us-central1-a"},
+        {sc::kCloudRegion, "us-central1"},
+        {sc::kServiceNamespace, "test-namespace"},
+        {sc::kHostName, "test-name"},
+    };
+    if (test.host_id) attributes[sc::kHostId] = *test.host_id;
+
+    auto mr = ToMonitoredResource(attributes);
+    EXPECT_EQ(mr.type, "generic_node");
+    EXPECT_THAT(mr.labels,
+                UnorderedElementsAre(Pair("location", "us-central1-a"),
+                                     Pair("namespace", "test-namespace"),
+                                     Pair("node_id", test.expected_node_id)));
   }
 }
 
