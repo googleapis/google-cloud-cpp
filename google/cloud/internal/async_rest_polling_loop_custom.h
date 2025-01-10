@@ -64,6 +64,30 @@ future<StatusOr<OperationType>> AsyncRestPollingLoop(
   return loop->Start(std::move(op));
 }
 
+template <typename OperationType, typename GetOperationRequestType,
+          typename CancelOperationRequestType>
+future<StatusOr<OperationType>> AsyncRestPollingLoop(
+    google::cloud::CompletionQueue cq, internal::ImmutableOptions options,
+    future<StatusOr<OperationType>> op,
+    AsyncRestPollLongRunningOperation<OperationType, GetOperationRequestType>
+        poll,
+    AsyncRestCancelLongRunningOperation<CancelOperationRequestType> cancel,
+    std::unique_ptr<PollingPolicy> polling_policy, std::string location,
+    std::function<bool(OperationType const&)> is_operation_done,
+    std::function<void(std::string const&, GetOperationRequestType&)>
+        get_request_set_operation_name,
+    std::function<void(std::string const&, CancelOperationRequestType&)>
+        cancel_request_set_operation_name,
+    std::function<std::string(StatusOr<OperationType> const&)> operation_name) {
+  auto loop = std::make_shared<AsyncRestPollingLoopImpl<
+      OperationType, GetOperationRequestType, CancelOperationRequestType>>(
+      std::move(cq), options, std::move(poll), std::move(cancel),
+      std::move(polling_policy), std::move(location), is_operation_done,
+      get_request_set_operation_name, cancel_request_set_operation_name,
+      operation_name);
+  return loop->Start(std::move(op));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
 }  // namespace cloud
