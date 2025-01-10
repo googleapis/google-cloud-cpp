@@ -45,6 +45,9 @@ class CredentialsVisitor;
  * @see https://cloud.google.com/docs/authentication for more information on
  *     authentication in GCP.
  *
+ * @see https://cloud.google.com/docs/authentication/client-libraries for more
+ *     information on authentication for client libraries.
+ *
  * @see https://cloud.google.com/iam for more information on the IAM Service.
  *
  * [IAM overview]: https://cloud.google.com/iam/docs/overview
@@ -119,6 +122,9 @@ std::shared_ptr<Credentials> MakeInsecureCredentials(Options opts = {});
  * @see https://cloud.google.com/docs/authentication for more information on
  *     authentication in GCP.
  *
+ * @see https://cloud.google.com/docs/authentication/client-libraries for more
+ *     information on authentication for client libraries.
+ *
  * [aip/4110]: https://google.aip.dev/auth/4110
  * [gcloud auth application-default]:
  * https://cloud.google.com/sdk/gcloud/reference/auth/application-default
@@ -140,6 +146,9 @@ std::shared_ptr<Credentials> MakeGoogleDefaultCredentials(Options opts = {});
  *
  * @see https://cloud.google.com/docs/authentication for more information on
  *     authentication in GCP.
+ *
+ * @see https://cloud.google.com/docs/authentication/client-libraries for more
+ *     information on authentication for client libraries.
  *
  * @ingroup guac
  *
@@ -181,6 +190,8 @@ std::shared_ptr<Credentials> MakeAccessTokenCredentials(
  * [IAM quotas]: https://cloud.google.com/iam/quotas
  * @see https://cloud.google.com/docs/authentication for more information on
  *     authentication in GCP.
+ * @see https://cloud.google.com/docs/authentication/client-libraries for more
+ *     information on authentication for client libraries.
  * @see https://cloud.google.com/iam/docs/impersonating-service-accounts for
  *     information on managing service account impersonation.
  * @see https://developers.google.com/identity/protocols/oauth2/scopes for
@@ -257,6 +268,9 @@ std::shared_ptr<Credentials> MakeServiceAccountCredentials(
  * @see https://cloud.google.com/docs/authentication for more information on
  *     authentication in GCP.
  *
+ * @see https://cloud.google.com/docs/authentication/client-libraries for more
+ *     information on authentication for client libraries.
+ *
  * @ingroup guac
  *
  * @param json_object the external account configuration as a JSON string.
@@ -288,6 +302,12 @@ std::shared_ptr<Credentials> MakeExternalAccountCredentials(
  *
  * @note This authentication scheme does not involve access tokens. The returned
  * `Credentials` are incompatible with an `oauth2::AccessTokenGenerator`.
+ *
+ * @see https://cloud.google.com/docs/authentication for more information on
+ *     authentication in GCP.
+ *
+ * @see https://cloud.google.com/docs/authentication/client-libraries for more
+ *     information on authentication for client libraries.
  *
  * @ingroup guac
  *
