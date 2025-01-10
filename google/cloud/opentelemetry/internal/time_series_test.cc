@@ -32,6 +32,8 @@ namespace otel_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+namespace sc = opentelemetry::sdk::resource::SemanticConventions;
+
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
@@ -133,7 +135,6 @@ auto Interval(std::chrono::system_clock::time_point start,
 }
 
 auto TestResource() {
-  namespace sc = opentelemetry::sdk::resource::SemanticConventions;
   return opentelemetry::sdk::resource::Resource::Create({
       {sc::kCloudProvider, "gcp"},
       {sc::kCloudPlatform, "gcp_compute_engine"},
@@ -247,13 +248,13 @@ TEST(ToMetric, Simple) {
   opentelemetry::sdk::metrics::PointAttributes attributes = {
       {"key1", "value1"}, {"_key2", "value2"}};
 
-  auto metric = ToMetric(md, attributes, PrefixWithWorkload);
+  auto metric = ToMetric(md, attributes, {}, PrefixWithWorkload);
 
   EXPECT_EQ(metric.type(), "workload.googleapis.com/test");
   EXPECT_THAT(metric.labels(), UnorderedElementsAre(Pair("key1", "value1"),
                                                     Pair("_key2", "value2")));
 
-  metric = ToMetric(md, {}, [](std::string s) {
+  metric = ToMetric(md, {}, {}, [](std::string s) {
     std::replace(s.begin(), s.end(), 't', 'T');
     return "custom.googleapis.com/" + std::move(s);
   });
@@ -266,7 +267,7 @@ TEST(ToMetric, BadLabelNames) {
   opentelemetry::sdk::metrics::PointAttributes attributes = {
       {"99", "dropped"}, {"a key-with.bad/characters", "value"}};
 
-  auto metric = ToMetric({}, attributes, PrefixWithWorkload);
+  auto metric = ToMetric({}, attributes, {}, PrefixWithWorkload);
 
   EXPECT_THAT(metric.labels(),
               UnorderedElementsAre(Pair("a_key_with_bad_characters", "value")));
@@ -274,6 +275,53 @@ TEST(ToMetric, BadLabelNames) {
   EXPECT_THAT(
       log.ExtractLines(),
       Contains(AllOf(HasSubstr("Dropping metric label"), HasSubstr("99"))));
+}
+
+TEST(ToMetric, IncludesServiceLabelsFromResource) {
+  opentelemetry::sdk::metrics::MetricData md;
+  md.instrument_descriptor.name_ = "test";
+
+  opentelemetry::sdk::resource::ResourceAttributes resource_attributes = {
+      {"unused", "unused"},
+      {sc::kServiceName, "test-name"},
+      {sc::kServiceNamespace, "test-namespace"},
+      {sc::kServiceInstanceId, "test-instance"},
+  };
+  auto resource =
+      opentelemetry::sdk::resource::Resource::Create(resource_attributes);
+
+  auto metric = ToMetric(md, {}, &resource, PrefixWithWorkload);
+  EXPECT_THAT(
+      metric.labels(),
+      UnorderedElementsAre(Pair("service_name", "test-name"),
+                           Pair("service_namespace", "test-namespace"),
+                           Pair("service_instance_id", "test-instance")));
+}
+
+TEST(ToMetric, PointAttributesOverServiceResourceAttributes) {
+  opentelemetry::sdk::metrics::MetricData md;
+  md.instrument_descriptor.name_ = "test";
+
+  opentelemetry::sdk::metrics::PointAttributes point_attributes = {
+      {"service_name", "point-name"},
+      {"service_namespace", "point-namespace"},
+      {"service_instance_id", "point-instance"},
+  };
+
+  opentelemetry::sdk::resource::ResourceAttributes resource_attributes = {
+      {sc::kServiceName, "resource-name"},
+      {sc::kServiceNamespace, "resource-namespace"},
+      {sc::kServiceInstanceId, "resource-instance"},
+  };
+  auto resource =
+      opentelemetry::sdk::resource::Resource::Create(resource_attributes);
+
+  auto metric = ToMetric(md, point_attributes, &resource, PrefixWithWorkload);
+  EXPECT_THAT(
+      metric.labels(),
+      UnorderedElementsAre(Pair("service_name", "point-name"),
+                           Pair("service_namespace", "point-namespace"),
+                           Pair("service_instance_id", "point-instance")));
 }
 
 TEST(SumPointData, Simple) {
