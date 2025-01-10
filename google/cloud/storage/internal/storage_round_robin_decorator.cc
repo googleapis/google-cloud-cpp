@@ -126,6 +126,17 @@ StorageRoundRobin::ReadObject(
   return Child()->ReadObject(std::move(context), options, request);
 }
 
+std::unique_ptr<google::cloud::AsyncStreamingReadWriteRpc<
+    google::storage::v2::BidiReadObjectRequest,
+    google::storage::v2::BidiReadObjectResponse>>
+StorageRoundRobin::AsyncBidiReadObject(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  return Child()->AsyncBidiReadObject(cq, std::move(context),
+                                      std::move(options));
+}
+
 StatusOr<google::storage::v2::Object> StorageRoundRobin::UpdateObject(
     grpc::ClientContext& context, Options const& options,
     google::storage::v2::UpdateObjectRequest const& request) {

@@ -221,6 +221,19 @@ class NetAppConnection {
   virtual future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
   DeleteStoragePool(google::longrunning::Operation const& operation);
 
+  virtual future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+  ValidateDirectoryService(
+      google::cloud::netapp::v1::ValidateDirectoryServiceRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> ValidateDirectoryService(
+      NoAwaitTag,
+      google::cloud::netapp::v1::ValidateDirectoryServiceRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+  ValidateDirectoryService(google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::netapp::v1::StoragePool>>
   SwitchActiveReplicaZone(
       google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request);

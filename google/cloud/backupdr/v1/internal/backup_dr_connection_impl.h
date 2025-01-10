@@ -273,6 +273,18 @@ class BackupDRConnectionImpl : public backupdr_v1::BackupDRConnection {
   future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
   TriggerBackup(google::longrunning::Operation const& operation) override;
 
+  future<StatusOr<google::cloud::backupdr::v1::InitializeServiceResponse>>
+  InitializeService(google::cloud::backupdr::v1::InitializeServiceRequest const&
+                        request) override;
+
+  StatusOr<google::longrunning::Operation> InitializeService(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::InitializeServiceRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::backupdr::v1::InitializeServiceResponse>>
+  InitializeService(google::longrunning::Operation const& operation) override;
+
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;
 

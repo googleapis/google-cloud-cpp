@@ -184,8 +184,8 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.talent.v4.BatchCreateJobsRequest]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L900}
-  /// [google.cloud.talent.v4.BatchCreateJobsResponse]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L992}
+  /// [google.cloud.talent.v4.BatchCreateJobsRequest]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L929}
+  /// [google.cloud.talent.v4.BatchCreateJobsResponse]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L1021}
   ///
   // clang-format on
   future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>
@@ -239,8 +239,8 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.talent.v4.BatchCreateJobsRequest]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L900}
-  /// [google.cloud.talent.v4.BatchCreateJobsResponse]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L992}
+  /// [google.cloud.talent.v4.BatchCreateJobsRequest]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L929}
+  /// [google.cloud.talent.v4.BatchCreateJobsResponse]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L1021}
   ///
   // clang-format on
   future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>
@@ -443,8 +443,8 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.talent.v4.BatchUpdateJobsRequest]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L916}
-  /// [google.cloud.talent.v4.BatchUpdateJobsResponse]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L1003}
+  /// [google.cloud.talent.v4.BatchUpdateJobsRequest]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L945}
+  /// [google.cloud.talent.v4.BatchUpdateJobsResponse]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L1032}
   ///
   // clang-format on
   future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>
@@ -498,8 +498,8 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.talent.v4.BatchUpdateJobsRequest]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L916}
-  /// [google.cloud.talent.v4.BatchUpdateJobsResponse]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L1003}
+  /// [google.cloud.talent.v4.BatchUpdateJobsRequest]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L945}
+  /// [google.cloud.talent.v4.BatchUpdateJobsResponse]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L1032}
   ///
   // clang-format on
   future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>
@@ -630,8 +630,8 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.talent.v4.BatchDeleteJobsRequest]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L950}
-  /// [google.cloud.talent.v4.BatchDeleteJobsResponse]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L1014}
+  /// [google.cloud.talent.v4.BatchDeleteJobsRequest]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L979}
+  /// [google.cloud.talent.v4.BatchDeleteJobsResponse]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L1043}
   ///
   // clang-format on
   future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>
@@ -683,8 +683,8 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.talent.v4.BatchDeleteJobsRequest]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L950}
-  /// [google.cloud.talent.v4.BatchDeleteJobsResponse]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L1014}
+  /// [google.cloud.talent.v4.BatchDeleteJobsRequest]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L979}
+  /// [google.cloud.talent.v4.BatchDeleteJobsResponse]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L1043}
   ///
   // clang-format on
   future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>
@@ -829,9 +829,9 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.talent.v4.Job.visibility]: @googleapis_reference_link{google/cloud/talent/v4/job.proto#L296}
+  /// [google.cloud.talent.v4.Job.visibility]: @googleapis_reference_link{google/cloud/talent/v4/job.proto#L299}
   /// [google.cloud.talent.v4.SearchJobsRequest]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L343}
-  /// [google.cloud.talent.v4.SearchJobsResponse]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L817}
+  /// [google.cloud.talent.v4.SearchJobsResponse]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L846}
   ///
   // clang-format on
   StatusOr<google::cloud::talent::v4::SearchJobsResponse> SearchJobs(
@@ -872,9 +872,9 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.talent.v4.Job.visibility]: @googleapis_reference_link{google/cloud/talent/v4/job.proto#L296}
+  /// [google.cloud.talent.v4.Job.visibility]: @googleapis_reference_link{google/cloud/talent/v4/job.proto#L299}
   /// [google.cloud.talent.v4.SearchJobsRequest]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L343}
-  /// [google.cloud.talent.v4.SearchJobsResponse]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L817}
+  /// [google.cloud.talent.v4.SearchJobsResponse]: @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L846}
   ///
   // clang-format on
   StatusOr<google::cloud::talent::v4::SearchJobsResponse> SearchJobsForAlert(

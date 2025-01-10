@@ -666,6 +666,46 @@ class MockBackupDRConnection : public backupdr_v1::BackupDRConnection {
       TriggerBackup, (google::longrunning::Operation const& operation),
       (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InitializeService(Matcher<google::cloud::backupdr::v1::InitializeServiceRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::backupdr::v1::InitializeServiceResponse>>,
+      InitializeService,
+      (google::cloud::backupdr::v1::InitializeServiceRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, InitializeService(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, InitializeService,
+      (NoAwaitTag,
+       google::cloud::backupdr::v1::InitializeServiceRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// InitializeService(Matcher<google::longrunning::Operation const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::backupdr::v1::InitializeServiceResponse>>,
+      InitializeService, (google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
               (google::cloud::location::ListLocationsRequest request),
               (override));

@@ -362,6 +362,18 @@ StorageMetadata::ReadObject(
   return child_->ReadObject(std::move(context), options, request);
 }
 
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::storage::v2::BidiReadObjectRequest,
+    google::storage::v2::BidiReadObjectResponse>>
+StorageMetadata::AsyncBidiReadObject(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  SetMetadata(*context, *options);
+  return child_->AsyncBidiReadObject(cq, std::move(context),
+                                     std::move(options));
+}
+
 StatusOr<google::storage::v2::Object> StorageMetadata::UpdateObject(
     grpc::ClientContext& context, Options const& options,
     google::storage::v2::UpdateObjectRequest const& request) {

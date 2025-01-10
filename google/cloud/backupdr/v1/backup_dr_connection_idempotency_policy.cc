@@ -169,6 +169,11 @@ Idempotency BackupDRConnectionIdempotencyPolicy::TriggerBackup(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency BackupDRConnectionIdempotencyPolicy::InitializeService(
+    google::cloud::backupdr::v1::InitializeServiceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency BackupDRConnectionIdempotencyPolicy::ListLocations(
     google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;

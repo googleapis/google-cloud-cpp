@@ -153,6 +153,38 @@ StatusOr<google::longrunning::Operation> NetAppLogging::DeleteStoragePool(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+NetAppLogging::AsyncValidateDirectoryService(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::ValidateDirectoryServiceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::netapp::v1::ValidateDirectoryServiceRequest const&
+                 request) {
+        return child_->AsyncValidateDirectoryService(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+NetAppLogging::ValidateDirectoryService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::ValidateDirectoryServiceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::ValidateDirectoryServiceRequest const&
+                 request) {
+        return child_->ValidateDirectoryService(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 NetAppLogging::AsyncSwitchActiveReplicaZone(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

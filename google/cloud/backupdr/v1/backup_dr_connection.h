@@ -389,6 +389,19 @@ class BackupDRConnection {
   virtual future<StatusOr<google::cloud::backupdr::v1::BackupPlanAssociation>>
   TriggerBackup(google::longrunning::Operation const& operation);
 
+  virtual future<
+      StatusOr<google::cloud::backupdr::v1::InitializeServiceResponse>>
+  InitializeService(
+      google::cloud::backupdr::v1::InitializeServiceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> InitializeService(
+      NoAwaitTag,
+      google::cloud::backupdr::v1::InitializeServiceRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::backupdr::v1::InitializeServiceResponse>>
+  InitializeService(google::longrunning::Operation const& operation);
+
   virtual StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

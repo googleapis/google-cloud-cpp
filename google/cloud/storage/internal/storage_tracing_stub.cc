@@ -207,6 +207,23 @@ StorageTracingStub::ReadObject(
       std::move(context), std::move(stream), std::move(span));
 }
 
+std::unique_ptr<
+    AsyncStreamingReadWriteRpc<google::storage::v2::BidiReadObjectRequest,
+                               google::storage::v2::BidiReadObjectResponse>>
+StorageTracingStub::AsyncBidiReadObject(
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  auto span =
+      internal::MakeSpanGrpc("google.storage.v2.Storage", "BidiReadObject");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto stream = child_->AsyncBidiReadObject(cq, context, std::move(options));
+  return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
+      google::storage::v2::BidiReadObjectRequest,
+      google::storage::v2::BidiReadObjectResponse>>(
+      std::move(context), std::move(stream), std::move(span));
+}
+
 StatusOr<google::storage::v2::Object> StorageTracingStub::UpdateObject(
     grpc::ClientContext& context, Options const& options,
     google::storage::v2::UpdateObjectRequest const& request) {

@@ -331,7 +331,7 @@ class MetricServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.api.MetricDescriptor]: @googleapis_reference_link{google/api/metric.proto#L33}
-  /// [google.monitoring.v3.GetMetricDescriptorRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L290}
+  /// [google.monitoring.v3.GetMetricDescriptorRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L302}
   ///
   // clang-format on
   StatusOr<google::api::MetricDescriptor> GetMetricDescriptor(
@@ -361,7 +361,7 @@ class MetricServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.api.MetricDescriptor]: @googleapis_reference_link{google/api/metric.proto#L33}
-  /// [google.monitoring.v3.GetMetricDescriptorRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L290}
+  /// [google.monitoring.v3.GetMetricDescriptorRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L302}
   ///
   // clang-format on
   StatusOr<google::api::MetricDescriptor> GetMetricDescriptor(
@@ -398,7 +398,7 @@ class MetricServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.api.MetricDescriptor]: @googleapis_reference_link{google/api/metric.proto#L33}
-  /// [google.monitoring.v3.CreateMetricDescriptorRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L307}
+  /// [google.monitoring.v3.CreateMetricDescriptorRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L319}
   ///
   // clang-format on
   StatusOr<google::api::MetricDescriptor> CreateMetricDescriptor(
@@ -435,7 +435,7 @@ class MetricServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.api.MetricDescriptor]: @googleapis_reference_link{google/api/metric.proto#L33}
-  /// [google.monitoring.v3.CreateMetricDescriptorRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L307}
+  /// [google.monitoring.v3.CreateMetricDescriptorRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L319}
   ///
   // clang-format on
   StatusOr<google::api::MetricDescriptor> CreateMetricDescriptor(
@@ -466,7 +466,7 @@ class MetricServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.DeleteMetricDescriptorRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L327}
+  /// [google.monitoring.v3.DeleteMetricDescriptorRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L339}
   ///
   // clang-format on
   Status DeleteMetricDescriptor(std::string const& name, Options opts = {});
@@ -494,7 +494,7 @@ class MetricServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.DeleteMetricDescriptorRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L327}
+  /// [google.monitoring.v3.DeleteMetricDescriptorRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L339}
   ///
   // clang-format on
   Status DeleteMetricDescriptor(
@@ -546,7 +546,7 @@ class MetricServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.ListTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L344}
+  /// [google.monitoring.v3.ListTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L356}
   /// [google.monitoring.v3.TimeSeries]: @googleapis_reference_link{google/monitoring/v3/metric.proto#L53}
   ///
   // clang-format on
@@ -588,7 +588,7 @@ class MetricServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.ListTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L344}
+  /// [google.monitoring.v3.ListTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L356}
   /// [google.monitoring.v3.TimeSeries]: @googleapis_reference_link{google/monitoring/v3/metric.proto#L53}
   ///
   // clang-format on
@@ -628,7 +628,7 @@ class MetricServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.CreateTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L440}
+  /// [google.monitoring.v3.CreateTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L452}
   ///
   // clang-format on
   Status CreateTimeSeries(
@@ -663,7 +663,7 @@ class MetricServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.CreateTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L440}
+  /// [google.monitoring.v3.CreateTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L452}
   ///
   // clang-format on
   Status CreateTimeSeries(
@@ -705,7 +705,7 @@ class MetricServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.CreateTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L440}
+  /// [google.monitoring.v3.CreateTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L452}
   /// [google.monitoring.v3.MetricService.CreateTimeSeries]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L154}
   ///
   // clang-format on
@@ -743,7 +743,7 @@ class MetricServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.CreateTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L440}
+  /// [google.monitoring.v3.CreateTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L452}
   /// [google.monitoring.v3.MetricService.CreateTimeSeries]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L154}
   ///
   // clang-format on
@@ -784,7 +784,7 @@ class MetricServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.CreateTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L440}
+  /// [google.monitoring.v3.CreateTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L452}
   ///
   // clang-format on
   future<Status> AsyncCreateTimeSeries(
@@ -819,7 +819,7 @@ class MetricServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.CreateTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L440}
+  /// [google.monitoring.v3.CreateTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L452}
   ///
   // clang-format on
   future<Status> AsyncCreateTimeSeries(

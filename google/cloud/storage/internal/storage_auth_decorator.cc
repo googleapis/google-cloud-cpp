@@ -161,6 +161,25 @@ StorageAuth::ReadObject(std::shared_ptr<grpc::ClientContext> context,
   return child_->ReadObject(std::move(context), options, request);
 }
 
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::storage::v2::BidiReadObjectRequest,
+    google::storage::v2::BidiReadObjectResponse>>
+StorageAuth::AsyncBidiReadObject(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  using StreamAuth = google::cloud::internal::AsyncStreamingReadWriteRpcAuth<
+      google::storage::v2::BidiReadObjectRequest,
+      google::storage::v2::BidiReadObjectResponse>;
+
+  auto call = [child = child_, cq, options = std::move(options)](
+                  std::shared_ptr<grpc::ClientContext> ctx) {
+    return child->AsyncBidiReadObject(cq, std::move(ctx), options);
+  };
+  return std::make_unique<StreamAuth>(
+      std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
+}
+
 StatusOr<google::storage::v2::Object> StorageAuth::UpdateObject(
     grpc::ClientContext& context, Options const& options,
     google::storage::v2::UpdateObjectRequest const& request) {
