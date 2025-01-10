@@ -110,7 +110,7 @@ bazel --output_user_root=c:\b build ...
     `google-cloud-cpp` and may not have the latest features available.
 
 [authentication methods at google]: https://cloud.google.com/docs/authentication
-[authentication-quickstart]: https://cloud.google.com/docs/authentication "Authentication methods at Google"
+[authentication-quickstart]: https://cloud.google.com/docs/authentication/client-libraries "Authenticate for using client libraries"
 [bazel-install]: https://docs.bazel.build/versions/main/install.html
 [choco-cmake-link]: https://chocolatey.org/packages/cmake
 [homebrew-cmake-link]: https://formulae.brew.sh/formula/cmake

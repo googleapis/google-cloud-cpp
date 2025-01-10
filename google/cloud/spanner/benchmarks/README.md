@@ -133,6 +133,6 @@ To run the experiment reading data for approximately 5 minutes use 20 samples of
     --experiment=read | tee srtp-read.csv
 ```
 
-[authentication-quickstart]: https://cloud.google.com/docs/authentication "Authentication methods at Google"
+[authentication-quickstart]: https://cloud.google.com/docs/authentication/client-libraries "Authenticate for using client libraries"
 [packaging-doc-link]: /doc/packaging.md
 [spanner-roles-link]: https://cloud.google.com/spanner/docs/iam#roles
