@@ -415,8 +415,9 @@ Status Table::ReadRows(google::bigtable::v2::ReadRowsRequest const& request,
   }
   std::lock_guard lock(mu_);
   auto stream = ReadRowsInternal(std::move(row_set));
+  FilterContext ctx;
   if (request.has_filter()) {
-    auto maybe_stream = CreateFilter(request.filter(), std::move(stream));
+    auto maybe_stream = CreateFilter(request.filter(), std::move(stream), ctx);
     if (!maybe_stream) {
       return maybe_stream.status();
     }
@@ -427,7 +428,8 @@ Status Table::ReadRows(google::bigtable::v2::ReadRowsRequest const& request,
               << " column_family: " << stream->column_family()
               << " column_qualifier: " << stream->column_qualifier()
               << " column_timestamp: " << stream->timestamp().count()
-              << " column_value: " << stream->value()
+              << " column_value: " << stream->value() << " label: "
+              << (stream->HasLabel() ? stream->label() : std::string("unset"))
               << std::endl;
     if (!row_streamer.Stream(*stream)) {
       std::cout << "HOW?" << std::endl;

@@ -56,6 +56,9 @@ bool RowStreamer::Stream(CellView const& cell) {
       std::chrono::duration_cast<std::chrono::microseconds>(cell.timestamp())
           .count());
   chunk.set_value(cell.value());
+  if (cell.HasLabel()) {
+    *chunk.add_labels() = cell.label();
+  }
   pending_chunks_.emplace_back(std::move(chunk));
   if (pending_chunks_.size() > 200) {
     return Flush(false);

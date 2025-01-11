@@ -32,7 +32,7 @@ class CellStream {
   bool HasValue() const { return current_.has_value(); }
   CellView const & Value() const { return *current_; }
   void Next() { current_ = impl_(); }
-  CellView const &operator++();
+  void operator++();
   CellView operator++(int);
   CellView operator*() const { return Value(); }
   CellView const* operator->() const { return &Value(); }
@@ -43,8 +43,20 @@ class CellStream {
   absl::optional<CellView> current_;
 };
 
+class FilterContext {
+ public:
+  FilterContext() : allow_apply_label_(true) {}
+
+  FilterContext& DisallowApplyLabel();
+
+  bool IsApplyLabelAllowed() const { return allow_apply_label_; }
+ private:
+  bool allow_apply_label_;
+};
+
 StatusOr<CellStream> CreateFilter(
-    ::google::bigtable::v2::RowFilter const& filter, CellStream source);
+    ::google::bigtable::v2::RowFilter const& filter, CellStream source,
+    FilterContext const& ctx);
 
 }  // namespace emulator
 }  // namespace bigtable

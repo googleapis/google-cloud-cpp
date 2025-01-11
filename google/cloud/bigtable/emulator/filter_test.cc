@@ -27,8 +27,13 @@ namespace {
 TEST(DummyFilter, Simple) {
   google::cloud::bigtable::Table table(MakeDataConnection(),
                                        TableResource("fake", "baz", "ft"));
-  Filter filter =
-      Filter::Chain(Filter::FamilyRegex("fam1"), Filter::CellsRowOffset(2));
+  Filter filter = Filter::Chain(
+      Filter::Interleave(Filter::Chain(Filter::ColumnRegex("[0-1]"),
+                                       Filter::ApplyLabelTransformer("L01")),
+                         Filter::Chain(Filter::ColumnRegex("[1-2]"),
+                                       Filter::ApplyLabelTransformer("L12")),
+                         Filter::Sink()),
+      Filter::ColumnRegex("[0-2]"));
   for (StatusOr<Row>& row :
        table.ReadRows(RowSet(RowRange::InfiniteRange()), filter)) {
     ASSERT_STATUS_OK(row);
@@ -37,6 +42,13 @@ TEST(DummyFilter, Simple) {
       std::cout << "\t" << cell.family_name() << ":" << cell.column_qualifier()
                 << "    @ " << cell.timestamp().count() << "us\n"
                 << "\t\"" << cell.value() << '"' << "\n";
+      if (!cell.labels().empty()) {
+        std::cout << "\tlabelled:";
+        for (auto const& label : cell.labels()) {
+          std::cout << " " << label;
+        }
+        std::cout << "\n\n";
+      }
     }
   }
 }

@@ -18,6 +18,7 @@
 #include <string>
 #include <chrono>
 #include <functional>
+#include <absl/types/optional.h>
 
 namespace google {
 namespace cloud {
@@ -48,6 +49,10 @@ class CellView {
   }
   std::chrono::milliseconds timestamp() const { return timestamp_; }
   std::string const& value() const { return value_.get(); }
+  bool HasLabel() const { return label_.has_value(); }
+  std::string const& label() const { return label_.value().get(); }
+  void SetLabel(std::string const& label) { label_ = label; }
+  void SetValue(std::string const& value) { value_ = value; }
 
  private:
   std::reference_wrapper<std::string const> row_key_;
@@ -55,6 +60,7 @@ class CellView {
   std::reference_wrapper<std::string const> column_qualifier_;
   std::chrono::milliseconds timestamp_;
   std::reference_wrapper<std::string const> value_;
+  absl::optional<std::reference_wrapper<std::string const>> label_;
 };
 
 }  // namespace emulator
