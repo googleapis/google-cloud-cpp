@@ -121,6 +121,9 @@ class GenericStub {
   virtual StatusOr<storage::ObjectMetadata> UpdateObject(
       rest_internal::RestContext&, Options const&,
       storage::internal::UpdateObjectRequest const&) = 0;
+  virtual StatusOr<storage::ObjectMetadata> MoveObject(
+      rest_internal::RestContext&, Options const&,
+      storage::internal::MoveObjectRequest const&) = 0;
   virtual StatusOr<storage::ObjectMetadata> PatchObject(
       rest_internal::RestContext&, Options const&,
       storage::internal::PatchObjectRequest const&) = 0;

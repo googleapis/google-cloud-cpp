@@ -88,6 +88,9 @@ class LoggingStub : public storage_internal::GenericStub {
   StatusOr<ObjectMetadata> UpdateObject(
       rest_internal::RestContext&, Options const&,
       UpdateObjectRequest const& request) override;
+  StatusOr<ObjectMetadata> MoveObject(
+      rest_internal::RestContext&, Options const&,
+      MoveObjectRequest const& request) override;
   StatusOr<ObjectMetadata> PatchObject(
       rest_internal::RestContext&, Options const&,
       PatchObjectRequest const& request) override;

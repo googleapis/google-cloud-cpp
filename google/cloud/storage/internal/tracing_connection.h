@@ -77,6 +77,8 @@ class TracingConnection : public storage::internal::StorageConnection {
       storage::internal::DeleteObjectRequest const& request) override;
   StatusOr<storage::ObjectMetadata> UpdateObject(
       storage::internal::UpdateObjectRequest const& request) override;
+  StatusOr<storage::ObjectMetadata> MoveObject(
+      storage::internal::MoveObjectRequest const& request) override;
   StatusOr<storage::ObjectMetadata> PatchObject(
       storage::internal::PatchObjectRequest const& request) override;
   StatusOr<storage::ObjectMetadata> ComposeObject(

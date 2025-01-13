@@ -80,6 +80,8 @@ class MockClient : public google::cloud::storage::internal::StorageConnection {
               (internal::DeleteObjectRequest const&), (override));
   MOCK_METHOD(StatusOr<storage::ObjectMetadata>, UpdateObject,
               (internal::UpdateObjectRequest const&), (override));
+  MOCK_METHOD(StatusOr<storage::ObjectMetadata>, MoveObject,
+              (internal::MoveObjectRequest const&), (override));
   MOCK_METHOD(StatusOr<storage::ObjectMetadata>, PatchObject,
               (internal::PatchObjectRequest const&), (override));
   MOCK_METHOD(StatusOr<storage::ObjectMetadata>, ComposeObject,

@@ -363,6 +363,18 @@ TEST(RestStubTest, UpdateObject) {
               StatusIs(PermanentError().code(), PermanentError().message()));
 }
 
+TEST(RestStubTest, MoveObject) {
+  auto mock = std::make_shared<MockRestClient>();
+  EXPECT_CALL(*mock,
+              Post(ExpectedContext(), ExpectedRequest(), ExpectedPayload()))
+      .WillOnce(Return(PermanentError()));
+  auto tested = std::make_unique<RestStub>(Options{}, mock, mock);
+  auto context = TestContext();
+  auto status = tested->MoveObject(context, TestOptions(), MoveObjectRequest());
+  EXPECT_THAT(status,
+              StatusIs(PermanentError().code(), PermanentError().message()));
+}
+
 TEST(RestStubTest, PatchObject) {
   auto mock = std::make_shared<MockRestClient>();
   EXPECT_CALL(*mock, Patch(ExpectedContext(), ExpectedRequest(), _))

@@ -103,6 +103,9 @@ class RestStub : public storage_internal::GenericStub {
   StatusOr<ObjectMetadata> UpdateObject(
       rest_internal::RestContext& context, Options const& options,
       UpdateObjectRequest const& request) override;
+  StatusOr<ObjectMetadata> MoveObject(
+      rest_internal::RestContext& context, Options const& options,
+      MoveObjectRequest const& request) override;
   StatusOr<ObjectMetadata> PatchObject(
       rest_internal::RestContext& context, Options const& options,
       PatchObjectRequest const& request) override;

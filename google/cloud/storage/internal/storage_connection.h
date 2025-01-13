@@ -93,6 +93,7 @@ class StorageConnection {
       ListObjectsRequest const&) = 0;
   virtual StatusOr<EmptyResponse> DeleteObject(DeleteObjectRequest const&) = 0;
   virtual StatusOr<ObjectMetadata> UpdateObject(UpdateObjectRequest const&) = 0;
+  virtual StatusOr<ObjectMetadata> MoveObject(MoveObjectRequest const&) = 0;
   virtual StatusOr<ObjectMetadata> PatchObject(PatchObjectRequest const&) = 0;
   virtual StatusOr<ObjectMetadata> ComposeObject(
       ComposeObjectRequest const&) = 0;

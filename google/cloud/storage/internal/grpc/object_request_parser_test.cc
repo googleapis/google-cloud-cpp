@@ -406,6 +406,51 @@ TEST(GrpcObjectRequestParser, ReadOffsetEmptyRange) {
   EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument));
 }
 
+TEST(GrpcObjectRequestParser, MoveObjectSimpleRequest) {
+  auto constexpr kTextProto = R"pb(
+    bucket: "projects/_/buckets/test-bucket"
+    source_object: "source-object"
+    destination_object: "destination-object"
+  )pb";
+  google::storage::v2::MoveObjectRequest expected;
+  ASSERT_TRUE(TextFormat::ParseFromString(kTextProto, &expected));
+  storage::internal::MoveObjectRequest req("test-bucket", "source-object",
+                                           "destination-object");
+  auto actual = ToProto(req);
+  ASSERT_STATUS_OK(actual);
+  EXPECT_THAT(*actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcObjectRequestParser, MoveObjectRequestAllOptions) {
+  auto constexpr kTextProto = R"pb(
+    bucket: "projects/_/buckets/test-bucket"
+    source_object: "source-object"
+    destination_object: "destination-object"
+    if_source_generation_match: 1
+    if_source_generation_not_match: 2
+    if_source_metageneration_match: 3
+    if_source_metageneration_not_match: 4
+    if_generation_match: 5
+    if_generation_not_match: 6
+    if_metageneration_match: 7
+    if_metageneration_not_match: 8
+  )pb";
+  google::storage::v2::MoveObjectRequest expected;
+  ASSERT_TRUE(TextFormat::ParseFromString(kTextProto, &expected));
+  storage::internal::MoveObjectRequest req("test-bucket", "source-object",
+                                           "destination-object");
+  req.set_multiple_options(
+      storage::IfSourceGenerationMatch(1),
+      storage::IfSourceGenerationNotMatch(2),
+      storage::IfSourceMetagenerationMatch(3),
+      storage::IfSourceMetagenerationNotMatch(4), storage::IfGenerationMatch(5),
+      storage::IfGenerationNotMatch(6), storage::IfMetagenerationMatch(7),
+      storage::IfMetagenerationNotMatch(8));
+  auto actual = ToProto(req);
+  ASSERT_STATUS_OK(actual);
+  EXPECT_THAT(*actual, IsProtoEqual(expected));
+}
+
 TEST(GrpcObjectRequestParser, PatchObjectRequestAllOptions) {
   auto constexpr kTextProto = R"pb(
     predefined_acl: "projectPrivate"

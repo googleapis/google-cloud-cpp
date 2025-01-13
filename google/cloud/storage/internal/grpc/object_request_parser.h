@@ -67,6 +67,9 @@ StatusOr<google::storage::v2::RewriteObjectRequest> ToProto(
 StatusOr<google::storage::v2::RestoreObjectRequest> ToProto(
     storage::internal::RestoreObjectRequest const& request);
 
+StatusOr<google::storage::v2::MoveObjectRequest> ToProto(
+    storage::internal::MoveObjectRequest const& request);
+
 StatusOr<google::storage::v2::StartResumableWriteRequest> ToProto(
     storage::internal::ResumableUploadRequest const& request);
 
