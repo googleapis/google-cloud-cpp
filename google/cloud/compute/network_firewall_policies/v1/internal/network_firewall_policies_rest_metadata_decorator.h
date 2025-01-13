@@ -70,6 +70,13 @@ class NetworkFirewallPoliciesRestMetadata
       google::cloud::cpp::compute::network_firewall_policies::v1::
           AddRuleRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::NetworkFirewallPolicyAggregatedList>
+  AggregatedListNetworkFirewallPolicies(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::network_firewall_policies::v1::
+          AggregatedListNetworkFirewallPoliciesRequest const& request) override;
+
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncCloneRules(
       google::cloud::CompletionQueue& cq,

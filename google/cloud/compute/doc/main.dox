@@ -72,6 +72,7 @@ application.
 - [\c compute_network_edge_security_services_v1::NetworkEdgeSecurityServicesClient](@ref google::cloud::compute_network_edge_security_services_v1::NetworkEdgeSecurityServicesClient)
 - [\c compute_network_endpoint_groups_v1::NetworkEndpointGroupsClient](@ref google::cloud::compute_network_endpoint_groups_v1::NetworkEndpointGroupsClient)
 - [\c compute_network_firewall_policies_v1::NetworkFirewallPoliciesClient](@ref google::cloud::compute_network_firewall_policies_v1::NetworkFirewallPoliciesClient)
+- [\c compute_network_profiles_v1::NetworkProfilesClient](@ref google::cloud::compute_network_profiles_v1::NetworkProfilesClient)
 - [\c compute_networks_v1::NetworksClient](@ref google::cloud::compute_networks_v1::NetworksClient)
 - [\c compute_node_groups_v1::NodeGroupsClient](@ref google::cloud::compute_node_groups_v1::NodeGroupsClient)
 - [\c compute_node_templates_v1::NodeTemplatesClient](@ref google::cloud::compute_node_templates_v1::NodeTemplatesClient)

@@ -446,6 +446,68 @@ RegionSecurityPoliciesClient::RemoveRule(
   return connection_->RemoveRule(operation);
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionSecurityPoliciesClient::SetLabels(
+    std::string const& project, std::string const& region,
+    std::string const& resource,
+    google::cloud::cpp::compute::v1::RegionSetLabelsRequest const&
+        region_set_labels_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_security_policies::v1::SetLabelsRequest
+      request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_resource(resource);
+  *request.mutable_region_set_labels_request_resource() =
+      region_set_labels_request_resource;
+  return connection_->SetLabels(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionSecurityPoliciesClient::SetLabels(
+    NoAwaitTag, std::string const& project, std::string const& region,
+    std::string const& resource,
+    google::cloud::cpp::compute::v1::RegionSetLabelsRequest const&
+        region_set_labels_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_security_policies::v1::SetLabelsRequest
+      request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_resource(resource);
+  *request.mutable_region_set_labels_request_resource() =
+      region_set_labels_request_resource;
+  return connection_->SetLabels(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionSecurityPoliciesClient::SetLabels(
+    google::cloud::cpp::compute::region_security_policies::v1::
+        SetLabelsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetLabels(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionSecurityPoliciesClient::SetLabels(
+    NoAwaitTag,
+    google::cloud::cpp::compute::region_security_policies::v1::
+        SetLabelsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetLabels(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionSecurityPoliciesClient::SetLabels(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetLabels(operation);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace compute_region_security_policies_v1
 }  // namespace cloud

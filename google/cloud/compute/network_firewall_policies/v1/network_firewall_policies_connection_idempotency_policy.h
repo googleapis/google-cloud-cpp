@@ -46,6 +46,10 @@ class NetworkFirewallPoliciesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::network_firewall_policies::v1::
           AddRuleRequest const& request);
 
+  virtual google::cloud::Idempotency AggregatedListNetworkFirewallPolicies(
+      google::cloud::cpp::compute::network_firewall_policies::v1::
+          AggregatedListNetworkFirewallPoliciesRequest request);
+
   virtual google::cloud::Idempotency CloneRules(
       google::cloud::cpp::compute::network_firewall_policies::v1::
           CloneRulesRequest const& request);

@@ -55,6 +55,7 @@ set(service_dirs
     "network_edge_security_services/v1/"
     "network_endpoint_groups/v1/"
     "network_firewall_policies/v1/"
+    "network_profiles/v1/"
     "networks/v1/"
     "node_groups/v1/"
     "node_templates/v1/"

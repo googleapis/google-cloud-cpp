@@ -88,6 +88,16 @@ NetworkFirewallPoliciesConnection::AddRule(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::FirewallPoliciesScopedList>>
+NetworkFirewallPoliciesConnection::AggregatedListNetworkFirewallPolicies(
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        AggregatedListNetworkFirewallPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                             FirewallPoliciesScopedList>>>();
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkFirewallPoliciesConnection::CloneRules(
     google::cloud::cpp::compute::network_firewall_policies::v1::

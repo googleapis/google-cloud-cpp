@@ -301,6 +301,53 @@ NetworkFirewallPoliciesRestConnectionImpl::AddRule(
       });
 }
 
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::FirewallPoliciesScopedList>>
+NetworkFirewallPoliciesRestConnectionImpl::
+    AggregatedListNetworkFirewallPolicies(
+        google::cloud::cpp::compute::network_firewall_policies::v1::
+            AggregatedListNetworkFirewallPoliciesRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->AggregatedListNetworkFirewallPolicies(
+          request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<StreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::FirewallPoliciesScopedList>>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<compute_network_firewall_policies_v1::
+                                   NetworkFirewallPoliciesRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::cpp::compute::network_firewall_policies::v1::
+              AggregatedListNetworkFirewallPoliciesRequest const& r) {
+        return google::cloud::rest_internal::RestRetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](rest_internal::RestContext& rest_context,
+                   Options const& options,
+                   google::cloud::cpp::compute::network_firewall_policies::v1::
+                       AggregatedListNetworkFirewallPoliciesRequest const&
+                           request) {
+              return stub->AggregatedListNetworkFirewallPolicies(
+                  rest_context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::cpp::compute::v1::NetworkFirewallPolicyAggregatedList
+             r) {
+        std::vector<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                               FirewallPoliciesScopedList>>
+            result(r.items().size());
+        auto& messages = *r.mutable_items();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkFirewallPoliciesRestConnectionImpl::CloneRules(
     google::cloud::cpp::compute::network_firewall_policies::v1::

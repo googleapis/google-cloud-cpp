@@ -82,6 +82,16 @@ NetworkFirewallPoliciesRestMetadata::AddRule(
   return child_->AddRule(rest_context, options, request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::NetworkFirewallPolicyAggregatedList>
+NetworkFirewallPoliciesRestMetadata::AggregatedListNetworkFirewallPolicies(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        AggregatedListNetworkFirewallPoliciesRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->AggregatedListNetworkFirewallPolicies(rest_context, options,
+                                                       request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkFirewallPoliciesRestMetadata::AsyncCloneRules(
     CompletionQueue& cq,

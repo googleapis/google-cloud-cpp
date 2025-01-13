@@ -129,6 +129,17 @@ class RegionSecurityPoliciesTracingConnection
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveRule(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      google::cloud::cpp::compute::region_security_policies::v1::
+          SetLabelsRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      NoAwaitTag, google::cloud::cpp::compute::region_security_policies::v1::
+                      SetLabelsRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
  private:
   std::shared_ptr<
       compute_region_security_policies_v1::RegionSecurityPoliciesConnection>

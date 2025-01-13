@@ -322,6 +322,27 @@ RegionInstanceGroupManagersRestMetadata::Resize(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionInstanceGroupManagersRestMetadata::AsyncResumeInstances(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        ResumeInstancesRequest const& request) {
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncResumeInstances(cq, std::move(rest_context),
+                                      std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionInstanceGroupManagersRestMetadata::ResumeInstances(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        ResumeInstancesRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->ResumeInstances(rest_context, options, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceGroupManagersRestMetadata::AsyncSetInstanceTemplate(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
@@ -361,6 +382,69 @@ RegionInstanceGroupManagersRestMetadata::SetTargetPools(
         SetTargetPoolsRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->SetTargetPools(rest_context, options, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionInstanceGroupManagersRestMetadata::AsyncStartInstances(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        StartInstancesRequest const& request) {
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncStartInstances(cq, std::move(rest_context),
+                                     std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionInstanceGroupManagersRestMetadata::StartInstances(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        StartInstancesRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->StartInstances(rest_context, options, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionInstanceGroupManagersRestMetadata::AsyncStopInstances(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        StopInstancesRequest const& request) {
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncStopInstances(cq, std::move(rest_context),
+                                    std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionInstanceGroupManagersRestMetadata::StopInstances(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        StopInstancesRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->StopInstances(rest_context, options, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionInstanceGroupManagersRestMetadata::AsyncSuspendInstances(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        SuspendInstancesRequest const& request) {
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncSuspendInstances(cq, std::move(rest_context),
+                                       std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionInstanceGroupManagersRestMetadata::SuspendInstances(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        SuspendInstancesRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->SuspendInstances(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

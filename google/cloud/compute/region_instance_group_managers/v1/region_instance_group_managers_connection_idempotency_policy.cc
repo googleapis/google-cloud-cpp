@@ -147,6 +147,13 @@ Idempotency RegionInstanceGroupManagersConnectionIdempotencyPolicy::Resize(
 }
 
 Idempotency
+RegionInstanceGroupManagersConnectionIdempotencyPolicy::ResumeInstances(
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        ResumeInstancesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
 RegionInstanceGroupManagersConnectionIdempotencyPolicy::SetInstanceTemplate(
     google::cloud::cpp::compute::region_instance_group_managers::v1::
         SetInstanceTemplateRequest const&) {
@@ -157,6 +164,27 @@ Idempotency
 RegionInstanceGroupManagersConnectionIdempotencyPolicy::SetTargetPools(
     google::cloud::cpp::compute::region_instance_group_managers::v1::
         SetTargetPoolsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+RegionInstanceGroupManagersConnectionIdempotencyPolicy::StartInstances(
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        StartInstancesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+RegionInstanceGroupManagersConnectionIdempotencyPolicy::StopInstances(
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        StopInstancesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+RegionInstanceGroupManagersConnectionIdempotencyPolicy::SuspendInstances(
+    google::cloud::cpp::compute::region_instance_group_managers::v1::
+        SuspendInstancesRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

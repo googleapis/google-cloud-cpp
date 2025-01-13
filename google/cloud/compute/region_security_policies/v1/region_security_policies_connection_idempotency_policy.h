@@ -73,6 +73,10 @@ class RegionSecurityPoliciesConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency RemoveRule(
       google::cloud::cpp::compute::region_security_policies::v1::
           RemoveRuleRequest const& request);
+
+  virtual google::cloud::Idempotency SetLabels(
+      google::cloud::cpp::compute::region_security_policies::v1::
+          SetLabelsRequest const& request);
 };
 
 std::unique_ptr<RegionSecurityPoliciesConnectionIdempotencyPolicy>

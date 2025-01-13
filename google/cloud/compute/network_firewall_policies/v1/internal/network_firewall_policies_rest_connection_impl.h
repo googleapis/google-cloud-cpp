@@ -76,6 +76,12 @@ class NetworkFirewallPoliciesRestConnectionImpl
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddRule(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
+  StreamRange<std::pair<
+      std::string, google::cloud::cpp::compute::v1::FirewallPoliciesScopedList>>
+  AggregatedListNetworkFirewallPolicies(
+      google::cloud::cpp::compute::network_firewall_policies::v1::
+          AggregatedListNetworkFirewallPoliciesRequest request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CloneRules(
       google::cloud::cpp::compute::network_firewall_policies::v1::
           CloneRulesRequest const& request) override;

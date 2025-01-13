@@ -95,6 +95,12 @@ Idempotency RegionSecurityPoliciesConnectionIdempotencyPolicy::RemoveRule(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency RegionSecurityPoliciesConnectionIdempotencyPolicy::SetLabels(
+    google::cloud::cpp::compute::region_security_policies::v1::
+        SetLabelsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<RegionSecurityPoliciesConnectionIdempotencyPolicy>
 MakeDefaultRegionSecurityPoliciesConnectionIdempotencyPolicy() {
   return std::make_unique<RegionSecurityPoliciesConnectionIdempotencyPolicy>();

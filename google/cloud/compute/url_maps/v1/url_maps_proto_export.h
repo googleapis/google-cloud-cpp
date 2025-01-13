@@ -30,7 +30,7 @@
 #include <google/cloud/compute/v1/internal/common_017.pb.h>
 #include <google/cloud/compute/v1/internal/common_019.pb.h>
 #include <google/cloud/compute/v1/internal/common_029.pb.h>
-#include <google/cloud/compute/v1/internal/common_077.pb.h>
+#include <google/cloud/compute/v1/internal/common_078.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_URL_MAPS_V1_URL_MAPS_PROTO_EXPORT_H
