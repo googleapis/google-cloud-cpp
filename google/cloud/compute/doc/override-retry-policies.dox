@@ -120,6 +120,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_network_edge_security_services_v1::NetworkEdgeSecurityServicesClient](@ref compute_network_edge_security_services_v1::NetworkEdgeSecurityServicesClient-retry-snippet)
 - [\c compute_network_endpoint_groups_v1::NetworkEndpointGroupsClient](@ref compute_network_endpoint_groups_v1::NetworkEndpointGroupsClient-retry-snippet)
 - [\c compute_network_firewall_policies_v1::NetworkFirewallPoliciesClient](@ref compute_network_firewall_policies_v1::NetworkFirewallPoliciesClient-retry-snippet)
+- [\c compute_network_profiles_v1::NetworkProfilesClient](@ref compute_network_profiles_v1::NetworkProfilesClient-retry-snippet)
 - [\c compute_networks_v1::NetworksClient](@ref compute_networks_v1::NetworksClient-retry-snippet)
 - [\c compute_node_groups_v1::NodeGroupsClient](@ref compute_node_groups_v1::NodeGroupsClient-retry-snippet)
 - [\c compute_node_templates_v1::NodeTemplatesClient](@ref compute_node_templates_v1::NodeTemplatesClient-retry-snippet)
@@ -683,6 +684,18 @@ This shows how to override the retry policies for compute_network_firewall_polic
 Assuming you have created a custom idempotency policy. Such as:
 
 @snippet google/cloud/compute/network_firewall_policies/v1/samples/network_firewall_policies_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page compute_network_profiles_v1::NetworkProfilesClient-retry-snippet Override compute_network_profiles_v1::NetworkProfilesClient Retry Policies
+
+This shows how to override the retry policies for compute_network_profiles_v1::NetworkProfilesClient:
+
+@snippet google/cloud/compute/network_profiles/v1/samples/network_profiles_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/compute/network_profiles/v1/samples/network_profiles_client_samples.cc custom-idempotency-policy
 
 */
 

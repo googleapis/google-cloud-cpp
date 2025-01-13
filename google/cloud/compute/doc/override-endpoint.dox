@@ -54,6 +54,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c compute_network_edge_security_services_v1::NetworkEdgeSecurityServicesClient](@ref compute_network_edge_security_services_v1::NetworkEdgeSecurityServicesClient-endpoint-snippet)
 - [\c compute_network_endpoint_groups_v1::NetworkEndpointGroupsClient](@ref compute_network_endpoint_groups_v1::NetworkEndpointGroupsClient-endpoint-snippet)
 - [\c compute_network_firewall_policies_v1::NetworkFirewallPoliciesClient](@ref compute_network_firewall_policies_v1::NetworkFirewallPoliciesClient-endpoint-snippet)
+- [\c compute_network_profiles_v1::NetworkProfilesClient](@ref compute_network_profiles_v1::NetworkProfilesClient-endpoint-snippet)
 - [\c compute_networks_v1::NetworksClient](@ref compute_networks_v1::NetworksClient-endpoint-snippet)
 - [\c compute_node_groups_v1::NodeGroupsClient](@ref compute_node_groups_v1::NodeGroupsClient-endpoint-snippet)
 - [\c compute_node_templates_v1::NodeTemplatesClient](@ref compute_node_templates_v1::NodeTemplatesClient-endpoint-snippet)
@@ -363,6 +364,12 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page compute_network_firewall_policies_v1::NetworkFirewallPoliciesClient-endpoint-snippet Override compute_network_firewall_policies_v1::NetworkFirewallPoliciesClient Endpoint Configuration
 
 @snippet google/cloud/compute/network_firewall_policies/v1/samples/network_firewall_policies_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page compute_network_profiles_v1::NetworkProfilesClient-endpoint-snippet Override compute_network_profiles_v1::NetworkProfilesClient Endpoint Configuration
+
+@snippet google/cloud/compute/network_profiles/v1/samples/network_profiles_client_samples.cc set-client-endpoint
 
 */
 

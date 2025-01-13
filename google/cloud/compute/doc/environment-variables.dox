@@ -178,6 +178,10 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeNetworkFirewallPoliciesConnection()`.
 
+- `GOOGLE_CLOUD_CPP_NETWORK_PROFILES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "compute.googleapis.com")
+  used by `MakeNetworkProfilesConnection()`.
+
 - `GOOGLE_CLOUD_CPP_NODE_GROUPS_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "compute.googleapis.com")
   used by `MakeNodeGroupsConnection()`.

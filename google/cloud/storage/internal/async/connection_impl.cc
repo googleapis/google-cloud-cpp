@@ -260,8 +260,8 @@ AsyncConnectionImpl::StartBufferedUpload(UploadParams p) {
   return StartUnbufferedUpload(std::move(p))
       .then([current = std::move(current),
              async_write_object = std::move(async_write_object)](auto f) mutable
-                -> StatusOr<std::unique_ptr<
-                    storage_experimental::AsyncWriterConnection>> {
+            -> StatusOr<
+                std::unique_ptr<storage_experimental::AsyncWriterConnection>> {
         auto w = f.get();
         if (!w) return std::move(w).status();
         auto factory = [upload_id = (*w)->UploadId(),
@@ -298,8 +298,8 @@ AsyncConnectionImpl::ResumeBufferedUpload(ResumeUploadParams p) {
   return f.then(
       [current = std::move(current),
        make_unbuffered = std::move(make_unbuffered)](auto f) mutable
-          -> StatusOr<
-              std::unique_ptr<storage_experimental::AsyncWriterConnection>> {
+      -> StatusOr<
+          std::unique_ptr<storage_experimental::AsyncWriterConnection>> {
         auto w = f.get();
         if (!w) return std::move(w).status();
         return MakeWriterConnectionBuffered(std::move(make_unbuffered),

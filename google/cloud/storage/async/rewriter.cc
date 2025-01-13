@@ -51,7 +51,7 @@ future<StatusOr<IterateResponse>> AsyncRewriter::Iterate(AsyncToken token) {
   if (token != t) return TokenError<IterateResponse>(GCP_ERROR_INFO());
 
   return impl_->Iterate().then([t = std::move(t), impl = impl_](auto f) mutable
-                                   -> StatusOr<IterateResponse> {
+                               -> StatusOr<IterateResponse> {
     auto r = f.get();
     if (!r) return std::move(r).status();
     auto const done = r->has_resource();
