@@ -194,6 +194,27 @@ RegionSecurityPoliciesRestMetadata::RemoveRule(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionSecurityPoliciesRestMetadata::AsyncSetLabels(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::region_security_policies::v1::
+        SetLabelsRequest const& request) {
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncSetLabels(cq, std::move(rest_context), std::move(options),
+                                request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionSecurityPoliciesRestMetadata::SetLabels(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_security_policies::v1::
+        SetLabelsRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->SetLabels(rest_context, options, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSecurityPoliciesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,

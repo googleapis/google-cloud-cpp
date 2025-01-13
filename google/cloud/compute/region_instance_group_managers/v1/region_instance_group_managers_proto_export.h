@@ -28,9 +28,9 @@
 // IWYU pragma: begin_exports
 #include <google/cloud/compute/v1/internal/common_016.pb.h>
 #include <google/cloud/compute/v1/internal/common_028.pb.h>
-#include <google/cloud/compute/v1/internal/common_039.pb.h>
-#include <google/cloud/compute/v1/internal/common_078.pb.h>
-#include <google/cloud/compute/v1/internal/common_098.pb.h>
+#include <google/cloud/compute/v1/internal/common_040.pb.h>
+#include <google/cloud/compute/v1/internal/common_079.pb.h>
+#include <google/cloud/compute/v1/internal/common_100.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_INSTANCE_GROUP_MANAGERS_V1_REGION_INSTANCE_GROUP_MANAGERS_PROTO_EXPORT_H

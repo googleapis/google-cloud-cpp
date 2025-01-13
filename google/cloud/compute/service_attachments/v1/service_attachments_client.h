@@ -121,7 +121,7 @@ class ServiceAttachmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.service_attachments.v1.AggregatedListServiceAttachmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L153}
-  /// [google.cloud.cpp.compute.v1.ServiceAttachmentsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_111.proto#L407}
+  /// [google.cloud.cpp.compute.v1.ServiceAttachmentsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_113.proto#L411}
   ///
   // clang-format on
   StreamRange<
@@ -166,7 +166,7 @@ class ServiceAttachmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.service_attachments.v1.AggregatedListServiceAttachmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L153}
-  /// [google.cloud.cpp.compute.v1.ServiceAttachmentsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_111.proto#L407}
+  /// [google.cloud.cpp.compute.v1.ServiceAttachmentsScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_113.proto#L411}
   ///
   // clang-format on
   StreamRange<
@@ -320,7 +320,7 @@ class ServiceAttachmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.service_attachments.v1.GetServiceAttachmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L287}
-  /// [google.cloud.cpp.compute.v1.ServiceAttachment]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_111.proto#L28}
+  /// [google.cloud.cpp.compute.v1.ServiceAttachment]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_113.proto#L28}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>
@@ -353,7 +353,7 @@ class ServiceAttachmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.service_attachments.v1.GetServiceAttachmentRequest]: @cloud_cpp_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L287}
-  /// [google.cloud.cpp.compute.v1.ServiceAttachment]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_111.proto#L28}
+  /// [google.cloud.cpp.compute.v1.ServiceAttachment]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_113.proto#L28}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>
@@ -582,7 +582,7 @@ class ServiceAttachmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.service_attachments.v1.ListServiceAttachmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L335}
-  /// [google.cloud.cpp.compute.v1.ServiceAttachment]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_111.proto#L28}
+  /// [google.cloud.cpp.compute.v1.ServiceAttachment]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_113.proto#L28}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::ServiceAttachment>
@@ -623,7 +623,7 @@ class ServiceAttachmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.service_attachments.v1.ListServiceAttachmentsRequest]: @cloud_cpp_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L335}
-  /// [google.cloud.cpp.compute.v1.ServiceAttachment]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_111.proto#L28}
+  /// [google.cloud.cpp.compute.v1.ServiceAttachment]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_113.proto#L28}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::ServiceAttachment>
@@ -855,7 +855,7 @@ class ServiceAttachmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.service_attachments.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L465}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_137.proto#L30}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_139.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -891,7 +891,7 @@ class ServiceAttachmentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.service_attachments.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/service_attachments/v1/service_attachments.proto#L465}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_137.proto#L30}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_139.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

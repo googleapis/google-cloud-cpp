@@ -851,6 +851,70 @@ InstanceGroupManagersClient::Resize(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstanceGroupManagersClient::ResumeInstances(
+    std::string const& project, std::string const& zone,
+    std::string const& instance_group_manager,
+    google::cloud::cpp::compute::v1::
+        InstanceGroupManagersResumeInstancesRequest const&
+            instance_group_managers_resume_instances_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::instance_group_managers::v1::
+      ResumeInstancesRequest request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_instance_group_manager(instance_group_manager);
+  *request.mutable_instance_group_managers_resume_instances_request_resource() =
+      instance_group_managers_resume_instances_request_resource;
+  return connection_->ResumeInstances(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceGroupManagersClient::ResumeInstances(
+    NoAwaitTag, std::string const& project, std::string const& zone,
+    std::string const& instance_group_manager,
+    google::cloud::cpp::compute::v1::
+        InstanceGroupManagersResumeInstancesRequest const&
+            instance_group_managers_resume_instances_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::instance_group_managers::v1::
+      ResumeInstancesRequest request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_instance_group_manager(instance_group_manager);
+  *request.mutable_instance_group_managers_resume_instances_request_resource() =
+      instance_group_managers_resume_instances_request_resource;
+  return connection_->ResumeInstances(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstanceGroupManagersClient::ResumeInstances(
+    google::cloud::cpp::compute::instance_group_managers::v1::
+        ResumeInstancesRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ResumeInstances(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceGroupManagersClient::ResumeInstances(
+    NoAwaitTag,
+    google::cloud::cpp::compute::instance_group_managers::v1::
+        ResumeInstancesRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ResumeInstances(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstanceGroupManagersClient::ResumeInstances(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ResumeInstances(operation);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupManagersClient::SetInstanceTemplate(
     std::string const& project, std::string const& zone,
     std::string const& instance_group_manager,
@@ -978,6 +1042,200 @@ InstanceGroupManagersClient::SetTargetPools(
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetTargetPools(operation);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstanceGroupManagersClient::StartInstances(
+    std::string const& project, std::string const& zone,
+    std::string const& instance_group_manager,
+    google::cloud::cpp::compute::v1::
+        InstanceGroupManagersStartInstancesRequest const&
+            instance_group_managers_start_instances_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::instance_group_managers::v1::
+      StartInstancesRequest request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_instance_group_manager(instance_group_manager);
+  *request.mutable_instance_group_managers_start_instances_request_resource() =
+      instance_group_managers_start_instances_request_resource;
+  return connection_->StartInstances(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceGroupManagersClient::StartInstances(
+    NoAwaitTag, std::string const& project, std::string const& zone,
+    std::string const& instance_group_manager,
+    google::cloud::cpp::compute::v1::
+        InstanceGroupManagersStartInstancesRequest const&
+            instance_group_managers_start_instances_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::instance_group_managers::v1::
+      StartInstancesRequest request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_instance_group_manager(instance_group_manager);
+  *request.mutable_instance_group_managers_start_instances_request_resource() =
+      instance_group_managers_start_instances_request_resource;
+  return connection_->StartInstances(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstanceGroupManagersClient::StartInstances(
+    google::cloud::cpp::compute::instance_group_managers::v1::
+        StartInstancesRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StartInstances(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceGroupManagersClient::StartInstances(
+    NoAwaitTag,
+    google::cloud::cpp::compute::instance_group_managers::v1::
+        StartInstancesRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StartInstances(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstanceGroupManagersClient::StartInstances(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StartInstances(operation);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstanceGroupManagersClient::StopInstances(
+    std::string const& project, std::string const& zone,
+    std::string const& instance_group_manager,
+    google::cloud::cpp::compute::v1::
+        InstanceGroupManagersStopInstancesRequest const&
+            instance_group_managers_stop_instances_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::instance_group_managers::v1::StopInstancesRequest
+      request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_instance_group_manager(instance_group_manager);
+  *request.mutable_instance_group_managers_stop_instances_request_resource() =
+      instance_group_managers_stop_instances_request_resource;
+  return connection_->StopInstances(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceGroupManagersClient::StopInstances(
+    NoAwaitTag, std::string const& project, std::string const& zone,
+    std::string const& instance_group_manager,
+    google::cloud::cpp::compute::v1::
+        InstanceGroupManagersStopInstancesRequest const&
+            instance_group_managers_stop_instances_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::instance_group_managers::v1::StopInstancesRequest
+      request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_instance_group_manager(instance_group_manager);
+  *request.mutable_instance_group_managers_stop_instances_request_resource() =
+      instance_group_managers_stop_instances_request_resource;
+  return connection_->StopInstances(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstanceGroupManagersClient::StopInstances(
+    google::cloud::cpp::compute::instance_group_managers::v1::
+        StopInstancesRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StopInstances(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceGroupManagersClient::StopInstances(
+    NoAwaitTag,
+    google::cloud::cpp::compute::instance_group_managers::v1::
+        StopInstancesRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StopInstances(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstanceGroupManagersClient::StopInstances(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StopInstances(operation);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstanceGroupManagersClient::SuspendInstances(
+    std::string const& project, std::string const& zone,
+    std::string const& instance_group_manager,
+    google::cloud::cpp::compute::v1::
+        InstanceGroupManagersSuspendInstancesRequest const&
+            instance_group_managers_suspend_instances_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::instance_group_managers::v1::
+      SuspendInstancesRequest request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_instance_group_manager(instance_group_manager);
+  *request
+       .mutable_instance_group_managers_suspend_instances_request_resource() =
+      instance_group_managers_suspend_instances_request_resource;
+  return connection_->SuspendInstances(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceGroupManagersClient::SuspendInstances(
+    NoAwaitTag, std::string const& project, std::string const& zone,
+    std::string const& instance_group_manager,
+    google::cloud::cpp::compute::v1::
+        InstanceGroupManagersSuspendInstancesRequest const&
+            instance_group_managers_suspend_instances_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::instance_group_managers::v1::
+      SuspendInstancesRequest request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_instance_group_manager(instance_group_manager);
+  *request
+       .mutable_instance_group_managers_suspend_instances_request_resource() =
+      instance_group_managers_suspend_instances_request_resource;
+  return connection_->SuspendInstances(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstanceGroupManagersClient::SuspendInstances(
+    google::cloud::cpp::compute::instance_group_managers::v1::
+        SuspendInstancesRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SuspendInstances(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceGroupManagersClient::SuspendInstances(
+    NoAwaitTag,
+    google::cloud::cpp::compute::instance_group_managers::v1::
+        SuspendInstancesRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SuspendInstances(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstanceGroupManagersClient::SuspendInstances(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SuspendInstances(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

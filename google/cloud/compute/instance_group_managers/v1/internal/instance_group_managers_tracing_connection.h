@@ -214,6 +214,17 @@ class InstanceGroupManagersTracingConnection
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> ResumeInstances(
+      google::cloud::cpp::compute::instance_group_managers::v1::
+          ResumeInstancesRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> ResumeInstances(
+      NoAwaitTag, google::cloud::cpp::compute::instance_group_managers::v1::
+                      ResumeInstancesRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> ResumeInstances(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetInstanceTemplate(google::cloud::cpp::compute::instance_group_managers::v1::
                           SetInstanceTemplateRequest const& request) override;
@@ -235,6 +246,39 @@ class InstanceGroupManagersTracingConnection
                       SetTargetPoolsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetTargetPools(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> StartInstances(
+      google::cloud::cpp::compute::instance_group_managers::v1::
+          StartInstancesRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> StartInstances(
+      NoAwaitTag, google::cloud::cpp::compute::instance_group_managers::v1::
+                      StartInstancesRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> StartInstances(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> StopInstances(
+      google::cloud::cpp::compute::instance_group_managers::v1::
+          StopInstancesRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> StopInstances(
+      NoAwaitTag, google::cloud::cpp::compute::instance_group_managers::v1::
+                      StopInstancesRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> StopInstances(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SuspendInstances(
+      google::cloud::cpp::compute::instance_group_managers::v1::
+          SuspendInstancesRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SuspendInstances(
+      NoAwaitTag, google::cloud::cpp::compute::instance_group_managers::v1::
+                      SuspendInstancesRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SuspendInstances(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

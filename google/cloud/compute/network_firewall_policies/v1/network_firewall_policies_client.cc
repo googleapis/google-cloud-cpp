@@ -149,6 +149,27 @@ NetworkFirewallPoliciesClient::AddRule(
   return connection_->AddRule(operation);
 }
 
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::FirewallPoliciesScopedList>>
+NetworkFirewallPoliciesClient::AggregatedListNetworkFirewallPolicies(
+    std::string const& project, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::network_firewall_policies::v1::
+      AggregatedListNetworkFirewallPoliciesRequest request;
+  request.set_project(project);
+  return connection_->AggregatedListNetworkFirewallPolicies(request);
+}
+
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::FirewallPoliciesScopedList>>
+NetworkFirewallPoliciesClient::AggregatedListNetworkFirewallPolicies(
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        AggregatedListNetworkFirewallPoliciesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AggregatedListNetworkFirewallPolicies(std::move(request));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkFirewallPoliciesClient::CloneRules(std::string const& project,
                                           std::string const& firewall_policy,

@@ -131,6 +131,14 @@ class MockNetworkFirewallPoliciesConnection
               (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  MOCK_METHOD(
+      (StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
+                                              FirewallPoliciesScopedList>>),
+      AggregatedListNetworkFirewallPolicies,
+      (google::cloud::cpp::compute::network_firewall_policies::v1::
+           AggregatedListNetworkFirewallPoliciesRequest request),
+      (override));
+
   /// To disambiguate calls, use:
   ///
   /// @code

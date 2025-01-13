@@ -405,8 +405,8 @@ TEST(FutureTestVoid, conform_2_3_5) {
 
 // Use SFINAE to test if future<void>::then() accepts a T parameter.
 template <typename T>
-auto test_then(int) -> decltype(std::declval<future<void>>().then(T()),
-                                std::true_type{}) {
+auto test_then(int)
+    -> decltype(std::declval<future<void>>().then(T()), std::true_type{}) {
   return std::true_type{};
 }
 

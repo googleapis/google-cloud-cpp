@@ -48,6 +48,13 @@ Idempotency NetworkFirewallPoliciesConnectionIdempotencyPolicy::AddRule(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency NetworkFirewallPoliciesConnectionIdempotencyPolicy::
+    AggregatedListNetworkFirewallPolicies(
+        google::cloud::cpp::compute::network_firewall_policies::v1::
+            AggregatedListNetworkFirewallPoliciesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
 Idempotency NetworkFirewallPoliciesConnectionIdempotencyPolicy::CloneRules(
     google::cloud::cpp::compute::network_firewall_policies::v1::
         CloneRulesRequest const&) {

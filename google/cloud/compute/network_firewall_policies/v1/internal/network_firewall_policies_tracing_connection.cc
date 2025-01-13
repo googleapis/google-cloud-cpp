@@ -102,6 +102,22 @@ NetworkFirewallPoliciesTracingConnection::AddRule(
   return internal::EndSpan(std::move(span), child_->AddRule(operation));
 }
 
+StreamRange<std::pair<
+    std::string, google::cloud::cpp::compute::v1::FirewallPoliciesScopedList>>
+NetworkFirewallPoliciesTracingConnection::AggregatedListNetworkFirewallPolicies(
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        AggregatedListNetworkFirewallPoliciesRequest request) {
+  auto span = internal::MakeSpan(
+      "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
+      ":AggregatedListNetworkFirewallPolicies");
+  internal::OTelScope scope(span);
+  auto sr = child_->AggregatedListNetworkFirewallPolicies(std::move(request));
+  return internal::MakeTracedStreamRange<
+      std::pair<std::string,
+                google::cloud::cpp::compute::v1::FirewallPoliciesScopedList>>(
+      std::move(span), std::move(sr));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkFirewallPoliciesTracingConnection::CloneRules(
     google::cloud::cpp::compute::network_firewall_policies::v1::

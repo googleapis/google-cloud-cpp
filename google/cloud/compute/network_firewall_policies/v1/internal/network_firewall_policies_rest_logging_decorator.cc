@@ -103,6 +103,21 @@ NetworkFirewallPoliciesRestLogging::AddRule(
       rest_context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::NetworkFirewallPolicyAggregatedList>
+NetworkFirewallPoliciesRestLogging::AggregatedListNetworkFirewallPolicies(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        AggregatedListNetworkFirewallPoliciesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::network_firewall_policies::v1::
+                 AggregatedListNetworkFirewallPoliciesRequest const& request) {
+        return child_->AggregatedListNetworkFirewallPolicies(rest_context,
+                                                             options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkFirewallPoliciesRestLogging::AsyncCloneRules(
     CompletionQueue& cq,

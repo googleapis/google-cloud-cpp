@@ -27,7 +27,7 @@
 
 // IWYU pragma: begin_exports
 #include <google/cloud/compute/v1/internal/common_022.pb.h>
-#include <google/cloud/compute/v1/internal/common_123.pb.h>
+#include <google/cloud/compute/v1/internal/common_125.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_STORAGE_POOL_TYPES_V1_STORAGE_POOL_TYPES_PROTO_EXPORT_H

@@ -244,7 +244,7 @@ class RegionInstantSnapshotsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_instant_snapshots.v1.GetInstantSnapshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto#L198}
-  /// [google.cloud.cpp.compute.v1.InstantSnapshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_064.proto#L26}
+  /// [google.cloud.cpp.compute.v1.InstantSnapshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_065.proto#L26}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstantSnapshot> GetInstantSnapshot(
@@ -276,7 +276,7 @@ class RegionInstantSnapshotsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_instant_snapshots.v1.GetInstantSnapshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto#L198}
-  /// [google.cloud.cpp.compute.v1.InstantSnapshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_064.proto#L26}
+  /// [google.cloud.cpp.compute.v1.InstantSnapshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_065.proto#L26}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::InstantSnapshot> GetInstantSnapshot(
@@ -503,7 +503,7 @@ class RegionInstantSnapshotsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_instant_snapshots.v1.ListRegionInstantSnapshotsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto#L246}
-  /// [google.cloud.cpp.compute.v1.InstantSnapshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_064.proto#L26}
+  /// [google.cloud.cpp.compute.v1.InstantSnapshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_065.proto#L26}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InstantSnapshot>
@@ -545,7 +545,7 @@ class RegionInstantSnapshotsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_instant_snapshots.v1.ListRegionInstantSnapshotsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto#L246}
-  /// [google.cloud.cpp.compute.v1.InstantSnapshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_064.proto#L26}
+  /// [google.cloud.cpp.compute.v1.InstantSnapshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_065.proto#L26}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::InstantSnapshot>
@@ -773,7 +773,7 @@ class RegionInstantSnapshotsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_instant_snapshots.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto#L376}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_137.proto#L30}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_139.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -809,7 +809,7 @@ class RegionInstantSnapshotsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.region_instant_snapshots.v1.TestIamPermissionsRequest]: @cloud_cpp_reference_link{google/cloud/compute/region_instant_snapshots/v1/region_instant_snapshots.proto#L376}
-  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_137.proto#L30}
+  /// [google.cloud.cpp.compute.v1.TestPermissionsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_139.proto#L30}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
