@@ -53,6 +53,10 @@ class NetAppConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteStoragePool(
       google::cloud::netapp::v1::DeleteStoragePoolRequest const& request);
 
+  virtual google::cloud::Idempotency ValidateDirectoryService(
+      google::cloud::netapp::v1::ValidateDirectoryServiceRequest const&
+          request);
+
   virtual google::cloud::Idempotency SwitchActiveReplicaZone(
       google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request);
 

@@ -111,9 +111,9 @@ class AutokeyClient {
   /// Creates a new [KeyHandle][google.cloud.kms.v1.KeyHandle], triggering the
   /// provisioning of a new [CryptoKey][google.cloud.kms.v1.CryptoKey] for CMEK
   /// use with the given resource type in the configured key project and the same
-  /// location. [GetOperation][Operations.GetOperation] should be used to resolve
-  /// the resulting long-running operation and get the resulting
-  /// [KeyHandle][google.cloud.kms.v1.KeyHandle] and
+  /// location. [GetOperation][google.longrunning.Operations.GetOperation] should
+  /// be used to resolve the resulting long-running operation and get the
+  /// resulting [KeyHandle][google.cloud.kms.v1.KeyHandle] and
   /// [CryptoKey][google.cloud.kms.v1.CryptoKey].
   ///
   /// @param parent  Required. Name of the resource project and location to create the
@@ -145,6 +145,7 @@ class AutokeyClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.kms.v1.CreateKeyHandleRequest]: @googleapis_reference_link{google/cloud/kms/v1/autokey.proto#L93}
   /// [google.cloud.kms.v1.KeyHandle]: @googleapis_reference_link{google/cloud/kms/v1/autokey.proto#L128}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   ///
   // clang-format on
   future<StatusOr<google::cloud::kms::v1::KeyHandle>> CreateKeyHandle(
@@ -173,9 +174,9 @@ class AutokeyClient {
   /// Creates a new [KeyHandle][google.cloud.kms.v1.KeyHandle], triggering the
   /// provisioning of a new [CryptoKey][google.cloud.kms.v1.CryptoKey] for CMEK
   /// use with the given resource type in the configured key project and the same
-  /// location. [GetOperation][Operations.GetOperation] should be used to resolve
-  /// the resulting long-running operation and get the resulting
-  /// [KeyHandle][google.cloud.kms.v1.KeyHandle] and
+  /// location. [GetOperation][google.longrunning.Operations.GetOperation] should
+  /// be used to resolve the resulting long-running operation and get the
+  /// resulting [KeyHandle][google.cloud.kms.v1.KeyHandle] and
   /// [CryptoKey][google.cloud.kms.v1.CryptoKey].
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -206,6 +207,7 @@ class AutokeyClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.kms.v1.CreateKeyHandleRequest]: @googleapis_reference_link{google/cloud/kms/v1/autokey.proto#L93}
   /// [google.cloud.kms.v1.KeyHandle]: @googleapis_reference_link{google/cloud/kms/v1/autokey.proto#L128}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   ///
   // clang-format on
   future<StatusOr<google::cloud::kms::v1::KeyHandle>> CreateKeyHandle(

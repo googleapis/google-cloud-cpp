@@ -271,6 +271,18 @@ class BackupDRTracingStub : public BackupDRStub {
       google::cloud::backupdr::v1::TriggerBackupRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncInitializeService(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::backupdr::v1::InitializeServiceRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> InitializeService(
+      grpc::ClientContext& context, Options options,
+      google::cloud::backupdr::v1::InitializeServiceRequest const& request)
+      override;
+
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;

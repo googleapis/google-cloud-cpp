@@ -178,6 +178,47 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
   /// using ::testing::_;
   /// using ::testing::Matcher;
   /// EXPECT_CALL(*mock,
+  /// ValidateDirectoryService(Matcher<google::cloud::netapp::v1::ValidateDirectoryServiceRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>,
+              ValidateDirectoryService,
+              (google::cloud::netapp::v1::ValidateDirectoryServiceRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ValidateDirectoryService(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              ValidateDirectoryService,
+              (NoAwaitTag,
+               google::cloud::netapp::v1::ValidateDirectoryServiceRequest const&
+                   request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ValidateDirectoryService(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>,
+              ValidateDirectoryService,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
   /// SwitchActiveReplicaZone(Matcher<google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest
   /// const&>(_)))
   /// @endcode

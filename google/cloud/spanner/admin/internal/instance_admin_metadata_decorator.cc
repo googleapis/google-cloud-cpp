@@ -345,6 +345,39 @@ StatusOr<google::longrunning::Operation> InstanceAdminMetadata::MoveInstance(
   return child_->MoveInstance(context, options, request);
 }
 
+StatusOr<google::longrunning::ListOperationsResponse>
+InstanceAdminMetadata::ListOperations(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::ListOperationsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ListOperations(context, options, request);
+}
+
+StatusOr<google::longrunning::Operation> InstanceAdminMetadata::GetOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetOperation(context, options, request);
+}
+
+Status InstanceAdminMetadata::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::DeleteOperationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteOperation(context, options, request);
+}
+
+Status InstanceAdminMetadata::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
+    google::longrunning::CancelOperationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->CancelOperation(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 InstanceAdminMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

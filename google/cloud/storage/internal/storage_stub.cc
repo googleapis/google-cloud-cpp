@@ -204,6 +204,22 @@ DefaultStorageStub::ReadObject(
                                                 std::move(stream));
 }
 
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::storage::v2::BidiReadObjectRequest,
+    google::storage::v2::BidiReadObjectResponse>>
+DefaultStorageStub::AsyncBidiReadObject(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  return google::cloud::internal::MakeStreamingReadWriteRpc<
+      google::storage::v2::BidiReadObjectRequest,
+      google::storage::v2::BidiReadObjectResponse>(
+      cq, std::move(context), std::move(options),
+      [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
+        return grpc_stub_->PrepareAsyncBidiReadObject(context, cq);
+      });
+}
+
 StatusOr<google::storage::v2::Object> DefaultStorageStub::UpdateObject(
     grpc::ClientContext& context, Options const&,
     google::storage::v2::UpdateObjectRequest const& request) {

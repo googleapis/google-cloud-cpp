@@ -193,6 +193,29 @@ NetAppClient::DeleteStoragePool(google::longrunning::Operation const& operation,
   return connection_->DeleteStoragePool(operation);
 }
 
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppClient::ValidateDirectoryService(
+    google::cloud::netapp::v1::ValidateDirectoryServiceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ValidateDirectoryService(request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppClient::ValidateDirectoryService(
+    NoAwaitTag,
+    google::cloud::netapp::v1::ValidateDirectoryServiceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ValidateDirectoryService(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppClient::ValidateDirectoryService(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ValidateDirectoryService(operation);
+}
+
 future<StatusOr<google::cloud::netapp::v1::StoragePool>>
 NetAppClient::SwitchActiveReplicaZone(
     google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request,

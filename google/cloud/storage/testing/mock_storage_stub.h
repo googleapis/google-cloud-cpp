@@ -96,6 +96,16 @@ class MockStorageStub : public storage_internal::StorageStub {
               (grpc::ClientContext&, Options const&,
                google::storage::v2::UpdateObjectRequest const&),
               (override));
+
+  MOCK_METHOD((std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+                   google::storage::v2::BidiReadObjectRequest,
+                   google::storage::v2::BidiReadObjectResponse>>),
+              AsyncBidiReadObject,
+              (google::cloud::CompletionQueue const&,
+               std::shared_ptr<grpc::ClientContext>,
+               google::cloud::internal::ImmutableOptions),
+              (override));
+
   MOCK_METHOD((std::unique_ptr<google::cloud::internal::StreamingWriteRpc<
                    google::storage::v2::WriteObjectRequest,
                    google::storage::v2::WriteObjectResponse>>),
@@ -231,6 +241,11 @@ class MockAsyncInsertStream
 using MockAsyncObjectMediaStream =
     google::cloud::testing_util::MockAsyncStreamingReadRpc<
         google::storage::v2::ReadObjectResponse>;
+
+using MockAsyncBidiReadObjectStream =
+    google::cloud::mocks::MockAsyncStreamingReadWriteRpc<
+        google::storage::v2::BidiReadObjectRequest,
+        google::storage::v2::BidiReadObjectResponse>;
 
 using MockAsyncBidiWriteObjectStream =
     google::cloud::mocks::MockAsyncStreamingReadWriteRpc<

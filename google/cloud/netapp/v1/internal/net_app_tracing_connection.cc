@@ -142,6 +142,37 @@ NetAppTracingConnection::DeleteStoragePool(
                            child_->DeleteStoragePool(operation));
 }
 
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppTracingConnection::ValidateDirectoryService(
+    google::cloud::netapp::v1::ValidateDirectoryServiceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "netapp_v1::NetAppConnection::ValidateDirectoryService");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ValidateDirectoryService(request));
+}
+
+StatusOr<google::longrunning::Operation>
+NetAppTracingConnection::ValidateDirectoryService(
+    NoAwaitTag,
+    google::cloud::netapp::v1::ValidateDirectoryServiceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "netapp_v1::NetAppConnection::ValidateDirectoryService");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->ValidateDirectoryService(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppTracingConnection::ValidateDirectoryService(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "netapp_v1::NetAppConnection::ValidateDirectoryService");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ValidateDirectoryService(operation));
+}
+
 future<StatusOr<google::cloud::netapp::v1::StoragePool>>
 NetAppTracingConnection::SwitchActiveReplicaZone(
     google::cloud::netapp::v1::SwitchActiveReplicaZoneRequest const& request) {

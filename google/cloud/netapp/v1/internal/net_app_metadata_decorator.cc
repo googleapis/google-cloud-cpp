@@ -124,6 +124,27 @@ StatusOr<google::longrunning::Operation> NetAppMetadata::DeleteStoragePool(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+NetAppMetadata::AsyncValidateDirectoryService(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::ValidateDirectoryServiceRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncValidateDirectoryService(cq, std::move(context),
+                                               std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+NetAppMetadata::ValidateDirectoryService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::ValidateDirectoryServiceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ValidateDirectoryService(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 NetAppMetadata::AsyncSwitchActiveReplicaZone(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

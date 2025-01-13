@@ -124,7 +124,7 @@ class QueryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.monitoring.v3.QueryTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L496}
+  /// [google.monitoring.v3.QueryTimeSeriesRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L508}
   /// [google.monitoring.v3.TimeSeriesData]: @googleapis_reference_link{google/monitoring/v3/metric.proto#L140}
   ///
   // clang-format on

@@ -126,8 +126,8 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L149}
-  /// [google.cloud.dataplex.v1.DataScan]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L416}
+  /// [google.cloud.dataplex.v1.CreateDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L150}
+  /// [google.cloud.dataplex.v1.DataScan]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L422}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataScan>> CreateDataScan(
@@ -181,8 +181,8 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L149}
-  /// [google.cloud.dataplex.v1.DataScan]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L416}
+  /// [google.cloud.dataplex.v1.CreateDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L150}
+  /// [google.cloud.dataplex.v1.DataScan]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L422}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataScan>> CreateDataScan(
@@ -224,7 +224,7 @@ class DataScanServiceClient {
   /// @param data_scan  Required. DataScan resource to be updated.
   ///  @n
   ///  Only fields specified in `update_mask` are updated.
-  /// @param update_mask  Required. Mask of fields to update.
+  /// @param update_mask  Optional. Mask of fields to update.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -245,8 +245,8 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataScan]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L416}
-  /// [google.cloud.dataplex.v1.UpdateDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L179}
+  /// [google.cloud.dataplex.v1.DataScan]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L422}
+  /// [google.cloud.dataplex.v1.UpdateDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L180}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataScan>> UpdateDataScan(
@@ -298,8 +298,8 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataScan]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L416}
-  /// [google.cloud.dataplex.v1.UpdateDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L179}
+  /// [google.cloud.dataplex.v1.DataScan]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L422}
+  /// [google.cloud.dataplex.v1.UpdateDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L180}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataScan>> UpdateDataScan(
@@ -362,7 +362,7 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L195}
+  /// [google.cloud.dataplex.v1.DeleteDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L196}
   /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
   ///
   // clang-format on
@@ -413,7 +413,7 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L195}
+  /// [google.cloud.dataplex.v1.DeleteDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L196}
   /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
   ///
   // clang-format on
@@ -472,8 +472,8 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataScan]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L416}
-  /// [google.cloud.dataplex.v1.GetDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L209}
+  /// [google.cloud.dataplex.v1.DataScan]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L422}
+  /// [google.cloud.dataplex.v1.GetDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L215}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::DataScan> GetDataScan(
@@ -502,8 +502,8 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataScan]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L416}
-  /// [google.cloud.dataplex.v1.GetDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L209}
+  /// [google.cloud.dataplex.v1.DataScan]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L422}
+  /// [google.cloud.dataplex.v1.GetDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L215}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::DataScan> GetDataScan(
@@ -540,8 +540,8 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataScan]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L416}
-  /// [google.cloud.dataplex.v1.ListDataScansRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L238}
+  /// [google.cloud.dataplex.v1.DataScan]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L422}
+  /// [google.cloud.dataplex.v1.ListDataScansRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L244}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::DataScan> ListDataScans(
@@ -579,8 +579,8 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataScan]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L416}
-  /// [google.cloud.dataplex.v1.ListDataScansRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L238}
+  /// [google.cloud.dataplex.v1.DataScan]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L422}
+  /// [google.cloud.dataplex.v1.ListDataScansRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L244}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::DataScan> ListDataScans(
@@ -610,8 +610,8 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.RunDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L283}
-  /// [google.cloud.dataplex.v1.RunDataScanResponse]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L299}
+  /// [google.cloud.dataplex.v1.RunDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L289}
+  /// [google.cloud.dataplex.v1.RunDataScanResponse]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L305}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::RunDataScanResponse> RunDataScan(
@@ -640,8 +640,8 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.RunDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L283}
-  /// [google.cloud.dataplex.v1.RunDataScanResponse]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L299}
+  /// [google.cloud.dataplex.v1.RunDataScanRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L289}
+  /// [google.cloud.dataplex.v1.RunDataScanResponse]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L305}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::RunDataScanResponse> RunDataScan(
@@ -669,8 +669,8 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataScanJob]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L538}
-  /// [google.cloud.dataplex.v1.GetDataScanJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L305}
+  /// [google.cloud.dataplex.v1.DataScanJob]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L552}
+  /// [google.cloud.dataplex.v1.GetDataScanJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L311}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::DataScanJob> GetDataScanJob(
@@ -699,8 +699,8 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataScanJob]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L538}
-  /// [google.cloud.dataplex.v1.GetDataScanJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L305}
+  /// [google.cloud.dataplex.v1.DataScanJob]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L552}
+  /// [google.cloud.dataplex.v1.GetDataScanJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L311}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::DataScanJob> GetDataScanJob(
@@ -737,8 +737,8 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataScanJob]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L538}
-  /// [google.cloud.dataplex.v1.ListDataScanJobsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L334}
+  /// [google.cloud.dataplex.v1.DataScanJob]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L552}
+  /// [google.cloud.dataplex.v1.ListDataScanJobsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L340}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::DataScanJob> ListDataScanJobs(
@@ -776,8 +776,8 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataScanJob]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L538}
-  /// [google.cloud.dataplex.v1.ListDataScanJobsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L334}
+  /// [google.cloud.dataplex.v1.DataScanJob]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L552}
+  /// [google.cloud.dataplex.v1.ListDataScanJobsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L340}
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::DataScanJob> ListDataScanJobs(
@@ -810,8 +810,8 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.GenerateDataQualityRulesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L389}
-  /// [google.cloud.dataplex.v1.GenerateDataQualityRulesResponse]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L400}
+  /// [google.cloud.dataplex.v1.GenerateDataQualityRulesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L395}
+  /// [google.cloud.dataplex.v1.GenerateDataQualityRulesResponse]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L406}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::GenerateDataQualityRulesResponse>
@@ -843,8 +843,8 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.GenerateDataQualityRulesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L389}
-  /// [google.cloud.dataplex.v1.GenerateDataQualityRulesResponse]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L400}
+  /// [google.cloud.dataplex.v1.GenerateDataQualityRulesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L395}
+  /// [google.cloud.dataplex.v1.GenerateDataQualityRulesResponse]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L406}
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::GenerateDataQualityRulesResponse>

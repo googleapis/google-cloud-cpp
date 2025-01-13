@@ -106,6 +106,13 @@ class StorageStub {
              Options const& options,
              google::storage::v2::ReadObjectRequest const& request) = 0;
 
+  virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::storage::v2::BidiReadObjectRequest,
+      google::storage::v2::BidiReadObjectResponse>>
+  AsyncBidiReadObject(google::cloud::CompletionQueue const& cq,
+                      std::shared_ptr<grpc::ClientContext> context,
+                      google::cloud::internal::ImmutableOptions options) = 0;
+
   virtual StatusOr<google::storage::v2::Object> UpdateObject(
       grpc::ClientContext& context, Options const& options,
       google::storage::v2::UpdateObjectRequest const& request) = 0;
@@ -262,6 +269,14 @@ class DefaultStorageStub : public StorageStub {
   ReadObject(std::shared_ptr<grpc::ClientContext> context,
              Options const& options,
              google::storage::v2::ReadObjectRequest const& request) override;
+
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::storage::v2::BidiReadObjectRequest,
+      google::storage::v2::BidiReadObjectResponse>>
+  AsyncBidiReadObject(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
 
   StatusOr<google::storage::v2::Object> UpdateObject(
       grpc::ClientContext& context, Options const& options,

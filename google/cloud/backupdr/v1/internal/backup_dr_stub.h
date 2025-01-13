@@ -265,6 +265,17 @@ class BackupDRStub {
       grpc::ClientContext& context, Options options,
       google::cloud::backupdr::v1::TriggerBackupRequest const& request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncInitializeService(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::backupdr::v1::InitializeServiceRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> InitializeService(
+      grpc::ClientContext& context, Options options,
+      google::cloud::backupdr::v1::InitializeServiceRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::location::ListLocationsResponse>
   ListLocations(
       grpc::ClientContext& context, Options const& options,
@@ -562,6 +573,18 @@ class DefaultBackupDRStub : public BackupDRStub {
   StatusOr<google::longrunning::Operation> TriggerBackup(
       grpc::ClientContext& context, Options options,
       google::cloud::backupdr::v1::TriggerBackupRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncInitializeService(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::backupdr::v1::InitializeServiceRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> InitializeService(
+      grpc::ClientContext& context, Options options,
+      google::cloud::backupdr::v1::InitializeServiceRequest const& request)
       override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(

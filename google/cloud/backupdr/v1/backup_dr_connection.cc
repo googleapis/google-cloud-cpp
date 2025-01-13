@@ -435,6 +435,27 @@ BackupDRConnection::TriggerBackup(google::longrunning::Operation const&) {
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::backupdr::v1::InitializeServiceResponse>>
+BackupDRConnection::InitializeService(
+    google::cloud::backupdr::v1::InitializeServiceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::backupdr::v1::InitializeServiceResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> BackupDRConnection::InitializeService(
+    NoAwaitTag, google::cloud::backupdr::v1::InitializeServiceRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::backupdr::v1::InitializeServiceResponse>>
+BackupDRConnection::InitializeService(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::backupdr::v1::InitializeServiceResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StreamRange<google::cloud::location::Location>
 BackupDRConnection::ListLocations(
     google::cloud::location::

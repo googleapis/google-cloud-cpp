@@ -846,6 +846,29 @@ BackupDRClient::TriggerBackup(google::longrunning::Operation const& operation,
   return connection_->TriggerBackup(operation);
 }
 
+future<StatusOr<google::cloud::backupdr::v1::InitializeServiceResponse>>
+BackupDRClient::InitializeService(
+    google::cloud::backupdr::v1::InitializeServiceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InitializeService(request);
+}
+
+StatusOr<google::longrunning::Operation> BackupDRClient::InitializeService(
+    NoAwaitTag,
+    google::cloud::backupdr::v1::InitializeServiceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InitializeService(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::backupdr::v1::InitializeServiceResponse>>
+BackupDRClient::InitializeService(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InitializeService(operation);
+}
+
 StreamRange<google::cloud::location::Location> BackupDRClient::ListLocations(
     google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

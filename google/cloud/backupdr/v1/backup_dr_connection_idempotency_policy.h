@@ -125,6 +125,9 @@ class BackupDRConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency TriggerBackup(
       google::cloud::backupdr::v1::TriggerBackupRequest const& request);
 
+  virtual google::cloud::Idempotency InitializeService(
+      google::cloud::backupdr::v1::InitializeServiceRequest const& request);
+
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

@@ -586,6 +586,36 @@ BackupDRTracingConnection::TriggerBackup(
   return internal::EndSpan(std::move(span), child_->TriggerBackup(operation));
 }
 
+future<StatusOr<google::cloud::backupdr::v1::InitializeServiceResponse>>
+BackupDRTracingConnection::InitializeService(
+    google::cloud::backupdr::v1::InitializeServiceRequest const& request) {
+  auto span =
+      internal::MakeSpan("backupdr_v1::BackupDRConnection::InitializeService");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->InitializeService(request));
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRTracingConnection::InitializeService(
+    NoAwaitTag,
+    google::cloud::backupdr::v1::InitializeServiceRequest const& request) {
+  auto span =
+      internal::MakeSpan("backupdr_v1::BackupDRConnection::InitializeService");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->InitializeService(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::backupdr::v1::InitializeServiceResponse>>
+BackupDRTracingConnection::InitializeService(
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("backupdr_v1::BackupDRConnection::InitializeService");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->InitializeService(operation));
+}
+
 StreamRange<google::cloud::location::Location>
 BackupDRTracingConnection::ListLocations(
     google::cloud::location::ListLocationsRequest request) {

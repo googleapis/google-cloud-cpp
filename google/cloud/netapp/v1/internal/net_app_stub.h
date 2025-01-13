@@ -82,6 +82,19 @@ class NetAppStub {
       google::cloud::netapp::v1::DeleteStoragePoolRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncValidateDirectoryService(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::netapp::v1::ValidateDirectoryServiceRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> ValidateDirectoryService(
+      grpc::ClientContext& context, Options options,
+      google::cloud::netapp::v1::ValidateDirectoryServiceRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
   AsyncSwitchActiveReplicaZone(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -598,6 +611,19 @@ class DefaultNetAppStub : public NetAppStub {
   StatusOr<google::longrunning::Operation> DeleteStoragePool(
       grpc::ClientContext& context, Options options,
       google::cloud::netapp::v1::DeleteStoragePoolRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncValidateDirectoryService(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::netapp::v1::ValidateDirectoryServiceRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> ValidateDirectoryService(
+      grpc::ClientContext& context, Options options,
+      google::cloud::netapp::v1::ValidateDirectoryServiceRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncSwitchActiveReplicaZone(
