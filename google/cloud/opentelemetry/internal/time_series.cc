@@ -20,6 +20,7 @@
 #include <opentelemetry/common/attribute_value.h>
 #include <opentelemetry/sdk/metrics/data/metric_data.h>
 #include <opentelemetry/sdk/metrics/export/metric_producer.h>
+#include <opentelemetry/sdk/resource/semantic_conventions.h>
 #include <cctype>
 
 namespace google {
@@ -27,6 +28,8 @@ namespace cloud {
 namespace otel_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
+
+namespace sc = opentelemetry::sdk::resource::SemanticConventions;
 
 google::protobuf::Timestamp ToProtoTimestamp(
     opentelemetry::common::SystemTimestamp ts) {
@@ -69,25 +72,46 @@ double AsDouble(opentelemetry::sdk::metrics::ValueType const& v) {
 google::api::Metric ToMetric(
     opentelemetry::sdk::metrics::MetricData const& metric_data,
     opentelemetry::sdk::metrics::PointAttributes const& attributes,
+    opentelemetry::sdk::resource::Resource const* resource,
     std::function<std::string(std::string)> const& name_formatter) {
-  google::api::Metric proto;
-  proto.set_type(name_formatter(metric_data.instrument_descriptor.name_));
-
-  auto& labels = *proto.mutable_labels();
-  for (auto const& kv : attributes) {
-    auto key = kv.first;
+  auto add_label = [](auto& labels, auto key, auto const& value) {
     // GCM labels match on the regex: R"([a-zA-Z_][a-zA-Z0-9_]*)".
-    if (key.empty()) continue;
+    if (key.empty()) return;
     if (!std::isalpha(key[0]) && key[0] != '_') {
       GCP_LOG(INFO) << "Dropping metric label which does not start with "
                        "[A-Za-z_]: "
                     << key;
-      continue;
+      return;
     }
     for (auto& c : key) {
       if (!std::isalnum(c)) c = '_';
     }
-    labels[std::move(key)] = AsString(kv.second);
+    labels[std::move(key)] = AsString(value);
+  };
+
+  google::api::Metric proto;
+  proto.set_type(name_formatter(metric_data.instrument_descriptor.name_));
+
+  auto& labels = *proto.mutable_labels();
+  if (resource) {
+    // Copy several well-known labels from the resource into the metric, if they
+    // exist.
+    //
+    // This avoids duplicate timeseries when multiple instances of a service are
+    // running on a single monitored resource, for example running multiple
+    // service processes on a single GCE VM.
+    auto const& ra = resource->GetAttributes().GetAttributes();
+    for (std::string key : {
+             sc::kServiceName,
+             sc::kServiceNamespace,
+             sc::kServiceInstanceId,
+         }) {
+      auto it = ra.find(std::move(key));
+      if (it != ra.end()) add_label(labels, it->first, it->second);
+    }
+  }
+  for (auto const& kv : attributes) {
+    add_label(labels, kv.first, kv.second);
   }
   return proto;
 }
@@ -210,7 +234,8 @@ std::vector<google::monitoring::v3::TimeSeries> ToTimeSeries(
         if (!ts) continue;
         ts->set_unit(metric_data.instrument_descriptor.unit_);
         *ts->mutable_metric() =
-            ToMetric(metric_data, pda.attributes, metrics_name_formatter);
+            ToMetric(metric_data, pda.attributes, data.resource_,
+                     metrics_name_formatter);
         tss.push_back(*std::move(ts));
       }
     }
