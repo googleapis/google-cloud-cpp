@@ -580,6 +580,7 @@ TEST(ToTimeSeries, Sum) {
 
   opentelemetry::sdk::metrics::ResourceMetrics rm;
   rm.scope_metric_data_.push_back(std::move(sm));
+  rm.resource_ = nullptr;
 
   auto tss = ToTimeSeries(rm, PrefixWithWorkload);
   EXPECT_THAT(tss, ElementsAre(SumTimeSeries(), SumTimeSeries()));
@@ -604,6 +605,7 @@ TEST(ToTimeSeries, Gauge) {
 
   opentelemetry::sdk::metrics::ResourceMetrics rm;
   rm.scope_metric_data_.push_back(std::move(sm));
+  rm.resource_ = nullptr;
 
   auto tss = ToTimeSeries(rm, PrefixWithWorkload);
   EXPECT_THAT(tss, ElementsAre(GaugeTimeSeries(), GaugeTimeSeries()));
@@ -628,6 +630,7 @@ TEST(ToTimeSeries, Histogram) {
 
   opentelemetry::sdk::metrics::ResourceMetrics rm;
   rm.scope_metric_data_.push_back(std::move(sm));
+  rm.resource_ = nullptr;
 
   auto tss = ToTimeSeries(rm, PrefixWithWorkload);
   EXPECT_THAT(tss, ElementsAre(HistogramTimeSeries(), HistogramTimeSeries()));
@@ -652,6 +655,7 @@ TEST(ToTimeSeries, DropIgnored) {
 
   opentelemetry::sdk::metrics::ResourceMetrics rm;
   rm.scope_metric_data_.push_back(std::move(sm));
+  rm.resource_ = nullptr;
 
   auto tss = ToTimeSeries(rm, PrefixWithWorkload);
   EXPECT_THAT(tss, IsEmpty());
@@ -682,6 +686,7 @@ TEST(ToTimeSeries, Combined) {
 
   opentelemetry::sdk::metrics::ResourceMetrics rm;
   rm.scope_metric_data_.push_back(std::move(sm));
+  rm.resource_ = nullptr;
 
   auto tss = ToTimeSeries(
       rm, [](std::string const& s) { return "custom.googleapis.com/" + s; });
