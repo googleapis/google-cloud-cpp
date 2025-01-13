@@ -880,7 +880,7 @@ set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 [choco-cmake-link]: https://chocolatey.org/packages/cmake
 [homebrew-cmake-link]: https://formulae.brew.sh/formula/cmake
 [cmake-download-link]: https://cmake.org/download/
-[authentication-quickstart]: https://cloud.google.com/docs/authentication 'Authentication methods at Google'
+[authentication-quickstart]: https://cloud.google.com/docs/authentication/client-libraries 'Authenticate for using client libraries'
 )""";
   google::protobuf::io::OstreamOutputStream output(&os);
   google::protobuf::io::Printer printer(&output, '$');

@@ -174,7 +174,7 @@ trust store for SSL certificates, you can download and configure this using:
 set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 ```
 
-[authentication-quickstart]: https://cloud.google.com/docs/authentication "Authentication methods at Google"
+[authentication-quickstart]: https://cloud.google.com/docs/authentication/client-libraries "Authenticate for using client libraries"
 [bazel-install]: https://docs.bazel.build/versions/main/install.html
 [bucket-naming-link]: https://cloud.google.com/storage/docs/naming-buckets
 [choco-cmake-link]: https://chocolatey.org/packages/cmake
