@@ -849,6 +849,26 @@ TEST_F(ObjectIntegrationTest, RestoreObject) {
   EXPECT_EQ(restore.value().metageneration(), 1);
 }
 
+TEST_F(ObjectIntegrationTest, MoveObject) {
+  auto client = MakeIntegrationTestClient();
+  auto src_object_name = MakeRandomObjectName();
+  auto dst_object_name = MakeRandomObjectName();
+  std::string expected = LoremIpsum();
+  
+  auto stream =
+      client.WriteObject(bucket_name_, src_object_name, IfGenerationMatch(0));
+  stream << expected;
+  stream.Close();
+  auto metadata = stream.metadata();
+  ASSERT_STATUS_OK(metadata);
+
+  auto move = client.MoveObject(bucket_name_, src_object_name, dst_object_name);
+  ASSERT_STATUS_OK(move);
+
+  EXPECT_NE(metadata.value().generation(), move.value().generation());
+  EXPECT_EQ(move.value().metageneration(), 1);
+}
+
 }  // anonymous namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
