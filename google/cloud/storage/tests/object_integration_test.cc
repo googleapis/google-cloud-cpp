@@ -854,7 +854,7 @@ TEST_F(ObjectIntegrationTest, MoveObject) {
   auto src_object_name = MakeRandomObjectName();
   auto dst_object_name = MakeRandomObjectName();
   std::string expected = LoremIpsum();
-  
+
   auto stream =
       client.WriteObject(bucket_name_, src_object_name, IfGenerationMatch(0));
   stream << expected;
