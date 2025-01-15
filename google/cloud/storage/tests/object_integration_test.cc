@@ -855,6 +855,13 @@ TEST_F(ObjectIntegrationTest, MoveObject) {
   auto dst_object_name = MakeRandomObjectName();
   std::string expected = LoremIpsum();
 
+  auto bucket_metadata = client.PatchBucket(
+      bucket_name_,
+      google::cloud::storage::BucketMetadataPatchBuilder()
+          .SetHierarchicalNamespace(
+              google::cloud::storage::BucketHierarchicalNamespace{true}));
+  ASSERT_STATUS_OK(bucket_metadata);
+
   auto stream =
       client.WriteObject(bucket_name_, src_object_name, IfGenerationMatch(0));
   stream << expected;
