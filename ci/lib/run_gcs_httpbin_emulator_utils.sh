@@ -127,4 +127,8 @@ create_testbench_resources() {
     curl -s -o /dev/null -X POST --data-binary @- \
       -H "Content-Type: application/json" \
       "${CLOUD_STORAGE_EMULATOR_ENDPOINT}/storage/v1/b?project=${GOOGLE_CLOUD_PROJECT}"
+  printf '{"name": "%s"}' "${GOOGLE_CLOUD_CPP_STORAGE_TEST_FOLDER_BUCKET_NAME}" |
+    curl -s -o /dev/null -X POST --data-binary @- \
+      -H "Content-Type: application/json" \
+      "${CLOUD_STORAGE_EMULATOR_ENDPOINT}/storage/v1/b?project=${GOOGLE_CLOUD_PROJECT}"
 }
