@@ -855,21 +855,16 @@ TEST_F(ObjectIntegrationTest, MoveObject) {
   auto dst_object_name = MakeRandomObjectName();
   std::string expected = LoremIpsum();
 
-  auto bucket_metadata = client.PatchBucket(
-      bucket_name_,
-      google::cloud::storage::BucketMetadataPatchBuilder()
-          .SetHierarchicalNamespace(
-              google::cloud::storage::BucketHierarchicalNamespace{true}));
-  ASSERT_STATUS_OK(bucket_metadata);
-
-  auto stream =
-      client.WriteObject(bucket_name_, src_object_name, IfGenerationMatch(0));
+  auto stream = client.WriteObject(folder_enabled_bucket_name_, src_object_name,
+                                   IfGenerationMatch(0));
   stream << expected;
   stream.Close();
   auto metadata = stream.metadata();
   ASSERT_STATUS_OK(metadata);
+  ScheduleForDelete(*metadata);
 
-  auto move = client.MoveObject(bucket_name_, src_object_name, dst_object_name);
+  auto move = client.MoveObject(folder_enabled_bucket_name_, src_object_name,
+                                dst_object_name);
   ASSERT_STATUS_OK(move);
 
   EXPECT_NE(metadata.value().generation(), move.value().generation());

@@ -34,6 +34,7 @@ class ObjectIntegrationTest
 
   std::string project_id_;
   std::string bucket_name_;
+  std::string folder_enabled_bucket_name_;
 };
 
 }  // namespace testing

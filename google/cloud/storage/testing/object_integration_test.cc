@@ -71,6 +71,11 @@ void ObjectIntegrationTest::SetUp() {
                      "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
                      .value_or("");
   ASSERT_FALSE(bucket_name_.empty());
+  folder_enabled_bucket_name_ =
+      google::cloud::internal::GetEnv(
+          "GOOGLE_CLOUD_CPP_STORAGE_TEST_FOLDER_BUCKET_NAME")
+          .value_or("");
+  ASSERT_FALSE(folder_enabled_bucket_name_.empty());
 }
 
 std::string ObjectIntegrationTest::MakeEntityName() const {
