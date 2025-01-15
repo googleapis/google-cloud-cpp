@@ -122,6 +122,34 @@ TEST(StorageConnectionImpl, RewriteObjectPermanentFailure) {
   EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }
 
+TEST(StorageConnectionImpl, MoveObjectTooManyFailures) {
+  auto transient = MockRetryClientFunction(TransientError());
+  auto mock = std::make_unique<MockGenericStub>();
+  EXPECT_CALL(*mock, options);
+  EXPECT_CALL(*mock, MoveObject).Times(3).WillRepeatedly(transient);
+  auto client =
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
+  google::cloud::internal::OptionsSpan span(client->options());
+  auto response = client->MoveObject(MoveObjectRequest()).status();
+  EXPECT_THAT(response, StoppedOnTooManyTransients("MoveObject"));
+  EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
+}
+
+TEST(StorageConnectionImpl, MoveObjectPermanentFailure) {
+  auto permanent = MockRetryClientFunction(PermanentError());
+  auto mock = std::make_unique<MockGenericStub>();
+  EXPECT_CALL(*mock, options);
+  EXPECT_CALL(*mock, MoveObject).WillOnce(permanent);
+  auto client =
+      StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
+  google::cloud::internal::OptionsSpan span(client->options());
+  auto response = client->MoveObject(MoveObjectRequest()).status();
+  EXPECT_THAT(response, StoppedOnPermanentError("MoveObject"));
+  EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
+  EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
+}
+
 }  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

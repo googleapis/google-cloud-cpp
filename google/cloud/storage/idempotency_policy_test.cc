@@ -231,6 +231,21 @@ TEST(StrictIdempotencyPolicyTest, UpdateObjectIfMetagenerationMatch) {
   EXPECT_TRUE(policy.IsIdempotent(request));
 }
 
+TEST(StrictIdempotencyPolicyTest, MoveObject) {
+  StrictIdempotencyPolicy policy;
+  internal::MoveObjectRequest request(
+      "test-bucket-name", "test-src-object-name", "test-dst-object-name");
+  EXPECT_FALSE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, MoveObjectIfGenerationMatch) {
+  StrictIdempotencyPolicy policy;
+  internal::MoveObjectRequest request(
+      "test-bucket-name", "test-src-object-name", "test-dst-object-name");
+  request.set_option(IfGenerationMatch(7));
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
 TEST(StrictIdempotencyPolicyTest, PatchObject) {
   StrictIdempotencyPolicy policy;
   internal::PatchObjectRequest request("test-bucket-name", "test-object-name",

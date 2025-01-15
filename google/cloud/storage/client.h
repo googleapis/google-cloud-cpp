@@ -1373,6 +1373,39 @@ class Client {
   }
 
   /**
+   * Moves an existing object to a new or existing object within a HNS enabled
+   * bucket.
+   *
+   * @param bucket_name the name of the bucket in which to move the object. The
+   * bucket must be HNS enabled.
+   * @param source_object_name the name of the source object to move.
+   * @param destination_object_name the destination name of the object after the
+   * move is completed.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include
+   *      `IfSourceGenerationMatch`, `IfSourceGenerationNotMatch`,
+   * `IfSourceMetagenerationMatch`, `IfSourceMetagenerationNotMatch`,
+   * `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`
+   *      `IfMetagenerationNotMatch`, `projection`.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions.
+   */
+  template <typename... Options>
+  StatusOr<ObjectMetadata> MoveObject(std::string bucket_name,
+                                      std::string source_object_name,
+                                      std::string destination_object_name,
+                                      Options&&... options) {
+    google::cloud::internal::OptionsSpan const span(
+        SpanOptions(std::forward<Options>(options)...));
+    internal::MoveObjectRequest request(std::move(bucket_name),
+                                        std::move(source_object_name),
+                                        std::move(destination_object_name));
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return connection_->MoveObject(request);
+  }
+
+  /**
    * Patches the metadata in a Google Cloud Storage Object.
    *
    * This function creates a patch request to change the writeable attributes in

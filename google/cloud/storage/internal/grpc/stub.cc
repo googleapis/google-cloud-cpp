@@ -483,6 +483,19 @@ StatusOr<storage::ObjectMetadata> GrpcStub::UpdateObject(
   return FromProto(*response, options);
 }
 
+StatusOr<storage::ObjectMetadata> GrpcStub::MoveObject(
+    rest_internal::RestContext& context, Options const& options,
+    storage::internal::MoveObjectRequest const& request) {
+  auto proto = ToProto(request);
+  if (!proto) return std::move(proto).status();
+  grpc::ClientContext ctx;
+  ApplyQueryParameters(ctx, options, request);
+  AddIdempotencyToken(ctx, context);
+  auto response = stub_->MoveObject(ctx, options, *proto);
+  if (!response) return std::move(response).status();
+  return FromProto(*response, options);
+}
+
 StatusOr<storage::ObjectMetadata> GrpcStub::PatchObject(
     rest_internal::RestContext& context, Options const& options,
     storage::internal::PatchObjectRequest const& request) {

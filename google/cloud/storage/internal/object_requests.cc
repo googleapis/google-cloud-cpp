@@ -382,6 +382,14 @@ std::ostream& operator<<(std::ostream& os, RewriteObjectRequest const& r) {
   return os << "}";
 }
 
+std::ostream& operator<<(std::ostream& os, MoveObjectRequest const& r) {
+  os << "MoveObjectRequest={bucket_name=" << r.bucket_name()
+     << ", source_object_name=" << r.source_object_name()
+     << ", destination_object_name=" << r.destination_object_name();
+  r.DumpOptions(os, ", ");
+  return os << "}";
+}
+
 std::ostream& operator<<(std::ostream& os, RestoreObjectRequest const& r) {
   os << "RestoreObjectRequest={bucket_name=" << r.bucket_name()
      << ", object_name=" << r.object_name()

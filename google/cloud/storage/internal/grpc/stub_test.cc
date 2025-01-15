@@ -658,6 +658,28 @@ TEST_F(GrpcClientTest, UpdateObject) {
   EXPECT_EQ(response.status(), PermanentError());
 }
 
+TEST_F(GrpcClientTest, MoveObject) {
+  auto mock = std::make_shared<MockStorageStub>();
+  EXPECT_CALL(*mock, MoveObject)
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
+                       v2::MoveObjectRequest const& request) {
+        auto metadata = GetMetadata(context);
+        EXPECT_THAT(metadata, UnorderedElementsAre(Pair(kIdempotencyTokenHeader,
+                                                        "test-token-1234")));
+        EXPECT_THAT(request.bucket(), "projects/_/buckets/test-bucket");
+        EXPECT_THAT(request.source_object(), "test-source-object");
+        EXPECT_THAT(request.destination_object(), "test-destination-object");
+        return PermanentError();
+      });
+  auto client = CreateTestClient(mock);
+  auto context = TestContext();
+  auto response = client->MoveObject(
+      context, TestOptions(),
+      storage::internal::MoveObjectRequest("test-bucket", "test-source-object",
+                                           "test-destination-object"));
+  EXPECT_EQ(response.status(), PermanentError());
+}
+
 TEST_F(GrpcClientTest, PatchObject) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, UpdateObject)

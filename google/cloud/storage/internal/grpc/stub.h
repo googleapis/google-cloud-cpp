@@ -107,6 +107,9 @@ class GrpcStub : public GenericStub {
   StatusOr<storage::ObjectMetadata> UpdateObject(
       rest_internal::RestContext& context, Options const& options,
       storage::internal::UpdateObjectRequest const& request) override;
+  StatusOr<storage::ObjectMetadata> MoveObject(
+      rest_internal::RestContext& context, Options const& options,
+      storage::internal::MoveObjectRequest const& request) override;
   StatusOr<storage::ObjectMetadata> PatchObject(
       rest_internal::RestContext& context, Options const& options,
       storage::internal::PatchObjectRequest const& request) override;
