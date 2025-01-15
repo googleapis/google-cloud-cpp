@@ -102,8 +102,9 @@ class IdempotencyPolicy {
       internal::DeleteObjectRequest const& request) const = 0;
   virtual bool IsIdempotent(
       internal::UpdateObjectRequest const& request) const = 0;
-  virtual bool IsIdempotent(
-      internal::MoveObjectRequest const& request) const = 0;
+  virtual bool IsIdempotent(internal::MoveObjectRequest const&) const {
+    return false;
+  };
   virtual bool IsIdempotent(
       internal::PatchObjectRequest const& request) const = 0;
   virtual bool IsIdempotent(
