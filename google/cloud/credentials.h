@@ -119,7 +119,7 @@ std::shared_ptr<Credentials> MakeInsecureCredentials(Options opts = {});
  *   service account key file, or a JSON object describing your user
  *   credentials.
  *
- * Important: If you accept a credential configuration (credential
+ * @warning If you accept a credential configuration (credential
  * JSON/File/Stream) from an external source for authentication to Google Cloud
  * Platform, you must validate it before providing it to any Google API or
  * client library. Providing an unvalidated credential configuration to Google
@@ -273,7 +273,7 @@ std::shared_ptr<Credentials> MakeServiceAccountCredentials(
  * identity provider that supports OpenID Connect (OIDC), such as Microsoft
  * Azure, or SAML 2.0.
  *
- * Important: If you accept a credential configuration (credential
+ * @warning If you accept a credential configuration (credential
  * JSON/File/Stream) from an external source for authentication to Google Cloud
  * Platform, you must validate it before providing it to any Google API or
  * client library. Providing an unvalidated credential configuration to Google
