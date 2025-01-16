@@ -52,6 +52,7 @@ struct AsStringVisitor {
 
 struct OTelKeyMatch {
   std::vector<std::string> otel_keys;
+  // NOLINTNEXTLINE(readability-redundant-member-init)
   std::string fallback = {};
 };
 
