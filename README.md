@@ -12,6 +12,8 @@ This repository contains idiomatic C++ client libraries for the following
 
 > Please check the [CHANGELOG] for important announcements and upcoming changes.
 
+> **Important**: If you accept a credential configuration (credential JSON/File/Stream) from an external source for authentication to Google Cloud Platform, you must validate it before providing it to any Google API or client library. Providing an unvalidated credential configuration to Google APIs can compromise the security of your systems and data. For more information, refer to [documentation](https://cloud.google.com/docs/authentication/external/externally-sourced-credentials).
+
 ## Quickstart
 
 Each library (see below) contains a directory named `quickstart/` that's
