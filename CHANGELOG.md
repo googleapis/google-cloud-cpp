@@ -4,7 +4,16 @@
 breaking changes in the upcoming 3.x release. This release is scheduled for
 2024-12 or 2025-01.
 
-## v2.34.0 - TBD
+## v2.34.0 - 2025-01
+
+### [OpenTelemetry](/google/cloud/opentelemetry/README.md)
+
+- fix(otel): Exporter creating Monitored Resource with task_id for Cloud Run ([#14923](https://github.com/googleapis/google-cloud-cpp/pull/14923))
+- feat(otel): copy service labels into GCM Metric ([#14930](https://github.com/googleapis/google-cloud-cpp/pull/14930))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- feat(storage): add MoveObject functionality to JSON and gRPC ([#14936](https://github.com/googleapis/google-cloud-cpp/pull/14936))
 
 ## v2.33.0 - 2024-12
 
