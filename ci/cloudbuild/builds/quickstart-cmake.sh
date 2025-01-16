@@ -49,6 +49,8 @@ readonly SED_ARGS=(
   -e '/^rpc$/d'
   # TODO:(#14896) Skip gkeconnect as it transitions from grpc to REST transport.
   -e '/^gkeconnect/d'
+  # TODO:(#14941) Skip bigquerycontrol until vcpkg version > 2024.09.30
+  -e '/^bigquerycontrol/d'
 )
 mapfile -t features < <(
   env -C "${vcpkg_dir}" ./vcpkg search google-cloud-cpp |
