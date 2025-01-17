@@ -1035,7 +1035,7 @@ class Client {
   ///@{
   /// @name Backwards compatibility for CommitOptions.
   /**
-   * @copybrief Commit(std::function<StatusOr<Mutations>(Transaction)> const&,std::unique_ptr<TransactionRerunPolicy>,std::unique_ptr<BackoffPolicy>,Options)
+   * @copybrief Commit(std::function<StatusOr<Mutations>(Transaction)> const&,std::unique_ptr<google::cloud::RetryPolicy>,std::unique_ptr<BackoffPolicy>,Options)
    * @see Commit(std::function<StatusOr<Mutations>(Transaction)> const&,std::unique_ptr<TransactionRerunPolicy>,std::unique_ptr<BackoffPolicy>,Options)
    */
   StatusOr<CommitResult> Commit(
@@ -1047,7 +1047,7 @@ class Client {
                   Options(commit_options));
   }
   /**
-   * @copybrief Commit(std::function<StatusOr<Mutations>(Transaction)> const&,std::unique_ptr<TransactionRerunPolicy>,std::unique_ptr<BackoffPolicy>,Options)
+   * @copybrief Commit(std::function<StatusOr<Mutations>(Transaction)> const&,std::unique_ptr<google::cloud::RetryPolicy>,std::unique_ptr<BackoffPolicy>,Options)
    * @see Commit(std::function<StatusOr<Mutations>(Transaction)> const&,std::unique_ptr<TransactionRerunPolicy>,std::unique_ptr<BackoffPolicy>,Options)
    */
   StatusOr<CommitResult> Commit(
