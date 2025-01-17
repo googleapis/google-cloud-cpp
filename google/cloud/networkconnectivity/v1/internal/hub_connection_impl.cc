@@ -33,8 +33,7 @@ namespace networkconnectivity_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<networkconnectivity_v1::HubServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<networkconnectivity_v1::HubServiceRetryPolicyOption>()
       ->clone();
 }
@@ -79,8 +78,7 @@ HubServiceConnectionImpl::ListHubs(
       StreamRange<google::cloud::networkconnectivity::v1::Hub>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<networkconnectivity_v1::HubServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::networkconnectivity::v1::ListHubsRequest const& r) {
@@ -403,8 +401,7 @@ HubServiceConnectionImpl::ListHubSpokes(
       StreamRange<google::cloud::networkconnectivity::v1::Spoke>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<networkconnectivity_v1::HubServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::networkconnectivity::v1::ListHubSpokesRequest const&
@@ -438,8 +435,7 @@ HubServiceConnectionImpl::QueryHubStatus(
       StreamRange<google::cloud::networkconnectivity::v1::HubStatusEntry>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<networkconnectivity_v1::HubServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::networkconnectivity::v1::QueryHubStatusRequest const&
@@ -473,8 +469,7 @@ HubServiceConnectionImpl::ListSpokes(
       StreamRange<google::cloud::networkconnectivity::v1::Spoke>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<networkconnectivity_v1::HubServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::networkconnectivity::v1::ListSpokesRequest const& r) {
@@ -1027,8 +1022,7 @@ HubServiceConnectionImpl::ListRoutes(
       StreamRange<google::cloud::networkconnectivity::v1::Route>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<networkconnectivity_v1::HubServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::networkconnectivity::v1::ListRoutesRequest const& r) {
@@ -1062,8 +1056,7 @@ HubServiceConnectionImpl::ListRouteTables(
       StreamRange<google::cloud::networkconnectivity::v1::RouteTable>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<networkconnectivity_v1::HubServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::networkconnectivity::v1::ListRouteTablesRequest const&
@@ -1112,8 +1105,7 @@ HubServiceConnectionImpl::ListGroups(
       StreamRange<google::cloud::networkconnectivity::v1::Group>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<networkconnectivity_v1::HubServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::networkconnectivity::v1::ListGroupsRequest const& r) {
@@ -1240,8 +1232,7 @@ HubServiceConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<networkconnectivity_v1::HubServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {
@@ -1328,8 +1319,7 @@ HubServiceConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<networkconnectivity_v1::HubServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

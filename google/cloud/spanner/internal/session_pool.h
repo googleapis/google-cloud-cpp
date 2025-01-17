@@ -210,7 +210,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   spanner::Database const db_;
   google::cloud::CompletionQueue cq_;
   Options const opts_;
-  std::unique_ptr<spanner::RetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<google::cloud::RetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<spanner::BackoffPolicy const> backoff_policy_prototype_;
   std::shared_ptr<Session::Clock> clock_;
   int const max_pool_size_;

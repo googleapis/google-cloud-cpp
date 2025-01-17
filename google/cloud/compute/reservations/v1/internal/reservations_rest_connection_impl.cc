@@ -58,9 +58,7 @@ ReservationsRestConnectionImpl::AggregatedListReservations(
       std::string, google::cloud::cpp::compute::v1::ReservationsScopedList>>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<compute_reservations_v1::ReservationsRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::reservations::v1::
@@ -393,9 +391,7 @@ ReservationsRestConnectionImpl::ListReservations(
       StreamRange<google::cloud::cpp::compute::v1::Reservation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<compute_reservations_v1::ReservationsRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::cpp::compute::reservations::
                                       v1::ListReservationsRequest const& r) {

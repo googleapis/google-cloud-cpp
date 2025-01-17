@@ -145,7 +145,8 @@ std::unique_ptr<BackoffPolicy> StorageIntegrationTest::TestBackoffPolicy() {
       .clone();
 }
 
-std::unique_ptr<RetryPolicy> StorageIntegrationTest::TestRetryPolicy() {
+std::unique_ptr<google::cloud::RetryPolicy>
+StorageIntegrationTest::TestRetryPolicy() {
   if (UsingGrpc() && !UsingEmulator()) {
     return LimitedTimeRetryPolicy(/*maximum_duration=*/std::chrono::minutes(10))
         .clone();

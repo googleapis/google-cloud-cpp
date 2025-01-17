@@ -111,9 +111,7 @@ class NetworkEdgeSecurityServicesRestConnectionImpl
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
-  static std::unique_ptr<compute_network_edge_security_services_v1::
-                             NetworkEdgeSecurityServicesRetryPolicy>
-  retry_policy(Options const& options) {
+  static std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
     return options
         .get<compute_network_edge_security_services_v1::
                  NetworkEdgeSecurityServicesRetryPolicyOption>()

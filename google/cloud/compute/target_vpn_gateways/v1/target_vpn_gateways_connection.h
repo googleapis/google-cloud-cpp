@@ -39,11 +39,7 @@ namespace compute_target_vpn_gateways_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `TargetVpnGatewaysConnection`.
-class TargetVpnGatewaysRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<TargetVpnGatewaysRetryPolicy> clone() const = 0;
-};
+class TargetVpnGatewaysRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `TargetVpnGatewaysConnection` based on counting errors.
@@ -84,7 +80,7 @@ class TargetVpnGatewaysLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<TargetVpnGatewaysRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<TargetVpnGatewaysLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -154,7 +150,7 @@ class TargetVpnGatewaysLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<TargetVpnGatewaysRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<TargetVpnGatewaysLimitedTimeRetryPolicy>(
         maximum_duration());
   }

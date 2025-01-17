@@ -72,7 +72,7 @@ TEST(GenericPollingPolicy, Simple) {
 TEST(GenericPollingPolicy, SimpleWithPointers) {
   LimitedTimeRetryPolicyForTest retry(kLimitedTimeTestPeriod);
   internal::ExponentialBackoffPolicy backoff(ms(10), ms(100), 2.0);
-  GenericPollingPolicy<std::shared_ptr<RetryPolicyForTest>,
+  GenericPollingPolicy<std::shared_ptr<RetryPolicy>,
                        std::shared_ptr<internal::BackoffPolicy>>
       tested(retry.clone(), backoff.clone());
   CheckLimitedTime(tested, __func__);
@@ -107,7 +107,7 @@ TEST(GenericPollingPolicy, Clone) {
 TEST(GenericPollingPolicy, CloneWithPointers) {
   LimitedErrorCountRetryPolicyForTest retry(1);
   internal::ExponentialBackoffPolicy backoff(ms(10), ms(100), 2.0);
-  GenericPollingPolicy<std::shared_ptr<RetryPolicyForTest>,
+  GenericPollingPolicy<std::shared_ptr<google::cloud::RetryPolicy>,
                        std::shared_ptr<internal::BackoffPolicy>>
       original(retry.clone(), backoff.clone());
   EXPECT_TRUE(original.OnFailure(TransientError()));

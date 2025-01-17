@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-secretmanager-options
  */
 struct SecretManagerServiceRetryPolicyOption {
-  using Type = std::shared_ptr<SecretManagerServiceRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

@@ -40,11 +40,7 @@ namespace policysimulator_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `SimulatorConnection`.
-class SimulatorRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<SimulatorRetryPolicy> clone() const = 0;
-};
+class SimulatorRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `SimulatorConnection` based on counting errors.
@@ -84,7 +80,7 @@ class SimulatorLimitedErrorCountRetryPolicy : public SimulatorRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<SimulatorRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<SimulatorLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -153,7 +149,7 @@ class SimulatorLimitedTimeRetryPolicy : public SimulatorRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<SimulatorRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<SimulatorLimitedTimeRetryPolicy>(
         maximum_duration());
   }

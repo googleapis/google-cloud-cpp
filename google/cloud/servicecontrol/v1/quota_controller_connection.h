@@ -35,11 +35,7 @@ namespace servicecontrol_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `QuotaControllerConnection`.
-class QuotaControllerRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<QuotaControllerRetryPolicy> clone() const = 0;
-};
+class QuotaControllerRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `QuotaControllerConnection` based on counting errors.
@@ -80,7 +76,7 @@ class QuotaControllerLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<QuotaControllerRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<QuotaControllerLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -150,7 +146,7 @@ class QuotaControllerLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<QuotaControllerRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<QuotaControllerLimitedTimeRetryPolicy>(
         maximum_duration());
   }

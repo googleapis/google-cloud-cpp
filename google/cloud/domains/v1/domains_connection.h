@@ -40,11 +40,7 @@ namespace domains_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `DomainsConnection`.
-class DomainsRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<DomainsRetryPolicy> clone() const = 0;
-};
+class DomainsRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `DomainsConnection` based on counting errors.
@@ -84,7 +80,7 @@ class DomainsLimitedErrorCountRetryPolicy : public DomainsRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<DomainsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<DomainsLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -152,7 +148,7 @@ class DomainsLimitedTimeRetryPolicy : public DomainsRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<DomainsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<DomainsLimitedTimeRetryPolicy>(maximum_duration());
   }
 

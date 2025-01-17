@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-spanner-options
  */
 struct InstanceAdminRetryPolicyOption {
-  using Type = std::shared_ptr<InstanceAdminRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

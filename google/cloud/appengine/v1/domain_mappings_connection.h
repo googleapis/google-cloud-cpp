@@ -41,11 +41,7 @@ namespace appengine_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `DomainMappingsConnection`.
-class DomainMappingsRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<DomainMappingsRetryPolicy> clone() const = 0;
-};
+class DomainMappingsRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `DomainMappingsConnection` based on counting errors.
@@ -86,7 +82,7 @@ class DomainMappingsLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<DomainMappingsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<DomainMappingsLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -155,7 +151,7 @@ class DomainMappingsLimitedTimeRetryPolicy : public DomainMappingsRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<DomainMappingsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<DomainMappingsLimitedTimeRetryPolicy>(
         maximum_duration());
   }

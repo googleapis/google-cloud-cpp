@@ -109,9 +109,7 @@ class PacketMirroringsRestConnectionImpl
                          TestIamPermissionsRequest const& request) override;
 
  private:
-  static std::unique_ptr<
-      compute_packet_mirrorings_v1::PacketMirroringsRetryPolicy>
-  retry_policy(Options const& options) {
+  static std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
     return options
         .get<compute_packet_mirrorings_v1::PacketMirroringsRetryPolicyOption>()
         ->clone();

@@ -41,9 +41,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `InterconnectAttachmentsConnection`.
 class InterconnectAttachmentsRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<InterconnectAttachmentsRetryPolicy> clone() const = 0;
 };
 
 /**
@@ -89,7 +86,7 @@ class InterconnectAttachmentsLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<InterconnectAttachmentsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<
         InterconnectAttachmentsLimitedErrorCountRetryPolicy>(
         maximum_failures());
@@ -161,7 +158,7 @@ class InterconnectAttachmentsLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<InterconnectAttachmentsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<InterconnectAttachmentsLimitedTimeRetryPolicy>(
         maximum_duration());
   }

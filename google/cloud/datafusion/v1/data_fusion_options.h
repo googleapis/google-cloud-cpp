@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-datafusion-options
  */
 struct DataFusionRetryPolicyOption {
-  using Type = std::shared_ptr<DataFusionRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

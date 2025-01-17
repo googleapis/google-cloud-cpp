@@ -39,11 +39,7 @@ namespace compute_target_pools_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `TargetPoolsConnection`.
-class TargetPoolsRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<TargetPoolsRetryPolicy> clone() const = 0;
-};
+class TargetPoolsRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `TargetPoolsConnection` based on counting errors.
@@ -83,7 +79,7 @@ class TargetPoolsLimitedErrorCountRetryPolicy : public TargetPoolsRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<TargetPoolsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<TargetPoolsLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -152,7 +148,7 @@ class TargetPoolsLimitedTimeRetryPolicy : public TargetPoolsRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<TargetPoolsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<TargetPoolsLimitedTimeRetryPolicy>(
         maximum_duration());
   }

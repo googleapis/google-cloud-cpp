@@ -56,11 +56,7 @@ namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The base class for the Spanner library retry policies.
-class RetryPolicy : public google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<RetryPolicy> clone() const = 0;
-};
+class RetryPolicy : public google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for the Spanner library based on counting errors.
@@ -99,7 +95,7 @@ class LimitedErrorCountRetryPolicy : public RetryPolicy {
   bool IsPermanentFailure(Status const& s) const override {
     return impl_.IsPermanentFailure(s);
   }
-  std::unique_ptr<RetryPolicy> clone() const override {
+  std::unique_ptr<google::cloud::RetryPolicy> clone() const override {
     return std::make_unique<LimitedErrorCountRetryPolicy>(
         impl_.maximum_failures());
   }
@@ -162,7 +158,7 @@ class LimitedTimeRetryPolicy : public RetryPolicy {
     return impl_.maximum_duration();
   }
 
-  std::unique_ptr<RetryPolicy> clone() const override {
+  std::unique_ptr<google::cloud::RetryPolicy> clone() const override {
     return std::make_unique<LimitedTimeRetryPolicy>(impl_.maximum_duration());
   }
   bool OnFailure(Status const& s) override { return impl_.OnFailure(s); }
@@ -191,11 +187,7 @@ class LimitedTimeRetryPolicy : public RetryPolicy {
  *
  * [`Client::Commit()`]: @ref google::cloud::spanner::Client::Commit()
  */
-class TransactionRerunPolicy : public google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<TransactionRerunPolicy> clone() const = 0;
-};
+class TransactionRerunPolicy : public google::cloud::RetryPolicy {};
 
 /**
  * A transaction rerun policy based on counting errors.
@@ -236,7 +228,7 @@ class LimitedErrorCountTransactionRerunPolicy : public TransactionRerunPolicy {
   bool IsPermanentFailure(Status const& s) const override {
     return impl_.IsPermanentFailure(s);
   }
-  std::unique_ptr<TransactionRerunPolicy> clone() const override {
+  std::unique_ptr<google::cloud::RetryPolicy> clone() const override {
     return std::make_unique<LimitedErrorCountTransactionRerunPolicy>(
         impl_.maximum_failures());
   }
@@ -306,7 +298,7 @@ class LimitedTimeTransactionRerunPolicy : public TransactionRerunPolicy {
   bool IsPermanentFailure(Status const& s) const override {
     return impl_.IsPermanentFailure(s);
   }
-  std::unique_ptr<TransactionRerunPolicy> clone() const override {
+  std::unique_ptr<google::cloud::RetryPolicy> clone() const override {
     return std::make_unique<LimitedTimeTransactionRerunPolicy>(
         impl_.maximum_duration());
   }

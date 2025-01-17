@@ -190,9 +190,7 @@ InstanceGroupsRestConnectionImpl::AggregatedListInstanceGroups(
       std::string, google::cloud::cpp::compute::v1::InstanceGroupsScopedList>>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           compute_instance_groups_v1::InstanceGroupsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::instance_groups::v1::
@@ -508,9 +506,7 @@ InstanceGroupsRestConnectionImpl::ListInstanceGroups(
       StreamRange<google::cloud::cpp::compute::v1::InstanceGroup>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           compute_instance_groups_v1::InstanceGroupsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::cpp::compute::instance_groups::
                                       v1::ListInstanceGroupsRequest const& r) {
@@ -545,9 +541,7 @@ InstanceGroupsRestConnectionImpl::ListInstances(
       StreamRange<google::cloud::cpp::compute::v1::InstanceWithNamedPorts>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           compute_instance_groups_v1::InstanceGroupsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::cpp::compute::instance_groups::
                                       v1::ListInstancesRequest const& r) {

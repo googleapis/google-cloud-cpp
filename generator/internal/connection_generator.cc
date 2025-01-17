@@ -94,10 +94,7 @@ Status ConnectionGenerator::GenerateHeader() {
   HeaderPrint(R"""(
 /// The retry policy for `$connection_class_name$`.
 class $retry_policy_name$ : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<$retry_policy_name$> clone() const = 0;
-};
+ };
 
 /**
  * A retry policy for `$connection_class_name$` based on counting errors.
@@ -135,7 +132,7 @@ class $limited_error_count_retry_policy_name$ : public $retry_policy_name$ {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<$retry_policy_name$> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<$limited_error_count_retry_policy_name$>(
         maximum_failures());
   }
@@ -198,7 +195,7 @@ class $limited_time_retry_policy_name$ : public $retry_policy_name$ {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<$retry_policy_name$> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<$limited_time_retry_policy_name$>(
         maximum_duration());
   }

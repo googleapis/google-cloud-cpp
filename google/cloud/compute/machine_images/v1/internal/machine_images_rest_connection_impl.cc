@@ -342,9 +342,7 @@ MachineImagesRestConnectionImpl::ListMachineImages(
       StreamRange<google::cloud::cpp::compute::v1::MachineImage>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<compute_machine_images_v1::MachineImagesRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::cpp::compute::machine_images::
                                       v1::ListMachineImagesRequest const& r) {

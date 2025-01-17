@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-pubsub-options
  */
 struct SubscriptionAdminRetryPolicyOption {
-  using Type = std::shared_ptr<SubscriptionAdminRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-resourcesettings-options
  */
 struct ResourceSettingsServiceRetryPolicyOption {
-  using Type = std::shared_ptr<ResourceSettingsServiceRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

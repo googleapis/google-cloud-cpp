@@ -33,7 +33,7 @@ namespace run_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<run_v2::JobsRetryPolicy> retry_policy(Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<run_v2::JobsRetryPolicyOption>()->clone();
 }
 
@@ -166,7 +166,7 @@ StreamRange<google::cloud::run::v2::Job> JobsConnectionImpl::ListJobs(
       StreamRange<google::cloud::run::v2::Job>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<run_v2::JobsRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::run::v2::ListJobsRequest const& r) {
@@ -485,7 +485,7 @@ StreamRange<google::longrunning::Operation> JobsConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<run_v2::JobsRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

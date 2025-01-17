@@ -53,8 +53,7 @@ InstanceAdminRestConnectionImpl::ListInstanceConfigs(
       StreamRange<google::spanner::admin::instance::v1::InstanceConfig>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<spanner_admin::InstanceAdminRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::spanner::admin::instance::v1::
                                       ListInstanceConfigsRequest const& r) {
@@ -306,8 +305,7 @@ InstanceAdminRestConnectionImpl::ListInstanceConfigOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<spanner_admin::InstanceAdminRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::spanner::admin::instance::v1::
@@ -344,8 +342,7 @@ InstanceAdminRestConnectionImpl::ListInstances(
       StreamRange<google::spanner::admin::instance::v1::Instance>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<spanner_admin::InstanceAdminRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::spanner::admin::instance::v1::ListInstancesRequest const& r) {
@@ -381,8 +378,7 @@ InstanceAdminRestConnectionImpl::ListInstancePartitions(
       StreamRange<google::spanner::admin::instance::v1::InstancePartition>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<spanner_admin::InstanceAdminRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::spanner::admin::instance::v1::
                                       ListInstancePartitionsRequest const& r) {
@@ -891,8 +887,7 @@ InstanceAdminRestConnectionImpl::ListInstancePartitionOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<spanner_admin::InstanceAdminRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::spanner::admin::instance::v1::
@@ -1020,8 +1015,7 @@ InstanceAdminRestConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<spanner_admin::InstanceAdminRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

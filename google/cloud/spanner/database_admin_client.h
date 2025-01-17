@@ -338,7 +338,7 @@ class GOOGLE_CLOUD_CPP_SPANNER_ADMIN_API_DEPRECATED("DatabaseAdminClient")
    */
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       Database const& db, IamUpdater const& updater,
-      std::unique_ptr<TransactionRerunPolicy> rerun_policy,
+      std::unique_ptr<google::cloud::RetryPolicy> rerun_policy,
       std::unique_ptr<BackoffPolicy> backoff_policy);
 
   /**

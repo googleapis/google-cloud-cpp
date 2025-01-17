@@ -42,12 +42,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `RapidMigrationAssessmentConnection`.
 class RapidMigrationAssessmentRetryPolicy
-    : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<RapidMigrationAssessmentRetryPolicy> clone()
-      const = 0;
-};
+    : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `RapidMigrationAssessmentConnection` based on counting
@@ -92,7 +87,7 @@ class RapidMigrationAssessmentLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<RapidMigrationAssessmentRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<
         RapidMigrationAssessmentLimitedErrorCountRetryPolicy>(
         maximum_failures());
@@ -166,7 +161,7 @@ class RapidMigrationAssessmentLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<RapidMigrationAssessmentRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<RapidMigrationAssessmentLimitedTimeRetryPolicy>(
         maximum_duration());
   }

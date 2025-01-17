@@ -32,8 +32,7 @@ namespace video_transcoder_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<video_transcoder_v1::TranscoderServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<video_transcoder_v1::TranscoderServiceRetryPolicyOption>()
       ->clone();
 }
@@ -90,9 +89,7 @@ TranscoderServiceConnectionImpl::ListJobs(
       StreamRange<google::cloud::video::transcoder::v1::Job>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<video_transcoder_v1::TranscoderServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::video::transcoder::v1::ListJobsRequest const& r) {
@@ -171,9 +168,7 @@ TranscoderServiceConnectionImpl::ListJobTemplates(
       StreamRange<google::cloud::video::transcoder::v1::JobTemplate>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<video_transcoder_v1::TranscoderServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::video::transcoder::v1::ListJobTemplatesRequest const&

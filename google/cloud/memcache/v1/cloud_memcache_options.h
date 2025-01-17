@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-memcache-options
  */
 struct CloudMemcacheRetryPolicyOption {
-  using Type = std::shared_ptr<CloudMemcacheRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

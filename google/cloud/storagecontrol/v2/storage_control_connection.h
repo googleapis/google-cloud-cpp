@@ -40,11 +40,7 @@ namespace storagecontrol_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `StorageControlConnection`.
-class StorageControlRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<StorageControlRetryPolicy> clone() const = 0;
-};
+class StorageControlRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `StorageControlConnection` based on counting errors.
@@ -89,7 +85,7 @@ class StorageControlLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<StorageControlRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<StorageControlLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -162,7 +158,7 @@ class StorageControlLimitedTimeRetryPolicy : public StorageControlRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<StorageControlRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<StorageControlLimitedTimeRetryPolicy>(
         maximum_duration());
   }

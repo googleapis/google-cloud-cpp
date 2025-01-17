@@ -34,8 +34,7 @@ namespace bigtable_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<bigtable_admin::BigtableTableAdminRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<bigtable_admin::BigtableTableAdminRetryPolicyOption>()
       ->clone();
 }
@@ -94,8 +93,7 @@ BigtableTableAdminConnectionImpl::ListTables(
       StreamRange<google::bigtable::admin::v2::Table>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<bigtable_admin::BigtableTableAdminRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::bigtable::admin::v2::ListTablesRequest const& r) {
@@ -429,8 +427,7 @@ BigtableTableAdminConnectionImpl::ListAuthorizedViews(
       StreamRange<google::bigtable::admin::v2::AuthorizedView>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<bigtable_admin::BigtableTableAdminRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::bigtable::admin::v2::ListAuthorizedViewsRequest const& r) {
@@ -777,8 +774,7 @@ BigtableTableAdminConnectionImpl::ListBackups(
       StreamRange<google::bigtable::admin::v2::Backup>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<bigtable_admin::BigtableTableAdminRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::bigtable::admin::v2::ListBackupsRequest const& r) {

@@ -32,8 +32,7 @@ namespace kms_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<kms_v1::KeyManagementServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<kms_v1::KeyManagementServiceRetryPolicyOption>()->clone();
 }
 
@@ -71,8 +70,7 @@ KeyManagementServiceConnectionImpl::ListKeyRings(
       StreamRange<google::cloud::kms::v1::KeyRing>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<kms_v1::KeyManagementServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::kms::v1::ListKeyRingsRequest const& r) {
@@ -104,8 +102,7 @@ KeyManagementServiceConnectionImpl::ListCryptoKeys(
       StreamRange<google::cloud::kms::v1::CryptoKey>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<kms_v1::KeyManagementServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::kms::v1::ListCryptoKeysRequest const& r) {
@@ -139,8 +136,7 @@ KeyManagementServiceConnectionImpl::ListCryptoKeyVersions(
       StreamRange<google::cloud::kms::v1::CryptoKeyVersion>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<kms_v1::KeyManagementServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::kms::v1::ListCryptoKeyVersionsRequest const& r) {
@@ -173,8 +169,7 @@ KeyManagementServiceConnectionImpl::ListImportJobs(
       StreamRange<google::cloud::kms::v1::ImportJob>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<kms_v1::KeyManagementServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::kms::v1::ListImportJobsRequest const& r) {
@@ -552,8 +547,7 @@ KeyManagementServiceConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<kms_v1::KeyManagementServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {

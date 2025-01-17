@@ -37,11 +37,7 @@ namespace dialogflow_es {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `VersionsConnection`.
-class VersionsRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<VersionsRetryPolicy> clone() const = 0;
-};
+class VersionsRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `VersionsConnection` based on counting errors.
@@ -81,7 +77,7 @@ class VersionsLimitedErrorCountRetryPolicy : public VersionsRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<VersionsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<VersionsLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -149,7 +145,7 @@ class VersionsLimitedTimeRetryPolicy : public VersionsRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<VersionsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<VersionsLimitedTimeRetryPolicy>(maximum_duration());
   }
 

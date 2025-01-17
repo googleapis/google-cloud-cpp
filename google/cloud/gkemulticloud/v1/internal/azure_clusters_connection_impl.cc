@@ -33,8 +33,7 @@ namespace gkemulticloud_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<gkemulticloud_v1::AzureClustersRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<gkemulticloud_v1::AzureClustersRetryPolicyOption>()
       ->clone();
 }
@@ -187,8 +186,7 @@ AzureClustersConnectionImpl::ListAzureClients(
       StreamRange<google::cloud::gkemulticloud::v1::AzureClient>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<gkemulticloud_v1::AzureClustersRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::gkemulticloud::v1::ListAzureClientsRequest const& r) {
@@ -523,8 +521,7 @@ AzureClustersConnectionImpl::ListAzureClusters(
       StreamRange<google::cloud::gkemulticloud::v1::AzureCluster>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<gkemulticloud_v1::AzureClustersRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::gkemulticloud::v1::ListAzureClustersRequest const& r) {
@@ -893,8 +890,7 @@ AzureClustersConnectionImpl::ListAzureNodePools(
       StreamRange<google::cloud::gkemulticloud::v1::AzureNodePool>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<gkemulticloud_v1::AzureClustersRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::gkemulticloud::v1::ListAzureNodePoolsRequest const&
@@ -1074,8 +1070,7 @@ AzureClustersConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<gkemulticloud_v1::AzureClustersRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

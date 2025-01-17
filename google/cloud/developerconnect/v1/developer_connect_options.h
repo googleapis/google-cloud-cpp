@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-developerconnect-options
  */
 struct DeveloperConnectRetryPolicyOption {
-  using Type = std::shared_ptr<DeveloperConnectRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

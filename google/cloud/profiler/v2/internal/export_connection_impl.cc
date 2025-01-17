@@ -32,8 +32,7 @@ namespace profiler_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<profiler_v2::ExportServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<profiler_v2::ExportServiceRetryPolicyOption>()->clone();
 }
 
@@ -70,8 +69,7 @@ ExportServiceConnectionImpl::ListProfiles(
       StreamRange<google::devtools::cloudprofiler::v2::Profile>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<profiler_v2::ExportServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::devtools::cloudprofiler::v2::ListProfilesRequest const& r) {

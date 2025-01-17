@@ -36,10 +36,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `GoldenRestOnlyConnection`.
 class GoldenRestOnlyRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<GoldenRestOnlyRetryPolicy> clone() const = 0;
-};
+ };
 
 /**
  * A retry policy for `GoldenRestOnlyConnection` based on counting errors.
@@ -79,7 +76,7 @@ class GoldenRestOnlyLimitedErrorCountRetryPolicy : public GoldenRestOnlyRetryPol
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<GoldenRestOnlyRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<GoldenRestOnlyLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -144,7 +141,7 @@ class GoldenRestOnlyLimitedTimeRetryPolicy : public GoldenRestOnlyRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<GoldenRestOnlyRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<GoldenRestOnlyLimitedTimeRetryPolicy>(
         maximum_duration());
   }

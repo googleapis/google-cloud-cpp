@@ -32,9 +32,7 @@ namespace advisorynotifications_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<
-    advisorynotifications_v1::AdvisoryNotificationsServiceRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options
       .get<advisorynotifications_v1::
                AdvisoryNotificationsServiceRetryPolicyOption>()
@@ -84,9 +82,7 @@ AdvisoryNotificationsServiceConnectionImpl::ListNotifications(
       StreamRange<google::cloud::advisorynotifications::v1::Notification>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           advisorynotifications_v1::AdvisoryNotificationsServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::advisorynotifications::v1::
                                       ListNotificationsRequest const& r) {

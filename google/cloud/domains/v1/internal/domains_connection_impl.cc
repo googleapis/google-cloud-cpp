@@ -33,8 +33,7 @@ namespace domains_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<domains_v1::DomainsRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<domains_v1::DomainsRetryPolicyOption>()->clone();
 }
 
@@ -301,8 +300,7 @@ DomainsConnectionImpl::ListRegistrations(
       StreamRange<google::cloud::domains::v1::Registration>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<domains_v1::DomainsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::domains::v1::ListRegistrationsRequest const& r) {

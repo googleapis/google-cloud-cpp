@@ -40,11 +40,7 @@ namespace compute_global_forwarding_rules_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `GlobalForwardingRulesConnection`.
-class GlobalForwardingRulesRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<GlobalForwardingRulesRetryPolicy> clone() const = 0;
-};
+class GlobalForwardingRulesRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `GlobalForwardingRulesConnection` based on counting
@@ -89,7 +85,7 @@ class GlobalForwardingRulesLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<GlobalForwardingRulesRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<GlobalForwardingRulesLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -160,7 +156,7 @@ class GlobalForwardingRulesLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<GlobalForwardingRulesRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<GlobalForwardingRulesLimitedTimeRetryPolicy>(
         maximum_duration());
   }

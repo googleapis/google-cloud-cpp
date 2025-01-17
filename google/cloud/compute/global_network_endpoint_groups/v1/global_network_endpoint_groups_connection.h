@@ -41,12 +41,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `GlobalNetworkEndpointGroupsConnection`.
 class GlobalNetworkEndpointGroupsRetryPolicy
-    : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<GlobalNetworkEndpointGroupsRetryPolicy> clone()
-      const = 0;
-};
+    : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `GlobalNetworkEndpointGroupsConnection` based on counting
@@ -92,8 +87,7 @@ class GlobalNetworkEndpointGroupsLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<GlobalNetworkEndpointGroupsRetryPolicy> clone()
-      const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<
         GlobalNetworkEndpointGroupsLimitedErrorCountRetryPolicy>(
         maximum_failures());
@@ -168,8 +162,7 @@ class GlobalNetworkEndpointGroupsLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<GlobalNetworkEndpointGroupsRetryPolicy> clone()
-      const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<GlobalNetworkEndpointGroupsLimitedTimeRetryPolicy>(
         maximum_duration());
   }

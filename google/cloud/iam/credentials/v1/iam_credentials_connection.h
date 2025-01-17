@@ -35,11 +35,7 @@ namespace iam_credentials_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `IAMCredentialsConnection`.
-class IAMCredentialsRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<IAMCredentialsRetryPolicy> clone() const = 0;
-};
+class IAMCredentialsRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `IAMCredentialsConnection` based on counting errors.
@@ -80,7 +76,7 @@ class IAMCredentialsLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<IAMCredentialsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<IAMCredentialsLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -149,7 +145,7 @@ class IAMCredentialsLimitedTimeRetryPolicy : public IAMCredentialsRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<IAMCredentialsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<IAMCredentialsLimitedTimeRetryPolicy>(
         maximum_duration());
   }

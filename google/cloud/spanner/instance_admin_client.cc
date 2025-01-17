@@ -99,7 +99,7 @@ StatusOr<google::iam::v1::Policy> InstanceAdminClient::SetIamPolicy(
 
 StatusOr<google::iam::v1::Policy> InstanceAdminClient::SetIamPolicy(
     Instance const& in, IamUpdater const& updater,
-    std::unique_ptr<TransactionRerunPolicy> rerun_policy,
+    std::unique_ptr<google::cloud::RetryPolicy> rerun_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy) {
   internal::OptionsSpan span(conn_->options());
   using RerunnablePolicy = spanner_internal::SafeTransactionRerun;

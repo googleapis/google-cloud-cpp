@@ -33,8 +33,7 @@ namespace datastream_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<datastream_v1::DatastreamRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<datastream_v1::DatastreamRetryPolicyOption>()->clone();
 }
 
@@ -76,8 +75,7 @@ DatastreamConnectionImpl::ListConnectionProfiles(
       StreamRange<google::cloud::datastream::v1::ConnectionProfile>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datastream_v1::DatastreamRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::datastream::v1::ListConnectionProfilesRequest const&
@@ -431,8 +429,7 @@ DatastreamConnectionImpl::ListStreams(
       StreamRange<google::cloud::datastream::v1::Stream>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datastream_v1::DatastreamRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::datastream::v1::ListStreamsRequest const& r) {
@@ -868,8 +865,7 @@ DatastreamConnectionImpl::ListStreamObjects(
       StreamRange<google::cloud::datastream::v1::StreamObject>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datastream_v1::DatastreamRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::datastream::v1::ListStreamObjectsRequest const& r) {
@@ -931,8 +927,7 @@ StreamRange<std::string> DatastreamConnectionImpl::FetchStaticIps(
   return google::cloud::internal::MakePaginationRange<StreamRange<std::string>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datastream_v1::DatastreamRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::datastream::v1::FetchStaticIpsRequest const& r) {
@@ -1076,8 +1071,7 @@ DatastreamConnectionImpl::ListPrivateConnections(
       StreamRange<google::cloud::datastream::v1::PrivateConnection>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datastream_v1::DatastreamRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::datastream::v1::ListPrivateConnectionsRequest const&
@@ -1310,8 +1304,7 @@ DatastreamConnectionImpl::ListRoutes(
       StreamRange<google::cloud::datastream::v1::Route>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datastream_v1::DatastreamRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::datastream::v1::ListRoutesRequest const& r) {
@@ -1434,8 +1427,7 @@ DatastreamConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datastream_v1::DatastreamRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {
@@ -1482,8 +1474,7 @@ DatastreamConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datastream_v1::DatastreamRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

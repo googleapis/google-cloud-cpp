@@ -36,11 +36,7 @@ namespace pubsub_admin {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `TopicAdminConnection`.
-class TopicAdminRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<TopicAdminRetryPolicy> clone() const = 0;
-};
+class TopicAdminRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `TopicAdminConnection` based on counting errors.
@@ -80,7 +76,7 @@ class TopicAdminLimitedErrorCountRetryPolicy : public TopicAdminRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<TopicAdminRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<TopicAdminLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -149,7 +145,7 @@ class TopicAdminLimitedTimeRetryPolicy : public TopicAdminRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<TopicAdminRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<TopicAdminLimitedTimeRetryPolicy>(
         maximum_duration());
   }

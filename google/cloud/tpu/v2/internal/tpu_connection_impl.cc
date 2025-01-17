@@ -33,7 +33,7 @@ namespace tpu_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<tpu_v2::TpuRetryPolicy> retry_policy(Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<tpu_v2::TpuRetryPolicyOption>()->clone();
 }
 
@@ -70,7 +70,7 @@ StreamRange<google::cloud::tpu::v2::Node> TpuConnectionImpl::ListNodes(
       StreamRange<google::cloud::tpu::v2::Node>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<tpu_v2::TpuRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::tpu::v2::ListNodesRequest const& r) {
@@ -555,7 +555,7 @@ TpuConnectionImpl::ListAcceleratorTypes(
       StreamRange<google::cloud::tpu::v2::AcceleratorType>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<tpu_v2::TpuRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::tpu::v2::ListAcceleratorTypesRequest const& r) {
@@ -602,7 +602,7 @@ TpuConnectionImpl::ListRuntimeVersions(
       StreamRange<google::cloud::tpu::v2::RuntimeVersion>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<tpu_v2::TpuRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::tpu::v2::ListRuntimeVersionsRequest const& r) {
@@ -662,7 +662,7 @@ StreamRange<google::cloud::location::Location> TpuConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<tpu_v2::TpuRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {
@@ -707,7 +707,7 @@ StreamRange<google::longrunning::Operation> TpuConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<tpu_v2::TpuRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

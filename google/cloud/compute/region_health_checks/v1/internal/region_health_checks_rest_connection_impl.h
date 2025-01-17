@@ -109,9 +109,7 @@ class RegionHealthChecksRestConnectionImpl
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
-  static std::unique_ptr<
-      compute_region_health_checks_v1::RegionHealthChecksRetryPolicy>
-  retry_policy(Options const& options) {
+  static std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
     return options
         .get<compute_region_health_checks_v1::
                  RegionHealthChecksRetryPolicyOption>()

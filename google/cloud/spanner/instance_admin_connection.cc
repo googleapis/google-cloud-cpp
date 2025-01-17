@@ -164,7 +164,8 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
     auto& stub = stub_;
     // Because we do not have C++14 generalized lambda captures we cannot just
     // use the unique_ptr<> here, so convert to shared_ptr<> instead.
-    auto retry = std::shared_ptr<RetryPolicy>(retry_policy_prototype_->clone());
+    auto retry = std::shared_ptr<google::cloud::RetryPolicy>(
+        retry_policy_prototype_->clone());
     auto backoff =
         std::shared_ptr<BackoffPolicy>(backoff_policy_prototype_->clone());
 
@@ -199,7 +200,8 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
     auto& stub = stub_;
     // Because we do not have C++14 generalized lambda captures we cannot just
     // use the unique_ptr<> here, so convert to shared_ptr<> instead.
-    auto retry = std::shared_ptr<RetryPolicy>(retry_policy_prototype_->clone());
+    auto retry = std::shared_ptr<google::cloud::RetryPolicy>(
+        retry_policy_prototype_->clone());
     auto backoff =
         std::shared_ptr<BackoffPolicy>(backoff_policy_prototype_->clone());
 
@@ -276,7 +278,7 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
  private:
   std::shared_ptr<spanner_internal::InstanceAdminStub> stub_;
   Options opts_;
-  std::unique_ptr<RetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<google::cloud::RetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
   std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
 

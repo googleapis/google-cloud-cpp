@@ -26,7 +26,7 @@ namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<ProjectRetryPolicy> retry_policy(Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<ProjectRetryPolicyOption>()->clone();
 }
 
@@ -53,8 +53,7 @@ StreamRange<Project> ProjectRestConnectionImpl::ListProjects(
   auto req = request;
   req.set_page_token("");
 
-  auto retry =
-      std::shared_ptr<ProjectRetryPolicy const>(retry_policy(*current));
+  auto retry = std::shared_ptr<RetryPolicy const>(retry_policy(*current));
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy(*current));
   auto idempotency = idempotency_policy(*current)->ListProjects(req);
   char const* function_name = __func__;

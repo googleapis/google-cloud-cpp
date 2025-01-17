@@ -33,8 +33,7 @@ namespace datafusion_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<datafusion_v1::DataFusionRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<datafusion_v1::DataFusionRetryPolicyOption>()->clone();
 }
 
@@ -76,8 +75,7 @@ DataFusionConnectionImpl::ListAvailableVersions(
       StreamRange<google::cloud::datafusion::v1::Version>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datafusion_v1::DataFusionRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::datafusion::v1::ListAvailableVersionsRequest const&
@@ -111,8 +109,7 @@ DataFusionConnectionImpl::ListInstances(
       StreamRange<google::cloud::datafusion::v1::Instance>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datafusion_v1::DataFusionRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::datafusion::v1::ListInstancesRequest const& r) {

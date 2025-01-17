@@ -58,9 +58,7 @@ HealthChecksRestConnectionImpl::AggregatedListHealthChecks(
       std::string, google::cloud::cpp::compute::v1::HealthChecksScopedList>>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<compute_health_checks_v1::HealthChecksRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::health_checks::v1::
@@ -369,9 +367,7 @@ HealthChecksRestConnectionImpl::ListHealthChecks(
       StreamRange<google::cloud::cpp::compute::v1::HealthCheck>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<compute_health_checks_v1::HealthChecksRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::cpp::compute::health_checks::
                                       v1::ListHealthChecksRequest const& r) {

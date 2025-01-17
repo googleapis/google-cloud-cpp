@@ -39,11 +39,7 @@ namespace compute_disks_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `DisksConnection`.
-class DisksRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<DisksRetryPolicy> clone() const = 0;
-};
+class DisksRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `DisksConnection` based on counting errors.
@@ -83,7 +79,7 @@ class DisksLimitedErrorCountRetryPolicy : public DisksRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<DisksRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<DisksLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -150,7 +146,7 @@ class DisksLimitedTimeRetryPolicy : public DisksRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<DisksRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<DisksLimitedTimeRetryPolicy>(maximum_duration());
   }
 

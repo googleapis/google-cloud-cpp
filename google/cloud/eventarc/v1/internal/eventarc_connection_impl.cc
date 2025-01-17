@@ -33,8 +33,7 @@ namespace eventarc_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<eventarc_v1::EventarcRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<eventarc_v1::EventarcRetryPolicyOption>()->clone();
 }
 
@@ -87,8 +86,7 @@ EventarcConnectionImpl::ListTriggers(
       StreamRange<google::cloud::eventarc::v1::Trigger>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<eventarc_v1::EventarcRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::eventarc::v1::ListTriggersRequest const& r) {
@@ -402,8 +400,7 @@ EventarcConnectionImpl::ListChannels(
       StreamRange<google::cloud::eventarc::v1::Channel>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<eventarc_v1::EventarcRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::eventarc::v1::ListChannelsRequest const& r) {
@@ -717,8 +714,7 @@ EventarcConnectionImpl::ListProviders(
       StreamRange<google::cloud::eventarc::v1::Provider>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<eventarc_v1::EventarcRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::eventarc::v1::ListProvidersRequest const& r) {
@@ -767,8 +763,7 @@ EventarcConnectionImpl::ListChannelConnections(
       StreamRange<google::cloud::eventarc::v1::ChannelConnection>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<eventarc_v1::EventarcRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::eventarc::v1::ListChannelConnectionsRequest const& r) {
@@ -1037,8 +1032,7 @@ EventarcConnectionImpl::ListMessageBuses(
       StreamRange<google::cloud::eventarc::v1::MessageBus>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<eventarc_v1::EventarcRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::eventarc::v1::ListMessageBusesRequest const& r) {
@@ -1375,8 +1369,7 @@ EventarcConnectionImpl::ListEnrollments(
       StreamRange<google::cloud::eventarc::v1::Enrollment>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<eventarc_v1::EventarcRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::eventarc::v1::ListEnrollmentsRequest const& r) {
@@ -1696,8 +1689,7 @@ EventarcConnectionImpl::ListPipelines(
       StreamRange<google::cloud::eventarc::v1::Pipeline>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<eventarc_v1::EventarcRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::eventarc::v1::ListPipelinesRequest const& r) {
@@ -2016,8 +2008,7 @@ EventarcConnectionImpl::ListGoogleApiSources(
       StreamRange<google::cloud::eventarc::v1::GoogleApiSource>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<eventarc_v1::EventarcRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::eventarc::v1::ListGoogleApiSourcesRequest const& r) {
@@ -2330,8 +2321,7 @@ EventarcConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<eventarc_v1::EventarcRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {
@@ -2417,8 +2407,7 @@ EventarcConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<eventarc_v1::EventarcRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

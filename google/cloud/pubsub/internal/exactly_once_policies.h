@@ -37,6 +37,7 @@ class ExactlyOnceRetryPolicy : public google::cloud::RetryPolicy {
   bool OnFailure(Status const&) override;
   bool IsExhausted() const override;
   bool IsPermanentFailure(Status const&) const override;
+  std::unique_ptr<RetryPolicy> clone() const override;
 
  private:
   std::string const ack_id_;

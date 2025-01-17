@@ -33,8 +33,7 @@ namespace resourcemanager_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<resourcemanager_v3::FoldersRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<resourcemanager_v3::FoldersRetryPolicyOption>()->clone();
 }
 
@@ -90,8 +89,7 @@ FoldersConnectionImpl::ListFolders(
       StreamRange<google::cloud::resourcemanager::v3::Folder>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<resourcemanager_v3::FoldersRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::resourcemanager::v3::ListFoldersRequest const& r) {
@@ -124,8 +122,7 @@ FoldersConnectionImpl::SearchFolders(
       StreamRange<google::cloud::resourcemanager::v3::Folder>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<resourcemanager_v3::FoldersRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::resourcemanager::v3::SearchFoldersRequest const& r) {

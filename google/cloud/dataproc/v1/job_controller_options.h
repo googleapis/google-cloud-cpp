@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-dataproc-options
  */
 struct JobControllerRetryPolicyOption {
-  using Type = std::shared_ptr<JobControllerRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

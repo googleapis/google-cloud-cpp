@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-servicedirectory-options
  */
 struct LookupServiceRetryPolicyOption {
-  using Type = std::shared_ptr<LookupServiceRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

@@ -228,7 +228,7 @@ StatusOr<BatchDmlResult> Client::ExecuteBatchDml(
 
 StatusOr<CommitResult> Client::Commit(
     std::function<StatusOr<Mutations>(Transaction)> const& mutator,
-    std::unique_ptr<TransactionRerunPolicy> rerun_policy,
+    std::unique_ptr<google::cloud::RetryPolicy> rerun_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
 
@@ -405,7 +405,7 @@ std::shared_ptr<Connection> MakeConnection(
 std::shared_ptr<Connection> MakeConnection(
     Database const& db, ConnectionOptions const& connection_options,
     SessionPoolOptions session_pool_options,
-    std::unique_ptr<RetryPolicy> retry_policy,
+    std::unique_ptr<google::cloud::RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy) {
   auto opts = internal::MergeOptions(
       internal::MakeOptions(connection_options),

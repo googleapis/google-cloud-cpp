@@ -64,9 +64,7 @@ PublicDelegatedPrefixesRestConnectionImpl::
       google::cloud::cpp::compute::v1::PublicDelegatedPrefixesScopedList>>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_public_delegated_prefixes_v1::
-                                   PublicDelegatedPrefixesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::public_delegated_prefixes::v1::
@@ -521,9 +519,7 @@ PublicDelegatedPrefixesRestConnectionImpl::ListPublicDelegatedPrefixes(
       StreamRange<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_public_delegated_prefixes_v1::
-                                   PublicDelegatedPrefixesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::public_delegated_prefixes::v1::

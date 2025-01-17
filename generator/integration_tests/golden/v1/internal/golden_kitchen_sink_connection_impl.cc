@@ -35,7 +35,7 @@ namespace golden_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<golden_v1::GoldenKitchenSinkRetryPolicy>
+std::unique_ptr<RetryPolicy>
 retry_policy(Options const& options) {
   return options.get<golden_v1::GoldenKitchenSinkRetryPolicyOption>()->clone();
 }
@@ -113,7 +113,7 @@ GoldenKitchenSinkConnectionImpl::ListLogs(google::test::admin::database::v1::Lis
   return google::cloud::internal::MakePaginationRange<StreamRange<std::string>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<golden_v1::GoldenKitchenSinkRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::test::admin::database::v1::ListLogsRequest const& r) {
         return google::cloud::internal::RetryLoop(
@@ -256,7 +256,7 @@ GoldenKitchenSinkConnectionImpl::ListOperations(google::longrunning::ListOperati
   return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<golden_v1::GoldenKitchenSinkRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(

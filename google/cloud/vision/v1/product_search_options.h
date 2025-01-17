@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-vision-options
  */
 struct ProductSearchRetryPolicyOption {
-  using Type = std::shared_ptr<ProductSearchRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

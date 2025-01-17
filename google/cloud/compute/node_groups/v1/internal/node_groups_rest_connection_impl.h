@@ -175,8 +175,7 @@ class NodeGroupsRestConnectionImpl
                          TestIamPermissionsRequest const& request) override;
 
  private:
-  static std::unique_ptr<compute_node_groups_v1::NodeGroupsRetryPolicy>
-  retry_policy(Options const& options) {
+  static std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
     return options.get<compute_node_groups_v1::NodeGroupsRetryPolicyOption>()
         ->clone();
   }

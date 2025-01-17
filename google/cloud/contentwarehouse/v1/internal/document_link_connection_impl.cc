@@ -32,8 +32,7 @@ namespace contentwarehouse_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<contentwarehouse_v1::DocumentLinkServiceRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options
       .get<contentwarehouse_v1::DocumentLinkServiceRetryPolicyOption>()
       ->clone();
@@ -93,9 +92,7 @@ DocumentLinkServiceConnectionImpl::ListLinkedSources(
       StreamRange<google::cloud::contentwarehouse::v1::DocumentLink>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<contentwarehouse_v1::DocumentLinkServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest const&

@@ -56,7 +56,7 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-inline std::unique_ptr<storage::RetryPolicy> retry_policy(
+inline std::unique_ptr<google::cloud::RetryPolicy> retry_policy(
     Options const& options) {
   return options.get<storage::RetryPolicyOption>()->clone();
 }

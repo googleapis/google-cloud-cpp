@@ -327,8 +327,7 @@ RoutesRestConnectionImpl::ListRoutes(
       StreamRange<google::cloud::cpp::compute::v1::Route>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_routes_v1::RoutesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::routes::v1::ListRoutesRequest const& r) {

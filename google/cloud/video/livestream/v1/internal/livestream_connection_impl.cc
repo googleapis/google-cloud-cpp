@@ -33,8 +33,7 @@ namespace video_livestream_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<video_livestream_v1::LivestreamServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<video_livestream_v1::LivestreamServiceRetryPolicyOption>()
       ->clone();
 }
@@ -176,9 +175,7 @@ LivestreamServiceConnectionImpl::ListChannels(
       StreamRange<google::cloud::video::livestream::v1::Channel>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<video_livestream_v1::LivestreamServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::video::livestream::v1::ListChannelsRequest const& r) {
@@ -697,9 +694,7 @@ LivestreamServiceConnectionImpl::ListInputs(
       StreamRange<google::cloud::video::livestream::v1::Input>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<video_livestream_v1::LivestreamServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::video::livestream::v1::ListInputsRequest const& r) {
@@ -951,9 +946,7 @@ LivestreamServiceConnectionImpl::ListEvents(
       StreamRange<google::cloud::video::livestream::v1::Event>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<video_livestream_v1::LivestreamServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::video::livestream::v1::ListEventsRequest const& r) {
@@ -1016,9 +1009,7 @@ LivestreamServiceConnectionImpl::ListClips(
       StreamRange<google::cloud::video::livestream::v1::Clip>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<video_livestream_v1::LivestreamServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::video::livestream::v1::ListClipsRequest const& r) {
@@ -1457,9 +1448,7 @@ LivestreamServiceConnectionImpl::ListAssets(
       StreamRange<google::cloud::video::livestream::v1::Asset>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<video_livestream_v1::LivestreamServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::video::livestream::v1::ListAssetsRequest const& r) {
@@ -1602,9 +1591,7 @@ LivestreamServiceConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<video_livestream_v1::LivestreamServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {
@@ -1651,9 +1638,7 @@ LivestreamServiceConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<video_livestream_v1::LivestreamServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

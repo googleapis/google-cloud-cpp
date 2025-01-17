@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-automl-options
  */
 struct AutoMlRetryPolicyOption {
-  using Type = std::shared_ptr<AutoMlRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

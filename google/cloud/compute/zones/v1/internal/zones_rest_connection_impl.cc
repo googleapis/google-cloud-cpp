@@ -66,8 +66,7 @@ ZonesRestConnectionImpl::ListZones(
       StreamRange<google::cloud::cpp::compute::v1::Zone>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_zones_v1::ZonesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::zones::v1::ListZonesRequest const& r) {

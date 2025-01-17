@@ -236,7 +236,7 @@ TEST(DatabaseAdminClientTest, SetIamPolicyOccNoUpdates) {
   EXPECT_EQ("test-etag", actual->etag());
 }
 
-std::unique_ptr<TransactionRerunPolicy> RerunPolicyForTesting() {
+std::unique_ptr<google::cloud::RetryPolicy> RerunPolicyForTesting() {
   return LimitedErrorCountTransactionRerunPolicy(/*maximum_failures=*/3)
       .clone();
 }

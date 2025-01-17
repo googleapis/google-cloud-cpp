@@ -33,8 +33,7 @@ namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<aiplatform_v1::FeatureOnlineStoreAdminServiceRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options
       .get<aiplatform_v1::FeatureOnlineStoreAdminServiceRetryPolicyOption>()
       ->clone();
@@ -202,9 +201,7 @@ FeatureOnlineStoreAdminServiceConnectionImpl::ListFeatureOnlineStores(
       StreamRange<google::cloud::aiplatform::v1::FeatureOnlineStore>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           aiplatform_v1::FeatureOnlineStoreAdminServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::aiplatform::v1::ListFeatureOnlineStoresRequest const&
@@ -541,9 +538,7 @@ FeatureOnlineStoreAdminServiceConnectionImpl::ListFeatureViews(
       StreamRange<google::cloud::aiplatform::v1::FeatureView>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           aiplatform_v1::FeatureOnlineStoreAdminServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::aiplatform::v1::ListFeatureViewsRequest const& r) {
@@ -795,9 +790,7 @@ FeatureOnlineStoreAdminServiceConnectionImpl::ListFeatureViewSyncs(
       StreamRange<google::cloud::aiplatform::v1::FeatureViewSync>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           aiplatform_v1::FeatureOnlineStoreAdminServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::aiplatform::v1::ListFeatureViewSyncsRequest const& r) {
@@ -830,9 +823,7 @@ FeatureOnlineStoreAdminServiceConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           aiplatform_v1::FeatureOnlineStoreAdminServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {
@@ -921,9 +912,7 @@ FeatureOnlineStoreAdminServiceConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           aiplatform_v1::FeatureOnlineStoreAdminServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

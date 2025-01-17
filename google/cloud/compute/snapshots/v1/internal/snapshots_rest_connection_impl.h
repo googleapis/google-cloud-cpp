@@ -107,8 +107,7 @@ class SnapshotsRestConnectionImpl
                          TestIamPermissionsRequest const& request) override;
 
  private:
-  static std::unique_ptr<compute_snapshots_v1::SnapshotsRetryPolicy>
-  retry_policy(Options const& options) {
+  static std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
     return options.get<compute_snapshots_v1::SnapshotsRetryPolicyOption>()
         ->clone();
   }

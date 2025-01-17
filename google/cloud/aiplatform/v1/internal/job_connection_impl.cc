@@ -33,8 +33,7 @@ namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<aiplatform_v1::JobServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<aiplatform_v1::JobServiceRetryPolicyOption>()->clone();
 }
 
@@ -105,8 +104,7 @@ JobServiceConnectionImpl::ListCustomJobs(
       StreamRange<google::cloud::aiplatform::v1::CustomJob>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::JobServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::aiplatform::v1::ListCustomJobsRequest const& r) {
@@ -279,8 +277,7 @@ JobServiceConnectionImpl::ListDataLabelingJobs(
       StreamRange<google::cloud::aiplatform::v1::DataLabelingJob>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::JobServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::aiplatform::v1::ListDataLabelingJobsRequest const& r) {
@@ -458,8 +455,7 @@ JobServiceConnectionImpl::ListHyperparameterTuningJobs(
       StreamRange<google::cloud::aiplatform::v1::HyperparameterTuningJob>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::JobServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::aiplatform::v1::
@@ -634,8 +630,7 @@ JobServiceConnectionImpl::ListNasJobs(
       StreamRange<google::cloud::aiplatform::v1::NasJob>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::JobServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::aiplatform::v1::ListNasJobsRequest const& r) {
@@ -789,8 +784,7 @@ JobServiceConnectionImpl::ListNasTrialDetails(
       StreamRange<google::cloud::aiplatform::v1::NasTrialDetail>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::JobServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::aiplatform::v1::ListNasTrialDetailsRequest const& r) {
@@ -858,8 +852,7 @@ JobServiceConnectionImpl::ListBatchPredictionJobs(
       StreamRange<google::cloud::aiplatform::v1::BatchPredictionJob>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::JobServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::aiplatform::v1::ListBatchPredictionJobsRequest const&
@@ -1026,8 +1019,7 @@ JobServiceConnectionImpl::SearchModelDeploymentMonitoringStatsAnomalies(
       google::cloud::aiplatform::v1::ModelMonitoringStatsAnomalies>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::JobServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::aiplatform::v1::
@@ -1085,8 +1077,7 @@ JobServiceConnectionImpl::ListModelDeploymentMonitoringJobs(
       StreamRange<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::JobServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::aiplatform::v1::
@@ -1351,8 +1342,7 @@ JobServiceConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::JobServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {
@@ -1439,8 +1429,7 @@ JobServiceConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::JobServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

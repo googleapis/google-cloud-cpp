@@ -40,10 +40,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `GoldenKitchenSinkConnection`.
 class GoldenKitchenSinkRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<GoldenKitchenSinkRetryPolicy> clone() const = 0;
-};
+ };
 
 /**
  * A retry policy for `GoldenKitchenSinkConnection` based on counting errors.
@@ -84,7 +81,7 @@ class GoldenKitchenSinkLimitedErrorCountRetryPolicy : public GoldenKitchenSinkRe
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<GoldenKitchenSinkRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<GoldenKitchenSinkLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -150,7 +147,7 @@ class GoldenKitchenSinkLimitedTimeRetryPolicy : public GoldenKitchenSinkRetryPol
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<GoldenKitchenSinkRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<GoldenKitchenSinkLimitedTimeRetryPolicy>(
         maximum_duration());
   }

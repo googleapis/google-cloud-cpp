@@ -43,7 +43,7 @@ RetryObjectReadSource::RetryObjectReadSource(
     ReadSourceFactory factory,
     google::cloud::internal::ImmutableOptions options,
     ReadObjectRangeRequest request, std::unique_ptr<ObjectReadSource> child,
-    std::unique_ptr<RetryPolicy> retry_policy,
+    std::unique_ptr<google::cloud::RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::function<void(std::chrono::milliseconds)> backoff)
     : factory_(std::move(factory)),
@@ -62,7 +62,7 @@ RetryObjectReadSource::RetryObjectReadSource(
     ReadSourceFactory factory,
     google::cloud::internal::ImmutableOptions options,
     ReadObjectRangeRequest request, std::unique_ptr<ObjectReadSource> child,
-    std::unique_ptr<RetryPolicy> retry_policy,
+    std::unique_ptr<google::cloud::RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy)
     : RetryObjectReadSource(
           std::move(factory), std::move(options), std::move(request),
@@ -153,8 +153,8 @@ bool RetryObjectReadSource::HandleResult(StatusOr<ReadSourceResult> const& r) {
   return true;
 }
 
-Status RetryObjectReadSource::MakeChild(RetryPolicy& retry_policy,
-                                        BackoffPolicy& backoff_policy) {
+Status RetryObjectReadSource::MakeChild(
+    google::cloud::RetryPolicy& retry_policy, BackoffPolicy& backoff_policy) {
   auto on_success = [this](std::unique_ptr<ObjectReadSource> child) {
     child_ = std::move(child);
     return Status{};

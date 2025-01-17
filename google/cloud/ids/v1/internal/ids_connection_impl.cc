@@ -33,7 +33,7 @@ namespace ids_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<ids_v1::IDSRetryPolicy> retry_policy(Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<ids_v1::IDSRetryPolicyOption>()->clone();
 }
 
@@ -70,7 +70,7 @@ StreamRange<google::cloud::ids::v1::Endpoint> IDSConnectionImpl::ListEndpoints(
       StreamRange<google::cloud::ids::v1::Endpoint>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<ids_v1::IDSRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::ids::v1::ListEndpointsRequest const& r) {

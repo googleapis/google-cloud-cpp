@@ -32,8 +32,7 @@ namespace monitoring_dashboard_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<monitoring_dashboard_v1::DashboardsServiceRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options
       .get<monitoring_dashboard_v1::DashboardsServiceRetryPolicyOption>()
       ->clone();
@@ -92,9 +91,7 @@ DashboardsServiceConnectionImpl::ListDashboards(
       StreamRange<google::monitoring::dashboard::v1::Dashboard>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           monitoring_dashboard_v1::DashboardsServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::monitoring::dashboard::v1::ListDashboardsRequest const& r) {

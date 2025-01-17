@@ -39,11 +39,7 @@ namespace compute_autoscalers_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `AutoscalersConnection`.
-class AutoscalersRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<AutoscalersRetryPolicy> clone() const = 0;
-};
+class AutoscalersRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `AutoscalersConnection` based on counting errors.
@@ -83,7 +79,7 @@ class AutoscalersLimitedErrorCountRetryPolicy : public AutoscalersRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<AutoscalersRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<AutoscalersLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -152,7 +148,7 @@ class AutoscalersLimitedTimeRetryPolicy : public AutoscalersRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<AutoscalersRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<AutoscalersLimitedTimeRetryPolicy>(
         maximum_duration());
   }

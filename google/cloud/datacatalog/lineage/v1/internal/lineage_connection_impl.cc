@@ -33,8 +33,7 @@ namespace datacatalog_lineage_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<datacatalog_lineage_v1::LineageRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<datacatalog_lineage_v1::LineageRetryPolicyOption>()
       ->clone();
 }
@@ -144,8 +143,7 @@ LineageConnectionImpl::ListProcesses(
       StreamRange<google::cloud::datacatalog::lineage::v1::Process>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datacatalog_lineage_v1::LineageRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::datacatalog::lineage::v1::ListProcessesRequest const&
@@ -318,8 +316,7 @@ LineageConnectionImpl::ListRuns(
       StreamRange<google::cloud::datacatalog::lineage::v1::Run>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datacatalog_lineage_v1::LineageRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::datacatalog::lineage::v1::ListRunsRequest const& r) {
@@ -478,8 +475,7 @@ LineageConnectionImpl::ListLineageEvents(
       StreamRange<google::cloud::datacatalog::lineage::v1::LineageEvent>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datacatalog_lineage_v1::LineageRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::datacatalog::lineage::v1::
                                       ListLineageEventsRequest const& r) {
@@ -527,8 +523,7 @@ LineageConnectionImpl::SearchLinks(
       StreamRange<google::cloud::datacatalog::lineage::v1::Link>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datacatalog_lineage_v1::LineageRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::datacatalog::lineage::v1::SearchLinksRequest const&
@@ -564,8 +559,7 @@ LineageConnectionImpl::BatchSearchLinkProcesses(
       StreamRange<google::cloud::datacatalog::lineage::v1::ProcessLinks>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datacatalog_lineage_v1::LineageRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::datacatalog::lineage::v1::
@@ -600,8 +594,7 @@ LineageConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datacatalog_lineage_v1::LineageRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

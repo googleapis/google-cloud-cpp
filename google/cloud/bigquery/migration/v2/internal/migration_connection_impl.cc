@@ -32,8 +32,7 @@ namespace bigquery_migration_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<bigquery_migration_v2::MigrationServiceRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options
       .get<bigquery_migration_v2::MigrationServiceRetryPolicyOption>()
       ->clone();
@@ -110,9 +109,7 @@ MigrationServiceConnectionImpl::ListMigrationWorkflows(
       StreamRange<google::cloud::bigquery::migration::v2::MigrationWorkflow>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<bigquery_migration_v2::MigrationServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::bigquery::migration::v2::
                                       ListMigrationWorkflowsRequest const& r) {
@@ -194,9 +191,7 @@ MigrationServiceConnectionImpl::ListMigrationSubtasks(
       StreamRange<google::cloud::bigquery::migration::v2::MigrationSubtask>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<bigquery_migration_v2::MigrationServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::bigquery::migration::v2::
                                       ListMigrationSubtasksRequest const& r) {

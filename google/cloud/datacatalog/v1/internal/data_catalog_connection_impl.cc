@@ -33,8 +33,7 @@ namespace datacatalog_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<datacatalog_v1::DataCatalogRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<datacatalog_v1::DataCatalogRetryPolicyOption>()->clone();
 }
 
@@ -75,8 +74,7 @@ DataCatalogConnectionImpl::SearchCatalog(
       StreamRange<google::cloud::datacatalog::v1::SearchCatalogResult>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datacatalog_v1::DataCatalogRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::datacatalog::v1::SearchCatalogRequest const& r) {
@@ -168,8 +166,7 @@ DataCatalogConnectionImpl::ListEntryGroups(
       StreamRange<google::cloud::datacatalog::v1::EntryGroup>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datacatalog_v1::DataCatalogRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::datacatalog::v1::ListEntryGroupsRequest const& r) {
@@ -275,8 +272,7 @@ DataCatalogConnectionImpl::ListEntries(
       StreamRange<google::cloud::datacatalog::v1::Entry>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datacatalog_v1::DataCatalogRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::datacatalog::v1::ListEntriesRequest const& r) {
@@ -523,8 +519,7 @@ DataCatalogConnectionImpl::ListTags(
       StreamRange<google::cloud::datacatalog::v1::Tag>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datacatalog_v1::DataCatalogRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::datacatalog::v1::ListTagsRequest const& r) {
@@ -858,8 +853,7 @@ DataCatalogConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<datacatalog_v1::DataCatalogRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

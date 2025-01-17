@@ -347,8 +347,7 @@ LicensesRestConnectionImpl::ListLicenses(
       StreamRange<google::cloud::cpp::compute::v1::License>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_licenses_v1::LicensesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::licenses::v1::ListLicensesRequest const&

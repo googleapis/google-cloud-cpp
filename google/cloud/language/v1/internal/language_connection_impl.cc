@@ -31,8 +31,7 @@ namespace language_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<language_v1::LanguageServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<language_v1::LanguageServiceRetryPolicyOption>()->clone();
 }
 

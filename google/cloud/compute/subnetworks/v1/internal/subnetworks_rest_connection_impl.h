@@ -140,8 +140,7 @@ class SubnetworksRestConnectionImpl
                          TestIamPermissionsRequest const& request) override;
 
  private:
-  static std::unique_ptr<compute_subnetworks_v1::SubnetworksRetryPolicy>
-  retry_policy(Options const& options) {
+  static std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
     return options.get<compute_subnetworks_v1::SubnetworksRetryPolicyOption>()
         ->clone();
   }

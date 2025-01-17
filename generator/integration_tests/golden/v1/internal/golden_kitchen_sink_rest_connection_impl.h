@@ -83,7 +83,7 @@ class GoldenKitchenSinkRestConnectionImpl
   ListOperations(google::longrunning::ListOperationsRequest request) override;
 
  private:
-  static std::unique_ptr<golden_v1::GoldenKitchenSinkRetryPolicy>
+  static std::unique_ptr<RetryPolicy>
   retry_policy(Options const& options) {
     return options.get<golden_v1::GoldenKitchenSinkRetryPolicyOption>()->clone();
   }

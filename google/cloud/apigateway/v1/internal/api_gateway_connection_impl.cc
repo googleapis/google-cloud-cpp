@@ -33,8 +33,7 @@ namespace apigateway_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<apigateway_v1::ApiGatewayServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<apigateway_v1::ApiGatewayServiceRetryPolicyOption>()
       ->clone();
 }
@@ -78,8 +77,7 @@ ApiGatewayServiceConnectionImpl::ListGateways(
       StreamRange<google::cloud::apigateway::v1::Gateway>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<apigateway_v1::ApiGatewayServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::apigateway::v1::ListGatewaysRequest const& r) {
@@ -400,8 +398,7 @@ ApiGatewayServiceConnectionImpl::ListApis(
       StreamRange<google::cloud::apigateway::v1::Api>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<apigateway_v1::ApiGatewayServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::apigateway::v1::ListApisRequest const& r) {
@@ -715,8 +712,7 @@ ApiGatewayServiceConnectionImpl::ListApiConfigs(
       StreamRange<google::cloud::apigateway::v1::ApiConfig>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<apigateway_v1::ApiGatewayServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::apigateway::v1::ListApiConfigsRequest const& r) {

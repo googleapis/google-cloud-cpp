@@ -48,9 +48,8 @@ class ObservableRetryPolicy : public LimitedErrorCountRetryPolicy {
  public:
   using LimitedErrorCountRetryPolicy::LimitedErrorCountRetryPolicy;
 
-  std::unique_ptr<LimitedErrorCountRetryPolicy::BaseType> clone()
-      const override {
-    return std::unique_ptr<LimitedErrorCountRetryPolicy::BaseType>(
+  std::unique_ptr<google::cloud::RetryPolicy> clone() const override {
+    return std::unique_ptr<google::cloud::RetryPolicy>(
         new ObservableRetryPolicy(*this));
   }
 

@@ -36,7 +36,8 @@ namespace {
 using ::google::cloud::Idempotency;
 using ::google::cloud::internal::RetryLoop;
 
-std::unique_ptr<pubsub::RetryPolicy> retry_policy(Options const& options) {
+std::unique_ptr<google::cloud::RetryPolicy> retry_policy(
+    Options const& options) {
   return options.get<pubsub::RetryPolicyOption>()->clone();
 }
 
@@ -101,8 +102,8 @@ class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {
     request.set_project(std::move(p.project_id));
     // Because we do not have C++14 generalized lambda captures we cannot just
     // use the unique_ptr<> here, so convert to shared_ptr<> instead.
-    auto retry =
-        std::shared_ptr<pubsub::RetryPolicy const>(retry_policy(*current));
+    auto retry = std::shared_ptr<google::cloud::RetryPolicy const>(
+        retry_policy(*current));
     auto backoff =
         std::shared_ptr<pubsub::BackoffPolicy const>(backoff_policy(*current));
     char const* function_name = __func__;
@@ -167,8 +168,8 @@ class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {
     request.set_topic(std::move(p.topic_full_name));
     // Because we do not have C++14 generalized lambda captures we cannot just
     // use the unique_ptr<> here, so convert to shared_ptr<> instead.
-    auto retry =
-        std::shared_ptr<pubsub::RetryPolicy const>(retry_policy(*current));
+    auto retry = std::shared_ptr<google::cloud::RetryPolicy const>(
+        retry_policy(*current));
     auto backoff =
         std::shared_ptr<pubsub::BackoffPolicy const>(backoff_policy(*current));
     char const* function_name = __func__;
@@ -205,8 +206,8 @@ class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {
     request.set_topic(std::move(p.topic_full_name));
     // The lambda must be copyable to use in MakePaginationRange<>(). We need
     // to wrap the policies in shared pointers.
-    auto retry =
-        std::shared_ptr<pubsub::RetryPolicy const>(retry_policy(*current));
+    auto retry = std::shared_ptr<google::cloud::RetryPolicy const>(
+        retry_policy(*current));
     auto backoff =
         std::shared_ptr<pubsub::BackoffPolicy const>(backoff_policy(*current));
     char const* function_name = __func__;

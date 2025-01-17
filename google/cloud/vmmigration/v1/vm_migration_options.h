@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-vmmigration-options
  */
 struct VmMigrationRetryPolicyOption {
-  using Type = std::shared_ptr<VmMigrationRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

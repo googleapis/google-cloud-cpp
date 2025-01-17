@@ -33,8 +33,7 @@ namespace accesscontextmanager_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<accesscontextmanager_v1::AccessContextManagerRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options
       .get<accesscontextmanager_v1::AccessContextManagerRetryPolicyOption>()
       ->clone();
@@ -85,9 +84,7 @@ AccessContextManagerConnectionImpl::ListAccessPolicies(
       StreamRange<google::identity::accesscontextmanager::v1::AccessPolicy>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           accesscontextmanager_v1::AccessContextManagerRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::identity::accesscontextmanager::v1::
                                       ListAccessPoliciesRequest const& r) {
@@ -429,9 +426,7 @@ AccessContextManagerConnectionImpl::ListAccessLevels(
       StreamRange<google::identity::accesscontextmanager::v1::AccessLevel>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           accesscontextmanager_v1::AccessContextManagerRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::identity::accesscontextmanager::v1::
                                       ListAccessLevelsRequest const& r) {
@@ -873,9 +868,7 @@ AccessContextManagerConnectionImpl::ListServicePerimeters(
       google::identity::accesscontextmanager::v1::ServicePerimeter>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           accesscontextmanager_v1::AccessContextManagerRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::identity::accesscontextmanager::v1::
                                       ListServicePerimetersRequest const& r) {
@@ -1418,9 +1411,7 @@ AccessContextManagerConnectionImpl::ListGcpUserAccessBindings(
       google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           accesscontextmanager_v1::AccessContextManagerRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::identity::accesscontextmanager::v1::

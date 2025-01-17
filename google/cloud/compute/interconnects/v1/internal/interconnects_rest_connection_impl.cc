@@ -358,9 +358,7 @@ InterconnectsRestConnectionImpl::ListInterconnects(
       StreamRange<google::cloud::cpp::compute::v1::Interconnect>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<compute_interconnects_v1::InterconnectsRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::cpp::compute::interconnects::
                                       v1::ListInterconnectsRequest const& r) {

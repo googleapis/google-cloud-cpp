@@ -40,11 +40,7 @@ namespace datacatalog_lineage_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `LineageConnection`.
-class LineageRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<LineageRetryPolicy> clone() const = 0;
-};
+class LineageRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `LineageConnection` based on counting errors.
@@ -84,7 +80,7 @@ class LineageLimitedErrorCountRetryPolicy : public LineageRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<LineageRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<LineageLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -152,7 +148,7 @@ class LineageLimitedTimeRetryPolicy : public LineageRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<LineageRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<LineageLimitedTimeRetryPolicy>(maximum_duration());
   }
 

@@ -191,8 +191,7 @@ NodeGroupsRestConnectionImpl::AggregatedListNodeGroups(
       std::string, google::cloud::cpp::compute::v1::NodeGroupsScopedList>>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_node_groups_v1::NodeGroupsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::node_groups::v1::
@@ -658,8 +657,7 @@ NodeGroupsRestConnectionImpl::ListNodeGroups(
       StreamRange<google::cloud::cpp::compute::v1::NodeGroup>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_node_groups_v1::NodeGroupsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::cpp::compute::node_groups::v1::
                                       ListNodeGroupsRequest const& r) {
@@ -693,8 +691,7 @@ NodeGroupsRestConnectionImpl::ListNodes(
       StreamRange<google::cloud::cpp::compute::v1::NodeGroupNode>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_node_groups_v1::NodeGroupsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::node_groups::v1::ListNodesRequest const&

@@ -39,11 +39,7 @@ namespace compute_node_groups_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `NodeGroupsConnection`.
-class NodeGroupsRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<NodeGroupsRetryPolicy> clone() const = 0;
-};
+class NodeGroupsRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `NodeGroupsConnection` based on counting errors.
@@ -83,7 +79,7 @@ class NodeGroupsLimitedErrorCountRetryPolicy : public NodeGroupsRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<NodeGroupsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<NodeGroupsLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -152,7 +148,7 @@ class NodeGroupsLimitedTimeRetryPolicy : public NodeGroupsRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<NodeGroupsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<NodeGroupsLimitedTimeRetryPolicy>(
         maximum_duration());
   }

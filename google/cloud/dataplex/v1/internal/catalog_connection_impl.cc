@@ -33,8 +33,7 @@ namespace dataplex_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<dataplex_v1::CatalogServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<dataplex_v1::CatalogServiceRetryPolicyOption>()->clone();
 }
 
@@ -349,8 +348,7 @@ CatalogServiceConnectionImpl::ListEntryTypes(
       StreamRange<google::cloud::dataplex::v1::EntryType>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataplex_v1::CatalogServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::dataplex::v1::ListEntryTypesRequest const& r) {
@@ -671,8 +669,7 @@ CatalogServiceConnectionImpl::ListAspectTypes(
       StreamRange<google::cloud::dataplex::v1::AspectType>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataplex_v1::CatalogServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::dataplex::v1::ListAspectTypesRequest const& r) {
@@ -993,8 +990,7 @@ CatalogServiceConnectionImpl::ListEntryGroups(
       StreamRange<google::cloud::dataplex::v1::EntryGroup>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataplex_v1::CatalogServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::dataplex::v1::ListEntryGroupsRequest const& r) {
@@ -1083,8 +1079,7 @@ CatalogServiceConnectionImpl::ListEntries(
       StreamRange<google::cloud::dataplex::v1::Entry>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataplex_v1::CatalogServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::dataplex::v1::ListEntriesRequest const& r) {
@@ -1145,8 +1140,7 @@ CatalogServiceConnectionImpl::SearchEntries(
       StreamRange<google::cloud::dataplex::v1::SearchEntriesResult>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataplex_v1::CatalogServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::dataplex::v1::SearchEntriesRequest const& r) {
@@ -1287,8 +1281,7 @@ CatalogServiceConnectionImpl::ListMetadataJobs(
       StreamRange<google::cloud::dataplex::v1::MetadataJob>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataplex_v1::CatalogServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::dataplex::v1::ListMetadataJobsRequest const& r) {
@@ -1335,8 +1328,7 @@ CatalogServiceConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataplex_v1::CatalogServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {
@@ -1423,8 +1415,7 @@ CatalogServiceConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataplex_v1::CatalogServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

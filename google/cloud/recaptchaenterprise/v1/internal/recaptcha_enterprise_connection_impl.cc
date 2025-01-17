@@ -32,8 +32,7 @@ namespace recaptchaenterprise_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<recaptchaenterprise_v1::RecaptchaEnterpriseServiceRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options
       .get<
           recaptchaenterprise_v1::RecaptchaEnterpriseServiceRetryPolicyOption>()
@@ -130,9 +129,7 @@ RecaptchaEnterpriseServiceConnectionImpl::ListKeys(
       StreamRange<google::cloud::recaptchaenterprise::v1::Key>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           recaptchaenterprise_v1::RecaptchaEnterpriseServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::recaptchaenterprise::v1::ListKeysRequest const& r) {
@@ -273,9 +270,7 @@ RecaptchaEnterpriseServiceConnectionImpl::ListIpOverrides(
       StreamRange<google::cloud::recaptchaenterprise::v1::IpOverrideData>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           recaptchaenterprise_v1::RecaptchaEnterpriseServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::recaptchaenterprise::v1::ListIpOverridesRequest const&
@@ -342,9 +337,7 @@ RecaptchaEnterpriseServiceConnectionImpl::ListFirewallPolicies(
       StreamRange<google::cloud::recaptchaenterprise::v1::FirewallPolicy>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           recaptchaenterprise_v1::RecaptchaEnterpriseServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::recaptchaenterprise::v1::
                                       ListFirewallPoliciesRequest const& r) {
@@ -444,9 +437,7 @@ RecaptchaEnterpriseServiceConnectionImpl::ListRelatedAccountGroups(
       StreamRange<google::cloud::recaptchaenterprise::v1::RelatedAccountGroup>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           recaptchaenterprise_v1::RecaptchaEnterpriseServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::recaptchaenterprise::v1::
@@ -484,9 +475,7 @@ RecaptchaEnterpriseServiceConnectionImpl::ListRelatedAccountGroupMemberships(
       google::cloud::recaptchaenterprise::v1::RelatedAccountGroupMembership>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           recaptchaenterprise_v1::RecaptchaEnterpriseServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::recaptchaenterprise::v1::
@@ -528,9 +517,7 @@ RecaptchaEnterpriseServiceConnectionImpl::SearchRelatedAccountGroupMemberships(
       google::cloud::recaptchaenterprise::v1::RelatedAccountGroupMembership>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           recaptchaenterprise_v1::RecaptchaEnterpriseServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::recaptchaenterprise::v1::

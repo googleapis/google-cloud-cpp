@@ -33,8 +33,7 @@ namespace artifactregistry_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<artifactregistry_v1::ArtifactRegistryRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<artifactregistry_v1::ArtifactRegistryRetryPolicyOption>()
       ->clone();
 }
@@ -82,9 +81,7 @@ ArtifactRegistryConnectionImpl::ListDockerImages(
       StreamRange<google::devtools::artifactregistry::v1::DockerImage>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<artifactregistry_v1::ArtifactRegistryRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::devtools::artifactregistry::v1::ListDockerImagesRequest const&
@@ -135,9 +132,7 @@ ArtifactRegistryConnectionImpl::ListMavenArtifacts(
       StreamRange<google::devtools::artifactregistry::v1::MavenArtifact>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<artifactregistry_v1::ArtifactRegistryRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::devtools::artifactregistry::v1::
                                       ListMavenArtifactsRequest const& r) {
@@ -187,9 +182,7 @@ ArtifactRegistryConnectionImpl::ListNpmPackages(
       StreamRange<google::devtools::artifactregistry::v1::NpmPackage>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<artifactregistry_v1::ArtifactRegistryRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::devtools::artifactregistry::v1::ListNpmPackagesRequest const&
@@ -239,9 +232,7 @@ ArtifactRegistryConnectionImpl::ListPythonPackages(
       StreamRange<google::devtools::artifactregistry::v1::PythonPackage>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<artifactregistry_v1::ArtifactRegistryRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::devtools::artifactregistry::v1::
                                       ListPythonPackagesRequest const& r) {
@@ -485,9 +476,7 @@ ArtifactRegistryConnectionImpl::ListRepositories(
       StreamRange<google::devtools::artifactregistry::v1::Repository>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<artifactregistry_v1::ArtifactRegistryRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::devtools::artifactregistry::v1::ListRepositoriesRequest const&
@@ -748,9 +737,7 @@ ArtifactRegistryConnectionImpl::ListPackages(
       StreamRange<google::devtools::artifactregistry::v1::Package>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<artifactregistry_v1::ArtifactRegistryRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::devtools::artifactregistry::v1::ListPackagesRequest const&
@@ -895,9 +882,7 @@ ArtifactRegistryConnectionImpl::ListVersions(
       StreamRange<google::devtools::artifactregistry::v1::Version>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<artifactregistry_v1::ArtifactRegistryRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::devtools::artifactregistry::v1::ListVersionsRequest const&
@@ -1155,9 +1140,7 @@ ArtifactRegistryConnectionImpl::ListFiles(
       StreamRange<google::devtools::artifactregistry::v1::File>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<artifactregistry_v1::ArtifactRegistryRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::devtools::artifactregistry::v1::ListFilesRequest const& r) {
@@ -1313,9 +1296,7 @@ ArtifactRegistryConnectionImpl::ListTags(
       StreamRange<google::devtools::artifactregistry::v1::Tag>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<artifactregistry_v1::ArtifactRegistryRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::devtools::artifactregistry::v1::ListTagsRequest const& r) {
@@ -1421,9 +1402,7 @@ ArtifactRegistryConnectionImpl::ListRules(
       StreamRange<google::devtools::artifactregistry::v1::Rule>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<artifactregistry_v1::ArtifactRegistryRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::devtools::artifactregistry::v1::ListRulesRequest const& r) {
@@ -1620,9 +1599,7 @@ ArtifactRegistryConnectionImpl::ListAttachments(
       StreamRange<google::devtools::artifactregistry::v1::Attachment>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<artifactregistry_v1::ArtifactRegistryRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::devtools::artifactregistry::v1::ListAttachmentsRequest const&
@@ -1866,9 +1843,7 @@ ArtifactRegistryConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<artifactregistry_v1::ArtifactRegistryRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {

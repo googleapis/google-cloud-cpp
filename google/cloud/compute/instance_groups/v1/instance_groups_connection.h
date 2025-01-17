@@ -39,11 +39,7 @@ namespace compute_instance_groups_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `InstanceGroupsConnection`.
-class InstanceGroupsRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<InstanceGroupsRetryPolicy> clone() const = 0;
-};
+class InstanceGroupsRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `InstanceGroupsConnection` based on counting errors.
@@ -84,7 +80,7 @@ class InstanceGroupsLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<InstanceGroupsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<InstanceGroupsLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -153,7 +149,7 @@ class InstanceGroupsLimitedTimeRetryPolicy : public InstanceGroupsRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<InstanceGroupsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<InstanceGroupsLimitedTimeRetryPolicy>(
         maximum_duration());
   }

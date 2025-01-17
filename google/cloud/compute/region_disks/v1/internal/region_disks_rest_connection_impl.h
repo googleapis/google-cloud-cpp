@@ -219,8 +219,7 @@ class RegionDisksRestConnectionImpl
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
-  static std::unique_ptr<compute_region_disks_v1::RegionDisksRetryPolicy>
-  retry_policy(Options const& options) {
+  static std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
     return options.get<compute_region_disks_v1::RegionDisksRetryPolicyOption>()
         ->clone();
   }

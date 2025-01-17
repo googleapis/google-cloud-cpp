@@ -33,8 +33,7 @@ namespace automl_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<automl_v1::AutoMlRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<automl_v1::AutoMlRetryPolicyOption>()->clone();
 }
 
@@ -175,8 +174,7 @@ AutoMlConnectionImpl::ListDatasets(
       StreamRange<google::cloud::automl::v1::Dataset>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<automl_v1::AutoMlRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::automl::v1::ListDatasetsRequest const& r) {
@@ -606,8 +604,7 @@ StreamRange<google::cloud::automl::v1::Model> AutoMlConnectionImpl::ListModels(
       StreamRange<google::cloud::automl::v1::Model>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<automl_v1::AutoMlRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::automl::v1::ListModelsRequest const& r) {
@@ -1025,8 +1022,7 @@ AutoMlConnectionImpl::ListModelEvaluations(
       StreamRange<google::cloud::automl::v1::ModelEvaluation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<automl_v1::AutoMlRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::automl::v1::ListModelEvaluationsRequest const& r) {

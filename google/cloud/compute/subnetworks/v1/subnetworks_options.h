@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-compute-options
  */
 struct SubnetworksRetryPolicyOption {
-  using Type = std::shared_ptr<SubnetworksRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

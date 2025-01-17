@@ -32,8 +32,7 @@ namespace containeranalysis_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<containeranalysis_v1::GrafeasRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<containeranalysis_v1::GrafeasRetryPolicyOption>()->clone();
 }
 
@@ -83,8 +82,7 @@ StreamRange<grafeas::v1::Occurrence> GrafeasConnectionImpl::ListOccurrences(
       StreamRange<grafeas::v1::Occurrence>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<containeranalysis_v1::GrafeasRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           grafeas::v1::ListOccurrencesRequest const& r) {
@@ -193,8 +191,7 @@ StreamRange<grafeas::v1::Note> GrafeasConnectionImpl::ListNotes(
       StreamRange<grafeas::v1::Note>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<containeranalysis_v1::GrafeasRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, grafeas::v1::ListNotesRequest const& r) {
         return google::cloud::internal::RetryLoop(
@@ -276,8 +273,7 @@ StreamRange<grafeas::v1::Occurrence> GrafeasConnectionImpl::ListNoteOccurrences(
       StreamRange<grafeas::v1::Occurrence>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<containeranalysis_v1::GrafeasRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           grafeas::v1::ListNoteOccurrencesRequest const& r) {

@@ -36,11 +36,7 @@ namespace run_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `TasksConnection`.
-class TasksRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<TasksRetryPolicy> clone() const = 0;
-};
+class TasksRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `TasksConnection` based on counting errors.
@@ -80,7 +76,7 @@ class TasksLimitedErrorCountRetryPolicy : public TasksRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<TasksRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<TasksLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -147,7 +143,7 @@ class TasksLimitedTimeRetryPolicy : public TasksRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<TasksRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<TasksLimitedTimeRetryPolicy>(maximum_duration());
   }
 

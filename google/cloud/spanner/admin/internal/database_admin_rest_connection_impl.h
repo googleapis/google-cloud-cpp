@@ -220,8 +220,7 @@ class DatabaseAdminRestConnectionImpl
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  static std::unique_ptr<spanner_admin::DatabaseAdminRetryPolicy> retry_policy(
-      Options const& options) {
+  static std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
     return options.get<spanner_admin::DatabaseAdminRetryPolicyOption>()
         ->clone();
   }

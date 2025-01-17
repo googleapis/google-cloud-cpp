@@ -35,7 +35,8 @@ namespace {
 using ::google::cloud::Idempotency;
 using ::google::cloud::internal::RetryLoop;
 
-std::unique_ptr<pubsub::RetryPolicy> retry_policy(Options const& options) {
+std::unique_ptr<google::cloud::RetryPolicy> retry_policy(
+    Options const& options) {
   return options.get<pubsub::RetryPolicyOption>()->clone();
 }
 
@@ -103,8 +104,8 @@ class SubscriptionAdminConnectionImpl
     request.set_project(std::move(p.project_id));
     // The lambda must be copyable to use in MakePaginationRange<>(). We need
     // to wrap the policies in shared pointers.
-    auto retry =
-        std::shared_ptr<pubsub::RetryPolicy const>(retry_policy(*current));
+    auto retry = std::shared_ptr<google::cloud::RetryPolicy const>(
+        retry_policy(*current));
     auto backoff =
         std::shared_ptr<pubsub::BackoffPolicy const>(backoff_policy(*current));
     char const* function_name = __func__;
@@ -196,8 +197,8 @@ class SubscriptionAdminConnectionImpl
     request.set_project(std::move(p.project_id));
     // The lambda must be copyable to use in MakePaginationRange<>(). We need
     // to wrap the policies in shared pointers.
-    auto retry =
-        std::shared_ptr<pubsub::RetryPolicy const>(retry_policy(*current));
+    auto retry = std::shared_ptr<google::cloud::RetryPolicy const>(
+        retry_policy(*current));
     auto backoff =
         std::shared_ptr<pubsub::BackoffPolicy const>(backoff_policy(*current));
     char const* function_name = __func__;

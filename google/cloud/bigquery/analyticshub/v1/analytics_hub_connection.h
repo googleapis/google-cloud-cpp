@@ -40,11 +40,7 @@ namespace bigquery_analyticshub_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `AnalyticsHubServiceConnection`.
-class AnalyticsHubServiceRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<AnalyticsHubServiceRetryPolicy> clone() const = 0;
-};
+class AnalyticsHubServiceRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `AnalyticsHubServiceConnection` based on counting errors.
@@ -87,7 +83,7 @@ class AnalyticsHubServiceLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<AnalyticsHubServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<AnalyticsHubServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -157,7 +153,7 @@ class AnalyticsHubServiceLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<AnalyticsHubServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<AnalyticsHubServiceLimitedTimeRetryPolicy>(
         maximum_duration());
   }

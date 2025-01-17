@@ -37,9 +37,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `ResourceSettingsServiceConnection`.
 class ResourceSettingsServiceRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<ResourceSettingsServiceRetryPolicy> clone() const = 0;
 };
 
 /**
@@ -85,7 +82,7 @@ class ResourceSettingsServiceLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<ResourceSettingsServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<
         ResourceSettingsServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
@@ -156,7 +153,7 @@ class ResourceSettingsServiceLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<ResourceSettingsServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<ResourceSettingsServiceLimitedTimeRetryPolicy>(
         maximum_duration());
   }

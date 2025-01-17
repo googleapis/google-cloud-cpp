@@ -96,8 +96,7 @@ class MachineImagesRestConnectionImpl
                          TestIamPermissionsRequest const& request) override;
 
  private:
-  static std::unique_ptr<compute_machine_images_v1::MachineImagesRetryPolicy>
-  retry_policy(Options const& options) {
+  static std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
     return options
         .get<compute_machine_images_v1::MachineImagesRetryPolicyOption>()
         ->clone();

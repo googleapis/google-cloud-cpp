@@ -64,9 +64,7 @@ class InterconnectLocationsRestConnectionImpl
           ListInterconnectLocationsRequest request) override;
 
  private:
-  static std::unique_ptr<
-      compute_interconnect_locations_v1::InterconnectLocationsRetryPolicy>
-  retry_policy(Options const& options) {
+  static std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
     return options
         .get<compute_interconnect_locations_v1::
                  InterconnectLocationsRetryPolicyOption>()

@@ -41,11 +41,7 @@ namespace aiplatform_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `VizierServiceConnection`.
-class VizierServiceRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<VizierServiceRetryPolicy> clone() const = 0;
-};
+class VizierServiceRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `VizierServiceConnection` based on counting errors.
@@ -86,7 +82,7 @@ class VizierServiceLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<VizierServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<VizierServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -155,7 +151,7 @@ class VizierServiceLimitedTimeRetryPolicy : public VizierServiceRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<VizierServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<VizierServiceLimitedTimeRetryPolicy>(
         maximum_duration());
   }

@@ -91,9 +91,7 @@ class SslCertificatesRestConnectionImpl
                           ListSslCertificatesRequest request) override;
 
  private:
-  static std::unique_ptr<
-      compute_ssl_certificates_v1::SslCertificatesRetryPolicy>
-  retry_policy(Options const& options) {
+  static std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
     return options
         .get<compute_ssl_certificates_v1::SslCertificatesRetryPolicyOption>()
         ->clone();

@@ -33,8 +33,7 @@ namespace bigquery_analyticshub_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options
       .get<bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicyOption>()
       ->clone();
@@ -85,9 +84,7 @@ AnalyticsHubServiceConnectionImpl::ListDataExchanges(
       StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::bigquery::analyticshub::v1::
                                       ListDataExchangesRequest const& r) {
@@ -123,9 +120,7 @@ AnalyticsHubServiceConnectionImpl::ListOrgDataExchanges(
       StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::bigquery::analyticshub::v1::
                                       ListOrgDataExchangesRequest const& r) {
@@ -222,9 +217,7 @@ AnalyticsHubServiceConnectionImpl::ListListings(
       StreamRange<google::cloud::bigquery::analyticshub::v1::Listing>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::bigquery::analyticshub::v1::ListListingsRequest const&
@@ -554,9 +547,7 @@ AnalyticsHubServiceConnectionImpl::ListSubscriptions(
       StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::bigquery::analyticshub::v1::
                                       ListSubscriptionsRequest const& r) {
@@ -592,9 +583,7 @@ AnalyticsHubServiceConnectionImpl::ListSharedResourceSubscriptions(
       StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::bigquery::analyticshub::v1::

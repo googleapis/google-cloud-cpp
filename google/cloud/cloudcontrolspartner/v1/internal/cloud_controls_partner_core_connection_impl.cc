@@ -32,8 +32,7 @@ namespace cloudcontrolspartner_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<cloudcontrolspartner_v1::CloudControlsPartnerCoreRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options
       .get<cloudcontrolspartner_v1::CloudControlsPartnerCoreRetryPolicyOption>()
       ->clone();
@@ -95,9 +94,7 @@ CloudControlsPartnerCoreConnectionImpl::ListWorkloads(
       StreamRange<google::cloud::cloudcontrolspartner::v1::Workload>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           cloudcontrolspartner_v1::CloudControlsPartnerCoreRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cloudcontrolspartner::v1::ListWorkloadsRequest const&
@@ -147,9 +144,7 @@ CloudControlsPartnerCoreConnectionImpl::ListCustomers(
       StreamRange<google::cloud::cloudcontrolspartner::v1::Customer>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           cloudcontrolspartner_v1::CloudControlsPartnerCoreRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cloudcontrolspartner::v1::ListCustomersRequest const&
@@ -217,9 +212,7 @@ CloudControlsPartnerCoreConnectionImpl::ListAccessApprovalRequests(
       google::cloud::cloudcontrolspartner::v1::AccessApprovalRequest>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           cloudcontrolspartner_v1::CloudControlsPartnerCoreRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cloudcontrolspartner::v1::

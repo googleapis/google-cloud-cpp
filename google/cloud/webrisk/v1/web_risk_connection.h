@@ -40,11 +40,7 @@ namespace webrisk_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `WebRiskServiceConnection`.
-class WebRiskServiceRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<WebRiskServiceRetryPolicy> clone() const = 0;
-};
+class WebRiskServiceRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `WebRiskServiceConnection` based on counting errors.
@@ -85,7 +81,7 @@ class WebRiskServiceLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<WebRiskServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<WebRiskServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -154,7 +150,7 @@ class WebRiskServiceLimitedTimeRetryPolicy : public WebRiskServiceRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<WebRiskServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<WebRiskServiceLimitedTimeRetryPolicy>(
         maximum_duration());
   }

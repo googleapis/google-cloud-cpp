@@ -607,9 +607,7 @@ RegionNetworkEndpointGroupsRestConnectionImpl::ListRegionNetworkEndpointGroups(
       StreamRange<google::cloud::cpp::compute::v1::NetworkEndpointGroup>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_region_network_endpoint_groups_v1::
-                                   RegionNetworkEndpointGroupsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::region_network_endpoint_groups::v1::
@@ -648,9 +646,7 @@ RegionNetworkEndpointGroupsRestConnectionImpl::ListNetworkEndpoints(
       google::cloud::cpp::compute::v1::NetworkEndpointWithHealthStatus>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_region_network_endpoint_groups_v1::
-                                   RegionNetworkEndpointGroupsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::region_network_endpoint_groups::v1::

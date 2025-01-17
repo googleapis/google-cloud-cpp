@@ -41,11 +41,7 @@ namespace functions_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `CloudFunctionsServiceConnection`.
-class CloudFunctionsServiceRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<CloudFunctionsServiceRetryPolicy> clone() const = 0;
-};
+class CloudFunctionsServiceRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `CloudFunctionsServiceConnection` based on counting
@@ -90,7 +86,7 @@ class CloudFunctionsServiceLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<CloudFunctionsServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<CloudFunctionsServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -160,7 +156,7 @@ class CloudFunctionsServiceLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<CloudFunctionsServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<CloudFunctionsServiceLimitedTimeRetryPolicy>(
         maximum_duration());
   }

@@ -485,9 +485,7 @@ RegionSecurityPoliciesRestConnectionImpl::ListRegionSecurityPolicies(
       StreamRange<google::cloud::cpp::compute::v1::SecurityPolicy>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_region_security_policies_v1::
-                                   RegionSecurityPoliciesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::region_security_policies::v1::

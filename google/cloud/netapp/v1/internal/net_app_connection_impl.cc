@@ -33,8 +33,7 @@ namespace netapp_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<netapp_v1::NetAppRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<netapp_v1::NetAppRetryPolicyOption>()->clone();
 }
 
@@ -73,8 +72,7 @@ NetAppConnectionImpl::ListStoragePools(
       StreamRange<google::cloud::netapp::v1::StoragePool>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<netapp_v1::NetAppRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::netapp::v1::ListStoragePoolsRequest const& r) {
@@ -580,8 +578,7 @@ NetAppConnectionImpl::ListVolumes(
       StreamRange<google::cloud::netapp::v1::Volume>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<netapp_v1::NetAppRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::netapp::v1::ListVolumesRequest const& r) {
@@ -980,8 +977,7 @@ NetAppConnectionImpl::ListSnapshots(
       StreamRange<google::cloud::netapp::v1::Snapshot>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<netapp_v1::NetAppRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::netapp::v1::ListSnapshotsRequest const& r) {
@@ -1296,8 +1292,7 @@ NetAppConnectionImpl::ListActiveDirectories(
       StreamRange<google::cloud::netapp::v1::ActiveDirectory>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<netapp_v1::NetAppRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::netapp::v1::ListActiveDirectoriesRequest const& r) {
@@ -1625,8 +1620,7 @@ NetAppConnectionImpl::ListKmsConfigs(
       StreamRange<google::cloud::netapp::v1::KmsConfig>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<netapp_v1::NetAppRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::netapp::v1::ListKmsConfigsRequest const& r) {
@@ -2044,8 +2038,7 @@ NetAppConnectionImpl::ListReplications(
       StreamRange<google::cloud::netapp::v1::Replication>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<netapp_v1::NetAppRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::netapp::v1::ListReplicationsRequest const& r) {
@@ -2925,8 +2918,7 @@ NetAppConnectionImpl::ListBackupVaults(
       StreamRange<google::cloud::netapp::v1::BackupVault>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<netapp_v1::NetAppRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::netapp::v1::ListBackupVaultsRequest const& r) {
@@ -3243,8 +3235,7 @@ NetAppConnectionImpl::ListBackups(
       StreamRange<google::cloud::netapp::v1::Backup>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<netapp_v1::NetAppRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::netapp::v1::ListBackupsRequest const& r) {
@@ -3559,8 +3550,7 @@ NetAppConnectionImpl::ListBackupPolicies(
       StreamRange<google::cloud::netapp::v1::BackupPolicy>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<netapp_v1::NetAppRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::netapp::v1::ListBackupPoliciesRequest const& r) {
@@ -3776,8 +3766,7 @@ NetAppConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<netapp_v1::NetAppRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {
@@ -3823,8 +3812,7 @@ NetAppConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<netapp_v1::NetAppRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

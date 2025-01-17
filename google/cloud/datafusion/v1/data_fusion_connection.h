@@ -40,11 +40,7 @@ namespace datafusion_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `DataFusionConnection`.
-class DataFusionRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<DataFusionRetryPolicy> clone() const = 0;
-};
+class DataFusionRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `DataFusionConnection` based on counting errors.
@@ -84,7 +80,7 @@ class DataFusionLimitedErrorCountRetryPolicy : public DataFusionRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<DataFusionRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<DataFusionLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -153,7 +149,7 @@ class DataFusionLimitedTimeRetryPolicy : public DataFusionRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<DataFusionRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<DataFusionLimitedTimeRetryPolicy>(
         maximum_duration());
   }

@@ -32,8 +32,7 @@ namespace support_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<support_v2::CommentServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<support_v2::CommentServiceRetryPolicyOption>()->clone();
 }
 
@@ -70,8 +69,7 @@ CommentServiceConnectionImpl::ListComments(
       StreamRange<google::cloud::support::v2::Comment>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<support_v2::CommentServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::support::v2::ListCommentsRequest const& r) {

@@ -63,8 +63,7 @@ class DiskTypesRestConnectionImpl
       override;
 
  private:
-  static std::unique_ptr<compute_disk_types_v1::DiskTypesRetryPolicy>
-  retry_policy(Options const& options) {
+  static std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
     return options.get<compute_disk_types_v1::DiskTypesRetryPolicyOption>()
         ->clone();
   }

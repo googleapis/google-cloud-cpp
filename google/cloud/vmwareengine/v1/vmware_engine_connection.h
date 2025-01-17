@@ -40,11 +40,7 @@ namespace vmwareengine_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `VmwareEngineConnection`.
-class VmwareEngineRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<VmwareEngineRetryPolicy> clone() const = 0;
-};
+class VmwareEngineRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `VmwareEngineConnection` based on counting errors.
@@ -85,7 +81,7 @@ class VmwareEngineLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<VmwareEngineRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<VmwareEngineLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -154,7 +150,7 @@ class VmwareEngineLimitedTimeRetryPolicy : public VmwareEngineRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<VmwareEngineRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<VmwareEngineLimitedTimeRetryPolicy>(
         maximum_duration());
   }

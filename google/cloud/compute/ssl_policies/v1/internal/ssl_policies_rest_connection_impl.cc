@@ -57,8 +57,7 @@ SslPoliciesRestConnectionImpl::AggregatedListSslPolicies(
       std::string, google::cloud::cpp::compute::v1::SslPoliciesScopedList>>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_ssl_policies_v1::SslPoliciesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::ssl_policies::v1::
@@ -369,8 +368,7 @@ SslPoliciesRestConnectionImpl::ListSslPolicies(
       StreamRange<google::cloud::cpp::compute::v1::SslPolicy>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_ssl_policies_v1::SslPoliciesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::cpp::compute::ssl_policies::
                                       v1::ListSslPoliciesRequest const& r) {

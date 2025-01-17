@@ -33,8 +33,7 @@ namespace channel_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<channel_v1::CloudChannelReportsServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<channel_v1::CloudChannelReportsServiceRetryPolicyOption>()
       ->clone();
 }
@@ -176,9 +175,7 @@ CloudChannelReportsServiceConnectionImpl::FetchReportResults(
       StreamRange<google::cloud::channel::v1::Row>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<channel_v1::CloudChannelReportsServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::channel::v1::FetchReportResultsRequest const& r) {
@@ -210,9 +207,7 @@ CloudChannelReportsServiceConnectionImpl::ListReports(
       StreamRange<google::cloud::channel::v1::Report>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<channel_v1::CloudChannelReportsServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::channel::v1::ListReportsRequest const& r) {
@@ -245,9 +240,7 @@ CloudChannelReportsServiceConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<channel_v1::CloudChannelReportsServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

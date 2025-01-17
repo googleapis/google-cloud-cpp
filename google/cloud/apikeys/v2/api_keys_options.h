@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-apikeys-options
  */
 struct ApiKeysRetryPolicyOption {
-  using Type = std::shared_ptr<ApiKeysRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

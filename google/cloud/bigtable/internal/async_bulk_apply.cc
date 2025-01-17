@@ -25,7 +25,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 future<std::vector<bigtable::FailedMutation>> AsyncBulkApplier::Create(
     CompletionQueue cq, std::shared_ptr<BigtableStub> stub,
     std::shared_ptr<MutateRowsLimiter> limiter,
-    std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
+    std::unique_ptr<google::cloud::RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy, bool enable_server_retries,
     bigtable::IdempotentMutationPolicy& idempotent_policy,
     std::string const& app_profile_id, std::string const& table_name,
@@ -45,7 +45,7 @@ future<std::vector<bigtable::FailedMutation>> AsyncBulkApplier::Create(
 AsyncBulkApplier::AsyncBulkApplier(
     CompletionQueue cq, std::shared_ptr<BigtableStub> stub,
     std::shared_ptr<MutateRowsLimiter> limiter,
-    std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
+    std::unique_ptr<google::cloud::RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy, bool enable_server_retries,
     bigtable::IdempotentMutationPolicy& idempotent_policy,
     std::string const& app_profile_id, std::string const& table_name,

@@ -55,8 +55,7 @@ class GatewayControlRestConnectionImpl
           request) override;
 
  private:
-  static std::unique_ptr<gkeconnect_gateway_v1::GatewayControlRetryPolicy>
-  retry_policy(Options const& options) {
+  static std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
     return options
         .get<gkeconnect_gateway_v1::GatewayControlRetryPolicyOption>()
         ->clone();

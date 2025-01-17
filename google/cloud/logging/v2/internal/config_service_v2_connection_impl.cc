@@ -33,8 +33,7 @@ namespace logging_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<logging_v2::ConfigServiceV2RetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<logging_v2::ConfigServiceV2RetryPolicyOption>()->clone();
 }
 
@@ -75,8 +74,7 @@ ConfigServiceV2ConnectionImpl::ListBuckets(
       StreamRange<google::logging::v2::LogBucket>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<logging_v2::ConfigServiceV2RetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::logging::v2::ListBucketsRequest const& r) {
@@ -351,8 +349,7 @@ ConfigServiceV2ConnectionImpl::ListViews(
       StreamRange<google::logging::v2::LogView>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<logging_v2::ConfigServiceV2RetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::logging::v2::ListViewsRequest const& r) {
@@ -437,8 +434,7 @@ ConfigServiceV2ConnectionImpl::ListSinks(
       StreamRange<google::logging::v2::LogSink>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<logging_v2::ConfigServiceV2RetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::logging::v2::ListSinksRequest const& r) {
@@ -696,8 +692,7 @@ StreamRange<google::logging::v2::Link> ConfigServiceV2ConnectionImpl::ListLinks(
       StreamRange<google::logging::v2::Link>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<logging_v2::ConfigServiceV2RetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::logging::v2::ListLinksRequest const& r) {
@@ -741,8 +736,7 @@ ConfigServiceV2ConnectionImpl::ListExclusions(
       StreamRange<google::logging::v2::LogExclusion>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<logging_v2::ConfigServiceV2RetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::logging::v2::ListExclusionsRequest const& r) {
@@ -975,8 +969,7 @@ ConfigServiceV2ConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<logging_v2::ConfigServiceV2RetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

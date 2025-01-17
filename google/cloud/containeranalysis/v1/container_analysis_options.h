@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-containeranalysis-options
  */
 struct ContainerAnalysisRetryPolicyOption {
-  using Type = std::shared_ptr<ContainerAnalysisRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

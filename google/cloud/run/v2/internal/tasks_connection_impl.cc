@@ -32,7 +32,7 @@ namespace run_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<run_v2::TasksRetryPolicy> retry_policy(Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<run_v2::TasksRetryPolicyOption>()->clone();
 }
 
@@ -78,8 +78,7 @@ StreamRange<google::cloud::run::v2::Task> TasksConnectionImpl::ListTasks(
       StreamRange<google::cloud::run::v2::Task>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<run_v2::TasksRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::run::v2::ListTasksRequest const& r) {
@@ -109,8 +108,7 @@ StreamRange<google::longrunning::Operation> TasksConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<run_v2::TasksRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

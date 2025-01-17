@@ -95,9 +95,7 @@ class RegionNotificationEndpointsRestConnectionImpl
           ListRegionNotificationEndpointsRequest request) override;
 
  private:
-  static std::unique_ptr<compute_region_notification_endpoints_v1::
-                             RegionNotificationEndpointsRetryPolicy>
-  retry_policy(Options const& options) {
+  static std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
     return options
         .get<compute_region_notification_endpoints_v1::
                  RegionNotificationEndpointsRetryPolicyOption>()

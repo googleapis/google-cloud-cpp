@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-binaryauthorization-options
  */
 struct BinauthzManagementServiceV1RetryPolicyOption {
-  using Type = std::shared_ptr<BinauthzManagementServiceV1RetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

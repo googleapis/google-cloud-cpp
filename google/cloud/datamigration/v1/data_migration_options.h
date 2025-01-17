@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-datamigration-options
  */
 struct DataMigrationServiceRetryPolicyOption {
-  using Type = std::shared_ptr<DataMigrationServiceRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

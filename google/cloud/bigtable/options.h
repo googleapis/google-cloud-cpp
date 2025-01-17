@@ -201,7 +201,7 @@ using ClientOptionList =
  * @ingroup google-cloud-bigtable-options
  */
 struct DataRetryPolicyOption {
-  using Type = std::shared_ptr<DataRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

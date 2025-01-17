@@ -129,8 +129,7 @@ class UrlMapsRestConnectionImpl
       override;
 
  private:
-  static std::unique_ptr<compute_url_maps_v1::UrlMapsRetryPolicy> retry_policy(
-      Options const& options) {
+  static std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
     return options.get<compute_url_maps_v1::UrlMapsRetryPolicyOption>()
         ->clone();
   }

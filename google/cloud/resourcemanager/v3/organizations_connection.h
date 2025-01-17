@@ -36,11 +36,7 @@ namespace resourcemanager_v3 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `OrganizationsConnection`.
-class OrganizationsRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<OrganizationsRetryPolicy> clone() const = 0;
-};
+class OrganizationsRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `OrganizationsConnection` based on counting errors.
@@ -81,7 +77,7 @@ class OrganizationsLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<OrganizationsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<OrganizationsLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -150,7 +146,7 @@ class OrganizationsLimitedTimeRetryPolicy : public OrganizationsRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<OrganizationsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<OrganizationsLimitedTimeRetryPolicy>(
         maximum_duration());
   }

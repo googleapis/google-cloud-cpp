@@ -50,7 +50,7 @@ class TraitBasedRetryPolicy : public RetryPolicy {
 
   ~TraitBasedRetryPolicy() override = default;
 
-  virtual std::unique_ptr<TraitBasedRetryPolicy> clone() const = 0;
+  //  virtual std::unique_ptr<TraitBasedRetryPolicy> clone() const = 0;
 
   bool IsPermanentFailure(Status const& status) const override {
     return RetryableTraits::IsPermanentFailure(status);
@@ -89,8 +89,8 @@ class LimitedErrorCountRetryPolicy
   LimitedErrorCountRetryPolicy(LimitedErrorCountRetryPolicy const& rhs) noexcept
       : LimitedErrorCountRetryPolicy(rhs.maximum_failures_) {}
 
-  std::unique_ptr<BaseType> clone() const override {
-    return std::unique_ptr<BaseType>(
+  std::unique_ptr<RetryPolicy> clone() const override {
+    return std::unique_ptr<RetryPolicy>(
         new LimitedErrorCountRetryPolicy(maximum_failures_));
   }
   bool IsExhausted() const override {
@@ -147,8 +147,8 @@ class LimitedTimeRetryPolicy : public TraitBasedRetryPolicy<RetryablePolicy> {
   LimitedTimeRetryPolicy(LimitedTimeRetryPolicy const& rhs)
       : LimitedTimeRetryPolicy(rhs.maximum_duration_) {}
 
-  std::unique_ptr<BaseType> clone() const override {
-    return std::unique_ptr<BaseType>(
+  std::unique_ptr<RetryPolicy> clone() const override {
+    return std::unique_ptr<RetryPolicy>(
         new LimitedTimeRetryPolicy(maximum_duration_));
   }
   bool IsExhausted() const override {

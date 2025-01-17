@@ -57,8 +57,7 @@ UrlMapsRestConnectionImpl::AggregatedListUrlMaps(
       std::string, google::cloud::cpp::compute::v1::UrlMapsScopedList>>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_url_maps_v1::UrlMapsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::cpp::compute::url_maps::v1::
                                       AggregatedListUrlMapsRequest const& r) {
@@ -498,8 +497,7 @@ UrlMapsRestConnectionImpl::ListUrlMaps(
       StreamRange<google::cloud::cpp::compute::v1::UrlMap>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_url_maps_v1::UrlMapsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::url_maps::v1::ListUrlMapsRequest const&

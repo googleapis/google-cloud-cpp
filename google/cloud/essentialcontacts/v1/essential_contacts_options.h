@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-essentialcontacts-options
  */
 struct EssentialContactsServiceRetryPolicyOption {
-  using Type = std::shared_ptr<EssentialContactsServiceRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

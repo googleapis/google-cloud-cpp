@@ -41,13 +41,13 @@ class AsyncRowSampler : public std::enable_shared_from_this<AsyncRowSampler> {
  public:
   static future<StatusOr<std::vector<bigtable::RowKeySample>>> Create(
       CompletionQueue cq, std::shared_ptr<BigtableStub> stub,
-      std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
+      std::unique_ptr<google::cloud::RetryPolicy> retry_policy,
       std::unique_ptr<BackoffPolicy> backoff_policy, bool enable_server_retries,
       std::string const& app_profile_id, std::string const& table_name);
 
  private:
   AsyncRowSampler(CompletionQueue cq, std::shared_ptr<BigtableStub> stub,
-                  std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
+                  std::unique_ptr<google::cloud::RetryPolicy> retry_policy,
                   std::unique_ptr<BackoffPolicy> backoff_policy,
                   bool enable_server_retries, std::string const& app_profile_id,
                   std::string const& table_name);
@@ -58,7 +58,7 @@ class AsyncRowSampler : public std::enable_shared_from_this<AsyncRowSampler> {
 
   CompletionQueue cq_;
   std::shared_ptr<BigtableStub> stub_;
-  std::unique_ptr<bigtable::DataRetryPolicy> retry_policy_;
+  std::unique_ptr<google::cloud::RetryPolicy> retry_policy_;
   std::unique_ptr<BackoffPolicy> backoff_policy_;
   bool enable_server_retries_;
   std::string app_profile_id_;

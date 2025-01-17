@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-appengine-options
  */
 struct FirewallRetryPolicyOption {
-  using Type = std::shared_ptr<FirewallRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

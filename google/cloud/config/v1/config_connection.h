@@ -40,11 +40,7 @@ namespace config_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `ConfigConnection`.
-class ConfigRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<ConfigRetryPolicy> clone() const = 0;
-};
+class ConfigRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `ConfigConnection` based on counting errors.
@@ -84,7 +80,7 @@ class ConfigLimitedErrorCountRetryPolicy : public ConfigRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<ConfigRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<ConfigLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -151,7 +147,7 @@ class ConfigLimitedTimeRetryPolicy : public ConfigRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<ConfigRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<ConfigLimitedTimeRetryPolicy>(maximum_duration());
   }
 

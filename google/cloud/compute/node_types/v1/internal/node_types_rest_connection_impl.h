@@ -63,8 +63,7 @@ class NodeTypesRestConnectionImpl
       override;
 
  private:
-  static std::unique_ptr<compute_node_types_v1::NodeTypesRetryPolicy>
-  retry_policy(Options const& options) {
+  static std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
     return options.get<compute_node_types_v1::NodeTypesRetryPolicyOption>()
         ->clone();
   }

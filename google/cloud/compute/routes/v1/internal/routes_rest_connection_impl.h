@@ -82,8 +82,7 @@ class RoutesRestConnectionImpl : public compute_routes_v1::RoutesConnection {
       override;
 
  private:
-  static std::unique_ptr<compute_routes_v1::RoutesRetryPolicy> retry_policy(
-      Options const& options) {
+  static std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
     return options.get<compute_routes_v1::RoutesRetryPolicyOption>()->clone();
   }
 

@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-kms-options
  */
 struct KeyDashboardServiceRetryPolicyOption {
-  using Type = std::shared_ptr<KeyDashboardServiceRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

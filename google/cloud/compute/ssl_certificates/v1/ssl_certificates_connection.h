@@ -39,11 +39,7 @@ namespace compute_ssl_certificates_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `SslCertificatesConnection`.
-class SslCertificatesRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<SslCertificatesRetryPolicy> clone() const = 0;
-};
+class SslCertificatesRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `SslCertificatesConnection` based on counting errors.
@@ -84,7 +80,7 @@ class SslCertificatesLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<SslCertificatesRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<SslCertificatesLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -154,7 +150,7 @@ class SslCertificatesLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<SslCertificatesRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<SslCertificatesLimitedTimeRetryPolicy>(
         maximum_duration());
   }

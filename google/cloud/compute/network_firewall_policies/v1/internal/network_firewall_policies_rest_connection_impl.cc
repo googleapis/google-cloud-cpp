@@ -318,9 +318,7 @@ NetworkFirewallPoliciesRestConnectionImpl::
                 google::cloud::cpp::compute::v1::FirewallPoliciesScopedList>>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_network_firewall_policies_v1::
-                                   NetworkFirewallPoliciesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::network_firewall_policies::v1::
@@ -806,9 +804,7 @@ NetworkFirewallPoliciesRestConnectionImpl::ListNetworkFirewallPolicies(
       StreamRange<google::cloud::cpp::compute::v1::FirewallPolicy>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_network_firewall_policies_v1::
-                                   NetworkFirewallPoliciesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::network_firewall_policies::v1::

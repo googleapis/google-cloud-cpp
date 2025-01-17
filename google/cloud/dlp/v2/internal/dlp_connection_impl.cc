@@ -32,8 +32,7 @@ namespace dlp_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<dlp_v2::DlpServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<dlp_v2::DlpServiceRetryPolicyOption>()->clone();
 }
 
@@ -186,8 +185,7 @@ DlpServiceConnectionImpl::ListInspectTemplates(
       StreamRange<google::privacy::dlp::v2::InspectTemplate>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dlp_v2::DlpServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::privacy::dlp::v2::ListInspectTemplatesRequest const& r) {
@@ -280,8 +278,7 @@ DlpServiceConnectionImpl::ListDeidentifyTemplates(
       StreamRange<google::privacy::dlp::v2::DeidentifyTemplate>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dlp_v2::DlpServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::privacy::dlp::v2::ListDeidentifyTemplatesRequest const& r) {
@@ -386,8 +383,7 @@ DlpServiceConnectionImpl::ListJobTriggers(
       StreamRange<google::privacy::dlp::v2::JobTrigger>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dlp_v2::DlpServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::privacy::dlp::v2::ListJobTriggersRequest const& r) {
@@ -494,8 +490,7 @@ DlpServiceConnectionImpl::ListDiscoveryConfigs(
       StreamRange<google::privacy::dlp::v2::DiscoveryConfig>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dlp_v2::DlpServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::privacy::dlp::v2::ListDiscoveryConfigsRequest const& r) {
@@ -556,8 +551,7 @@ DlpServiceConnectionImpl::ListDlpJobs(
       StreamRange<google::privacy::dlp::v2::DlpJob>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dlp_v2::DlpServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::privacy::dlp::v2::ListDlpJobsRequest const& r) {
@@ -673,8 +667,7 @@ DlpServiceConnectionImpl::ListStoredInfoTypes(
       StreamRange<google::privacy::dlp::v2::StoredInfoType>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dlp_v2::DlpServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::privacy::dlp::v2::ListStoredInfoTypesRequest const& r) {
@@ -722,8 +715,7 @@ DlpServiceConnectionImpl::ListProjectDataProfiles(
       StreamRange<google::privacy::dlp::v2::ProjectDataProfile>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dlp_v2::DlpServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::privacy::dlp::v2::ListProjectDataProfilesRequest const& r) {
@@ -758,8 +750,7 @@ DlpServiceConnectionImpl::ListTableDataProfiles(
       StreamRange<google::privacy::dlp::v2::TableDataProfile>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dlp_v2::DlpServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::privacy::dlp::v2::ListTableDataProfilesRequest const& r) {
@@ -793,8 +784,7 @@ DlpServiceConnectionImpl::ListColumnDataProfiles(
       StreamRange<google::privacy::dlp::v2::ColumnDataProfile>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dlp_v2::DlpServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::privacy::dlp::v2::ListColumnDataProfilesRequest const& r) {
@@ -844,8 +834,7 @@ DlpServiceConnectionImpl::ListFileStoreDataProfiles(
       StreamRange<google::privacy::dlp::v2::FileStoreDataProfile>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dlp_v2::DlpServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::privacy::dlp::v2::ListFileStoreDataProfilesRequest const& r) {
@@ -1008,8 +997,7 @@ DlpServiceConnectionImpl::ListConnections(
       StreamRange<google::privacy::dlp::v2::Connection>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dlp_v2::DlpServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::privacy::dlp::v2::ListConnectionsRequest const& r) {
@@ -1042,8 +1030,7 @@ DlpServiceConnectionImpl::SearchConnections(
       StreamRange<google::privacy::dlp::v2::Connection>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dlp_v2::DlpServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::privacy::dlp::v2::SearchConnectionsRequest const& r) {

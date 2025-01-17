@@ -39,11 +39,7 @@ namespace compute_region_url_maps_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `RegionUrlMapsConnection`.
-class RegionUrlMapsRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<RegionUrlMapsRetryPolicy> clone() const = 0;
-};
+class RegionUrlMapsRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `RegionUrlMapsConnection` based on counting errors.
@@ -84,7 +80,7 @@ class RegionUrlMapsLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<RegionUrlMapsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<RegionUrlMapsLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -153,7 +149,7 @@ class RegionUrlMapsLimitedTimeRetryPolicy : public RegionUrlMapsRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<RegionUrlMapsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<RegionUrlMapsLimitedTimeRetryPolicy>(
         maximum_duration());
   }

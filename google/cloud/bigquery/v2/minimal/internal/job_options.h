@@ -33,7 +33,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * Use with `google::cloud::Options` to configure the retry policy.
  */
 struct BigQueryJobRetryPolicyOption {
-  using Type = std::shared_ptr<BigQueryJobRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

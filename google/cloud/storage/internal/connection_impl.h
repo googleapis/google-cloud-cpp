@@ -165,7 +165,7 @@ class StorageConnectionImpl
   explicit StorageConnectionImpl(
       std::unique_ptr<storage_internal::GenericStub> stub, Options options);
 
-  static std::unique_ptr<RetryPolicy> current_retry_policy();
+  static std::unique_ptr<google::cloud::RetryPolicy> current_retry_policy();
   static std::unique_ptr<BackoffPolicy> current_backoff_policy();
   static IdempotencyPolicy& current_idempotency_policy();
 

@@ -97,7 +97,7 @@ class DirectedReadVisitor {
   std::function<google::spanner::v1::DirectedReadOptions*()> factory_;
 };
 
-inline std::shared_ptr<spanner::RetryPolicy> const& RetryPolicyPrototype(
+inline std::shared_ptr<google::cloud::RetryPolicy> const& RetryPolicyPrototype(
     Options const& options) {
   return options.get<spanner::SpannerRetryPolicyOption>();
 }
@@ -107,7 +107,8 @@ inline std::shared_ptr<spanner::BackoffPolicy> const& BackoffPolicyPrototype(
   return options.get<spanner::SpannerBackoffPolicyOption>();
 }
 
-inline std::shared_ptr<spanner::RetryPolicy> const& RetryPolicyPrototype() {
+inline std::shared_ptr<google::cloud::RetryPolicy> const&
+RetryPolicyPrototype() {
   return RetryPolicyPrototype(internal::CurrentOptions());
 }
 

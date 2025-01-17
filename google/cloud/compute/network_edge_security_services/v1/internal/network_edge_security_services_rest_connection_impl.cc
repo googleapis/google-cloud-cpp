@@ -65,9 +65,7 @@ NetworkEdgeSecurityServicesRestConnectionImpl::
       google::cloud::cpp::compute::v1::NetworkEdgeSecurityServicesScopedList>>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_network_edge_security_services_v1::
-                                   NetworkEdgeSecurityServicesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::network_edge_security_services::v1::

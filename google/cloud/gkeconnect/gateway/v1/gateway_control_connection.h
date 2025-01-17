@@ -35,11 +35,7 @@ namespace gkeconnect_gateway_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `GatewayControlConnection`.
-class GatewayControlRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<GatewayControlRetryPolicy> clone() const = 0;
-};
+class GatewayControlRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `GatewayControlConnection` based on counting errors.
@@ -80,7 +76,7 @@ class GatewayControlLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<GatewayControlRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<GatewayControlLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -149,7 +145,7 @@ class GatewayControlLimitedTimeRetryPolicy : public GatewayControlRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<GatewayControlRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<GatewayControlLimitedTimeRetryPolicy>(
         maximum_duration());
   }

@@ -40,11 +40,7 @@ namespace ids_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `IDSConnection`.
-class IDSRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<IDSRetryPolicy> clone() const = 0;
-};
+class IDSRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `IDSConnection` based on counting errors.
@@ -84,7 +80,7 @@ class IDSLimitedErrorCountRetryPolicy : public IDSRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<IDSRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<IDSLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -151,7 +147,7 @@ class IDSLimitedTimeRetryPolicy : public IDSRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<IDSRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<IDSLimitedTimeRetryPolicy>(maximum_duration());
   }
 

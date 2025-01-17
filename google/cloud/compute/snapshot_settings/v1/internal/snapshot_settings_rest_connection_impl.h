@@ -69,9 +69,7 @@ class SnapshotSettingsRestConnectionImpl
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
-  static std::unique_ptr<
-      compute_snapshot_settings_v1::SnapshotSettingsRetryPolicy>
-  retry_policy(Options const& options) {
+  static std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
     return options
         .get<compute_snapshot_settings_v1::SnapshotSettingsRetryPolicyOption>()
         ->clone();

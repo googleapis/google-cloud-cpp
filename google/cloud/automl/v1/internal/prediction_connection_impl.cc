@@ -32,8 +32,7 @@ namespace automl_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<automl_v1::PredictionServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<automl_v1::PredictionServiceRetryPolicyOption>()->clone();
 }
 

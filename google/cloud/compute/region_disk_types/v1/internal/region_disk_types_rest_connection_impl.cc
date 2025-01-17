@@ -70,9 +70,7 @@ RegionDiskTypesRestConnectionImpl::ListRegionDiskTypes(
       StreamRange<google::cloud::cpp::compute::v1::DiskType>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           compute_region_disk_types_v1::RegionDiskTypesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::region_disk_types::v1::

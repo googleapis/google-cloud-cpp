@@ -40,11 +40,7 @@ namespace accesscontextmanager_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `AccessContextManagerConnection`.
-class AccessContextManagerRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<AccessContextManagerRetryPolicy> clone() const = 0;
-};
+class AccessContextManagerRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `AccessContextManagerConnection` based on counting errors.
@@ -88,7 +84,7 @@ class AccessContextManagerLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<AccessContextManagerRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<AccessContextManagerLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -158,7 +154,7 @@ class AccessContextManagerLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<AccessContextManagerRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<AccessContextManagerLimitedTimeRetryPolicy>(
         maximum_duration());
   }

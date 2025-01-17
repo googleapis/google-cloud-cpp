@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-beyondcorp-options
  */
 struct AppGatewaysServiceRetryPolicyOption {
-  using Type = std::shared_ptr<AppGatewaysServiceRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

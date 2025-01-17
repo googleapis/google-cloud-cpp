@@ -83,7 +83,7 @@ using LimitedErrorCountRetryPolicyForTest =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         TestRetryablePolicy>;
 
-std::unique_ptr<RetryPolicyForTest> DefaultRetryPolicy() {
+std::unique_ptr<google::cloud::RetryPolicy> DefaultRetryPolicy() {
   // With maximum_failures==2 it tolerates up to 2 failures, so the *third*
   // failure is an error.
   return LimitedErrorCountRetryPolicyForTest(/*maximum_failures=*/2).clone();

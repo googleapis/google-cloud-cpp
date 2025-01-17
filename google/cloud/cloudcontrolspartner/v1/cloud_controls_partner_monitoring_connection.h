@@ -37,12 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `CloudControlsPartnerMonitoringConnection`.
 class CloudControlsPartnerMonitoringRetryPolicy
-    : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<CloudControlsPartnerMonitoringRetryPolicy> clone()
-      const = 0;
-};
+    : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `CloudControlsPartnerMonitoringConnection` based on
@@ -88,8 +83,7 @@ class CloudControlsPartnerMonitoringLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<CloudControlsPartnerMonitoringRetryPolicy> clone()
-      const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<
         CloudControlsPartnerMonitoringLimitedErrorCountRetryPolicy>(
         maximum_failures());
@@ -164,8 +158,7 @@ class CloudControlsPartnerMonitoringLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<CloudControlsPartnerMonitoringRetryPolicy> clone()
-      const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<
         CloudControlsPartnerMonitoringLimitedTimeRetryPolicy>(
         maximum_duration());

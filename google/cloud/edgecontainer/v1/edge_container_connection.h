@@ -40,11 +40,7 @@ namespace edgecontainer_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `EdgeContainerConnection`.
-class EdgeContainerRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<EdgeContainerRetryPolicy> clone() const = 0;
-};
+class EdgeContainerRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `EdgeContainerConnection` based on counting errors.
@@ -85,7 +81,7 @@ class EdgeContainerLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<EdgeContainerRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<EdgeContainerLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -154,7 +150,7 @@ class EdgeContainerLimitedTimeRetryPolicy : public EdgeContainerRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<EdgeContainerRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<EdgeContainerLimitedTimeRetryPolicy>(
         maximum_duration());
   }

@@ -32,8 +32,7 @@ namespace support_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<support_v2::CaseServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<support_v2::CaseServiceRetryPolicyOption>()->clone();
 }
 
@@ -82,8 +81,7 @@ CaseServiceConnectionImpl::ListCases(
       StreamRange<google::cloud::support::v2::Case>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<support_v2::CaseServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::support::v2::ListCasesRequest const& r) {
@@ -115,8 +113,7 @@ CaseServiceConnectionImpl::SearchCases(
       StreamRange<google::cloud::support::v2::Case>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<support_v2::CaseServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::support::v2::SearchCasesRequest const& r) {
@@ -204,8 +201,7 @@ CaseServiceConnectionImpl::SearchCaseClassifications(
       StreamRange<google::cloud::support::v2::CaseClassification>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<support_v2::CaseServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::support::v2::SearchCaseClassificationsRequest const&

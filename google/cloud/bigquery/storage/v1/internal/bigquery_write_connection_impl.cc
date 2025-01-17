@@ -31,8 +31,7 @@ namespace bigquery_storage_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<bigquery_storage_v1::BigQueryWriteRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<bigquery_storage_v1::BigQueryWriteRetryPolicyOption>()
       ->clone();
 }

@@ -33,8 +33,7 @@ namespace telcoautomation_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<telcoautomation_v1::TelcoAutomationRetryPolicyOption>()
       ->clone();
 }
@@ -81,8 +80,7 @@ TelcoAutomationConnectionImpl::ListOrchestrationClusters(
       StreamRange<google::cloud::telcoautomation::v1::OrchestrationCluster>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::telcoautomation::v1::
@@ -323,8 +321,7 @@ TelcoAutomationConnectionImpl::ListEdgeSlms(
       StreamRange<google::cloud::telcoautomation::v1::EdgeSlm>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::telcoautomation::v1::ListEdgeSlmsRequest const& r) {
@@ -620,8 +617,7 @@ TelcoAutomationConnectionImpl::ListBlueprints(
       StreamRange<google::cloud::telcoautomation::v1::Blueprint>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::telcoautomation::v1::ListBlueprintsRequest const& r) {
@@ -703,8 +699,7 @@ TelcoAutomationConnectionImpl::ListBlueprintRevisions(
       StreamRange<google::cloud::telcoautomation::v1::Blueprint>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::telcoautomation::v1::
                                       ListBlueprintRevisionsRequest const& r) {
@@ -739,8 +734,7 @@ TelcoAutomationConnectionImpl::SearchBlueprintRevisions(
       StreamRange<google::cloud::telcoautomation::v1::Blueprint>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::telcoautomation::v1::
@@ -777,8 +771,7 @@ TelcoAutomationConnectionImpl::SearchDeploymentRevisions(
       StreamRange<google::cloud::telcoautomation::v1::Deployment>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::telcoautomation::v1::
@@ -830,8 +823,7 @@ TelcoAutomationConnectionImpl::ListPublicBlueprints(
       StreamRange<google::cloud::telcoautomation::v1::PublicBlueprint>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::telcoautomation::v1::ListPublicBlueprintsRequest const&
@@ -944,8 +936,7 @@ TelcoAutomationConnectionImpl::ListDeployments(
       StreamRange<google::cloud::telcoautomation::v1::Deployment>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::telcoautomation::v1::ListDeploymentsRequest const& r) {
@@ -980,8 +971,7 @@ TelcoAutomationConnectionImpl::ListDeploymentRevisions(
       StreamRange<google::cloud::telcoautomation::v1::Deployment>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::telcoautomation::v1::
                                       ListDeploymentRevisionsRequest const& r) {
@@ -1097,8 +1087,7 @@ TelcoAutomationConnectionImpl::ListHydratedDeployments(
       StreamRange<google::cloud::telcoautomation::v1::HydratedDeployment>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::telcoautomation::v1::
                                       ListHydratedDeploymentsRequest const& r) {
@@ -1164,8 +1153,7 @@ TelcoAutomationConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {
@@ -1212,8 +1200,7 @@ TelcoAutomationConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

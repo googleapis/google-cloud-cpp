@@ -36,11 +36,7 @@ namespace compute_machine_types_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `MachineTypesConnection`.
-class MachineTypesRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<MachineTypesRetryPolicy> clone() const = 0;
-};
+class MachineTypesRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `MachineTypesConnection` based on counting errors.
@@ -81,7 +77,7 @@ class MachineTypesLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<MachineTypesRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<MachineTypesLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -150,7 +146,7 @@ class MachineTypesLimitedTimeRetryPolicy : public MachineTypesRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<MachineTypesRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<MachineTypesLimitedTimeRetryPolicy>(
         maximum_duration());
   }

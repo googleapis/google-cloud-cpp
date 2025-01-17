@@ -31,7 +31,7 @@ namespace golden_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<golden_v1::DeprecatedServiceRetryPolicy>
+std::unique_ptr<RetryPolicy>
 retry_policy(Options const& options) {
   return options.get<golden_v1::DeprecatedServiceRetryPolicyOption>()->clone();
 }

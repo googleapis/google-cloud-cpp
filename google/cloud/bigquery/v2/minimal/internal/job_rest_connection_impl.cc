@@ -26,7 +26,7 @@ namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<BigQueryJobRetryPolicy> retry_policy(Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<BigQueryJobRetryPolicyOption>()->clone();
 }
 
@@ -68,8 +68,7 @@ StreamRange<ListFormatJob> BigQueryJobRestConnectionImpl::ListJobs(
   auto req = request;
   req.set_page_token("");
 
-  auto retry =
-      std::shared_ptr<BigQueryJobRetryPolicy const>(retry_policy(*current));
+  auto retry = std::shared_ptr<RetryPolicy const>(retry_policy(*current));
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy(*current));
   auto idempotency = idempotency_policy(*current)->ListJobs(req);
   char const* function_name = __func__;

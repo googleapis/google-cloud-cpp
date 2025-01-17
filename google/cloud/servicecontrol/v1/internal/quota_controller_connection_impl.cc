@@ -31,8 +31,7 @@ namespace servicecontrol_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<servicecontrol_v1::QuotaControllerRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<servicecontrol_v1::QuotaControllerRetryPolicyOption>()
       ->clone();
 }

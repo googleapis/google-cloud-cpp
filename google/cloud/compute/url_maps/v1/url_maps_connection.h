@@ -39,11 +39,7 @@ namespace compute_url_maps_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `UrlMapsConnection`.
-class UrlMapsRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<UrlMapsRetryPolicy> clone() const = 0;
-};
+class UrlMapsRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `UrlMapsConnection` based on counting errors.
@@ -83,7 +79,7 @@ class UrlMapsLimitedErrorCountRetryPolicy : public UrlMapsRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<UrlMapsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<UrlMapsLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -151,7 +147,7 @@ class UrlMapsLimitedTimeRetryPolicy : public UrlMapsRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<UrlMapsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<UrlMapsLimitedTimeRetryPolicy>(maximum_duration());
   }
 

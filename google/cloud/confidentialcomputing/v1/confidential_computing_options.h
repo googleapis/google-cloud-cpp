@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-confidentialcomputing-options
  */
 struct ConfidentialComputingRetryPolicyOption {
-  using Type = std::shared_ptr<ConfidentialComputingRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

@@ -32,8 +32,7 @@ namespace recommender_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<recommender_v1::RecommenderRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<recommender_v1::RecommenderRetryPolicyOption>()->clone();
 }
 
@@ -70,8 +69,7 @@ RecommenderConnectionImpl::ListInsights(
       StreamRange<google::cloud::recommender::v1::Insight>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<recommender_v1::RecommenderRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::recommender::v1::ListInsightsRequest const& r) {
@@ -133,8 +131,7 @@ RecommenderConnectionImpl::ListRecommendations(
       StreamRange<google::cloud::recommender::v1::Recommendation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<recommender_v1::RecommenderRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::recommender::v1::ListRecommendationsRequest const& r) {

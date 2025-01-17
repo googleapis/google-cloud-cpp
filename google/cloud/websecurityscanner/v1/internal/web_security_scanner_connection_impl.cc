@@ -32,8 +32,7 @@ namespace websecurityscanner_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<websecurityscanner_v1::WebSecurityScannerRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options
       .get<websecurityscanner_v1::WebSecurityScannerRetryPolicyOption>()
       ->clone();
@@ -126,9 +125,7 @@ WebSecurityScannerConnectionImpl::ListScanConfigs(
       StreamRange<google::cloud::websecurityscanner::v1::ScanConfig>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           websecurityscanner_v1::WebSecurityScannerRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::websecurityscanner::v1::ListScanConfigsRequest const&
@@ -209,9 +206,7 @@ WebSecurityScannerConnectionImpl::ListScanRuns(
       StreamRange<google::cloud::websecurityscanner::v1::ScanRun>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           websecurityscanner_v1::WebSecurityScannerRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::websecurityscanner::v1::ListScanRunsRequest const& r) {
@@ -259,9 +254,7 @@ WebSecurityScannerConnectionImpl::ListCrawledUrls(
       StreamRange<google::cloud::websecurityscanner::v1::CrawledUrl>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           websecurityscanner_v1::WebSecurityScannerRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest const&
@@ -310,9 +303,7 @@ WebSecurityScannerConnectionImpl::ListFindings(
       StreamRange<google::cloud::websecurityscanner::v1::Finding>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           websecurityscanner_v1::WebSecurityScannerRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::websecurityscanner::v1::ListFindingsRequest const& r) {

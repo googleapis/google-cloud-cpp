@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-timeseriesinsights-options
  */
 struct TimeseriesInsightsControllerRetryPolicyOption {
-  using Type = std::shared_ptr<TimeseriesInsightsControllerRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

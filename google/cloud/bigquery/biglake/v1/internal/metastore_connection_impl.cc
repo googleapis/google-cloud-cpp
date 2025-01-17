@@ -32,8 +32,7 @@ namespace bigquery_biglake_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<bigquery_biglake_v1::MetastoreServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<bigquery_biglake_v1::MetastoreServiceRetryPolicyOption>()
       ->clone();
 }
@@ -120,9 +119,7 @@ MetastoreServiceConnectionImpl::ListCatalogs(
       StreamRange<google::cloud::bigquery::biglake::v1::Catalog>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<bigquery_biglake_v1::MetastoreServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::bigquery::biglake::v1::ListCatalogsRequest const& r) {
@@ -219,9 +216,7 @@ MetastoreServiceConnectionImpl::ListDatabases(
       StreamRange<google::cloud::bigquery::biglake::v1::Database>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<bigquery_biglake_v1::MetastoreServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::bigquery::biglake::v1::ListDatabasesRequest const& r) {
@@ -329,9 +324,7 @@ MetastoreServiceConnectionImpl::ListTables(
       StreamRange<google::cloud::bigquery::biglake::v1::Table>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<bigquery_biglake_v1::MetastoreServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::bigquery::biglake::v1::ListTablesRequest const& r) {

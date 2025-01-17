@@ -34,7 +34,7 @@ namespace golden_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<golden_v1::RequestIdServiceRetryPolicy>
+std::unique_ptr<RetryPolicy>
 retry_policy(Options const& options) {
   return options.get<golden_v1::RequestIdServiceRetryPolicyOption>()->clone();
 }
@@ -172,7 +172,7 @@ RequestIdServiceConnectionImpl::ListFoos(google::test::requestid::v1::ListFoosRe
   return google::cloud::internal::MakePaginationRange<StreamRange<google::test::requestid::v1::Foo>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<golden_v1::RequestIdServiceRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::test::requestid::v1::ListFoosRequest const& r) {
         return google::cloud::internal::RetryLoop(

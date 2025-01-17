@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-cloudbuild-options
  */
 struct RepositoryManagerRetryPolicyOption {
-  using Type = std::shared_ptr<RepositoryManagerRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

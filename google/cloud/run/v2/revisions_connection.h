@@ -40,11 +40,7 @@ namespace run_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `RevisionsConnection`.
-class RevisionsRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<RevisionsRetryPolicy> clone() const = 0;
-};
+class RevisionsRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `RevisionsConnection` based on counting errors.
@@ -84,7 +80,7 @@ class RevisionsLimitedErrorCountRetryPolicy : public RevisionsRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<RevisionsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<RevisionsLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -153,7 +149,7 @@ class RevisionsLimitedTimeRetryPolicy : public RevisionsRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<RevisionsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<RevisionsLimitedTimeRetryPolicy>(
         maximum_duration());
   }

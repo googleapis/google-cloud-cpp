@@ -37,12 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `RecaptchaEnterpriseServiceConnection`.
 class RecaptchaEnterpriseServiceRetryPolicy
-    : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<RecaptchaEnterpriseServiceRetryPolicy> clone()
-      const = 0;
-};
+    : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `RecaptchaEnterpriseServiceConnection` based on counting
@@ -88,8 +83,7 @@ class RecaptchaEnterpriseServiceLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<RecaptchaEnterpriseServiceRetryPolicy> clone()
-      const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<
         RecaptchaEnterpriseServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
@@ -163,8 +157,7 @@ class RecaptchaEnterpriseServiceLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<RecaptchaEnterpriseServiceRetryPolicy> clone()
-      const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<RecaptchaEnterpriseServiceLimitedTimeRetryPolicy>(
         maximum_duration());
   }

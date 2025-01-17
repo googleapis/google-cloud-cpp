@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-monitoring-options
  */
 struct DashboardsServiceRetryPolicyOption {
-  using Type = std::shared_ptr<DashboardsServiceRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

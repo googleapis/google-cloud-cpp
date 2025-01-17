@@ -33,8 +33,7 @@ namespace workstations_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<workstations_v1::WorkstationsRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<workstations_v1::WorkstationsRetryPolicyOption>()->clone();
 }
 
@@ -95,8 +94,7 @@ WorkstationsConnectionImpl::ListWorkstationClusters(
       StreamRange<google::cloud::workstations::v1::WorkstationCluster>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<workstations_v1::WorkstationsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::workstations::v1::ListWorkstationClustersRequest const&
@@ -429,8 +427,7 @@ WorkstationsConnectionImpl::ListWorkstationConfigs(
       StreamRange<google::cloud::workstations::v1::WorkstationConfig>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<workstations_v1::WorkstationsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::workstations::v1::ListWorkstationConfigsRequest const&
@@ -466,8 +463,7 @@ WorkstationsConnectionImpl::ListUsableWorkstationConfigs(
       StreamRange<google::cloud::workstations::v1::WorkstationConfig>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<workstations_v1::WorkstationsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::workstations::v1::
@@ -806,8 +802,7 @@ WorkstationsConnectionImpl::ListWorkstations(
       StreamRange<google::cloud::workstations::v1::Workstation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<workstations_v1::WorkstationsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::workstations::v1::ListWorkstationsRequest const& r) {
@@ -842,8 +837,7 @@ WorkstationsConnectionImpl::ListUsableWorkstations(
       StreamRange<google::cloud::workstations::v1::Workstation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<workstations_v1::WorkstationsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::workstations::v1::ListUsableWorkstationsRequest const&
@@ -1398,8 +1392,7 @@ WorkstationsConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<workstations_v1::WorkstationsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

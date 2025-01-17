@@ -195,9 +195,7 @@ InstanceGroupManagersRestConnectionImpl::AggregatedListInstanceGroupManagers(
       google::cloud::cpp::compute::v1::InstanceGroupManagersScopedList>>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_instance_group_managers_v1::
-                                   InstanceGroupManagersRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::instance_group_managers::v1::
@@ -1042,9 +1040,7 @@ InstanceGroupManagersRestConnectionImpl::ListInstanceGroupManagers(
       StreamRange<google::cloud::cpp::compute::v1::InstanceGroupManager>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_instance_group_managers_v1::
-                                   InstanceGroupManagersRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::instance_group_managers::v1::
@@ -1081,9 +1077,7 @@ InstanceGroupManagersRestConnectionImpl::ListErrors(
       StreamRange<google::cloud::cpp::compute::v1::InstanceManagedByIgmError>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_instance_group_managers_v1::
-                                   InstanceGroupManagersRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::instance_group_managers::v1::
@@ -1138,9 +1132,7 @@ InstanceGroupManagersRestConnectionImpl::ListPerInstanceConfigs(
       StreamRange<google::cloud::cpp::compute::v1::PerInstanceConfig>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_instance_group_managers_v1::
-                                   InstanceGroupManagersRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::instance_group_managers::v1::

@@ -33,8 +33,7 @@ namespace vision_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<vision_v1::ProductSearchRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<vision_v1::ProductSearchRetryPolicyOption>()->clone();
 }
 
@@ -90,8 +89,7 @@ ProductSearchConnectionImpl::ListProductSets(
       StreamRange<google::cloud::vision::v1::ProductSet>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<vision_v1::ProductSearchRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::vision::v1::ListProductSetsRequest const& r) {
@@ -181,8 +179,7 @@ ProductSearchConnectionImpl::ListProducts(
       StreamRange<google::cloud::vision::v1::Product>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<vision_v1::ProductSearchRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::vision::v1::ListProductsRequest const& r) {
@@ -285,8 +282,7 @@ ProductSearchConnectionImpl::ListReferenceImages(
       StreamRange<google::cloud::vision::v1::ReferenceImage>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<vision_v1::ProductSearchRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::vision::v1::ListReferenceImagesRequest const& r) {
@@ -365,8 +361,7 @@ ProductSearchConnectionImpl::ListProductsInProductSet(
       StreamRange<google::cloud::vision::v1::Product>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<vision_v1::ProductSearchRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::vision::v1::ListProductsInProductSetRequest const& r) {

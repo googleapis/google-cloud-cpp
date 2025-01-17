@@ -57,8 +57,7 @@ VpnTunnelsRestConnectionImpl::AggregatedListVpnTunnels(
       std::string, google::cloud::cpp::compute::v1::VpnTunnelsScopedList>>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_vpn_tunnels_v1::VpnTunnelsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::vpn_tunnels::v1::
@@ -376,8 +375,7 @@ VpnTunnelsRestConnectionImpl::ListVpnTunnels(
       StreamRange<google::cloud::cpp::compute::v1::VpnTunnel>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_vpn_tunnels_v1::VpnTunnelsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::cpp::compute::vpn_tunnels::v1::
                                       ListVpnTunnelsRequest const& r) {

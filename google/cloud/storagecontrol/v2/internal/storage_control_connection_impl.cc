@@ -33,8 +33,7 @@ namespace storagecontrol_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<storagecontrol_v2::StorageControlRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<storagecontrol_v2::StorageControlRetryPolicyOption>()
       ->clone();
 }
@@ -131,8 +130,7 @@ StorageControlConnectionImpl::ListFolders(
       StreamRange<google::storage::control::v2::Folder>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<storagecontrol_v2::StorageControlRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::storage::control::v2::ListFoldersRequest const& r) {
@@ -333,8 +331,7 @@ StorageControlConnectionImpl::ListManagedFolders(
       StreamRange<google::storage::control::v2::ManagedFolder>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<storagecontrol_v2::StorageControlRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::storage::control::v2::ListManagedFoldersRequest const& r) {

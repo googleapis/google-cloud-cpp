@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-tpu-options
  */
 struct TpuRetryPolicyOption {
-  using Type = std::shared_ptr<TpuRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

@@ -52,7 +52,7 @@ class GoldenRestOnlyRestConnectionImpl
   Noop(google::protobuf::Empty const& request) override;
 
  private:
-  static std::unique_ptr<golden_v1::GoldenRestOnlyRetryPolicy>
+  static std::unique_ptr<RetryPolicy>
   retry_policy(Options const& options) {
     return options.get<golden_v1::GoldenRestOnlyRetryPolicyOption>()->clone();
   }

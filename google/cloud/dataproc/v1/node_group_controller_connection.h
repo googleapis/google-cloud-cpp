@@ -42,11 +42,7 @@ namespace dataproc_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `NodeGroupControllerConnection`.
-class NodeGroupControllerRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<NodeGroupControllerRetryPolicy> clone() const = 0;
-};
+class NodeGroupControllerRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `NodeGroupControllerConnection` based on counting errors.
@@ -89,7 +85,7 @@ class NodeGroupControllerLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<NodeGroupControllerRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<NodeGroupControllerLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -159,7 +155,7 @@ class NodeGroupControllerLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<NodeGroupControllerRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<NodeGroupControllerLimitedTimeRetryPolicy>(
         maximum_duration());
   }

@@ -40,11 +40,7 @@ namespace logging_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `ConfigServiceV2Connection`.
-class ConfigServiceV2RetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<ConfigServiceV2RetryPolicy> clone() const = 0;
-};
+class ConfigServiceV2RetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `ConfigServiceV2Connection` based on counting errors.
@@ -85,7 +81,7 @@ class ConfigServiceV2LimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<ConfigServiceV2RetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<ConfigServiceV2LimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -155,7 +151,7 @@ class ConfigServiceV2LimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<ConfigServiceV2RetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<ConfigServiceV2LimitedTimeRetryPolicy>(
         maximum_duration());
   }

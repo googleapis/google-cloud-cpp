@@ -40,11 +40,7 @@ namespace securesourcemanager_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `SecureSourceManagerConnection`.
-class SecureSourceManagerRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<SecureSourceManagerRetryPolicy> clone() const = 0;
-};
+class SecureSourceManagerRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `SecureSourceManagerConnection` based on counting errors.
@@ -87,7 +83,7 @@ class SecureSourceManagerLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<SecureSourceManagerRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<SecureSourceManagerLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -157,7 +153,7 @@ class SecureSourceManagerLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<SecureSourceManagerRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<SecureSourceManagerLimitedTimeRetryPolicy>(
         maximum_duration());
   }

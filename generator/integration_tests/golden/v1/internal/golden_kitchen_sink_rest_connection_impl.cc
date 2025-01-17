@@ -89,7 +89,7 @@ GoldenKitchenSinkRestConnectionImpl::ListLogs(google::test::admin::database::v1:
   return google::cloud::internal::MakePaginationRange<StreamRange<std::string>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<golden_v1::GoldenKitchenSinkRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::test::admin::database::v1::ListLogsRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(
@@ -196,7 +196,7 @@ GoldenKitchenSinkRestConnectionImpl::ListOperations(google::longrunning::ListOpe
   return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<golden_v1::GoldenKitchenSinkRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::rest_internal::RestRetryLoop(

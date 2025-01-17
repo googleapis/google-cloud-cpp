@@ -40,11 +40,7 @@ namespace datamigration_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `DataMigrationServiceConnection`.
-class DataMigrationServiceRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<DataMigrationServiceRetryPolicy> clone() const = 0;
-};
+class DataMigrationServiceRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `DataMigrationServiceConnection` based on counting errors.
@@ -88,7 +84,7 @@ class DataMigrationServiceLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<DataMigrationServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<DataMigrationServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -158,7 +154,7 @@ class DataMigrationServiceLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<DataMigrationServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<DataMigrationServiceLimitedTimeRetryPolicy>(
         maximum_duration());
   }

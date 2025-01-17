@@ -75,9 +75,7 @@ InterconnectRemoteLocationsRestConnectionImpl::ListInterconnectRemoteLocations(
       StreamRange<google::cloud::cpp::compute::v1::InterconnectRemoteLocation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_interconnect_remote_locations_v1::
-                                   InterconnectRemoteLocationsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::interconnect_remote_locations::v1::

@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-functions-options
  */
 struct CloudFunctionsServiceRetryPolicyOption {
-  using Type = std::shared_ptr<CloudFunctionsServiceRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

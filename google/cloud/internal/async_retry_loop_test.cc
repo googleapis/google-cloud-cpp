@@ -194,6 +194,8 @@ class MockRetryPolicy : public RetryPolicyWithSetup {
   MOCK_METHOD(void, Setup, (grpc::ClientContext&), (const, override));
   MOCK_METHOD(bool, IsExhausted, (), (const, override));
   MOCK_METHOD(bool, IsPermanentFailure, (Status const&), (const, override));
+  MOCK_METHOD(std::unique_ptr<google::cloud::RetryPolicy>, clone, (),
+              (const, override));
 };
 
 /// @test Verify the backoff policy is queried after each failure.

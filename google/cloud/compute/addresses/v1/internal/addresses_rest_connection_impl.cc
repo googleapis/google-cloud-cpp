@@ -57,8 +57,7 @@ AddressesRestConnectionImpl::AggregatedListAddresses(
       std::string, google::cloud::cpp::compute::v1::AddressesScopedList>>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_addresses_v1::AddressesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::cpp::compute::addresses::v1::
                                       AggregatedListAddressesRequest const& r) {
@@ -375,8 +374,7 @@ AddressesRestConnectionImpl::ListAddresses(
       StreamRange<google::cloud::cpp::compute::v1::Address>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_addresses_v1::AddressesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::cpp::compute::addresses::v1::
                                       ListAddressesRequest const& r) {

@@ -39,11 +39,7 @@ namespace compute_service_attachments_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `ServiceAttachmentsConnection`.
-class ServiceAttachmentsRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<ServiceAttachmentsRetryPolicy> clone() const = 0;
-};
+class ServiceAttachmentsRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `ServiceAttachmentsConnection` based on counting errors.
@@ -86,7 +82,7 @@ class ServiceAttachmentsLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<ServiceAttachmentsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<ServiceAttachmentsLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -156,7 +152,7 @@ class ServiceAttachmentsLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<ServiceAttachmentsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<ServiceAttachmentsLimitedTimeRetryPolicy>(
         maximum_duration());
   }

@@ -90,9 +90,7 @@ GlobalOrganizationOperationsRestConnectionImpl::
       StreamRange<google::cloud::cpp::compute::v1::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_global_organization_operations_v1::
-                                   GlobalOrganizationOperationsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::global_organization_operations::v1::

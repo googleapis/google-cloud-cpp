@@ -90,9 +90,7 @@ class RegionTargetTcpProxiesRestConnectionImpl
           ListRegionTargetTcpProxiesRequest request) override;
 
  private:
-  static std::unique_ptr<
-      compute_region_target_tcp_proxies_v1::RegionTargetTcpProxiesRetryPolicy>
-  retry_policy(Options const& options) {
+  static std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
     return options
         .get<compute_region_target_tcp_proxies_v1::
                  RegionTargetTcpProxiesRetryPolicyOption>()

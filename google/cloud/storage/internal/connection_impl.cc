@@ -95,7 +95,8 @@ Status ValidateCommittedSize(UploadChunkRequest const& request,
 
 // For resumable uploads over gRPC we need to treat some non-retryable errors
 // as retryable.
-bool UploadChunkOnFailure(RetryPolicy& retry_policy, Status const& status) {
+bool UploadChunkOnFailure(google::cloud::RetryPolicy& retry_policy,
+                          Status const& status) {
   // TODO(#9273) - use ErrorInfo when it becomes available
   if (status.code() == StatusCode::kAborted &&
       absl::StartsWith(status.message(), "Concurrent requests received.")) {
@@ -105,7 +106,8 @@ bool UploadChunkOnFailure(RetryPolicy& retry_policy, Status const& status) {
   return retry_policy.OnFailure(status);
 }
 
-Status RetryError(Status const& status, RetryPolicy const& retry_policy,
+Status RetryError(Status const& status,
+                  google::cloud::RetryPolicy const& retry_policy,
                   char const* function_name) {
   return google::cloud::internal::RetryLoopError(status, function_name,
                                                  retry_policy.IsExhausted());
@@ -376,7 +378,8 @@ StatusOr<std::unique_ptr<ObjectReadSource>> StorageConnectionImpl::ReadObject(
   auto const* where = __func__;
   auto factory = [self = shared_from_this(), current, where](
                      ReadObjectRangeRequest const& request,
-                     RetryPolicy& retry_policy, BackoffPolicy& backoff_policy) {
+                     google::cloud::RetryPolicy& retry_policy,
+                     BackoffPolicy& backoff_policy) {
     auto const idempotency =
         current->get<IdempotencyPolicyOption>()->IsIdempotent(request)
             ? Idempotency::kIdempotent
@@ -1225,7 +1228,8 @@ std::vector<std::string> StorageConnectionImpl::InspectStackStructure() const {
   return stack;
 }
 
-std::unique_ptr<RetryPolicy> StorageConnectionImpl::current_retry_policy() {
+std::unique_ptr<google::cloud::RetryPolicy>
+StorageConnectionImpl::current_retry_policy() {
   return google::cloud::internal::CurrentOptions()
       .get<RetryPolicyOption>()
       ->clone();

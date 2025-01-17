@@ -33,8 +33,7 @@ namespace privateca_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<privateca_v1::CertificateAuthorityServiceRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options
       .get<privateca_v1::CertificateAuthorityServiceRetryPolicyOption>()
       ->clone();
@@ -119,9 +118,7 @@ CertificateAuthorityServiceConnectionImpl::ListCertificates(
       StreamRange<google::cloud::security::privateca::v1::Certificate>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           privateca_v1::CertificateAuthorityServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::security::privateca::v1::ListCertificatesRequest const&
@@ -598,9 +595,7 @@ CertificateAuthorityServiceConnectionImpl::ListCertificateAuthorities(
       google::cloud::security::privateca::v1::CertificateAuthority>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           privateca_v1::CertificateAuthorityServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::security::privateca::v1::
@@ -1126,9 +1121,7 @@ CertificateAuthorityServiceConnectionImpl::ListCaPools(
       StreamRange<google::cloud::security::privateca::v1::CaPool>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           privateca_v1::CertificateAuthorityServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::security::privateca::v1::ListCaPoolsRequest const& r) {
@@ -1291,9 +1284,7 @@ CertificateAuthorityServiceConnectionImpl::ListCertificateRevocationLists(
       google::cloud::security::privateca::v1::CertificateRevocationList>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           privateca_v1::CertificateAuthorityServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::security::privateca::v1::
@@ -1635,9 +1626,7 @@ CertificateAuthorityServiceConnectionImpl::ListCertificateTemplates(
       StreamRange<google::cloud::security::privateca::v1::CertificateTemplate>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           privateca_v1::CertificateAuthorityServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::security::privateca::v1::
@@ -1766,9 +1755,7 @@ CertificateAuthorityServiceConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           privateca_v1::CertificateAuthorityServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {
@@ -1857,9 +1844,7 @@ CertificateAuthorityServiceConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           privateca_v1::CertificateAuthorityServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

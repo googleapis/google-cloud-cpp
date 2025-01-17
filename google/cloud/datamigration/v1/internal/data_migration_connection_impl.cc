@@ -33,8 +33,7 @@ namespace datamigration_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<datamigration_v1::DataMigrationServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<datamigration_v1::DataMigrationServiceRetryPolicyOption>()
       ->clone();
 }
@@ -82,9 +81,7 @@ DataMigrationServiceConnectionImpl::ListMigrationJobs(
       StreamRange<google::cloud::clouddms::v1::MigrationJob>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<datamigration_v1::DataMigrationServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::clouddms::v1::ListMigrationJobsRequest const& r) {
@@ -999,9 +996,7 @@ DataMigrationServiceConnectionImpl::ListConnectionProfiles(
       StreamRange<google::cloud::clouddms::v1::ConnectionProfile>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<datamigration_v1::DataMigrationServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::clouddms::v1::ListConnectionProfilesRequest const& r) {
@@ -1445,9 +1440,7 @@ DataMigrationServiceConnectionImpl::ListPrivateConnections(
       StreamRange<google::cloud::clouddms::v1::PrivateConnection>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<datamigration_v1::DataMigrationServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::clouddms::v1::ListPrivateConnectionsRequest const& r) {
@@ -1591,9 +1584,7 @@ DataMigrationServiceConnectionImpl::ListConversionWorkspaces(
       StreamRange<google::cloud::clouddms::v1::ConversionWorkspace>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<datamigration_v1::DataMigrationServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::clouddms::v1::ListConversionWorkspacesRequest const&
@@ -1944,9 +1935,7 @@ DataMigrationServiceConnectionImpl::ListMappingRules(
       StreamRange<google::cloud::clouddms::v1::MappingRule>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<datamigration_v1::DataMigrationServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::clouddms::v1::ListMappingRulesRequest const& r) {
@@ -2566,9 +2555,7 @@ DataMigrationServiceConnectionImpl::DescribeDatabaseEntities(
       StreamRange<google::cloud::clouddms::v1::DatabaseEntity>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<datamigration_v1::DataMigrationServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::clouddms::v1::DescribeDatabaseEntitiesRequest const&
@@ -2634,9 +2621,7 @@ StreamRange<std::string> DataMigrationServiceConnectionImpl::FetchStaticIps(
   return google::cloud::internal::MakePaginationRange<StreamRange<std::string>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<datamigration_v1::DataMigrationServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::clouddms::v1::FetchStaticIpsRequest const& r) {
@@ -2668,9 +2653,7 @@ DataMigrationServiceConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<datamigration_v1::DataMigrationServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {
@@ -2759,9 +2742,7 @@ DataMigrationServiceConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<datamigration_v1::DataMigrationServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

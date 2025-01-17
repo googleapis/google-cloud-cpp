@@ -86,7 +86,7 @@ class DefaultUniverseDomainRetryPolicy
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
   }
-  std::unique_ptr<internal::UniverseDomainRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<DefaultUniverseDomainRetryPolicy>(
         maximum_duration());
   }

@@ -40,11 +40,7 @@ namespace artifactregistry_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `ArtifactRegistryConnection`.
-class ArtifactRegistryRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<ArtifactRegistryRetryPolicy> clone() const = 0;
-};
+class ArtifactRegistryRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `ArtifactRegistryConnection` based on counting errors.
@@ -85,7 +81,7 @@ class ArtifactRegistryLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<ArtifactRegistryRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<ArtifactRegistryLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -155,7 +151,7 @@ class ArtifactRegistryLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<ArtifactRegistryRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<ArtifactRegistryLimitedTimeRetryPolicy>(
         maximum_duration());
   }

@@ -32,8 +32,7 @@ namespace apigeeconnect_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<apigeeconnect_v1::ConnectionServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<apigeeconnect_v1::ConnectionServiceRetryPolicyOption>()
       ->clone();
 }
@@ -73,8 +72,7 @@ ConnectionServiceConnectionImpl::ListConnections(
       StreamRange<google::cloud::apigeeconnect::v1::Connection>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<apigeeconnect_v1::ConnectionServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::apigeeconnect::v1::ListConnectionsRequest const& r) {

@@ -41,11 +41,7 @@ namespace aiplatform_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `GenAiTuningServiceConnection`.
-class GenAiTuningServiceRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<GenAiTuningServiceRetryPolicy> clone() const = 0;
-};
+class GenAiTuningServiceRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `GenAiTuningServiceConnection` based on counting errors.
@@ -88,7 +84,7 @@ class GenAiTuningServiceLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<GenAiTuningServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<GenAiTuningServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -158,7 +154,7 @@ class GenAiTuningServiceLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<GenAiTuningServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<GenAiTuningServiceLimitedTimeRetryPolicy>(
         maximum_duration());
   }

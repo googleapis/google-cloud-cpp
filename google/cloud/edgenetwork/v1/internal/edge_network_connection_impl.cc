@@ -33,8 +33,7 @@ namespace edgenetwork_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<edgenetwork_v1::EdgeNetworkRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<edgenetwork_v1::EdgeNetworkRetryPolicyOption>()->clone();
 }
 
@@ -90,8 +89,7 @@ EdgeNetworkConnectionImpl::ListZones(
       StreamRange<google::cloud::edgenetwork::v1::Zone>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<edgenetwork_v1::EdgeNetworkRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::edgenetwork::v1::ListZonesRequest const& r) {
@@ -138,8 +136,7 @@ EdgeNetworkConnectionImpl::ListNetworks(
       StreamRange<google::cloud::edgenetwork::v1::Network>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<edgenetwork_v1::EdgeNetworkRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::edgenetwork::v1::ListNetworksRequest const& r) {
@@ -384,8 +381,7 @@ EdgeNetworkConnectionImpl::ListSubnets(
       StreamRange<google::cloud::edgenetwork::v1::Subnet>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<edgenetwork_v1::EdgeNetworkRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::edgenetwork::v1::ListSubnetsRequest const& r) {
@@ -706,8 +702,7 @@ EdgeNetworkConnectionImpl::ListInterconnects(
       StreamRange<google::cloud::edgenetwork::v1::Interconnect>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<edgenetwork_v1::EdgeNetworkRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::edgenetwork::v1::ListInterconnectsRequest const& r) {
@@ -774,8 +769,7 @@ EdgeNetworkConnectionImpl::ListInterconnectAttachments(
       StreamRange<google::cloud::edgenetwork::v1::InterconnectAttachment>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<edgenetwork_v1::EdgeNetworkRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::edgenetwork::v1::
@@ -1015,8 +1009,7 @@ EdgeNetworkConnectionImpl::ListRouters(
       StreamRange<google::cloud::edgenetwork::v1::Router>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<edgenetwork_v1::EdgeNetworkRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::edgenetwork::v1::ListRoutersRequest const& r) {
@@ -1352,8 +1345,7 @@ EdgeNetworkConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<edgenetwork_v1::EdgeNetworkRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {
@@ -1400,8 +1392,7 @@ EdgeNetworkConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<edgenetwork_v1::EdgeNetworkRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

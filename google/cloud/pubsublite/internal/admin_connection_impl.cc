@@ -34,8 +34,7 @@ namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<pubsublite::AdminServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<pubsublite::AdminServiceRetryPolicyOption>()->clone();
 }
 
@@ -119,8 +118,7 @@ AdminServiceConnectionImpl::ListTopics(
       StreamRange<google::cloud::pubsublite::v1::Topic>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<pubsublite::AdminServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::pubsublite::v1::ListTopicsRequest const& r) {
@@ -179,8 +177,7 @@ StreamRange<std::string> AdminServiceConnectionImpl::ListTopicSubscriptions(
   return google::cloud::internal::MakePaginationRange<StreamRange<std::string>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<pubsublite::AdminServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest const&
@@ -243,8 +240,7 @@ AdminServiceConnectionImpl::ListSubscriptions(
       StreamRange<google::cloud::pubsublite::v1::Subscription>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<pubsublite::AdminServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::pubsublite::v1::ListSubscriptionsRequest const& r) {
@@ -430,8 +426,7 @@ AdminServiceConnectionImpl::ListReservations(
       StreamRange<google::cloud::pubsublite::v1::Reservation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<pubsublite::AdminServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::pubsublite::v1::ListReservationsRequest const& r) {
@@ -492,8 +487,7 @@ StreamRange<std::string> AdminServiceConnectionImpl::ListReservationTopics(
   return google::cloud::internal::MakePaginationRange<StreamRange<std::string>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<pubsublite::AdminServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::pubsublite::v1::ListReservationTopicsRequest const&
@@ -526,8 +520,7 @@ AdminServiceConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<pubsublite::AdminServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

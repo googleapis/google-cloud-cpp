@@ -42,10 +42,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `GoldenThingAdminConnection`.
 class GoldenThingAdminRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<GoldenThingAdminRetryPolicy> clone() const = 0;
-};
+ };
 
 /**
  * A retry policy for `GoldenThingAdminConnection` based on counting errors.
@@ -86,7 +83,7 @@ class GoldenThingAdminLimitedErrorCountRetryPolicy : public GoldenThingAdminRetr
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<GoldenThingAdminRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<GoldenThingAdminLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -152,7 +149,7 @@ class GoldenThingAdminLimitedTimeRetryPolicy : public GoldenThingAdminRetryPolic
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<GoldenThingAdminRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<GoldenThingAdminLimitedTimeRetryPolicy>(
         maximum_duration());
   }

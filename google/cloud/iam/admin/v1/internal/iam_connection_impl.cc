@@ -32,8 +32,7 @@ namespace iam_admin_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<iam_admin_v1::IAMRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<iam_admin_v1::IAMRetryPolicyOption>()->clone();
 }
 
@@ -68,8 +67,7 @@ IAMConnectionImpl::ListServiceAccounts(
       StreamRange<google::iam::admin::v1::ServiceAccount>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<iam_admin_v1::IAMRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::iam::admin::v1::ListServiceAccountsRequest const& r) {
@@ -345,8 +343,7 @@ IAMConnectionImpl::QueryGrantableRoles(
       StreamRange<google::iam::admin::v1::Role>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<iam_admin_v1::IAMRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::iam::admin::v1::QueryGrantableRolesRequest const& r) {
@@ -377,8 +374,7 @@ StreamRange<google::iam::admin::v1::Role> IAMConnectionImpl::ListRoles(
       StreamRange<google::iam::admin::v1::Role>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<iam_admin_v1::IAMRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::iam::admin::v1::ListRolesRequest const& r) {
@@ -475,8 +471,7 @@ IAMConnectionImpl::QueryTestablePermissions(
       StreamRange<google::iam::admin::v1::Permission>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<iam_admin_v1::IAMRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::iam::admin::v1::QueryTestablePermissionsRequest const& r) {

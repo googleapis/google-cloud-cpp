@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-eventarc-options
  */
 struct PublisherRetryPolicyOption {
-  using Type = std::shared_ptr<PublisherRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

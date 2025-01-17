@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-websecurityscanner-options
  */
 struct WebSecurityScannerRetryPolicyOption {
-  using Type = std::shared_ptr<WebSecurityScannerRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

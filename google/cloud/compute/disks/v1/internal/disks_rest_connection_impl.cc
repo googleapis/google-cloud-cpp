@@ -188,8 +188,7 @@ DisksRestConnectionImpl::AggregatedListDisks(
       std::string, google::cloud::cpp::compute::v1::DisksScopedList>>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_disks_v1::DisksRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::cpp::compute::disks::v1::
                                       AggregatedListDisksRequest const& r) {
@@ -782,8 +781,7 @@ DisksRestConnectionImpl::ListDisks(
       StreamRange<google::cloud::cpp::compute::v1::Disk>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_disks_v1::DisksRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::disks::v1::ListDisksRequest const& r) {

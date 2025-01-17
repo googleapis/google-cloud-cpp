@@ -33,8 +33,7 @@ namespace connectors_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<connectors_v1::ConnectorsRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<connectors_v1::ConnectorsRetryPolicyOption>()->clone();
 }
 
@@ -75,8 +74,7 @@ ConnectorsConnectionImpl::ListConnections(
       StreamRange<google::cloud::connectors::v1::Connection>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<connectors_v1::ConnectorsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::connectors::v1::ListConnectionsRequest const& r) {
@@ -403,8 +401,7 @@ ConnectorsConnectionImpl::ListProviders(
       StreamRange<google::cloud::connectors::v1::Provider>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<connectors_v1::ConnectorsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::connectors::v1::ListProvidersRequest const& r) {
@@ -451,8 +448,7 @@ ConnectorsConnectionImpl::ListConnectors(
       StreamRange<google::cloud::connectors::v1::Connector>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<connectors_v1::ConnectorsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::connectors::v1::ListConnectorsRequest const& r) {
@@ -501,8 +497,7 @@ ConnectorsConnectionImpl::ListConnectorVersions(
       StreamRange<google::cloud::connectors::v1::ConnectorVersion>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<connectors_v1::ConnectorsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::connectors::v1::ListConnectorVersionsRequest const&
@@ -665,8 +660,7 @@ ConnectorsConnectionImpl::ListRuntimeEntitySchemas(
       StreamRange<google::cloud::connectors::v1::RuntimeEntitySchema>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<connectors_v1::ConnectorsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest const&
@@ -701,8 +695,7 @@ ConnectorsConnectionImpl::ListRuntimeActionSchemas(
       StreamRange<google::cloud::connectors::v1::RuntimeActionSchema>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<connectors_v1::ConnectorsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::connectors::v1::ListRuntimeActionSchemasRequest const&
@@ -766,8 +759,7 @@ ConnectorsConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<connectors_v1::ConnectorsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {
@@ -854,8 +846,7 @@ ConnectorsConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<connectors_v1::ConnectorsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

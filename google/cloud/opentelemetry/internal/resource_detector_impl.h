@@ -44,7 +44,7 @@ using RetryPolicy = internal::TraitBasedRetryPolicy<StatusTraits>;
 
 std::unique_ptr<opentelemetry::sdk::resource::ResourceDetector>
 MakeResourceDetector(HttpClientFactory factory,
-                     std::unique_ptr<RetryPolicy> retry,
+                     std::unique_ptr<google::cloud::RetryPolicy> retry,
                      std::unique_ptr<BackoffPolicy> backoff,
                      Options options = {});
 

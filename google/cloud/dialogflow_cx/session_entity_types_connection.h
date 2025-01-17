@@ -37,11 +37,7 @@ namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `SessionEntityTypesConnection`.
-class SessionEntityTypesRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<SessionEntityTypesRetryPolicy> clone() const = 0;
-};
+class SessionEntityTypesRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `SessionEntityTypesConnection` based on counting errors.
@@ -84,7 +80,7 @@ class SessionEntityTypesLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<SessionEntityTypesRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<SessionEntityTypesLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -154,7 +150,7 @@ class SessionEntityTypesLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<SessionEntityTypesRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<SessionEntityTypesLimitedTimeRetryPolicy>(
         maximum_duration());
   }

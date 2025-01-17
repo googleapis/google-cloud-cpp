@@ -40,11 +40,7 @@ namespace securitycenter_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `SecurityCenterConnection`.
-class SecurityCenterRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<SecurityCenterRetryPolicy> clone() const = 0;
-};
+class SecurityCenterRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `SecurityCenterConnection` based on counting errors.
@@ -85,7 +81,7 @@ class SecurityCenterLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<SecurityCenterRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<SecurityCenterLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -154,7 +150,7 @@ class SecurityCenterLimitedTimeRetryPolicy : public SecurityCenterRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<SecurityCenterRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<SecurityCenterLimitedTimeRetryPolicy>(
         maximum_duration());
   }

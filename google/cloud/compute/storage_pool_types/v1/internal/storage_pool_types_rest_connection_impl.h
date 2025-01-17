@@ -66,9 +66,7 @@ class StoragePoolTypesRestConnectionImpl
                            ListStoragePoolTypesRequest request) override;
 
  private:
-  static std::unique_ptr<
-      compute_storage_pool_types_v1::StoragePoolTypesRetryPolicy>
-  retry_policy(Options const& options) {
+  static std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
     return options
         .get<compute_storage_pool_types_v1::StoragePoolTypesRetryPolicyOption>()
         ->clone();

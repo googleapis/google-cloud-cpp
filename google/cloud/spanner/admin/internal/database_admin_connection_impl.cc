@@ -33,8 +33,7 @@ namespace spanner_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<spanner_admin::DatabaseAdminRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<spanner_admin::DatabaseAdminRetryPolicyOption>()->clone();
 }
 
@@ -77,8 +76,7 @@ DatabaseAdminConnectionImpl::ListDatabases(
       StreamRange<google::spanner::admin::database::v1::Database>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<spanner_admin::DatabaseAdminRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::spanner::admin::database::v1::ListDatabasesRequest const& r) {
@@ -719,8 +717,7 @@ DatabaseAdminConnectionImpl::ListBackups(
       StreamRange<google::spanner::admin::database::v1::Backup>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<spanner_admin::DatabaseAdminRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::spanner::admin::database::v1::ListBackupsRequest const& r) {
@@ -852,8 +849,7 @@ DatabaseAdminConnectionImpl::ListDatabaseOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<spanner_admin::DatabaseAdminRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::spanner::admin::database::v1::
                                       ListDatabaseOperationsRequest const& r) {
@@ -888,8 +884,7 @@ DatabaseAdminConnectionImpl::ListBackupOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<spanner_admin::DatabaseAdminRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::spanner::admin::database::v1::
                                       ListBackupOperationsRequest const& r) {
@@ -922,8 +917,7 @@ DatabaseAdminConnectionImpl::ListDatabaseRoles(
       StreamRange<google::spanner::admin::database::v1::DatabaseRole>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<spanner_admin::DatabaseAdminRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::spanner::admin::database::v1::ListDatabaseRolesRequest const&
@@ -1021,8 +1015,7 @@ DatabaseAdminConnectionImpl::ListBackupSchedules(
       StreamRange<google::spanner::admin::database::v1::BackupSchedule>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<spanner_admin::DatabaseAdminRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::spanner::admin::database::v1::
                                       ListBackupSchedulesRequest const& r) {
@@ -1055,8 +1048,7 @@ DatabaseAdminConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<spanner_admin::DatabaseAdminRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

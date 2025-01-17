@@ -39,11 +39,7 @@ namespace compute_packet_mirrorings_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `PacketMirroringsConnection`.
-class PacketMirroringsRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<PacketMirroringsRetryPolicy> clone() const = 0;
-};
+class PacketMirroringsRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `PacketMirroringsConnection` based on counting errors.
@@ -84,7 +80,7 @@ class PacketMirroringsLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<PacketMirroringsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<PacketMirroringsLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -154,7 +150,7 @@ class PacketMirroringsLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<PacketMirroringsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<PacketMirroringsLimitedTimeRetryPolicy>(
         maximum_duration());
   }

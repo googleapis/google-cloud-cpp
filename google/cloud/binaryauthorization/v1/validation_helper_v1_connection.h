@@ -35,11 +35,7 @@ namespace binaryauthorization_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `ValidationHelperV1Connection`.
-class ValidationHelperV1RetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<ValidationHelperV1RetryPolicy> clone() const = 0;
-};
+class ValidationHelperV1RetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `ValidationHelperV1Connection` based on counting errors.
@@ -82,7 +78,7 @@ class ValidationHelperV1LimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<ValidationHelperV1RetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<ValidationHelperV1LimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -152,7 +148,7 @@ class ValidationHelperV1LimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<ValidationHelperV1RetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<ValidationHelperV1LimitedTimeRetryPolicy>(
         maximum_duration());
   }

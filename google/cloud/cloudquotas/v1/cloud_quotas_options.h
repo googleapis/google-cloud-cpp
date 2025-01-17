@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-cloudquotas-options
  */
 struct CloudQuotasRetryPolicyOption {
-  using Type = std::shared_ptr<CloudQuotasRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

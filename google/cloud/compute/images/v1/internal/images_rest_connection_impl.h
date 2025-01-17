@@ -135,8 +135,7 @@ class ImagesRestConnectionImpl : public compute_images_v1::ImagesConnection {
           request) override;
 
  private:
-  static std::unique_ptr<compute_images_v1::ImagesRetryPolicy> retry_policy(
-      Options const& options) {
+  static std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
     return options.get<compute_images_v1::ImagesRetryPolicyOption>()->clone();
   }
 

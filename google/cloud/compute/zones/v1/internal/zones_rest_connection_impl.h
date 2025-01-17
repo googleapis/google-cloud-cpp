@@ -57,8 +57,7 @@ class ZonesRestConnectionImpl : public compute_zones_v1::ZonesConnection {
       override;
 
  private:
-  static std::unique_ptr<compute_zones_v1::ZonesRetryPolicy> retry_policy(
-      Options const& options) {
+  static std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
     return options.get<compute_zones_v1::ZonesRetryPolicyOption>()->clone();
   }
 

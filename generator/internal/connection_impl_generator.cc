@@ -180,7 +180,7 @@ Status ConnectionImplGenerator::GenerateCc() {
   // So, we have to fallback to `options_`.
   CcPrint(R"""(namespace {
 
-std::unique_ptr<$product_namespace$::$retry_policy_name$>
+std::unique_ptr<RetryPolicy>
 retry_policy(Options const& options) {
   return options.get<$product_namespace$::$retry_policy_name$Option>()->clone();
 }
@@ -377,7 +377,7 @@ $connection_class_name$Impl::$method_name$($request_type$ request) {
   return google::cloud::internal::MakePaginationRange<StreamRange<$range_output_type$>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<$product_namespace$::$retry_policy_name$>(retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, $request_type$ const& r) {
         return google::cloud::internal::RetryLoop(

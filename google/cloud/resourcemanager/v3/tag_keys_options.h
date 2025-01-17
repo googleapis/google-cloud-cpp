@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-resourcemanager-options
  */
 struct TagKeysRetryPolicyOption {
-  using Type = std::shared_ptr<TagKeysRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

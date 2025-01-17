@@ -55,9 +55,7 @@ class ImageFamilyViewsRestConnectionImpl
           GetImageFamilyViewRequest const& request) override;
 
  private:
-  static std::unique_ptr<
-      compute_image_family_views_v1::ImageFamilyViewsRetryPolicy>
-  retry_policy(Options const& options) {
+  static std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
     return options
         .get<compute_image_family_views_v1::ImageFamilyViewsRetryPolicyOption>()
         ->clone();

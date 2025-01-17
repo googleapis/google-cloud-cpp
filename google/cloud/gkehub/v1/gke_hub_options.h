@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-gkehub-options
  */
 struct GkeHubRetryPolicyOption {
-  using Type = std::shared_ptr<GkeHubRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

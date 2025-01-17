@@ -31,8 +31,7 @@ namespace containeranalysis_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<containeranalysis_v1::ContainerAnalysisRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options
       .get<containeranalysis_v1::ContainerAnalysisRetryPolicyOption>()
       ->clone();

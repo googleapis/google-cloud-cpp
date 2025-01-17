@@ -37,11 +37,7 @@ namespace texttospeech_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `TextToSpeechConnection`.
-class TextToSpeechRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<TextToSpeechRetryPolicy> clone() const = 0;
-};
+class TextToSpeechRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `TextToSpeechConnection` based on counting errors.
@@ -82,7 +78,7 @@ class TextToSpeechLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<TextToSpeechRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<TextToSpeechLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -151,7 +147,7 @@ class TextToSpeechLimitedTimeRetryPolicy : public TextToSpeechRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<TextToSpeechRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<TextToSpeechLimitedTimeRetryPolicy>(
         maximum_duration());
   }

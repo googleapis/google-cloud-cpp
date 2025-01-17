@@ -31,8 +31,7 @@ namespace oslogin_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<oslogin_v1::OsLoginServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<oslogin_v1::OsLoginServiceRetryPolicyOption>()->clone();
 }
 

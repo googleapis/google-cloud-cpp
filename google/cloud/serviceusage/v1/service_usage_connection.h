@@ -40,11 +40,7 @@ namespace serviceusage_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `ServiceUsageConnection`.
-class ServiceUsageRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<ServiceUsageRetryPolicy> clone() const = 0;
-};
+class ServiceUsageRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `ServiceUsageConnection` based on counting errors.
@@ -85,7 +81,7 @@ class ServiceUsageLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<ServiceUsageRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<ServiceUsageLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -154,7 +150,7 @@ class ServiceUsageLimitedTimeRetryPolicy : public ServiceUsageRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<ServiceUsageRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<ServiceUsageLimitedTimeRetryPolicy>(
         maximum_duration());
   }

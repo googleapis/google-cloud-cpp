@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup generator-integration_tests-golden-options
  */
 struct RequestIdServiceRetryPolicyOption {
-  using Type = std::shared_ptr<RequestIdServiceRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-discoveryengine-options
  */
 struct ConversationalSearchServiceRetryPolicyOption {
-  using Type = std::shared_ptr<ConversationalSearchServiceRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

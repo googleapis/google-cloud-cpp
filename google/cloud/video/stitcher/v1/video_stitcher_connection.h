@@ -40,11 +40,7 @@ namespace video_stitcher_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `VideoStitcherServiceConnection`.
-class VideoStitcherServiceRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<VideoStitcherServiceRetryPolicy> clone() const = 0;
-};
+class VideoStitcherServiceRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `VideoStitcherServiceConnection` based on counting errors.
@@ -88,7 +84,7 @@ class VideoStitcherServiceLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<VideoStitcherServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<VideoStitcherServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -158,7 +154,7 @@ class VideoStitcherServiceLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<VideoStitcherServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<VideoStitcherServiceLimitedTimeRetryPolicy>(
         maximum_duration());
   }

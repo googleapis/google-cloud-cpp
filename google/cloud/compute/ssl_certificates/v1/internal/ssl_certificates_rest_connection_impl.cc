@@ -60,9 +60,7 @@ SslCertificatesRestConnectionImpl::AggregatedListSslCertificates(
                 google::cloud::cpp::compute::v1::SslCertificatesScopedList>>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           compute_ssl_certificates_v1::SslCertificatesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::ssl_certificates::v1::
@@ -370,9 +368,7 @@ SslCertificatesRestConnectionImpl::ListSslCertificates(
       StreamRange<google::cloud::cpp::compute::v1::SslCertificate>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           compute_ssl_certificates_v1::SslCertificatesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::ssl_certificates::v1::

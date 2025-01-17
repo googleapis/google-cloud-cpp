@@ -34,8 +34,7 @@ namespace beyondcorp_appconnections_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<beyondcorp_appconnections_v1::AppConnectionsServiceRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options
       .get<beyondcorp_appconnections_v1::
                AppConnectionsServiceRetryPolicyOption>()
@@ -90,9 +89,7 @@ AppConnectionsServiceConnectionImpl::ListAppConnections(
       google::cloud::beyondcorp::appconnections::v1::AppConnection>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           beyondcorp_appconnections_v1::AppConnectionsServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::beyondcorp::appconnections::
                                       v1::ListAppConnectionsRequest const& r) {
@@ -436,9 +433,7 @@ AppConnectionsServiceConnectionImpl::ResolveAppConnections(
                       ResolveAppConnectionsResponse::AppConnectionDetails>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           beyondcorp_appconnections_v1::AppConnectionsServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::beyondcorp::appconnections::v1::
@@ -474,9 +469,7 @@ AppConnectionsServiceConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           beyondcorp_appconnections_v1::AppConnectionsServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {
@@ -565,9 +558,7 @@ AppConnectionsServiceConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           beyondcorp_appconnections_v1::AppConnectionsServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

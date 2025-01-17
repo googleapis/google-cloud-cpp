@@ -33,8 +33,7 @@ namespace managedkafka_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<managedkafka_v1::ManagedKafkaRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<managedkafka_v1::ManagedKafkaRetryPolicyOption>()->clone();
 }
 
@@ -77,8 +76,7 @@ ManagedKafkaConnectionImpl::ListClusters(
       StreamRange<google::cloud::managedkafka::v1::Cluster>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<managedkafka_v1::ManagedKafkaRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::managedkafka::v1::ListClustersRequest const& r) {
@@ -405,8 +403,7 @@ ManagedKafkaConnectionImpl::ListTopics(
       StreamRange<google::cloud::managedkafka::v1::Topic>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<managedkafka_v1::ManagedKafkaRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::managedkafka::v1::ListTopicsRequest const& r) {
@@ -497,8 +494,7 @@ ManagedKafkaConnectionImpl::ListConsumerGroups(
       StreamRange<google::cloud::managedkafka::v1::ConsumerGroup>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<managedkafka_v1::ManagedKafkaRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::managedkafka::v1::ListConsumerGroupsRequest const& r) {
@@ -577,8 +573,7 @@ ManagedKafkaConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<managedkafka_v1::ManagedKafkaRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {
@@ -625,8 +620,7 @@ ManagedKafkaConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<managedkafka_v1::ManagedKafkaRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

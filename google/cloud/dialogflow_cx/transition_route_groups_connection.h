@@ -37,11 +37,7 @@ namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `TransitionRouteGroupsConnection`.
-class TransitionRouteGroupsRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<TransitionRouteGroupsRetryPolicy> clone() const = 0;
-};
+class TransitionRouteGroupsRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `TransitionRouteGroupsConnection` based on counting
@@ -86,7 +82,7 @@ class TransitionRouteGroupsLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<TransitionRouteGroupsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<TransitionRouteGroupsLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -156,7 +152,7 @@ class TransitionRouteGroupsLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<TransitionRouteGroupsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<TransitionRouteGroupsLimitedTimeRetryPolicy>(
         maximum_duration());
   }

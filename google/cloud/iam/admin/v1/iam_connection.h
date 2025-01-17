@@ -36,11 +36,7 @@ namespace iam_admin_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `IAMConnection`.
-class IAMRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<IAMRetryPolicy> clone() const = 0;
-};
+class IAMRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `IAMConnection` based on counting errors.
@@ -80,7 +76,7 @@ class IAMLimitedErrorCountRetryPolicy : public IAMRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<IAMRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<IAMLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -147,7 +143,7 @@ class IAMLimitedTimeRetryPolicy : public IAMRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<IAMRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<IAMLimitedTimeRetryPolicy>(maximum_duration());
   }
 

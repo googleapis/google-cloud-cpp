@@ -33,8 +33,7 @@ namespace baremetalsolution_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<baremetalsolution_v2::BareMetalSolutionRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options
       .get<baremetalsolution_v2::BareMetalSolutionRetryPolicyOption>()
       ->clone();
@@ -83,9 +82,7 @@ BareMetalSolutionConnectionImpl::ListInstances(
       StreamRange<google::cloud::baremetalsolution::v2::Instance>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<baremetalsolution_v2::BareMetalSolutionRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::baremetalsolution::v2::ListInstancesRequest const& r) {
@@ -826,9 +823,7 @@ BareMetalSolutionConnectionImpl::ListSSHKeys(
       StreamRange<google::cloud::baremetalsolution::v2::SSHKey>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<baremetalsolution_v2::BareMetalSolutionRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::baremetalsolution::v2::ListSSHKeysRequest const& r) {
@@ -891,9 +886,7 @@ BareMetalSolutionConnectionImpl::ListVolumes(
       StreamRange<google::cloud::baremetalsolution::v2::Volume>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<baremetalsolution_v2::BareMetalSolutionRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::baremetalsolution::v2::ListVolumesRequest const& r) {
@@ -1239,9 +1232,7 @@ BareMetalSolutionConnectionImpl::ListNetworks(
       StreamRange<google::cloud::baremetalsolution::v2::Network>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<baremetalsolution_v2::BareMetalSolutionRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::baremetalsolution::v2::ListNetworksRequest const& r) {
@@ -1544,9 +1535,7 @@ BareMetalSolutionConnectionImpl::ListVolumeSnapshots(
       StreamRange<google::cloud::baremetalsolution::v2::VolumeSnapshot>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<baremetalsolution_v2::BareMetalSolutionRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::baremetalsolution::v2::
                                       ListVolumeSnapshotsRequest const& r) {
@@ -1594,9 +1583,7 @@ BareMetalSolutionConnectionImpl::ListLuns(
       StreamRange<google::cloud::baremetalsolution::v2::Lun>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<baremetalsolution_v2::BareMetalSolutionRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::baremetalsolution::v2::ListLunsRequest const& r) {
@@ -1737,9 +1724,7 @@ BareMetalSolutionConnectionImpl::ListNfsShares(
       StreamRange<google::cloud::baremetalsolution::v2::NfsShare>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<baremetalsolution_v2::BareMetalSolutionRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::baremetalsolution::v2::ListNfsSharesRequest const& r) {
@@ -2078,9 +2063,7 @@ BareMetalSolutionConnectionImpl::ListProvisioningQuotas(
       StreamRange<google::cloud::baremetalsolution::v2::ProvisioningQuota>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<baremetalsolution_v2::BareMetalSolutionRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::baremetalsolution::v2::
                                       ListProvisioningQuotasRequest const& r) {
@@ -2193,9 +2176,7 @@ BareMetalSolutionConnectionImpl::ListOSImages(
       StreamRange<google::cloud::baremetalsolution::v2::OSImage>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<baremetalsolution_v2::BareMetalSolutionRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::baremetalsolution::v2::ListOSImagesRequest const& r) {
@@ -2229,9 +2210,7 @@ BareMetalSolutionConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<baremetalsolution_v2::BareMetalSolutionRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {

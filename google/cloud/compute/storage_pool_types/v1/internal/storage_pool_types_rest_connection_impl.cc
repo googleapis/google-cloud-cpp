@@ -57,9 +57,7 @@ StoragePoolTypesRestConnectionImpl::AggregatedListStoragePoolTypes(
                 google::cloud::cpp::compute::v1::StoragePoolTypesScopedList>>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           compute_storage_pool_types_v1::StoragePoolTypesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::storage_pool_types::v1::
@@ -114,9 +112,7 @@ StoragePoolTypesRestConnectionImpl::ListStoragePoolTypes(
       StreamRange<google::cloud::cpp::compute::v1::StoragePoolType>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           compute_storage_pool_types_v1::StoragePoolTypesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::storage_pool_types::v1::

@@ -85,7 +85,7 @@ class StorageIntegrationTest
   static google::cloud::storage::Client MakeBucketIntegrationTestClient();
 
   static std::unique_ptr<BackoffPolicy> TestBackoffPolicy();
-  static std::unique_ptr<RetryPolicy> TestRetryPolicy();
+  static std::unique_ptr<google::cloud::RetryPolicy> TestRetryPolicy();
 
   static std::string RandomBucketNamePrefix();
   std::string MakeRandomBucketName();

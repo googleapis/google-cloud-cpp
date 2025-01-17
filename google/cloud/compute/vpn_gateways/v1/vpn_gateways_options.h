@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-compute-options
  */
 struct VpnGatewaysRetryPolicyOption {
-  using Type = std::shared_ptr<VpnGatewaysRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

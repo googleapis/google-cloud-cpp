@@ -40,11 +40,7 @@ namespace parallelstore_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `ParallelstoreConnection`.
-class ParallelstoreRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<ParallelstoreRetryPolicy> clone() const = 0;
-};
+class ParallelstoreRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `ParallelstoreConnection` based on counting errors.
@@ -85,7 +81,7 @@ class ParallelstoreLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<ParallelstoreRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<ParallelstoreLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -154,7 +150,7 @@ class ParallelstoreLimitedTimeRetryPolicy : public ParallelstoreRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<ParallelstoreRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<ParallelstoreLimitedTimeRetryPolicy>(
         maximum_duration());
   }

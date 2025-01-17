@@ -41,11 +41,7 @@ namespace automl_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `AutoMlConnection`.
-class AutoMlRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<AutoMlRetryPolicy> clone() const = 0;
-};
+class AutoMlRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `AutoMlConnection` based on counting errors.
@@ -85,7 +81,7 @@ class AutoMlLimitedErrorCountRetryPolicy : public AutoMlRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<AutoMlRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<AutoMlLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -152,7 +148,7 @@ class AutoMlLimitedTimeRetryPolicy : public AutoMlRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<AutoMlRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<AutoMlLimitedTimeRetryPolicy>(maximum_duration());
   }
 

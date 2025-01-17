@@ -39,11 +39,7 @@ namespace compute_network_attachments_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `NetworkAttachmentsConnection`.
-class NetworkAttachmentsRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<NetworkAttachmentsRetryPolicy> clone() const = 0;
-};
+class NetworkAttachmentsRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `NetworkAttachmentsConnection` based on counting errors.
@@ -86,7 +82,7 @@ class NetworkAttachmentsLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<NetworkAttachmentsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<NetworkAttachmentsLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -156,7 +152,7 @@ class NetworkAttachmentsLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<NetworkAttachmentsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<NetworkAttachmentsLimitedTimeRetryPolicy>(
         maximum_duration());
   }

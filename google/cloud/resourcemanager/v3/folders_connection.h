@@ -40,11 +40,7 @@ namespace resourcemanager_v3 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `FoldersConnection`.
-class FoldersRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<FoldersRetryPolicy> clone() const = 0;
-};
+class FoldersRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `FoldersConnection` based on counting errors.
@@ -84,7 +80,7 @@ class FoldersLimitedErrorCountRetryPolicy : public FoldersRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<FoldersRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<FoldersLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -152,7 +148,7 @@ class FoldersLimitedTimeRetryPolicy : public FoldersRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<FoldersRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<FoldersLimitedTimeRetryPolicy>(maximum_duration());
   }
 

@@ -32,8 +32,7 @@ namespace servicehealth_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<servicehealth_v1::ServiceHealthRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<servicehealth_v1::ServiceHealthRetryPolicyOption>()
       ->clone();
 }
@@ -72,8 +71,7 @@ ServiceHealthConnectionImpl::ListEvents(
       StreamRange<google::cloud::servicehealth::v1::Event>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<servicehealth_v1::ServiceHealthRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::servicehealth::v1::ListEventsRequest const& r) {
@@ -121,8 +119,7 @@ ServiceHealthConnectionImpl::ListOrganizationEvents(
       StreamRange<google::cloud::servicehealth::v1::OrganizationEvent>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<servicehealth_v1::ServiceHealthRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::servicehealth::v1::ListOrganizationEventsRequest const&
@@ -174,8 +171,7 @@ ServiceHealthConnectionImpl::ListOrganizationImpacts(
       StreamRange<google::cloud::servicehealth::v1::OrganizationImpact>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<servicehealth_v1::ServiceHealthRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::servicehealth::v1::
                                       ListOrganizationImpactsRequest const& r) {
@@ -225,8 +221,7 @@ ServiceHealthConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<servicehealth_v1::ServiceHealthRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {
