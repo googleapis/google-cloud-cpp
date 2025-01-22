@@ -360,6 +360,8 @@ void CreateInstanceWithAutoscalingConfig(
   request.mutable_instance()->set_name(in.FullName());
   request.mutable_instance()->set_config(config);
   request.mutable_instance()->set_display_name(display_name);
+  request.mutable_instance()->set_edition(
+      google::spanner::admin::instance::v1::Instance_Edition_ENTERPRISE);
 
   auto* autoscaling = request.mutable_instance()->mutable_autoscaling_config();
   auto* limits = autoscaling->mutable_autoscaling_limits();
