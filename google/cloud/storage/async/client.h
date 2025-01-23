@@ -371,9 +371,66 @@ class AsyncClient {
       std::int64_t limit, Options opts = {});
 
   /*
+  [start-appendable-object-upload]
+  Initiates a [resumable upload][resumable-link] for an appendable object.
+
+  Appendable objects allow you to create an object and upload data to it
+  incrementally until it is finalized. This means you can start an upload
+  and append data to the object later.
+
+  You can finalize an appendable object in the first call itself by providing
+  all the data in the initial upload. You can also explicitly Flush to ensure
+  the data is persisted.
+
+  The recovery can be done from most transient errors, including an unexpected
+  closure of the streaming RPC used for the upload.
+
+  @par Example
+  @snippet storage_async_samples.cc start-appendable-object-upload
+
+  @par Idempotency
+  This function is always treated as idempotent, and the library will
+  automatically retry the function on transient errors.
+
+  [resumable-link]: https://cloud.google.com/storage/docs/resumable-uploads
+  [start-appendable-object-upload]
+  */
+
+  /**
+   * Starts a new resumable upload session for appendable objects and
+   * automatic recovery from transient failures.
+   *
+   * @snippet{doc} async/client.h start-appendable-object-upload
+   *
+   * @param bucket_name the name of the bucket that contains the object.
+   * @param object_name the name of the object to be read.
+   * @param opts options controlling the behavior of this RPC, for example
+   *     the application may change the retry policy.
+   */
+  future<StatusOr<std::pair<AsyncWriter, AsyncToken>>>
+  StartAppendableObjectUpload(BucketName const& bucket_name,
+                              std::string object_name, Options opts = {});
+
+  /**
+   * Starts a new resumable upload session for appendable objects and
+   * automatic recovery from transient failures.
+   *
+   * @snippet{doc} async/client.h start-appendable-object-upload
+   *
+   * @param request the request contents, it must include the bucket name and
+   *     object names. Many other fields are optional.
+   * @param opts options controlling the behavior of this RPC, for example
+   *     the application may change the retry policy.
+   */
+  future<StatusOr<std::pair<AsyncWriter, AsyncToken>>>
+  StartAppendableObjectUpload(
+      google::storage::v2::BidiWriteObjectRequest request, Options opts = {});
+
+  /*
   [start-buffered-upload-common]
   This function always uses [resumable uploads][resumable-link]. The objects
   returned by this function buffer data until it is persisted on the service.
+
   If the buffer becomes full, they stop accepting new data until the service
   has persisted enough data.
 

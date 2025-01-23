@@ -168,6 +168,7 @@ AsyncWriterConnectionImpl::MakeRequest() {
     first_request_ = false;
   } else {
     request.clear_upload_id();
+    request.clear_write_object_spec();
   }
   request.set_write_offset(offset_);
   return request;

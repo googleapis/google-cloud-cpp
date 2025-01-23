@@ -71,6 +71,9 @@ class AsyncConnectionImpl
       ReadObjectParams p) override;
 
   future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  StartAppendableObjectUpload(AppendableUploadParams p) override;
+
+  future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
   StartUnbufferedUpload(UploadParams p) override;
 
   future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>

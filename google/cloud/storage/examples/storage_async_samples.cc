@@ -536,6 +536,34 @@ void ResumeUnbufferedUpload(
   std::cout << "Object successfully uploaded " << object.DebugString() << "\n";
 }
 
+void StartAppendableObjectUpload(
+    google::cloud::storage_experimental::AsyncClient& client,
+    std::vector<std::string> const& argv) {
+  //! [start-appendable-object-upload]
+  namespace gcs = google::cloud::storage;
+  namespace gcs_ex = google::cloud::storage_experimental;
+  auto coro = [](gcs_ex::AsyncClient& client, std::string bucket_name,
+                 std::string object_name)
+      -> google::cloud::future<google::storage::v2::Object> {
+    auto [writer, token] = (co_await client.StartAppendableObjectUpload(
+                                gcs_ex::BucketName(std::move(bucket_name)),
+                                std::move(object_name)))
+                               .value();
+    for (int i = 0; i != 1000; ++i) {
+      auto line = gcs_ex::WritePayload(std::vector<std::string>{
+          std::string("line number "), std::to_string(i), std::string("\n")});
+      token =
+          (co_await writer.Write(std::move(token), std::move(line))).value();
+    }
+    co_return (co_await writer.Finalize(std::move(token))).value();
+  };
+  //! [start-appendable-object-upload]
+  // The example is easier to test and run if we call the coroutine and block
+  // until it completes..
+  auto const object = coro(client, argv.at(0), argv.at(1), argv.at(2)).get();
+  std::cout << "File successfully uploaded " << object.DebugString() << "\n";
+}
+
 void RewriteObject(google::cloud::storage_experimental::AsyncClient& client,
                    std::vector<std::string> const& argv) {
   //! [rewrite-object]
@@ -689,6 +717,13 @@ void ResumeUnbufferedUpload(google::cloud::storage_experimental::AsyncClient&,
                             std::vector<std::string> const&) {
   std::cerr
       << "AsyncClient::ResumeUnbufferedUpload() example requires coroutines\n";
+}
+
+void StartAppendableObjectUpload(
+    google::cloud::storage_experimental::AsyncClient&,
+    std::vector<std::string> const&) {
+  std::cerr << "AsyncClient::StartAppendableObjectUpload() example requires "
+               "coroutines\n";
 }
 
 void RewriteObject(google::cloud::storage_experimental::AsyncClient&,
@@ -1048,6 +1083,9 @@ int main(int argc, char* argv[]) try {
       make_entry("suspend-unbuffered-upload", {}, SuspendUnbufferedUpload),
       make_resume_entry("resume-unbuffered-upload", {"<filename>"},
                         ResumeUnbufferedUpload),
+
+      make_entry("start-appendable-object-upload", {},
+                 StartAppendableObjectUpload),
 
       make_entry("rewrite-object", {"<destination>"}, RewriteObject),
       make_entry("resume-rewrite-object", {"<destination>"}, ResumeRewrite),
