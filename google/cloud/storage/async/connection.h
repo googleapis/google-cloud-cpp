@@ -116,6 +116,22 @@ class AsyncConnection {
   virtual future<StatusOr<ReadPayload>> ReadObjectRange(ReadObjectParams p) = 0;
 
   /**
+   * A thin wrapper around the `WriteObject()` parameters for appendable object
+   */
+  struct AppendableUploadParams {
+    /// The bucket name and object name for the new object.
+    google::storage::v2::BidiWriteObjectRequest request;
+    /// Any options modifying the RPC behavior, including per-client and
+    /// per-connection options.
+    Options options;
+  };
+
+  /// Start an appendable upload configured for persistent sources.
+  virtual future<
+      StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  StartAppendableObjectUpload(AppendableUploadParams p) = 0;
+
+  /**
    * A thin wrapper around the `WriteObject()` parameters.
    *
    * We use a single struct as the input parameter for this function to

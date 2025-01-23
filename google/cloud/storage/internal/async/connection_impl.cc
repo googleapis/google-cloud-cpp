@@ -290,6 +290,54 @@ AsyncConnectionImpl::ReadObjectRange(ReadObjectParams p) {
 }
 
 future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+AsyncConnectionImpl::StartAppendableObjectUpload(AppendableUploadParams p) {
+  auto current = internal::MakeImmutableOptions(std::move(p.options));
+  std::int64_t persisted_size = 0;
+  auto hash_function = CreateHashFunction(*current);
+  using StreamingRpc = AsyncWriterConnectionImpl::StreamingRpc;
+  struct RequestPlaceholder {};
+
+  auto call = [stub = stub_](CompletionQueue& cq,
+                             std::shared_ptr<grpc::ClientContext> context,
+                             google::cloud::internal::ImmutableOptions options,
+                             RequestPlaceholder const&)
+      -> future<StatusOr<std::unique_ptr<StreamingRpc>>> {
+    auto rpc =
+        stub->AsyncBidiWriteObject(cq, std::move(context), std::move(options));
+    auto start = rpc->Start();
+    return start.then([rpc = std::move(rpc)](auto f) mutable {
+      if (f.get()) return make_ready_future(make_status_or(std::move(rpc)));
+      auto pending = rpc->Finish();
+      return pending.then([rpc = std::move(rpc)](auto f) mutable {
+        rpc.reset();
+        auto status = f.get();
+        return StatusOr<std::unique_ptr<StreamingRpc>>(std::move(status));
+      });
+    });
+  };
+
+  auto transform = [current, request = std::move(p.request), persisted_size,
+                    hash = std::move(hash_function)](auto f) mutable
+      -> StatusOr<
+          std::unique_ptr<storage_experimental::AsyncWriterConnection>> {
+    auto rpc = f.get();
+    if (!rpc) return std::move(rpc).status();
+    return std::unique_ptr<storage_experimental::AsyncWriterConnection>(
+        std::make_unique<AsyncWriterConnectionImpl>(
+            current, std::move(request), *std::move(rpc), std::move(hash),
+            persisted_size));
+  };
+
+  auto retry = retry_policy(*current);
+  auto backoff = backoff_policy(*current);
+  return google::cloud::internal::AsyncRetryLoop(
+             std::move(retry), std::move(backoff), Idempotency::kIdempotent,
+             cq_, std::move(call), std::move(current), RequestPlaceholder{},
+             __func__)
+      .then(std::move(transform));
+}
+
+future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
 AsyncConnectionImpl::StartUnbufferedUpload(UploadParams p) {
   auto current = internal::MakeImmutableOptions(std::move(p.options));
 
