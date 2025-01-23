@@ -34,7 +34,7 @@ absl::optional<google::storage::v2::ReadRange> ReadRange::RangeForResume(
   std::lock_guard<std::mutex> lk(mu_);
   if (status_.has_value()) return absl::nullopt;
   range.set_read_offset(offset_);
-  range.set_read_limit(limit_);
+  range.set_read_length(length_);
   return range;
 }
 
@@ -80,7 +80,7 @@ void ReadRange::OnRead(google::storage::v2::ObjectRangeData data) {
   }
 
   offset_ += content.size();
-  if (limit_ != 0) limit_ -= std::min<std::int64_t>(content.size(), limit_);
+  if (length_ != 0) length_ -= std::min<std::int64_t>(content.size(), length_);
   auto p = ReadPayloadImpl::Make(std::move(content));
   if (wait_) {
     if (!payload_) return Notify(std::move(lk), std::move(p));

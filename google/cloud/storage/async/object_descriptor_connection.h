@@ -52,7 +52,7 @@ class ObjectDescriptorConnection {
    */
   struct ReadParams {
     std::int64_t start;
-    std::int64_t limit;
+    std::int64_t length;
   };
 
   /**

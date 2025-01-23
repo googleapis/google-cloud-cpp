@@ -52,7 +52,7 @@ TEST(ObjectDescriptorReaderTracing, Read) {
   auto data = google::storage::v2::ObjectRangeData{};
   auto constexpr kData0 = R"pb(
     checksummed_data { content: "0123456789" }
-    read_range { read_offset: 10000 read_limit: 10 read_id: 7 }
+    read_range { read_offset: 10000 read_length: 10 read_id: 7 }
     range_end: false
   )pb";
   EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));

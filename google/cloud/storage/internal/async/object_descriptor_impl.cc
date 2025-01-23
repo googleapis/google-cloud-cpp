@@ -65,7 +65,7 @@ ObjectDescriptorImpl::Read(ReadParams p) {
         std::make_shared<storage::internal::Crc32cMessageHashFunction>(
             storage::internal::CreateNullHashFunction());
   }
-  auto range = std::make_shared<ReadRange>(p.start, p.limit, hash_function);
+  auto range = std::make_shared<ReadRange>(p.start, p.length, hash_function);
 
   std::unique_lock<std::mutex> lk(mu_);
   auto const id = ++read_id_generator_;
@@ -73,7 +73,7 @@ ObjectDescriptorImpl::Read(ReadParams p) {
   auto& read_range = *next_request_.add_read_ranges();
   read_range.set_read_id(id);
   read_range.set_read_offset(p.start);
-  read_range.set_read_limit(p.limit);
+  read_range.set_read_length(p.length);
   Flush(std::move(lk));
 
   if (!internal::TracingEnabled(options_)) {

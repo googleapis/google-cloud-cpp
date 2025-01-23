@@ -38,7 +38,7 @@ TEST(ObjectDescriptor, Basic) {
   EXPECT_CALL(*mock, Read)
       .WillOnce([](ReadParams p) -> std::unique_ptr<AsyncReaderConnection> {
         EXPECT_EQ(p.start, 100);
-        EXPECT_EQ(p.limit, 200);
+        EXPECT_EQ(p.length, 200);
         auto reader = std::make_unique<MockAsyncReaderConnection>();
         EXPECT_CALL(*reader, Read)
             .WillOnce([] {
@@ -75,7 +75,7 @@ TEST(ObjectDescriptor, ReadFromOffset) {
   EXPECT_CALL(*mock, Read)
       .WillOnce([](ReadParams p) -> std::unique_ptr<AsyncReaderConnection> {
         EXPECT_EQ(p.start, 10);
-        EXPECT_EQ(p.limit, 0);
+        EXPECT_EQ(p.length, 0);
         auto reader = std::make_unique<MockAsyncReaderConnection>();
         EXPECT_CALL(*reader, Read)
             .WillOnce([] {
@@ -114,7 +114,7 @@ TEST(ObjectDescriptor, ReadLast) {
   EXPECT_CALL(*mock, Read)
       .WillOnce([](ReadParams p) -> std::unique_ptr<AsyncReaderConnection> {
         EXPECT_EQ(p.start, -15);
-        EXPECT_EQ(p.limit, 0);
+        EXPECT_EQ(p.length, 0);
         auto reader = std::make_unique<MockAsyncReaderConnection>();
         EXPECT_CALL(*reader, Read)
             .WillOnce([] {

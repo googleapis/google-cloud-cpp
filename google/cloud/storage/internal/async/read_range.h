@@ -45,11 +45,11 @@ class ReadRange {
   using ReadResponse =
       storage_experimental::AsyncReaderConnection::ReadResponse;
 
-  ReadRange(std::int64_t offset, std::int64_t limit,
+  ReadRange(std::int64_t offset, std::int64_t length,
             std::shared_ptr<storage::internal::HashFunction> hash_function =
                 storage::internal::CreateNullHashFunction())
       : offset_(offset),
-        limit_(limit),
+        length_(length),
         hash_function_(std::move(hash_function)) {}
 
   bool IsDone() const;
@@ -68,7 +68,7 @@ class ReadRange {
 
   mutable std::mutex mu_;
   std::int64_t offset_;
-  std::int64_t limit_;
+  std::int64_t length_;
   absl::optional<storage_experimental::ReadPayload> payload_;
   absl::optional<Status> status_;
   absl::optional<promise<ReadResponse>> wait_;
