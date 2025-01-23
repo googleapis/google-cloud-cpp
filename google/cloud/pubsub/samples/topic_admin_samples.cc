@@ -279,8 +279,9 @@ void CreateTopicWithAwsMskIngestion(
   namespace pubsub = ::google::cloud::pubsub;
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   [](pubsub_admin::TopicAdminClient client, std::string project_id,
-     std::string topic_id, std::string cluster_arn, std::string msk_topic,
-     std::string aws_role_arn, std::string gcp_service_account) {
+     std::string topic_id, std::string const& cluster_arn,
+     std::string const& msk_topic, std::string const& aws_role_arn,
+     std::string const& gcp_service_account) {
     google::pubsub::v1::Topic request;
     request.set_name(
         pubsub::Topic(std::move(project_id), std::move(topic_id)).FullName());
@@ -314,9 +315,10 @@ void CreateTopicWithConfluentCloudIngestion(
   namespace pubsub = ::google::cloud::pubsub;
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   [](pubsub_admin::TopicAdminClient client, std::string project_id,
-     std::string topic_id, std::string bootstrap_server, std::string cluster_id,
-     std::string confluent_topic, std::string identity_pool_id,
-     std::string gcp_service_account) {
+     std::string topic_id, std::string const& bootstrap_server,
+     std::string const& cluster_id, std::string const& confluent_topic,
+     std::string const& identity_pool_id,
+     std::string const& gcp_service_account) {
     google::pubsub::v1::Topic request;
     request.set_name(
         pubsub::Topic(std::move(project_id), std::move(topic_id)).FullName());
@@ -351,10 +353,11 @@ void CreateTopicWithAzureEventHubsIngestion(
   namespace pubsub = ::google::cloud::pubsub;
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   [](pubsub_admin::TopicAdminClient client, std::string project_id,
-     std::string topic_id, std::string resource_group,
-     std::string event_hubs_namespace, std::string event_hub,
-     std::string client_id, std::string tenant_id, std::string subscription_id,
-     std::string gcp_service_account) {
+     std::string topic_id, std::string const& resource_group,
+     std::string const& event_hubs_namespace, std::string const& event_hub,
+     std::string const& client_id, std::string const& tenant_id,
+     std::string const& subscription_id,
+     std::string const& gcp_service_account) {
     google::pubsub::v1::Topic request;
     request.set_name(
         pubsub::Topic(std::move(project_id), std::move(topic_id)).FullName());
