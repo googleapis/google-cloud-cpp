@@ -67,7 +67,7 @@ TEST(ReadRange, BasicLifecycle) {
   EXPECT_FALSE(actual.IsDone());
   auto range = google::storage::v2::ReadRange{};
   auto constexpr kRange0 = R"pb(
-    read_id: 7 read_offset: 10000 read_limit: 40
+    read_id: 7 read_offset: 10000 read_length: 40
   )pb";
   EXPECT_TRUE(TextFormat::ParseFromString(kRange0, &range));
   EXPECT_THAT(actual.RangeForResume(7), Optional(IsProtoEqual(range)));
@@ -78,7 +78,7 @@ TEST(ReadRange, BasicLifecycle) {
   auto data = google::storage::v2::ObjectRangeData{};
   auto constexpr kData0 = R"pb(
     checksummed_data { content: "0123456789" }
-    read_range { read_offset: 10000 read_limit: 10 read_id: 7 }
+    read_range { read_offset: 10000 read_length: 10 read_id: 7 }
     range_end: false
   )pb";
   EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
@@ -91,14 +91,14 @@ TEST(ReadRange, BasicLifecycle) {
                   ElementsAre("0123456789"))));
   range = google::storage::v2::ReadRange{};
   auto constexpr kRange1 = R"pb(
-    read_id: 7 read_offset: 10010 read_limit: 30
+    read_id: 7 read_offset: 10010 read_length: 30
   )pb";
   EXPECT_TRUE(TextFormat::ParseFromString(kRange1, &range));
   EXPECT_THAT(actual.RangeForResume(7), Optional(IsProtoEqual(range)));
 
   auto constexpr kData1 = R"pb(
     checksummed_data { content: "1234567890" }
-    read_range { read_offset: 10020 read_limit: 10 read_id: 7 }
+    read_range { read_offset: 10020 read_length: 10 read_id: 7 }
     range_end: false
   )pb";
   EXPECT_TRUE(TextFormat::ParseFromString(kData1, &data));
@@ -114,7 +114,7 @@ TEST(ReadRange, BasicLifecycle) {
   data = google::storage::v2::ObjectRangeData{};
   auto constexpr kData2 = R"pb(
     checksummed_data { content: "2345678901" }
-    read_range { read_offset: 10030 read_limit: 10 read_id: 7 }
+    read_range { read_offset: 10030 read_length: 10 read_id: 7 }
     range_end: true
   )pb";
   EXPECT_TRUE(TextFormat::ParseFromString(kData2, &data));
@@ -152,7 +152,7 @@ TEST(ReadRange, Queue) {
   auto data = google::storage::v2::ObjectRangeData{};
   auto constexpr kData0 = R"pb(
     checksummed_data { content: "0123456789" }
-    read_range { read_offset: 10000 read_limit: 10 read_id: 7 }
+    read_range { read_offset: 10000 read_length: 10 read_id: 7 }
     range_end: false
   )pb";
   EXPECT_TRUE(TextFormat::ParseFromString(kData0, &data));
@@ -160,7 +160,7 @@ TEST(ReadRange, Queue) {
 
   auto constexpr kData1 = R"pb(
     checksummed_data { content: "1234567890" }
-    read_range { read_offset: 10020 read_limit: 10 read_id: 7 }
+    read_range { read_offset: 10020 read_length: 10 read_id: 7 }
     range_end: false
   )pb";
   EXPECT_TRUE(TextFormat::ParseFromString(kData1, &data));
@@ -191,7 +191,7 @@ TEST(ReadRange, HashFunctionCalled) {
   auto data = google::storage::v2::ObjectRangeData{};
   auto constexpr kData0 = R"pb(
     checksummed_data { content: "1234567890" }
-    read_range { read_offset: 0 read_limit: 10 read_id: 7 }
+    read_range { read_offset: 0 read_length: 10 read_id: 7 }
     range_end: false
   )pb";
 

@@ -58,7 +58,7 @@ TEST(ObjectDescriptorConnectionTracing, Read) {
   EXPECT_CALL(*mock, Read)
       .WillOnce([](ObjectDescriptorConnection::ReadParams p) {
         EXPECT_EQ(p.start, 100);
-        EXPECT_EQ(p.limit, 200);
+        EXPECT_EQ(p.length, 200);
         return std::make_unique<MockAsyncReaderConnection>();
       });
   auto actual = MakeTracingObjectDescriptorConnection(
@@ -75,7 +75,7 @@ TEST(ObjectDescriptorConnectionTracing, Read) {
                   SpanHasEvents(AllOf(
                       EventNamed("gl-cpp.open.read"),
                       SpanEventAttributesAre(
-                          OTelAttribute<std::int64_t>("read-limit", 200),
+                          OTelAttribute<std::int64_t>("read-length", 200),
                           OTelAttribute<std::int64_t>("read-start", 100),
                           OTelAttribute<std::string>(sc::kThreadId, _)))))));
 }

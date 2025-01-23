@@ -134,7 +134,7 @@ TEST(ObjectDescriptorImpl, ReadSingleRange) {
   )pb";
 
   auto constexpr kRequest1 = R"pb(
-    read_ranges { read_id: 1 read_offset: 20000 read_limit: 100 }
+    read_ranges { read_id: 1 read_offset: 20000 read_length: 100 }
   )pb";
   auto constexpr kResponse1 = R"pb(
     read_handle { handle: "handle-23456" }
@@ -227,14 +227,14 @@ TEST(ObjectDescriptorImpl, ReadSingleRange) {
 
 /// @test Reading multiple ranges creates a single request.
 TEST(ObjectDescriptorImpl, ReadMultipleRanges) {
-  auto constexpr kLimit = 100;
+  auto constexpr kLength = 100;
   auto constexpr kOffset = 20000;
   auto constexpr kRequest1 = R"pb(
-    read_ranges { read_id: 1 read_offset: 20000 read_limit: 100 }
+    read_ranges { read_id: 1 read_offset: 20000 read_length: 100 }
   )pb";
   auto constexpr kRequest2 = R"pb(
-    read_ranges { read_id: 2 read_offset: 40000 read_limit: 100 }
-    read_ranges { read_id: 3 read_offset: 60000 read_limit: 100 }
+    read_ranges { read_id: 2 read_offset: 40000 read_length: 100 }
+    read_ranges { read_id: 3 read_offset: 60000 read_length: 100 }
   )pb";
   auto constexpr kResponse0 = R"pb(
     metadata {
@@ -308,7 +308,7 @@ TEST(ObjectDescriptorImpl, ReadMultipleRanges) {
   auto read1 = sequencer.PopFrontWithName();
   EXPECT_EQ(read1.second, "Read[1]");
 
-  auto s1 = tested->Read({kOffset, kLimit});
+  auto s1 = tested->Read({kOffset, kLength});
   ASSERT_THAT(s1, NotNull());
 
   // Asking for data should result in an immediate `Write()` message with the
@@ -317,10 +317,10 @@ TEST(ObjectDescriptorImpl, ReadMultipleRanges) {
   EXPECT_EQ(next.second, "Write[1]");
 
   // Additional ranges are queued until the first `Write()` call is completed.
-  auto s2 = tested->Read({2 * kOffset, kLimit});
+  auto s2 = tested->Read({2 * kOffset, kLength});
   ASSERT_THAT(s2, NotNull());
 
-  auto s3 = tested->Read({3 * kOffset, kLimit});
+  auto s3 = tested->Read({3 * kOffset, kLength});
   ASSERT_THAT(s3, NotNull());
 
   // Complete the first `Write()` call, that should result in a second
@@ -373,7 +373,7 @@ TEST(ObjectDescriptorImpl, ReadMultipleRanges) {
 /// @test Reading a range may require many messages.
 TEST(ObjectDescriptorImpl, ReadSingleRangeManyMessages) {
   auto constexpr kRequest1 = R"pb(
-    read_ranges { read_id: 1 read_offset: 20000 read_limit: 100 }
+    read_ranges { read_id: 1 read_offset: 20000 read_length: 100 }
   )pb";
   auto constexpr kResponse0 = R"pb(
     metadata {
@@ -402,7 +402,7 @@ TEST(ObjectDescriptorImpl, ReadSingleRangeManyMessages) {
     }
   )pb";
   auto constexpr kOffset = 20000;
-  auto constexpr kLimit = 100;
+  auto constexpr kLength = 100;
 
   AsyncSequencer<bool> sequencer;
   auto stream = std::make_unique<MockStream>();
@@ -456,7 +456,7 @@ TEST(ObjectDescriptorImpl, ReadSingleRangeManyMessages) {
   auto read = sequencer.PopFrontWithName();
   EXPECT_EQ(read.second, "Read[1]");
 
-  auto s1 = tested->Read({kOffset, kLimit});
+  auto s1 = tested->Read({kOffset, kLength});
   ASSERT_THAT(s1, NotNull());
 
   // Asking for data should result in an immediate `Write()` message with the
@@ -515,14 +515,14 @@ TEST(ObjectDescriptorImpl, ReadSingleRangeManyMessages) {
 /// @test When the underlying stream fails with unrecoverable errors all ranges
 /// fail.
 TEST(ObjectDescriptorImpl, AllRangesFailOnUnrecoverableError) {
-  auto constexpr kLimit = 100;
+  auto constexpr kLength = 100;
   auto constexpr kOffset = 20000;
   auto constexpr kRequest1 = R"pb(
-    read_ranges { read_id: 1 read_offset: 20000 read_limit: 100 }
+    read_ranges { read_id: 1 read_offset: 20000 read_length: 100 }
   )pb";
   auto constexpr kRequest2 = R"pb(
-    read_ranges { read_id: 2 read_offset: 40000 read_limit: 100 }
-    read_ranges { read_id: 3 read_offset: 60000 read_limit: 100 }
+    read_ranges { read_id: 2 read_offset: 40000 read_length: 100 }
+    read_ranges { read_id: 3 read_offset: 60000 read_length: 100 }
   )pb";
 
   AsyncSequencer<bool> sequencer;
@@ -568,7 +568,7 @@ TEST(ObjectDescriptorImpl, AllRangesFailOnUnrecoverableError) {
   auto read = sequencer.PopFrontWithName();
   EXPECT_EQ(read.second, "Read[1]");
 
-  auto s1 = tested->Read({kOffset, kLimit});
+  auto s1 = tested->Read({kOffset, kLength});
   ASSERT_THAT(s1, NotNull());
 
   // Asking for data should result in an immediate `Write()` message with the
@@ -577,10 +577,10 @@ TEST(ObjectDescriptorImpl, AllRangesFailOnUnrecoverableError) {
   EXPECT_EQ(next.second, "Write[1]");
 
   // Additional ranges are queued until the first `Write()` call is completed.
-  auto s2 = tested->Read({2 * kOffset, kLimit});
+  auto s2 = tested->Read({2 * kOffset, kLength});
   ASSERT_THAT(s2, NotNull());
 
-  auto s3 = tested->Read({3 * kOffset, kLimit});
+  auto s3 = tested->Read({3 * kOffset, kLength});
   ASSERT_THAT(s3, NotNull());
 
   // Complete the first `Write()` call, that should result in a second
@@ -613,11 +613,11 @@ TEST(ObjectDescriptorImpl, AllRangesFailOnUnrecoverableError) {
 
 auto InitialStream(AsyncSequencer<bool>& sequencer) {
   auto constexpr kRequest1 = R"pb(
-    read_ranges { read_id: 1 read_offset: 20000 read_limit: 100 }
+    read_ranges { read_id: 1 read_offset: 20000 read_length: 100 }
   )pb";
   auto constexpr kRequest2 = R"pb(
-    read_ranges { read_id: 2 read_offset: 40000 read_limit: 100 }
-    read_ranges { read_id: 3 read_offset: 60000 read_limit: 100 }
+    read_ranges { read_id: 2 read_offset: 40000 read_length: 100 }
+    read_ranges { read_id: 3 read_offset: 60000 read_length: 100 }
   )pb";
 
   auto constexpr kResponse1 = R"pb(
@@ -679,7 +679,7 @@ auto InitialStream(AsyncSequencer<bool>& sequencer) {
 
 /// @test Verify that resuming a stream adjusts all offsets.
 TEST(ObjectDescriptorImpl, ResumeRangesOnRecoverableError) {
-  auto constexpr kLimit = 100;
+  auto constexpr kLength = 100;
   auto constexpr kOffset = 20000;
   auto constexpr kReadSpecText = R"pb(
     bucket: "test-only-invalid"
@@ -697,8 +697,8 @@ TEST(ObjectDescriptorImpl, ResumeRangesOnRecoverableError) {
       if_generation_match: 42
       read_handle { handle: "handle-12345" }
     }
-    read_ranges { read_id: 1 read_offset: 20010 read_limit: 90 }
-    read_ranges { read_id: 2 read_offset: 40010 read_limit: 90 }
+    read_ranges { read_id: 1 read_offset: 20010 read_length: 90 }
+    read_ranges { read_id: 2 read_offset: 40010 read_length: 90 }
   )pb";
   auto constexpr kResponse0 = R"pb(
     metadata {
@@ -735,7 +735,7 @@ TEST(ObjectDescriptorImpl, ResumeRangesOnRecoverableError) {
   auto read1 = sequencer.PopFrontWithName();
   EXPECT_EQ(read1.second, "Read[1]");
 
-  auto s1 = tested->Read({kOffset, kLimit});
+  auto s1 = tested->Read({kOffset, kLength});
   ASSERT_THAT(s1, NotNull());
 
   // Asking for data should result in an immediate `Write()` message with the
@@ -744,10 +744,10 @@ TEST(ObjectDescriptorImpl, ResumeRangesOnRecoverableError) {
   EXPECT_EQ(next.second, "Write[1]");
 
   // Additional ranges are queued until the first `Write()` call is completed.
-  auto s2 = tested->Read({2 * kOffset, kLimit});
+  auto s2 = tested->Read({2 * kOffset, kLength});
   ASSERT_THAT(s2, NotNull());
 
-  auto s3 = tested->Read({3 * kOffset, kLimit});
+  auto s3 = tested->Read({3 * kOffset, kLength});
   ASSERT_THAT(s3, NotNull());
 
   // Complete the first `Write()` call, that should result in a second
@@ -842,7 +842,7 @@ TEST(ObjectDescriptorImpl, PendingFinish) {
 
   auto initial_stream = [&sequencer]() {
     auto constexpr kRequest1 = R"pb(
-      read_ranges { read_id: 1 read_offset: 20000 read_limit: 100 }
+      read_ranges { read_id: 1 read_offset: 20000 read_length: 100 }
     )pb";
 
     auto stream = std::make_unique<MockStream>();
@@ -870,7 +870,7 @@ TEST(ObjectDescriptorImpl, PendingFinish) {
     return stream;
   };
 
-  auto constexpr kLimit = 100;
+  auto constexpr kLength = 100;
   auto constexpr kOffset = 20000;
   auto constexpr kReadSpecText = R"pb(
     bucket: "test-only-invalid"
@@ -895,7 +895,7 @@ TEST(ObjectDescriptorImpl, PendingFinish) {
   auto read1 = sequencer.PopFrontWithName();
   EXPECT_EQ(read1.second, "Read[1]");
 
-  auto s1 = tested->Read({kOffset, kLimit});
+  auto s1 = tested->Read({kOffset, kLength});
   ASSERT_THAT(s1, NotNull());
 
   // Asking for data should result in an immediate `Write()` message with the
@@ -929,7 +929,7 @@ TEST(ObjectDescriptorImpl, ResumeUsesRouting) {
 
   auto initial_stream = [&sequencer]() {
     auto constexpr kRequest1 = R"pb(
-      read_ranges { read_id: 1 read_offset: 20000 read_limit: 100 }
+      read_ranges { read_id: 1 read_offset: 20000 read_length: 100 }
     )pb";
 
     auto stream = std::make_unique<MockStream>();
@@ -958,7 +958,7 @@ TEST(ObjectDescriptorImpl, ResumeUsesRouting) {
     return stream;
   };
 
-  auto constexpr kLimit = 100;
+  auto constexpr kLength = 100;
   auto constexpr kOffset = 20000;
   auto constexpr kReadSpecText = R"pb(
     bucket: "test-only-invalid"
@@ -977,7 +977,7 @@ TEST(ObjectDescriptorImpl, ResumeUsesRouting) {
       read_handle { handle: "handle-redirect-3456" }
       routing_token: "token-redirect-3456"
     }
-    read_ranges { read_id: 1 read_offset: 20000 read_limit: 100 }
+    read_ranges { read_id: 1 read_offset: 20000 read_length: 100 }
   )pb";
 
   MockFactory factory;
@@ -1004,7 +1004,7 @@ TEST(ObjectDescriptorImpl, ResumeUsesRouting) {
   auto read1 = sequencer.PopFrontWithName();
   EXPECT_EQ(read1.second, "Read[1]");
 
-  auto s1 = tested->Read({kOffset, kLimit});
+  auto s1 = tested->Read({kOffset, kLength});
   ASSERT_THAT(s1, NotNull());
 
   // Asking for data should result in an immediate `Write()` message with the
@@ -1051,7 +1051,7 @@ Status PartialFailure(std::int64_t read_id) {
 /// @test When the underlying stream fails with unrecoverable errors all ranges
 /// fail.
 TEST(ObjectDescriptorImpl, RecoverFromPartialFailure) {
-  auto constexpr kLimit = 100;
+  auto constexpr kLength = 100;
   auto constexpr kOffset = 20000;
   auto constexpr kReadSpecText = R"pb(
     bucket: "test-only-invalid"
@@ -1060,11 +1060,11 @@ TEST(ObjectDescriptorImpl, RecoverFromPartialFailure) {
     if_generation_match: 42
   )pb";
   auto constexpr kRequest1 = R"pb(
-    read_ranges { read_id: 1 read_offset: 20000 read_limit: 100 }
+    read_ranges { read_id: 1 read_offset: 20000 read_length: 100 }
   )pb";
   auto constexpr kRequest2 = R"pb(
-    read_ranges { read_id: 2 read_offset: 4000000 read_limit: 100 }
-    read_ranges { read_id: 3 read_offset: 60000 read_limit: 100 }
+    read_ranges { read_id: 2 read_offset: 4000000 read_length: 100 }
+    read_ranges { read_id: 3 read_offset: 60000 read_length: 100 }
   )pb";
 
   // The resume request should include all the remaining ranges.
@@ -1075,8 +1075,8 @@ TEST(ObjectDescriptorImpl, RecoverFromPartialFailure) {
       generation: 24
       if_generation_match: 42
     }
-    read_ranges { read_id: 1 read_offset: 20000 read_limit: 100 }
-    read_ranges { read_id: 3 read_offset: 60000 read_limit: 100 }
+    read_ranges { read_id: 1 read_offset: 20000 read_length: 100 }
+    read_ranges { read_id: 3 read_offset: 60000 read_length: 100 }
   )pb";
 
   AsyncSequencer<bool> sequencer;
@@ -1134,7 +1134,7 @@ TEST(ObjectDescriptorImpl, RecoverFromPartialFailure) {
   auto read = sequencer.PopFrontWithName();
   EXPECT_EQ(read.second, "Read[1]");
 
-  auto s1 = tested->Read({kOffset, kLimit});
+  auto s1 = tested->Read({kOffset, kLength});
   ASSERT_THAT(s1, NotNull());
 
   // Asking for data should result in an immediate `Write()` message with the
@@ -1143,10 +1143,10 @@ TEST(ObjectDescriptorImpl, RecoverFromPartialFailure) {
   EXPECT_EQ(next.second, "Write[1]");
 
   // Additional ranges are queued until the first `Write()` call is completed.
-  auto s2 = tested->Read({2 * kOffset * 100, kLimit});
+  auto s2 = tested->Read({2 * kOffset * 100, kLength});
   ASSERT_THAT(s2, NotNull());
 
-  auto s3 = tested->Read({3 * kOffset, kLimit});
+  auto s3 = tested->Read({3 * kOffset, kLength});
   ASSERT_THAT(s3, NotNull());
 
   // Complete the first `Write()` call, that should result in a second
