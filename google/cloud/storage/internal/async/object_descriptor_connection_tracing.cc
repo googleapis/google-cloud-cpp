@@ -57,7 +57,7 @@ class AsyncObjectDescriptorConnectionTracing
     span_->AddEvent("gl-cpp.open.read",
                     {{sc::kThreadId, internal::CurrentThreadId()},
                      {"read-start", p.start},
-                     {"read-limit", p.limit}});
+                     {"read-length", p.length}});
     return result;
   }
 
