@@ -30,6 +30,12 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
             cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
             $<TARGET_FILE:optimization_quickstart> GOOGLE_CLOUD_PROJECT
             GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME)
-    set_tests_properties(optimization_quickstart
-                         PROPERTIES LABELS "integration-test;quickstart")
+    set_tests_properties(
+        optimization_quickstart
+        PROPERTIES
+            LABELS
+            "integration-test;quickstart"
+            PASS_REGULAR_EXPRESSION
+            "The service is currently unavailable.*gcloud-cpp.retry.function=BatchOptimizeTours"
+    )
 endif ()
