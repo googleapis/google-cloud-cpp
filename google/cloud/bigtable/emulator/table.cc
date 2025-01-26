@@ -15,7 +15,9 @@
 #include <chrono>
 #include "google/cloud/bigtable/emulator/table.h"
 #include "google/cloud/bigtable/emulator/filter.h"
+#include "google/cloud/bigtable/emulator/filtered_map.h"
 #include "google/cloud/bigtable/emulator/row_iterators.h"
+#include "google/cloud/bigtable/internal/google_bytes_traits.h"
 #include "google/protobuf/util/field_mask_util.h"
 #include "google/cloud/internal/make_status.h"
 
@@ -363,19 +365,21 @@ struct CombineCellIterators {
 };
 
 CellStream Table::ReadRowsInternal(
-    std::shared_ptr<SortedRowSet> row_set) const {
-  using CFWithNameIt = TransformIterator<ColumnFamily::const_iterator,
+    std::shared_ptr<StringRangeSet> row_set) const {
+  using FilteredColumnFamily = FilteredMap<ColumnFamily>;
+  using CFWithNameIt = TransformIterator<FilteredColumnFamily::const_iterator,
                                          ExtendWithColumnFamilyName>;
   std::vector<std::pair<CFWithNameIt, CFWithNameIt>> cf_ranges;
 
-  std::transform(
-      column_families_.begin(), column_families_.end(),
-      std::back_inserter(cf_ranges), [&](auto const& column_family) {
-        ExtendWithColumnFamilyName transformer(column_family.first);
-        return std::make_pair(
-            CFWithNameIt(column_family.second->FindRows(row_set), transformer),
-            CFWithNameIt(column_family.second->end(), transformer));
-      });
+  std::vector<FilteredColumnFamily> filtered_cfs;
+  for (auto const &column_family : column_families_) {
+    filtered_cfs.emplace_back(*column_family.second, row_set);
+
+    ExtendWithColumnFamilyName transformer(column_family.first);
+    cf_ranges.emplace_back(
+        CFWithNameIt(filtered_cfs.back().begin(), transformer),
+        CFWithNameIt(filtered_cfs.back().end(), transformer));
+  }
 
   using CFRowsIt = MergedSortedIterator<CFWithNameIt, RowKeyLess>;
   CFRowsIt cfrows_begin(std::move(cf_ranges));
@@ -401,17 +405,68 @@ CellStream Table::ReadRowsInternal(
   });
 }
 
+StatusOr<StringRangeSet> CreateStringRangeSet(
+    google::bigtable::v2::RowSet const& row_set) {
+  StringRangeSet res;
+  for (auto const& row_key : row_set.row_keys()) {
+    if (row_key.empty()) {
+      return InvalidArgumentError(
+          "`row_key` empty",
+          GCP_ERROR_INFO().WithMetadata("row_set", row_set.DebugString()));
+    }
+    res.Insert(StringRangeSet::Range(row_key, false, row_key, false)); 
+  }
+  for (auto const& row_range : row_set.row_ranges()) {
+    StringRangeSet::Range::Value start;
+    bool start_open;
+    if (row_range.has_start_key_open() && !row_range.start_key_open().empty()) {
+      start = StringRangeSet::Range::Value(row_range.start_key_open());
+      start_open = true;
+    } else if (row_range.has_start_key_closed() &&
+               !row_range.start_key_closed().empty()) {
+      start = StringRangeSet::Range::Value(row_range.start_key_closed());
+      start_open = false;
+    } else {
+      start = StringRangeSet::Range::Value("");
+      start_open = false;
+    }
+    StringRangeSet::Range::Value end;
+    bool end_open;
+    if (row_range.has_end_key_open() && !row_range.end_key_open().empty()) {
+      end = StringRangeSet::Range::Value(row_range.end_key_open());
+      end_open = true;
+    } else if (row_range.has_end_key_closed() &&
+               !row_range.end_key_closed().empty()) {
+      end = StringRangeSet::Range::Value(row_range.end_key_closed());
+      end_open = false;
+    } else {
+      end = StringRangeSet::Range::Value(StringRangeSet::Range::Infinity{});
+      end_open = true;
+    }
+    if (StringRangeSet::RangeValueLess()(end, start)) {
+      return InvalidArgumentError(
+          "reversed `row_range`",
+          GCP_ERROR_INFO().WithMetadata("row_range", row_range.DebugString()));
+    }
+    if (StringRangeSet::Range::IsEmpty(start, start_open, end, end_open)) {
+      continue;
+    }
+    res.Insert(StringRangeSet::Range(std::move(start), start_open, std::move(end), end_open));
+  }
+  return res;
+}
+
 Status Table::ReadRows(google::bigtable::v2::ReadRowsRequest const& request,
                        RowStreamer& row_streamer) const {
-  std::shared_ptr<SortedRowSet> row_set;
+  std::shared_ptr<StringRangeSet> row_set;
   if (request.has_rows()) {
-    auto maybe_row_set = SortedRowSet::Create(request.rows());
+    auto maybe_row_set = CreateStringRangeSet(request.rows());
     if (!maybe_row_set) {
       return maybe_row_set.status();
     }
-    row_set = std::make_shared<SortedRowSet>(*std::move(maybe_row_set));
+    row_set = std::make_shared<StringRangeSet>(*std::move(maybe_row_set));
   } else {
-    row_set = std::make_shared<SortedRowSet>(SortedRowSet::AllRows());
+    row_set = std::make_shared<StringRangeSet>(StringRangeSet::All());
   }
   std::lock_guard lock(mu_);
   auto stream = ReadRowsInternal(std::move(row_set));

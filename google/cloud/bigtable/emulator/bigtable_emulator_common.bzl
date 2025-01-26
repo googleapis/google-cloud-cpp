@@ -21,10 +21,11 @@ bigtable_emulator_common_hdrs = [
     "cluster.h",
     "column_family.h",
     "filter.h",
+    "filtered_map.h",
     "row_iterators.h",
     "row_streamer.h",
     "server.h",
-    "sorted_row_set.h",
+    "string_range_set.h",
     "table.h",
     "to_grpc_status.h",
 ]
@@ -37,7 +38,7 @@ bigtable_emulator_common_srcs = [
     "row_iterators.cc",
     "row_streamer.cc",
     "server.cc",
-    "sorted_row_set.cc",
+    "string_range_set.cc",
     "table.cc",
     "to_grpc_status.cc",
 ]

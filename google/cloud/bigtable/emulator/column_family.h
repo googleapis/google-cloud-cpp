@@ -17,7 +17,7 @@
 
 #include <google/bigtable/admin/v2/table.pb.h>
 #include <google/bigtable/v2/data.pb.h>
-#include "google/cloud/bigtable/emulator/sorted_row_set.h"
+#include "google/cloud/bigtable/emulator/string_range_set.h"
 #include <map>
 
 namespace google {
@@ -60,7 +60,7 @@ class ColumnFamilyRow {
 
 class ColumnFamily {
  public:
-  class const_iterator;
+  using const_iterator = std::map<std::string, ColumnFamilyRow>::const_iterator;
 
   void SetCell(std::string const& row_key, std::string const& column_qualifier,
                std::chrono::milliseconds timestamp, std::string const& value);
@@ -69,49 +69,20 @@ class ColumnFamily {
       std::string const& row_key, std::string const& column_qualifier,
       ::google::bigtable::v2::TimestampRange const& time_range);
 
-  const_iterator FindRows(std::shared_ptr<SortedRowSet> row_set) const {
-    return const_iterator(*this, std::move(row_set));
+  const_iterator begin() const {
+    return rows_.begin();
   }
-  const_iterator end() const { return const_iterator(*this, {}); }
-
-  class const_iterator {
-   public:
-    using iterator_category = std::input_iterator_tag;
-    using value_type = std::pair<std::string const, ColumnFamilyRow> const;
-    using difference_type = std::ptrdiff_t;
-    using reference = value_type&;
-    using pointer = value_type*;
-
-    const_iterator& operator++();
-    const_iterator operator++(int);
-    bool operator==(const_iterator const& other) const {
-      return row_pos_ == other.row_pos_;
-    }
-
-    bool operator!=(const_iterator const& other) const {
-      return !(*this == other);
-    }
-
-    reference operator*() const { return *row_pos_; }
-
-    friend const_iterator ColumnFamily::FindRows(std::shared_ptr<SortedRowSet>) const;
-    friend const_iterator ColumnFamily::end() const;
-   private:
-    const_iterator(ColumnFamily const& column_family,
-                           std::shared_ptr<SortedRowSet> row_set);
-
-    void AdvanceToNextRange();
-    void EnsureIteratorValid();
-
-    std::reference_wrapper<ColumnFamily const> column_family_;
-    std::shared_ptr<SortedRowSet> row_set_;
-    std::set<google::bigtable::v2::RowRange,
-             internal::RowRangeHelpers::StartLess>::const_iterator row_set_pos_;
-    std::map<std::string, ColumnFamilyRow>::const_iterator row_pos_;
-  };
+  const_iterator end() const { 
+    return rows_.end();
+  }
+  const_iterator lower_bound(std::string const& row_key) const {
+    return rows_.lower_bound(row_key);
+  }
+  const_iterator upper_bound(std::string const& row_key) const {
+    return rows_.lower_bound(row_key);
+  }
 
  private:
-  friend class const_iterator;
   std::map<std::string, ColumnFamilyRow> rows_;
 };
 

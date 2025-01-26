@@ -18,7 +18,8 @@
 #include <new>
 #include "google/cloud/bigtable/emulator/cell_view.h"
 #include "google/cloud/bigtable/emulator/table.h"
-#include "google/cloud/bigtable/emulator/sorted_row_set.h"
+#include "google/cloud/bigtable/emulator/string_range_set.h"
+#include "google/cloud/internal/invoke_result.h"
 #include <list>
 #include <functional>
 #include <queue>
@@ -27,6 +28,84 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 namespace emulator {
+
+struct RowKeyRegex {
+  std::string regex;
+};
+struct RowSample {
+  double pass_prob;
+};
+struct FamilyNameRegex {
+  std::string regex;
+};
+struct ColumnRegex {
+  std::string regex;
+};
+struct PerRowOffset {
+  std::int32_t offset;
+};
+
+using InternalFilter =
+    absl::variant<google::bigtable::v2::RowSet,
+                  google::bigtable::v2::ColumnRange,
+                  google::bigtable::v2::TimestampRange, RowKeyRegex, RowSample,
+                  FamilyNameRegex, ColumnRegex, PerRowOffset>;
+
+class FilteredColumnFamilyStream {
+  absl::optional<CellView> operator()() {
+    return {};
+  }
+
+  bool ApplyFilter(InternalFilter const& internal_filter) {
+    return absl::visit(FilterApply(*this), internal_filter);
+  }
+
+  class FilterApply {
+   public:
+    FilterApply(FilteredColumnFamilyStream& parent) : parent_(parent) {}
+    bool operator()(google::bigtable::v2::RowSet const& ) {
+      assert(!parent_.row_ranges_);
+//      parent_.row_ranges_ = StringRangeSet::Create(row_set);
+      return false;
+    }
+
+    bool operator()(google::bigtable::v2::ColumnRange const&) {
+      return false;
+    }
+
+    bool operator()(google::bigtable::v2::TimestampRange const&) {
+      return false;
+    }
+
+    bool operator()(RowKeyRegex const&) {
+      return false;
+    }
+
+    bool operator()(RowSample const&) {
+      return false;
+    }
+
+    bool operator()(FamilyNameRegex const&) {
+      return false;
+    }
+
+    bool operator()(ColumnRegex const&) {
+      return false;
+    }
+
+    bool operator()(PerRowOffset const&) {
+      return false;
+    }
+
+   private:
+    FilteredColumnFamilyStream& parent_;
+  };
+
+  std::shared_ptr<StringRangeSet> row_ranges_;
+  ColumnRow::const_iterator cell_it_;
+  ColumnFamilyRow::const_iterator column_it_;
+  ColumnFamily::const_iterator row_it_;
+};
 
 template <typename Iterator, typename IteratorLess>
 class MergedSortedIterator {
@@ -180,8 +259,9 @@ template <typename InputIterator, typename Functor>
 class TransformIterator {
  public:
   using iterator_category = std::input_iterator_tag;
-  using value_type = std::decay_t<typename std::result_of<Functor(
-      typename std::iterator_traits<InputIterator>::value_type)>::type> const;
+  using value_type = std::decay_t<typename internal::invoke_result<
+      Functor,
+      typename std::iterator_traits<InputIterator>::value_type>::type> const;
   using difference_type =
       typename std::iterator_traits<InputIterator>::difference_type;
   using pointer = value_type*;
