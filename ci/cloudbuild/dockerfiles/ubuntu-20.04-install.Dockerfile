@@ -156,7 +156,7 @@ RUN curl -fsSL https://github.com/google/re2/archive/2024-07-02.tar.gz | \
     cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/
-RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.18.0.tar.gz | \
+RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.19.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_CXX_STANDARD=14 \
