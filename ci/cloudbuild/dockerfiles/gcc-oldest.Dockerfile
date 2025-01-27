@@ -70,7 +70,7 @@ RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v29.3.tar.gz 
 # GCC 7.x. See https://github.com/open-telemetry/opentelemetry-cpp/issues/1014
 # for more details.
 WORKDIR /var/tmp/build/opentelemetry-cpp
-RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.18.0.tar.gz | \
+RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.19.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/Stack &GetStack()/Stack \&GetStack() __attribute__((noinline, noclone))/' "api/include/opentelemetry/context/runtime_context.h" && \
     cmake \
