@@ -19,6 +19,38 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 namespace emulator {
+namespace {
+
+StringRangeSet::Range CreateColumnRange(
+    ::google::bigtable::v2::ColumnRange const& column_range) {
+ StringRangeSet::Range::Value start; 
+ bool start_open; 
+ StringRangeSet::Range::Value end; 
+ bool end_open;
+ if (column_range.has_start_qualifier_closed()) {
+   start = StringRangeSet::Range::Value(column_range.start_qualifier_closed());
+   start_open = false;
+ } else if (column_range.has_start_qualifier_open()) {
+   start = StringRangeSet::Range::Value(column_range.start_qualifier_open());
+   start_open = true;
+ } else {
+   start_open = false;
+   start = StringRangeSet::Range::Value("");
+ }
+ if (column_range.has_end_qualifier_closed()) {
+   end = StringRangeSet::Range::Value(column_range.end_qualifier_closed());
+   end_open = false;
+ } else if (column_range.has_end_qualifier_open()) {
+   end = StringRangeSet::Range::Value(column_range.end_qualifier_open());
+   end_open = true;
+ } else {
+   end = StringRangeSet::Range::Infinity{};
+   end_open = true;
+ }
+ return StringRangeSet::Range(std::move(start), start_open, std::move(end),
+                              end_open);
+}
+}  // anonymous namespace
 
 void ColumnRow::SetCell(std::chrono::milliseconds timestamp,
                         std::string const& value) {
@@ -91,7 +123,124 @@ std::size_t ColumnFamily::DeleteColumn(
   return 0;
 }
 
+class FilteredColumnFamilyStream::FilterApply {
+ public:
+  FilterApply(FilteredColumnFamilyStream& parent) : parent_(parent) {}
 
+  bool operator()(google::bigtable::v2::ColumnRange const& column_range) {
+    parent_.column_ranges_->Insert(CreateColumnRange(column_range));
+    return true;
+  }
+
+  bool operator()(google::bigtable::v2::TimestampRange const& timestamp_range) {
+    parent_.timestamp_ranges_->Insert(TimestampRangeSet::Range(
+        std::chrono::duration_cast<std::chrono::milliseconds>(
+            std::chrono::microseconds(
+                timestamp_range.start_timestamp_micros())),
+        std::chrono::duration_cast<std::chrono::milliseconds>(
+            std::chrono::microseconds(
+                timestamp_range.end_timestamp_micros()))));
+    return true;
+  }
+
+  bool operator()(RowKeyRegex const& row_key_regex) {
+    parent_.row_regexes_.emplace_back(row_key_regex.regex);
+    return true;
+  }
+
+  bool operator()(FamilyNameRegex const&) { return false; }
+
+  bool operator()(ColumnRegex const& column_regex) {
+    parent_.column_regexes_.emplace_back(column_regex.regex);
+    return true;
+  }
+
+ private:
+  FilteredColumnFamilyStream& parent_;
+};
+
+FilteredColumnFamilyStream::FilteredColumnFamilyStream(
+    ColumnFamily const& column_family, std::string column_family_name,
+    std::shared_ptr<StringRangeSet> row_set)
+    : column_family_name_(std::move(column_family_name)),
+      row_ranges_(std::move(row_set)),
+      rows_(column_family, *row_ranges_),
+      row_it_(rows_.begin()),
+      initialized_(false) {}
+
+absl::optional<CellView> FilteredColumnFamilyStream::operator()() {
+  InitializeIfNeeded();
+  if (row_it_ == rows_.end()) {
+    return {};
+  }
+  return CellView(row_it_->first, column_family_name_,
+                  column_it_.value()->first, cell_it_.value()->first,
+                  cell_it_.value()->second);
+}
+
+bool FilteredColumnFamilyStream::ApplyFilter(
+    InternalFilter const& internal_filter) {
+  return absl::visit(FilterApply(*this), internal_filter);
+}
+
+void FilteredColumnFamilyStream::SkipCurrentColumn() {
+  ++(column_it_.value());
+  if (PointToFirstCellAfterColumnChange()) {
+    return;
+  }
+  // no more cells in this row
+  ++row_it_;
+  PointToFirstCellAfterRowChange();
+}
+
+void FilteredColumnFamilyStream::SkipCurrentRow() {
+  ++row_it_;
+  PointToFirstCellAfterRowChange();
+}
+
+void FilteredColumnFamilyStream::InitializeIfNeeded() {
+  if (!initialized_) {
+    PointToFirstCellAfterRowChange();
+    initialized_ = true;
+  }
+}
+
+void FilteredColumnFamilyStream::Next() {
+  assert(row_it_ != rows_.end());
+  assert(column_it_.value() != columns_.value().end());
+  assert(cell_it_.value() != cells_.value().end());
+  ++(cell_it_.value());
+  if (cell_it_.value() != cells_.value().end()) {
+    return;
+  }
+  SkipCurrentColumn();
+}
+
+// Returns whether we've managed to find another cell in currently pointed row
+bool FilteredColumnFamilyStream::PointToFirstCellAfterColumnChange() {
+  for (; column_it_.value() != columns_.value().end(); ++(column_it_.value())) {
+    cells_ = FilteredMapView<ColumnRow, TimestampRangeSet>(
+        column_it_.value()->second, *timestamp_ranges_);
+    cell_it_ = cells_.value().begin();
+    if (cell_it_.value() != cells_.value().end()) {
+      return true;
+    }
+  }
+  return false;
+}
+
+// Returns whether we've managed to find another cell
+bool FilteredColumnFamilyStream::PointToFirstCellAfterRowChange() {
+  for (; row_it_ != rows_.end(); ++row_it_) {
+    columns_ = FilteredMapView<ColumnFamilyRow, StringRangeSet>(
+        row_it_->second, *column_ranges_);
+    column_it_.value() = columns_.value().begin();
+    if (PointToFirstCellAfterColumnChange()) {
+      return true;
+    }
+  }
+  return false;
+}
 
 }  // namespace emulator
 }  // namespace bigtable

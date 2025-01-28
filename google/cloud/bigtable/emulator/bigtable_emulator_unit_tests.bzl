@@ -21,5 +21,5 @@ bigtable_emulator_unit_tests = [
     "filter_test.cc",
     "row_iterators_test.cc",
     "server_test.cc",
-    "string_range_set_test.cc",
+    "range_set_test.cc",
 ]

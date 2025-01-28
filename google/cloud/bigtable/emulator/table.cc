@@ -282,129 +282,6 @@ Status Table::MutateRow(
   return Status();
 }
 
-class ExtendWithColumnFamilyName {
- public:
-  using ExtendedType = std::tuple<std::string const&, std::string const&,
-                                  ColumnFamilyRow const&> const;
-
-  explicit ExtendWithColumnFamilyName(std::string const& column_family_name)
-      : column_family_name_(std::cref(column_family_name)) {}
-
-  ExtendedType operator()(
-      std::iterator_traits<ColumnFamily::const_iterator>::reference
-          row_key_and_column) const {
-    return ExtendedType(row_key_and_column.first, column_family_name_.get(),
-                            row_key_and_column.second);
-  }
-
- private:
-  std::reference_wrapper<std::string const> column_family_name_;
-};
-
-struct RowKeyLess {
-  bool operator()(
-      TransformIterator<ColumnFamily::const_iterator,
-                        ExtendWithColumnFamilyName>::value_type const& lhs,
-      TransformIterator<ColumnFamily::const_iterator,
-                        ExtendWithColumnFamilyName>::value_type const& rhs)
-      const {
-    auto row_key_cmp =
-        internal::CompareRowKey(std::get<0>(lhs), std::get<0>(rhs));
-    if (row_key_cmp == 0) {
-      return internal::CompareColumnQualifiers(std::get<1>(lhs),
-                                               std::get<1>(rhs)) < 0;
-    }
-    return row_key_cmp < 0;
-  }
-};
-
-struct DescendToColumn {
-  ColumnFamilyRow const& operator()(
-      std::tuple<std::string const&, std::string const&,
-                 ColumnFamilyRow const&> const& column_family_row) const {
-    return std::get<2>(column_family_row);
-  }
-};
-
-struct CombineColumnIterators {
-  using ReturnType =
-      std::tuple<std::string const&, std::string const&, std::string const&,
-                 ColumnRow const&> const;
-  ReturnType operator()(
-      std::tuple<std::string const&, std::string const&,
-                 ColumnFamilyRow const&> const& column_family_row,
-      std::pair<std::string const, ColumnRow> const& column_row) const {
-    return ReturnType(std::get<0>(column_family_row),
-                      std::get<1>(column_family_row), column_row.first,
-                      column_row.second);
-  }
-};
-
-
-struct DescendToCell {
-  ColumnRow const& operator()(
-                CombineColumnIterators::ReturnType const &column_row) const {
-    return std::get<3>(column_row);
-  }
-};
-
-struct CombineCellIterators {
-  using ReturnType = CellView;
-  ReturnType operator()(CombineColumnIterators::ReturnType const& column_row,
-                        std::pair<std::chrono::milliseconds const,
-                                  std::string> const& cell) const {
-    static_assert(
-        std::is_same<std::pair<std::chrono::milliseconds const, std::string>,
-                     ColumnRow::const_iterator::value_type>::value);
-    return ReturnType(std::get<0>(column_row),
-                      std::get<1>(column_row),
-                      std::get<2>(column_row),
-                      cell.first,
-                      cell.second);
-  }
-};
-
-CellStream Table::ReadRowsInternal(
-    std::shared_ptr<StringRangeSet> row_set) const {
-  using FilteredColumnFamily = FilteredMap<ColumnFamily>;
-  using CFWithNameIt = TransformIterator<FilteredColumnFamily::const_iterator,
-                                         ExtendWithColumnFamilyName>;
-  std::vector<std::pair<CFWithNameIt, CFWithNameIt>> cf_ranges;
-
-  std::vector<FilteredColumnFamily> filtered_cfs;
-  for (auto const &column_family : column_families_) {
-    filtered_cfs.emplace_back(*column_family.second, row_set);
-
-    ExtendWithColumnFamilyName transformer(column_family.first);
-    cf_ranges.emplace_back(
-        CFWithNameIt(filtered_cfs.back().begin(), transformer),
-        CFWithNameIt(filtered_cfs.back().end(), transformer));
-  }
-
-  using CFRowsIt = MergedSortedIterator<CFWithNameIt, RowKeyLess>;
-  CFRowsIt cfrows_begin(std::move(cf_ranges));
-  CFRowsIt cfrows_end;
-
-  using ColRowsIt =
-      FlattenedIterator<CFRowsIt, DescendToColumn, CombineColumnIterators>;
-  ColRowsIt colrows_begin(std::move(cfrows_begin), cfrows_end);
-  ColRowsIt colrows_end(cfrows_end, cfrows_end);
-
-  using CellRowsIt =
-      FlattenedIterator<ColRowsIt, DescendToCell, CombineCellIterators>;
-  CellRowsIt cellrows_begin(std::move(colrows_begin), colrows_end);
-  CellRowsIt cellrows_end(colrows_end, colrows_end);
-  std::cout << "Print start" << std::endl;
-
-  return CellStream ([cellrows_begin, cellrows_end]() mutable
-                    -> absl::optional<CellView> {
-    if (cellrows_begin == cellrows_end) {
-      return {};
-    }
-    return *cellrows_begin++;
-  });
-}
-
 StatusOr<StringRangeSet> CreateStringRangeSet(
     google::bigtable::v2::RowSet const& row_set) {
   StringRangeSet res;
@@ -469,7 +346,12 @@ Status Table::ReadRows(google::bigtable::v2::ReadRowsRequest const& request,
     row_set = std::make_shared<StringRangeSet>(StringRangeSet::All());
   }
   std::lock_guard lock(mu_);
-  auto stream = ReadRowsInternal(std::move(row_set));
+  std::vector<CellStream> per_cf_streams;
+  for (auto const & column_family: column_families_) {
+    per_cf_streams.emplace_back(FilteredColumnFamilyStream(
+        *column_family.second, column_family.first, row_set));
+  }
+  auto stream = JoinCellStreams(std::move(per_cf_streams));
   FilterContext ctx;
   if (request.has_filter()) {
     auto maybe_stream = CreateFilter(request.filter(), std::move(stream), ctx);

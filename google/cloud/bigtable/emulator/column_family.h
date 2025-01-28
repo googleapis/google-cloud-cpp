@@ -17,7 +17,10 @@
 
 #include <google/bigtable/admin/v2/table.pb.h>
 #include <google/bigtable/v2/data.pb.h>
-#include "google/cloud/bigtable/emulator/string_range_set.h"
+#include "google/cloud/bigtable/emulator/range_set.h"
+#include "google/cloud/bigtable/emulator/filtered_map.h"
+#include "google/cloud/bigtable/emulator/cell_view.h"
+#include "absl/types/optional.h"
 #include <map>
 
 namespace google {
@@ -37,6 +40,12 @@ class ColumnRow {
       std::map<std::chrono::milliseconds, std::string>::const_iterator;
   const_iterator begin() const { return cells_.begin(); }
   const_iterator end() const { return cells_.end(); }
+  const_iterator lower_bound(std::chrono::milliseconds timestamp) const {
+    return cells_.lower_bound(timestamp);
+  }
+  const_iterator upper_bound(std::chrono::milliseconds timestamp) const {
+    return cells_.lower_bound(timestamp);
+  }
 
  private:
   std::map<std::chrono::milliseconds, std::string> cells_;
@@ -53,6 +62,12 @@ class ColumnFamilyRow {
   using const_iterator = std::map<std::string, ColumnRow>::const_iterator;
   const_iterator begin() const { return columns_.begin(); }
   const_iterator end() const { return columns_.end(); }
+  const_iterator lower_bound(std::string const& column_qualifier) const {
+    return columns_.lower_bound(column_qualifier);
+  }
+  const_iterator upper_bound(std::string const& column_qualifier) const {
+    return columns_.lower_bound(column_qualifier);
+  }
 
  private:
   std::map<std::string, ColumnRow> columns_;
@@ -86,6 +101,63 @@ class ColumnFamily {
   std::map<std::string, ColumnFamilyRow> rows_;
 };
 
+struct RowKeyRegex {
+  std::string regex;
+};
+struct FamilyNameRegex {
+  std::string regex;
+};
+struct ColumnRegex {
+  std::string regex;
+};
+
+using InternalFilter = absl::variant<google::bigtable::v2::ColumnRange,
+                                     google::bigtable::v2::TimestampRange,
+                                     RowKeyRegex, FamilyNameRegex, ColumnRegex>;
+
+class FilteredColumnFamilyStream {
+ public:
+  FilteredColumnFamilyStream(ColumnFamily const& column_family,
+                             std::string column_family_name,
+                             std::shared_ptr<StringRangeSet> row_set);
+  absl::optional<CellView> operator()();
+  bool ApplyFilter(InternalFilter const& internal_filter);
+  void SkipCurrentColumn();
+  void SkipCurrentRow();
+
+ private:
+  class FilterApply;
+
+  void Next();
+  void InitializeIfNeeded();
+  // Returns whether we've managed to find another cell in currently pointed row
+  bool PointToFirstCellAfterColumnChange();
+  // Returns whether we've managed to find another cell
+  bool PointToFirstCellAfterRowChange();
+
+  std::string column_family_name_;
+
+  std::shared_ptr<StringRangeSet> row_ranges_;
+  std::vector<std::string> row_regexes_;
+  std::shared_ptr<StringRangeSet> column_ranges_;
+  std::vector<std::string> column_regexes_;
+  std::shared_ptr<TimestampRangeSet> timestamp_ranges_;
+
+  FilteredMapView<ColumnFamily, StringRangeSet> rows_;
+  absl::optional<FilteredMapView<ColumnFamilyRow, StringRangeSet>> columns_;
+  absl::optional<FilteredMapView<ColumnRow, TimestampRangeSet>> cells_;
+
+  // If row_it_ == rows_.end() we've reached the end.
+  // We keep the invariant that if (row_it_ != rows_.end()) then
+  // cell_it_ != cells.end() && column_it_ != columns_.end()
+  FilteredMapView<ColumnFamily, StringRangeSet>::const_iterator row_it_;
+  absl::optional<
+      FilteredMapView<ColumnFamilyRow, StringRangeSet>::const_iterator>
+      column_it_;
+  absl::optional<FilteredMapView<ColumnRow, TimestampRangeSet>::const_iterator>
+      cell_it_;
+  bool initialized_;
+};
 
 }  // namespace emulator
 }  // namespace bigtable

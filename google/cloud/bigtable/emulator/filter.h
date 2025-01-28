@@ -43,6 +43,15 @@ class CellStream {
   absl::optional<CellView> current_;
 };
 
+class AbstractCellStreamImpl {
+ public:
+  virtual ~AbstractCellStreamImpl() = default;
+
+  virtual absl::optional<CellView> Next() = 0;
+  bool SkipColumn();
+  bool SkipRow();
+};
+
 class FilterContext {
  public:
   FilterContext() : allow_apply_label_(true) {}
@@ -53,6 +62,8 @@ class FilterContext {
  private:
   bool allow_apply_label_;
 };
+
+CellStream JoinCellStreams(std::vector<CellStream> cell_streams);
 
 StatusOr<CellStream> CreateFilter(
     ::google::bigtable::v2::RowFilter const& filter, CellStream source,

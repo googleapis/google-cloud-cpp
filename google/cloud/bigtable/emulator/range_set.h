@@ -12,10 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EMULATOR_STRING_RANGE_SET_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EMULATOR_STRING_RANGE_SET_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EMULATOR_RANGE_SET_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EMULATOR_RANGE_SET_H
 
 #include "absl/types/variant.h"
+#include <chrono>
 #include <ostream>
 #include <set>
 #include <string>
@@ -35,6 +36,9 @@ class StringRangeSet {
     Range(Value start, bool start_open, Value end, bool end_open);
 
     Value const& start() const & { return start_; }
+    std::string const& start_finite() const& {
+      return absl::get<std::string>(start_);
+    }
     Value&& start() && { return std::move(start_); }
     bool start_open() const { return start_open_; }
     bool start_closed() const { return !start_open_; }
@@ -97,9 +101,67 @@ bool operator==(StringRangeSet::Range const& lhs,
 std::ostream& operator<<(std::ostream& os,
                          StringRangeSet::Range const& range);
 
+
+class TimestampRangeSet {
+ public:
+  class Range {
+   public:
+    using Value = std::chrono::milliseconds;
+
+    Range(Value start, Value end);
+
+    Value start() const { return start_; }
+    Value start_finite() const { return start_; }
+    bool start_open() const { return false; }
+    bool start_closed() const { return true; }
+    void set_start(Value start) { start_ = start; }
+
+    Value end() const { return end_; }
+    bool end_open() const { return true; }
+    bool end_closed() const { return false; }
+    void set_end(Value end) { end_ = end; }
+
+    bool IsBelowStart(Value value) const { return value < start_; }
+    bool IsAboveEnd(Value value) const;
+
+    static bool IsEmpty(TimestampRangeSet::Range::Value start,
+                        TimestampRangeSet::Range::Value end);
+
+   private:
+    Value start_;
+    Value end_;
+  };
+
+  struct RangeStartLess {
+    bool operator()(Range const& lhs, Range const& rhs) const;
+  };
+
+  struct RangeEndLess {
+    bool operator()(Range const& lhs, Range const& rhs) const;
+  };
+
+  static TimestampRangeSet All();
+  static TimestampRangeSet Empty();
+  void Insert(Range inserted_range);
+
+  std::set<Range, RangeStartLess> const& disjoint_ranges() const {
+    return disjoint_ranges_;
+  };
+
+
+ private:
+  std::set<Range, RangeStartLess> disjoint_ranges_;
+};
+
+bool operator==(TimestampRangeSet::Range const& lhs,
+                TimestampRangeSet::Range const& rhs);
+
+std::ostream& operator<<(std::ostream& os,
+                         TimestampRangeSet::Range const& range);
+
 }  // namespace emulator
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EMULATOR_STRING_RANGE_SET_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EMULATOR_RANGE_SET_H

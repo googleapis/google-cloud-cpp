@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/emulator/string_range_set.h"
+#include "google/cloud/bigtable/emulator/range_set.h"
 #include "google/cloud/bigtable/internal/google_bytes_traits.h"
 
 namespace google {
@@ -58,6 +58,15 @@ bool HasOverlap(StringRangeSet::Range const& lhs,
       intersect_end.end(), intersect_end.end_open());
 }
 
+bool HasOverlap(TimestampRangeSet::Range const& lhs,
+                TimestampRangeSet::Range const& rhs) {
+  TimestampRangeSet::Range::Value overlap_start =
+      std::max(lhs.start(), rhs.start());
+  TimestampRangeSet::Range::Value overlap_end =
+      TimestampRangeSet::RangeEndLess()(lhs, rhs) ? lhs.end() : rhs.end();
+  return TimestampRangeSet::Range::IsEmpty(overlap_start, overlap_end);
+}
+
 bool DisjointAndSortedRangesAdjacent(StringRangeSet::Range const& lhs,
                                      StringRangeSet::Range const& rhs) {
   assert(!HasOverlap(lhs, rhs));
@@ -75,6 +84,13 @@ bool DisjointAndSortedRangesAdjacent(StringRangeSet::Range const& lhs,
     return true;
   }
   return false;
+}
+
+bool DisjointAndSortedRangesAdjacent(TimestampRangeSet::Range const& lhs,
+                                     TimestampRangeSet::Range const& rhs) {
+  assert(!HasOverlap(lhs, rhs));
+  assert(TimestampRangeSet::RangeStartLess()(lhs, rhs));
+  return lhs.end() == rhs.start();
 }
 
 }  // anonymous namespace
@@ -245,6 +261,107 @@ std::ostream& operator<<(std::ostream& os,
      << range.end() << (range.end_closed() ? "]" : ")");
   return os;
 }
+
+TimestampRangeSet::Range::Range(Value start, Value end)
+    : start_(std::move(start)), end_(std::move(end)) {
+  assert(end == std::chrono::milliseconds::zero() || start <= end);
+}
+
+bool TimestampRangeSet::Range::IsAboveEnd(Value value) const {
+  return end_ != std::chrono::milliseconds::zero() && value >= end_;
+}
+
+bool TimestampRangeSet::Range::IsEmpty(TimestampRangeSet::Range::Value start,
+                                       TimestampRangeSet::Range::Value end) {
+  if (end == std::chrono::milliseconds::zero()) {
+    return false;
+  }
+  return start < end;
+}
+
+bool TimestampRangeSet::RangeStartLess::operator()(Range const& lhs,
+                                              Range const& rhs) const {
+  return lhs.start() < rhs.start();
+}
+
+bool TimestampRangeSet::RangeEndLess::operator()(Range const& lhs,
+                                            Range const& rhs) const {
+  if (lhs.end() == std::chrono::milliseconds::zero()) {
+    return false;
+  }
+  if (rhs.end() == std::chrono::milliseconds::zero()) {
+    return true;
+  }
+  return lhs.end() < rhs.end();
+}
+
+TimestampRangeSet TimestampRangeSet::All() {
+  TimestampRangeSet res;
+  res.Insert(Range(std::chrono::milliseconds(0), std::chrono::milliseconds(0)));
+  return res;
+}
+
+TimestampRangeSet TimestampRangeSet::Empty() {
+  return TimestampRangeSet{};
+}
+
+// FIXME - share this with StringRangeSet
+void TimestampRangeSet::Insert(TimestampRangeSet::Range inserted_range) {
+  // Remove all ranges which either have an overlap with `inserted_range` or are
+  // adjacent to it. Then add `inserted_range` with `start` and `end`
+  // adjusted to cover what the removed ranges used to cover.
+
+  auto first_to_remove = disjoint_ranges_.upper_bound(inserted_range);
+  // `*first_to_remove` starts strictly after `inserted_range`'s start.
+  // The previous range is the first to have a chance for an overlap - it is the
+  // last one, which starts at or before `inserted_range` start.
+  if (first_to_remove != disjoint_ranges_.begin() &&
+      HasOverlap(*std::prev(first_to_remove), inserted_range)) {
+    std::advance(first_to_remove, -1);
+  }
+  // The range preceeding `first_to_remove` for sure has no overlap with
+  // `inserted_range` but it may be adjacent to it. In that case we should also
+  // remove it.
+  if (first_to_remove != disjoint_ranges_.begin() &&
+      DisjointAndSortedRangesAdjacent(*std::prev(first_to_remove),
+                                      inserted_range)) {
+    std::advance(first_to_remove, -1);
+  }
+  if (first_to_remove != disjoint_ranges_.end()) {
+    if (RangeStartLess()(*first_to_remove, inserted_range)) {
+      inserted_range.set_start(first_to_remove->start());
+                               
+    }
+    do {
+      if (RangeEndLess()(inserted_range, *first_to_remove)) {
+        inserted_range.set_end(first_to_remove->end());
+      }
+      disjoint_ranges_.erase(first_to_remove++);
+    } while (
+        first_to_remove != disjoint_ranges_.end() &&
+        (HasOverlap(*first_to_remove, inserted_range) ||
+         DisjointAndSortedRangesAdjacent(inserted_range, *first_to_remove)));
+  }
+  disjoint_ranges_.insert(std::move(inserted_range));
+}
+
+bool operator==(TimestampRangeSet::Range const& lhs,
+                TimestampRangeSet::Range const& rhs) {
+  return lhs.start() == rhs.start() && lhs.end() == rhs.end();
+}
+
+std::ostream& operator<<(std::ostream& os,
+                         TimestampRangeSet::Range const& range) {
+  os << "[" << range.start().count() << "ms-";
+  if (range.end() == std::chrono::milliseconds::zero()) {
+    os << "INF";
+  } else {
+    os << range.end().count() << "ms";
+  }
+  os << ")";
+  return os;
+}
+
 
 }  // namespace emulator
 }  // namespace bigtable

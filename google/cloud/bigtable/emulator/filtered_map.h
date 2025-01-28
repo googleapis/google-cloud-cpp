@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EMULATOR_FILTERED_MAP_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EMULATOR_FILTERED_MAP_H
 
-#include "google/cloud/bigtable/emulator/string_range_set.h"
+#include "google/cloud/bigtable/emulator/range_set.h"
 #include <functional>
 #include <iterator>
 
@@ -24,27 +24,24 @@ namespace cloud {
 namespace bigtable {
 namespace emulator {
 
-template <typename StringKeyedMap>
-class FilteredMap {
+template <typename Map, typename ExcludedRanges>
+class FilteredMapView {
  public:
-  FilteredMap(StringKeyedMap const& unfiltered,
-              std::shared_ptr<StringRangeSet> filter)
-      : unfiltered_(std::cref(unfiltered)), filter_(std::move(filter)) {}
   class const_iterator {
    public:
     using iterator_category = std::input_iterator_tag;
     using value_type = typename std::iterator_traits<
-        typename StringKeyedMap::const_iterator>::value_type;
+        typename Map::const_iterator>::value_type;
     using difference_type = typename std::iterator_traits<
-        typename StringKeyedMap::const_iterator>::difference_type;
+        typename Map::const_iterator>::difference_type;
     using reference = value_type const&;
-    using pointer = value_type*;
+    using pointer = value_type const*;
 
     const_iterator(
-        FilteredMap const& parent,
-        typename StringKeyedMap::const_iterator unfiltered_pos,
-        std::set<StringRangeSet::Range,
-                 StringRangeSet::RangeStartLess>::const_iterator filter_pos)
+        FilteredMapView const& parent, typename Map::const_iterator unfiltered_pos,
+        typename std::set<
+            typename ExcludedRanges::Range,
+            typename ExcludedRanges::RangeStartLess>::const_iterator filter_pos)
         : parent_(std::cref(parent)),
           unfiltered_pos_(std::move(unfiltered_pos)),
           filter_pos_(std::move(filter_pos)) {
@@ -73,10 +70,11 @@ class FilteredMap {
     }
 
     reference operator*() const { return *unfiltered_pos_; }
+    pointer operator->() const { return &*unfiltered_pos_; }
 
    private:
     void AdvanceToNextRange() {
-      if (filter_pos_ == parent_.get().filter_->disjoint_ranges().end()) {
+      if (filter_pos_ == parent_.get().filter_.get().disjoint_ranges().end()) {
         // We've reached the end.
         unfiltered_pos_ = parent_.get().unfiltered_.get().end();
         return;
@@ -90,20 +88,12 @@ class FilteredMap {
         return;
       }
 
-      if (absl::holds_alternative<StringRangeSet::Range::Infinity>(
-              filter_pos_->start())) {
-        // Defensive programming - this should be dead code - it means we've got
-        // a range which starts at infinity.
-        unfiltered_pos_ = parent_.get().unfiltered_.get().end();
-        return;
-      }
-
       if (filter_pos_->start_closed()) {
         unfiltered_pos_ = parent_.get().unfiltered_.get().lower_bound(
-            absl::get<std ::string>(filter_pos_->start()));
+            filter_pos_->start_finite());
       } else {
         unfiltered_pos_ = parent_.get().unfiltered_.get().upper_bound(
-            absl::get<std::string>(filter_pos_->start()));
+            filter_pos_->start_finite());
       }
     }
 
@@ -112,7 +102,7 @@ class FilteredMap {
       // pointed by filter_pos_. Make sure this only happens when the iteration
       // reaches its end.
       while (unfiltered_pos_ != parent_.get().unfiltered_.get().end() &&
-             filter_pos_ != parent_.get().filter_->disjoint_ranges().end() &&
+             filter_pos_ != parent_.get().filter_.get().disjoint_ranges().end() &&
              filter_pos_->IsAboveEnd(unfiltered_pos_->first)) {
         ++filter_pos_;
         AdvanceToNextRange();
@@ -123,23 +113,29 @@ class FilteredMap {
       // following ranges, i.e. we've reached the end.
     }
 
-    std::reference_wrapper<FilteredMap const> parent_;
-    typename StringKeyedMap::const_iterator unfiltered_pos_;
-    std::set<StringRangeSet::Range,
-             StringRangeSet::RangeStartLess>::const_iterator filter_pos_;
+    std::reference_wrapper<FilteredMapView const> parent_;
+    typename Map::const_iterator unfiltered_pos_;
+    typename std::set<typename ExcludedRanges::Range,
+                      typename ExcludedRanges::RangeStartLess>::const_iterator
+        filter_pos_;
   };
+
+  FilteredMapView(Map const& unfiltered,
+              ExcludedRanges const& filter)
+      : unfiltered_(std::cref(unfiltered)), filter_(std::cref(filter)) {}
+
 
   const_iterator begin() const {
     return const_iterator(*this, unfiltered_.get().begin(),
-                          filter_->disjoint_ranges().begin());
+                          filter_.get().disjoint_ranges().begin());
   }
   const_iterator end() const {
     return const_iterator(*this, unfiltered_.get().end(),
-                          filter_->disjoint_ranges().end());
+                          filter_.get().disjoint_ranges().end());
   }
  private:
-  std::reference_wrapper<StringKeyedMap const> unfiltered_;
-  std::shared_ptr<StringRangeSet> filter_;
+  std::reference_wrapper<Map const> unfiltered_;
+  std::reference_wrapper<ExcludedRanges const> filter_;
 };
 
 }  // namespace emulator

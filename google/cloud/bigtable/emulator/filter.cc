@@ -672,6 +672,10 @@ StatusOr<CellStream> CreateFilterImpl(
       GCP_ERROR_INFO().WithMetadata("filter", filter.DebugString()));
 }
 
+CellStream JoinCellStreams(std::vector<CellStream> cell_streams) {
+    return CellStream(MergeCellStreams(std::move(cell_streams)));
+}
+
 StatusOr<CellStream> CreateFilter(
     ::google::bigtable::v2::RowFilter const& filter, CellStream source,
     FilterContext const& ctx) {

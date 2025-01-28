@@ -60,7 +60,6 @@ class Table {
   StatusOr<std::reference_wrapper<ColumnFamily>> FindColumnFamily(
       MESSAGE const& message) const;
   bool IsDeleteProtectedNoLock() const;
-  CellStream ReadRowsInternal(std::shared_ptr<StringRangeSet> row_set) const;
   Status Construct(google::bigtable::admin::v2::Table schema);
 
   mutable std::mutex mu_;

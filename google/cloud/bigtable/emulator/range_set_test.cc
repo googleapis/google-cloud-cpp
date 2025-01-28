@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/emulator/string_range_set.h"
+#include "google/cloud/bigtable/emulator/range_set.h"
 #include "google/cloud/bigtable/row_range.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include <google/protobuf/text_format.h>

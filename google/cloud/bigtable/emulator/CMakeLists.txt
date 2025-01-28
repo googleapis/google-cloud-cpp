@@ -25,14 +25,14 @@ add_library(
     filter.cc
     filter.h
     filtered_map.h
+    range_set.cc
+    range_set.h
     row_iterators.cc
     row_iterators.h
     row_streamer.cc
     row_streamer.h
     server.cc
     server.h
-    string_range_set.cc
-    string_range_set.h
     table.cc
     table.h
     to_grpc_status.cc
@@ -61,7 +61,7 @@ if (BUILD_TESTING)
         filter_test.cc
         row_iterators_test.cc
         server_test.cc
-        string_range_set_test.cc)
+        range_set_test.cc)
     export_list_to_bazel("bigtable_emulator_unit_tests.bzl"
                          "bigtable_emulator_unit_tests" YEAR "2024")
 

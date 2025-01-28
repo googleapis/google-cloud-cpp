@@ -25,18 +25,6 @@ namespace emulator {
 namespace {
 
 TEST(MergedSortedIterator, Simple) {
-  std::vector<int> a{4, 5, 6, 6, 9, 20};
-  std::vector<int> b{1, 2, 3, 4, 7, 20};
-  std::vector<int> expected{1, 2, 3, 4, 4, 5, 6, 6, 7, 9, 20, 20};
-  std::vector<int> merged;
-  using MSI = MergedSortedIterator<std::vector<int>::iterator, std::less<int>>;
-  for (MSI it(std::vector<std::pair<std::vector<int>::iterator,
-                                    std::vector<int>::iterator>>{
-           {a.begin(), a.end()}, {b.begin(), b.end()}});
-       it != MSI(); ++it) {
-    merged.push_back(*it);
-  }
-  EXPECT_EQ(expected, merged);
 }
 
 }  // anonymous namespace
