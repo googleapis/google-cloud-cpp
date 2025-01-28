@@ -24,14 +24,45 @@ namespace cloud {
 namespace bigtable {
 namespace emulator {
 
+
+struct RowKeyRegex {
+  std::string regex;
+};
+struct FamilyNameRegex {
+  std::string regex;
+};
+struct ColumnRegex {
+  std::string regex;
+};
+
+using InternalFilter = absl::variant<google::bigtable::v2::ColumnRange,
+                                     google::bigtable::v2::TimestampRange,
+                                     RowKeyRegex, FamilyNameRegex, ColumnRegex>;
+
+class AbstractCellStreamImpl {
+ public:
+  virtual ~AbstractCellStreamImpl() = default;
+
+  virtual bool ApplyFilter(InternalFilter const& internal_filter) = 0;
+  virtual absl::optional<CellView> Next() = 0;
+  // Make sure Next() returns a different row than on last invocation. Noop in
+  // Next() was never called before.
+  virtual bool SkipRow() = 0;
+  // Make sure Next() returns a different (row, column) pair than on last
+  // invocation. Noop in Next() was never called before.
+  virtual bool SkipColumn() = 0;
+};
+
 class CellStream {
  public:
-  CellStream(std::function<absl::optional<CellView>()> impl)
-      : impl_(std::move(impl)), current_(impl_()) {}
+  CellStream(std::shared_ptr<AbstractCellStreamImpl> impl)
+      : impl_(std::move(impl)), current_(impl_->Next()) {}
 
   bool HasValue() const { return current_.has_value(); }
   CellView const & Value() const { return *current_; }
-  void Next() { current_ = impl_(); }
+  void Next() { current_ = impl_->Next(); }
+  bool SkipColumn() { return impl_->SkipColumn(); }
+  bool SkipRow() { return impl_->SkipRow(); }
   void operator++();
   CellView operator++(int);
   CellView operator*() const { return Value(); }
@@ -39,17 +70,8 @@ class CellStream {
   explicit operator bool() const { return HasValue(); }
 
  private:
-  std::function<absl::optional<CellView>()> impl_;
+  std::shared_ptr<AbstractCellStreamImpl> impl_;
   absl::optional<CellView> current_;
-};
-
-class AbstractCellStreamImpl {
- public:
-  virtual ~AbstractCellStreamImpl() = default;
-
-  virtual absl::optional<CellView> Next() = 0;
-  bool SkipColumn();
-  bool SkipRow();
 };
 
 class FilterContext {

@@ -18,6 +18,7 @@
 #include <google/bigtable/admin/v2/table.pb.h>
 #include <google/bigtable/v2/data.pb.h>
 #include "google/cloud/bigtable/emulator/range_set.h"
+#include "google/cloud/bigtable/emulator/filter.h"
 #include "google/cloud/bigtable/emulator/filtered_map.h"
 #include "google/cloud/bigtable/emulator/cell_view.h"
 #include "absl/types/optional.h"
@@ -100,35 +101,20 @@ class ColumnFamily {
  private:
   std::map<std::string, ColumnFamilyRow> rows_;
 };
-
-struct RowKeyRegex {
-  std::string regex;
-};
-struct FamilyNameRegex {
-  std::string regex;
-};
-struct ColumnRegex {
-  std::string regex;
-};
-
-using InternalFilter = absl::variant<google::bigtable::v2::ColumnRange,
-                                     google::bigtable::v2::TimestampRange,
-                                     RowKeyRegex, FamilyNameRegex, ColumnRegex>;
-
-class FilteredColumnFamilyStream {
+class FilteredColumnFamilyStream : public AbstractCellStreamImpl {
  public:
   FilteredColumnFamilyStream(ColumnFamily const& column_family,
                              std::string column_family_name,
                              std::shared_ptr<StringRangeSet> row_set);
-  absl::optional<CellView> operator()();
-  bool ApplyFilter(InternalFilter const& internal_filter);
-  void SkipCurrentColumn();
-  void SkipCurrentRow();
+  absl::optional<CellView> Next() override;
+  bool ApplyFilter(InternalFilter const& internal_filter) override;
+  bool SkipColumn() override;
+  bool SkipRow() override;
 
  private:
   class FilterApply;
 
-  void Next();
+  void Advance();
   void InitializeIfNeeded();
   // Returns whether we've managed to find another cell in currently pointed row
   bool PointToFirstCellAfterColumnChange();

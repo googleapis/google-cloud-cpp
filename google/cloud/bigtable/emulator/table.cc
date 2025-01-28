@@ -348,7 +348,7 @@ Status Table::ReadRows(google::bigtable::v2::ReadRowsRequest const& request,
   std::lock_guard lock(mu_);
   std::vector<CellStream> per_cf_streams;
   for (auto const & column_family: column_families_) {
-    per_cf_streams.emplace_back(FilteredColumnFamilyStream(
+    per_cf_streams.emplace_back(std::make_unique<FilteredColumnFamilyStream>(
         *column_family.second, column_family.first, row_set));
   }
   auto stream = JoinCellStreams(std::move(per_cf_streams));

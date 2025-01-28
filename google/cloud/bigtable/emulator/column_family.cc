@@ -168,14 +168,16 @@ FilteredColumnFamilyStream::FilteredColumnFamilyStream(
       row_it_(rows_.begin()),
       initialized_(false) {}
 
-absl::optional<CellView> FilteredColumnFamilyStream::operator()() {
+absl::optional<CellView> FilteredColumnFamilyStream::Next() {
   InitializeIfNeeded();
   if (row_it_ == rows_.end()) {
     return {};
   }
-  return CellView(row_it_->first, column_family_name_,
-                  column_it_.value()->first, cell_it_.value()->first,
-                  cell_it_.value()->second);
+  auto res =
+      CellView(row_it_->first, column_family_name_, column_it_.value()->first,
+               cell_it_.value()->first, cell_it_.value()->second);
+  Advance();
+  return res;
 }
 
 bool FilteredColumnFamilyStream::ApplyFilter(
@@ -183,7 +185,7 @@ bool FilteredColumnFamilyStream::ApplyFilter(
   return absl::visit(FilterApply(*this), internal_filter);
 }
 
-void FilteredColumnFamilyStream::SkipCurrentColumn() {
+bool FilteredColumnFamilyStream::SkipColumn() {
   ++(column_it_.value());
   if (PointToFirstCellAfterColumnChange()) {
     return;
@@ -191,11 +193,13 @@ void FilteredColumnFamilyStream::SkipCurrentColumn() {
   // no more cells in this row
   ++row_it_;
   PointToFirstCellAfterRowChange();
+  return true;
 }
 
-void FilteredColumnFamilyStream::SkipCurrentRow() {
+bool FilteredColumnFamilyStream::SkipRow() {
   ++row_it_;
   PointToFirstCellAfterRowChange();
+  return true;
 }
 
 void FilteredColumnFamilyStream::InitializeIfNeeded() {
@@ -205,7 +209,7 @@ void FilteredColumnFamilyStream::InitializeIfNeeded() {
   }
 }
 
-void FilteredColumnFamilyStream::Next() {
+void FilteredColumnFamilyStream::Advance() {
   assert(row_it_ != rows_.end());
   assert(column_it_.value() != columns_.value().end());
   assert(cell_it_.value() != cells_.value().end());
@@ -213,7 +217,7 @@ void FilteredColumnFamilyStream::Next() {
   if (cell_it_.value() != cells_.value().end()) {
     return;
   }
-  SkipCurrentColumn();
+  SkipColumn();
 }
 
 // Returns whether we've managed to find another cell in currently pointed row
