@@ -64,7 +64,7 @@ As is often the case, the CMake build can be configured using a number of
 options and command-line flags. A full treatment of these options is outside the
 scope of this document, but here are a few highlights:
 
-- Consider using `-GNinja` to switch the generator from `make` (or msbuild on
+- Consider using `-GNinja` to switch the generator from `make` (or `msbuild` on
   Windows) to [`ninja`][ninja-build]. In our experience `ninja` takes better
   advantage of multicore machines. Be aware that `ninja` is often not installed
   in development workstations, but it is available through most package
