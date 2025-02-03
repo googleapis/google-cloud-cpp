@@ -159,7 +159,7 @@ target_link_libraries(
            google-cloud-cpp::longrunning_operations_protos
            absl::str_format
            protobuf::libprotoc
-           yaml-cpp)
+           yaml-cpp::yaml-cpp)
 google_cloud_cpp_add_common_options(google_cloud_cpp_generator)
 target_compile_options(google_cloud_cpp_generator
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
