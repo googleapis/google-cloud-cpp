@@ -85,6 +85,16 @@ ModelServiceAuth::ListModelVersions(
   return child_->ListModelVersions(context, options, request);
 }
 
+StatusOr<google::cloud::aiplatform::v1::ListModelVersionCheckpointsResponse>
+ModelServiceAuth::ListModelVersionCheckpoints(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::ListModelVersionCheckpointsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListModelVersionCheckpoints(context, options, request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::Model> ModelServiceAuth::UpdateModel(
     grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::UpdateModelRequest const& request) {

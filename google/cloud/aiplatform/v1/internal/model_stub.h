@@ -65,6 +65,13 @@ class ModelServiceStub {
       google::cloud::aiplatform::v1::ListModelVersionsRequest const&
           request) = 0;
 
+  virtual StatusOr<
+      google::cloud::aiplatform::v1::ListModelVersionCheckpointsResponse>
+  ListModelVersionCheckpoints(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::ListModelVersionCheckpointsRequest const&
+          request) = 0;
+
   virtual StatusOr<google::cloud::aiplatform::v1::Model> UpdateModel(
       grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::UpdateModelRequest const& request) = 0;
@@ -271,6 +278,12 @@ class DefaultModelServiceStub : public ModelServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListModelVersionsRequest const& request)
       override;
+
+  StatusOr<google::cloud::aiplatform::v1::ListModelVersionCheckpointsResponse>
+  ListModelVersionCheckpoints(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::ListModelVersionCheckpointsRequest const&
+          request) override;
 
   StatusOr<google::cloud::aiplatform::v1::Model> UpdateModel(
       grpc::ClientContext& context, Options const& options,

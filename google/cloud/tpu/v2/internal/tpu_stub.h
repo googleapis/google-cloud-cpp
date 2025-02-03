@@ -97,6 +97,48 @@ class TpuStub {
       grpc::ClientContext& context, Options options,
       google::cloud::tpu::v2::UpdateNodeRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::tpu::v2::ListQueuedResourcesResponse>
+  ListQueuedResources(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::tpu::v2::ListQueuedResourcesRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::tpu::v2::QueuedResource> GetQueuedResource(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::tpu::v2::GetQueuedResourceRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateQueuedResource(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::tpu::v2::CreateQueuedResourceRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> CreateQueuedResource(
+      grpc::ClientContext& context, Options options,
+      google::cloud::tpu::v2::CreateQueuedResourceRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteQueuedResource(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::tpu::v2::DeleteQueuedResourceRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteQueuedResource(
+      grpc::ClientContext& context, Options options,
+      google::cloud::tpu::v2::DeleteQueuedResourceRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncResetQueuedResource(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::tpu::v2::ResetQueuedResourceRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> ResetQueuedResource(
+      grpc::ClientContext& context, Options options,
+      google::cloud::tpu::v2::ResetQueuedResourceRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::tpu::v2::GenerateServiceIdentityResponse>
   GenerateServiceIdentity(
       grpc::ClientContext& context, Options const& options,
@@ -233,6 +275,51 @@ class DefaultTpuStub : public TpuStub {
   StatusOr<google::longrunning::Operation> UpdateNode(
       grpc::ClientContext& context, Options options,
       google::cloud::tpu::v2::UpdateNodeRequest const& request) override;
+
+  StatusOr<google::cloud::tpu::v2::ListQueuedResourcesResponse>
+  ListQueuedResources(grpc::ClientContext& context, Options const& options,
+                      google::cloud::tpu::v2::ListQueuedResourcesRequest const&
+                          request) override;
+
+  StatusOr<google::cloud::tpu::v2::QueuedResource> GetQueuedResource(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::tpu::v2::GetQueuedResourceRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateQueuedResource(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::tpu::v2::CreateQueuedResourceRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateQueuedResource(
+      grpc::ClientContext& context, Options options,
+      google::cloud::tpu::v2::CreateQueuedResourceRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteQueuedResource(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::tpu::v2::DeleteQueuedResourceRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteQueuedResource(
+      grpc::ClientContext& context, Options options,
+      google::cloud::tpu::v2::DeleteQueuedResourceRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncResetQueuedResource(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::tpu::v2::ResetQueuedResourceRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> ResetQueuedResource(
+      grpc::ClientContext& context, Options options,
+      google::cloud::tpu::v2::ResetQueuedResourceRequest const& request)
+      override;
 
   StatusOr<google::cloud::tpu::v2::GenerateServiceIdentityResponse>
   GenerateServiceIdentity(

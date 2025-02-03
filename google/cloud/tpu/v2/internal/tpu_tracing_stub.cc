@@ -164,6 +164,108 @@ StatusOr<google::longrunning::Operation> TpuTracingStub::UpdateNode(
                            child_->UpdateNode(context, options, request));
 }
 
+StatusOr<google::cloud::tpu::v2::ListQueuedResourcesResponse>
+TpuTracingStub::ListQueuedResources(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::tpu::v2::ListQueuedResourcesRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.tpu.v2.Tpu", "ListQueuedResources");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ListQueuedResources(context, options, request));
+}
+
+StatusOr<google::cloud::tpu::v2::QueuedResource>
+TpuTracingStub::GetQueuedResource(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::tpu::v2::GetQueuedResourceRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.tpu.v2.Tpu", "GetQueuedResource");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->GetQueuedResource(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+TpuTracingStub::AsyncCreateQueuedResource(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::tpu::v2::CreateQueuedResourceRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.tpu.v2.Tpu", "CreateQueuedResource");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncCreateQueuedResource(cq, context, std::move(options),
+                                             request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> TpuTracingStub::CreateQueuedResource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::tpu::v2::CreateQueuedResourceRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.tpu.v2.Tpu", "CreateQueuedResource");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->CreateQueuedResource(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+TpuTracingStub::AsyncDeleteQueuedResource(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::tpu::v2::DeleteQueuedResourceRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.tpu.v2.Tpu", "DeleteQueuedResource");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncDeleteQueuedResource(cq, context, std::move(options),
+                                             request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> TpuTracingStub::DeleteQueuedResource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::tpu::v2::DeleteQueuedResourceRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.tpu.v2.Tpu", "DeleteQueuedResource");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->DeleteQueuedResource(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+TpuTracingStub::AsyncResetQueuedResource(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::tpu::v2::ResetQueuedResourceRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.tpu.v2.Tpu", "ResetQueuedResource");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncResetQueuedResource(cq, context, std::move(options),
+                                            request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> TpuTracingStub::ResetQueuedResource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::tpu::v2::ResetQueuedResourceRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.tpu.v2.Tpu", "ResetQueuedResource");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ResetQueuedResource(context, options, request));
+}
+
 StatusOr<google::cloud::tpu::v2::GenerateServiceIdentityResponse>
 TpuTracingStub::GenerateServiceIdentity(
     grpc::ClientContext& context, Options const& options,

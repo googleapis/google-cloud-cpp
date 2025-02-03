@@ -661,7 +661,7 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.CreateFeatureViewRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L350}
-  /// [google.cloud.aiplatform.v1.FeatureView]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_view.proto#L33}
+  /// [google.cloud.aiplatform.v1.FeatureView]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_view.proto#L34}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
@@ -717,7 +717,7 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.CreateFeatureViewRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L350}
-  /// [google.cloud.aiplatform.v1.FeatureView]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_view.proto#L33}
+  /// [google.cloud.aiplatform.v1.FeatureView]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_view.proto#L34}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
@@ -774,7 +774,7 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.FeatureView]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_view.proto#L33}
+  /// [google.cloud.aiplatform.v1.FeatureView]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_view.proto#L34}
   /// [google.cloud.aiplatform.v1.GetFeatureViewRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L382}
   ///
   // clang-format on
@@ -804,7 +804,7 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.FeatureView]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_view.proto#L33}
+  /// [google.cloud.aiplatform.v1.FeatureView]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_view.proto#L34}
   /// [google.cloud.aiplatform.v1.GetFeatureViewRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L382}
   ///
   // clang-format on
@@ -841,7 +841,7 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.FeatureView]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_view.proto#L33}
+  /// [google.cloud.aiplatform.v1.FeatureView]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_view.proto#L34}
   /// [google.cloud.aiplatform.v1.ListFeatureViewsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L396}
   ///
   // clang-format on
@@ -880,7 +880,7 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.FeatureView]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_view.proto#L33}
+  /// [google.cloud.aiplatform.v1.FeatureView]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_view.proto#L34}
   /// [google.cloud.aiplatform.v1.ListFeatureViewsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L396}
   ///
   // clang-format on
@@ -935,7 +935,7 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.FeatureView]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_view.proto#L33}
+  /// [google.cloud.aiplatform.v1.FeatureView]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_view.proto#L34}
   /// [google.cloud.aiplatform.v1.UpdateFeatureViewRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L468}
   ///
   // clang-format on
@@ -990,7 +990,7 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.FeatureView]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_view.proto#L33}
+  /// [google.cloud.aiplatform.v1.FeatureView]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_view.proto#L34}
   /// [google.cloud.aiplatform.v1.UpdateFeatureViewRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L468}
   ///
   // clang-format on

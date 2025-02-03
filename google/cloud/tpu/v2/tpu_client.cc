@@ -215,6 +215,162 @@ future<StatusOr<google::cloud::tpu::v2::Node>> TpuClient::UpdateNode(
   return connection_->UpdateNode(operation);
 }
 
+StreamRange<google::cloud::tpu::v2::QueuedResource>
+TpuClient::ListQueuedResources(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::tpu::v2::ListQueuedResourcesRequest request;
+  request.set_parent(parent);
+  return connection_->ListQueuedResources(request);
+}
+
+StreamRange<google::cloud::tpu::v2::QueuedResource>
+TpuClient::ListQueuedResources(
+    google::cloud::tpu::v2::ListQueuedResourcesRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListQueuedResources(std::move(request));
+}
+
+StatusOr<google::cloud::tpu::v2::QueuedResource> TpuClient::GetQueuedResource(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::tpu::v2::GetQueuedResourceRequest request;
+  request.set_name(name);
+  return connection_->GetQueuedResource(request);
+}
+
+StatusOr<google::cloud::tpu::v2::QueuedResource> TpuClient::GetQueuedResource(
+    google::cloud::tpu::v2::GetQueuedResourceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetQueuedResource(request);
+}
+
+future<StatusOr<google::cloud::tpu::v2::QueuedResource>>
+TpuClient::CreateQueuedResource(
+    std::string const& parent,
+    google::cloud::tpu::v2::QueuedResource const& queued_resource,
+    std::string const& queued_resource_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::tpu::v2::CreateQueuedResourceRequest request;
+  request.set_parent(parent);
+  *request.mutable_queued_resource() = queued_resource;
+  request.set_queued_resource_id(queued_resource_id);
+  return connection_->CreateQueuedResource(request);
+}
+
+StatusOr<google::longrunning::Operation> TpuClient::CreateQueuedResource(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::tpu::v2::QueuedResource const& queued_resource,
+    std::string const& queued_resource_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::tpu::v2::CreateQueuedResourceRequest request;
+  request.set_parent(parent);
+  *request.mutable_queued_resource() = queued_resource;
+  request.set_queued_resource_id(queued_resource_id);
+  return connection_->CreateQueuedResource(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::tpu::v2::QueuedResource>>
+TpuClient::CreateQueuedResource(
+    google::cloud::tpu::v2::CreateQueuedResourceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateQueuedResource(request);
+}
+
+StatusOr<google::longrunning::Operation> TpuClient::CreateQueuedResource(
+    NoAwaitTag,
+    google::cloud::tpu::v2::CreateQueuedResourceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateQueuedResource(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::tpu::v2::QueuedResource>>
+TpuClient::CreateQueuedResource(google::longrunning::Operation const& operation,
+                                Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateQueuedResource(operation);
+}
+
+future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>
+TpuClient::DeleteQueuedResource(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::tpu::v2::DeleteQueuedResourceRequest request;
+  request.set_name(name);
+  return connection_->DeleteQueuedResource(request);
+}
+
+StatusOr<google::longrunning::Operation> TpuClient::DeleteQueuedResource(
+    NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::tpu::v2::DeleteQueuedResourceRequest request;
+  request.set_name(name);
+  return connection_->DeleteQueuedResource(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>
+TpuClient::DeleteQueuedResource(
+    google::cloud::tpu::v2::DeleteQueuedResourceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteQueuedResource(request);
+}
+
+StatusOr<google::longrunning::Operation> TpuClient::DeleteQueuedResource(
+    NoAwaitTag,
+    google::cloud::tpu::v2::DeleteQueuedResourceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteQueuedResource(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>
+TpuClient::DeleteQueuedResource(google::longrunning::Operation const& operation,
+                                Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteQueuedResource(operation);
+}
+
+future<StatusOr<google::cloud::tpu::v2::QueuedResource>>
+TpuClient::ResetQueuedResource(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::tpu::v2::ResetQueuedResourceRequest request;
+  request.set_name(name);
+  return connection_->ResetQueuedResource(request);
+}
+
+StatusOr<google::longrunning::Operation> TpuClient::ResetQueuedResource(
+    NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::tpu::v2::ResetQueuedResourceRequest request;
+  request.set_name(name);
+  return connection_->ResetQueuedResource(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::tpu::v2::QueuedResource>>
+TpuClient::ResetQueuedResource(
+    google::cloud::tpu::v2::ResetQueuedResourceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ResetQueuedResource(request);
+}
+
+StatusOr<google::longrunning::Operation> TpuClient::ResetQueuedResource(
+    NoAwaitTag,
+    google::cloud::tpu::v2::ResetQueuedResourceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ResetQueuedResource(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::tpu::v2::QueuedResource>>
+TpuClient::ResetQueuedResource(google::longrunning::Operation const& operation,
+                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ResetQueuedResource(operation);
+}
+
 StatusOr<google::cloud::tpu::v2::GenerateServiceIdentityResponse>
 TpuClient::GenerateServiceIdentity(
     google::cloud::tpu::v2::GenerateServiceIdentityRequest const& request,

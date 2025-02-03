@@ -178,6 +178,184 @@ class MockCloudRedisClusterConnection
                    GetClusterCertificateAuthorityRequest const& request),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RescheduleClusterMaintenance(Matcher<google::cloud::redis::cluster::v1::RescheduleClusterMaintenanceRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>,
+              RescheduleClusterMaintenance,
+              (google::cloud::redis::cluster::v1::
+                   RescheduleClusterMaintenanceRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, RescheduleClusterMaintenance(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              RescheduleClusterMaintenance,
+              (NoAwaitTag,
+               google::cloud::redis::cluster::v1::
+                   RescheduleClusterMaintenanceRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// RescheduleClusterMaintenance(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>,
+              RescheduleClusterMaintenance,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::redis::cluster::v1::BackupCollection>),
+      ListBackupCollections,
+      (google::cloud::redis::cluster::v1::ListBackupCollectionsRequest request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::redis::cluster::v1::BackupCollection>,
+      GetBackupCollection,
+      (google::cloud::redis::cluster::v1::GetBackupCollectionRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::redis::cluster::v1::Backup>),
+              ListBackups,
+              (google::cloud::redis::cluster::v1::ListBackupsRequest request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::redis::cluster::v1::Backup>, GetBackup,
+      (google::cloud::redis::cluster::v1::GetBackupRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// DeleteBackup(Matcher<google::cloud::redis::cluster::v1::DeleteBackupRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::protobuf::Any>>, DeleteBackup,
+      (google::cloud::redis::cluster::v1::DeleteBackupRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, DeleteBackup(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteBackup,
+      (NoAwaitTag,
+       google::cloud::redis::cluster::v1::DeleteBackupRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, DeleteBackup(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::protobuf::Any>>, DeleteBackup,
+              (google::longrunning::Operation const& operation), (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ExportBackup(Matcher<google::cloud::redis::cluster::v1::ExportBackupRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::redis::cluster::v1::Backup>>, ExportBackup,
+      (google::cloud::redis::cluster::v1::ExportBackupRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ExportBackup(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ExportBackup,
+      (NoAwaitTag,
+       google::cloud::redis::cluster::v1::ExportBackupRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, ExportBackup(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::redis::cluster::v1::Backup>>,
+              ExportBackup, (google::longrunning::Operation const& operation),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// BackupCluster(Matcher<google::cloud::redis::cluster::v1::BackupClusterRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>,
+      BackupCluster,
+      (google::cloud::redis::cluster::v1::BackupClusterRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, BackupCluster(_, _))
+  /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, BackupCluster,
+      (NoAwaitTag,
+       google::cloud::redis::cluster::v1::BackupClusterRequest const& request),
+      (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, BackupCluster(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>,
+              BackupCluster, (google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
               (google::cloud::location::ListLocationsRequest request),
               (override));

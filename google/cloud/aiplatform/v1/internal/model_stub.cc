@@ -96,6 +96,20 @@ DefaultModelServiceStub::ListModelVersions(
   return response;
 }
 
+StatusOr<google::cloud::aiplatform::v1::ListModelVersionCheckpointsResponse>
+DefaultModelServiceStub::ListModelVersionCheckpoints(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::ListModelVersionCheckpointsRequest const&
+        request) {
+  google::cloud::aiplatform::v1::ListModelVersionCheckpointsResponse response;
+  auto status =
+      grpc_stub_->ListModelVersionCheckpoints(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::aiplatform::v1::Model>
 DefaultModelServiceStub::UpdateModel(
     grpc::ClientContext& context, Options const&,

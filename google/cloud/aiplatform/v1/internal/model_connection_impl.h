@@ -73,6 +73,11 @@ class ModelServiceConnectionImpl
   StreamRange<google::cloud::aiplatform::v1::Model> ListModelVersions(
       google::cloud::aiplatform::v1::ListModelVersionsRequest request) override;
 
+  StreamRange<google::cloud::aiplatform::v1::ModelVersionCheckpoint>
+  ListModelVersionCheckpoints(
+      google::cloud::aiplatform::v1::ListModelVersionCheckpointsRequest request)
+      override;
+
   StatusOr<google::cloud::aiplatform::v1::Model> UpdateModel(
       google::cloud::aiplatform::v1::UpdateModelRequest const& request)
       override;

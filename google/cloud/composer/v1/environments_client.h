@@ -710,7 +710,7 @@ class EnvironmentsClient {
   /// runs a single Composer component.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-2.*.*-airflow-*.*.* and newer.
   ///
   /// @param parent  Required. The environment name to get workloads for, in the form:
   ///  "projects/{projectId}/locations/{locationId}/environments/{environmentId}"
@@ -750,7 +750,7 @@ class EnvironmentsClient {
   /// runs a single Composer component.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-2.*.*-airflow-*.*.* and newer.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all

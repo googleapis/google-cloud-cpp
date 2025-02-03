@@ -68,6 +68,31 @@ Idempotency TpuConnectionIdempotencyPolicy::UpdateNode(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency TpuConnectionIdempotencyPolicy::ListQueuedResources(
+    google::cloud::tpu::v2::ListQueuedResourcesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency TpuConnectionIdempotencyPolicy::GetQueuedResource(
+    google::cloud::tpu::v2::GetQueuedResourceRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency TpuConnectionIdempotencyPolicy::CreateQueuedResource(
+    google::cloud::tpu::v2::CreateQueuedResourceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency TpuConnectionIdempotencyPolicy::DeleteQueuedResource(
+    google::cloud::tpu::v2::DeleteQueuedResourceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency TpuConnectionIdempotencyPolicy::ResetQueuedResource(
+    google::cloud::tpu::v2::ResetQueuedResourceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency TpuConnectionIdempotencyPolicy::GenerateServiceIdentity(
     google::cloud::tpu::v2::GenerateServiceIdentityRequest const&) {
   return Idempotency::kNonIdempotent;
