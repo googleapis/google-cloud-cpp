@@ -3000,7 +3000,7 @@ service {
 service {
   service_proto_path: "google/cloud/parametermanager/v1/service.proto"
   product_path: "google/cloud/parametermanager/v1"
-  initial_copyright_year: "2024"
+  initial_copyright_year: "2025"
   retryable_status_codes: ["kUnavailable"]
   omit_repo_metadata: true
 }
