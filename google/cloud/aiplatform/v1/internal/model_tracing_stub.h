@@ -64,6 +64,12 @@ class ModelServiceTracingStub : public ModelServiceStub {
       google::cloud::aiplatform::v1::ListModelVersionsRequest const& request)
       override;
 
+  StatusOr<google::cloud::aiplatform::v1::ListModelVersionCheckpointsResponse>
+  ListModelVersionCheckpoints(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::aiplatform::v1::ListModelVersionCheckpointsRequest const&
+          request) override;
+
   StatusOr<google::cloud::aiplatform::v1::Model> UpdateModel(
       grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::UpdateModelRequest const& request)

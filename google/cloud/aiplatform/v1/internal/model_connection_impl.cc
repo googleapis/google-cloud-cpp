@@ -239,6 +239,43 @@ ModelServiceConnectionImpl::ListModelVersions(
       });
 }
 
+StreamRange<google::cloud::aiplatform::v1::ModelVersionCheckpoint>
+ModelServiceConnectionImpl::ListModelVersionCheckpoints(
+    google::cloud::aiplatform::v1::ListModelVersionCheckpointsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListModelVersionCheckpoints(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::aiplatform::v1::ModelVersionCheckpoint>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<aiplatform_v1::ModelServiceRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::aiplatform::v1::
+              ListModelVersionCheckpointsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::aiplatform::v1::
+                       ListModelVersionCheckpointsRequest const& request) {
+              return stub->ListModelVersionCheckpoints(context, options,
+                                                       request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::aiplatform::v1::ListModelVersionCheckpointsResponse r) {
+        std::vector<google::cloud::aiplatform::v1::ModelVersionCheckpoint>
+            result(r.checkpoints().size());
+        auto& messages = *r.mutable_checkpoints();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
 StatusOr<google::cloud::aiplatform::v1::Model>
 ModelServiceConnectionImpl::UpdateModel(
     google::cloud::aiplatform::v1::UpdateModelRequest const& request) {

@@ -233,6 +233,46 @@ class TpuConnection {
   virtual future<StatusOr<google::cloud::tpu::v2::Node>> UpdateNode(
       google::longrunning::Operation const& operation);
 
+  virtual StreamRange<google::cloud::tpu::v2::QueuedResource>
+  ListQueuedResources(
+      google::cloud::tpu::v2::ListQueuedResourcesRequest request);
+
+  virtual StatusOr<google::cloud::tpu::v2::QueuedResource> GetQueuedResource(
+      google::cloud::tpu::v2::GetQueuedResourceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::tpu::v2::QueuedResource>>
+  CreateQueuedResource(
+      google::cloud::tpu::v2::CreateQueuedResourceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateQueuedResource(
+      NoAwaitTag,
+      google::cloud::tpu::v2::CreateQueuedResourceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::tpu::v2::QueuedResource>>
+  CreateQueuedResource(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>
+  DeleteQueuedResource(
+      google::cloud::tpu::v2::DeleteQueuedResourceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteQueuedResource(
+      NoAwaitTag,
+      google::cloud::tpu::v2::DeleteQueuedResourceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>
+  DeleteQueuedResource(google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<google::cloud::tpu::v2::QueuedResource>>
+  ResetQueuedResource(
+      google::cloud::tpu::v2::ResetQueuedResourceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> ResetQueuedResource(
+      NoAwaitTag,
+      google::cloud::tpu::v2::ResetQueuedResourceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::tpu::v2::QueuedResource>>
+  ResetQueuedResource(google::longrunning::Operation const& operation);
+
   virtual StatusOr<google::cloud::tpu::v2::GenerateServiceIdentityResponse>
   GenerateServiceIdentity(
       google::cloud::tpu::v2::GenerateServiceIdentityRequest const& request);

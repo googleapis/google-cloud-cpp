@@ -90,6 +90,16 @@ ModelServiceMetadata::ListModelVersions(
   return child_->ListModelVersions(context, options, request);
 }
 
+StatusOr<google::cloud::aiplatform::v1::ListModelVersionCheckpointsResponse>
+ModelServiceMetadata::ListModelVersionCheckpoints(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::ListModelVersionCheckpointsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ListModelVersionCheckpoints(context, options, request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::Model>
 ModelServiceMetadata::UpdateModel(
     grpc::ClientContext& context, Options const& options,

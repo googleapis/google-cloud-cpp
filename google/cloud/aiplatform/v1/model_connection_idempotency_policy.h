@@ -52,6 +52,10 @@ class ModelServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ListModelVersions(
       google::cloud::aiplatform::v1::ListModelVersionsRequest request);
 
+  virtual google::cloud::Idempotency ListModelVersionCheckpoints(
+      google::cloud::aiplatform::v1::ListModelVersionCheckpointsRequest
+          request);
+
   virtual google::cloud::Idempotency UpdateModel(
       google::cloud::aiplatform::v1::UpdateModelRequest const& request);
 

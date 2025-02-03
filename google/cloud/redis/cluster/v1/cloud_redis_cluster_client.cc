@@ -212,6 +212,228 @@ CloudRedisClusterClient::GetClusterCertificateAuthority(
   return connection_->GetClusterCertificateAuthority(request);
 }
 
+future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
+CloudRedisClusterClient::RescheduleClusterMaintenance(
+    std::string const& name,
+    google::cloud::redis::cluster::v1::RescheduleClusterMaintenanceRequest::
+        RescheduleType reschedule_type,
+    google::protobuf::Timestamp const& schedule_time, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::redis::cluster::v1::RescheduleClusterMaintenanceRequest
+      request;
+  request.set_name(name);
+  request.set_reschedule_type(reschedule_type);
+  *request.mutable_schedule_time() = schedule_time;
+  return connection_->RescheduleClusterMaintenance(request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterClient::RescheduleClusterMaintenance(
+    NoAwaitTag, std::string const& name,
+    google::cloud::redis::cluster::v1::RescheduleClusterMaintenanceRequest::
+        RescheduleType reschedule_type,
+    google::protobuf::Timestamp const& schedule_time, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::redis::cluster::v1::RescheduleClusterMaintenanceRequest
+      request;
+  request.set_name(name);
+  request.set_reschedule_type(reschedule_type);
+  *request.mutable_schedule_time() = schedule_time;
+  return connection_->RescheduleClusterMaintenance(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
+CloudRedisClusterClient::RescheduleClusterMaintenance(
+    google::cloud::redis::cluster::v1::
+        RescheduleClusterMaintenanceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RescheduleClusterMaintenance(request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterClient::RescheduleClusterMaintenance(
+    NoAwaitTag,
+    google::cloud::redis::cluster::v1::
+        RescheduleClusterMaintenanceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RescheduleClusterMaintenance(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
+CloudRedisClusterClient::RescheduleClusterMaintenance(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RescheduleClusterMaintenance(operation);
+}
+
+StreamRange<google::cloud::redis::cluster::v1::BackupCollection>
+CloudRedisClusterClient::ListBackupCollections(std::string const& parent,
+                                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::redis::cluster::v1::ListBackupCollectionsRequest request;
+  request.set_parent(parent);
+  return connection_->ListBackupCollections(request);
+}
+
+StreamRange<google::cloud::redis::cluster::v1::BackupCollection>
+CloudRedisClusterClient::ListBackupCollections(
+    google::cloud::redis::cluster::v1::ListBackupCollectionsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListBackupCollections(std::move(request));
+}
+
+StatusOr<google::cloud::redis::cluster::v1::BackupCollection>
+CloudRedisClusterClient::GetBackupCollection(std::string const& name,
+                                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::redis::cluster::v1::GetBackupCollectionRequest request;
+  request.set_name(name);
+  return connection_->GetBackupCollection(request);
+}
+
+StatusOr<google::cloud::redis::cluster::v1::BackupCollection>
+CloudRedisClusterClient::GetBackupCollection(
+    google::cloud::redis::cluster::v1::GetBackupCollectionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetBackupCollection(request);
+}
+
+StreamRange<google::cloud::redis::cluster::v1::Backup>
+CloudRedisClusterClient::ListBackups(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::redis::cluster::v1::ListBackupsRequest request;
+  request.set_parent(parent);
+  return connection_->ListBackups(request);
+}
+
+StreamRange<google::cloud::redis::cluster::v1::Backup>
+CloudRedisClusterClient::ListBackups(
+    google::cloud::redis::cluster::v1::ListBackupsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListBackups(std::move(request));
+}
+
+StatusOr<google::cloud::redis::cluster::v1::Backup>
+CloudRedisClusterClient::GetBackup(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::redis::cluster::v1::GetBackupRequest request;
+  request.set_name(name);
+  return connection_->GetBackup(request);
+}
+
+StatusOr<google::cloud::redis::cluster::v1::Backup>
+CloudRedisClusterClient::GetBackup(
+    google::cloud::redis::cluster::v1::GetBackupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetBackup(request);
+}
+
+future<StatusOr<google::protobuf::Any>> CloudRedisClusterClient::DeleteBackup(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::redis::cluster::v1::DeleteBackupRequest request;
+  request.set_name(name);
+  return connection_->DeleteBackup(request);
+}
+
+StatusOr<google::longrunning::Operation> CloudRedisClusterClient::DeleteBackup(
+    NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::redis::cluster::v1::DeleteBackupRequest request;
+  request.set_name(name);
+  return connection_->DeleteBackup(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::protobuf::Any>> CloudRedisClusterClient::DeleteBackup(
+    google::cloud::redis::cluster::v1::DeleteBackupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteBackup(request);
+}
+
+StatusOr<google::longrunning::Operation> CloudRedisClusterClient::DeleteBackup(
+    NoAwaitTag,
+    google::cloud::redis::cluster::v1::DeleteBackupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteBackup(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::protobuf::Any>> CloudRedisClusterClient::DeleteBackup(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteBackup(operation);
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::Backup>>
+CloudRedisClusterClient::ExportBackup(
+    google::cloud::redis::cluster::v1::ExportBackupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExportBackup(request);
+}
+
+StatusOr<google::longrunning::Operation> CloudRedisClusterClient::ExportBackup(
+    NoAwaitTag,
+    google::cloud::redis::cluster::v1::ExportBackupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExportBackup(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::Backup>>
+CloudRedisClusterClient::ExportBackup(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExportBackup(operation);
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
+CloudRedisClusterClient::BackupCluster(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::redis::cluster::v1::BackupClusterRequest request;
+  request.set_name(name);
+  return connection_->BackupCluster(request);
+}
+
+StatusOr<google::longrunning::Operation> CloudRedisClusterClient::BackupCluster(
+    NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::redis::cluster::v1::BackupClusterRequest request;
+  request.set_name(name);
+  return connection_->BackupCluster(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
+CloudRedisClusterClient::BackupCluster(
+    google::cloud::redis::cluster::v1::BackupClusterRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BackupCluster(request);
+}
+
+StatusOr<google::longrunning::Operation> CloudRedisClusterClient::BackupCluster(
+    NoAwaitTag,
+    google::cloud::redis::cluster::v1::BackupClusterRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BackupCluster(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
+CloudRedisClusterClient::BackupCluster(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BackupCluster(operation);
+}
+
 StreamRange<google::cloud::location::Location>
 CloudRedisClusterClient::ListLocations(
     google::cloud::location::ListLocationsRequest request, Options opts) {

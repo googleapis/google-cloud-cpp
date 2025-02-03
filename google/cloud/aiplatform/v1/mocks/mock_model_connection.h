@@ -101,6 +101,13 @@ class MockModelServiceConnection
               (override));
 
   MOCK_METHOD(
+      (StreamRange<google::cloud::aiplatform::v1::ModelVersionCheckpoint>),
+      ListModelVersionCheckpoints,
+      (google::cloud::aiplatform::v1::ListModelVersionCheckpointsRequest
+           request),
+      (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::aiplatform::v1::Model>, UpdateModel,
       (google::cloud::aiplatform::v1::UpdateModelRequest const& request),
       (override));
