@@ -21,23 +21,23 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/parametermanager/v1/ EDIT HERE _client.h"
+#include "google/cloud/parametermanager/v1/parameter_manager_client.h"
 #include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 3) {
-    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
+  if (argc != 2) {
+    std::cerr << "Usage: " << argv[0] << " project-id\n";
     return 1;
   }
 
-  auto const location = google::cloud::Location(argv[1], argv[2]);
+  auto const location = google::cloud::Location(argv[1], "global");
 
   namespace parametermanager = ::google::cloud::parametermanager_v1;
-  auto client = parametermanager::ServiceClient(
-      parametermanager::MakeServiceConnection());  // EDIT HERE
+  auto client = parametermanager::ParameterManagerClient(
+      parametermanager::MakeParameterManagerConnection());
 
-  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
+  for (auto r : client.ListParameters(location.FullName())) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }

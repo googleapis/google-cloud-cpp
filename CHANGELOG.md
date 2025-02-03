@@ -6,6 +6,13 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
 
 ## v2.36.0 - TBD
 
+### New Libraries
+
+We are happy to announce the following GA libraries. Unless specifically noted,
+the APIs in these libraries are stable, and are ready for production use.
+
+- [Parameter Manager API](/google/cloud/parametermanager/README.md)
+
 ## v2.35.0 - 2025-02
 
 ### [Pub/Sub](/google/cloud/pubsub/README.md)
