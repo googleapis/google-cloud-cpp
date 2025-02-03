@@ -1,0 +1,25 @@
+/*!
+@page parametermanager-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[EndpointOption](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `parametermanager_v1::ParameterManagerClient`:
+
+@snippet parameter_manager_client_samples.cc set-client-endpoint
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page parametermanager_v1::ParameterManagerClient-endpoint-snippet Override parametermanager_v1::ParameterManagerClient Endpoint Configuration
+
+@snippet google/cloud/parametermanager/v1/samples/parameter_manager_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->
