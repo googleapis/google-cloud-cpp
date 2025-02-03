@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/emulator/range_set.h"
 #include "google/cloud/bigtable/internal/google_bytes_traits.h"
+#include <google/bigtable/v2/data.pb.h>
 
 namespace google {
 namespace cloud {
@@ -110,6 +111,122 @@ StringRangeSet::Range::Range(Value start, bool start_open, Value end,
          StringRangeSet::Range::IsEmpty(start_, start_open_, end_, end_open_));
 }
 
+StatusOr<StringRangeSet::Range> StringRangeSet::Range::FromRowRange(
+    google::bigtable::v2::RowRange const& row_range) {
+  StringRangeSet::Range::Value start;
+  bool start_open;
+  if (row_range.has_start_key_open() && !row_range.start_key_open().empty()) {
+    start = StringRangeSet::Range::Value(row_range.start_key_open());
+    start_open = true;
+  } else if (row_range.has_start_key_closed() &&
+             !row_range.start_key_closed().empty()) {
+    start = StringRangeSet::Range::Value(row_range.start_key_closed());
+    start_open = false;
+  } else {
+    start = StringRangeSet::Range::Value("");
+    start_open = false;
+  }
+  StringRangeSet::Range::Value end;
+  bool end_open;
+  if (row_range.has_end_key_open() && !row_range.end_key_open().empty()) {
+    end = StringRangeSet::Range::Value(row_range.end_key_open());
+    end_open = true;
+  } else if (row_range.has_end_key_closed() &&
+             !row_range.end_key_closed().empty()) {
+    end = StringRangeSet::Range::Value(row_range.end_key_closed());
+    end_open = false;
+  } else {
+    end = StringRangeSet::Range::Value(StringRangeSet::Range::Infinity{});
+    end_open = true;
+  }
+  if (StringRangeSet::RangeValueLess()(end, start)) {
+    return InvalidArgumentError(
+        "reversed `row_range`",
+        GCP_ERROR_INFO().WithMetadata("row_range", row_range.DebugString()));
+  }
+  return StringRangeSet::Range(std::move(start), start_open, std::move(end),
+                               end_open);
+}
+
+StatusOr<StringRangeSet::Range> StringRangeSet::Range::FromValueRange(
+    google::bigtable::v2::ValueRange const& value_range) {
+  StringRangeSet::Range::Value start;
+  bool start_open;
+  if (value_range.has_start_value_open() &&
+      !value_range.start_value_open().empty()) {
+    start = StringRangeSet::Range::Value(value_range.start_value_open());
+    start_open = true;
+  } else if (value_range.has_start_value_closed() &&
+             !value_range.start_value_closed().empty()) {
+    start = StringRangeSet::Range::Value(value_range.start_value_closed());
+    start_open = false;
+  } else {
+    start = StringRangeSet::Range::Value("");
+    start_open = false;
+  }
+  StringRangeSet::Range::Value end;
+  bool end_open;
+  if (value_range.has_end_value_open() &&
+      !value_range.end_value_open().empty()) {
+    end = StringRangeSet::Range::Value(value_range.end_value_open());
+    end_open = true;
+  } else if (value_range.has_end_value_closed() &&
+             !value_range.end_value_closed().empty()) {
+    end = StringRangeSet::Range::Value(value_range.end_value_closed());
+    end_open = false;
+  } else {
+    end = StringRangeSet::Range::Value(StringRangeSet::Range::Infinity{});
+    end_open = true;
+  }
+  if (StringRangeSet::RangeValueLess()(end, start)) {
+    return InvalidArgumentError("reversed `value_range`",
+                                GCP_ERROR_INFO().WithMetadata(
+                                    "value_range", value_range.DebugString()));
+  }
+  return StringRangeSet::Range(std::move(start), start_open, std::move(end),
+                               end_open);
+}
+
+StatusOr<StringRangeSet::Range> StringRangeSet::Range::FromColumnRange(
+    google::bigtable::v2::ColumnRange const& column_range) {
+  StringRangeSet::Range::Value start;
+  bool start_open;
+  if (column_range.has_start_qualifier_open() &&
+      !column_range.start_qualifier_open().empty()) {
+    start = StringRangeSet::Range::Value(column_range.start_qualifier_open());
+    start_open = true;
+  } else if (column_range.has_start_qualifier_closed() &&
+             !column_range.start_qualifier_closed().empty()) {
+    start = StringRangeSet::Range::Value(column_range.start_qualifier_closed());
+    start_open = false;
+  } else {
+    start = StringRangeSet::Range::Value("");
+    start_open = false;
+  }
+  StringRangeSet::Range::Value end;
+  bool end_open;
+  if (column_range.has_end_qualifier_open() &&
+      !column_range.end_qualifier_open().empty()) {
+    end = StringRangeSet::Range::Value(column_range.end_qualifier_open());
+    end_open = true;
+  } else if (column_range.has_end_qualifier_closed() &&
+             !column_range.end_qualifier_closed().empty()) {
+    end = StringRangeSet::Range::Value(column_range.end_qualifier_closed());
+    end_open = false;
+  } else {
+    end = StringRangeSet::Range::Value(StringRangeSet::Range::Infinity{});
+    end_open = true;
+  }
+  if (StringRangeSet::RangeValueLess()(end, start)) {
+    return InvalidArgumentError(
+        "reversed `column_range`",
+        GCP_ERROR_INFO().WithMetadata("column_range",
+                                      column_range.DebugString()));
+  }
+  return StringRangeSet::Range(std::move(start), start_open, std::move(end),
+                               end_open);
+}
+
 void StringRangeSet::Range::set_start(Value start, bool start_open) {
   start_ = std::move(start);
   start_open_ = start_open;
@@ -154,6 +271,14 @@ bool StringRangeSet::Range::IsAboveEnd(Value const &value) const {
     return cmp > 0;
   }
   return end_open_;
+}
+
+bool StringRangeSet::Range::IsWithin(Value const &value) const {
+  return !IsAboveEnd(value) && !IsBelowStart(value);
+}
+
+bool StringRangeSet::Range::IsEmpty() const {
+  return Range::IsEmpty(start_, start_open_, end_, end_open_);
 }
 
 bool StringRangeSet::RangeValueLess::operator()(Range::Value const& lhs,
@@ -267,8 +392,27 @@ TimestampRangeSet::Range::Range(Value start, Value end)
   assert(end == std::chrono::milliseconds::zero() || start <= end);
 }
 
+StatusOr<TimestampRangeSet::Range> TimestampRangeSet::Range::FromTimestampRange(
+        google::bigtable::v2::TimestampRange const& timestamp_range) {
+  auto start = std::chrono::duration_cast<std::chrono::milliseconds>(
+      std::chrono::microseconds(timestamp_range.start_timestamp_micros()));
+  auto end = std::chrono::duration_cast<std::chrono::milliseconds>(
+      std::chrono::microseconds(timestamp_range.end_timestamp_micros()));
+  if (end != std::chrono::milliseconds::zero() && start > end) {
+    return InvalidArgumentError(
+        "reversed `timestamp_range`",
+        GCP_ERROR_INFO().WithMetadata("timestamp_range",
+                                      timestamp_range.DebugString()));
+  }
+  return Range(start, end);
+}
+
 bool TimestampRangeSet::Range::IsAboveEnd(Value value) const {
   return end_ != std::chrono::milliseconds::zero() && value >= end_;
+}
+
+bool TimestampRangeSet::Range::IsWithin(Value value) const {
+  return !IsAboveEnd(value) && !IsBelowStart(value);
 }
 
 bool TimestampRangeSet::Range::IsEmpty(TimestampRangeSet::Range::Value start,

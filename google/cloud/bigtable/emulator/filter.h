@@ -16,8 +16,12 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EMULATOR_FILTER_H
 
 #include "google/cloud/bigtable/emulator/cell_view.h"
-#include "google/cloud/stream_range.h"
+#include "google/cloud/bigtable/emulator/range_set.h"
 #include <google/bigtable/v2/data.pb.h>
+
+namespace re2 {
+class RE2;
+}  // namespace re2
 
 namespace google {
 namespace cloud {
@@ -26,52 +30,59 @@ namespace emulator {
 
 
 struct RowKeyRegex {
-  std::string regex;
+  std::shared_ptr<re2::RE2> regex;
 };
 struct FamilyNameRegex {
-  std::string regex;
+  std::shared_ptr<re2::RE2> regex;
 };
 struct ColumnRegex {
-  std::string regex;
+  std::shared_ptr<re2::RE2> regex;
+};
+struct ColumnRange {
+  StringRangeSet::Range range;
+};
+struct TimestampRange {
+  TimestampRangeSet::Range range;
 };
 
-using InternalFilter = absl::variant<google::bigtable::v2::ColumnRange,
-                                     google::bigtable::v2::TimestampRange,
-                                     RowKeyRegex, FamilyNameRegex, ColumnRegex>;
+using InternalFilter = absl::variant<RowKeyRegex, FamilyNameRegex, ColumnRegex,
+                                     ColumnRange, TimestampRange>;
+enum class NextMode {
+  kCell = 0,
+  kColumn,
+  kRow,
+};
 
 class AbstractCellStreamImpl {
  public:
   virtual ~AbstractCellStreamImpl() = default;
 
   virtual bool ApplyFilter(InternalFilter const& internal_filter) = 0;
-  virtual absl::optional<CellView> Next() = 0;
-  // Make sure Next() returns a different row than on last invocation. Noop in
-  // Next() was never called before.
-  virtual bool SkipRow() = 0;
-  // Make sure Next() returns a different (row, column) pair than on last
-  // invocation. Noop in Next() was never called before.
-  virtual bool SkipColumn() = 0;
+  virtual bool HasValue() const = 0;
+  virtual CellView const &Value() const = 0;
+  virtual bool Next(NextMode mode = NextMode::kCell) = 0;
 };
 
 class CellStream {
  public:
   CellStream(std::shared_ptr<AbstractCellStreamImpl> impl)
-      : impl_(std::move(impl)), current_(impl_->Next()) {}
+      : impl_(std::move(impl)) {}
 
-  bool HasValue() const { return current_.has_value(); }
-  CellView const & Value() const { return *current_; }
-  void Next() { current_ = impl_->Next(); }
-  bool SkipColumn() { return impl_->SkipColumn(); }
-  bool SkipRow() { return impl_->SkipRow(); }
-  void operator++();
+  bool ApplyFilter(InternalFilter const& internal_filter) {
+    return impl_->ApplyFilter(internal_filter);
+  }
+  bool HasValue() const { return impl_->HasValue(); }
+  CellView const & Value() const { return impl_->Value(); }
+  void Next(NextMode mode = NextMode::kCell);
+  void operator++() { Next(); }
   CellView operator++(int);
   CellView operator*() const { return Value(); }
   CellView const* operator->() const { return &Value(); }
   explicit operator bool() const { return HasValue(); }
+  AbstractCellStreamImpl const &impl() const { return *impl_; }
 
  private:
   std::shared_ptr<AbstractCellStreamImpl> impl_;
-  absl::optional<CellView> current_;
 };
 
 class FilterContext {
@@ -83,6 +94,32 @@ class FilterContext {
   bool IsApplyLabelAllowed() const { return allow_apply_label_; }
  private:
   bool allow_apply_label_;
+};
+
+class MergeCellStreams : public AbstractCellStreamImpl {
+ public:
+  class CellStreamGreater {
+   public:
+    bool operator()(std::unique_ptr<CellStream> const& lhs,
+                    std::unique_ptr<CellStream> const& rhs) const;
+  };
+
+  MergeCellStreams(std::vector<CellStream> streams);
+  bool ApplyFilter(InternalFilter const& internal_filter) override;
+  bool HasValue() const override;
+  CellView const& Value() const override;
+  bool Next(NextMode mode) override;
+
+ private:
+  void InitializeIfNeeded() const;
+  void ReassesStreams() const;
+  bool SkipRowOrColumn(NextMode mode);
+
+  mutable bool initialized_;
+ protected:
+  // A priority queue of streams which still have data.
+  // `std::priority_queue` can't be used because it cannot be iterated over.
+  mutable std::vector<std::unique_ptr<CellStream>> unfinished_streams_;
 };
 
 CellStream JoinCellStreams(std::vector<CellStream> cell_streams);

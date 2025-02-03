@@ -106,43 +106,46 @@ class FilteredColumnFamilyStream : public AbstractCellStreamImpl {
   FilteredColumnFamilyStream(ColumnFamily const& column_family,
                              std::string column_family_name,
                              std::shared_ptr<StringRangeSet> row_set);
-  absl::optional<CellView> Next() override;
   bool ApplyFilter(InternalFilter const& internal_filter) override;
-  bool SkipColumn() override;
-  bool SkipRow() override;
+  bool HasValue() const override;
+  CellView const &Value() const override;
+  bool Next(NextMode mode) override;
+  std::string const& column_family_name() const { return column_family_name_; }
 
  private:
   class FilterApply;
 
-  void Advance();
-  void InitializeIfNeeded();
+  void InitializeIfNeeded() const;
   // Returns whether we've managed to find another cell in currently pointed row
-  bool PointToFirstCellAfterColumnChange();
+  bool PointToFirstCellAfterColumnChange() const;
   // Returns whether we've managed to find another cell
-  bool PointToFirstCellAfterRowChange();
+  bool PointToFirstCellAfterRowChange() const;
 
   std::string column_family_name_;
 
   std::shared_ptr<StringRangeSet> row_ranges_;
-  std::vector<std::string> row_regexes_;
+  std::vector<std::shared_ptr<re2::RE2 const>> row_regexes_;
   std::shared_ptr<StringRangeSet> column_ranges_;
-  std::vector<std::string> column_regexes_;
+  std::vector<std::shared_ptr<re2::RE2 const>> column_regexes_;
   std::shared_ptr<TimestampRangeSet> timestamp_ranges_;
 
   FilteredMapView<ColumnFamily, StringRangeSet> rows_;
-  absl::optional<FilteredMapView<ColumnFamilyRow, StringRangeSet>> columns_;
-  absl::optional<FilteredMapView<ColumnRow, TimestampRangeSet>> cells_;
+  mutable absl::optional<FilteredMapView<ColumnFamilyRow, StringRangeSet>>
+      columns_;
+  mutable absl::optional<FilteredMapView<ColumnRow, TimestampRangeSet>> cells_;
 
   // If row_it_ == rows_.end() we've reached the end.
   // We keep the invariant that if (row_it_ != rows_.end()) then
   // cell_it_ != cells.end() && column_it_ != columns_.end()
-  FilteredMapView<ColumnFamily, StringRangeSet>::const_iterator row_it_;
-  absl::optional<
+  mutable FilteredMapView<ColumnFamily, StringRangeSet>::const_iterator row_it_;
+  mutable absl::optional<
       FilteredMapView<ColumnFamilyRow, StringRangeSet>::const_iterator>
       column_it_;
-  absl::optional<FilteredMapView<ColumnRow, TimestampRangeSet>::const_iterator>
+  mutable absl::optional<
+      FilteredMapView<ColumnRow, TimestampRangeSet>::const_iterator>
       cell_it_;
-  bool initialized_;
+  mutable absl::optional<CellView> cur_value_;
+  mutable bool initialized_;
 };
 
 }  // namespace emulator

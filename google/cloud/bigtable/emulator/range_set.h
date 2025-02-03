@@ -16,12 +16,21 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EMULATOR_RANGE_SET_H
 
 #include "absl/types/variant.h"
+#include "google/cloud/status_or.h"
 #include <chrono>
 #include <ostream>
 #include <set>
 #include <string>
 
 namespace google {
+namespace bigtable {
+namespace v2 {
+class RowRange;
+class ValueRange;
+class ColumnRange;
+class TimestampRange;
+}  // namespace v2
+}  // namespace bigtable
 namespace cloud {
 namespace bigtable {
 namespace emulator {
@@ -34,6 +43,12 @@ class StringRangeSet {
     using Value = absl::variant<Infinity, std::string>;
 
     Range(Value start, bool start_open, Value end, bool end_open);
+    static StatusOr<Range> FromRowRange(
+        google::bigtable::v2::RowRange const& row_range);
+    static StatusOr<Range> FromValueRange(
+        google::bigtable::v2::ValueRange const& value_range);
+    static StatusOr<Range> FromColumnRange(
+        google::bigtable::v2::ColumnRange const& column_range);
 
     Value const& start() const & { return start_; }
     std::string const& start_finite() const& {
@@ -52,6 +67,8 @@ class StringRangeSet {
 
     bool IsBelowStart(Value const &value) const;
     bool IsAboveEnd(Value const &value) const;
+    bool IsWithin(Value const &value) const;
+    bool IsEmpty() const;
 
     static bool IsEmpty(StringRangeSet::Range::Value const& start,
                         bool start_open,
@@ -109,6 +126,8 @@ class TimestampRangeSet {
     using Value = std::chrono::milliseconds;
 
     Range(Value start, Value end);
+    static StatusOr<Range> FromTimestampRange(
+        google::bigtable::v2::TimestampRange const& timestamp_range);
 
     Value start() const { return start_; }
     Value start_finite() const { return start_; }
@@ -123,6 +142,7 @@ class TimestampRangeSet {
 
     bool IsBelowStart(Value value) const { return value < start_; }
     bool IsAboveEnd(Value value) const;
+    bool IsWithin(Value value) const;
 
     static bool IsEmpty(TimestampRangeSet::Range::Value start,
                         TimestampRangeSet::Range::Value end);

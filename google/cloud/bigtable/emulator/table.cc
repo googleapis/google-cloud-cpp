@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include <chrono>
+#include <re2/re2.h>
 #include "google/cloud/bigtable/emulator/table.h"
 #include "google/cloud/bigtable/emulator/filter.h"
 #include "google/cloud/bigtable/emulator/filtered_map.h"
@@ -282,6 +283,47 @@ Status Table::MutateRow(
   return Status();
 }
 
+class FilteredTableStream : public MergeCellStreams  {
+ public:
+  FilteredTableStream(
+      std::vector<std::shared_ptr<FilteredColumnFamilyStream>> cf_streams)
+      : MergeCellStreams(CreateCellStreams(std::move(cf_streams))) {}
+
+  bool ApplyFilter(InternalFilter const& internal_filter) override {
+    if (!absl::holds_alternative<FamilyNameRegex>(internal_filter)) {
+      return MergeCellStreams::ApplyFilter(internal_filter);
+    }
+    for (auto stream_it = unfinished_streams_.begin();
+         stream_it != unfinished_streams_.end(); ++stream_it) {
+      auto* cf_stream =
+          dynamic_cast<FilteredColumnFamilyStream const*>(&(*stream_it)->impl());
+      assert(cf_stream);
+      if (re2::RE2::PartialMatch(
+              cf_stream->column_family_name(),
+              *absl::get<FamilyNameRegex>(internal_filter).regex)) {
+        auto last_it = std::prev(unfinished_streams_.end());
+        if (stream_it == last_it) {
+          unfinished_streams_.pop_back();
+          break;
+        }
+        stream_it->swap(unfinished_streams_.back());
+        unfinished_streams_.pop_back();
+      }
+    }
+    return true;
+  }
+ private:
+  static std::vector<CellStream> CreateCellStreams(
+      std::vector<std::shared_ptr<FilteredColumnFamilyStream>> cf_streams) {
+    std::vector<CellStream> res;
+    res.reserve(cf_streams.size());
+    for (auto& stream : cf_streams) {
+      res.emplace_back(std::move(stream));
+    }
+    return res;
+  }
+};
+
 StatusOr<StringRangeSet> CreateStringRangeSet(
     google::bigtable::v2::RowSet const& row_set) {
   StringRangeSet res;
@@ -294,41 +336,14 @@ StatusOr<StringRangeSet> CreateStringRangeSet(
     res.Insert(StringRangeSet::Range(row_key, false, row_key, false)); 
   }
   for (auto const& row_range : row_set.row_ranges()) {
-    StringRangeSet::Range::Value start;
-    bool start_open;
-    if (row_range.has_start_key_open() && !row_range.start_key_open().empty()) {
-      start = StringRangeSet::Range::Value(row_range.start_key_open());
-      start_open = true;
-    } else if (row_range.has_start_key_closed() &&
-               !row_range.start_key_closed().empty()) {
-      start = StringRangeSet::Range::Value(row_range.start_key_closed());
-      start_open = false;
-    } else {
-      start = StringRangeSet::Range::Value("");
-      start_open = false;
+    auto maybe_range = StringRangeSet::Range::FromRowRange(row_range);
+    if (!maybe_range) {
+      return maybe_range.status();
     }
-    StringRangeSet::Range::Value end;
-    bool end_open;
-    if (row_range.has_end_key_open() && !row_range.end_key_open().empty()) {
-      end = StringRangeSet::Range::Value(row_range.end_key_open());
-      end_open = true;
-    } else if (row_range.has_end_key_closed() &&
-               !row_range.end_key_closed().empty()) {
-      end = StringRangeSet::Range::Value(row_range.end_key_closed());
-      end_open = false;
-    } else {
-      end = StringRangeSet::Range::Value(StringRangeSet::Range::Infinity{});
-      end_open = true;
-    }
-    if (StringRangeSet::RangeValueLess()(end, start)) {
-      return InvalidArgumentError(
-          "reversed `row_range`",
-          GCP_ERROR_INFO().WithMetadata("row_range", row_range.DebugString()));
-    }
-    if (StringRangeSet::Range::IsEmpty(start, start_open, end, end_open)) {
+    if (maybe_range->IsEmpty()) {
       continue;
     }
-    res.Insert(StringRangeSet::Range(std::move(start), start_open, std::move(end), end_open));
+    res.Insert(*std::move(maybe_range));
   }
   return res;
 }
@@ -346,12 +361,13 @@ Status Table::ReadRows(google::bigtable::v2::ReadRowsRequest const& request,
     row_set = std::make_shared<StringRangeSet>(StringRangeSet::All());
   }
   std::lock_guard lock(mu_);
-  std::vector<CellStream> per_cf_streams;
+  std::vector<std::shared_ptr<FilteredColumnFamilyStream>> per_cf_streams;
   for (auto const & column_family: column_families_) {
-    per_cf_streams.emplace_back(std::make_unique<FilteredColumnFamilyStream>(
+    per_cf_streams.emplace_back(std::make_shared<FilteredColumnFamilyStream>(
         *column_family.second, column_family.first, row_set));
   }
-  auto stream = JoinCellStreams(std::move(per_cf_streams));
+  auto stream = CellStream(
+      std::make_shared<FilteredTableStream>(std::move(per_cf_streams)));
   FilterContext ctx;
   if (request.has_filter()) {
     auto maybe_stream = CreateFilter(request.filter(), std::move(stream), ctx);
