@@ -4,7 +4,19 @@
 breaking changes in the upcoming 3.x release. This release is scheduled for
 2024-12 or 2025-01.
 
-## v2.35.0 - TBD
+## v2.35.0 - 2025-02
+
+### [Pub/Sub](/google/cloud/pubsub/README.md)
+
+- docs(pubsub): Add Pub/Sub ingestion from Kafka samples ([#14954](https://github.com/googleapis/google-cloud-cpp/pull/14954))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- doc: update documentation to point to security best practice ([#14942](https://github.com/googleapis/google-cloud-cpp/pull/14942))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2025-01-28T16:10:24-08:00](https://github.com/googleapis/googleapis/tree/280725e991516d4a0f136268faf5aa6d32d21b54)
 
 ## v2.34.0 - 2025-01
 
