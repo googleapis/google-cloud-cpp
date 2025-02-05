@@ -12,18 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-createTime: '2023-06-02T17:19:52.984755094Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: prepare-for-v3.0.0
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-id: 8a4c069a-53c0-49bf-ba31-5f3a3c228a42
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: clang-7-0-pr
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/8a4c069a-53c0-49bf-ba31-5f3a3c228a42
+name: prepare-for-v3-0-0-clang-7-0-pr
 substitutions:
   _BUILD_NAME: clang-7.0
   _DISTRO: ubuntu-20.04-install
