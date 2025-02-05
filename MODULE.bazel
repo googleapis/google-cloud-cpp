@@ -16,8 +16,8 @@
 
 module(
     name = "google_cloud_cpp",
-    version = "2.38.0-rc",  # Updated by CMake
-    compatibility_level = 2,  # Updated by CMake
+    version = "3.0.0-rc",  # Updated by CMake
+    compatibility_level = 3,  # Updated by CMake
 )
 
 bazel_dep(name = "platforms", version = "0.0.11")
