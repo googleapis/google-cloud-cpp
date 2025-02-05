@@ -12,17 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-createTime: '2021-03-23T16:27:32.983843488Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
-id: 7af338de-c46d-41ff-a96b-f58e3b720fc5
+    branch: prepare-for-v3.0.0
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: xsan-ci
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/7af338de-c46d-41ff-a96b-f58e3b720fc5
+name: prepare-for-v3-0-0-xsan-ci
 substitutions:
   _BUILD_NAME: xsan
   _DISTRO: fedora-latest-bazel
