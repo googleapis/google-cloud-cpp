@@ -12,17 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-createTime: '2021-04-14T14:41:37.760841534Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
-id: ab963829-28af-4d7c-8aa4-e2598f8b8862
+    branch: prepare-for-v3.0.0
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: noex-ci
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/ab963829-28af-4d7c-8aa4-e2598f8b8862
+name: prepare-for-v3-0-0-noex-ci
 substitutions:
   _BUILD_NAME: noex
   _DISTRO: fedora-latest-cmake
