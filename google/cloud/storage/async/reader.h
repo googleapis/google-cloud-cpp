@@ -62,7 +62,7 @@ class AsyncReader {
    * does **not** block waiting for the download to cancel. This may delay the
    * termination of the associated completion queue.
    */
-  ~AsyncReader() noexcept(false);
+  ~AsyncReader();
 
   /**
    * Retrieves more data from the object.
