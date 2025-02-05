@@ -12,17 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-createTime: '2023-10-24T17:38:59.377179872Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
-id: dcb2a46a-01f9-4b02-8c34-79943099e25f
+    branch: prepare-for-v3.0.0
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: clang-tidy-storage-ci
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/dcb2a46a-01f9-4b02-8c34-79943099e25f
+name: prepare-for-v3-0-0-clang-tidy-storage-ci
 substitutions:
   _BUILD_NAME: clang-tidy
   _DISTRO: fedora-latest-cmake

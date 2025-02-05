@@ -12,16 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-createTime: '2021-04-23T00:24:28.311789386Z'
 description: Rotates the SA keys used by the GCS integration test
 gitFileSource:
   path: ci/cloudbuild/cloudbuild.yaml
   repoType: GITHUB
   revision: refs/heads/main
   uri: https://github.com/googleapis/google-cloud-cpp
-id: 3fca51de-ec4c-453f-9693-5ccec556a379
-name: rotate-keys
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/3fca51de-ec4c-453f-9693-5ccec556a379
+name: prepare-for-v3-0-0-rotate-keys
 sourceToBuild:
   ref: refs/heads/main
   repoType: GITHUB

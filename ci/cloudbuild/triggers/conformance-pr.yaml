@@ -12,18 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-createTime: '2023-10-30T21:35:19.557214462Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: prepare-for-v3.0.0
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-id: 03976e73-5154-457f-813f-4d33bb162e70
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: conformance-pr
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/03976e73-5154-457f-813f-4d33bb162e70
+name: prepare-for-v3-0-0-conformance-pr
 substitutions:
   _BUILD_NAME: conformance
   _DISTRO: fedora-latest-bazel
