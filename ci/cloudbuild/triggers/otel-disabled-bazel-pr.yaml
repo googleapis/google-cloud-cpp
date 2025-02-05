@@ -12,18 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-createTime: '2022-11-29T04:06:20.679878755Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: prepare-for-v3.0.0
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-id: e645a8df-6b2c-4911-a192-e36e6d8935b6
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: otel-disabled-bazel-pr
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/e645a8df-6b2c-4911-a192-e36e6d8935b6
+name: prepare-for-v3-0-0-otel-disabled-bazel-pr
 substitutions:
   _BUILD_NAME: otel-disabled-bazel
   _DISTRO: fedora-latest-bazel

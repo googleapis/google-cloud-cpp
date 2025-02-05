@@ -12,18 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-createTime: '2023-08-28T23:51:12.027081210Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: prepare-for-v3.0.0
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-id: 30ee0e3e-4eed-4b33-8786-47baae4947c1
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: publish-docs-compute-pr
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/30ee0e3e-4eed-4b33-8786-47baae4947c1
+name: prepare-for-v3-0-0-publish-docs-compute-pr
 substitutions:
   _BUILD_NAME: publish-docs
   _DISTRO: fedora-latest-publish-docs

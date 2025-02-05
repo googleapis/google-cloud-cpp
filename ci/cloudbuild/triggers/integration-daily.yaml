@@ -12,16 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-createTime: '2021-04-26T23:11:01.303393604Z'
 description: Runs the slow integration tests
 gitFileSource:
   path: ci/cloudbuild/cloudbuild.yaml
   repoType: GITHUB
   revision: refs/heads/main
   uri: https://github.com/googleapis/google-cloud-cpp
-id: 03b9bb52-8d28-4095-9ca4-653f8602acf7
-name: integration-daily
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/03b9bb52-8d28-4095-9ca4-653f8602acf7
+name: prepare-for-v3-0-0-integration-daily
 sourceToBuild:
   ref: refs/heads/main
   repoType: GITHUB
