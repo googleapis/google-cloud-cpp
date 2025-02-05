@@ -65,9 +65,8 @@ google::api::HttpRule ParseHttpRule(YAML::detail::iterator_value const& rule) {
         kv.second.Type() != YAML::NodeType::Scalar)
       continue;
 
-    std::string const rule_key =
-        absl::AsciiStrToLower(kv.first.as<std::string>());
-    std::string const rule_value = kv.second.as<std::string>();
+    auto const rule_key = absl::AsciiStrToLower(kv.first.as<std::string>());
+    auto const rule_value = kv.second.as<std::string>();
 
     if (rule_key == "get") {
       http_rule.set_get(rule_value);
@@ -107,7 +106,7 @@ std::unordered_map<std::string, google::api::HttpRule> GetMixinHttpOverrides(
     auto const& selector = rule["selector"];
     if (selector.Type() != YAML::NodeType::Scalar) continue;
 
-    std::string const method_full_name = selector.as<std::string>();
+    auto const method_full_name = selector.as<std::string>();
     google::api::HttpRule http_rule = ParseHttpRule(rule);
 
     if (rule["additional_bindings"]) {
@@ -150,7 +149,7 @@ std::vector<std::string> GetMixinProtoPaths(YAML::Node const& service_config) {
     if (api.Type() != YAML::NodeType::Map) continue;
     auto const& name = api["name"];
     if (name.Type() != YAML::NodeType::Scalar) continue;
-    std::string const package_path = name.as<std::string>();
+    auto const package_path = name.as<std::string>();
     auto const& mixin_proto_path_map = GetMixinProtoPathMap();
     auto const it = mixin_proto_path_map.find(package_path);
     if (it == mixin_proto_path_map.end()) continue;
