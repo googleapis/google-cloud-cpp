@@ -55,6 +55,7 @@ class Discard : public std::enable_shared_from_this<Discard> {
 
 }  // namespace
 
+// NOLINTNEXTLINE(bugprone-exception-escape)
 AsyncReader::~AsyncReader() {
   if (!impl_ || finished_) return;
   impl_->Cancel();
