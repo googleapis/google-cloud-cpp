@@ -81,6 +81,7 @@ class RowReader {
             MetadataUpdatePolicy metadata_update_policy,
             std::unique_ptr<internal::ReadRowsParserFactory> parser_factory);
 
+  // NOLINTNEXTLINE(performance-noexcept-move-constructor)
   RowReader(RowReader&&) = default;
 
   ~RowReader() = default;
