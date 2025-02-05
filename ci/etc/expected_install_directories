@@ -924,6 +924,10 @@
 ./include/google/cloud/parallelstore/v1
 ./include/google/cloud/parallelstore/v1/internal
 ./include/google/cloud/parallelstore/v1/mocks
+./include/google/cloud/parametermanager
+./include/google/cloud/parametermanager/v1
+./include/google/cloud/parametermanager/v1/internal
+./include/google/cloud/parametermanager/v1/mocks
 ./include/google/cloud/policysimulator
 ./include/google/cloud/policysimulator/v1
 ./include/google/cloud/policysimulator/v1/internal
@@ -1439,6 +1443,8 @@
 ./lib64/cmake/google_cloud_cpp_oslogin_mocks
 ./lib64/cmake/google_cloud_cpp_parallelstore
 ./lib64/cmake/google_cloud_cpp_parallelstore_mocks
+./lib64/cmake/google_cloud_cpp_parametermanager
+./lib64/cmake/google_cloud_cpp_parametermanager_mocks
 ./lib64/cmake/google_cloud_cpp_policysimulator
 ./lib64/cmake/google_cloud_cpp_policysimulator_mocks
 ./lib64/cmake/google_cloud_cpp_policytroubleshooter

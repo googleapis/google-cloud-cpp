@@ -188,6 +188,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "osconfig",
     "oslogin",
     "parallelstore",
+    "parametermanager",
     "policysimulator",
     "policytroubleshooter",
     "privateca",
