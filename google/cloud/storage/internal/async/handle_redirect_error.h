@@ -25,10 +25,16 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+void EnsureFirstMessageAppendObjectSpec(
+    google::storage::v2::BidiWriteObjectRequest& request);
+
 google::rpc::Status ExtractGrpcStatus(Status const& status);
 
 void ApplyRedirectErrors(google::storage::v2::BidiReadObjectSpec& spec,
                          google::rpc::Status const& rpc_status);
+
+void ApplyWriteRedirectErrors(google::storage::v2::AppendObjectSpec& spec,
+                              google::rpc::Status const& rpc_status);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
