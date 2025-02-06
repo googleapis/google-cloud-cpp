@@ -128,7 +128,7 @@ RUN curl -fsSL https://github.com/google/re2/archive/2025-07-22.tar.gz | \
 
 # ```bash
 WORKDIR /var/tmp/build/grpc
-RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.69.0.tar.gz | \
+RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.70.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_CXX_STANDARD=17 \
