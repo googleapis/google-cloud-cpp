@@ -28,6 +28,7 @@
 #include "google/cloud/storage/internal/async/reader_connection_impl.h"
 #include "google/cloud/storage/internal/async/reader_connection_resume.h"
 #include "google/cloud/storage/internal/async/rewriter_connection_impl.h"
+#include "google/cloud/storage/internal/async/write_object.h"
 #include "google/cloud/storage/internal/async/write_payload_impl.h"
 #include "google/cloud/storage/internal/async/writer_connection_buffered.h"
 #include "google/cloud/storage/internal/async/writer_connection_finalized.h"
@@ -292,31 +293,35 @@ AsyncConnectionImpl::ReadObjectRange(ReadObjectParams p) {
 future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
 AsyncConnectionImpl::StartAppendableObjectUpload(AppendableUploadParams p) {
   auto current = internal::MakeImmutableOptions(std::move(p.options));
+  auto request = p.request;
   std::int64_t persisted_size = 0;
   auto hash_function = CreateHashFunction(*current);
-  using StreamingRpc = AsyncWriterConnectionImpl::StreamingRpc;
+  auto retry = retry_policy(*current);
+  auto backoff = backoff_policy(*current);
   struct RequestPlaceholder {};
 
-  auto call = [stub = stub_](CompletionQueue& cq,
-                             std::shared_ptr<grpc::ClientContext> context,
-                             google::cloud::internal::ImmutableOptions options,
-                             RequestPlaceholder const&)
-      -> future<StatusOr<std::unique_ptr<StreamingRpc>>> {
+  auto call = [stub = stub_, request = std::move(request)](
+                  CompletionQueue& cq,
+                  std::shared_ptr<grpc::ClientContext> context,
+                  google::cloud::internal::ImmutableOptions options,
+                  RequestPlaceholder const&) mutable
+      -> future<StatusOr<WriteObject::WriteResult>> {
     auto rpc =
         stub->AsyncBidiWriteObject(cq, std::move(context), std::move(options));
-    auto start = rpc->Start();
-    return start.then([rpc = std::move(rpc)](auto f) mutable {
-      if (f.get()) return make_ready_future(make_status_or(std::move(rpc)));
-      auto pending = rpc->Finish();
-      return pending.then([rpc = std::move(rpc)](auto f) mutable {
-        rpc.reset();
-        auto status = f.get();
-        return StatusOr<std::unique_ptr<StreamingRpc>>(std::move(status));
-      });
+    request.set_state_lookup(true);
+    auto open = std::make_shared<WriteObject>(std::move(rpc), request);
+    return open->Call().then([open, &request](auto f) mutable {
+      auto response = f.get();
+      if (!response) {
+        EnsureFirstMessageAppendObjectSpec(request);
+        ApplyWriteRedirectErrors(*request.mutable_append_object_spec(),
+                                 ExtractGrpcStatus(response.status()));
+      }
+      return response;
     });
   };
 
-  auto transform = [current, request = std::move(p.request), persisted_size,
+  auto transform = [current, request, persisted_size,
                     hash = std::move(hash_function)](auto f) mutable
       -> StatusOr<
           std::unique_ptr<storage_experimental::AsyncWriterConnection>> {
@@ -324,12 +329,10 @@ AsyncConnectionImpl::StartAppendableObjectUpload(AppendableUploadParams p) {
     if (!rpc) return std::move(rpc).status();
     return std::unique_ptr<storage_experimental::AsyncWriterConnection>(
         std::make_unique<AsyncWriterConnectionImpl>(
-            current, std::move(request), *std::move(rpc), std::move(hash),
-            persisted_size));
+            current, std::move(request), std::move(rpc->stream),
+            std::move(hash), persisted_size, false));
   };
 
-  auto retry = retry_policy(*current);
-  auto backoff = backoff_policy(*current);
   return google::cloud::internal::AsyncRetryLoop(
              std::move(retry), std::move(backoff), Idempotency::kIdempotent,
              cq_, std::move(call), std::move(current), RequestPlaceholder{},
@@ -716,7 +719,7 @@ AsyncConnectionImpl::UnbufferedUploadImpl(
     return std::unique_ptr<storage_experimental::AsyncWriterConnection>(
         std::make_unique<AsyncWriterConnectionImpl>(
             current, std::move(request), *std::move(rpc), std::move(hash),
-            persisted_size));
+            persisted_size, true));
   };
 
   auto retry = retry_policy(*current);

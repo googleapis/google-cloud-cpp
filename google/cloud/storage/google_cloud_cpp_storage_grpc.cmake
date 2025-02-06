@@ -141,6 +141,8 @@ add_library(
     internal/async/rewriter_connection_tracing.h
     internal/async/token_impl.cc
     internal/async/token_impl.h
+    internal/async/write_object.cc
+    internal/async/write_object.h
     internal/async/write_payload_fwd.h
     internal/async/write_payload_impl.h
     internal/async/writer_connection_buffered.cc

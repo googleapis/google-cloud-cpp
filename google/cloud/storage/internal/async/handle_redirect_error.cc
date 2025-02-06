@@ -20,6 +20,16 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+void EnsureFirstMessageAppendObjectSpec(
+    google::storage::v2::BidiWriteObjectRequest& request) {
+  if (request.has_write_object_spec()) {
+    auto spec = request.write_object_spec();
+    auto& append_object_spec = *request.mutable_append_object_spec();
+    append_object_spec.set_bucket(spec.resource().bucket());
+    append_object_spec.set_object(spec.resource().name());
+  }
+}
+
 google::rpc::Status ExtractGrpcStatus(Status const& status) {
   auto proto_status = google::rpc::Status{};
   auto payload = google::cloud::internal::GetPayload(
@@ -34,6 +44,16 @@ void ApplyRedirectErrors(google::storage::v2::BidiReadObjectSpec& spec,
     auto error = google::storage::v2::BidiReadObjectRedirectedError{};
     if (!any.UnpackTo(&error)) continue;
     *spec.mutable_read_handle() = std::move(*error.mutable_read_handle());
+    *spec.mutable_routing_token() = std::move(*error.mutable_routing_token());
+  }
+}
+
+void ApplyWriteRedirectErrors(google::storage::v2::AppendObjectSpec& spec,
+                              google::rpc::Status const& rpc_status) {
+  for (auto const& any : rpc_status.details()) {
+    auto error = google::storage::v2::BidiWriteObjectRedirectedError{};
+    if (!any.UnpackTo(&error)) continue;
+    *spec.mutable_write_handle() = std::move(*error.mutable_write_handle());
     *spec.mutable_routing_token() = std::move(*error.mutable_routing_token());
   }
 }
