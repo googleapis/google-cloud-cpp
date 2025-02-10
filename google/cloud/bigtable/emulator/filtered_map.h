@@ -38,10 +38,11 @@ class FilteredMapView {
     using pointer = value_type const*;
 
     const_iterator(
-        FilteredMapView const& parent, typename Map::const_iterator unfiltered_pos,
-        typename std::set<
-            typename ExcludedRanges::Range,
-            typename ExcludedRanges::RangeStartLess>::const_iterator filter_pos)
+        FilteredMapView const& parent,
+        typename Map::const_iterator unfiltered_pos,
+        typename std::set<typename ExcludedRanges::Range,
+                          typename ExcludedRanges::Range::StartLess>::
+            const_iterator filter_pos)
         : parent_(std::cref(parent)),
           unfiltered_pos_(std::move(unfiltered_pos)),
           filter_pos_(std::move(filter_pos)) {
@@ -116,7 +117,7 @@ class FilteredMapView {
     std::reference_wrapper<FilteredMapView const> parent_;
     typename Map::const_iterator unfiltered_pos_;
     typename std::set<typename ExcludedRanges::Range,
-                      typename ExcludedRanges::RangeStartLess>::const_iterator
+                      typename ExcludedRanges::Range::StartLess>::const_iterator
         filter_pos_;
   };
 

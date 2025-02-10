@@ -65,14 +65,14 @@ bool HasOverlap(TimestampRangeSet::Range const& lhs,
   TimestampRangeSet::Range::Value overlap_start =
       std::max(lhs.start(), rhs.start());
   TimestampRangeSet::Range::Value overlap_end =
-      TimestampRangeSet::RangeEndLess()(lhs, rhs) ? lhs.end() : rhs.end();
-  return TimestampRangeSet::Range::IsEmpty(overlap_start, overlap_end);
+      TimestampRangeSet::Range::EndLess()(lhs, rhs) ? lhs.end() : rhs.end();
+  return !TimestampRangeSet::Range::IsEmpty(overlap_start, overlap_end);
 }
 
 bool DisjointAndSortedRangesAdjacent(StringRangeSet::Range const& lhs,
                                      StringRangeSet::Range const& rhs) {
   assert(!HasOverlap(lhs, rhs));
-  assert(StringRangeSet::RangeStartLess()(lhs, rhs));
+  assert(StringRangeSet::Range::StartLess()(lhs, rhs));
   if (lhs.end_closed() && rhs.start_open() && lhs.end() == rhs.start()) {
       return true;
   }
@@ -91,8 +91,48 @@ bool DisjointAndSortedRangesAdjacent(StringRangeSet::Range const& lhs,
 bool DisjointAndSortedRangesAdjacent(TimestampRangeSet::Range const& lhs,
                                      TimestampRangeSet::Range const& rhs) {
   assert(!HasOverlap(lhs, rhs));
-  assert(TimestampRangeSet::RangeStartLess()(lhs, rhs));
+  assert(TimestampRangeSet::Range::StartLess()(lhs, rhs));
   return lhs.end() == rhs.start();
+}
+
+template <typename RangeSetType, typename RangeType>
+void RangeSetInsertImpl(RangeSetType& disjoint_ranges,
+                            RangeType inserted_range) {
+  // Remove all ranges which either have an overlap with `inserted_range` or are
+  // adjacent to it. Then add `inserted_range` with `start` and `end`
+  // adjusted to cover what the removed ranges used to cover.
+
+  auto first_to_remove = disjoint_ranges.upper_bound(inserted_range);
+  // `*first_to_remove` starts strictly after `inserted_range`'s start.
+  // The previous range is the first to have a chance for an overlap - it is the
+  // last one, which starts at or before `inserted_range` start.
+  if (first_to_remove != disjoint_ranges.begin() &&
+      detail::HasOverlap(*std::prev(first_to_remove), inserted_range)) {
+    std::advance(first_to_remove, -1);
+  }
+  // The range preceeding `first_to_remove` for sure has no overlap with
+  // `inserted_range` but it may be adjacent to it. In that case we should also
+  // remove it.
+  if (first_to_remove != disjoint_ranges.begin() &&
+      detail::DisjointAndSortedRangesAdjacent(*std::prev(first_to_remove),
+                                              inserted_range)) {
+    std::advance(first_to_remove, -1);
+  }
+  if (first_to_remove != disjoint_ranges.end()) {
+    if (typename RangeType::StartLess()(*first_to_remove, inserted_range)) {
+      inserted_range.set_start(*first_to_remove);
+    }
+    do {
+      if (typename RangeType::EndLess()(inserted_range, *first_to_remove)) {
+        inserted_range.set_end(*first_to_remove);
+      }
+      disjoint_ranges.erase(first_to_remove++);
+    } while (first_to_remove != disjoint_ranges.end() &&
+             (detail::HasOverlap(*first_to_remove, inserted_range) ||
+              detail::DisjointAndSortedRangesAdjacent(inserted_range,
+                                                      *first_to_remove)));
+  }
+  disjoint_ranges.insert(std::move(inserted_range));
 }
 
 }  // namespace detail
@@ -103,7 +143,7 @@ StringRangeSet::Range::Range(Value start, bool start_open, Value end,
       start_open_(start_open),
       end_(std::move(end)),
       end_open_(end_open) {
-  assert(!RangeValueLess()(end, start));
+  assert(!Range::ValueLess()(end, start));
   assert(!absl::holds_alternative<StringRangeSet::Range::Infinity>(start) ||
          !start_open_);
   assert(!absl::holds_alternative<StringRangeSet::Range::Infinity>(end) ||
@@ -140,7 +180,7 @@ StatusOr<StringRangeSet::Range> StringRangeSet::Range::FromRowRange(
     end = StringRangeSet::Range::Value(StringRangeSet::Range::Infinity{});
     end_open = false;
   }
-  if (StringRangeSet::RangeValueLess()(end, start)) {
+  if (StringRangeSet::Range::ValueLess()(end, start)) {
     return InvalidArgumentError(
         "reversed `row_range`",
         GCP_ERROR_INFO().WithMetadata("row_range", row_range.DebugString()));
@@ -179,7 +219,7 @@ StatusOr<StringRangeSet::Range> StringRangeSet::Range::FromValueRange(
     end = StringRangeSet::Range::Value(StringRangeSet::Range::Infinity{});
     end_open = false;
   }
-  if (StringRangeSet::RangeValueLess()(end, start)) {
+  if (StringRangeSet::Range::ValueLess()(end, start)) {
     return InvalidArgumentError("reversed `value_range`",
                                 GCP_ERROR_INFO().WithMetadata(
                                     "value_range", value_range.DebugString()));
@@ -218,7 +258,7 @@ StatusOr<StringRangeSet::Range> StringRangeSet::Range::FromColumnRange(
     end = StringRangeSet::Range::Value(StringRangeSet::Range::Infinity{});
     end_open = false;
   }
-  if (StringRangeSet::RangeValueLess()(end, start)) {
+  if (StringRangeSet::Range::ValueLess()(end, start)) {
     return InvalidArgumentError(
         "reversed `column_range`",
         GCP_ERROR_INFO().WithMetadata("column_range",
@@ -228,14 +268,14 @@ StatusOr<StringRangeSet::Range> StringRangeSet::Range::FromColumnRange(
                                end_open);
 }
 
-void StringRangeSet::Range::set_start(Value start, bool start_open) {
-  start_ = std::move(start);
-  start_open_ = start_open;
+void StringRangeSet::Range::set_start(Range const& source) {
+  start_ = source.start();
+  start_open_ = source.start_open();
 }
 
-void StringRangeSet::Range::set_end(Value end, bool end_open) {
-  end_ = std::move(end);
-  end_open_ = end_open;
+void StringRangeSet::Range::set_end(Range const& source) {
+  end_ = source.end();
+  end_open_ = source.end_open();
 }
 
 bool StringRangeSet::Range::IsBelowStart(Value const &value) const {
@@ -282,12 +322,12 @@ bool StringRangeSet::Range::IsEmpty() const {
   return Range::IsEmpty(start_, start_open_, end_, end_open_);
 }
 
-bool StringRangeSet::RangeValueLess::operator()(Range::Value const& lhs,
+bool StringRangeSet::Range::ValueLess::operator()(Range::Value const& lhs,
                                               Range::Value const& rhs) const {
   return detail::CompareRangeValues(lhs, rhs) < 0;
 }
 
-bool StringRangeSet::RangeStartLess::operator()(Range const& lhs,
+bool StringRangeSet::Range::StartLess::operator()(Range const& lhs,
                                               Range const& rhs) const {
   auto res = detail::CompareRangeValues(lhs.start(), rhs.start());
   if (res == 0) {
@@ -296,7 +336,7 @@ bool StringRangeSet::RangeStartLess::operator()(Range const& lhs,
   return res < 0;
 }
 
-bool StringRangeSet::RangeEndLess::operator()(Range const& lhs,
+bool StringRangeSet::Range::EndLess::operator()(Range const& lhs,
                                             Range const& rhs) const {
   auto res = detail::CompareRangeValues(lhs.end(), rhs.end());
   if (res == 0) {
@@ -316,43 +356,7 @@ StringRangeSet StringRangeSet::Empty() {
 }
 
 void StringRangeSet::Insert(StringRangeSet::Range inserted_range) {
-  // Remove all ranges which either have an overlap with `inserted_range` or are
-  // adjacent to it. Then add `inserted_range` with `start` and `end`
-  // adjusted to cover what the removed ranges used to cover.
-
-  auto first_to_remove = disjoint_ranges_.upper_bound(inserted_range);
-  // `*first_to_remove` starts strictly after `inserted_range`'s start.
-  // The previous range is the first to have a chance for an overlap - it is the
-  // last one, which starts at or before `inserted_range` start.
-  if (first_to_remove != disjoint_ranges_.begin() &&
-      detail::HasOverlap(*std::prev(first_to_remove), inserted_range)) {
-    std::advance(first_to_remove, -1);
-  }
-  // The range preceeding `first_to_remove` for sure has no overlap with
-  // `inserted_range` but it may be adjacent to it. In that case we should also
-  // remove it.
-  if (first_to_remove != disjoint_ranges_.begin() &&
-      detail::DisjointAndSortedRangesAdjacent(*std::prev(first_to_remove),
-                                              inserted_range)) {
-    std::advance(first_to_remove, -1);
-  }
-  if (first_to_remove != disjoint_ranges_.end()) {
-    if (RangeStartLess()(*first_to_remove, inserted_range)) {
-      inserted_range.set_start(std::move(first_to_remove)->start(),
-                               first_to_remove->start_open());
-    }
-    do {
-      if (RangeEndLess()(inserted_range, *first_to_remove)) {
-        inserted_range.set_end(std::move(first_to_remove)->end(),
-                                first_to_remove->end_open());
-      }
-      disjoint_ranges_.erase(first_to_remove++);
-    } while (first_to_remove != disjoint_ranges_.end() &&
-             (detail::HasOverlap(*first_to_remove, inserted_range) ||
-              detail::DisjointAndSortedRangesAdjacent(inserted_range,
-                                                      *first_to_remove)));
-  }
-  disjoint_ranges_.insert(std::move(inserted_range));
+  detail::RangeSetInsertImpl(disjoint_ranges_, std::move(inserted_range));
 }
 
 bool operator==(StringRangeSet::Range::Value const& lhs,
@@ -422,15 +426,15 @@ bool TimestampRangeSet::Range::IsEmpty(TimestampRangeSet::Range::Value start,
   if (end == std::chrono::milliseconds::zero()) {
     return false;
   }
-  return start < end;
+  return start >= end;
 }
 
-bool TimestampRangeSet::RangeStartLess::operator()(Range const& lhs,
+bool TimestampRangeSet::Range::StartLess::operator()(Range const& lhs,
                                               Range const& rhs) const {
   return lhs.start() < rhs.start();
 }
 
-bool TimestampRangeSet::RangeEndLess::operator()(Range const& lhs,
+bool TimestampRangeSet::Range::EndLess::operator()(Range const& lhs,
                                             Range const& rhs) const {
   if (lhs.end() == std::chrono::milliseconds::zero()) {
     return false;
@@ -451,44 +455,8 @@ TimestampRangeSet TimestampRangeSet::Empty() {
   return TimestampRangeSet{};
 }
 
-// FIXME - share this with StringRangeSet
 void TimestampRangeSet::Insert(TimestampRangeSet::Range inserted_range) {
-  // Remove all ranges which either have an overlap with `inserted_range` or are
-  // adjacent to it. Then add `inserted_range` with `start` and `end`
-  // adjusted to cover what the removed ranges used to cover.
-
-  auto first_to_remove = disjoint_ranges_.upper_bound(inserted_range);
-  // `*first_to_remove` starts strictly after `inserted_range`'s start.
-  // The previous range is the first to have a chance for an overlap - it is the
-  // last one, which starts at or before `inserted_range` start.
-  if (first_to_remove != disjoint_ranges_.begin() &&
-      detail::HasOverlap(*std::prev(first_to_remove), inserted_range)) {
-    std::advance(first_to_remove, -1);
-  }
-  // The range preceeding `first_to_remove` for sure has no overlap with
-  // `inserted_range` but it may be adjacent to it. In that case we should also
-  // remove it.
-  if (first_to_remove != disjoint_ranges_.begin() &&
-      detail::DisjointAndSortedRangesAdjacent(*std::prev(first_to_remove),
-                                              inserted_range)) {
-    std::advance(first_to_remove, -1);
-  }
-  if (first_to_remove != disjoint_ranges_.end()) {
-    if (RangeStartLess()(*first_to_remove, inserted_range)) {
-      inserted_range.set_start(first_to_remove->start());
-                               
-    }
-    do {
-      if (RangeEndLess()(inserted_range, *first_to_remove)) {
-        inserted_range.set_end(first_to_remove->end());
-      }
-      disjoint_ranges_.erase(first_to_remove++);
-    } while (first_to_remove != disjoint_ranges_.end() &&
-             (detail::HasOverlap(*first_to_remove, inserted_range) ||
-              detail::DisjointAndSortedRangesAdjacent(inserted_range,
-                                                      *first_to_remove)));
-  }
-  disjoint_ranges_.insert(std::move(inserted_range));
+  detail::RangeSetInsertImpl(disjoint_ranges_, std::move(inserted_range));
 }
 
 bool operator==(TimestampRangeSet::Range const& lhs,
@@ -498,9 +466,9 @@ bool operator==(TimestampRangeSet::Range const& lhs,
 
 std::ostream& operator<<(std::ostream& os,
                          TimestampRangeSet::Range const& range) {
-  os << "[" << range.start().count() << "ms-";
+  os << "[" << range.start().count() << "ms,";
   if (range.end() == std::chrono::milliseconds::zero()) {
-    os << "INF";
+    os << "inf";
   } else {
     os << range.end().count() << "ms";
   }

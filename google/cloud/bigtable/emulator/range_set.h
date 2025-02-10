@@ -54,16 +54,14 @@ class StringRangeSet {
     std::string const& start_finite() const& {
       return absl::get<std::string>(start_);
     }
-    Value&& start() && { return std::move(start_); }
     bool start_open() const { return start_open_; }
     bool start_closed() const { return !start_open_; }
-    void set_start(Value start, bool start_open);
+    void set_start(Range const& source);
 
     Value const& end() const & { return end_; }
-    Value&& end() && { return std::move(end_); }
-    void set_end(Value end, bool end_open);
     bool end_open() const { return end_open_; }
     bool end_closed() const { return !end_open_; }
+    void set_end(Range const& source);
 
     bool IsBelowStart(Value const &value) const;
     bool IsAboveEnd(Value const &value) const;
@@ -74,6 +72,18 @@ class StringRangeSet {
                         bool start_open,
                         StringRangeSet::Range::Value const& end, bool end_open);
 
+    struct ValueLess {
+      bool operator()(Range::Value const& lhs, Range::Value const& rhs) const;
+    };
+
+    struct StartLess {
+      bool operator()(Range const& lhs, Range const& rhs) const;
+    };
+
+    struct EndLess {
+      bool operator()(Range const& lhs, Range const& rhs) const;
+    };
+
    private:
     Value start_;
     bool start_open_;
@@ -81,29 +91,17 @@ class StringRangeSet {
     bool end_open_;
   };
 
-  struct RangeValueLess {
-    bool operator()(Range::Value const& lhs, Range::Value const& rhs) const;
-  };
-
-  struct RangeStartLess {
-    bool operator()(Range const& lhs, Range const& rhs) const;
-  };
-
-  struct RangeEndLess {
-    bool operator()(Range const& lhs, Range const& rhs) const;
-  };
-
   static StringRangeSet All();
   static StringRangeSet Empty();
   void Insert(Range inserted_range);
 
-  std::set<Range, RangeStartLess> const& disjoint_ranges() const {
+  std::set<Range, Range::StartLess> const& disjoint_ranges() const {
     return disjoint_ranges_;
   };
 
 
  private:
-  std::set<Range, RangeStartLess> disjoint_ranges_;
+  std::set<Range, Range::StartLess> disjoint_ranges_;
 };
 
 bool operator==(StringRangeSet::Range::Value const& lhs,
@@ -133,12 +131,12 @@ class TimestampRangeSet {
     Value start_finite() const { return start_; }
     bool start_open() const { return false; }
     bool start_closed() const { return true; }
-    void set_start(Value start) { start_ = start; }
+    void set_start(Range const& source) { start_ = source.start_; }
 
     Value end() const { return end_; }
     bool end_open() const { return true; }
     bool end_closed() const { return false; }
-    void set_end(Value end) { end_ = end; }
+    void set_end(Range const& source) { end_ = source.end_; }
 
     bool IsBelowStart(Value value) const { return value < start_; }
     bool IsAboveEnd(Value value) const;
@@ -146,30 +144,31 @@ class TimestampRangeSet {
 
     static bool IsEmpty(TimestampRangeSet::Range::Value start,
                         TimestampRangeSet::Range::Value end);
+    bool IsEmpty() const { return IsEmpty(start_, end_); }
+
+    struct StartLess {
+      bool operator()(Range const& lhs, Range const& rhs) const;
+    };
+
+    struct EndLess {
+      bool operator()(Range const& lhs, Range const& rhs) const;
+    };
 
    private:
     Value start_;
     Value end_;
   };
 
-  struct RangeStartLess {
-    bool operator()(Range const& lhs, Range const& rhs) const;
-  };
-
-  struct RangeEndLess {
-    bool operator()(Range const& lhs, Range const& rhs) const;
-  };
-
   static TimestampRangeSet All();
   static TimestampRangeSet Empty();
   void Insert(Range inserted_range);
 
-  std::set<Range, RangeStartLess> const& disjoint_ranges() const {
+  std::set<Range, Range::StartLess> const& disjoint_ranges() const {
     return disjoint_ranges_;
   };
 
  private:
-  std::set<Range, RangeStartLess> disjoint_ranges_;
+  std::set<Range, Range::StartLess> disjoint_ranges_;
 };
 
 bool operator==(TimestampRangeSet::Range const& lhs,

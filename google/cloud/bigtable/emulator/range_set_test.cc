@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/row_range.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "google/cloud/testing_util/chrono_literals.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
@@ -58,6 +59,7 @@ TEST(StringRangeValueOrder, Infinite) {
             detail::CompareRangeValues(StringRangeSet::Range::Infinity{}, ""));
 }
 
+// FIXME add invalid data tests
 TEST(StringRangeSet, FromRowRangeClosed) {
   auto closed = StringRangeSet::Range::FromRowRange(
       RowRange::Closed("A", "B").as_proto());
@@ -71,8 +73,8 @@ TEST(StringRangeSet, FromRowRangeClosed) {
 }
 
 TEST(StringRangeSet, FromRowRangeOpen) {
-  auto open = StringRangeSet::Range::FromRowRange(
-      RowRange::Open("A", "B").as_proto());
+  auto open =
+      StringRangeSet::Range::FromRowRange(RowRange::Open("A", "B").as_proto());
   EXPECT_STATUS_OK(open);
   EXPECT_EQ("A", open->start());
   EXPECT_EQ("B", open->end());
@@ -145,8 +147,8 @@ TEST(StringRangeSet, FromColumnRangeOpen) {
 }
 
 TEST(StringRangeSet, FromColumnRangeImplicitlyInfinite) {
-  auto range =
-      StringRangeSet::Range::FromColumnRange(google::bigtable::v2::ColumnRange{});
+  auto range = StringRangeSet::Range::FromColumnRange(
+      google::bigtable::v2::ColumnRange{});
 
   EXPECT_STATUS_OK(range);
   EXPECT_EQ("", range->start());
@@ -241,65 +243,65 @@ TEST(StringRangeSet, FromValueRangeExplicitlyInfinite) {
 }
 
 TEST(StringRangeSet, RangeValueLess) {
-  EXPECT_TRUE(StringRangeSet::RangeValueLess()("A", "B"));
-  EXPECT_FALSE(StringRangeSet::RangeValueLess()("A", "A"));
-  EXPECT_FALSE(StringRangeSet::RangeValueLess()("B", "A"));
+  EXPECT_TRUE(StringRangeSet::Range::ValueLess()("A", "B"));
+  EXPECT_FALSE(StringRangeSet::Range::ValueLess()("A", "A"));
+  EXPECT_FALSE(StringRangeSet::Range::ValueLess()("B", "A"));
 }
 
 TEST(StringRangeSet, RangeStartLess) {
-  EXPECT_TRUE(StringRangeSet::RangeStartLess()(
+  EXPECT_TRUE(StringRangeSet::Range::StartLess()(
       StringRangeSet::Range("A", kOpen, "unimportant", kWhatever),
       StringRangeSet::Range("B", kOpen, "unimportant", kWhatever)));
-  EXPECT_FALSE(StringRangeSet::RangeStartLess()(
+  EXPECT_FALSE(StringRangeSet::Range::StartLess()(
       StringRangeSet::Range("B", kOpen, "unimportant", kWhatever),
       StringRangeSet::Range("A", kOpen, "unimportant", kWhatever)));
-  EXPECT_FALSE(StringRangeSet::RangeStartLess()(
+  EXPECT_FALSE(StringRangeSet::Range::StartLess()(
       StringRangeSet::Range("A", kOpen, "unimportant", kWhatever),
       StringRangeSet::Range("A", kOpen, "unimportant", kWhatever)));
 
-  EXPECT_TRUE(StringRangeSet::RangeStartLess()(
+  EXPECT_TRUE(StringRangeSet::Range::StartLess()(
       StringRangeSet::Range("A", kClosed, "unimportant", kWhatever),
       StringRangeSet::Range("B", kClosed, "unimportant", kWhatever)));
-  EXPECT_FALSE(StringRangeSet::RangeStartLess()(
+  EXPECT_FALSE(StringRangeSet::Range::StartLess()(
       StringRangeSet::Range("B", kClosed, "unimportant", kWhatever),
       StringRangeSet::Range("A", kClosed, "unimportant", kWhatever)));
-  EXPECT_FALSE(StringRangeSet::RangeStartLess()(
+  EXPECT_FALSE(StringRangeSet::Range::StartLess()(
       StringRangeSet::Range("A", kClosed, "unimportant", kWhatever),
       StringRangeSet::Range("A", kClosed, "unimportant", kWhatever)));
 
-  EXPECT_FALSE(StringRangeSet::RangeStartLess()(
+  EXPECT_FALSE(StringRangeSet::Range::StartLess()(
       StringRangeSet::Range("A", kOpen, "unimportant", kWhatever),
       StringRangeSet::Range("A", kClosed, "unimportant", kWhatever)));
-  EXPECT_TRUE(StringRangeSet::RangeStartLess()(
+  EXPECT_TRUE(StringRangeSet::Range::StartLess()(
       StringRangeSet::Range("A", kClosed, "unimportant", kWhatever),
       StringRangeSet::Range("A", kOpen, "unimportant", kWhatever)));
 }
 
 TEST(StringRangeSet, RangeEndLess) {
-  EXPECT_TRUE(StringRangeSet::RangeEndLess()(
+  EXPECT_TRUE(StringRangeSet::Range::EndLess()(
       StringRangeSet::Range("unimportant", kWhatever, "A", kOpen),
       StringRangeSet::Range("unimportant", kWhatever, "B", kOpen)));
-  EXPECT_FALSE(StringRangeSet::RangeEndLess()(
+  EXPECT_FALSE(StringRangeSet::Range::EndLess()(
       StringRangeSet::Range("unimportant", kWhatever, "B", kOpen),
       StringRangeSet::Range("unimportant", kWhatever, "A", kOpen)));
-  EXPECT_FALSE(StringRangeSet::RangeEndLess()(
+  EXPECT_FALSE(StringRangeSet::Range::EndLess()(
       StringRangeSet::Range("unimportant", kWhatever, "A", kOpen),
       StringRangeSet::Range("unimportant", kWhatever, "A", kOpen)));
 
-  EXPECT_TRUE(StringRangeSet::RangeEndLess()(
+  EXPECT_TRUE(StringRangeSet::Range::EndLess()(
       StringRangeSet::Range("unimportant", kWhatever, "A", kClosed),
       StringRangeSet::Range("unimportant", kWhatever, "B", kClosed)));
-  EXPECT_FALSE(StringRangeSet::RangeEndLess()(
+  EXPECT_FALSE(StringRangeSet::Range::EndLess()(
       StringRangeSet::Range("unimportant", kWhatever, "B", kClosed),
       StringRangeSet::Range("unimportant", kWhatever, "A", kClosed)));
-  EXPECT_FALSE(StringRangeSet::RangeEndLess()(
+  EXPECT_FALSE(StringRangeSet::Range::EndLess()(
       StringRangeSet::Range("unimportant", kWhatever, "A", kClosed),
       StringRangeSet::Range("unimportant", kWhatever, "A", kClosed)));
 
-  EXPECT_FALSE(StringRangeSet::RangeEndLess()(
+  EXPECT_FALSE(StringRangeSet::Range::EndLess()(
       StringRangeSet::Range("unimportant", kWhatever, "A", kClosed),
       StringRangeSet::Range("unimportant", kWhatever, "A", kOpen)));
-  EXPECT_TRUE(StringRangeSet::RangeEndLess()(
+  EXPECT_TRUE(StringRangeSet::Range::EndLess()(
       StringRangeSet::Range("unimportant", kWhatever, "A", kOpen),
       StringRangeSet::Range("unimportant", kWhatever, "A", kClosed)));
 }
@@ -307,9 +309,9 @@ TEST(StringRangeSet, RangeEndLess) {
 TEST(StringRangeSet, BelowStart) {
   StringRangeSet::Range const open("B", kOpen, "unimportant", kWhatever);
   StringRangeSet::Range const closed("B", kClosed, "unimportant", kWhatever);
-  StringRangeSet::Range const infinite(StringRangeSet::Range::Infinity{}, kClosed,
-                                       StringRangeSet::Range::Infinity{},
-                                       kClosed);
+  StringRangeSet::Range const infinite(
+      StringRangeSet::Range::Infinity{}, kClosed,
+      StringRangeSet::Range::Infinity{}, kClosed);
 
   EXPECT_TRUE(open.IsBelowStart("A"));
   EXPECT_TRUE(closed.IsBelowStart("A"));
@@ -338,7 +340,6 @@ TEST(StringRangeSet, AboveEnd) {
   EXPECT_FALSE(infinite.IsAboveEnd("whatever_string"));
   EXPECT_FALSE(infinite.IsAboveEnd(StringRangeSet::Range::Infinity{}));
 }
-
 
 TEST(StringRangeSet, IsWithin) {
   StringRangeSet::Range const closed("A", kClosed, "C", kClosed);
@@ -460,9 +461,9 @@ TEST(StringRangeSet, HasOverlap) {
       StringRangeSet::Range("A", kClosed, StringRangeSet::Range::Infinity{},
                             kClosed)));
 
-  EXPECT_FALSE(detail::HasOverlap(
-      StringRangeSet::Range("B", kClosed, "D", kOpen),
-      StringRangeSet::Range("D", kClosed, "E", kOpen)));
+  EXPECT_FALSE(
+      detail::HasOverlap(StringRangeSet::Range("B", kClosed, "D", kOpen),
+                         StringRangeSet::Range("D", kClosed, "E", kOpen)));
   EXPECT_FALSE(detail::HasOverlap(
       StringRangeSet::Range("B", kClosed, std::string("D\0", 2), kOpen),
       StringRangeSet::Range("D", kOpen, "E", kOpen)));
@@ -522,6 +523,167 @@ TEST(StringRangeSet, DisjointAdjacent) {
   EXPECT_TRUE(detail::DisjointAndSortedRangesAdjacent(
       StringRangeSet::Range("A", kWhatever, "C", kClosed),
       StringRangeSet::Range(std::string("C\0", 2), kClosed, "D", kWhatever)));
+}
+
+// FIXME test invalid data
+TEST(TimestampRangeSet, FromInfiniteTimstampRange) {
+  using testing_util::chrono_literals::operator""_ms;
+  auto infinite = TimestampRangeSet::Range::FromTimestampRange(
+      google::bigtable::v2::TimestampRange{});
+  ASSERT_STATUS_OK(infinite);
+  EXPECT_EQ(0_ms, infinite->start());
+  EXPECT_EQ(0_ms, infinite->start_finite());
+  EXPECT_EQ(0_ms, infinite->end());
+  EXPECT_TRUE(infinite->start_closed());
+  EXPECT_TRUE(infinite->end_open());
+  EXPECT_FALSE(infinite->start_open());
+  EXPECT_FALSE(infinite->end_closed());
+}
+
+TEST(TimestampRangeSet, FromFiniteTimstampRange) {
+  using testing_util::chrono_literals::operator""_ms;
+  google::bigtable::v2::TimestampRange proto;
+  proto.set_start_timestamp_micros(1234);
+  proto.set_end_timestamp_micros(123456789);
+  auto finite = TimestampRangeSet::Range::FromTimestampRange(proto);
+  ASSERT_STATUS_OK(finite);
+  EXPECT_EQ(1_ms, finite->start());
+  EXPECT_EQ(1_ms, finite->start_finite());
+  EXPECT_EQ(123456_ms, finite->end());
+  EXPECT_TRUE(finite->start_closed());
+  EXPECT_TRUE(finite->end_open());
+  EXPECT_FALSE(finite->start_open());
+  EXPECT_FALSE(finite->end_closed());
+}
+
+TEST(TimestampRangeSet, RangeStartLess) {
+  using testing_util::chrono_literals::operator""_ms;
+  EXPECT_TRUE(TimestampRangeSet::Range::StartLess()(
+      TimestampRangeSet::Range(3_ms, 7_ms),
+      TimestampRangeSet::Range(4_ms, 7_ms)));
+  EXPECT_FALSE(TimestampRangeSet::Range::StartLess()(
+      TimestampRangeSet::Range(4_ms, 7_ms),
+      TimestampRangeSet::Range(4_ms, 7_ms)));
+  EXPECT_FALSE(TimestampRangeSet::Range::StartLess()(
+      TimestampRangeSet::Range(5_ms, 7_ms),
+      TimestampRangeSet::Range(4_ms, 7_ms)));
+}
+
+TEST(TimestampRangeSet, RangeEndLess) {
+  using testing_util::chrono_literals::operator""_ms;
+  EXPECT_TRUE(TimestampRangeSet::Range::EndLess()(
+      TimestampRangeSet::Range(3_ms, 7_ms),
+      TimestampRangeSet::Range(4_ms, 8_ms)));
+  EXPECT_FALSE(TimestampRangeSet::Range::EndLess()(
+      TimestampRangeSet::Range(4_ms, 7_ms),
+      TimestampRangeSet::Range(4_ms, 7_ms)));
+  EXPECT_FALSE(TimestampRangeSet::Range::EndLess()(
+      TimestampRangeSet::Range(4_ms, 7_ms),
+      TimestampRangeSet::Range(4_ms, 6_ms)));
+  EXPECT_TRUE(TimestampRangeSet::Range::EndLess()(
+      TimestampRangeSet::Range(4_ms, 7_ms),
+      TimestampRangeSet::Range(4_ms, 0_ms)));
+}
+
+TEST(TimestampRangeSet, BelowStart) {
+  using testing_util::chrono_literals::operator""_ms;
+  EXPECT_TRUE(TimestampRangeSet::Range(3_ms, 7_ms).IsBelowStart(0_ms));
+  EXPECT_TRUE(TimestampRangeSet::Range(3_ms, 7_ms).IsBelowStart(2_ms));
+  EXPECT_FALSE(TimestampRangeSet::Range(3_ms, 7_ms).IsBelowStart(3_ms));
+  EXPECT_FALSE(TimestampRangeSet::Range(3_ms, 7_ms).IsBelowStart(4_ms));
+}
+
+TEST(TimestampRangeSet, AboveEnd) {
+  using testing_util::chrono_literals::operator""_ms;
+  EXPECT_FALSE(TimestampRangeSet::Range(3_ms, 7_ms).IsAboveEnd(0_ms));
+  EXPECT_FALSE(TimestampRangeSet::Range(3_ms, 7_ms).IsAboveEnd(6_ms));
+  EXPECT_TRUE(TimestampRangeSet::Range(3_ms, 7_ms).IsAboveEnd(7_ms));
+  EXPECT_TRUE(TimestampRangeSet::Range(3_ms, 7_ms).IsAboveEnd(8_ms));
+  EXPECT_FALSE(TimestampRangeSet::Range(3_ms, 0_ms).IsAboveEnd(4_ms));
+  EXPECT_FALSE(TimestampRangeSet::Range(3_ms, 0_ms).IsAboveEnd(0_ms));
+}
+
+TEST(TimestampRangeSet, IsWithin) {
+  using testing_util::chrono_literals::operator""_ms;
+  EXPECT_FALSE(TimestampRangeSet::Range(3_ms, 5_ms).IsWithin(0_ms));
+  EXPECT_FALSE(TimestampRangeSet::Range(3_ms, 5_ms).IsWithin(2_ms));
+  EXPECT_TRUE(TimestampRangeSet::Range(3_ms, 5_ms).IsWithin(3_ms));
+  EXPECT_TRUE(TimestampRangeSet::Range(3_ms, 5_ms).IsWithin(4_ms));
+  EXPECT_FALSE(TimestampRangeSet::Range(3_ms, 5_ms).IsWithin(2_ms));
+  EXPECT_FALSE(TimestampRangeSet::Range(3_ms, 5_ms).IsWithin(2_ms));
+
+  EXPECT_FALSE(TimestampRangeSet::Range(3_ms, 0_ms).IsWithin(0_ms));
+  EXPECT_FALSE(TimestampRangeSet::Range(3_ms, 0_ms).IsWithin(2_ms));
+  EXPECT_TRUE(TimestampRangeSet::Range(3_ms, 0_ms).IsWithin(3_ms));
+  EXPECT_TRUE(TimestampRangeSet::Range(3_ms, 0_ms).IsWithin(4_ms));
+}
+
+TEST(TimestampRangeSet, RangeEqality) {
+  using testing_util::chrono_literals::operator""_ms;
+  EXPECT_EQ(TimestampRangeSet::Range(3_ms, 5_ms),
+            TimestampRangeSet::Range(3_ms, 5_ms));
+  EXPECT_EQ(TimestampRangeSet::Range(3_ms, 0_ms),
+            TimestampRangeSet::Range(3_ms, 0_ms));
+
+  EXPECT_FALSE(TimestampRangeSet::Range(3_ms, 5_ms) ==
+               TimestampRangeSet::Range(4_ms, 5_ms));
+  EXPECT_FALSE(TimestampRangeSet::Range(3_ms, 5_ms) ==
+               TimestampRangeSet::Range(3_ms, 6_ms));
+  EXPECT_FALSE(TimestampRangeSet::Range(3_ms, 0_ms) ==
+               TimestampRangeSet::Range(4_ms, 0_ms));
+  EXPECT_FALSE(TimestampRangeSet::Range(3_ms, 0_ms) ==
+               TimestampRangeSet::Range(3_ms, 10_ms));
+}
+
+TEST(TimestampRangeSet, RangePrint) {
+  using testing_util::chrono_literals::operator""_ms;
+  {
+    std::stringstream os;
+    os << TimestampRangeSet::Range(1_ms, 3_ms);
+    EXPECT_EQ("[1ms,3ms)", os.str());
+  }
+  {
+    std::stringstream os;
+    os << TimestampRangeSet::Range(1_ms, 0_ms);
+    EXPECT_EQ("[1ms,inf)", os.str());
+  }
+}
+
+TEST(TimestampRangeSet, IsEmpty) {
+  using testing_util::chrono_literals::operator""_ms;
+  EXPECT_TRUE(TimestampRangeSet::Range(3_ms, 3_ms).IsEmpty());
+  EXPECT_FALSE(TimestampRangeSet::Range(3_ms, 0_ms).IsEmpty());
+  EXPECT_FALSE(TimestampRangeSet::Range(0_ms, 0_ms).IsEmpty());
+  EXPECT_FALSE(TimestampRangeSet::Range(1_ms, 0_ms).IsEmpty());
+  EXPECT_FALSE(TimestampRangeSet::Range(1_ms, 2_ms).IsEmpty());
+}
+
+TEST(TimestampRangeSet, HasOverlap) {
+  using testing_util::chrono_literals::operator""_ms;
+  EXPECT_FALSE(detail::HasOverlap(TimestampRangeSet::Range(4_ms, 7_ms),
+                                  TimestampRangeSet::Range(0_ms, 4_ms)));
+  EXPECT_TRUE(detail::HasOverlap(TimestampRangeSet::Range(4_ms, 7_ms),
+                                 TimestampRangeSet::Range(0_ms, 5_ms)));
+  EXPECT_TRUE(detail::HasOverlap(TimestampRangeSet::Range(4_ms, 7_ms),
+                                 TimestampRangeSet::Range(6_ms, 9_ms)));
+  EXPECT_FALSE(detail::HasOverlap(TimestampRangeSet::Range(4_ms, 7_ms),
+                                  TimestampRangeSet::Range(7_ms, 9_ms)));
+  EXPECT_TRUE(detail::HasOverlap(TimestampRangeSet::Range(4_ms, 0_ms),
+                                 TimestampRangeSet::Range(7_ms, 9_ms)));
+  EXPECT_FALSE(detail::HasOverlap(TimestampRangeSet::Range(4_ms, 0_ms),
+                                  TimestampRangeSet::Range(3_ms, 4_ms)));
+  EXPECT_TRUE(detail::HasOverlap(TimestampRangeSet::Range(4_ms, 0_ms),
+                                 TimestampRangeSet::Range(3_ms, 5_ms)));
+}
+
+TEST(TimestampRangeSet, DisjointAdjacent) {
+  using testing_util::chrono_literals::operator""_ms;
+  EXPECT_TRUE(detail::DisjointAndSortedRangesAdjacent(
+      TimestampRangeSet::Range(0_ms, 1_ms),
+      TimestampRangeSet::Range(1_ms, 2_ms)));
+  EXPECT_FALSE(detail::DisjointAndSortedRangesAdjacent(
+      TimestampRangeSet::Range(0_ms, 1_ms),
+      TimestampRangeSet::Range(2_ms, 2_ms)));
 }
 
 TEST(StringRangeSet, SingleRange) {
