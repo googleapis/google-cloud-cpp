@@ -71,10 +71,20 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "rules_cc",
         urls = [
-            "https://github.com/bazelbuild/rules_cc/releases/download/0.0.17/rules_cc-0.0.17.tar.gz",
+            "https://github.com/bazelbuild/rules_cc/releases/download/0.1.0/rules_cc-0.1.0.tar.gz",
         ],
-        sha256 = "abc605dd850f813bb37004b77db20106a19311a96b2da1c92b789da529d28fe1",
-        strip_prefix = "rules_cc-0.0.17",
+        sha256 = "4b12149a041ddfb8306a8fd0e904e39d673552ce82e4296e96fac9cbf0780e59",
+        strip_prefix = "rules_cc-0.1.0",
+    )
+
+    # Load rules_java, used by protobuf
+    maybe(
+        http_archive,
+        name = "rules_java",
+        urls = [
+            "https://github.com/bazelbuild/rules_java/releases/download/8.8.0/rules_java-8.8.0.tar.gz",
+        ],
+        sha256 = "f79a6e10cdd213ceded45884914bb8c68f0c8d41144e74ec89ebb74984c409ac",
     )
 
     # protobuf requires this
@@ -165,6 +175,17 @@ def gl_cpp_workspace0(name = None):
         ],
         sha256 = "c25e5c1ac36fa6709b2fd9095584228d48e9f82bcf97d8cd868bcbe796f90ba5",
         strip_prefix = "boringssl-82a53d8c902f940eb1310f76a0b96c40c67f632f",
+    )
+
+    # Needed by grpc to work with latest protobuf.
+    maybe(
+        http_archive,
+        name = "com_envoyproxy_protoc_gen_validate",
+        urls = [
+            "https://github.com/bufbuild/protoc-gen-validate/archive/v1.2.1.tar.gz",
+        ],
+        sha256 = "e4718352754df1393b8792b631338aa8562f390e8160783e365454bc11d96328",
+        strip_prefix = "protoc-gen-validate-1.2.1",
     )
 
     # Load gRPC and its dependencies, using a similar pattern to this function.

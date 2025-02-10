@@ -21,6 +21,7 @@ load(
     "switched_rules_by_language",
 )
 load("@rules_cc//cc:repositories.bzl", "rules_cc_dependencies")
+load("@rules_java//java:rules_java_deps.bzl", "rules_java_dependencies")
 
 def gl_cpp_workspace2(name = None):
     """Loads dependencies needed to use the google-cloud-cpp libraries.
@@ -37,6 +38,8 @@ def gl_cpp_workspace2(name = None):
     apple_support_dependencies()
 
     rules_cc_dependencies()
+
+    rules_java_dependencies()
 
     # Configure @com_google_googleapis to only compile C++ and gRPC libraries.
     switched_rules_by_language(
