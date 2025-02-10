@@ -21,7 +21,6 @@ GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES = [
 ]
 
 GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES = [
-    "bigquerycontrol",
     "storage_grpc",
 ]
 
@@ -45,6 +44,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "batch",
     "beyondcorp",
     "bigquery",
+    "bigquerycontrol",
     "bigtable",
     "billing",
     "binaryauthorization",
