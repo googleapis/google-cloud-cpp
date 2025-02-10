@@ -168,7 +168,6 @@ class TimestampRangeSet {
     return disjoint_ranges_;
   };
 
-
  private:
   std::set<Range, RangeStartLess> disjoint_ranges_;
 };
@@ -179,6 +178,23 @@ bool operator==(TimestampRangeSet::Range const& lhs,
 std::ostream& operator<<(std::ostream& os,
                          TimestampRangeSet::Range const& range);
 
+// For testing only.
+namespace detail {
+
+int CompareRangeValues(StringRangeSet::Range::Value const& lhs,
+                       StringRangeSet::Range::Value const& rhs);
+bool ConsecutiveRowKeys(StringRangeSet::Range::Value const& lhs,
+                        StringRangeSet::Range::Value const& rhs);
+bool HasOverlap(StringRangeSet::Range const& lhs,
+                StringRangeSet::Range const& rhs);
+bool HasOverlap(TimestampRangeSet::Range const& lhs,
+                TimestampRangeSet::Range const& rhs);
+bool DisjointAndSortedRangesAdjacent(StringRangeSet::Range const& lhs,
+                                     StringRangeSet::Range const& rhs);
+bool DisjointAndSortedRangesAdjacent(TimestampRangeSet::Range const& lhs,
+                                     TimestampRangeSet::Range const& rhs);
+
+}  // namespace detail
 }  // namespace emulator
 }  // namespace bigtable
 }  // namespace cloud

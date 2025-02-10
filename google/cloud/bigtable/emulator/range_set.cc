@@ -20,12 +20,13 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 namespace emulator {
-namespace {
+namespace detail {
 
 int CompareRangeValues(StringRangeSet::Range::Value const& lhs,
                        StringRangeSet::Range::Value const& rhs) {
   if (absl::holds_alternative<StringRangeSet::Range::Infinity>(lhs)) {
-    return absl::holds_alternative<StringRangeSet::Range::Infinity>(rhs) ? 0 : 1;
+    return absl::holds_alternative<StringRangeSet::Range::Infinity>(rhs) ? 0
+                                                                         : 1;
   }
   if (absl::holds_alternative<StringRangeSet::Range::Infinity>(rhs)) {
     return -1;
@@ -81,7 +82,7 @@ bool DisjointAndSortedRangesAdjacent(StringRangeSet::Range const& lhs,
   // FIXME - ConsecutiveRowKeys should somehow take into account the allowed
   // length of the strings.
   if (lhs.end_closed() && rhs.start_closed() &&
-      ConsecutiveRowKeys(lhs.end(), rhs.start())) {
+      detail::ConsecutiveRowKeys(lhs.end(), rhs.start())) {
     return true;
   }
   return false;
@@ -94,7 +95,7 @@ bool DisjointAndSortedRangesAdjacent(TimestampRangeSet::Range const& lhs,
   return lhs.end() == rhs.start();
 }
 
-}  // anonymous namespace
+}  // namespace detail
 
 StringRangeSet::Range::Range(Value start, bool start_open, Value end,
                            bool end_open)
@@ -104,11 +105,11 @@ StringRangeSet::Range::Range(Value start, bool start_open, Value end,
       end_open_(end_open) {
   assert(!RangeValueLess()(end, start));
   assert(!absl::holds_alternative<StringRangeSet::Range::Infinity>(start) ||
-         start_open_);
+         !start_open_);
   assert(!absl::holds_alternative<StringRangeSet::Range::Infinity>(end) ||
-         end_open_);
+         !end_open_);
   assert(!absl::holds_alternative<StringRangeSet::Range::Infinity>(start) ||
-         StringRangeSet::Range::IsEmpty(start_, start_open_, end_, end_open_));
+         absl::holds_alternative<StringRangeSet::Range::Infinity>(end));
 }
 
 StatusOr<StringRangeSet::Range> StringRangeSet::Range::FromRowRange(
@@ -137,7 +138,7 @@ StatusOr<StringRangeSet::Range> StringRangeSet::Range::FromRowRange(
     end_open = false;
   } else {
     end = StringRangeSet::Range::Value(StringRangeSet::Range::Infinity{});
-    end_open = true;
+    end_open = false;
   }
   if (StringRangeSet::RangeValueLess()(end, start)) {
     return InvalidArgumentError(
@@ -176,7 +177,7 @@ StatusOr<StringRangeSet::Range> StringRangeSet::Range::FromValueRange(
     end_open = false;
   } else {
     end = StringRangeSet::Range::Value(StringRangeSet::Range::Infinity{});
-    end_open = true;
+    end_open = false;
   }
   if (StringRangeSet::RangeValueLess()(end, start)) {
     return InvalidArgumentError("reversed `value_range`",
@@ -215,7 +216,7 @@ StatusOr<StringRangeSet::Range> StringRangeSet::Range::FromColumnRange(
     end_open = false;
   } else {
     end = StringRangeSet::Range::Value(StringRangeSet::Range::Infinity{});
-    end_open = true;
+    end_open = false;
   }
   if (StringRangeSet::RangeValueLess()(end, start)) {
     return InvalidArgumentError(
@@ -238,7 +239,7 @@ void StringRangeSet::Range::set_end(Value end, bool end_open) {
 }
 
 bool StringRangeSet::Range::IsBelowStart(Value const &value) const {
-  auto const cmp = CompareRangeValues(start_, value);
+  auto const cmp = detail::CompareRangeValues(value, start_);
   if (cmp != 0) {
     return cmp < 0;
   }
@@ -249,24 +250,24 @@ bool StringRangeSet::Range::IsEmpty(StringRangeSet::Range::Value const& start,
                                     bool start_open,
                                     StringRangeSet::Range::Value const& end,
                                     bool end_open) {
-  auto const res_cmp = CompareRangeValues(start, end);
+  auto const res_cmp = detail::CompareRangeValues(start, end);
   if (res_cmp > 0) {
     return true;
   }
   if (res_cmp == 0) {
-    return start_open || end_open;
+    return start_open || end_open ||
+           absl::holds_alternative<StringRangeSet::Range::Infinity>(start);
   }
   if (start_open && end_open) {
     // FIXME - ConsecutiveRowKeys should somehow take into account the allowed
     // length of the strings.
-    return ConsecutiveRowKeys(start, end);
+    return detail::ConsecutiveRowKeys(start, end);
   }
   return false;
 }
 
-
 bool StringRangeSet::Range::IsAboveEnd(Value const &value) const {
-  auto const cmp = CompareRangeValues(value, end_);
+  auto const cmp = detail::CompareRangeValues(value, end_);
   if (cmp != 0) {
     return cmp > 0;
   }
@@ -283,12 +284,12 @@ bool StringRangeSet::Range::IsEmpty() const {
 
 bool StringRangeSet::RangeValueLess::operator()(Range::Value const& lhs,
                                               Range::Value const& rhs) const {
-  return CompareRangeValues(lhs, rhs) < 0;
+  return detail::CompareRangeValues(lhs, rhs) < 0;
 }
 
 bool StringRangeSet::RangeStartLess::operator()(Range const& lhs,
                                               Range const& rhs) const {
-  auto res = CompareRangeValues(lhs.start(), rhs.start());
+  auto res = detail::CompareRangeValues(lhs.start(), rhs.start());
   if (res == 0) {
     return lhs.start_closed() && rhs.start_open();
   }
@@ -297,7 +298,7 @@ bool StringRangeSet::RangeStartLess::operator()(Range const& lhs,
 
 bool StringRangeSet::RangeEndLess::operator()(Range const& lhs,
                                             Range const& rhs) const {
-  auto res = CompareRangeValues(lhs.end(), rhs.end());
+  auto res = detail::CompareRangeValues(lhs.end(), rhs.end());
   if (res == 0) {
     return lhs.end_open() && rhs.end_closed();
   }
@@ -324,15 +325,15 @@ void StringRangeSet::Insert(StringRangeSet::Range inserted_range) {
   // The previous range is the first to have a chance for an overlap - it is the
   // last one, which starts at or before `inserted_range` start.
   if (first_to_remove != disjoint_ranges_.begin() &&
-      HasOverlap(*std::prev(first_to_remove), inserted_range)) {
+      detail::HasOverlap(*std::prev(first_to_remove), inserted_range)) {
     std::advance(first_to_remove, -1);
   }
   // The range preceeding `first_to_remove` for sure has no overlap with
   // `inserted_range` but it may be adjacent to it. In that case we should also
   // remove it.
   if (first_to_remove != disjoint_ranges_.begin() &&
-      DisjointAndSortedRangesAdjacent(*std::prev(first_to_remove),
-                                      inserted_range)) {
+      detail::DisjointAndSortedRangesAdjacent(*std::prev(first_to_remove),
+                                              inserted_range)) {
     std::advance(first_to_remove, -1);
   }
   if (first_to_remove != disjoint_ranges_.end()) {
@@ -346,10 +347,10 @@ void StringRangeSet::Insert(StringRangeSet::Range inserted_range) {
                                 first_to_remove->end_open());
       }
       disjoint_ranges_.erase(first_to_remove++);
-    } while (
-        first_to_remove != disjoint_ranges_.end() &&
-        (HasOverlap(*first_to_remove, inserted_range) ||
-         DisjointAndSortedRangesAdjacent(inserted_range, *first_to_remove)));
+    } while (first_to_remove != disjoint_ranges_.end() &&
+             (detail::HasOverlap(*first_to_remove, inserted_range) ||
+              detail::DisjointAndSortedRangesAdjacent(inserted_range,
+                                                      *first_to_remove)));
   }
   disjoint_ranges_.insert(std::move(inserted_range));
 }
@@ -369,8 +370,9 @@ std::ostream& operator<<(std::ostream& os,
                          StringRangeSet::Range::Value const& value) {
   if (absl::holds_alternative<StringRangeSet::Range::Infinity>(value)) {
     os << "inf";
+    return os;
   }
-  os << absl::holds_alternative<std::string>(value);
+  os << absl::get<std::string>(value);
   return os;
 }
 
@@ -460,15 +462,15 @@ void TimestampRangeSet::Insert(TimestampRangeSet::Range inserted_range) {
   // The previous range is the first to have a chance for an overlap - it is the
   // last one, which starts at or before `inserted_range` start.
   if (first_to_remove != disjoint_ranges_.begin() &&
-      HasOverlap(*std::prev(first_to_remove), inserted_range)) {
+      detail::HasOverlap(*std::prev(first_to_remove), inserted_range)) {
     std::advance(first_to_remove, -1);
   }
   // The range preceeding `first_to_remove` for sure has no overlap with
   // `inserted_range` but it may be adjacent to it. In that case we should also
   // remove it.
   if (first_to_remove != disjoint_ranges_.begin() &&
-      DisjointAndSortedRangesAdjacent(*std::prev(first_to_remove),
-                                      inserted_range)) {
+      detail::DisjointAndSortedRangesAdjacent(*std::prev(first_to_remove),
+                                              inserted_range)) {
     std::advance(first_to_remove, -1);
   }
   if (first_to_remove != disjoint_ranges_.end()) {
@@ -481,10 +483,10 @@ void TimestampRangeSet::Insert(TimestampRangeSet::Range inserted_range) {
         inserted_range.set_end(first_to_remove->end());
       }
       disjoint_ranges_.erase(first_to_remove++);
-    } while (
-        first_to_remove != disjoint_ranges_.end() &&
-        (HasOverlap(*first_to_remove, inserted_range) ||
-         DisjointAndSortedRangesAdjacent(inserted_range, *first_to_remove)));
+    } while (first_to_remove != disjoint_ranges_.end() &&
+             (detail::HasOverlap(*first_to_remove, inserted_range) ||
+              detail::DisjointAndSortedRangesAdjacent(inserted_range,
+                                                      *first_to_remove)));
   }
   disjoint_ranges_.insert(std::move(inserted_range));
 }
