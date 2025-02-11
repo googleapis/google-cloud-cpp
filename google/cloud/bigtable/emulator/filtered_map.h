@@ -108,10 +108,6 @@ class FilteredMapView {
         ++filter_pos_;
         AdvanceToNextRange();
       }
-      // This situation indicates that there are no rows which start after
-      // current (as pointed by `filter_pos_`) range's start. Given that we're
-      // traversing `filter_` in order, there will be no such rows for
-      // following ranges, i.e. we've reached the end.
     }
 
     std::reference_wrapper<FilteredMapView const> parent_;

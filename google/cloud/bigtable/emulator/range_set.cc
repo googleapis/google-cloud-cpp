@@ -104,18 +104,13 @@ void RangeSetInsertImpl(RangeSetType& disjoint_ranges,
 
   auto first_to_remove = disjoint_ranges.upper_bound(inserted_range);
   // `*first_to_remove` starts strictly after `inserted_range`'s start.
-  // The previous range is the first to have a chance for an overlap - it is the
-  // last one, which starts at or before `inserted_range` start.
+  // The previous range is the first to have a chance for an overlap (or being
+  // adjacent) - it is the last one, which starts at or before `inserted_range`
+  // start.
   if (first_to_remove != disjoint_ranges.begin() &&
-      detail::HasOverlap(*std::prev(first_to_remove), inserted_range)) {
-    std::advance(first_to_remove, -1);
-  }
-  // The range preceeding `first_to_remove` for sure has no overlap with
-  // `inserted_range` but it may be adjacent to it. In that case we should also
-  // remove it.
-  if (first_to_remove != disjoint_ranges.begin() &&
-      detail::DisjointAndSortedRangesAdjacent(*std::prev(first_to_remove),
-                                              inserted_range)) {
+      (detail::HasOverlap(*std::prev(first_to_remove), inserted_range) ||
+       detail::DisjointAndSortedRangesAdjacent(*std::prev(first_to_remove),
+                                               inserted_range))) {
     std::advance(first_to_remove, -1);
   }
   if (first_to_remove != disjoint_ranges.end()) {
@@ -347,7 +342,7 @@ bool StringRangeSet::Range::EndLess::operator()(Range const& lhs,
 
 StringRangeSet StringRangeSet::All() {
   StringRangeSet res;
-  res.Insert(Range("", false, StringRangeSet::Range::Infinity{}, true));
+  res.Insert(Range("", false, StringRangeSet::Range::Infinity{}, false));
   return res;
 }
 
