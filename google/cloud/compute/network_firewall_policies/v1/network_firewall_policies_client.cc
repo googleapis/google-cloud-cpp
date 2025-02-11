@@ -92,6 +92,64 @@ NetworkFirewallPoliciesClient::AddAssociation(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkFirewallPoliciesClient::AddPacketMirroringRule(
+    std::string const& project, std::string const& firewall_policy,
+    google::cloud::cpp::compute::v1::FirewallPolicyRule const&
+        firewall_policy_rule_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::network_firewall_policies::v1::
+      AddPacketMirroringRuleRequest request;
+  request.set_project(project);
+  request.set_firewall_policy(firewall_policy);
+  *request.mutable_firewall_policy_rule_resource() =
+      firewall_policy_rule_resource;
+  return connection_->AddPacketMirroringRule(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkFirewallPoliciesClient::AddPacketMirroringRule(
+    NoAwaitTag, std::string const& project, std::string const& firewall_policy,
+    google::cloud::cpp::compute::v1::FirewallPolicyRule const&
+        firewall_policy_rule_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::network_firewall_policies::v1::
+      AddPacketMirroringRuleRequest request;
+  request.set_project(project);
+  request.set_firewall_policy(firewall_policy);
+  *request.mutable_firewall_policy_rule_resource() =
+      firewall_policy_rule_resource;
+  return connection_->AddPacketMirroringRule(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkFirewallPoliciesClient::AddPacketMirroringRule(
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        AddPacketMirroringRuleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AddPacketMirroringRule(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkFirewallPoliciesClient::AddPacketMirroringRule(
+    NoAwaitTag,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        AddPacketMirroringRuleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AddPacketMirroringRule(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkFirewallPoliciesClient::AddPacketMirroringRule(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AddPacketMirroringRule(operation);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkFirewallPoliciesClient::AddRule(
     std::string const& project, std::string const& firewall_policy,
     google::cloud::cpp::compute::v1::FirewallPolicyRule const&
@@ -335,6 +393,27 @@ NetworkFirewallPoliciesClient::GetIamPolicy(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyRule>
+NetworkFirewallPoliciesClient::GetPacketMirroringRule(
+    std::string const& project, std::string const& firewall_policy,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::network_firewall_policies::v1::
+      GetPacketMirroringRuleRequest request;
+  request.set_project(project);
+  request.set_firewall_policy(firewall_policy);
+  return connection_->GetPacketMirroringRule(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyRule>
+NetworkFirewallPoliciesClient::GetPacketMirroringRule(
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        GetPacketMirroringRuleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetPacketMirroringRule(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyRule>
 NetworkFirewallPoliciesClient::GetRule(std::string const& project,
                                        std::string const& firewall_policy,
                                        Options opts) {
@@ -485,6 +564,64 @@ NetworkFirewallPoliciesClient::PatchFirewallPolicy(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkFirewallPoliciesClient::PatchPacketMirroringRule(
+    std::string const& project, std::string const& firewall_policy,
+    google::cloud::cpp::compute::v1::FirewallPolicyRule const&
+        firewall_policy_rule_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::network_firewall_policies::v1::
+      PatchPacketMirroringRuleRequest request;
+  request.set_project(project);
+  request.set_firewall_policy(firewall_policy);
+  *request.mutable_firewall_policy_rule_resource() =
+      firewall_policy_rule_resource;
+  return connection_->PatchPacketMirroringRule(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkFirewallPoliciesClient::PatchPacketMirroringRule(
+    NoAwaitTag, std::string const& project, std::string const& firewall_policy,
+    google::cloud::cpp::compute::v1::FirewallPolicyRule const&
+        firewall_policy_rule_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::network_firewall_policies::v1::
+      PatchPacketMirroringRuleRequest request;
+  request.set_project(project);
+  request.set_firewall_policy(firewall_policy);
+  *request.mutable_firewall_policy_rule_resource() =
+      firewall_policy_rule_resource;
+  return connection_->PatchPacketMirroringRule(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkFirewallPoliciesClient::PatchPacketMirroringRule(
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        PatchPacketMirroringRuleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchPacketMirroringRule(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkFirewallPoliciesClient::PatchPacketMirroringRule(
+    NoAwaitTag,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        PatchPacketMirroringRuleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchPacketMirroringRule(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkFirewallPoliciesClient::PatchPacketMirroringRule(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchPacketMirroringRule(operation);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkFirewallPoliciesClient::PatchRule(
     std::string const& project, std::string const& firewall_policy,
     google::cloud::cpp::compute::v1::FirewallPolicyRule const&
@@ -590,6 +727,56 @@ NetworkFirewallPoliciesClient::RemoveAssociation(
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RemoveAssociation(operation);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkFirewallPoliciesClient::RemovePacketMirroringRule(
+    std::string const& project, std::string const& firewall_policy,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::network_firewall_policies::v1::
+      RemovePacketMirroringRuleRequest request;
+  request.set_project(project);
+  request.set_firewall_policy(firewall_policy);
+  return connection_->RemovePacketMirroringRule(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkFirewallPoliciesClient::RemovePacketMirroringRule(
+    NoAwaitTag, std::string const& project, std::string const& firewall_policy,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::network_firewall_policies::v1::
+      RemovePacketMirroringRuleRequest request;
+  request.set_project(project);
+  request.set_firewall_policy(firewall_policy);
+  return connection_->RemovePacketMirroringRule(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkFirewallPoliciesClient::RemovePacketMirroringRule(
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        RemovePacketMirroringRuleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RemovePacketMirroringRule(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkFirewallPoliciesClient::RemovePacketMirroringRule(
+    NoAwaitTag,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        RemovePacketMirroringRuleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RemovePacketMirroringRule(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkFirewallPoliciesClient::RemovePacketMirroringRule(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RemovePacketMirroringRule(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
