@@ -61,6 +61,88 @@ DefaultRowAccessPolicyServiceRestStub::ListRowAccessPolicies(
       std::move(query_params));
 }
 
+StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>
+DefaultRowAccessPolicyServiceRestStub::GetRowAccessPolicy(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::bigquery::v2::GetRowAccessPolicyRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  return rest_internal::Get<google::cloud::bigquery::v2::RowAccessPolicy>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "bigquery", "/",
+                   rest_internal::DetermineApiVersion("v2", options), "/",
+                   "projects", "/", request.project_id(), "/", "datasets", "/",
+                   request.dataset_id(), "/", "tables", "/", request.table_id(),
+                   "/", "rowAccessPolicies", "/", request.policy_id()),
+      std::move(query_params));
+}
+
+StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>
+DefaultRowAccessPolicyServiceRestStub::CreateRowAccessPolicy(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::bigquery::v2::CreateRowAccessPolicyRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  return rest_internal::Post<google::cloud::bigquery::v2::RowAccessPolicy>(
+      *service_, rest_context, request.row_access_policy(), false,
+      absl::StrCat("/", "bigquery", "/",
+                   rest_internal::DetermineApiVersion("v2", options), "/",
+                   "projects", "/", request.project_id(), "/", "datasets", "/",
+                   request.dataset_id(), "/", "tables", "/", request.table_id(),
+                   "/", "rowAccessPolicies"),
+      std::move(query_params));
+}
+
+StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>
+DefaultRowAccessPolicyServiceRestStub::UpdateRowAccessPolicy(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::bigquery::v2::UpdateRowAccessPolicyRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  return rest_internal::Put<google::cloud::bigquery::v2::RowAccessPolicy>(
+      *service_, rest_context, request.row_access_policy(), false,
+      absl::StrCat("/", "bigquery", "/",
+                   rest_internal::DetermineApiVersion("v2", options), "/",
+                   "projects", "/", request.project_id(), "/", "datasets", "/",
+                   request.dataset_id(), "/", "tables", "/", request.table_id(),
+                   "/", "rowAccessPolicies", "/", request.policy_id()),
+      std::move(query_params));
+}
+
+Status DefaultRowAccessPolicyServiceRestStub::DeleteRowAccessPolicy(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::bigquery::v2::DeleteRowAccessPolicyRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"force", (request.force() ? "1" : "0")});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
+  return rest_internal::Delete<google::cloud::rest_internal::EmptyResponseType>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "bigquery", "/",
+                   rest_internal::DetermineApiVersion("v2", options), "/",
+                   "projects", "/", request.project_id(), "/", "datasets", "/",
+                   request.dataset_id(), "/", "tables", "/", request.table_id(),
+                   "/", "rowAccessPolicies", "/", request.policy_id()),
+      std::move(query_params));
+}
+
+Status DefaultRowAccessPolicyServiceRestStub::BatchDeleteRowAccessPolicies(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::bigquery::v2::BatchDeleteRowAccessPoliciesRequest const&
+        request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  return rest_internal::Post<google::cloud::rest_internal::EmptyResponseType>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "bigquery", "/",
+                   rest_internal::DetermineApiVersion("v2", options), "/",
+                   "projects", "/", request.project_id(), "/", "datasets", "/",
+                   request.dataset_id(), "/", "tables", "/", request.table_id(),
+                   "/", "rowAccessPolicies", ":batchDelete"),
+      std::move(query_params));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquerycontrol_v2_internal
 }  // namespace cloud

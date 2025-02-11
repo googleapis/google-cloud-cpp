@@ -536,6 +536,50 @@ class NetAppLogging : public NetAppStub {
       google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request)
       override;
 
+  StatusOr<google::cloud::netapp::v1::ListQuotaRulesResponse> ListQuotaRules(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::netapp::v1::ListQuotaRulesRequest const& request) override;
+
+  StatusOr<google::cloud::netapp::v1::QuotaRule> GetQuotaRule(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::netapp::v1::GetQuotaRuleRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateQuotaRule(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::netapp::v1::CreateQuotaRuleRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateQuotaRule(
+      grpc::ClientContext& context, Options options,
+      google::cloud::netapp::v1::CreateQuotaRuleRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateQuotaRule(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateQuotaRule(
+      grpc::ClientContext& context, Options options,
+      google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteQuotaRule(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteQuotaRule(
+      grpc::ClientContext& context, Options options,
+      google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request)
+      override;
+
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;

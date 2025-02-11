@@ -82,6 +82,81 @@ RowAccessPolicyServiceRestConnectionImpl::ListRowAccessPolicies(
       });
 }
 
+StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>
+RowAccessPolicyServiceRestConnectionImpl::GetRowAccessPolicy(
+    google::cloud::bigquery::v2::GetRowAccessPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetRowAccessPolicy(request),
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::bigquery::v2::GetRowAccessPolicyRequest const&
+                 request) {
+        return stub_->GetRowAccessPolicy(rest_context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>
+RowAccessPolicyServiceRestConnectionImpl::CreateRowAccessPolicy(
+    google::cloud::bigquery::v2::CreateRowAccessPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateRowAccessPolicy(request),
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::bigquery::v2::CreateRowAccessPolicyRequest const&
+                 request) {
+        return stub_->CreateRowAccessPolicy(rest_context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>
+RowAccessPolicyServiceRestConnectionImpl::UpdateRowAccessPolicy(
+    google::cloud::bigquery::v2::UpdateRowAccessPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateRowAccessPolicy(request),
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::bigquery::v2::UpdateRowAccessPolicyRequest const&
+                 request) {
+        return stub_->UpdateRowAccessPolicy(rest_context, options, request);
+      },
+      *current, request, __func__);
+}
+
+Status RowAccessPolicyServiceRestConnectionImpl::DeleteRowAccessPolicy(
+    google::cloud::bigquery::v2::DeleteRowAccessPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteRowAccessPolicy(request),
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::bigquery::v2::DeleteRowAccessPolicyRequest const&
+                 request) {
+        return stub_->DeleteRowAccessPolicy(rest_context, options, request);
+      },
+      *current, request, __func__);
+}
+
+Status RowAccessPolicyServiceRestConnectionImpl::BatchDeleteRowAccessPolicies(
+    google::cloud::bigquery::v2::BatchDeleteRowAccessPoliciesRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->BatchDeleteRowAccessPolicies(request),
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::bigquery::v2::
+                 BatchDeleteRowAccessPoliciesRequest const& request) {
+        return stub_->BatchDeleteRowAccessPolicies(rest_context, options,
+                                                   request);
+      },
+      *current, request, __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquerycontrol_v2_internal
 }  // namespace cloud
