@@ -300,7 +300,8 @@ bool MergeCellStreams::CellStreamGreater::operator()(
   return (*lhs)->timestamp() > (*rhs)->timestamp();
 }
 
-MergeCellStreams::MergeCellStreams(std::vector<CellStream> streams) {
+MergeCellStreams::MergeCellStreams(std::vector<CellStream> streams)
+    : initialized_(false) {
   for (auto& stream : streams) {
     unfinished_streams_.emplace_back(
         std::make_unique<CellStream>(std::move(stream)));

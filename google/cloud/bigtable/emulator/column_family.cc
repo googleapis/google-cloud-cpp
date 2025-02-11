@@ -96,12 +96,12 @@ class FilteredColumnFamilyStream::FilterApply {
   FilterApply(FilteredColumnFamilyStream& parent) : parent_(parent) {}
 
   bool operator()(ColumnRange const& column_range) {
-    parent_.column_ranges_->Insert(column_range.range);
+    parent_.column_ranges_.Insert(column_range.range);
     return true;
   }
 
   bool operator()(TimestampRange const& timestamp_range) {
-    parent_.timestamp_ranges_->Insert(timestamp_range.range);
+    parent_.timestamp_ranges_.Insert(timestamp_range.range);
     return true;
   }
 
@@ -176,6 +176,13 @@ bool FilteredColumnFamilyStream::Next(NextMode mode) {
 
 void FilteredColumnFamilyStream::InitializeIfNeeded() const {
   if (!initialized_) {
+    if (column_ranges_.disjoint_ranges().empty()) {
+      column_ranges_.Insert(*StringRangeSet::All().disjoint_ranges().begin());
+    }
+    if (timestamp_ranges_.disjoint_ranges().empty()) {
+      timestamp_ranges_.Insert(*
+          TimestampRangeSet::All().disjoint_ranges().begin());
+    }
     PointToFirstCellAfterRowChange();
     initialized_ = true;
   }
@@ -185,7 +192,7 @@ void FilteredColumnFamilyStream::InitializeIfNeeded() const {
 bool FilteredColumnFamilyStream::PointToFirstCellAfterColumnChange() const {
   for (; column_it_.value() != columns_.value().end(); ++(column_it_.value())) {
     cells_ = FilteredMapView<ColumnRow, TimestampRangeSet>(
-        column_it_.value()->second, *timestamp_ranges_);
+        column_it_.value()->second, timestamp_ranges_);
     cell_it_ = cells_.value().begin();
     if (cell_it_.value() != cells_.value().end()) {
       return true;
@@ -198,7 +205,7 @@ bool FilteredColumnFamilyStream::PointToFirstCellAfterColumnChange() const {
 bool FilteredColumnFamilyStream::PointToFirstCellAfterRowChange() const {
   for (; row_it_ != rows_.end(); ++row_it_) {
     columns_ = FilteredMapView<ColumnFamilyRow, StringRangeSet>(
-        row_it_->second, *column_ranges_);
+        row_it_->second, column_ranges_);
     column_it_.value() = columns_.value().begin();
     if (PointToFirstCellAfterColumnChange()) {
       return true;

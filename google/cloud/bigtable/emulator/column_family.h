@@ -123,11 +123,11 @@ class FilteredColumnFamilyStream : public AbstractCellStreamImpl {
 
   std::string column_family_name_;
 
-  std::shared_ptr<StringRangeSet> row_ranges_;
+  std::shared_ptr<StringRangeSet const> row_ranges_;
   std::vector<std::shared_ptr<re2::RE2 const>> row_regexes_;
-  std::shared_ptr<StringRangeSet> column_ranges_;
+  mutable StringRangeSet column_ranges_;
   std::vector<std::shared_ptr<re2::RE2 const>> column_regexes_;
-  std::shared_ptr<TimestampRangeSet> timestamp_ranges_;
+  mutable TimestampRangeSet timestamp_ranges_;
 
   FilteredMapView<ColumnFamily, StringRangeSet> rows_;
   mutable absl::optional<FilteredMapView<ColumnFamilyRow, StringRangeSet>>
