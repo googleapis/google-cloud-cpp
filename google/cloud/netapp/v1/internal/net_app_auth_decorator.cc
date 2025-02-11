@@ -1198,6 +1198,107 @@ StatusOr<google::longrunning::Operation> NetAppAuth::DeleteBackupPolicy(
   return child_->DeleteBackupPolicy(context, options, request);
 }
 
+StatusOr<google::cloud::netapp::v1::ListQuotaRulesResponse>
+NetAppAuth::ListQuotaRules(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::netapp::v1::ListQuotaRulesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListQuotaRules(context, options, request);
+}
+
+StatusOr<google::cloud::netapp::v1::QuotaRule> NetAppAuth::GetQuotaRule(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::netapp::v1::GetQuotaRuleRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetQuotaRule(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetAppAuth::AsyncCreateQuotaRule(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::CreateQuotaRuleRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateQuotaRule(cq, *std::move(context),
+                                           std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> NetAppAuth::CreateQuotaRule(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::CreateQuotaRuleRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateQuotaRule(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetAppAuth::AsyncUpdateQuotaRule(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateQuotaRule(cq, *std::move(context),
+                                           std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> NetAppAuth::UpdateQuotaRule(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateQuotaRule(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetAppAuth::AsyncDeleteQuotaRule(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteQuotaRule(cq, *std::move(context),
+                                           std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> NetAppAuth::DeleteQuotaRule(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteQuotaRule(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 NetAppAuth::ListLocations(
     grpc::ClientContext& context, Options const& options,

@@ -47,6 +47,45 @@ RowAccessPolicyServiceRestMetadata::ListRowAccessPolicies(
   return child_->ListRowAccessPolicies(rest_context, options, request);
 }
 
+StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>
+RowAccessPolicyServiceRestMetadata::GetRowAccessPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::bigquery::v2::GetRowAccessPolicyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->GetRowAccessPolicy(rest_context, options, request);
+}
+
+StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>
+RowAccessPolicyServiceRestMetadata::CreateRowAccessPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::bigquery::v2::CreateRowAccessPolicyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->CreateRowAccessPolicy(rest_context, options, request);
+}
+
+StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>
+RowAccessPolicyServiceRestMetadata::UpdateRowAccessPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::bigquery::v2::UpdateRowAccessPolicyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->UpdateRowAccessPolicy(rest_context, options, request);
+}
+
+Status RowAccessPolicyServiceRestMetadata::DeleteRowAccessPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::bigquery::v2::DeleteRowAccessPolicyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteRowAccessPolicy(rest_context, options, request);
+}
+
+Status RowAccessPolicyServiceRestMetadata::BatchDeleteRowAccessPolicies(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::bigquery::v2::BatchDeleteRowAccessPoliciesRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->BatchDeleteRowAccessPolicies(rest_context, options, request);
+}
+
 void RowAccessPolicyServiceRestMetadata::SetMetadata(
     rest_internal::RestContext& rest_context, Options const& options,
     std::vector<std::string> const& params) {

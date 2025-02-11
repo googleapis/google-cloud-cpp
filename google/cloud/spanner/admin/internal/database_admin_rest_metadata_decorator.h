@@ -210,6 +210,13 @@ class DatabaseAdminRestMetadata : public DatabaseAdminRestStub {
       google::spanner::admin::database::v1::ListDatabaseRolesRequest const&
           request) override;
 
+  StatusOr<google::spanner::admin::database::v1::AddSplitPointsResponse>
+  AddSplitPoints(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::spanner::admin::database::v1::AddSplitPointsRequest const&
+          request) override;
+
   StatusOr<google::spanner::admin::database::v1::BackupSchedule>
   CreateBackupSchedule(
       google::cloud::rest_internal::RestContext& rest_context,

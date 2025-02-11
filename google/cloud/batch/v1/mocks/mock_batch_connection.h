@@ -90,6 +90,42 @@ class MockBatchServiceConnection : public batch_v1::BatchServiceConnection {
               DeleteJob, (google::longrunning::Operation const& operation),
               (override));
 
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// CancelJob(Matcher<google::cloud::batch::v1::CancelJobRequest const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::batch::v1::CancelJobResponse>>,
+              CancelJob,
+              (google::cloud::batch::v1::CancelJobRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, CancelJob(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CancelJob,
+              (NoAwaitTag,
+               google::cloud::batch::v1::CancelJobRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock, CancelJob(Matcher<google::longrunning::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::batch::v1::CancelJobResponse>>,
+              CancelJob, (google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD((StreamRange<google::cloud::batch::v1::Job>), ListJobs,
               (google::cloud::batch::v1::ListJobsRequest request), (override));
 
