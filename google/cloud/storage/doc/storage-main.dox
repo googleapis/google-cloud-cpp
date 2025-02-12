@@ -34,7 +34,6 @@ project.
 - @ref storage-auth-example
 - @ref storage-retry-examples
 - @ref storage-mocking shows how to write tests mocking the [Client] class
-<!-- @ref storage-grpc "Using the GCS+gRPC plugin" -->
 - The [Setting up your development environment] guide describes how to set up
   a C++ development environment in various platforms, including the Google Cloud
   C++ client libraries.
