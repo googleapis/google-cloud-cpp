@@ -102,6 +102,6 @@ of your systems and data. For more information, refer to [externally sourced cre
 [Oauth2]: https://oauth.net/2/
 [service account keyfile]: https://cloud.google.com/iam/docs/creating-managing-service-account-keys
 [feature request]: https://github.com/googleapis/google-cloud-cpp/issues
-[externally sourced credentials]: (https://cloud.google.com/docs/authentication/external/externally-sourced-credentials)
+[externally sourced credentials]: https://cloud.google.com/docs/authentication/external/externally-sourced-credentials
 
 */
