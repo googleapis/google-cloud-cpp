@@ -33,12 +33,11 @@ set(GOOGLE_CLOUD_CPP_NO_GRPC_FEATURES
 
 set(GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
     # cmake-format: sort
-    "bigquerycontrol" # Some proto RPC comments indicate experimental methods.
     "pubsublite" # This is WIP, it needs a number of hand-crafted APIs.
 )
 
 set(GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES # cmake-format: sort
-                                          "storage_grpc")
+                                          "bigquerycontrol" "storage_grpc")
 
 set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     # cmake-format: sort

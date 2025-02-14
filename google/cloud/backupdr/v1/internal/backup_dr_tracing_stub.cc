@@ -564,6 +564,32 @@ StatusOr<google::longrunning::Operation> BackupDRTracingStub::TriggerBackup(
                            child_->TriggerBackup(context, options, request));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+BackupDRTracingStub::AsyncInitializeService(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::InitializeServiceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "InitializeService");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncInitializeService(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> BackupDRTracingStub::InitializeService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::InitializeServiceRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.backupdr.v1.BackupDR",
+                                     "InitializeService");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->InitializeService(context, options, request));
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 BackupDRTracingStub::ListLocations(
     grpc::ClientContext& context, Options const& options,

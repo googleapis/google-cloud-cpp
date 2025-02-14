@@ -560,7 +560,7 @@ void StartAppendableObjectUpload(
   //! [start-appendable-object-upload]
   // The example is easier to test and run if we call the coroutine and block
   // until it completes..
-  auto const object = coro(client, argv.at(0), argv.at(1), argv.at(2)).get();
+  auto const object = coro(client, argv.at(0), argv.at(1)).get();
   std::cout << "File successfully uploaded " << object.DebugString() << "\n";
 }
 

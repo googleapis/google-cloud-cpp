@@ -491,6 +491,36 @@ DefaultHubServiceStub::ListGroups(
   return response;
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultHubServiceStub::AsyncUpdateGroup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networkconnectivity::v1::UpdateGroupRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networkconnectivity::v1::UpdateGroupRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::networkconnectivity::v1::UpdateGroupRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateGroup(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultHubServiceStub::UpdateGroup(
+    grpc::ClientContext& context, Options,
+    google::cloud::networkconnectivity::v1::UpdateGroupRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateGroup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultHubServiceStub::ListLocations(
     grpc::ClientContext& context, Options const&,

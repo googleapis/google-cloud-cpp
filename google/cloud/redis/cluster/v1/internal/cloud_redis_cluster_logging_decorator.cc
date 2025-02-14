@@ -172,6 +172,190 @@ CloudRedisClusterLogging::GetClusterCertificateAuthority(
       context, options, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+CloudRedisClusterLogging::AsyncRescheduleClusterMaintenance(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::redis::cluster::v1::
+        RescheduleClusterMaintenanceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::redis::cluster::v1::
+                 RescheduleClusterMaintenanceRequest const& request) {
+        return child_->AsyncRescheduleClusterMaintenance(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterLogging::RescheduleClusterMaintenance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::cluster::v1::
+        RescheduleClusterMaintenanceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::redis::cluster::v1::
+                 RescheduleClusterMaintenanceRequest const& request) {
+        return child_->RescheduleClusterMaintenance(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::redis::cluster::v1::ListBackupCollectionsResponse>
+CloudRedisClusterLogging::ListBackupCollections(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::redis::cluster::v1::ListBackupCollectionsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::redis::cluster::v1::ListBackupCollectionsRequest const&
+              request) {
+        return child_->ListBackupCollections(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::redis::cluster::v1::BackupCollection>
+CloudRedisClusterLogging::GetBackupCollection(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::redis::cluster::v1::GetBackupCollectionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::redis::cluster::v1::GetBackupCollectionRequest const&
+              request) {
+        return child_->GetBackupCollection(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::redis::cluster::v1::ListBackupsResponse>
+CloudRedisClusterLogging::ListBackups(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::redis::cluster::v1::ListBackupsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::redis::cluster::v1::ListBackupsRequest const&
+                 request) {
+        return child_->ListBackups(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::redis::cluster::v1::Backup>
+CloudRedisClusterLogging::GetBackup(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::redis::cluster::v1::GetBackupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::redis::cluster::v1::GetBackupRequest const& request) {
+        return child_->GetBackup(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudRedisClusterLogging::AsyncDeleteBackup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::redis::cluster::v1::DeleteBackupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::redis::cluster::v1::DeleteBackupRequest const&
+                 request) {
+        return child_->AsyncDeleteBackup(cq, std::move(context),
+                                         std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> CloudRedisClusterLogging::DeleteBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::cluster::v1::DeleteBackupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::redis::cluster::v1::DeleteBackupRequest const&
+                 request) {
+        return child_->DeleteBackup(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudRedisClusterLogging::AsyncExportBackup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::redis::cluster::v1::ExportBackupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::redis::cluster::v1::ExportBackupRequest const&
+                 request) {
+        return child_->AsyncExportBackup(cq, std::move(context),
+                                         std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> CloudRedisClusterLogging::ExportBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::cluster::v1::ExportBackupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::redis::cluster::v1::ExportBackupRequest const&
+                 request) {
+        return child_->ExportBackup(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudRedisClusterLogging::AsyncBackupCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::redis::cluster::v1::BackupClusterRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::redis::cluster::v1::BackupClusterRequest const&
+                 request) {
+        return child_->AsyncBackupCluster(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterLogging::BackupCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::cluster::v1::BackupClusterRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::redis::cluster::v1::BackupClusterRequest const&
+                 request) {
+        return child_->BackupCluster(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 CloudRedisClusterLogging::ListLocations(
     grpc::ClientContext& context, Options const& options,

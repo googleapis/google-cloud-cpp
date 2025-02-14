@@ -17,11 +17,11 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES = [
-    "bigquerycontrol",
     "pubsublite",
 ]
 
 GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES = [
+    "bigquerycontrol",
     "storage_grpc",
 ]
 

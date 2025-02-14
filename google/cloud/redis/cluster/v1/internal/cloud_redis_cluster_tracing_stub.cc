@@ -149,6 +149,167 @@ CloudRedisClusterTracingStub::GetClusterCertificateAuthority(
       child_->GetClusterCertificateAuthority(context, options, request));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+CloudRedisClusterTracingStub::AsyncRescheduleClusterMaintenance(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::redis::cluster::v1::
+        RescheduleClusterMaintenanceRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.redis.cluster.v1.CloudRedisCluster",
+                             "RescheduleClusterMaintenance");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncRescheduleClusterMaintenance(
+      cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterTracingStub::RescheduleClusterMaintenance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::cluster::v1::
+        RescheduleClusterMaintenanceRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.redis.cluster.v1.CloudRedisCluster",
+                             "RescheduleClusterMaintenance");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->RescheduleClusterMaintenance(context, options, request));
+}
+
+StatusOr<google::cloud::redis::cluster::v1::ListBackupCollectionsResponse>
+CloudRedisClusterTracingStub::ListBackupCollections(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::redis::cluster::v1::ListBackupCollectionsRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.redis.cluster.v1.CloudRedisCluster",
+                             "ListBackupCollections");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ListBackupCollections(context, options, request));
+}
+
+StatusOr<google::cloud::redis::cluster::v1::BackupCollection>
+CloudRedisClusterTracingStub::GetBackupCollection(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::redis::cluster::v1::GetBackupCollectionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.redis.cluster.v1.CloudRedisCluster", "GetBackupCollection");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->GetBackupCollection(context, options, request));
+}
+
+StatusOr<google::cloud::redis::cluster::v1::ListBackupsResponse>
+CloudRedisClusterTracingStub::ListBackups(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::redis::cluster::v1::ListBackupsRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.redis.cluster.v1.CloudRedisCluster", "ListBackups");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListBackups(context, options, request));
+}
+
+StatusOr<google::cloud::redis::cluster::v1::Backup>
+CloudRedisClusterTracingStub::GetBackup(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::redis::cluster::v1::GetBackupRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.redis.cluster.v1.CloudRedisCluster", "GetBackup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetBackup(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudRedisClusterTracingStub::AsyncDeleteBackup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::redis::cluster::v1::DeleteBackupRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.redis.cluster.v1.CloudRedisCluster", "DeleteBackup");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncDeleteBackup(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterTracingStub::DeleteBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::cluster::v1::DeleteBackupRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.redis.cluster.v1.CloudRedisCluster", "DeleteBackup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteBackup(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudRedisClusterTracingStub::AsyncExportBackup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::redis::cluster::v1::ExportBackupRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.redis.cluster.v1.CloudRedisCluster", "ExportBackup");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncExportBackup(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterTracingStub::ExportBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::cluster::v1::ExportBackupRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.redis.cluster.v1.CloudRedisCluster", "ExportBackup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ExportBackup(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudRedisClusterTracingStub::AsyncBackupCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::redis::cluster::v1::BackupClusterRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.redis.cluster.v1.CloudRedisCluster", "BackupCluster");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncBackupCluster(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterTracingStub::BackupCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::cluster::v1::BackupClusterRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.redis.cluster.v1.CloudRedisCluster", "BackupCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->BackupCluster(context, options, request));
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 CloudRedisClusterTracingStub::ListLocations(
     grpc::ClientContext& context, Options const& options,

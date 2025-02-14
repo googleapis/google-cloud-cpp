@@ -100,7 +100,7 @@ message NetworkEdgeSecurityServiceAggregatedList {
   repeated string unreachables = 7 [json_name = "unreachables"];
 
   // [Output Only] Unreachable resources.
-  repeated string unreachables = 6 [json_name = "unreachables"];
+  repeated string unreachables = 7 [json_name = "unreachables"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine

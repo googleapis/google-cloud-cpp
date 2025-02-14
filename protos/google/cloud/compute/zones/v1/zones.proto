@@ -24,7 +24,7 @@ package google.cloud.cpp.compute.zones.v1;
 import "google/api/annotations.proto";
 import "google/api/client.proto";
 import "google/api/field_behavior.proto";
-import "google/cloud/compute/v1/internal/common_142.proto";
+import "google/cloud/compute/v1/internal/common_144.proto";
 
 // Service for the zones resource.
 // https://cloud.google.com/compute/docs/reference/rest/v1/zones

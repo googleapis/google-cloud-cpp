@@ -143,6 +143,159 @@ CloudRedisClusterAuth::GetClusterCertificateAuthority(
   return child_->GetClusterCertificateAuthority(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+CloudRedisClusterAuth::AsyncRescheduleClusterMaintenance(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::redis::cluster::v1::
+        RescheduleClusterMaintenanceRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncRescheduleClusterMaintenance(
+            cq, *std::move(context), std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterAuth::RescheduleClusterMaintenance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::cluster::v1::
+        RescheduleClusterMaintenanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RescheduleClusterMaintenance(context, options, request);
+}
+
+StatusOr<google::cloud::redis::cluster::v1::ListBackupCollectionsResponse>
+CloudRedisClusterAuth::ListBackupCollections(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::redis::cluster::v1::ListBackupCollectionsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListBackupCollections(context, options, request);
+}
+
+StatusOr<google::cloud::redis::cluster::v1::BackupCollection>
+CloudRedisClusterAuth::GetBackupCollection(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::redis::cluster::v1::GetBackupCollectionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetBackupCollection(context, options, request);
+}
+
+StatusOr<google::cloud::redis::cluster::v1::ListBackupsResponse>
+CloudRedisClusterAuth::ListBackups(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::redis::cluster::v1::ListBackupsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListBackups(context, options, request);
+}
+
+StatusOr<google::cloud::redis::cluster::v1::Backup>
+CloudRedisClusterAuth::GetBackup(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::redis::cluster::v1::GetBackupRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetBackup(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudRedisClusterAuth::AsyncDeleteBackup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::redis::cluster::v1::DeleteBackupRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteBackup(cq, *std::move(context),
+                                        std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> CloudRedisClusterAuth::DeleteBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::cluster::v1::DeleteBackupRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteBackup(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudRedisClusterAuth::AsyncExportBackup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::redis::cluster::v1::ExportBackupRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncExportBackup(cq, *std::move(context),
+                                        std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> CloudRedisClusterAuth::ExportBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::cluster::v1::ExportBackupRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ExportBackup(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudRedisClusterAuth::AsyncBackupCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::redis::cluster::v1::BackupClusterRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncBackupCluster(cq, *std::move(context),
+                                         std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> CloudRedisClusterAuth::BackupCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::cluster::v1::BackupClusterRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->BackupCluster(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 CloudRedisClusterAuth::ListLocations(
     grpc::ClientContext& context, Options const& options,

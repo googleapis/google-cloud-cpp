@@ -444,6 +444,31 @@ HubServiceTracingStub::ListGroups(
                            child_->ListGroups(context, options, request));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+HubServiceTracingStub::AsyncUpdateGroup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkconnectivity::v1::UpdateGroupRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkconnectivity.v1.HubService", "UpdateGroup");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncUpdateGroup(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> HubServiceTracingStub::UpdateGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::UpdateGroupRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkconnectivity.v1.HubService", "UpdateGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateGroup(context, options, request));
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 HubServiceTracingStub::ListLocations(
     grpc::ClientContext& context, Options const& options,

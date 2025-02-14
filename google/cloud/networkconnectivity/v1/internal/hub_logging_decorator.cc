@@ -516,6 +516,37 @@ HubServiceLogging::ListGroups(
       context, options, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+HubServiceLogging::AsyncUpdateGroup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkconnectivity::v1::UpdateGroupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::networkconnectivity::v1::UpdateGroupRequest const&
+                 request) {
+        return child_->AsyncUpdateGroup(cq, std::move(context),
+                                        std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> HubServiceLogging::UpdateGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::UpdateGroupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkconnectivity::v1::UpdateGroupRequest const&
+                 request) {
+        return child_->UpdateGroup(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 HubServiceLogging::ListLocations(
     grpc::ClientContext& context, Options const& options,
