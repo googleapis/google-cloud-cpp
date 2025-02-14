@@ -40,11 +40,7 @@ namespace dataplex_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `DataTaxonomyServiceConnection`.
-class DataTaxonomyServiceRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<DataTaxonomyServiceRetryPolicy> clone() const = 0;
-};
+class DataTaxonomyServiceRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `DataTaxonomyServiceConnection` based on counting errors.
@@ -87,7 +83,7 @@ class DataTaxonomyServiceLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<DataTaxonomyServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<DataTaxonomyServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -157,7 +153,7 @@ class DataTaxonomyServiceLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<DataTaxonomyServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<DataTaxonomyServiceLimitedTimeRetryPolicy>(
         maximum_duration());
   }

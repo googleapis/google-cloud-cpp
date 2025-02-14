@@ -32,8 +32,7 @@ namespace osconfig_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<osconfig_v1::OsConfigServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<osconfig_v1::OsConfigServiceRetryPolicyOption>()->clone();
 }
 
@@ -115,8 +114,7 @@ OsConfigServiceConnectionImpl::ListPatchJobs(
       StreamRange<google::cloud::osconfig::v1::PatchJob>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<osconfig_v1::OsConfigServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::osconfig::v1::ListPatchJobsRequest const& r) {
@@ -150,8 +148,7 @@ OsConfigServiceConnectionImpl::ListPatchJobInstanceDetails(
       StreamRange<google::cloud::osconfig::v1::PatchJobInstanceDetails>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<osconfig_v1::OsConfigServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest const&
@@ -217,8 +214,7 @@ OsConfigServiceConnectionImpl::ListPatchDeployments(
       StreamRange<google::cloud::osconfig::v1::PatchDeployment>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<osconfig_v1::OsConfigServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::osconfig::v1::ListPatchDeploymentsRequest const& r) {

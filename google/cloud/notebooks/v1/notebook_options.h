@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-notebooks-options
  */
 struct NotebookServiceRetryPolicyOption {
-  using Type = std::shared_ptr<NotebookServiceRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

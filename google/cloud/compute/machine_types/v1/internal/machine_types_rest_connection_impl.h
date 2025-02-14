@@ -65,8 +65,7 @@ class MachineTypesRestConnectionImpl
           request) override;
 
  private:
-  static std::unique_ptr<compute_machine_types_v1::MachineTypesRetryPolicy>
-  retry_policy(Options const& options) {
+  static std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
     return options
         .get<compute_machine_types_v1::MachineTypesRetryPolicyOption>()
         ->clone();

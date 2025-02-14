@@ -113,9 +113,7 @@ class InstanceGroupManagerResizeRequestsRestConnectionImpl
           ListInstanceGroupManagerResizeRequestsRequest request) override;
 
  private:
-  static std::unique_ptr<compute_instance_group_manager_resize_requests_v1::
-                             InstanceGroupManagerResizeRequestsRetryPolicy>
-  retry_policy(Options const& options) {
+  static std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
     return options
         .get<compute_instance_group_manager_resize_requests_v1::
                  InstanceGroupManagerResizeRequestsRetryPolicyOption>()

@@ -32,8 +32,7 @@ namespace monitoring_metricsscope_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<monitoring_metricsscope_v1::MetricsScopesRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options
       .get<monitoring_metricsscope_v1::MetricsScopesRetryPolicyOption>()
       ->clone();

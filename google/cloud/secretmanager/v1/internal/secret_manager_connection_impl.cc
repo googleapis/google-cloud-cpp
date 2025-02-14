@@ -32,8 +32,7 @@ namespace secretmanager_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<secretmanager_v1::SecretManagerServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<secretmanager_v1::SecretManagerServiceRetryPolicyOption>()
       ->clone();
 }
@@ -75,9 +74,7 @@ SecretManagerServiceConnectionImpl::ListSecrets(
       StreamRange<google::cloud::secretmanager::v1::Secret>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<secretmanager_v1::SecretManagerServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::secretmanager::v1::ListSecretsRequest const& r) {
@@ -184,9 +181,7 @@ SecretManagerServiceConnectionImpl::ListSecretVersions(
       StreamRange<google::cloud::secretmanager::v1::SecretVersion>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<secretmanager_v1::SecretManagerServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::secretmanager::v1::ListSecretVersionsRequest const&
@@ -343,9 +338,7 @@ SecretManagerServiceConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<secretmanager_v1::SecretManagerServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {

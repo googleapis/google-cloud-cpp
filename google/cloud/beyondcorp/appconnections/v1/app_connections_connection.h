@@ -41,11 +41,7 @@ namespace beyondcorp_appconnections_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `AppConnectionsServiceConnection`.
-class AppConnectionsServiceRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<AppConnectionsServiceRetryPolicy> clone() const = 0;
-};
+class AppConnectionsServiceRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `AppConnectionsServiceConnection` based on counting
@@ -90,7 +86,7 @@ class AppConnectionsServiceLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<AppConnectionsServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<AppConnectionsServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -160,7 +156,7 @@ class AppConnectionsServiceLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<AppConnectionsServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<AppConnectionsServiceLimitedTimeRetryPolicy>(
         maximum_duration());
   }

@@ -33,8 +33,7 @@ namespace alloydb_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<alloydb_v1::AlloyDBAdminRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<alloydb_v1::AlloyDBAdminRetryPolicyOption>()->clone();
 }
 
@@ -75,8 +74,7 @@ AlloyDBAdminConnectionImpl::ListClusters(
       StreamRange<google::cloud::alloydb::v1::Cluster>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<alloydb_v1::AlloyDBAdminRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::alloydb::v1::ListClustersRequest const& r) {
@@ -757,8 +755,7 @@ AlloyDBAdminConnectionImpl::ListInstances(
       StreamRange<google::cloud::alloydb::v1::Instance>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<alloydb_v1::AlloyDBAdminRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::alloydb::v1::ListInstancesRequest const& r) {
@@ -1546,8 +1543,7 @@ AlloyDBAdminConnectionImpl::ListBackups(
       StreamRange<google::cloud::alloydb::v1::Backup>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<alloydb_v1::AlloyDBAdminRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::alloydb::v1::ListBackupsRequest const& r) {
@@ -1866,8 +1862,7 @@ AlloyDBAdminConnectionImpl::ListSupportedDatabaseFlags(
       StreamRange<google::cloud::alloydb::v1::SupportedDatabaseFlag>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<alloydb_v1::AlloyDBAdminRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::alloydb::v1::ListSupportedDatabaseFlagsRequest const&
@@ -1933,8 +1928,7 @@ AlloyDBAdminConnectionImpl::ListUsers(
       StreamRange<google::cloud::alloydb::v1::User>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<alloydb_v1::AlloyDBAdminRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::alloydb::v1::ListUsersRequest const& r) {
@@ -2020,8 +2014,7 @@ AlloyDBAdminConnectionImpl::ListDatabases(
       StreamRange<google::cloud::alloydb::v1::Database>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<alloydb_v1::AlloyDBAdminRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::alloydb::v1::ListDatabasesRequest const& r) {
@@ -2054,8 +2047,7 @@ AlloyDBAdminConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<alloydb_v1::AlloyDBAdminRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {
@@ -2102,8 +2094,7 @@ AlloyDBAdminConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<alloydb_v1::AlloyDBAdminRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

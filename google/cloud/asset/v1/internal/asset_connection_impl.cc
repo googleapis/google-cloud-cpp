@@ -33,8 +33,7 @@ namespace asset_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<asset_v1::AssetServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<asset_v1::AssetServiceRetryPolicyOption>()->clone();
 }
 
@@ -163,8 +162,7 @@ AssetServiceConnectionImpl::ListAssets(
       StreamRange<google::cloud::asset::v1::Asset>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<asset_v1::AssetServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::asset::v1::ListAssetsRequest const& r) {
@@ -276,8 +274,7 @@ AssetServiceConnectionImpl::SearchAllResources(
       StreamRange<google::cloud::asset::v1::ResourceSearchResult>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<asset_v1::AssetServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::asset::v1::SearchAllResourcesRequest const& r) {
@@ -311,8 +308,7 @@ AssetServiceConnectionImpl::SearchAllIamPolicies(
       StreamRange<google::cloud::asset::v1::IamPolicySearchResult>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<asset_v1::AssetServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::asset::v1::SearchAllIamPoliciesRequest const& r) {
@@ -511,8 +507,7 @@ AssetServiceConnectionImpl::ListSavedQueries(
       StreamRange<google::cloud::asset::v1::SavedQuery>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<asset_v1::AssetServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::asset::v1::ListSavedQueriesRequest const& r) {
@@ -590,8 +585,7 @@ AssetServiceConnectionImpl::AnalyzeOrgPolicies(
       google::cloud::asset::v1::AnalyzeOrgPoliciesResponse::OrgPolicyResult>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<asset_v1::AssetServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::asset::v1::AnalyzeOrgPoliciesRequest const& r) {
@@ -629,8 +623,7 @@ AssetServiceConnectionImpl::AnalyzeOrgPolicyGovernedContainers(
           GovernedContainer>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<asset_v1::AssetServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::asset::v1::
@@ -672,8 +665,7 @@ AssetServiceConnectionImpl::AnalyzeOrgPolicyGovernedAssets(
                       AnalyzeOrgPolicyGovernedAssetsResponse::GovernedAsset>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<asset_v1::AssetServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest const&

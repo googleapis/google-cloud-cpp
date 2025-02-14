@@ -33,8 +33,7 @@ namespace notebooks_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<notebooks_v1::NotebookServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<notebooks_v1::NotebookServiceRetryPolicyOption>()->clone();
 }
 
@@ -77,8 +76,7 @@ NotebookServiceConnectionImpl::ListInstances(
       StreamRange<google::cloud::notebooks::v1::Instance>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<notebooks_v1::NotebookServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::notebooks::v1::ListInstancesRequest const& r) {
@@ -1644,8 +1642,7 @@ NotebookServiceConnectionImpl::ListEnvironments(
       StreamRange<google::cloud::notebooks::v1::Environment>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<notebooks_v1::NotebookServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::notebooks::v1::ListEnvironmentsRequest const& r) {
@@ -1879,8 +1876,7 @@ NotebookServiceConnectionImpl::ListSchedules(
       StreamRange<google::cloud::notebooks::v1::Schedule>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<notebooks_v1::NotebookServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::notebooks::v1::ListSchedulesRequest const& r) {
@@ -2201,8 +2197,7 @@ NotebookServiceConnectionImpl::ListExecutions(
       StreamRange<google::cloud::notebooks::v1::Execution>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<notebooks_v1::NotebookServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::notebooks::v1::ListExecutionsRequest const& r) {
@@ -2432,8 +2427,7 @@ NotebookServiceConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<notebooks_v1::NotebookServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {
@@ -2520,8 +2514,7 @@ NotebookServiceConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<notebooks_v1::NotebookServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

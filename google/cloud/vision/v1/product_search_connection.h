@@ -40,11 +40,7 @@ namespace vision_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `ProductSearchConnection`.
-class ProductSearchRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<ProductSearchRetryPolicy> clone() const = 0;
-};
+class ProductSearchRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `ProductSearchConnection` based on counting errors.
@@ -85,7 +81,7 @@ class ProductSearchLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<ProductSearchRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<ProductSearchLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -154,7 +150,7 @@ class ProductSearchLimitedTimeRetryPolicy : public ProductSearchRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<ProductSearchRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<ProductSearchLimitedTimeRetryPolicy>(
         maximum_duration());
   }

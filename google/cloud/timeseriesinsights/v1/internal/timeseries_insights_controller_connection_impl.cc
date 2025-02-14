@@ -32,8 +32,7 @@ namespace timeseriesinsights_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<timeseriesinsights_v1::TimeseriesInsightsControllerRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options
       .get<timeseriesinsights_v1::
                TimeseriesInsightsControllerRetryPolicyOption>()
@@ -82,9 +81,7 @@ TimeseriesInsightsControllerConnectionImpl::ListDataSets(
       StreamRange<google::cloud::timeseriesinsights::v1::DataSet>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           timeseriesinsights_v1::TimeseriesInsightsControllerRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::timeseriesinsights::v1::ListDataSetsRequest const& r) {

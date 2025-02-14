@@ -39,11 +39,7 @@ namespace compute_subnetworks_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `SubnetworksConnection`.
-class SubnetworksRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<SubnetworksRetryPolicy> clone() const = 0;
-};
+class SubnetworksRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `SubnetworksConnection` based on counting errors.
@@ -83,7 +79,7 @@ class SubnetworksLimitedErrorCountRetryPolicy : public SubnetworksRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<SubnetworksRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<SubnetworksLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -152,7 +148,7 @@ class SubnetworksLimitedTimeRetryPolicy : public SubnetworksRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<SubnetworksRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<SubnetworksLimitedTimeRetryPolicy>(
         maximum_duration());
   }

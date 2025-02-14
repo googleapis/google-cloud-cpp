@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-contentwarehouse-options
  */
 struct RuleSetServiceRetryPolicyOption {
-  using Type = std::shared_ptr<RuleSetServiceRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

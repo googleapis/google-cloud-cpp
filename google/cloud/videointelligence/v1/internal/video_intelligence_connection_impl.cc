@@ -32,8 +32,7 @@ namespace videointelligence_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<videointelligence_v1::VideoIntelligenceServiceRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options
       .get<videointelligence_v1::VideoIntelligenceServiceRetryPolicyOption>()
       ->clone();

@@ -39,11 +39,7 @@ namespace compute_target_tcp_proxies_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `TargetTcpProxiesConnection`.
-class TargetTcpProxiesRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<TargetTcpProxiesRetryPolicy> clone() const = 0;
-};
+class TargetTcpProxiesRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `TargetTcpProxiesConnection` based on counting errors.
@@ -84,7 +80,7 @@ class TargetTcpProxiesLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<TargetTcpProxiesRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<TargetTcpProxiesLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -154,7 +150,7 @@ class TargetTcpProxiesLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<TargetTcpProxiesRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<TargetTcpProxiesLimitedTimeRetryPolicy>(
         maximum_duration());
   }

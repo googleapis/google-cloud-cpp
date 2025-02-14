@@ -38,7 +38,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-compute-options
  */
 struct PublicAdvertisedPrefixesRetryPolicyOption {
-  using Type = std::shared_ptr<PublicAdvertisedPrefixesRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

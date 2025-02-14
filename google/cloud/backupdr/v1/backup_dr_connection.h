@@ -40,11 +40,7 @@ namespace backupdr_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `BackupDRConnection`.
-class BackupDRRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<BackupDRRetryPolicy> clone() const = 0;
-};
+class BackupDRRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `BackupDRConnection` based on counting errors.
@@ -84,7 +80,7 @@ class BackupDRLimitedErrorCountRetryPolicy : public BackupDRRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<BackupDRRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<BackupDRLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -152,7 +148,7 @@ class BackupDRLimitedTimeRetryPolicy : public BackupDRRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<BackupDRRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<BackupDRLimitedTimeRetryPolicy>(maximum_duration());
   }
 

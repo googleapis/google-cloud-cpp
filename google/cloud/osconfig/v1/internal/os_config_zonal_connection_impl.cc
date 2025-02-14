@@ -33,8 +33,7 @@ namespace osconfig_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<osconfig_v1::OsConfigZonalServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<osconfig_v1::OsConfigZonalServiceRetryPolicyOption>()
       ->clone();
 }
@@ -286,8 +285,7 @@ OsConfigZonalServiceConnectionImpl::ListOSPolicyAssignments(
       StreamRange<google::cloud::osconfig::v1::OSPolicyAssignment>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<osconfig_v1::OsConfigZonalServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::osconfig::v1::ListOSPolicyAssignmentsRequest const&
@@ -323,8 +321,7 @@ OsConfigZonalServiceConnectionImpl::ListOSPolicyAssignmentRevisions(
       StreamRange<google::cloud::osconfig::v1::OSPolicyAssignment>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<osconfig_v1::OsConfigZonalServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::osconfig::v1::
@@ -476,8 +473,7 @@ OsConfigZonalServiceConnectionImpl::ListOSPolicyAssignmentReports(
       StreamRange<google::cloud::osconfig::v1::OSPolicyAssignmentReport>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<osconfig_v1::OsConfigZonalServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::osconfig::v1::
@@ -526,8 +522,7 @@ OsConfigZonalServiceConnectionImpl::ListInventories(
       StreamRange<google::cloud::osconfig::v1::Inventory>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<osconfig_v1::OsConfigZonalServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::osconfig::v1::ListInventoriesRequest const& r) {
@@ -576,8 +571,7 @@ OsConfigZonalServiceConnectionImpl::ListVulnerabilityReports(
       StreamRange<google::cloud::osconfig::v1::VulnerabilityReport>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<osconfig_v1::OsConfigZonalServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::osconfig::v1::ListVulnerabilityReportsRequest const&

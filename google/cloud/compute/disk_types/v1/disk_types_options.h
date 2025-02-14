@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-compute-options
  */
 struct DiskTypesRetryPolicyOption {
-  using Type = std::shared_ptr<DiskTypesRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

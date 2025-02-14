@@ -40,11 +40,7 @@ namespace netapp_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `NetAppConnection`.
-class NetAppRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<NetAppRetryPolicy> clone() const = 0;
-};
+class NetAppRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `NetAppConnection` based on counting errors.
@@ -84,7 +80,7 @@ class NetAppLimitedErrorCountRetryPolicy : public NetAppRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<NetAppRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<NetAppLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -151,7 +147,7 @@ class NetAppLimitedTimeRetryPolicy : public NetAppRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<NetAppRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<NetAppLimitedTimeRetryPolicy>(maximum_duration());
   }
 

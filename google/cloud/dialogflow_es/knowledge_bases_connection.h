@@ -37,11 +37,7 @@ namespace dialogflow_es {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `KnowledgeBasesConnection`.
-class KnowledgeBasesRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<KnowledgeBasesRetryPolicy> clone() const = 0;
-};
+class KnowledgeBasesRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `KnowledgeBasesConnection` based on counting errors.
@@ -82,7 +78,7 @@ class KnowledgeBasesLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<KnowledgeBasesRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<KnowledgeBasesLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -151,7 +147,7 @@ class KnowledgeBasesLimitedTimeRetryPolicy : public KnowledgeBasesRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<KnowledgeBasesRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<KnowledgeBasesLimitedTimeRetryPolicy>(
         maximum_duration());
   }

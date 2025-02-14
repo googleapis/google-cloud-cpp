@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-recommender-options
  */
 struct RecommenderRetryPolicyOption {
-  using Type = std::shared_ptr<RecommenderRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

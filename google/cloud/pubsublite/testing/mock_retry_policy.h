@@ -29,6 +29,7 @@ class MockRetryPolicy : public google::cloud::RetryPolicy {
   MOCK_METHOD(bool, OnFailure, (Status const&), (override));
   MOCK_METHOD(bool, IsExhausted, (), (const, override));
   MOCK_METHOD(bool, IsPermanentFailure, (Status const&), (const, override));
+  MOCK_METHOD(std::unique_ptr<RetryPolicy>, clone, (), (const, override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

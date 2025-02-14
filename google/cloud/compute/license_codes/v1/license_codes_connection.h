@@ -35,11 +35,7 @@ namespace compute_license_codes_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `LicenseCodesConnection`.
-class LicenseCodesRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<LicenseCodesRetryPolicy> clone() const = 0;
-};
+class LicenseCodesRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `LicenseCodesConnection` based on counting errors.
@@ -80,7 +76,7 @@ class LicenseCodesLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<LicenseCodesRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<LicenseCodesLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -149,7 +145,7 @@ class LicenseCodesLimitedTimeRetryPolicy : public LicenseCodesRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<LicenseCodesRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<LicenseCodesLimitedTimeRetryPolicy>(
         maximum_duration());
   }

@@ -36,11 +36,7 @@ namespace datastore_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `DatastoreConnection`.
-class DatastoreRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<DatastoreRetryPolicy> clone() const = 0;
-};
+class DatastoreRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `DatastoreConnection` based on counting errors.
@@ -80,7 +76,7 @@ class DatastoreLimitedErrorCountRetryPolicy : public DatastoreRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<DatastoreRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<DatastoreLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -149,7 +145,7 @@ class DatastoreLimitedTimeRetryPolicy : public DatastoreRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<DatastoreRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<DatastoreLimitedTimeRetryPolicy>(
         maximum_duration());
   }

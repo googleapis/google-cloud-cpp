@@ -33,8 +33,7 @@ namespace vmwareengine_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<vmwareengine_v1::VmwareEngineRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<vmwareengine_v1::VmwareEngineRetryPolicyOption>()->clone();
 }
 
@@ -77,8 +76,7 @@ VmwareEngineConnectionImpl::ListPrivateClouds(
       StreamRange<google::cloud::vmwareengine::v1::PrivateCloud>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<vmwareengine_v1::VmwareEngineRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::vmwareengine::v1::ListPrivateCloudsRequest const& r) {
@@ -501,8 +499,7 @@ VmwareEngineConnectionImpl::ListClusters(
       StreamRange<google::cloud::vmwareengine::v1::Cluster>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<vmwareengine_v1::VmwareEngineRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::vmwareengine::v1::ListClustersRequest const& r) {
@@ -829,8 +826,7 @@ VmwareEngineConnectionImpl::ListNodes(
       StreamRange<google::cloud::vmwareengine::v1::Node>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<vmwareengine_v1::VmwareEngineRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::vmwareengine::v1::ListNodesRequest const& r) {
@@ -878,8 +874,7 @@ VmwareEngineConnectionImpl::ListExternalAddresses(
       StreamRange<google::cloud::vmwareengine::v1::ExternalAddress>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<vmwareengine_v1::VmwareEngineRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::vmwareengine::v1::ListExternalAddressesRequest const&
@@ -916,8 +911,7 @@ VmwareEngineConnectionImpl::FetchNetworkPolicyExternalAddresses(
       StreamRange<google::cloud::vmwareengine::v1::ExternalAddress>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<vmwareengine_v1::VmwareEngineRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::vmwareengine::v1::
@@ -1257,8 +1251,7 @@ VmwareEngineConnectionImpl::ListSubnets(
       StreamRange<google::cloud::vmwareengine::v1::Subnet>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<vmwareengine_v1::VmwareEngineRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::vmwareengine::v1::ListSubnetsRequest const& r) {
@@ -1397,8 +1390,7 @@ VmwareEngineConnectionImpl::ListExternalAccessRules(
       StreamRange<google::cloud::vmwareengine::v1::ExternalAccessRule>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<vmwareengine_v1::VmwareEngineRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::vmwareengine::v1::ListExternalAccessRulesRequest const&
@@ -1731,8 +1723,7 @@ VmwareEngineConnectionImpl::ListLoggingServers(
       StreamRange<google::cloud::vmwareengine::v1::LoggingServer>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<vmwareengine_v1::VmwareEngineRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::vmwareengine::v1::ListLoggingServersRequest const& r) {
@@ -2065,8 +2056,7 @@ VmwareEngineConnectionImpl::ListNodeTypes(
       StreamRange<google::cloud::vmwareengine::v1::NodeType>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<vmwareengine_v1::VmwareEngineRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::vmwareengine::v1::ListNodeTypesRequest const& r) {
@@ -2462,8 +2452,7 @@ VmwareEngineConnectionImpl::ListNetworkPeerings(
       StreamRange<google::cloud::vmwareengine::v1::NetworkPeering>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<vmwareengine_v1::VmwareEngineRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::vmwareengine::v1::ListNetworkPeeringsRequest const&
@@ -2782,8 +2771,7 @@ VmwareEngineConnectionImpl::ListPeeringRoutes(
       StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<vmwareengine_v1::VmwareEngineRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::vmwareengine::v1::ListPeeringRoutesRequest const& r) {
@@ -2914,8 +2902,7 @@ VmwareEngineConnectionImpl::ListHcxActivationKeys(
       StreamRange<google::cloud::vmwareengine::v1::HcxActivationKey>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<vmwareengine_v1::VmwareEngineRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::vmwareengine::v1::ListHcxActivationKeysRequest const&
@@ -2980,8 +2967,7 @@ VmwareEngineConnectionImpl::ListNetworkPolicies(
       StreamRange<google::cloud::vmwareengine::v1::NetworkPolicy>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<vmwareengine_v1::VmwareEngineRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::vmwareengine::v1::ListNetworkPoliciesRequest const&
@@ -3302,8 +3288,7 @@ VmwareEngineConnectionImpl::ListManagementDnsZoneBindings(
       StreamRange<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<vmwareengine_v1::VmwareEngineRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::vmwareengine::v1::
@@ -4031,8 +4016,7 @@ VmwareEngineConnectionImpl::ListVmwareEngineNetworks(
       StreamRange<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<vmwareengine_v1::VmwareEngineRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::vmwareengine::v1::
@@ -4179,8 +4163,7 @@ VmwareEngineConnectionImpl::ListPrivateConnections(
       StreamRange<google::cloud::vmwareengine::v1::PrivateConnection>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<vmwareengine_v1::VmwareEngineRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::vmwareengine::v1::ListPrivateConnectionsRequest const&
@@ -4408,8 +4391,7 @@ VmwareEngineConnectionImpl::ListPrivateConnectionPeeringRoutes(
       StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<vmwareengine_v1::VmwareEngineRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::vmwareengine::v1::
@@ -4654,8 +4636,7 @@ VmwareEngineConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<vmwareengine_v1::VmwareEngineRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {
@@ -4742,8 +4723,7 @@ VmwareEngineConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<vmwareengine_v1::VmwareEngineRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

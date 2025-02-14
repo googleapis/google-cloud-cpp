@@ -39,11 +39,7 @@ namespace compute_routers_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `RoutersConnection`.
-class RoutersRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<RoutersRetryPolicy> clone() const = 0;
-};
+class RoutersRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `RoutersConnection` based on counting errors.
@@ -83,7 +79,7 @@ class RoutersLimitedErrorCountRetryPolicy : public RoutersRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<RoutersRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<RoutersLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -151,7 +147,7 @@ class RoutersLimitedTimeRetryPolicy : public RoutersRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<RoutersRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<RoutersLimitedTimeRetryPolicy>(maximum_duration());
   }
 

@@ -39,10 +39,11 @@ using PartialResultSetReaderFactory =
  */
 class PartialResultSetResume : public PartialResultSetReader {
  public:
-  PartialResultSetResume(PartialResultSetReaderFactory factory,
-                         google::cloud::Idempotency idempotency,
-                         std::unique_ptr<spanner::RetryPolicy> retry_policy,
-                         std::unique_ptr<spanner::BackoffPolicy> backoff_policy)
+  PartialResultSetResume(
+      PartialResultSetReaderFactory factory,
+      google::cloud::Idempotency idempotency,
+      std::unique_ptr<google::cloud::RetryPolicy> retry_policy,
+      std::unique_ptr<spanner::BackoffPolicy> backoff_policy)
       : factory_(std::move(factory)),
         idempotency_(idempotency),
         retry_policy_prototype_(std::move(retry_policy)),
@@ -59,7 +60,7 @@ class PartialResultSetResume : public PartialResultSetReader {
  private:
   PartialResultSetReaderFactory factory_;
   google::cloud::Idempotency idempotency_;
-  std::unique_ptr<spanner::RetryPolicy> retry_policy_prototype_;
+  std::unique_ptr<google::cloud::RetryPolicy> retry_policy_prototype_;
   std::unique_ptr<spanner::BackoffPolicy> backoff_policy_prototype_;
   std::unique_ptr<PartialResultSetReader> child_;
   absl::optional<Status> last_status_;

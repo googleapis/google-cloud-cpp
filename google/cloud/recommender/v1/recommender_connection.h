@@ -36,11 +36,7 @@ namespace recommender_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `RecommenderConnection`.
-class RecommenderRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<RecommenderRetryPolicy> clone() const = 0;
-};
+class RecommenderRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `RecommenderConnection` based on counting errors.
@@ -80,7 +76,7 @@ class RecommenderLimitedErrorCountRetryPolicy : public RecommenderRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<RecommenderRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<RecommenderLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -149,7 +145,7 @@ class RecommenderLimitedTimeRetryPolicy : public RecommenderRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<RecommenderRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<RecommenderLimitedTimeRetryPolicy>(
         maximum_duration());
   }

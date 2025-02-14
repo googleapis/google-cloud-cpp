@@ -60,9 +60,7 @@ NetworkAttachmentsRestConnectionImpl::AggregatedListNetworkAttachments(
       google::cloud::cpp::compute::v1::NetworkAttachmentsScopedList>>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           compute_network_attachments_v1::NetworkAttachmentsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::network_attachments::v1::
@@ -395,9 +393,7 @@ NetworkAttachmentsRestConnectionImpl::ListNetworkAttachments(
       StreamRange<google::cloud::cpp::compute::v1::NetworkAttachment>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           compute_network_attachments_v1::NetworkAttachmentsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::network_attachments::v1::

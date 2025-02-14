@@ -42,11 +42,7 @@ namespace dataproc_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `ClusterControllerConnection`.
-class ClusterControllerRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<ClusterControllerRetryPolicy> clone() const = 0;
-};
+class ClusterControllerRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `ClusterControllerConnection` based on counting errors.
@@ -87,7 +83,7 @@ class ClusterControllerLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<ClusterControllerRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<ClusterControllerLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -157,7 +153,7 @@ class ClusterControllerLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<ClusterControllerRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<ClusterControllerLimitedTimeRetryPolicy>(
         maximum_duration());
   }

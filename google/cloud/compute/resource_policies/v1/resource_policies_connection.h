@@ -39,11 +39,7 @@ namespace compute_resource_policies_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `ResourcePoliciesConnection`.
-class ResourcePoliciesRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<ResourcePoliciesRetryPolicy> clone() const = 0;
-};
+class ResourcePoliciesRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `ResourcePoliciesConnection` based on counting errors.
@@ -84,7 +80,7 @@ class ResourcePoliciesLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<ResourcePoliciesRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<ResourcePoliciesLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -154,7 +150,7 @@ class ResourcePoliciesLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<ResourcePoliciesRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<ResourcePoliciesLimitedTimeRetryPolicy>(
         maximum_duration());
   }

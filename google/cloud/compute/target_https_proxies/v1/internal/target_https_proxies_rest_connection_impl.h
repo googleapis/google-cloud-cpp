@@ -165,9 +165,7 @@ class TargetHttpsProxiesRestConnectionImpl
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
-  static std::unique_ptr<
-      compute_target_https_proxies_v1::TargetHttpsProxiesRetryPolicy>
-  retry_policy(Options const& options) {
+  static std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
     return options
         .get<compute_target_https_proxies_v1::
                  TargetHttpsProxiesRetryPolicyOption>()

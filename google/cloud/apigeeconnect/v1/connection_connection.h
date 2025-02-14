@@ -36,11 +36,7 @@ namespace apigeeconnect_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `ConnectionServiceConnection`.
-class ConnectionServiceRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<ConnectionServiceRetryPolicy> clone() const = 0;
-};
+class ConnectionServiceRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `ConnectionServiceConnection` based on counting errors.
@@ -82,7 +78,7 @@ class ConnectionServiceLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<ConnectionServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<ConnectionServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -153,7 +149,7 @@ class ConnectionServiceLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<ConnectionServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<ConnectionServiceLimitedTimeRetryPolicy>(
         maximum_duration());
   }

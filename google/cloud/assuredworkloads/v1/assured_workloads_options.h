@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-assuredworkloads-options
  */
 struct AssuredWorkloadsServiceRetryPolicyOption {
-  using Type = std::shared_ptr<AssuredWorkloadsServiceRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

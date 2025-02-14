@@ -89,11 +89,11 @@ class StreamingSubscriptionBatchSource
     return {shared_from_this()};
   }
 
-  void StartStream(std::shared_ptr<pubsub::RetryPolicy> retry_policy,
+  void StartStream(std::shared_ptr<google::cloud::RetryPolicy> retry_policy,
                    std::shared_ptr<pubsub::BackoffPolicy> backoff_policy);
 
   struct RetryLoopState {
-    std::shared_ptr<pubsub::RetryPolicy> retry_policy;
+    std::shared_ptr<google::cloud::RetryPolicy> retry_policy;
     std::shared_ptr<pubsub::BackoffPolicy> backoff_policy;
   };
 

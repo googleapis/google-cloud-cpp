@@ -95,8 +95,7 @@ class LicensesRestConnectionImpl
                          TestIamPermissionsRequest const& request) override;
 
  private:
-  static std::unique_ptr<compute_licenses_v1::LicensesRetryPolicy> retry_policy(
-      Options const& options) {
+  static std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
     return options.get<compute_licenses_v1::LicensesRetryPolicyOption>()
         ->clone();
   }

@@ -60,9 +60,7 @@ InstantSnapshotsRestConnectionImpl::AggregatedListInstantSnapshots(
                 google::cloud::cpp::compute::v1::InstantSnapshotsScopedList>>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           compute_instant_snapshots_v1::InstantSnapshotsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::instant_snapshots::v1::
@@ -395,9 +393,7 @@ InstantSnapshotsRestConnectionImpl::ListInstantSnapshots(
       StreamRange<google::cloud::cpp::compute::v1::InstantSnapshot>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           compute_instant_snapshots_v1::InstantSnapshotsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::instant_snapshots::v1::

@@ -33,8 +33,7 @@ namespace translate_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<translate_v3::TranslationServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<translate_v3::TranslationServiceRetryPolicyOption>()
       ->clone();
 }
@@ -533,8 +532,7 @@ TranslationServiceConnectionImpl::ListGlossaries(
       StreamRange<google::cloud::translation::v3::Glossary>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<translate_v3::TranslationServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::translation::v3::ListGlossariesRequest const& r) {
@@ -691,8 +689,7 @@ TranslationServiceConnectionImpl::ListGlossaryEntries(
       StreamRange<google::cloud::translation::v3::GlossaryEntry>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<translate_v3::TranslationServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::translation::v3::ListGlossaryEntriesRequest const& r) {
@@ -875,8 +872,7 @@ TranslationServiceConnectionImpl::ListDatasets(
       StreamRange<google::cloud::translation::v3::Dataset>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<translate_v3::TranslationServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::translation::v3::ListDatasetsRequest const& r) {
@@ -1052,8 +1048,7 @@ TranslationServiceConnectionImpl::ListAdaptiveMtDatasets(
       StreamRange<google::cloud::translation::v3::AdaptiveMtDataset>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<translate_v3::TranslationServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::translation::v3::ListAdaptiveMtDatasetsRequest const&
@@ -1148,8 +1143,7 @@ TranslationServiceConnectionImpl::ListAdaptiveMtFiles(
       StreamRange<google::cloud::translation::v3::AdaptiveMtFile>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<translate_v3::TranslationServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::translation::v3::ListAdaptiveMtFilesRequest const& r) {
@@ -1183,8 +1177,7 @@ TranslationServiceConnectionImpl::ListAdaptiveMtSentences(
       StreamRange<google::cloud::translation::v3::AdaptiveMtSentence>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<translate_v3::TranslationServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::translation::v3::ListAdaptiveMtSentencesRequest const&
@@ -1400,8 +1393,7 @@ TranslationServiceConnectionImpl::ListExamples(
       StreamRange<google::cloud::translation::v3::Example>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<translate_v3::TranslationServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::translation::v3::ListExamplesRequest const& r) {
@@ -1526,8 +1518,7 @@ TranslationServiceConnectionImpl::ListModels(
       StreamRange<google::cloud::translation::v3::Model>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<translate_v3::TranslationServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::translation::v3::ListModelsRequest const& r) {
@@ -1667,8 +1658,7 @@ TranslationServiceConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<translate_v3::TranslationServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {
@@ -1715,8 +1705,7 @@ TranslationServiceConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<translate_v3::TranslationServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

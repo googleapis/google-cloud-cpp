@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-aiplatform-options
  */
 struct ScheduleServiceRetryPolicyOption {
-  using Type = std::shared_ptr<ScheduleServiceRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

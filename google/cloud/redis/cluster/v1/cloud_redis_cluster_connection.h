@@ -40,11 +40,7 @@ namespace redis_cluster_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `CloudRedisClusterConnection`.
-class CloudRedisClusterRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<CloudRedisClusterRetryPolicy> clone() const = 0;
-};
+class CloudRedisClusterRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `CloudRedisClusterConnection` based on counting errors.
@@ -85,7 +81,7 @@ class CloudRedisClusterLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<CloudRedisClusterRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<CloudRedisClusterLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -155,7 +151,7 @@ class CloudRedisClusterLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<CloudRedisClusterRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<CloudRedisClusterLimitedTimeRetryPolicy>(
         maximum_duration());
   }

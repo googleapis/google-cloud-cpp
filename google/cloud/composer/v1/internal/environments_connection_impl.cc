@@ -33,8 +33,7 @@ namespace composer_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<composer_v1::EnvironmentsRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<composer_v1::EnvironmentsRetryPolicyOption>()->clone();
 }
 
@@ -188,8 +187,7 @@ EnvironmentsConnectionImpl::ListEnvironments(
       google::cloud::orchestration::airflow::service::v1::Environment>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<composer_v1::EnvironmentsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::orchestration::airflow::service::v1::
@@ -473,8 +471,7 @@ EnvironmentsConnectionImpl::ListWorkloads(
                       ListWorkloadsResponse::ComposerWorkload>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<composer_v1::EnvironmentsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::orchestration::airflow::service::v1::
@@ -645,8 +642,7 @@ EnvironmentsConnectionImpl::ListUserWorkloadsSecrets(
       google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<composer_v1::EnvironmentsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::orchestration::airflow::service::v1::
@@ -752,8 +748,7 @@ EnvironmentsConnectionImpl::ListUserWorkloadsConfigMaps(
                       UserWorkloadsConfigMap>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<composer_v1::EnvironmentsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::orchestration::airflow::service::v1::
@@ -1136,8 +1131,7 @@ EnvironmentsConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<composer_v1::EnvironmentsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

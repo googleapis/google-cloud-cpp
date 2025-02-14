@@ -33,8 +33,7 @@ namespace bigtable_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<bigtable_admin::BigtableInstanceAdminRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<bigtable_admin::BigtableInstanceAdminRetryPolicyOption>()
       ->clone();
 }
@@ -664,9 +663,7 @@ BigtableInstanceAdminConnectionImpl::ListAppProfiles(
       StreamRange<google::bigtable::admin::v2::AppProfile>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<bigtable_admin::BigtableInstanceAdminRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::bigtable::admin::v2::ListAppProfilesRequest const& r) {
@@ -847,9 +844,7 @@ BigtableInstanceAdminConnectionImpl::ListHotTablets(
       StreamRange<google::bigtable::admin::v2::HotTablet>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<bigtable_admin::BigtableInstanceAdminRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::bigtable::admin::v2::ListHotTabletsRequest const& r) {

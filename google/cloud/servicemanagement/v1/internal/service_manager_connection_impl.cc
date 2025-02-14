@@ -33,8 +33,7 @@ namespace servicemanagement_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<servicemanagement_v1::ServiceManagerRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<servicemanagement_v1::ServiceManagerRetryPolicyOption>()
       ->clone();
 }
@@ -79,8 +78,7 @@ ServiceManagerConnectionImpl::ListServices(
       StreamRange<google::api::servicemanagement::v1::ManagedService>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<servicemanagement_v1::ServiceManagerRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::api::servicemanagement::v1::ListServicesRequest const& r) {
@@ -411,8 +409,7 @@ ServiceManagerConnectionImpl::ListServiceConfigs(
       StreamRange<google::api::Service>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<servicemanagement_v1::ServiceManagerRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::api::servicemanagement::v1::ListServiceConfigsRequest const&
@@ -574,8 +571,7 @@ ServiceManagerConnectionImpl::ListServiceRollouts(
       StreamRange<google::api::servicemanagement::v1::Rollout>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<servicemanagement_v1::ServiceManagerRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::api::servicemanagement::v1::ListServiceRolloutsRequest const&
@@ -779,8 +775,7 @@ ServiceManagerConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<servicemanagement_v1::ServiceManagerRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

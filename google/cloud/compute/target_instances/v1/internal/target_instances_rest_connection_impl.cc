@@ -60,9 +60,7 @@ TargetInstancesRestConnectionImpl::AggregatedListTargetInstances(
                 google::cloud::cpp::compute::v1::TargetInstancesScopedList>>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           compute_target_instances_v1::TargetInstancesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::target_instances::v1::
@@ -378,9 +376,7 @@ TargetInstancesRestConnectionImpl::ListTargetInstances(
       StreamRange<google::cloud::cpp::compute::v1::TargetInstance>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           compute_target_instances_v1::TargetInstancesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::target_instances::v1::

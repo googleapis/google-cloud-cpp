@@ -33,8 +33,7 @@ namespace migrationcenter_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<migrationcenter_v1::MigrationCenterRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<migrationcenter_v1::MigrationCenterRetryPolicyOption>()
       ->clone();
 }
@@ -79,8 +78,7 @@ MigrationCenterConnectionImpl::ListAssets(
       StreamRange<google::cloud::migrationcenter::v1::Asset>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<migrationcenter_v1::MigrationCenterRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::migrationcenter::v1::ListAssetsRequest const& r) {
@@ -314,8 +312,7 @@ MigrationCenterConnectionImpl::ListImportJobs(
       StreamRange<google::cloud::migrationcenter::v1::ImportJob>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<migrationcenter_v1::MigrationCenterRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::migrationcenter::v1::ListImportJobsRequest const& r) {
@@ -758,8 +755,7 @@ MigrationCenterConnectionImpl::ListImportDataFiles(
       StreamRange<google::cloud::migrationcenter::v1::ImportDataFile>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<migrationcenter_v1::MigrationCenterRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::migrationcenter::v1::ListImportDataFilesRequest const&
@@ -987,8 +983,7 @@ MigrationCenterConnectionImpl::ListGroups(
       StreamRange<google::cloud::migrationcenter::v1::Group>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<migrationcenter_v1::MigrationCenterRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::migrationcenter::v1::ListGroupsRequest const& r) {
@@ -1509,8 +1504,7 @@ MigrationCenterConnectionImpl::ListErrorFrames(
       StreamRange<google::cloud::migrationcenter::v1::ErrorFrame>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<migrationcenter_v1::MigrationCenterRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::migrationcenter::v1::ListErrorFramesRequest const& r) {
@@ -1558,8 +1552,7 @@ MigrationCenterConnectionImpl::ListSources(
       StreamRange<google::cloud::migrationcenter::v1::Source>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<migrationcenter_v1::MigrationCenterRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::migrationcenter::v1::ListSourcesRequest const& r) {
@@ -1889,8 +1882,7 @@ MigrationCenterConnectionImpl::ListPreferenceSets(
       StreamRange<google::cloud::migrationcenter::v1::PreferenceSet>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<migrationcenter_v1::MigrationCenterRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::migrationcenter::v1::ListPreferenceSetsRequest const&
@@ -2452,8 +2444,7 @@ MigrationCenterConnectionImpl::ListReportConfigs(
       StreamRange<google::cloud::migrationcenter::v1::ReportConfig>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<migrationcenter_v1::MigrationCenterRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::migrationcenter::v1::ListReportConfigsRequest const&
@@ -2693,8 +2684,7 @@ MigrationCenterConnectionImpl::ListReports(
       StreamRange<google::cloud::migrationcenter::v1::Report>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<migrationcenter_v1::MigrationCenterRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::migrationcenter::v1::ListReportsRequest const& r) {
@@ -2821,8 +2811,7 @@ MigrationCenterConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<migrationcenter_v1::MigrationCenterRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {
@@ -2869,8 +2858,7 @@ MigrationCenterConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<migrationcenter_v1::MigrationCenterRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

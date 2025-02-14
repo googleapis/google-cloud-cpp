@@ -40,11 +40,7 @@ namespace compute_instance_group_managers_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `InstanceGroupManagersConnection`.
-class InstanceGroupManagersRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<InstanceGroupManagersRetryPolicy> clone() const = 0;
-};
+class InstanceGroupManagersRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `InstanceGroupManagersConnection` based on counting
@@ -89,7 +85,7 @@ class InstanceGroupManagersLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<InstanceGroupManagersRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<InstanceGroupManagersLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -160,7 +156,7 @@ class InstanceGroupManagersLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<InstanceGroupManagersRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<InstanceGroupManagersLimitedTimeRetryPolicy>(
         maximum_duration());
   }

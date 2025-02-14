@@ -42,12 +42,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `CloudChannelReportsServiceConnection`.
 class CloudChannelReportsServiceRetryPolicy
-    : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<CloudChannelReportsServiceRetryPolicy> clone()
-      const = 0;
-};
+    : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `CloudChannelReportsServiceConnection` based on counting
@@ -93,8 +88,7 @@ class CloudChannelReportsServiceLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<CloudChannelReportsServiceRetryPolicy> clone()
-      const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<
         CloudChannelReportsServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
@@ -168,8 +162,7 @@ class CloudChannelReportsServiceLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<CloudChannelReportsServiceRetryPolicy> clone()
-      const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<CloudChannelReportsServiceLimitedTimeRetryPolicy>(
         maximum_duration());
   }

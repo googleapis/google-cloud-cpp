@@ -41,11 +41,7 @@ namespace gkemulticloud_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `AttachedClustersConnection`.
-class AttachedClustersRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<AttachedClustersRetryPolicy> clone() const = 0;
-};
+class AttachedClustersRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `AttachedClustersConnection` based on counting errors.
@@ -86,7 +82,7 @@ class AttachedClustersLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<AttachedClustersRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<AttachedClustersLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -156,7 +152,7 @@ class AttachedClustersLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<AttachedClustersRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<AttachedClustersLimitedTimeRetryPolicy>(
         maximum_duration());
   }

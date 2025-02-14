@@ -60,9 +60,7 @@ PacketMirroringsRestConnectionImpl::AggregatedListPacketMirrorings(
                 google::cloud::cpp::compute::v1::PacketMirroringsScopedList>>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           compute_packet_mirrorings_v1::PacketMirroringsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::packet_mirrorings::v1::
@@ -379,9 +377,7 @@ PacketMirroringsRestConnectionImpl::ListPacketMirrorings(
       StreamRange<google::cloud::cpp::compute::v1::PacketMirroring>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           compute_packet_mirrorings_v1::PacketMirroringsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::packet_mirrorings::v1::

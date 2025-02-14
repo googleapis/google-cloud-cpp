@@ -32,8 +32,7 @@ namespace servicedirectory_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<servicedirectory_v1::RegistrationServiceRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options
       .get<servicedirectory_v1::RegistrationServiceRetryPolicyOption>()
       ->clone();
@@ -92,9 +91,7 @@ RegistrationServiceConnectionImpl::ListNamespaces(
       StreamRange<google::cloud::servicedirectory::v1::Namespace>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<servicedirectory_v1::RegistrationServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::servicedirectory::v1::ListNamespacesRequest const& r) {
@@ -188,9 +185,7 @@ RegistrationServiceConnectionImpl::ListServices(
       StreamRange<google::cloud::servicedirectory::v1::Service>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<servicedirectory_v1::RegistrationServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::servicedirectory::v1::ListServicesRequest const& r) {
@@ -283,9 +278,7 @@ RegistrationServiceConnectionImpl::ListEndpoints(
       StreamRange<google::cloud::servicedirectory::v1::Endpoint>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<servicedirectory_v1::RegistrationServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::servicedirectory::v1::ListEndpointsRequest const& r) {
@@ -405,9 +398,7 @@ RegistrationServiceConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<servicedirectory_v1::RegistrationServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {

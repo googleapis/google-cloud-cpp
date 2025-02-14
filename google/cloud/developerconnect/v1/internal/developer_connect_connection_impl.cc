@@ -33,8 +33,7 @@ namespace developerconnect_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<developerconnect_v1::DeveloperConnectRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<developerconnect_v1::DeveloperConnectRetryPolicyOption>()
       ->clone();
 }
@@ -82,9 +81,7 @@ DeveloperConnectConnectionImpl::ListConnections(
       StreamRange<google::cloud::developerconnect::v1::Connection>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<developerconnect_v1::DeveloperConnectRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::developerconnect::v1::ListConnectionsRequest const&
@@ -613,9 +610,7 @@ DeveloperConnectConnectionImpl::ListGitRepositoryLinks(
       StreamRange<google::cloud::developerconnect::v1::GitRepositoryLink>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<developerconnect_v1::DeveloperConnectRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::developerconnect::v1::
                                       ListGitRepositoryLinksRequest const& r) {
@@ -699,9 +694,7 @@ DeveloperConnectConnectionImpl::FetchLinkableGitRepositories(
       StreamRange<google::cloud::developerconnect::v1::LinkableGitRepository>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<developerconnect_v1::DeveloperConnectRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::developerconnect::v1::
@@ -751,9 +744,7 @@ StreamRange<std::string> DeveloperConnectConnectionImpl::FetchGitRefs(
   return google::cloud::internal::MakePaginationRange<StreamRange<std::string>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<developerconnect_v1::DeveloperConnectRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::developerconnect::v1::FetchGitRefsRequest const& r) {
@@ -786,9 +777,7 @@ DeveloperConnectConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<developerconnect_v1::DeveloperConnectRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {
@@ -835,9 +824,7 @@ DeveloperConnectConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<developerconnect_v1::DeveloperConnectRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

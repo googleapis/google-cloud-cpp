@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-edgecontainer-options
  */
 struct EdgeContainerRetryPolicyOption {
-  using Type = std::shared_ptr<EdgeContainerRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

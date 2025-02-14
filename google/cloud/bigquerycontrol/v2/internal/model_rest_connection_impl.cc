@@ -65,8 +65,7 @@ ModelServiceRestConnectionImpl::ListModels(
       StreamRange<google::cloud::bigquery::v2::Model>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<bigquerycontrol_v2::ModelServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::bigquery::v2::ListModelsRequest const& r) {

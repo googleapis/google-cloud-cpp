@@ -32,8 +32,7 @@ namespace vision_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<vision_v1::ImageAnnotatorRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<vision_v1::ImageAnnotatorRetryPolicyOption>()->clone();
 }
 

@@ -40,7 +40,7 @@ inline std::string const& app_profile_id(Options const& options) {
   return options.get<bigtable::AppProfileIdOption>();
 }
 
-inline std::unique_ptr<bigtable::DataRetryPolicy> retry_policy(
+inline std::unique_ptr<google::cloud::RetryPolicy> retry_policy(
     Options const& options) {
   return options.get<bigtable::DataRetryPolicyOption>()->clone();
 }
@@ -175,7 +175,7 @@ std::vector<bigtable::FailedMutation> DataConnectionImpl::BulkApply(
                       *idempotency_policy(*current), std::move(mut));
   // We wait to allocate the policies until they are needed as a
   // micro-optimization.
-  std::unique_ptr<bigtable::DataRetryPolicy> retry;
+  std::unique_ptr<google::cloud::RetryPolicy> retry;
   std::unique_ptr<BackoffPolicy> backoff;
   while (true) {
     auto status = mutator.MakeOneRequest(*stub_, *limiter_, *current);
@@ -337,7 +337,7 @@ StatusOr<std::vector<bigtable::RowKeySample>> DataConnectionImpl::SampleRows(
 
   Status status;
   std::vector<bigtable::RowKeySample> samples;
-  std::unique_ptr<bigtable::DataRetryPolicy> retry;
+  std::unique_ptr<google::cloud::RetryPolicy> retry;
   std::unique_ptr<BackoffPolicy> backoff;
   RetryContext retry_context;
   while (true) {

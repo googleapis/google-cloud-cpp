@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-publicca-options
  */
 struct PublicCertificateAuthorityServiceRetryPolicyOption {
-  using Type = std::shared_ptr<PublicCertificateAuthorityServiceRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-tasks-options
  */
 struct CloudTasksRetryPolicyOption {
-  using Type = std::shared_ptr<CloudTasksRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

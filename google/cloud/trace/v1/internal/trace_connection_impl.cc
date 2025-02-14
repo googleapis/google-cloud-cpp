@@ -32,8 +32,7 @@ namespace trace_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<trace_v1::TraceServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<trace_v1::TraceServiceRetryPolicyOption>()->clone();
 }
 
@@ -68,8 +67,7 @@ TraceServiceConnectionImpl::ListTraces(
       StreamRange<google::devtools::cloudtrace::v1::Trace>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<trace_v1::TraceServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::devtools::cloudtrace::v1::ListTracesRequest const& r) {

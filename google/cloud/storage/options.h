@@ -309,7 +309,7 @@ struct DownloadStallMinimumRateOption {
  * @ingroup storage-options
  */
 struct RetryPolicyOption {
-  using Type = std::shared_ptr<RetryPolicy>;
+  using Type = std::shared_ptr<google::cloud::RetryPolicy>;
 };
 
 /**

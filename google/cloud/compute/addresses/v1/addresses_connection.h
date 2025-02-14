@@ -39,11 +39,7 @@ namespace compute_addresses_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `AddressesConnection`.
-class AddressesRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<AddressesRetryPolicy> clone() const = 0;
-};
+class AddressesRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `AddressesConnection` based on counting errors.
@@ -83,7 +79,7 @@ class AddressesLimitedErrorCountRetryPolicy : public AddressesRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<AddressesRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<AddressesLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -152,7 +148,7 @@ class AddressesLimitedTimeRetryPolicy : public AddressesRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<AddressesRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<AddressesLimitedTimeRetryPolicy>(
         maximum_duration());
   }

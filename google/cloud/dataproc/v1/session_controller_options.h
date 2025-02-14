@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-dataproc-options
  */
 struct SessionControllerRetryPolicyOption {
-  using Type = std::shared_ptr<SessionControllerRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

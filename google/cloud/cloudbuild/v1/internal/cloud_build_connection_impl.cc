@@ -33,8 +33,7 @@ namespace cloudbuild_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<cloudbuild_v1::CloudBuildRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<cloudbuild_v1::CloudBuildRetryPolicyOption>()->clone();
 }
 
@@ -180,8 +179,7 @@ CloudBuildConnectionImpl::ListBuilds(
       StreamRange<google::devtools::cloudbuild::v1::Build>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<cloudbuild_v1::CloudBuildRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::devtools::cloudbuild::v1::ListBuildsRequest const& r) {
@@ -443,8 +441,7 @@ CloudBuildConnectionImpl::ListBuildTriggers(
       StreamRange<google::devtools::cloudbuild::v1::BuildTrigger>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<cloudbuild_v1::CloudBuildRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::devtools::cloudbuild::v1::ListBuildTriggersRequest const& r) {
@@ -917,8 +914,7 @@ CloudBuildConnectionImpl::ListWorkerPools(
       StreamRange<google::devtools::cloudbuild::v1::WorkerPool>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<cloudbuild_v1::CloudBuildRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::devtools::cloudbuild::v1::ListWorkerPoolsRequest const& r) {

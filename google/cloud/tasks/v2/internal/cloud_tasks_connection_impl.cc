@@ -32,8 +32,7 @@ namespace tasks_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<tasks_v2::CloudTasksRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<tasks_v2::CloudTasksRetryPolicyOption>()->clone();
 }
 
@@ -68,8 +67,7 @@ CloudTasksConnectionImpl::ListQueues(
       StreamRange<google::cloud::tasks::v2::Queue>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<tasks_v2::CloudTasksRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::tasks::v2::ListQueuesRequest const& r) {
@@ -230,8 +228,7 @@ StreamRange<google::cloud::tasks::v2::Task> CloudTasksConnectionImpl::ListTasks(
       StreamRange<google::cloud::tasks::v2::Task>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<tasks_v2::CloudTasksRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::tasks::v2::ListTasksRequest const& r) {
@@ -314,8 +311,7 @@ CloudTasksConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<tasks_v2::CloudTasksRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {

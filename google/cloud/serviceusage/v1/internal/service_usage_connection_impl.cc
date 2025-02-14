@@ -33,8 +33,7 @@ namespace serviceusage_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<serviceusage_v1::ServiceUsageRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<serviceusage_v1::ServiceUsageRetryPolicyOption>()->clone();
 }
 
@@ -275,8 +274,7 @@ ServiceUsageConnectionImpl::ListServices(
       StreamRange<google::api::serviceusage::v1::Service>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<serviceusage_v1::ServiceUsageRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::api::serviceusage::v1::ListServicesRequest const& r) {
@@ -417,8 +415,7 @@ ServiceUsageConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<serviceusage_v1::ServiceUsageRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

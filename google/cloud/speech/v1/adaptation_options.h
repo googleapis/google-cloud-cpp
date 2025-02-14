@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-speech-options
  */
 struct AdaptationRetryPolicyOption {
-  using Type = std::shared_ptr<AdaptationRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

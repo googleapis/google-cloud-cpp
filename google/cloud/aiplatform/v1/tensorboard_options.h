@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-aiplatform-options
  */
 struct TensorboardServiceRetryPolicyOption {
-  using Type = std::shared_ptr<TensorboardServiceRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

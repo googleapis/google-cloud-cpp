@@ -37,11 +37,7 @@ namespace appengine_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `AuthorizedDomainsConnection`.
-class AuthorizedDomainsRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<AuthorizedDomainsRetryPolicy> clone() const = 0;
-};
+class AuthorizedDomainsRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `AuthorizedDomainsConnection` based on counting errors.
@@ -82,7 +78,7 @@ class AuthorizedDomainsLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<AuthorizedDomainsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<AuthorizedDomainsLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -152,7 +148,7 @@ class AuthorizedDomainsLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<AuthorizedDomainsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<AuthorizedDomainsLimitedTimeRetryPolicy>(
         maximum_duration());
   }

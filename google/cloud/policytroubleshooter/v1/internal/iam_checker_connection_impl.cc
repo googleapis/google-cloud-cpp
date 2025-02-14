@@ -31,8 +31,7 @@ namespace policytroubleshooter_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<policytroubleshooter_v1::IamCheckerRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<policytroubleshooter_v1::IamCheckerRetryPolicyOption>()
       ->clone();
 }

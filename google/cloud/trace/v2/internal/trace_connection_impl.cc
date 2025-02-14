@@ -31,8 +31,7 @@ namespace trace_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<trace_v2::TraceServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<trace_v2::TraceServiceRetryPolicyOption>()->clone();
 }
 

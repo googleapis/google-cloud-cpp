@@ -328,9 +328,7 @@ TargetSslProxiesRestConnectionImpl::ListTargetSslProxies(
       StreamRange<google::cloud::cpp::compute::v1::TargetSslProxy>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           compute_target_ssl_proxies_v1::TargetSslProxiesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::target_ssl_proxies::v1::

@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-bigquery-options
  */
 struct DataTransferServiceRetryPolicyOption {
-  using Type = std::shared_ptr<DataTransferServiceRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

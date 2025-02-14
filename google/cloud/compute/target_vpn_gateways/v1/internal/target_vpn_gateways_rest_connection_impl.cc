@@ -60,9 +60,7 @@ TargetVpnGatewaysRestConnectionImpl::AggregatedListTargetVpnGateways(
                 google::cloud::cpp::compute::v1::TargetVpnGatewaysScopedList>>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           compute_target_vpn_gateways_v1::TargetVpnGatewaysRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::target_vpn_gateways::v1::
@@ -379,9 +377,7 @@ TargetVpnGatewaysRestConnectionImpl::ListTargetVpnGateways(
       StreamRange<google::cloud::cpp::compute::v1::TargetVpnGateway>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           compute_target_vpn_gateways_v1::TargetVpnGatewaysRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::target_vpn_gateways::v1::

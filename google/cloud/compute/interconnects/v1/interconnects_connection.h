@@ -39,11 +39,7 @@ namespace compute_interconnects_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `InterconnectsConnection`.
-class InterconnectsRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<InterconnectsRetryPolicy> clone() const = 0;
-};
+class InterconnectsRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `InterconnectsConnection` based on counting errors.
@@ -84,7 +80,7 @@ class InterconnectsLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<InterconnectsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<InterconnectsLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -153,7 +149,7 @@ class InterconnectsLimitedTimeRetryPolicy : public InterconnectsRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<InterconnectsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<InterconnectsLimitedTimeRetryPolicy>(
         maximum_duration());
   }

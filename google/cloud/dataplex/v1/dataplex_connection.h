@@ -40,11 +40,7 @@ namespace dataplex_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `DataplexServiceConnection`.
-class DataplexServiceRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<DataplexServiceRetryPolicy> clone() const = 0;
-};
+class DataplexServiceRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `DataplexServiceConnection` based on counting errors.
@@ -85,7 +81,7 @@ class DataplexServiceLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<DataplexServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<DataplexServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -155,7 +151,7 @@ class DataplexServiceLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<DataplexServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<DataplexServiceLimitedTimeRetryPolicy>(
         maximum_duration());
   }

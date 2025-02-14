@@ -36,9 +36,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `SqlInstanceNamesServiceConnection`.
 class SqlInstanceNamesServiceRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<SqlInstanceNamesServiceRetryPolicy> clone() const = 0;
 };
 
 /**
@@ -84,7 +81,7 @@ class SqlInstanceNamesServiceLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<SqlInstanceNamesServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<
         SqlInstanceNamesServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
@@ -155,7 +152,7 @@ class SqlInstanceNamesServiceLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<SqlInstanceNamesServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<SqlInstanceNamesServiceLimitedTimeRetryPolicy>(
         maximum_duration());
   }

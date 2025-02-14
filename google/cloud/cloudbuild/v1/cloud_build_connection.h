@@ -40,11 +40,7 @@ namespace cloudbuild_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `CloudBuildConnection`.
-class CloudBuildRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<CloudBuildRetryPolicy> clone() const = 0;
-};
+class CloudBuildRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `CloudBuildConnection` based on counting errors.
@@ -84,7 +80,7 @@ class CloudBuildLimitedErrorCountRetryPolicy : public CloudBuildRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<CloudBuildRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<CloudBuildLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -153,7 +149,7 @@ class CloudBuildLimitedTimeRetryPolicy : public CloudBuildRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<CloudBuildRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<CloudBuildLimitedTimeRetryPolicy>(
         maximum_duration());
   }

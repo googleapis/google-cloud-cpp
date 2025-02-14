@@ -33,8 +33,7 @@ namespace networkservices_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<networkservices_v1::NetworkServicesRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<networkservices_v1::NetworkServicesRetryPolicyOption>()
       ->clone();
 }
@@ -80,8 +79,7 @@ NetworkServicesConnectionImpl::ListEndpointPolicies(
       StreamRange<google::cloud::networkservices::v1::EndpointPolicy>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<networkservices_v1::NetworkServicesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::networkservices::v1::ListEndpointPoliciesRequest const&
@@ -422,8 +420,7 @@ NetworkServicesConnectionImpl::ListGateways(
       StreamRange<google::cloud::networkservices::v1::Gateway>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<networkservices_v1::NetworkServicesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::networkservices::v1::ListGatewaysRequest const& r) {
@@ -754,8 +751,7 @@ NetworkServicesConnectionImpl::ListGrpcRoutes(
       StreamRange<google::cloud::networkservices::v1::GrpcRoute>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<networkservices_v1::NetworkServicesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::networkservices::v1::ListGrpcRoutesRequest const& r) {
@@ -1086,8 +1082,7 @@ NetworkServicesConnectionImpl::ListHttpRoutes(
       StreamRange<google::cloud::networkservices::v1::HttpRoute>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<networkservices_v1::NetworkServicesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::networkservices::v1::ListHttpRoutesRequest const& r) {
@@ -1418,8 +1413,7 @@ NetworkServicesConnectionImpl::ListTcpRoutes(
       StreamRange<google::cloud::networkservices::v1::TcpRoute>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<networkservices_v1::NetworkServicesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::networkservices::v1::ListTcpRoutesRequest const& r) {
@@ -1750,8 +1744,7 @@ NetworkServicesConnectionImpl::ListTlsRoutes(
       StreamRange<google::cloud::networkservices::v1::TlsRoute>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<networkservices_v1::NetworkServicesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::networkservices::v1::ListTlsRoutesRequest const& r) {
@@ -2082,8 +2075,7 @@ NetworkServicesConnectionImpl::ListServiceBindings(
       StreamRange<google::cloud::networkservices::v1::ServiceBinding>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<networkservices_v1::NetworkServicesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::networkservices::v1::ListServiceBindingsRequest const&
@@ -2327,8 +2319,7 @@ NetworkServicesConnectionImpl::ListMeshes(
       StreamRange<google::cloud::networkservices::v1::Mesh>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<networkservices_v1::NetworkServicesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::networkservices::v1::ListMeshesRequest const& r) {
@@ -2658,8 +2649,7 @@ NetworkServicesConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<networkservices_v1::NetworkServicesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {
@@ -2746,8 +2736,7 @@ NetworkServicesConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<networkservices_v1::NetworkServicesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

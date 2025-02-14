@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-videointelligence-options
  */
 struct VideoIntelligenceServiceRetryPolicyOption {
-  using Type = std::shared_ptr<VideoIntelligenceServiceRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

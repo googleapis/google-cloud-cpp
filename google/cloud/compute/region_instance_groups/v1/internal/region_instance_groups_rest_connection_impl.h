@@ -78,9 +78,7 @@ class RegionInstanceGroupsRestConnectionImpl
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
-  static std::unique_ptr<
-      compute_region_instance_groups_v1::RegionInstanceGroupsRetryPolicy>
-  retry_policy(Options const& options) {
+  static std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
     return options
         .get<compute_region_instance_groups_v1::
                  RegionInstanceGroupsRetryPolicyOption>()

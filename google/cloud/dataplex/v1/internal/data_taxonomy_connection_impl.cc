@@ -33,8 +33,7 @@ namespace dataplex_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<dataplex_v1::DataTaxonomyServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<dataplex_v1::DataTaxonomyServiceRetryPolicyOption>()
       ->clone();
 }
@@ -357,8 +356,7 @@ DataTaxonomyServiceConnectionImpl::ListDataTaxonomies(
       StreamRange<google::cloud::dataplex::v1::DataTaxonomy>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataplex_v1::DataTaxonomyServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::dataplex::v1::ListDataTaxonomiesRequest const& r) {
@@ -695,8 +693,7 @@ DataTaxonomyServiceConnectionImpl::ListDataAttributeBindings(
       StreamRange<google::cloud::dataplex::v1::DataAttributeBinding>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataplex_v1::DataTaxonomyServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::dataplex::v1::ListDataAttributeBindingsRequest const&
@@ -1025,8 +1022,7 @@ DataTaxonomyServiceConnectionImpl::ListDataAttributes(
       StreamRange<google::cloud::dataplex::v1::DataAttribute>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataplex_v1::DataTaxonomyServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::dataplex::v1::ListDataAttributesRequest const& r) {
@@ -1074,8 +1070,7 @@ DataTaxonomyServiceConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataplex_v1::DataTaxonomyServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {
@@ -1164,8 +1159,7 @@ DataTaxonomyServiceConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<dataplex_v1::DataTaxonomyServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

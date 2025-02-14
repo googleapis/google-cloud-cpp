@@ -75,8 +75,7 @@ class DatasetServiceRestConnectionImpl
       override;
 
  private:
-  static std::unique_ptr<bigquerycontrol_v2::DatasetServiceRetryPolicy>
-  retry_policy(Options const& options) {
+  static std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
     return options.get<bigquerycontrol_v2::DatasetServiceRetryPolicyOption>()
         ->clone();
   }

@@ -37,12 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `ServiceMonitoringServiceConnection`.
 class ServiceMonitoringServiceRetryPolicy
-    : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<ServiceMonitoringServiceRetryPolicy> clone()
-      const = 0;
-};
+    : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `ServiceMonitoringServiceConnection` based on counting
@@ -87,7 +82,7 @@ class ServiceMonitoringServiceLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<ServiceMonitoringServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<
         ServiceMonitoringServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
@@ -161,7 +156,7 @@ class ServiceMonitoringServiceLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<ServiceMonitoringServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<ServiceMonitoringServiceLimitedTimeRetryPolicy>(
         maximum_duration());
   }
