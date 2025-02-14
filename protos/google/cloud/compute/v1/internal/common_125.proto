@@ -27,68 +27,76 @@ message StoragePoolType {
   // [Output Only] Creation timestamp in RFC3339 text format.
   optional string creation_timestamp = 1 [json_name = "creationTimestamp"];
 
-  // An optional description of this resource. Provide this property when you
-  // create the resource.
-  optional string description = 2 [json_name = "description"];
+  // [Output Only] The deprecation status associated with this storage pool
+  // type.
+  optional DeprecationStatus deprecated = 2 [json_name = "deprecated"];
 
-  // Fingerprint of this resource. A hash of the contents stored in this object.
-  // This field is used in optimistic locking. This field will be ignored when
-  // inserting a TargetGrpcProxy. An up-to-date fingerprint must be provided in
-  // order to patch/update the TargetGrpcProxy; otherwise, the request will fail
-  // with error 412 conditionNotMet. To see the latest fingerprint, make a get()
-  // request to retrieve the TargetGrpcProxy.
-  optional string fingerprint = 3 [json_name = "fingerprint"];
+  // [Output Only] An optional description of this resource.
+  optional string description = 3 [json_name = "description"];
 
-  // [Output Only] The unique identifier for the resource type. The server
-  // generates this identifier.
+  // [Output Only] The unique identifier for the resource. This identifier is
+  // defined by the server.
   optional string id = 4 [json_name = "id"];
 
-  // [Output Only] Type of the resource. Always compute#targetGrpcProxy for
-  // target grpc proxies.
+  // [Output Only] Type of the resource. Always compute#storagePoolType for
+  // storage pool types.
   optional string kind = 5 [json_name = "kind"];
 
-  // Name of the resource. Provided by the client when the resource is created.
-  // The name must be 1-63 characters long, and comply with RFC1035.
-  // Specifically, the name must be 1-63 characters long and match the regular
-  // expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character
-  // must be a lowercase letter, and all following characters must be a dash,
-  // lowercase letter, or digit, except the last character, which cannot be a
-  // dash.
-  optional string name = 6 [json_name = "name"];
+  // [Output Only] Maximum storage pool size in GB.
+  optional string max_pool_provisioned_capacity_gb = 6
+      [json_name = "maxPoolProvisionedCapacityGb"];
+
+  // [Output Only] Maximum provisioned IOPS.
+  optional string max_pool_provisioned_iops = 7
+      [json_name = "maxPoolProvisionedIops"];
+
+  // [Output Only] Maximum provisioned throughput.
+  optional string max_pool_provisioned_throughput = 8
+      [json_name = "maxPoolProvisionedThroughput"];
+
+  // [Output Only] Minimum storage pool size in GB.
+  optional string min_pool_provisioned_capacity_gb = 9
+      [json_name = "minPoolProvisionedCapacityGb"];
+
+  // [Output Only] Minimum provisioned IOPS.
+  optional string min_pool_provisioned_iops = 10
+      [json_name = "minPoolProvisionedIops"];
+
+  // [Output Only] Minimum provisioned throughput.
+  optional string min_pool_provisioned_throughput = 11
+      [json_name = "minPoolProvisionedThroughput"];
+
+  // [Deprecated] This field is deprecated. Use minPoolProvisionedCapacityGb
+  // instead.
+  optional string min_size_gb = 12 [json_name = "minSizeGb"];
+
+  // [Output Only] Name of the resource.
+  optional string name = 13 [json_name = "name"];
 
   // [Output Only] Server-defined URL for the resource.
-  optional string self_link = 7 [json_name = "selfLink"];
+  optional string self_link = 14 [json_name = "selfLink"];
 
-  // [Output Only] Server-defined URL with id for the resource.
-  optional string self_link_with_id = 8 [json_name = "selfLinkWithId"];
+  // [Output Only] Server-defined URL for this resource with the resource id.
+  optional string self_link_with_id = 15 [json_name = "selfLinkWithId"];
 
-  // URL to the UrlMap resource that defines the mapping from URL to the
-  // BackendService. The protocol field in the BackendService must be set to
-  // GRPC.
-  optional string url_map = 9 [json_name = "urlMap"];
+  // [Output Only] The list of disk types supported in this storage pool type.
+  repeated string supported_disk_types = 16 [json_name = "supportedDiskTypes"];
 
-  // If true, indicates that the BackendServices referenced by the urlMap may be
-  // accessed by gRPC applications without using a sidecar proxy. This will
-  // enable configuration checks on urlMap and its referenced BackendServices to
-  // not allow unsupported features. A gRPC application must use "xds:///"
-  // scheme in the target URI of the service it is connecting to. If false,
-  // indicates that the BackendServices referenced by the urlMap will be
-  // accessed by gRPC applications via a sidecar proxy. In this case, a gRPC
-  // application must not use "xds:///" scheme in the target URI of the service
-  // it is connecting to
-  optional bool validate_for_proxyless = 10
-      [json_name = "validateForProxyless"];
+  // [Output Only] URL of the zone where the storage pool type resides. You must
+  // specify this field as part of the HTTP request URL. It is not settable as a
+  // field in the request body.
+  optional string zone = 17 [json_name = "zone"];
 }
 
-message TargetGrpcProxyList {
+message StoragePoolTypeAggregatedList {
   // [Output Only] Unique identifier for the resource; defined by the server.
   optional string id = 1 [json_name = "id"];
 
-  // A list of TargetGrpcProxy resources.
-  repeated TargetGrpcProxy items = 2 [json_name = "items"];
+  // A list of StoragePoolTypesScopedList resources.
+  map<string, StoragePoolTypesScopedList> items = 2 [json_name = "items"];
 
-  // [Output Only] Type of the resource. Always compute#targetGrpcProxy for
-  // target grpc proxies.
+  // [Output Only] Type of resource. Always
+  // compute#storagePoolTypeAggregatedList .
   optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for

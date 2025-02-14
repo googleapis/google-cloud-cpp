@@ -31,9 +31,10 @@
 #include <google/cloud/compute/v1/internal/common_031.pb.h>
 #include <google/cloud/compute/v1/internal/common_034.pb.h>
 #include <google/cloud/compute/v1/internal/common_038.pb.h>
-#include <google/cloud/compute/v1/internal/common_100.pb.h>
+#include <google/cloud/compute/v1/internal/common_039.pb.h>
 #include <google/cloud/compute/v1/internal/common_102.pb.h>
-#include <google/cloud/compute/v1/internal/common_137.pb.h>
+#include <google/cloud/compute/v1/internal/common_104.pb.h>
+#include <google/cloud/compute/v1/internal/common_139.pb.h>
 // IWYU pragma: end_exports
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_NETWORK_FIREWALL_POLICIES_V1_REGION_NETWORK_FIREWALL_POLICIES_PROTO_EXPORT_H

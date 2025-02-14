@@ -24,7 +24,7 @@ package google.cloud.cpp.compute.regions.v1;
 import "google/api/annotations.proto";
 import "google/api/client.proto";
 import "google/api/field_behavior.proto";
-import "google/cloud/compute/v1/internal/common_093.proto";
+import "google/cloud/compute/v1/internal/common_095.proto";
 
 // Service for the regions resource.
 // https://cloud.google.com/compute/docs/reference/rest/v1/regions

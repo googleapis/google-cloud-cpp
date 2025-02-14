@@ -21,51 +21,33 @@ syntax = "proto3";
 
 package google.cloud.cpp.compute.v1;
 
-// Represents a Target HTTPS Proxy resource. Google Compute Engine has two
-// Target HTTPS Proxy resources: *
-// [Global](/compute/docs/reference/rest/v1/targetHttpsProxies) *
-// [Regional](/compute/docs/reference/rest/v1/regionTargetHttpsProxies) A target
-// HTTPS proxy is a component of GCP HTTPS load balancers. * targetHttpProxies
-// are used by global external Application Load Balancers, classic Application
-// Load Balancers, cross-region internal Application Load Balancers, and Traffic
-// Director. * regionTargetHttpProxies are used by regional internal Application
-// Load Balancers and regional external Application Load Balancers. Forwarding
-// rules reference a target HTTPS proxy, and the target proxy then references a
-// URL map. For more information, read Using Target Proxies and Forwarding rule
-// concepts.
-message TargetHttpsProxy {
-  // Optional. A URL referring to a networksecurity.AuthorizationPolicy resource
-  // that describes how the proxy should authorize inbound traffic. If left
-  // blank, access will not be restricted by an authorization policy. Refer to
-  // the AuthorizationPolicy resource for additional details.
-  // authorizationPolicy only applies to a global TargetHttpsProxy attached to
-  // globalForwardingRules with the loadBalancingScheme set to
-  // INTERNAL_SELF_MANAGED. Note: This field currently has no impact.
-  optional string authorization_policy = 1 [json_name = "authorizationPolicy"];
-
-  // URL of a certificate map that identifies a certificate map associated with
-  // the given target proxy. This field can only be set for Global external
-  // Application Load Balancer or Classic Application Load Balancer. For other
-  // products use Certificate Manager Certificates instead. If set,
-  // sslCertificates will be ignored. Accepted format is
-  // //certificatemanager.googleapis.com/projects/{project
-  // }/locations/{location}/certificateMaps/{resourceName}.
-  optional string certificate_map = 2 [json_name = "certificateMap"];
-
+// Represents a Target HTTP Proxy resource. Google Compute Engine has two Target
+// HTTP Proxy resources: *
+// [Global](/compute/docs/reference/rest/v1/targetHttpProxies) *
+// [Regional](/compute/docs/reference/rest/v1/regionTargetHttpProxies) A target
+// HTTP proxy is a component of Google Cloud HTTP load balancers. *
+// targetHttpProxies are used by global external Application Load Balancers,
+// classic Application Load Balancers, cross-region internal Application Load
+// Balancers, and Traffic Director. * regionTargetHttpProxies are used by
+// regional internal Application Load Balancers and regional external
+// Application Load Balancers. Forwarding rules reference a target HTTP proxy,
+// and the target proxy then references a URL map. For more information, read
+// Using Target Proxies and Forwarding rule concepts.
+message TargetHttpProxy {
   // [Output Only] Creation timestamp in RFC3339 text format.
-  optional string creation_timestamp = 3 [json_name = "creationTimestamp"];
+  optional string creation_timestamp = 1 [json_name = "creationTimestamp"];
 
   // An optional description of this resource. Provide this property when you
   // create the resource.
-  optional string description = 4 [json_name = "description"];
+  optional string description = 2 [json_name = "description"];
 
   // Fingerprint of this resource. A hash of the contents stored in this object.
   // This field is used in optimistic locking. This field will be ignored when
-  // inserting a TargetHttpsProxy. An up-to-date fingerprint must be provided in
-  // order to patch the TargetHttpsProxy; otherwise, the request will fail with
-  // error 412 conditionNotMet. To see the latest fingerprint, make a get()
-  // request to retrieve the TargetHttpsProxy.
-  optional string fingerprint = 5 [json_name = "fingerprint"];
+  // inserting a TargetHttpProxy. An up-to-date fingerprint must be provided in
+  // order to patch/update the TargetHttpProxy; otherwise, the request will fail
+  // with error 412 conditionNotMet. To see the latest fingerprint, make a get()
+  // request to retrieve the TargetHttpProxy.
+  optional string fingerprint = 3 [json_name = "fingerprint"];
 
   // Specifies how long to keep a connection open, after completing a response,
   // while there is no matching traffic (in seconds). If an HTTP keep-alive is
@@ -73,16 +55,16 @@ message TargetHttpsProxy {
   // external Application Load Balancers, the minimum allowed value is 5 seconds
   // and the maximum allowed value is 1200 seconds. For classic Application Load
   // Balancers, this option is not supported.
-  optional int32 http_keep_alive_timeout_sec = 17
+  optional int32 http_keep_alive_timeout_sec = 11
       [json_name = "httpKeepAliveTimeoutSec"];
 
   // [Output Only] The unique identifier for the resource. This identifier is
   // defined by the server.
-  optional string id = 6 [json_name = "id"];
+  optional string id = 4 [json_name = "id"];
 
-  // [Output Only] Type of resource. Always compute#targetHttpsProxy for target
-  // HTTPS proxies.
-  optional string kind = 7 [json_name = "kind"];
+  // [Output Only] Type of resource. Always compute#targetHttpProxy for target
+  // HTTP proxies.
+  optional string kind = 5 [json_name = "kind"];
 
   // Name of the resource. Provided by the client when the resource is created.
   // The name must be 1-63 characters long, and comply with RFC1035.
@@ -91,7 +73,7 @@ message TargetHttpsProxy {
   // must be a lowercase letter, and all following characters must be a dash,
   // lowercase letter, or digit, except the last character, which cannot be a
   // dash.
-  optional string name = 8 [json_name = "name"];
+  optional string name = 6 [json_name = "name"];
 
   // This field only applies when the forwarding rule that references this
   // target proxy has a loadBalancingScheme set to INTERNAL_SELF_MANAGED. When
@@ -101,107 +83,30 @@ message TargetHttpsProxy {
   // configure Envoy as a gateway or middle proxy (in other words, not a sidecar
   // proxy). The Envoy proxy listens for inbound requests and handles requests
   // when it receives them. The default is false.
-  optional bool proxy_bind = 9 [json_name = "proxyBind"];
+  optional bool proxy_bind = 7 [json_name = "proxyBind"];
 
-  // Specifies the QUIC override policy for this TargetHttpsProxy resource. This
-  // setting determines whether the load balancer attempts to negotiate QUIC
-  // with clients. You can specify NONE, ENABLE, or DISABLE. - When
-  // quic-override is set to NONE, Google manages whether QUIC is used. - When
-  // quic-override is set to ENABLE, the load balancer uses QUIC when possible.
-  // - When quic-override is set to DISABLE, the load balancer doesn't use QUIC.
-  // - If the quic-override flag is not specified, NONE is implied.
-  // DISABLE: The load balancer will not attempt to negotiate QUIC with clients.
-  // ENABLE: The load balancer will attempt to negotiate QUIC with clients.
-  // NONE: No overrides to the default QUIC policy. This option is implicit if
-  // no QUIC override has been specified in the request.
-  optional string quic_override = 10 [json_name = "quicOverride"];
-
-  // [Output Only] URL of the region where the regional TargetHttpsProxy
-  // resides. This field is not applicable to global TargetHttpsProxies.
-  optional string region = 11 [json_name = "region"];
+  // [Output Only] URL of the region where the regional Target HTTP Proxy
+  // resides. This field is not applicable to global Target HTTP Proxies.
+  optional string region = 8 [json_name = "region"];
 
   // [Output Only] Server-defined URL for the resource.
-  optional string self_link = 12 [json_name = "selfLink"];
+  optional string self_link = 9 [json_name = "selfLink"];
 
-  // Optional. A URL referring to a networksecurity.ServerTlsPolicy resource
-  // that describes how the proxy should authenticate inbound traffic.
-  // serverTlsPolicy only applies to a global TargetHttpsProxy attached to
-  // globalForwardingRules with the loadBalancingScheme set to
-  // INTERNAL_SELF_MANAGED or EXTERNAL or EXTERNAL_MANAGED. For details which
-  // ServerTlsPolicy resources are accepted with INTERNAL_SELF_MANAGED and which
-  // with EXTERNAL, EXTERNAL_MANAGED loadBalancingScheme consult ServerTlsPolicy
-  // documentation. If left blank, communications are not encrypted.
-  optional string server_tls_policy = 13 [json_name = "serverTlsPolicy"];
-
-  // URLs to SslCertificate resources that are used to authenticate connections
-  // between users and the load balancer. At least one SSL certificate must be
-  // specified. SslCertificates do not apply when the load balancing scheme is
-  // set to INTERNAL_SELF_MANAGED. The URLs should refer to a SSL Certificate
-  // resource or Certificate Manager Certificate resource. Mixing Classic
-  // Certificates and Certificate Manager Certificates is not allowed.
-  // Certificate Manager Certificates must include the certificatemanager API.
-  // Certificate Manager Certificates are not supported by Global external
-  // Application Load Balancer or Classic Application Load Balancer, use
-  // certificate_map instead. Currently, you may specify up to 15 Classic SSL
-  // Certificates. Certificate Manager Certificates accepted formats are: -
-  // //certificatemanager.googleapis.com/projects/{project}/locations/{
-  // location}/certificates/{resourceName}. -
-  // https://certificatemanager.googleapis.com/v1alpha1/projects/{project
-  // }/locations/{location}/certificates/{resourceName}.
-  repeated string ssl_certificates = 14 [json_name = "sslCertificates"];
-
-  // URL of SslPolicy resource that will be associated with the TargetHttpsProxy
-  // resource. If not set, the TargetHttpsProxy resource has no SSL policy
-  // configured.
-  optional string ssl_policy = 15 [json_name = "sslPolicy"];
-
-  //  Specifies whether TLS 1.3 0-RTT Data ("Early Data") should be accepted for
-  // this service. Early Data allows a TLS resumption handshake to include the
-  // initial application payload (a HTTP request) alongside the handshake,
-  // reducing the effective round trips to "zero". This applies to TLS 1.3
-  // connections over TCP (HTTP/2) as well as over UDP (QUIC/h3). This can
-  // improve application performance, especially on networks where interruptions
-  // may be common, such as on mobile. Requests with Early Data will have the
-  // "Early-Data" HTTP header set on the request, with a value of "1", to allow
-  // the backend to determine whether Early Data was included. Note: TLS Early
-  // Data may allow requests to be replayed, as the data is sent to the backend
-  // before the handshake has fully completed. Applications that allow
-  // idempotent HTTP methods to make non-idempotent changes, such as a GET
-  // request updating a database, should not accept Early Data on those
-  // requests, and reject requests with the "Early-Data: 1" HTTP header by
-  // returning a HTTP 425 (Too Early) status code, in order to remain RFC
-  // compliant. The default value is DISABLED.
-  // DISABLED: TLS 1.3 Early Data is not advertised, and any (invalid) attempts
-  // to send Early Data will be rejected by closing the connection.
-  // PERMISSIVE: This enables TLS 1.3 0-RTT, and only allows Early Data to be
-  // included on requests with safe HTTP methods (GET, HEAD, OPTIONS, TRACE).
-  // This mode does not enforce any other limitations for requests with Early
-  // Data. The application owner should validate that Early Data is acceptable
-  // for a given request path.
-  // STRICT: This enables TLS 1.3 0-RTT, and only allows Early Data to be
-  // included on requests with safe HTTP methods (GET, HEAD, OPTIONS, TRACE)
-  // without query parameters. Requests that send Early Data with non-idempotent
-  // HTTP methods or with query parameters will be rejected with a HTTP 425.
-  optional string tls_early_data = 18 [json_name = "tlsEarlyData"];
-
-  // A fully-qualified or valid partial URL to the UrlMap resource that defines
-  // the mapping from URL to the BackendService. For example, the following are
-  // all valid URLs for specifying a URL map: -
-  // https://www.googleapis.compute/v1/projects/project/global/urlMaps/ url-map
-  // - projects/project/global/urlMaps/url-map - global/urlMaps/url-map
-  optional string url_map = 16 [json_name = "urlMap"];
+  // URL to the UrlMap resource that defines the mapping from URL to the
+  // BackendService.
+  optional string url_map = 10 [json_name = "urlMap"];
 }
 
-// Contains a list of TargetHttpsProxy resources.
-message TargetHttpsProxyList {
+// A list of TargetHttpProxy resources.
+message TargetHttpProxyList {
   // [Output Only] Unique identifier for the resource; defined by the server.
   optional string id = 1 [json_name = "id"];
 
-  // A list of TargetHttpsProxy resources.
-  repeated TargetHttpsProxy items = 2 [json_name = "items"];
+  // A list of TargetHttpProxy resources.
+  repeated TargetHttpProxy items = 2 [json_name = "items"];
 
-  // Type of resource. Always compute#targetHttpsProxyList for lists of target
-  // HTTPS proxies.
+  // Type of resource. Always compute#targetHttpProxyList for lists of target
+  // HTTP proxies.
   optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
