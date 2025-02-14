@@ -23,29 +23,25 @@ package google.cloud.cpp.compute.v1;
 
 import "google/cloud/compute/v1/internal/common_028.proto";
 
-message RegionNetworkFirewallPoliciesGetEffectiveFirewallsResponse {
-  // [Output only] Effective firewalls from firewall policy. It applies to
-  // Regional Network Firewall Policies in the specified region, Global Network
-  // Firewall Policies and Hierachial Firewall Policies which are associated
-  // with the network.
-  repeated
-      RegionNetworkFirewallPoliciesGetEffectiveFirewallsResponseEffectiveFirewallPolicy
-          firewall_policys = 1 [json_name = "firewallPolicys"];
-
-  // Effective firewalls on the network.
-  repeated Firewall firewalls = 2 [json_name = "firewalls"];
+// RegionInstanceGroupManagers.deletePerInstanceConfigs
+message RegionInstanceGroupManagerDeleteInstanceConfigReq {
+  // The list of instance names for which we want to delete per-instance configs
+  // on this managed instance group.
+  repeated string names = 1 [json_name = "names"];
 }
 
-message
-RegionNetworkFirewallPoliciesGetEffectiveFirewallsResponseEffectiveFirewallPolicy {
-  // [Output Only] The display name of the firewall policy.
-  optional string display_name = 1 [json_name = "displayName"];
+// Contains a list of managed instance groups.
+message RegionInstanceGroupManagerList {
+  // [Output Only] Unique identifier for the resource; defined by the server.
+  optional string id = 1 [json_name = "id"];
 
-  // [Output Only] The name of the firewall policy.
-  optional string name = 2 [json_name = "name"];
+  // A list of InstanceGroupManager resources.
+  repeated InstanceGroupManager items = 2 [json_name = "items"];
 
-  // [Output only] The rules that apply to the network.
-  repeated FirewallPolicyRule rules = 3 [json_name = "rules"];
+  // [Output Only] The resource type, which is always
+  // compute#instanceGroupManagerList for a list of managed instance groups that
+  // exist in th regional scope.
+  optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the

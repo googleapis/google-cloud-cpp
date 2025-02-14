@@ -162,6 +162,184 @@ DefaultCloudRedisClusterStub::GetClusterCertificateAuthority(
   return response;
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultCloudRedisClusterStub::AsyncRescheduleClusterMaintenance(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::redis::cluster::v1::
+        RescheduleClusterMaintenanceRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::redis::cluster::v1::RescheduleClusterMaintenanceRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::redis::cluster::v1::
+                 RescheduleClusterMaintenanceRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncRescheduleClusterMaintenance(context, request,
+                                                             cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCloudRedisClusterStub::RescheduleClusterMaintenance(
+    grpc::ClientContext& context, Options,
+    google::cloud::redis::cluster::v1::
+        RescheduleClusterMaintenanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->RescheduleClusterMaintenance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::redis::cluster::v1::ListBackupCollectionsResponse>
+DefaultCloudRedisClusterStub::ListBackupCollections(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::redis::cluster::v1::ListBackupCollectionsRequest const&
+        request) {
+  google::cloud::redis::cluster::v1::ListBackupCollectionsResponse response;
+  auto status = grpc_stub_->ListBackupCollections(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::redis::cluster::v1::BackupCollection>
+DefaultCloudRedisClusterStub::GetBackupCollection(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::redis::cluster::v1::GetBackupCollectionRequest const&
+        request) {
+  google::cloud::redis::cluster::v1::BackupCollection response;
+  auto status = grpc_stub_->GetBackupCollection(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::redis::cluster::v1::ListBackupsResponse>
+DefaultCloudRedisClusterStub::ListBackups(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::redis::cluster::v1::ListBackupsRequest const& request) {
+  google::cloud::redis::cluster::v1::ListBackupsResponse response;
+  auto status = grpc_stub_->ListBackups(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::redis::cluster::v1::Backup>
+DefaultCloudRedisClusterStub::GetBackup(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::redis::cluster::v1::GetBackupRequest const& request) {
+  google::cloud::redis::cluster::v1::Backup response;
+  auto status = grpc_stub_->GetBackup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultCloudRedisClusterStub::AsyncDeleteBackup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::redis::cluster::v1::DeleteBackupRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::redis::cluster::v1::DeleteBackupRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::redis::cluster::v1::DeleteBackupRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteBackup(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCloudRedisClusterStub::DeleteBackup(
+    grpc::ClientContext& context, Options,
+    google::cloud::redis::cluster::v1::DeleteBackupRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteBackup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultCloudRedisClusterStub::AsyncExportBackup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::redis::cluster::v1::ExportBackupRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::redis::cluster::v1::ExportBackupRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::redis::cluster::v1::ExportBackupRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncExportBackup(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCloudRedisClusterStub::ExportBackup(
+    grpc::ClientContext& context, Options,
+    google::cloud::redis::cluster::v1::ExportBackupRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ExportBackup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultCloudRedisClusterStub::AsyncBackupCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::redis::cluster::v1::BackupClusterRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::redis::cluster::v1::BackupClusterRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::redis::cluster::v1::BackupClusterRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncBackupCluster(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCloudRedisClusterStub::BackupCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::redis::cluster::v1::BackupClusterRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->BackupCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultCloudRedisClusterStub::ListLocations(
     grpc::ClientContext& context, Options const&,

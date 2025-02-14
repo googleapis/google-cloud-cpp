@@ -16,6 +16,7 @@
 
 include(GoogleCloudCppLibrary)
 
+<<<<<<<< HEAD:google/cloud/parametermanager/CMakeLists.txt
 google_cloud_cpp_add_gapic_library(parametermanager "Parameter Manager API"
                                    SERVICE_DIRS "v1/")
 
@@ -31,3 +32,7 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     set_tests_properties(parametermanager_quickstart
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()
+========
+google_cloud_cpp_add_gapic_library(resourcesettings "Resource Settings API"
+                                   SERVICE_DIRS "__EMPTY__" "v1/")
+>>>>>>>> c234c141e7 (chore: merge from public circa 2025-02-07 (#98)):google/cloud/resourcesettings/CMakeLists.txt

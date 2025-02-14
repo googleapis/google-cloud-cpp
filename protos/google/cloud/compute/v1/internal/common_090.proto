@@ -21,130 +21,38 @@ syntax = "proto3";
 
 package google.cloud.cpp.compute.v1;
 
-// A PublicDelegatedPrefix resource represents an IP block within a
-// PublicAdvertisedPrefix that is configured within a single cloud scope (global
-// or region). IPs in the block can be allocated to resources within that scope.
-// Public delegated prefixes may be further broken up into smaller IP blocks in
-// the same scope as the parent block.
-message PublicDelegatedPrefix {
-  // The allocatable prefix length supported by this public delegated prefix.
-  // This field is optional and cannot be set for prefixes in DELEGATION mode.
-  // It cannot be set for IPv4 prefixes either, and it always defaults to 32.
-  optional int32 allocatable_prefix_length = 15
-      [json_name = "allocatablePrefixLength"];
+import "google/cloud/compute/v1/internal/common_111.proto";
 
-  // [Output Only] The version of BYOIP API.
-  // V1: This public delegated prefix usually takes 4 weeks to delete, and the
-  // BGP status cannot be changed. Announce and Withdraw APIs can not be used on
-  // this prefix.
-  // V2: This public delegated prefix takes minutes to delete. Announce and
-  // Withdraw APIs can be used on this prefix to change the BGP status.
-  optional string byoip_api_version = 14 [json_name = "byoipApiVersion"];
-
-  // [Output Only] Creation timestamp in RFC3339 text format.
-  optional string creation_timestamp = 1 [json_name = "creationTimestamp"];
-
-  // An optional description of this resource. Provide this property when you
-  // create the resource.
-  optional string description = 2 [json_name = "description"];
-
-  // Fingerprint of this resource. A hash of the contents stored in this object.
-  // This field is used in optimistic locking. This field will be ignored when
-  // inserting a new PublicDelegatedPrefix. An up-to-date fingerprint must be
-  // provided in order to update the PublicDelegatedPrefix, otherwise the
-  // request will fail with error 412 conditionNotMet. To see the latest
-  // fingerprint, make a get() request to retrieve a PublicDelegatedPrefix.
-  optional string fingerprint = 3 [json_name = "fingerprint"];
-
-  // [Output Only] The unique identifier for the resource type. The server
-  // generates this identifier.
-  optional string id = 4 [json_name = "id"];
-
-  // The IP address range, in CIDR format, represented by this public delegated
-  // prefix.
-  optional string ip_cidr_range = 5 [json_name = "ipCidrRange"];
-
-  // If true, the prefix will be live migrated.
-  optional bool is_live_migration = 6 [json_name = "isLiveMigration"];
-
-  // [Output Only] Type of the resource. Always compute#publicDelegatedPrefix
-  // for public delegated prefixes.
-  optional string kind = 7 [json_name = "kind"];
-
-  // The public delegated prefix mode for IPv6 only.
-  // DELEGATION: The public delegated prefix is used for further sub-delegation
-  // only. Such prefixes cannot set allocatablePrefixLength.
-  // EXTERNAL_IPV6_FORWARDING_RULE_CREATION: The public delegated prefix is used
-  // for creating forwarding rules only. Such prefixes cannot set
-  // publicDelegatedSubPrefixes.
-  optional string mode = 16 [json_name = "mode"];
-
-  // Name of the resource. Provided by the client when the resource is created.
-  // The name must be 1-63 characters long, and comply with RFC1035.
-  // Specifically, the name must be 1-63 characters long and match the regular
-  // expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character
-  // must be a lowercase letter, and all following characters must be a dash,
-  // lowercase letter, or digit, except the last character, which cannot be a
-  // dash.
-  optional string name = 8 [json_name = "name"];
-
-  // The URL of parent prefix. Either PublicAdvertisedPrefix or
-  // PublicDelegatedPrefix.
-  optional string parent_prefix = 9 [json_name = "parentPrefix"];
-
-  // The list of sub public delegated prefixes that exist for this public
-  // delegated prefix.
-  repeated PublicDelegatedPrefixPublicDelegatedSubPrefix
-      public_delegated_sub_prefixs = 10
-      [json_name = "publicDelegatedSubPrefixs"];
-
-  // [Output Only] URL of the region where the public delegated prefix resides.
-  // This field applies only to the region resource. You must specify this field
-  // as part of the HTTP request URL. It is not settable as a field in the
-  // request body.
-  optional string region = 11 [json_name = "region"];
-
-  // [Output Only] Server-defined URL for the resource.
-  optional string self_link = 12 [json_name = "selfLink"];
-
-  // [Output Only] The status of the public delegated prefix, which can be one
-  // of following values: - `INITIALIZING` The public delegated prefix is being
-  // initialized and addresses cannot be created yet. - `READY_TO_ANNOUNCE` The
-  // public delegated prefix is a live migration prefix and is active. -
-  // `ANNOUNCED` The public delegated prefix is active. - `DELETING` The public
-  // delegated prefix is being deprovsioned.
-  // ANNOUNCED: The public delegated prefix is active.
-  // ANNOUNCED_TO_GOOGLE: The prefix is announced within Google network.
-  // ANNOUNCED_TO_INTERNET: The prefix is announced to Internet and within
-  // Google.
-  // DELETING: The public delegated prefix is being deprovsioned.
-  // INITIALIZING: The public delegated prefix is being initialized and
-  // addresses cannot be created yet.
-  // READY_TO_ANNOUNCE: The public delegated prefix is currently withdrawn but
-  // ready to be announced.
-  optional string status = 13 [json_name = "status"];
+message PreconfiguredWafSet {
+  // List of entities that are currently supported for WAF rules.
+  repeated WafExpressionSet expression_sets = 1 [json_name = "expressionSets"];
 }
 
-message PublicDelegatedPrefixList {
+message SecurityPoliciesAggregatedList {
+  optional string etag = 1 [json_name = "etag"];
+
   // [Output Only] Unique identifier for the resource; defined by the server.
-  optional string id = 1 [json_name = "id"];
+  optional string id = 2 [json_name = "id"];
 
-  // A list of PublicDelegatedPrefix resources.
-  repeated PublicDelegatedPrefix items = 2 [json_name = "items"];
+  // A list of SecurityPoliciesScopedList resources.
+  map<string, SecurityPoliciesScopedList> items = 3 [json_name = "items"];
 
-  // [Output Only] Type of the resource. Always
-  // compute#publicDelegatedPrefixList for public delegated prefixes.
-  optional string kind = 3 [json_name = "kind"];
+  // [Output Only] Type of resource. Always compute#securityPolicyAggregatedList
+  // for lists of Security Policies.
+  optional string kind = 4 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
   // list requests. If the number of results is larger than maxResults, use the
   // nextPageToken as a value for the query parameter pageToken in the next list
   // request. Subsequent list requests will have their own nextPageToken to
   // continue paging through the results.
-  optional string next_page_token = 4 [json_name = "nextPageToken"];
+  optional string next_page_token = 5 [json_name = "nextPageToken"];
 
   // [Output Only] Server-defined URL for this resource.
-  optional string self_link = 5 [json_name = "selfLink"];
+  optional string self_link = 6 [json_name = "selfLink"];
+
+  // [Output Only] Unreachable resources.
+  repeated string unreachables = 7 [json_name = "unreachables"];
 
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
@@ -230,7 +138,7 @@ message PublicDelegatedPrefixList {
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 6 [json_name = "warning"];
+  optional Warning warning = 8 [json_name = "warning"];
 }
 
 message SecurityPoliciesListPreconfiguredExpressionSetsResponse {

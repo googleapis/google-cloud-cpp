@@ -641,6 +641,37 @@ StatusOr<google::longrunning::Operation> BackupDRLogging::TriggerBackup(
       context, options, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+BackupDRLogging::AsyncInitializeService(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::backupdr::v1::InitializeServiceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::backupdr::v1::InitializeServiceRequest const&
+                 request) {
+        return child_->AsyncInitializeService(cq, std::move(context),
+                                              std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> BackupDRLogging::InitializeService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::InitializeServiceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::backupdr::v1::InitializeServiceRequest const&
+                 request) {
+        return child_->InitializeService(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 BackupDRLogging::ListLocations(
     grpc::ClientContext& context, Options const& options,

@@ -137,6 +137,130 @@ CloudRedisClusterMetadata::GetClusterCertificateAuthority(
   return child_->GetClusterCertificateAuthority(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+CloudRedisClusterMetadata::AsyncRescheduleClusterMaintenance(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::redis::cluster::v1::
+        RescheduleClusterMaintenanceRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncRescheduleClusterMaintenance(cq, std::move(context),
+                                                   std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterMetadata::RescheduleClusterMaintenance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::cluster::v1::
+        RescheduleClusterMaintenanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->RescheduleClusterMaintenance(context, options, request);
+}
+
+StatusOr<google::cloud::redis::cluster::v1::ListBackupCollectionsResponse>
+CloudRedisClusterMetadata::ListBackupCollections(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::redis::cluster::v1::ListBackupCollectionsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListBackupCollections(context, options, request);
+}
+
+StatusOr<google::cloud::redis::cluster::v1::BackupCollection>
+CloudRedisClusterMetadata::GetBackupCollection(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::redis::cluster::v1::GetBackupCollectionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetBackupCollection(context, options, request);
+}
+
+StatusOr<google::cloud::redis::cluster::v1::ListBackupsResponse>
+CloudRedisClusterMetadata::ListBackups(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::redis::cluster::v1::ListBackupsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListBackups(context, options, request);
+}
+
+StatusOr<google::cloud::redis::cluster::v1::Backup>
+CloudRedisClusterMetadata::GetBackup(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::redis::cluster::v1::GetBackupRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetBackup(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudRedisClusterMetadata::AsyncDeleteBackup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::redis::cluster::v1::DeleteBackupRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteBackup(cq, std::move(context), std::move(options),
+                                   request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterMetadata::DeleteBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::cluster::v1::DeleteBackupRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteBackup(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudRedisClusterMetadata::AsyncExportBackup(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::redis::cluster::v1::ExportBackupRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncExportBackup(cq, std::move(context), std::move(options),
+                                   request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterMetadata::ExportBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::cluster::v1::ExportBackupRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ExportBackup(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudRedisClusterMetadata::AsyncBackupCluster(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::redis::cluster::v1::BackupClusterRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncBackupCluster(cq, std::move(context), std::move(options),
+                                    request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterMetadata::BackupCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::cluster::v1::BackupClusterRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->BackupCluster(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 CloudRedisClusterMetadata::ListLocations(
     grpc::ClientContext& context, Options const& options,

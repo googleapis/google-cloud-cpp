@@ -158,11 +158,11 @@ message RegionList {
   // [Output Only] Unique identifier for the resource; defined by the server.
   optional string id = 1 [json_name = "id"];
 
-  // A list of DiskType resources.
-  repeated DiskType items = 2 [json_name = "items"];
+  // A list of Region resources.
+  repeated Region items = 2 [json_name = "items"];
 
-  // [Output Only] Type of resource. Always compute#regionDiskTypeList for
-  // region disk types.
+  // [Output Only] Type of resource. Always compute#regionList for lists of
+  // regions.
   optional string kind = 3 [json_name = "kind"];
 
   // [Output Only] This token allows you to get the next page of results for
