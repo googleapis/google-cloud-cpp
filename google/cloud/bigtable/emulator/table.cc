@@ -333,7 +333,7 @@ StatusOr<StringRangeSet> CreateStringRangeSet(
           "`row_key` empty",
           GCP_ERROR_INFO().WithMetadata("row_set", row_set.DebugString()));
     }
-    res.Insert(StringRangeSet::Range(row_key, false, row_key, false)); 
+    res.Insert(StringRangeSet::Range(row_key, false, row_key, false));
   }
   for (auto const& row_range : row_set.row_ranges()) {
     auto maybe_range = StringRangeSet::Range::FromRowRange(row_range);
@@ -404,6 +404,18 @@ bool Table::IsDeleteProtected() const {
 
 bool Table::IsDeleteProtectedNoLock() const {
   return schema_.deletion_protection();
+}
+
+Status RowTransaction::AddToCell(::google::bigtable::v2::Mutation_AddToCell const &add_to_cell) {
+      return UnimplementedError(
+          "Unsupported mutation type.",
+          GCP_ERROR_INFO().WithMetadata("mutation", add_to_cell.DebugString()));
+}
+
+Status MergeToCell(::google::bigtable::v2::Mutation_MergeToCell const &merge_to_cell) {
+      return UnimplementedError(
+          "Unsupported mutation type.",
+          GCP_ERROR_INFO().WithMetadata("mutation", merge_to_cell.DebugString()));
 }
 
 }  // namespace emulator

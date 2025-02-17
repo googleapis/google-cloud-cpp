@@ -94,13 +94,12 @@ class RowTransaction {
     committed_ = true;
   }
 
-  Status SetCell(std::string const& row_key, std::string const& column_qualifier,
-               std::chrono::milliseconds timestamp, std::string const& value);
-  Status DeleteRow(std::string const& row_key);
-  Status DeleteColumn(
-      std::string const& row_key, std::string const& column_qualifier,
-      ::google::bigtable::v2::TimestampRange const& time_range);
-
+  Status SetCell(::google::bigtable::v2::Mutation_SetCell const &set_cell);
+  Status AddToCell(::google::bigtable::v2::Mutation_AddToCell const &add_to_cell);
+  Status MergeToCell(::google::bigtable::v2::Mutation_MergeToCell const &merge_to_cell);
+  Status DeleteFromColumn(::google::bigtable::v2::Mutation_DeleteFromColumn const &delete_from_column);
+  Status DeleteFromFamily(::google::bigtable::v2::Mutation_DeleteFromFamily const &delete_from_family);
+  Status DeleteFromRow(::google::bigtable::v2::Mutation_DeleteFromRow const &delete_from_row);
 
  private:
   void Undo();
