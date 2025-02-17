@@ -1,6 +1,7 @@
 # Common build output directory names
 .build/
 _build/
+build/
 build-output/
 build-out/
 cmake-out/

@@ -20,12 +20,15 @@
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 #include <google/bigtable/admin/v2/table.pb.h>
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
+#include <google/bigtable/v2/bigtable.pb.h>
 #include <google/protobuf/field_mask.pb.h>
 #include <google/protobuf/util/time_util.h>
 #include "google/cloud/bigtable/emulator/filter.h"
 #include "google/cloud/bigtable/emulator/column_family.h"
 #include "google/cloud/bigtable/emulator/row_streamer.h"
+#include "absl/types/variant.h"
 #include <map>
+#include <stack>
 
 namespace google {
 namespace cloud {
@@ -66,6 +69,51 @@ class Table {
   google::bigtable::admin::v2::Table schema_;
   std::map<std::string, std::shared_ptr<ColumnFamily>> column_families_;
 };
+
+
+struct RestoreValue {
+  // The iterator to the `columns_` member of a relevant `ColumnFamilyRow` where
+  // we should reinsert the value.
+  std::map<std::string, ColumnRow>::iterator column_row_it_;
+  std::chrono::milliseconds timestamp_;
+  std::string value_;
+};
+
+struct DeleteValue {
+  // The iterator to the `columns_` member of a relevant `ColumnFamilyRow` where
+  // we should delete value.
+  std::map<std::string, ColumnRow>::iterator column_row_it_;
+  std::chrono::milliseconds timestamp_;
+};
+
+
+class RowTransaction {
+ public:
+  explicit RowTransaction(google::bigtable::v2::MutateRowRequest const &request);
+  void commit() {
+    committed_ = true;
+  }
+
+  Status SetCell(std::string const& row_key, std::string const& column_qualifier,
+               std::chrono::milliseconds timestamp, std::string const& value);
+  Status DeleteRow(std::string const& row_key);
+  Status DeleteColumn(
+      std::string const& row_key, std::string const& column_qualifier,
+      ::google::bigtable::v2::TimestampRange const& time_range);
+
+
+ private:
+  void Undo();
+  bool committed_;
+  std::stack<absl::variant<DeleteValue, RestoreValue>> undo_;
+  ~RowTransaction() {
+    if (!committed_) {
+      Undo();
+    }
+  };
+
+};
+
 
 }  // namespace emulator
 }  // namespace bigtable
