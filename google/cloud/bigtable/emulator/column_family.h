@@ -15,20 +15,20 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EMULATOR_COLUMN_FAMILY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EMULATOR_COLUMN_FAMILY_H
 
-#include <google/bigtable/admin/v2/table.pb.h>
-#include <google/bigtable/v2/data.pb.h>
-#include "google/cloud/bigtable/emulator/range_set.h"
+#include "google/cloud/bigtable/emulator/cell_view.h"
 #include "google/cloud/bigtable/emulator/filter.h"
 #include "google/cloud/bigtable/emulator/filtered_map.h"
-#include "google/cloud/bigtable/emulator/cell_view.h"
+#include "google/cloud/bigtable/emulator/range_set.h"
 #include "absl/types/optional.h"
+#include <google/bigtable/admin/v2/table.pb.h>
+#include <google/bigtable/v2/data.pb.h>
+#include <chrono>
 #include <map>
 
 namespace google {
 namespace cloud {
 namespace bigtable {
 namespace emulator {
-
 
 class ColumnRow {
  public:
@@ -48,10 +48,20 @@ class ColumnRow {
     return cells_.lower_bound(timestamp);
   }
 
+  std::map<std::chrono::milliseconds, std::string>::iterator find(
+      std::chrono::milliseconds const& timestamp) {
+    return cells_.find(timestamp);
+  }
+
+  void erase(
+      std::map<std::chrono::milliseconds, std::string>::iterator timestamp_it) {
+    cells_.erase(timestamp_it);
+  }
+
  private:
   std::map<std::chrono::milliseconds, std::string> cells_;
 };
-  
+
 class ColumnFamilyRow {
  public:
   void SetCell(std::string const& column_qualifier,
@@ -70,6 +80,15 @@ class ColumnFamilyRow {
     return columns_.lower_bound(column_qualifier);
   }
 
+  std::map<std::string, ColumnRow>::iterator find(
+      std::string const& column_qualifier) {
+    return columns_.find(column_qualifier);
+  }
+
+  void erase(std::map<std::string, ColumnRow>::iterator column_it) {
+    columns_.erase(column_it);
+  }
+
  private:
   std::map<std::string, ColumnRow> columns_;
 };
@@ -85,17 +104,22 @@ class ColumnFamily {
       std::string const& row_key, std::string const& column_qualifier,
       ::google::bigtable::v2::TimestampRange const& time_range);
 
-  const_iterator begin() const {
-    return rows_.begin();
-  }
-  const_iterator end() const { 
-    return rows_.end();
-  }
+  const_iterator begin() const { return rows_.begin(); }
+  const_iterator end() const { return rows_.end(); }
   const_iterator lower_bound(std::string const& row_key) const {
     return rows_.lower_bound(row_key);
   }
   const_iterator upper_bound(std::string const& row_key) const {
     return rows_.lower_bound(row_key);
+  }
+
+  std::map<std::string, ColumnFamilyRow>::iterator find(
+      std::string const& row_key) {
+    return rows_.find(row_key);
+  }
+
+  void erase(std::map<std::string, ColumnFamilyRow>::iterator row_it) {
+    rows_.erase(row_it);
   }
 
  private:
@@ -108,7 +132,7 @@ class FilteredColumnFamilyStream : public AbstractCellStreamImpl {
                              std::shared_ptr<StringRangeSet> row_set);
   bool ApplyFilter(InternalFilter const& internal_filter) override;
   bool HasValue() const override;
-  CellView const &Value() const override;
+  CellView const& Value() const override;
   bool Next(NextMode mode) override;
   std::string const& column_family_name() const { return column_family_name_; }
 
