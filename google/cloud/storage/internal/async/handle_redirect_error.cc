@@ -55,6 +55,7 @@ void ApplyWriteRedirectErrors(google::storage::v2::AppendObjectSpec& spec,
     if (!any.UnpackTo(&error)) continue;
     *spec.mutable_write_handle() = std::move(*error.mutable_write_handle());
     *spec.mutable_routing_token() = std::move(*error.mutable_routing_token());
+    if (error.has_generation()) spec.set_generation(error.generation());
   }
 }
 
