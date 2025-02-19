@@ -151,6 +151,8 @@ add_library(
     internal/async/writer_connection_finalized.h
     internal/async/writer_connection_impl.cc
     internal/async/writer_connection_impl.h
+    internal/async/writer_connection_resumed.cc
+    internal/async/writer_connection_resumed.h
     internal/async/writer_connection_tracing.cc
     internal/async/writer_connection_tracing.h
     internal/grpc/bucket_access_control_parser.cc
