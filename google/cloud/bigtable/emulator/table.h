@@ -28,6 +28,7 @@
 #include "google/cloud/bigtable/emulator/row_streamer.h"
 #include "absl/types/variant.h"
 #include <map>
+#include <memory>
 #include <stack>
 
 namespace google {
@@ -58,6 +59,7 @@ class Table {
  private:
   Table() = default;
   friend class RowSetIterator;
+  friend class RowTransaction;
 
   template <typename MESSAGE>
   StatusOr<std::reference_wrapper<ColumnFamily>> FindColumnFamily(
@@ -86,10 +88,24 @@ struct DeleteValue {
   std::chrono::milliseconds timestamp_;
 };
 
+struct DeleteRow {
+  // The iterator to the `rows_` member of a relavant ColumnFamily
+  // which we should delete the row if the ColumnfamilyRow has been
+  // introduced by the mutation (i.e. it did not exist previously).
+  std::map<std::string, ColumnFamilyRow>::iterator row_it;
+};
+
+struct DeleteColumn {
+  // The iterator to the `columns_` member of the relevant
+  // ColumnFamilyRow which we should delete if the ColumnRow has been
+  // introduced in the mutation (i.e. did not exist previously).
+  std::map<std::string, ColumnRow>::iterator column_row_it;
+};
+
 
 class RowTransaction {
  public:
-  explicit RowTransaction(google::bigtable::v2::MutateRowRequest const &request);
+  explicit RowTransaction(Table table, ::google::bigtable::v2::MutateRowRequest const &request);
   void commit() {
     committed_ = true;
   }
@@ -103,13 +119,16 @@ class RowTransaction {
 
  private:
   void Undo();
-  bool committed_;
-  std::stack<absl::variant<DeleteValue, RestoreValue>> undo_;
   ~RowTransaction() {
     if (!committed_) {
       Undo();
     }
   };
+
+  bool committed_;
+  std::shared_ptr<Table> table_;
+  std::stack<absl::variant<DeleteValue, RestoreValue, DeleteRow, DeleteColumn>> undo_;
+  ::google::bigtable::v2::MutateRowRequest request_;
 
 };
 

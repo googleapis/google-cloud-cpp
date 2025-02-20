@@ -48,10 +48,14 @@ class ColumnRow {
     return cells_.lower_bound(timestamp);
   }
 
+  std::map<std::chrono::milliseconds, std::string>::iterator find(std::chrono::milliseconds const & timestamp)  {
+    return cells_.find(timestamp);
+  }
+
  private:
   std::map<std::chrono::milliseconds, std::string> cells_;
 };
-  
+
 class ColumnFamilyRow {
  public:
   void SetCell(std::string const& column_qualifier,
@@ -69,6 +73,11 @@ class ColumnFamilyRow {
   const_iterator upper_bound(std::string const& column_qualifier) const {
     return columns_.lower_bound(column_qualifier);
   }
+
+  std::map<std::string, ColumnRow>::iterator find(std::string const & column_qualifier)  {
+    return columns_.find(column_qualifier);
+  }
+
 
  private:
   std::map<std::string, ColumnRow> columns_;
@@ -88,7 +97,7 @@ class ColumnFamily {
   const_iterator begin() const {
     return rows_.begin();
   }
-  const_iterator end() const { 
+  const_iterator end() const {
     return rows_.end();
   }
   const_iterator lower_bound(std::string const& row_key) const {
@@ -96,6 +105,10 @@ class ColumnFamily {
   }
   const_iterator upper_bound(std::string const& row_key) const {
     return rows_.lower_bound(row_key);
+  }
+
+  std::map<std::string, ColumnFamilyRow>::iterator find(std::string const & row_key)  {
+    return rows_.find(row_key);
   }
 
  private:
