@@ -15,18 +15,18 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EMULATOR_TABLE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EMULATOR_TABLE_H
 
+#include "google/cloud/bigtable/emulator/column_family.h"
+#include "google/cloud/bigtable/emulator/filter.h"
+#include "google/cloud/bigtable/emulator/row_streamer.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
+#include "absl/types/variant.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 #include <google/bigtable/admin/v2/table.pb.h>
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <google/bigtable/v2/bigtable.pb.h>
 #include <google/protobuf/field_mask.pb.h>
 #include <google/protobuf/util/time_util.h>
-#include "google/cloud/bigtable/emulator/filter.h"
-#include "google/cloud/bigtable/emulator/column_family.h"
-#include "google/cloud/bigtable/emulator/row_streamer.h"
-#include "absl/types/variant.h"
 #include <map>
 #include <memory>
 #include <stack>
@@ -51,7 +51,7 @@ class Table {
 
   bool IsDeleteProtected() const;
 
-  Status MutateRow(google::bigtable::v2::MutateRowRequest const & request);
+  Status MutateRow(google::bigtable::v2::MutateRowRequest const& request);
 
   Status ReadRows(google::bigtable::v2::ReadRowsRequest const& request,
                   RowStreamer& row_streamer) const;
@@ -71,7 +71,6 @@ class Table {
   google::bigtable::admin::v2::Table schema_;
   std::map<std::string, std::shared_ptr<ColumnFamily>> column_families_;
 };
-
 
 struct RestoreValue {
   // The iterator to the `columns_` member of a relevant `ColumnFamilyRow` where
@@ -93,7 +92,7 @@ struct DeleteRow {
   // which we should delete the row if the ColumnfamilyRow has been
   // introduced by the mutation (i.e. it did not exist previously).
   std::map<std::string, ColumnFamilyRow>::iterator row_it;
-  ::google::cloud::bigtable::emulator::ColumnFamily &column_family;
+  ::google::cloud::bigtable::emulator::ColumnFamily& column_family;
 };
 
 struct DeleteColumn {
@@ -101,15 +100,15 @@ struct DeleteColumn {
   // ColumnFamilyRow which we should delete if the ColumnRow has been
   // introduced in the mutation (i.e. did not exist previously).
   std::map<std::string, ColumnRow>::iterator column_row_it;
-  ::google::cloud::bigtable::emulator::ColumnFamilyRow &column_family_row;
+  ::google::cloud::bigtable::emulator::ColumnFamilyRow& column_family_row;
 };
-
 
 class RowTransaction {
  public:
-  explicit RowTransaction(const Table *table, const ::google::bigtable::v2::MutateRowRequest &request)
-      : request_(request)
-  {
+  explicit RowTransaction(
+      Table const* table,
+      ::google::bigtable::v2::MutateRowRequest const& request)
+      : request_(request) {
     table_ = table;
   };
 
@@ -119,27 +118,31 @@ class RowTransaction {
     }
   };
 
-  void commit() {
-    committed_ = true;
-  }
+  void commit() { committed_ = true; }
 
-  Status SetCell(::google::bigtable::v2::Mutation_SetCell const &set_cell);
-  Status AddToCell(::google::bigtable::v2::Mutation_AddToCell const &add_to_cell);
-  Status MergeToCell(::google::bigtable::v2::Mutation_MergeToCell const &merge_to_cell);
-  Status DeleteFromColumn(::google::bigtable::v2::Mutation_DeleteFromColumn const &delete_from_column);
-  Status DeleteFromFamily(::google::bigtable::v2::Mutation_DeleteFromFamily const &delete_from_family);
-  Status DeleteFromRow(::google::bigtable::v2::Mutation_DeleteFromRow const &delete_from_row);
+  Status SetCell(::google::bigtable::v2::Mutation_SetCell const& set_cell);
+  Status AddToCell(
+      ::google::bigtable::v2::Mutation_AddToCell const& add_to_cell);
+  Status MergeToCell(
+      ::google::bigtable::v2::Mutation_MergeToCell const& merge_to_cell);
+  Status DeleteFromColumn(
+      ::google::bigtable::v2::Mutation_DeleteFromColumn const&
+          delete_from_column);
+  Status DeleteFromFamily(
+      ::google::bigtable::v2::Mutation_DeleteFromFamily const&
+          delete_from_family);
+  Status DeleteFromRow(
+      ::google::bigtable::v2::Mutation_DeleteFromRow const& delete_from_row);
 
  private:
   void Undo();
 
   bool committed_;
-  const Table *table_;
-  std::stack<absl::variant<DeleteValue, RestoreValue, DeleteRow, DeleteColumn>> undo_;
-  const ::google::bigtable::v2::MutateRowRequest &request_;
-
+  Table const* table_;
+  std::stack<absl::variant<DeleteValue, RestoreValue, DeleteRow, DeleteColumn>>
+      undo_;
+  ::google::bigtable::v2::MutateRowRequest const& request_;
 };
-
 
 }  // namespace emulator
 }  // namespace bigtable
