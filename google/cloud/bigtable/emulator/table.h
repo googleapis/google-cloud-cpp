@@ -107,7 +107,12 @@ struct DeleteColumn {
 
 class RowTransaction {
  public:
-  explicit RowTransaction(Table table, ::google::bigtable::v2::MutateRowRequest const &request);
+  explicit RowTransaction(const Table *table, ::google::bigtable::v2::MutateRowRequest request)
+  {
+    table_ = table;
+    request_ = request;
+  };
+
   void commit() {
     committed_ = true;
   }
@@ -128,7 +133,7 @@ class RowTransaction {
   };
 
   bool committed_;
-  std::shared_ptr<Table> table_;
+  const Table *table_;
   std::stack<absl::variant<DeleteValue, RestoreValue, DeleteRow, DeleteColumn>> undo_;
   ::google::bigtable::v2::MutateRowRequest request_;
 
