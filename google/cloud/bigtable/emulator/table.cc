@@ -231,18 +231,16 @@ Status Table::MutateRow(
   // FIXME - determine what happens when row/column family/column does not exist
   std::lock_guard lock(mu_);
   assert(request.table_name() == schema_.name());
+
+  RowTransaction row_transaction(this, request);
+
   for (auto mutation : request.mutations()) {
     if (mutation.has_set_cell()) {
       auto const & set_cell = mutation.set_cell();
-      auto maybe_column_family = FindColumnFamily(set_cell);
-      if (!maybe_column_family) {
-        return maybe_column_family.status();
+      auto status = row_transaction.SetCell(set_cell);
+      if (!status.ok()) {
+        return status;
       }
-      maybe_column_family->get().SetCell(
-          request.row_key(), set_cell.column_qualifier(),
-          std::chrono::duration_cast<std::chrono::milliseconds>(
-              std::chrono::microseconds(set_cell.timestamp_micros())),
-          set_cell.value());
     } else if (mutation.has_add_to_cell()) {
       // FIXME
     } else if (mutation.has_merge_to_cell()) {
@@ -282,6 +280,12 @@ Status Table::MutateRow(
           GCP_ERROR_INFO().WithMetadata("mutation", mutation.DebugString()));
     }
   }
+
+  // If we get here, all mutations on the row have succeeded. We can
+  // commit and return which will prevent the destructor from undoing
+  // the transaction.
+  row_transaction.commit();
+
   return Status();
 }
 

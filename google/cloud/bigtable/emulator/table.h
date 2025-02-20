@@ -113,6 +113,12 @@ class RowTransaction {
     table_ = table;
   };
 
+  ~RowTransaction() {
+    if (!committed_) {
+      Undo();
+    }
+  };
+
   void commit() {
     committed_ = true;
   }
@@ -126,11 +132,6 @@ class RowTransaction {
 
  private:
   void Undo();
-  ~RowTransaction() {
-    if (!committed_) {
-      Undo();
-    }
-  };
 
   bool committed_;
   const Table *table_;
