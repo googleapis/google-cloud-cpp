@@ -467,13 +467,13 @@ Status RowTransaction::SetCell(::google::bigtable::v2::Mutation_SetCell const &s
 
       if (!row_existed) {
         row_key_it = column_family.find(request_.row_key());
-               DeleteRow delete_row = {row_key_it};
+        DeleteRow delete_row = {row_key_it, column_family};
         undo_.emplace(delete_row);
       }
 
       if (!column_existed) {
         column_row_it = column_family_row.find(set_cell.column_qualifier());
-        DeleteColumn delete_column_row = {column_row_it};
+        DeleteColumn delete_column_row = {column_row_it, column_family_row};
         undo_.emplace(delete_column_row);
       }
 
@@ -487,8 +487,41 @@ Status RowTransaction::SetCell(::google::bigtable::v2::Mutation_SetCell const &s
       }
 
       return Status();
-
 }
+
+void RowTransaction::Undo() {
+  while (!undo_.empty()) {
+    auto op = undo_.top();
+    undo_.pop();
+
+    if (auto *restore_value = absl::get_if<RestoreValue>(&op)) {
+      auto column_row = restore_value->column_row_it_->second;
+      column_row.find(restore_value->timestamp_)->second = std::move(restore_value->value_);
+      continue;
+    }
+
+    if (auto *delete_value = absl::get_if<DeleteValue>(&op)) {
+      auto column_row = delete_value->column_row_it_->second;
+      auto timestamp_it = column_row.find(delete_value->timestamp_);
+      column_row.erase(timestamp_it);
+      continue;
+    }
+
+    if (auto *delete_row = absl::get_if<DeleteRow>(&op)) {
+      delete_row->column_family.erase(delete_row->row_it);
+      continue;
+    }
+
+    if (auto *delete_column = absl::get_if<DeleteColumn>(&op)) {
+      delete_column->column_family_row.erase(delete_column->column_row_it);
+      continue;
+    }
+
+    // If we get here, there is an type of undo log that has not been implemented!
+    std::abort();
+  }
+}
+
 
 }  // namespace emulator
 }  // namespace bigtable

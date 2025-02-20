@@ -22,6 +22,7 @@
 #include "google/cloud/bigtable/emulator/filtered_map.h"
 #include "google/cloud/bigtable/emulator/cell_view.h"
 #include "absl/types/optional.h"
+#include <chrono>
 #include <map>
 
 namespace google {
@@ -52,6 +53,10 @@ class ColumnRow {
     return cells_.find(timestamp);
   }
 
+  void erase(std::map<std::chrono::milliseconds, std::string>::iterator timestamp_it) {
+    cells_.erase(timestamp_it);
+  }
+
  private:
   std::map<std::chrono::milliseconds, std::string> cells_;
 };
@@ -76,6 +81,10 @@ class ColumnFamilyRow {
 
   std::map<std::string, ColumnRow>::iterator find(std::string const & column_qualifier)  {
     return columns_.find(column_qualifier);
+  }
+
+  void erase(std::map<std::string, ColumnRow>::iterator column_it) {
+    columns_.erase(column_it);
   }
 
 
@@ -109,6 +118,10 @@ class ColumnFamily {
 
   std::map<std::string, ColumnFamilyRow>::iterator find(std::string const & row_key)  {
     return rows_.find(row_key);
+  }
+
+  void erase(std::map<std::string, ColumnFamilyRow>::iterator row_it) {
+    rows_.erase(row_it);
   }
 
  private:

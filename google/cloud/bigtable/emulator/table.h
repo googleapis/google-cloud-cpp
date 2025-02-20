@@ -93,6 +93,7 @@ struct DeleteRow {
   // which we should delete the row if the ColumnfamilyRow has been
   // introduced by the mutation (i.e. it did not exist previously).
   std::map<std::string, ColumnFamilyRow>::iterator row_it;
+  ::google::cloud::bigtable::emulator::ColumnFamily &column_family;
 };
 
 struct DeleteColumn {
@@ -100,6 +101,7 @@ struct DeleteColumn {
   // ColumnFamilyRow which we should delete if the ColumnRow has been
   // introduced in the mutation (i.e. did not exist previously).
   std::map<std::string, ColumnRow>::iterator column_row_it;
+  ::google::cloud::bigtable::emulator::ColumnFamilyRow &column_family_row;
 };
 
 
