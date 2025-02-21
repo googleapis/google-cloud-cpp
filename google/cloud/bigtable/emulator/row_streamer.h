@@ -35,11 +35,9 @@ class RowStreamer {
 
  private:
   grpc::ServerWriter<google::bigtable::v2::ReadRowsResponse>& writer_;
-  absl::optional<std::reference_wrapper<std::string const>> current_row_key_;
-  absl::optional<std::reference_wrapper<std::string const>>
-      current_column_family_;
-  absl::optional<std::reference_wrapper<std::string const>>
-      current_column_qualifier_;
+  absl::optional<std::string> current_row_key_;
+  absl::optional<std::string> current_column_family_;
+  absl::optional<std::string> current_column_qualifier_;
   std::vector<google::bigtable::v2::ReadRowsResponse::CellChunk>
       pending_chunks_;
 };

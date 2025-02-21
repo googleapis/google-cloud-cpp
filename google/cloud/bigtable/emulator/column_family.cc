@@ -56,13 +56,14 @@ std::size_t ColumnFamilyRow::DeleteColumn(
     std::string const& column_qualifier,
     ::google::bigtable::v2::TimestampRange const& time_range) {
   auto column_it = columns_.find(column_qualifier);
-  if (column_it != columns_.end()) {
-    return column_it->second.DeleteTimeRange(time_range);
+  if (column_it == columns_.end()) {
+    return 0;
   }
+  auto res = column_it->second.DeleteTimeRange(time_range);
   if (!column_it->second.HasCells()) {
     columns_.erase(column_it);
   }
-  return 0;
+  return res;
 }
 
 void ColumnFamily::SetCell(std::string const& row_key,
@@ -96,12 +97,12 @@ class FilteredColumnFamilyStream::FilterApply {
   FilterApply(FilteredColumnFamilyStream& parent) : parent_(parent) {}
 
   bool operator()(ColumnRange const& column_range) {
-    parent_.column_ranges_.Insert(column_range.range);
+    parent_.column_ranges_.Sum(column_range.range);
     return true;
   }
 
   bool operator()(TimestampRange const& timestamp_range) {
-    parent_.timestamp_ranges_.Insert(timestamp_range.range);
+    parent_.timestamp_ranges_.Sum(timestamp_range.range);
     return true;
   }
 
@@ -126,7 +127,11 @@ FilteredColumnFamilyStream::FilteredColumnFamilyStream(
     std::shared_ptr<StringRangeSet> row_set)
     : column_family_name_(std::move(column_family_name)),
       row_ranges_(std::move(row_set)),
-      rows_(column_family, *row_ranges_),
+      column_ranges_(StringRangeSet::All()),
+      timestamp_ranges_(TimestampRangeSet::All()),
+      rows_(RangeFilteredMapView<ColumnFamily, StringRangeSet>(column_family,
+                                                               *row_ranges_),
+            std::cref(row_regexes_)),
       row_it_(rows_.begin()),
       initialized_(false) {}
 
@@ -176,13 +181,6 @@ bool FilteredColumnFamilyStream::Next(NextMode mode) {
 
 void FilteredColumnFamilyStream::InitializeIfNeeded() const {
   if (!initialized_) {
-    if (column_ranges_.disjoint_ranges().empty()) {
-      column_ranges_.Insert(*StringRangeSet::All().disjoint_ranges().begin());
-    }
-    if (timestamp_ranges_.disjoint_ranges().empty()) {
-      timestamp_ranges_.Insert(*
-          TimestampRangeSet::All().disjoint_ranges().begin());
-    }
     PointToFirstCellAfterRowChange();
     initialized_ = true;
   }
@@ -191,7 +189,7 @@ void FilteredColumnFamilyStream::InitializeIfNeeded() const {
 // Returns whether we've managed to find another cell in currently pointed row
 bool FilteredColumnFamilyStream::PointToFirstCellAfterColumnChange() const {
   for (; column_it_.value() != columns_.value().end(); ++(column_it_.value())) {
-    cells_ = FilteredMapView<ColumnRow, TimestampRangeSet>(
+    cells_ = RangeFilteredMapView<ColumnRow, TimestampRangeSet>(
         column_it_.value()->second, timestamp_ranges_);
     cell_it_ = cells_.value().begin();
     if (cell_it_.value() != cells_.value().end()) {
@@ -204,9 +202,12 @@ bool FilteredColumnFamilyStream::PointToFirstCellAfterColumnChange() const {
 // Returns whether we've managed to find another cell
 bool FilteredColumnFamilyStream::PointToFirstCellAfterRowChange() const {
   for (; row_it_ != rows_.end(); ++row_it_) {
-    columns_ = FilteredMapView<ColumnFamilyRow, StringRangeSet>(
-        row_it_->second, column_ranges_);
-    column_it_.value() = columns_.value().begin();
+    columns_ = RegexFiteredMapView<
+        RangeFilteredMapView<ColumnFamilyRow, StringRangeSet>>(
+        RangeFilteredMapView<ColumnFamilyRow, StringRangeSet>(row_it_->second,
+                                                              column_ranges_),
+        column_regexes_);
+    column_it_ = columns_.value().begin();
     if (PointToFirstCellAfterColumnChange()) {
       return true;
     }

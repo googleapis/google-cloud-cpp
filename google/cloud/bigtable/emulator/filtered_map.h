@@ -18,30 +18,31 @@
 #include "google/cloud/bigtable/emulator/range_set.h"
 #include <functional>
 #include <iterator>
+#include <re2/re2.h>
 
 namespace google {
 namespace cloud {
 namespace bigtable {
 namespace emulator {
 
-template <typename Map, typename ExcludedRanges>
-class FilteredMapView {
+template <typename Map, typename PermittedRanges>
+class RangeFilteredMapView {
  public:
   class const_iterator {
    public:
     using iterator_category = std::input_iterator_tag;
-    using value_type = typename std::iterator_traits<
-        typename Map::const_iterator>::value_type;
+    using value_type =
+        typename std::iterator_traits<typename Map::const_iterator>::value_type;
     using difference_type = typename std::iterator_traits<
         typename Map::const_iterator>::difference_type;
     using reference = value_type const&;
     using pointer = value_type const*;
 
     const_iterator(
-        FilteredMapView const& parent,
+        RangeFilteredMapView const& parent,
         typename Map::const_iterator unfiltered_pos,
-        typename std::set<typename ExcludedRanges::Range,
-                          typename ExcludedRanges::Range::StartLess>::
+        typename std::set<typename PermittedRanges::Range,
+                          typename PermittedRanges::Range::StartLess>::
             const_iterator filter_pos)
         : parent_(std::cref(parent)),
           unfiltered_pos_(std::move(unfiltered_pos)),
@@ -103,24 +104,23 @@ class FilteredMapView {
       // pointed by filter_pos_. Make sure this only happens when the iteration
       // reaches its end.
       while (unfiltered_pos_ != parent_.get().unfiltered_.get().end() &&
-             filter_pos_ != parent_.get().filter_.get().disjoint_ranges().end() &&
+             filter_pos_ !=
+                 parent_.get().filter_.get().disjoint_ranges().end() &&
              filter_pos_->IsAboveEnd(unfiltered_pos_->first)) {
         ++filter_pos_;
         AdvanceToNextRange();
       }
     }
 
-    std::reference_wrapper<FilteredMapView const> parent_;
+    std::reference_wrapper<RangeFilteredMapView const> parent_;
     typename Map::const_iterator unfiltered_pos_;
-    typename std::set<typename ExcludedRanges::Range,
-                      typename ExcludedRanges::Range::StartLess>::const_iterator
-        filter_pos_;
+    typename std::set<
+        typename PermittedRanges::Range,
+        typename PermittedRanges::Range::StartLess>::const_iterator filter_pos_;
   };
 
-  FilteredMapView(Map const& unfiltered,
-              ExcludedRanges const& filter)
+  RangeFilteredMapView(Map const& unfiltered, PermittedRanges const& filter)
       : unfiltered_(std::cref(unfiltered)), filter_(std::cref(filter)) {}
-
 
   const_iterator begin() const {
     return const_iterator(*this, unfiltered_.get().begin(),
@@ -130,9 +130,88 @@ class FilteredMapView {
     return const_iterator(*this, unfiltered_.get().end(),
                           filter_.get().disjoint_ranges().end());
   }
+
  private:
   std::reference_wrapper<Map const> unfiltered_;
-  std::reference_wrapper<ExcludedRanges const> filter_;
+  std::reference_wrapper<PermittedRanges const> filter_;
+};
+
+template <typename Map>
+class RegexFiteredMapView {
+ public:
+  class const_iterator {
+   public:
+    using iterator_category = std::input_iterator_tag;
+    using value_type =
+        typename std::iterator_traits<typename Map::const_iterator>::value_type;
+    using difference_type = typename std::iterator_traits<
+        typename Map::const_iterator>::difference_type;
+    using reference = value_type const&;
+    using pointer = value_type const*;
+
+    const_iterator(RegexFiteredMapView const& parent,
+                   typename Map::const_iterator unfiltered_pos)
+        : parent_(std::cref(parent)),
+          unfiltered_pos_(std::move(unfiltered_pos)) {
+      EnsureIteratorValid();
+    }
+
+    const_iterator& operator++() {
+      ++unfiltered_pos_;
+      EnsureIteratorValid();
+      return *this;
+    }
+
+    const_iterator operator++(int) {
+      const_iterator retval = *this;
+      ++(*this);
+      return retval;
+    }
+
+    bool operator==(const_iterator const& other) const {
+      return unfiltered_pos_ == other.unfiltered_pos_;
+    }
+
+    bool operator!=(const_iterator const& other) const {
+      return !(*this == other);
+    }
+
+    reference operator*() const { return *unfiltered_pos_; }
+    pointer operator->() const { return &*unfiltered_pos_; }
+
+   private:
+    void EnsureIteratorValid() {
+      for (; unfiltered_pos_ != parent_.get().unfiltered_.end() &&
+             std::any_of(parent_.get().filters_.get().begin(),
+                         parent_.get().filters_.get().end(),
+                         [&](std::shared_ptr<re2::RE2 const> const& filter) {
+                           return !re2::RE2::PartialMatch(
+                               unfiltered_pos_->first, *filter);
+                         });
+           ++unfiltered_pos_) {
+      }
+    }
+
+    std::reference_wrapper<RegexFiteredMapView const> parent_;
+    typename Map::const_iterator unfiltered_pos_;
+  };
+
+  RegexFiteredMapView(
+      Map unfiltered,
+      std::vector<std::shared_ptr<re2::RE2 const>> const& filters)
+      : unfiltered_(std::move(unfiltered)), filters_(std::cref(filters)) {}
+
+  const_iterator begin() const {
+    return const_iterator(*this, unfiltered_.begin());
+  }
+  const_iterator end() const {
+    return const_iterator(*this, unfiltered_.end());
+  }
+
+ private:
+  Map unfiltered_;
+  std::reference_wrapper<std::vector<std::shared_ptr<re2::RE2 const>> const>
+      filters_;
 };
 
 }  // namespace emulator
