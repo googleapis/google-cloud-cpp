@@ -12,7 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/bigtable/emulator/table.h"
+#include "google/cloud/bigtable/table.h"
 #include <gtest/gtest.h>
+#include <memory>
 
 namespace google {
 namespace cloud {
@@ -22,8 +25,9 @@ namespace emulator {
 // Ensure that SetCell still works to set a cell that was not set
 // before.
 TEST(TransactonRollback, SetCellBasicFunction) {
-
+  std::shared_ptr<Table> table = Table::TestTable();
 }
+
 }  // namespace emulator
 }  // namespace bigtable
 }  // namespace cloud
