@@ -688,7 +688,7 @@ TEST(TimestampRangeSet, DisjointAdjacent) {
 
 TEST(StringRangeSet, SingleRange) {
   StringRangeSet srs;
-  srs.Insert(StringRangeSet::Range("a", kClosed, "b", kClosed));
+  srs.Sum(StringRangeSet::Range("a", kClosed, "b", kClosed));
   ASSERT_EQ(1, srs.disjoint_ranges().size());
   ASSERT_EQ(StringRangeSet::Range("a", kClosed, "b", kClosed),
             *srs.disjoint_ranges().begin());
@@ -709,9 +709,9 @@ TSRanges(std::vector<std::pair<std::chrono::milliseconds,
 TEST(TimestampRangeSet, ThreeDisjointIntervals) {
   using testing_util::chrono_literals::operator""_ms;
   TimestampRangeSet trs;
-  trs.Insert(TimestampRangeSet::Range(1_ms, 2_ms));
-  trs.Insert(TimestampRangeSet::Range(3_ms, 5_ms));
-  trs.Insert(TimestampRangeSet::Range(6_ms, 8_ms));
+  trs.Sum(TimestampRangeSet::Range(1_ms, 2_ms));
+  trs.Sum(TimestampRangeSet::Range(3_ms, 5_ms));
+  trs.Sum(TimestampRangeSet::Range(6_ms, 8_ms));
   ASSERT_EQ(TSRanges({{1_ms, 2_ms}, {3_ms, 5_ms}, {6_ms, 8_ms}}),
             trs.disjoint_ranges());
 }
@@ -719,8 +719,8 @@ TEST(TimestampRangeSet, ThreeDisjointIntervals) {
 TEST(TimestampRangeSet, MergingAdjacentPreceeding) {
   using testing_util::chrono_literals::operator""_ms;
   TimestampRangeSet trs;
-  trs.Insert(TimestampRangeSet::Range(7_ms, 8_ms));
-  trs.Insert(TimestampRangeSet::Range(8_ms, 9_ms));
+  trs.Sum(TimestampRangeSet::Range(7_ms, 8_ms));
+  trs.Sum(TimestampRangeSet::Range(8_ms, 9_ms));
   ASSERT_EQ(TSRanges({{7_ms, 9_ms}}),
             trs.disjoint_ranges());
 }
@@ -728,8 +728,8 @@ TEST(TimestampRangeSet, MergingAdjacentPreceeding) {
 TEST(TimestampRangeSet, MergingOverlappingPreceeding) {
   using testing_util::chrono_literals::operator""_ms;
   TimestampRangeSet trs;
-  trs.Insert(TimestampRangeSet::Range(7_ms, 9_ms));
-  trs.Insert(TimestampRangeSet::Range(8_ms, 10_ms));
+  trs.Sum(TimestampRangeSet::Range(7_ms, 9_ms));
+  trs.Sum(TimestampRangeSet::Range(8_ms, 10_ms));
   ASSERT_EQ(TSRanges({{7_ms, 10_ms}}),
             trs.disjoint_ranges());
 }
@@ -737,11 +737,11 @@ TEST(TimestampRangeSet, MergingOverlappingPreceeding) {
 TEST(TimestampRangeSet, RemovingOvelapping) {
   using testing_util::chrono_literals::operator""_ms;
   TimestampRangeSet trs;
-  trs.Insert(TimestampRangeSet::Range(1_ms, 2_ms));
-  trs.Insert(TimestampRangeSet::Range(3_ms, 4_ms));
-  trs.Insert(TimestampRangeSet::Range(5_ms, 6_ms));
-  trs.Insert(TimestampRangeSet::Range(7_ms, 8_ms));
-  trs.Insert(TimestampRangeSet::Range(1_ms, 8_ms));
+  trs.Sum(TimestampRangeSet::Range(1_ms, 2_ms));
+  trs.Sum(TimestampRangeSet::Range(3_ms, 4_ms));
+  trs.Sum(TimestampRangeSet::Range(5_ms, 6_ms));
+  trs.Sum(TimestampRangeSet::Range(7_ms, 8_ms));
+  trs.Sum(TimestampRangeSet::Range(1_ms, 8_ms));
   ASSERT_EQ(TSRanges({{1_ms, 8_ms}}),
             trs.disjoint_ranges());
 }
@@ -749,11 +749,11 @@ TEST(TimestampRangeSet, RemovingOvelapping) {
 TEST(TimestampRangeSet, RemovingOvelappingExtendEnd) {
   using testing_util::chrono_literals::operator""_ms;
   TimestampRangeSet trs;
-  trs.Insert(TimestampRangeSet::Range(1_ms, 2_ms));
-  trs.Insert(TimestampRangeSet::Range(3_ms, 4_ms));
-  trs.Insert(TimestampRangeSet::Range(5_ms, 6_ms));
-  trs.Insert(TimestampRangeSet::Range(7_ms, 8_ms));
-  trs.Insert(TimestampRangeSet::Range(1_ms, 9_ms));
+  trs.Sum(TimestampRangeSet::Range(1_ms, 2_ms));
+  trs.Sum(TimestampRangeSet::Range(3_ms, 4_ms));
+  trs.Sum(TimestampRangeSet::Range(5_ms, 6_ms));
+  trs.Sum(TimestampRangeSet::Range(7_ms, 8_ms));
+  trs.Sum(TimestampRangeSet::Range(1_ms, 9_ms));
   ASSERT_EQ(TSRanges({{1_ms, 9_ms}}),
             trs.disjoint_ranges());
 }
@@ -761,11 +761,11 @@ TEST(TimestampRangeSet, RemovingOvelappingExtendEnd) {
 TEST(TimestampRangeSet, RemovingOvelappingEarlyEnd) {
   using testing_util::chrono_literals::operator""_ms;
   TimestampRangeSet trs;
-  trs.Insert(TimestampRangeSet::Range(1_ms, 2_ms));
-  trs.Insert(TimestampRangeSet::Range(3_ms, 4_ms));
-  trs.Insert(TimestampRangeSet::Range(5_ms, 6_ms));
-  trs.Insert(TimestampRangeSet::Range(7_ms, 9_ms));
-  trs.Insert(TimestampRangeSet::Range(1_ms, 8_ms));
+  trs.Sum(TimestampRangeSet::Range(1_ms, 2_ms));
+  trs.Sum(TimestampRangeSet::Range(3_ms, 4_ms));
+  trs.Sum(TimestampRangeSet::Range(5_ms, 6_ms));
+  trs.Sum(TimestampRangeSet::Range(7_ms, 9_ms));
+  trs.Sum(TimestampRangeSet::Range(1_ms, 8_ms));
   ASSERT_EQ(TSRanges({{1_ms, 9_ms}}),
             trs.disjoint_ranges());
 }
@@ -773,13 +773,28 @@ TEST(TimestampRangeSet, RemovingOvelappingEarlyEnd) {
 TEST(TimestampRangeSet, PluggingGap) {
   using testing_util::chrono_literals::operator""_ms;
   TimestampRangeSet trs;
-  trs.Insert(TimestampRangeSet::Range(1_ms, 2_ms));
-  trs.Insert(TimestampRangeSet::Range(3_ms, 5_ms));
+  trs.Sum(TimestampRangeSet::Range(1_ms, 2_ms));
+  trs.Sum(TimestampRangeSet::Range(3_ms, 5_ms));
   ASSERT_EQ(TSRanges({{1_ms, 2_ms}, {3_ms, 5_ms}}), trs.disjoint_ranges());
-  trs.Insert(TimestampRangeSet::Range(2_ms, 3_ms));
+  trs.Sum(TimestampRangeSet::Range(2_ms, 3_ms));
   ASSERT_EQ(TSRanges({{1_ms, 5_ms}}), trs.disjoint_ranges());
 }
 
+TEST(TimestampRangeSet, IntersectAll) {
+  using testing_util::chrono_literals::operator""_ms;
+
+  auto trs = TimestampRangeSet::All();
+  trs.Intersect(TimestampRangeSet::Range(3_ms, 5_ms));
+  ASSERT_EQ(TSRanges({{3_ms, 5_ms}}), trs.disjoint_ranges());
+}
+
+TEST(TimestampRangeSet, IntersectPartial) {
+  using testing_util::chrono_literals::operator""_ms;
+
+  auto trs = TimestampRangeSet::All();
+  trs.Intersect(TimestampRangeSet::Range(3_ms, 5_ms));
+  ASSERT_EQ(TSRanges({{3_ms, 5_ms}}), trs.disjoint_ranges());
+}
 
 }  // anonymous namespace
 }  // namespace emulator

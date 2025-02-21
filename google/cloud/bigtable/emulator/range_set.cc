@@ -96,7 +96,7 @@ bool DisjointAndSortedRangesAdjacent(TimestampRangeSet::Range const& lhs,
 }
 
 template <typename RangeSetType, typename RangeType>
-void RangeSetInsertImpl(RangeSetType& disjoint_ranges,
+void RangeSetSumImpl(RangeSetType& disjoint_ranges,
                             RangeType inserted_range) {
   // Remove all ranges which either have an overlap with `inserted_range` or are
   // adjacent to it. Then add `inserted_range` with `start` and `end`
@@ -128,6 +128,33 @@ void RangeSetInsertImpl(RangeSetType& disjoint_ranges,
                                                       *first_to_remove)));
   }
   disjoint_ranges.insert(std::move(inserted_range));
+}
+
+template <typename RangeSetType, typename RangeType>
+void RangeSetIntersectImpl(RangeSetType& disjoint_ranges,
+                           RangeType const& intersected_range) {
+  // Intersect with every range. This could be optimized but it's unlikely that
+  // the extra code complexity would be offset by any performance gains in real
+  // life.
+  for (auto range_it = disjoint_ranges.begin();
+       range_it != disjoint_ranges.end();) {
+    if (!detail::HasOverlap(*range_it, intersected_range)) {
+      disjoint_ranges.erase(range_it++);
+    }
+    if (typename RangeType::StartLess()(*range_it, intersected_range)) {
+      RangeType to_update = std::move(*range_it);
+      disjoint_ranges.erase(range_it);
+      to_update.set_start(intersected_range);
+      range_it = disjoint_ranges.emplace(std::move(to_update)).first;
+    }
+    if (typename RangeType::EndLess()(intersected_range, *range_it)) {
+      RangeType to_update = std::move(*range_it);
+      disjoint_ranges.erase(range_it);
+      to_update.set_end(intersected_range);
+      range_it = disjoint_ranges.emplace(std::move(to_update)).first;
+    }
+    ++range_it;
+  }
 }
 
 }  // namespace detail
@@ -342,7 +369,7 @@ bool StringRangeSet::Range::EndLess::operator()(Range const& lhs,
 
 StringRangeSet StringRangeSet::All() {
   StringRangeSet res;
-  res.Insert(Range("", false, StringRangeSet::Range::Infinity{}, false));
+  res.Sum(Range("", false, StringRangeSet::Range::Infinity{}, false));
   return res;
 }
 
@@ -350,8 +377,12 @@ StringRangeSet StringRangeSet::Empty() {
   return StringRangeSet{};
 }
 
-void StringRangeSet::Insert(StringRangeSet::Range inserted_range) {
-  detail::RangeSetInsertImpl(disjoint_ranges_, std::move(inserted_range));
+void StringRangeSet::Sum(StringRangeSet::Range inserted_range) {
+  detail::RangeSetSumImpl(disjoint_ranges_, std::move(inserted_range));
+}
+
+void StringRangeSet::Intersect(StringRangeSet::Range const& inserted_range) {
+  detail::RangeSetIntersectImpl(disjoint_ranges_, inserted_range);
 }
 
 bool operator==(StringRangeSet::Range::Value const& lhs,
@@ -442,7 +473,7 @@ bool TimestampRangeSet::Range::EndLess::operator()(Range const& lhs,
 
 TimestampRangeSet TimestampRangeSet::All() {
   TimestampRangeSet res;
-  res.Insert(Range(std::chrono::milliseconds(0), std::chrono::milliseconds(0)));
+  res.Sum(Range(std::chrono::milliseconds(0), std::chrono::milliseconds(0)));
   return res;
 }
 
@@ -450,8 +481,13 @@ TimestampRangeSet TimestampRangeSet::Empty() {
   return TimestampRangeSet{};
 }
 
-void TimestampRangeSet::Insert(TimestampRangeSet::Range inserted_range) {
-  detail::RangeSetInsertImpl(disjoint_ranges_, std::move(inserted_range));
+void TimestampRangeSet::Sum(TimestampRangeSet::Range inserted_range) {
+  detail::RangeSetSumImpl(disjoint_ranges_, std::move(inserted_range));
+}
+
+void TimestampRangeSet::Intersect(
+    TimestampRangeSet::Range const& intersected_range) {
+  detail::RangeSetIntersectImpl(disjoint_ranges_, intersected_range);
 }
 
 bool operator==(TimestampRangeSet::Range const& lhs,

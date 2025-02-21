@@ -28,28 +28,25 @@ RowStreamer::RowStreamer(grpc::ServerWriter<btproto::ReadRowsResponse>& writer)
 bool RowStreamer::Stream(CellView const& cell) {
   std::cout << "Attempting to stream" << std::endl;
   btproto::ReadRowsResponse::CellChunk chunk;
-  if (!current_row_key_ || (&current_row_key_->get() != &cell.row_key() && 
-                           current_row_key_->get() != cell.row_key())) {
+  if (!current_row_key_ || current_row_key_ != cell.row_key()) {
     if (!pending_chunks_.empty()) {
       pending_chunks_.back().set_commit_row(true);
     }
-    current_row_key_ = std::cref(cell.row_key());
-    current_column_family_ = std::cref(cell.column_family());
-    current_column_qualifier_ = std::cref(cell.column_qualifier());
+    current_row_key_ = cell.row_key();
+    current_column_family_ = cell.column_family();
+    current_column_qualifier_ = cell.column_qualifier();
     chunk.set_row_key(cell.row_key());
     chunk.mutable_family_name()->set_value(cell.column_family());
     chunk.mutable_qualifier()->set_value(cell.column_qualifier());
   }
-  if (&current_column_family_->get() != &cell.column_family() && 
-                           current_row_key_->get() != cell.column_family()) {
-    current_column_family_ = std::cref(cell.column_family());
-    current_column_qualifier_ = std::cref(cell.column_qualifier());
+  if (current_row_key_ != cell.column_family()) {
+    current_column_family_ = cell.column_family();
+    current_column_qualifier_ = cell.column_qualifier();
     chunk.mutable_family_name()->set_value(cell.column_family());
     chunk.mutable_qualifier()->set_value(cell.column_qualifier());
   }
-  if (&current_column_qualifier_->get() != &cell.column_qualifier() && 
-                           current_row_key_->get() != cell.column_qualifier()) {
-    current_column_qualifier_ = std::cref(cell.column_qualifier());
+  if (current_row_key_ != cell.column_qualifier()) {
+    current_column_qualifier_ = cell.column_qualifier();
     chunk.mutable_qualifier()->set_value(cell.column_qualifier());
   }
   chunk.set_timestamp_micros(

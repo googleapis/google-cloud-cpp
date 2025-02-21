@@ -328,7 +328,7 @@ StatusOr<StringRangeSet> CreateStringRangeSet(
           "`row_key` empty",
           GCP_ERROR_INFO().WithMetadata("row_set", row_set.DebugString()));
     }
-    res.Insert(StringRangeSet::Range(row_key, false, row_key, false));
+    res.Sum(StringRangeSet::Range(row_key, false, row_key, false));
   }
   for (auto const& row_range : row_set.row_ranges()) {
     auto maybe_range = StringRangeSet::Range::FromRowRange(row_range);
@@ -338,7 +338,7 @@ StatusOr<StringRangeSet> CreateStringRangeSet(
     if (maybe_range->IsEmpty()) {
       continue;
     }
-    res.Insert(*std::move(maybe_range));
+    res.Sum(*std::move(maybe_range));
   }
   return res;
 }

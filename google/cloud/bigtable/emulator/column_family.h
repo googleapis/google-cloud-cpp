@@ -45,7 +45,7 @@ class ColumnRow {
     return cells_.lower_bound(timestamp);
   }
   const_iterator upper_bound(std::chrono::milliseconds timestamp) const {
-    return cells_.lower_bound(timestamp);
+    return cells_.upper_bound(timestamp);
   }
 
   std::map<std::chrono::milliseconds, std::string>::iterator find(
@@ -77,7 +77,7 @@ class ColumnFamilyRow {
     return columns_.lower_bound(column_qualifier);
   }
   const_iterator upper_bound(std::string const& column_qualifier) const {
-    return columns_.lower_bound(column_qualifier);
+    return columns_.upper_bound(column_qualifier);
   }
 
   std::map<std::string, ColumnRow>::iterator find(
@@ -110,7 +110,7 @@ class ColumnFamily {
     return rows_.lower_bound(row_key);
   }
   const_iterator upper_bound(std::string const& row_key) const {
-    return rows_.lower_bound(row_key);
+    return rows_.upper_bound(row_key);
   }
 
   std::map<std::string, ColumnFamilyRow>::iterator find(
@@ -125,6 +125,7 @@ class ColumnFamily {
  private:
   std::map<std::string, ColumnFamilyRow> rows_;
 };
+
 class FilteredColumnFamilyStream : public AbstractCellStreamImpl {
  public:
   FilteredColumnFamilyStream(ColumnFamily const& column_family,
@@ -153,20 +154,24 @@ class FilteredColumnFamilyStream : public AbstractCellStreamImpl {
   std::vector<std::shared_ptr<re2::RE2 const>> column_regexes_;
   mutable TimestampRangeSet timestamp_ranges_;
 
-  FilteredMapView<ColumnFamily, StringRangeSet> rows_;
-  mutable absl::optional<FilteredMapView<ColumnFamilyRow, StringRangeSet>>
+  RegexFiteredMapView<RangeFilteredMapView<ColumnFamily, StringRangeSet>> rows_;
+  mutable absl::optional<RegexFiteredMapView<
+      RangeFilteredMapView<ColumnFamilyRow, StringRangeSet>>>
       columns_;
-  mutable absl::optional<FilteredMapView<ColumnRow, TimestampRangeSet>> cells_;
+  mutable absl::optional<RangeFilteredMapView<ColumnRow, TimestampRangeSet>>
+      cells_;
 
   // If row_it_ == rows_.end() we've reached the end.
   // We keep the invariant that if (row_it_ != rows_.end()) then
   // cell_it_ != cells.end() && column_it_ != columns_.end()
-  mutable FilteredMapView<ColumnFamily, StringRangeSet>::const_iterator row_it_;
-  mutable absl::optional<
-      FilteredMapView<ColumnFamilyRow, StringRangeSet>::const_iterator>
+  mutable RegexFiteredMapView<
+      RangeFilteredMapView<ColumnFamily, StringRangeSet>>::const_iterator
+      row_it_;
+  mutable absl::optional<RegexFiteredMapView<
+      RangeFilteredMapView<ColumnFamilyRow, StringRangeSet>>::const_iterator>
       column_it_;
   mutable absl::optional<
-      FilteredMapView<ColumnRow, TimestampRangeSet>::const_iterator>
+      RangeFilteredMapView<ColumnRow, TimestampRangeSet>::const_iterator>
       cell_it_;
   mutable absl::optional<CellView> cur_value_;
   mutable bool initialized_;
