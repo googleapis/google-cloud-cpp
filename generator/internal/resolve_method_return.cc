@@ -28,7 +28,8 @@ namespace {
 ProtoDefinitionLocation Location(google::protobuf::Descriptor const& d) {
   google::protobuf::SourceLocation loc;
   d.GetSourceLocation(&loc);
-  return ProtoDefinitionLocation{d.file()->name(), loc.start_line + 1};
+  return ProtoDefinitionLocation{std::string{d.file()->name()},
+                                 loc.start_line + 1};
 }
 
 }  // namespace
@@ -46,7 +47,7 @@ ResolveMethodReturn(google::protobuf::MethodDescriptor const& method) {
     // For string pagination we return nothing, there is no need to link the
     // definition of the `std::string` type.
     if (!info->range_output_type) return absl::nullopt;
-    return std::make_pair(info->range_output_type->full_name(),
+    return std::make_pair(std::string{info->range_output_type->full_name()},
                           Location(*info->range_output_type));
   }
 
@@ -59,14 +60,15 @@ ResolveMethodReturn(google::protobuf::MethodDescriptor const& method) {
     message = method.file()->pool()->FindMessageTypeByName(name);
     if (!message) {
       // Qualify the name and try again
-      auto const fqname = method.file()->package() + "." + name;
+      auto const fqname = std::string{method.file()->package()} + "." + name;
       message = method.file()->pool()->FindMessageTypeByName(fqname);
       if (!message) return absl::nullopt;
     }
-    return std::make_pair(message->full_name(), Location(*message));
+    return std::make_pair(std::string{message->full_name()},
+                          Location(*message));
   }
 
-  return std::make_pair(message->full_name(), Location(*message));
+  return std::make_pair(std::string{message->full_name()}, Location(*message));
 }
 
 }  // namespace generator_internal

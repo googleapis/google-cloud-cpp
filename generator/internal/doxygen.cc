@@ -24,7 +24,7 @@ std::string FormatDoxygenLink(
     google::protobuf::Descriptor const& message_type) {
   google::protobuf::SourceLocation loc;
   message_type.GetSourceLocation(&loc);
-  std::string output_type_proto_file_name = message_type.file()->name();
+  std::string output_type_proto_file_name{message_type.file()->name()};
   return absl::StrCat(
       "@googleapis_link{", ProtoNameToCppName(message_type.full_name()), ",",
       output_type_proto_file_name, "#L", loc.start_line + 1, "}");
