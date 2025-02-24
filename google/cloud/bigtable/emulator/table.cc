@@ -440,12 +440,12 @@ Status RowTransaction::SetCell(
 
   bool column_existed = true;
   auto column_row_it = column_family_row.find(set_cell.column_qualifier());
-  if (column_row_it == column_family_row.end()) {
+  if (!row_existed || column_row_it == column_family_row.end()) {
     column_existed = false;
   }
 
   bool cell_existed = true;
-  if (!column_existed) {
+  if (!row_existed || !column_existed) {
     cell_existed = false;
   } else {
     auto timestamp_it = column_row_it->second.find(
@@ -462,21 +462,26 @@ Status RowTransaction::SetCell(
           std::chrono::microseconds(set_cell.timestamp_micros())),
       set_cell.value());
 
+  // If we have added a row, a column or a cell, we need to recompute
+  // these iterators.
+  row_key_it = column_family.find(request_.row_key());
+  column_family_row = row_key_it->second;
+  column_row_it = column_family_row.find(set_cell.column_qualifier());
+  auto timestamp_it = column_row_it->second.find(
+      std::chrono::duration_cast<std::chrono::milliseconds>(
+          std::chrono::microseconds(set_cell.timestamp_micros())));
+
+
   if (!row_existed) {
-    row_key_it = column_family.find(request_.row_key());
     DeleteRow delete_row = {row_key_it, column_family};
     undo_.emplace(delete_row);
   }
 
   if (!column_existed) {
-    column_row_it = column_family_row.find(set_cell.column_qualifier());
     DeleteColumn delete_column_row = {column_row_it, column_family_row};
     undo_.emplace(delete_column_row);
   }
 
-  auto timestamp_it = column_row_it->second.find(
-      std::chrono::duration_cast<std::chrono::milliseconds>(
-          std::chrono::microseconds(set_cell.timestamp_micros())));
   if (!cell_existed) {
     DeleteValue delete_value = {column_row_it, timestamp_it->first};
     undo_.emplace(delete_value);
