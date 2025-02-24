@@ -42,12 +42,6 @@ class Table {
       google::bigtable::admin::v2::Table schema);
 
 
-  static std::shared_ptr<Table> TestTable() {
-    std::shared_ptr<Table> r(new Table);
-
-    return r;
-  }
-
   google::bigtable::admin::v2::Table GetSchema() const;
 
   Status Update(google::bigtable::admin::v2::Table const& new_schema,

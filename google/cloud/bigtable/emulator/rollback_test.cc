@@ -14,6 +14,9 @@
 
 #include "google/cloud/bigtable/emulator/table.h"
 #include "google/cloud/bigtable/table.h"
+#include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
+#include <google/bigtable/admin/v2/bigtable_table_admin.pb.h>
+#include <google/bigtable/admin/v2/table.pb.h>
 #include <gtest/gtest.h>
 #include <memory>
 
@@ -25,7 +28,13 @@ namespace emulator {
 // Ensure that SetCell still works to set a cell that was not set
 // before.
 TEST(TransactonRollback, SetCellBasicFunction) {
-  std::shared_ptr<Table> table = Table::TestTable();
+  ::google::bigtable::admin::v2::Table schema;
+  ::google::bigtable::admin::v2::ColumnFamily column_family;
+
+  schema.set_name("projects/test/instances/test/tables/test");
+  (*schema.mutable_column_families())["test"] = column_family;
+
+  auto table = Table::Create(schema);
 }
 
 }  // namespace emulator
