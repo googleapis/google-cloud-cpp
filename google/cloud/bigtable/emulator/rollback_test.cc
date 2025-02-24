@@ -44,17 +44,17 @@ TEST(TransactonRollback, SetCellBasicFunction) {
   auto table = Table::Create(schema);
   ASSERT_STATUS_OK(table);
 
-  ::google::bigtable::v2::Mutation_SetCell set_cell_mutation;
-  set_cell_mutation.set_family_name("test");
-  set_cell_mutation.set_column_qualifier("test");
-  set_cell_mutation.set_timestamp_micros(1234);
-  set_cell_mutation.set_value("test");
-
   ::google::bigtable::v2::MutateRowRequest mutation_request;
   mutation_request.set_table_name(table_name);
   mutation_request.set_row_key(row_key);
+
+
   auto *mutation_request_mutation = mutation_request.add_mutations();
-  mutation_request_mutation->set_allocated_set_cell(&set_cell_mutation);
+  auto *set_cell_mutation = mutation_request_mutation->mutable_set_cell();
+  set_cell_mutation->set_family_name("test");
+  set_cell_mutation->set_column_qualifier("test");
+  set_cell_mutation->set_timestamp_micros(1234);
+  set_cell_mutation->set_value("test");
 
   auto status = table.value()->MutateRow(mutation_request);
   ASSERT_STATUS_OK(status);
