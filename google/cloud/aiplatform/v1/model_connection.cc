@@ -80,6 +80,14 @@ ModelServiceConnection::ListModelVersions(
       StreamRange<google::cloud::aiplatform::v1::Model>>();
 }
 
+StreamRange<google::cloud::aiplatform::v1::ModelVersionCheckpoint>
+ModelServiceConnection::ListModelVersionCheckpoints(
+    google::cloud::aiplatform::v1::
+        ListModelVersionCheckpointsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::aiplatform::v1::ModelVersionCheckpoint>>();
+}
+
 StatusOr<google::cloud::aiplatform::v1::Model>
 ModelServiceConnection::UpdateModel(
     google::cloud::aiplatform::v1::UpdateModelRequest const&) {

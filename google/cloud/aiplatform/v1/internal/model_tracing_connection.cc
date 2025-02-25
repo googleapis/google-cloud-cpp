@@ -92,6 +92,18 @@ ModelServiceTracingConnection::ListModelVersions(
       std::move(span), std::move(sr));
 }
 
+StreamRange<google::cloud::aiplatform::v1::ModelVersionCheckpoint>
+ModelServiceTracingConnection::ListModelVersionCheckpoints(
+    google::cloud::aiplatform::v1::ListModelVersionCheckpointsRequest request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::ModelServiceConnection::ListModelVersionCheckpoints");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListModelVersionCheckpoints(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::aiplatform::v1::ModelVersionCheckpoint>(std::move(span),
+                                                             std::move(sr));
+}
+
 StatusOr<google::cloud::aiplatform::v1::Model>
 ModelServiceTracingConnection::UpdateModel(
     google::cloud::aiplatform::v1::UpdateModelRequest const& request) {

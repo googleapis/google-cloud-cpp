@@ -66,6 +66,49 @@ CloudRedisClusterConnectionIdempotencyPolicy::GetClusterCertificateAuthority(
   return Idempotency::kIdempotent;
 }
 
+Idempotency
+CloudRedisClusterConnectionIdempotencyPolicy::RescheduleClusterMaintenance(
+    google::cloud::redis::cluster::v1::
+        RescheduleClusterMaintenanceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency CloudRedisClusterConnectionIdempotencyPolicy::ListBackupCollections(
+    google::cloud::redis::cluster::v1::
+        ListBackupCollectionsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency CloudRedisClusterConnectionIdempotencyPolicy::GetBackupCollection(
+    google::cloud::redis::cluster::v1::GetBackupCollectionRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency CloudRedisClusterConnectionIdempotencyPolicy::ListBackups(
+    google::cloud::redis::cluster::v1::ListBackupsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency CloudRedisClusterConnectionIdempotencyPolicy::GetBackup(
+    google::cloud::redis::cluster::v1::GetBackupRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency CloudRedisClusterConnectionIdempotencyPolicy::DeleteBackup(
+    google::cloud::redis::cluster::v1::DeleteBackupRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency CloudRedisClusterConnectionIdempotencyPolicy::ExportBackup(
+    google::cloud::redis::cluster::v1::ExportBackupRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency CloudRedisClusterConnectionIdempotencyPolicy::BackupCluster(
+    google::cloud::redis::cluster::v1::BackupClusterRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency CloudRedisClusterConnectionIdempotencyPolicy::ListLocations(
     google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;

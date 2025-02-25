@@ -26,6 +26,13 @@
 #      avoiding C arrays often makes the code less readable, and std::array is
 #      not a drop-in replacement because it doesn't deduce the size.
 #
+#  -modernize-type-traits: clang-tidy recommands using c++17 style variable
+#      templates. We will enable this check after we moved to c++17.
+#
+#  -modernize-unary-static-assert: clang-tidy asks removing empty string in
+#      static_assert(), the check is only applicable for c++17 and later code.
+#      We will enable this check after we moved to c++17.
+#
 #  -performance-move-const-arg: This warning requires the developer to
 #      know/care more about the implementation details of types/functions than
 #      should be necessary. For example, `A a; F(std::move(a));` will trigger a
@@ -89,6 +96,8 @@ Checks: >
   -modernize-concat-nested-namespaces,
   -modernize-use-nodiscard,
   -modernize-avoid-c-arrays,
+  -modernize-type-traits,
+  -modernize-unary-static-assert,
   -performance-move-const-arg,
   -performance-avoid-endl,
   -performance-enum-size,

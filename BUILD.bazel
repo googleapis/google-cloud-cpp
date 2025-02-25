@@ -150,7 +150,6 @@ cc_library(
 bool_flag(
     name = "enable-ctype-cord-workaround",
     build_setting_default = False,
-    visibility = ["//:__subpackages__"],
 )
 
 cc_library(
@@ -259,5 +258,4 @@ cc_library(
 bool_flag(
     name = "enable_opentelemetry",
     build_setting_default = False,
-    visibility = ["//:__subpackages__"],
 )

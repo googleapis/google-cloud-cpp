@@ -197,6 +197,123 @@ StatusOr<google::longrunning::Operation> TpuLogging::UpdateNode(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::tpu::v2::ListQueuedResourcesResponse>
+TpuLogging::ListQueuedResources(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::tpu::v2::ListQueuedResourcesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::tpu::v2::ListQueuedResourcesRequest const& request) {
+        return child_->ListQueuedResources(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::tpu::v2::QueuedResource> TpuLogging::GetQueuedResource(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::tpu::v2::GetQueuedResourceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::tpu::v2::GetQueuedResourceRequest const& request) {
+        return child_->GetQueuedResource(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+TpuLogging::AsyncCreateQueuedResource(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::tpu::v2::CreateQueuedResourceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::tpu::v2::CreateQueuedResourceRequest const& request) {
+        return child_->AsyncCreateQueuedResource(cq, std::move(context),
+                                                 std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> TpuLogging::CreateQueuedResource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::tpu::v2::CreateQueuedResourceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::tpu::v2::CreateQueuedResourceRequest const& request) {
+        return child_->CreateQueuedResource(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+TpuLogging::AsyncDeleteQueuedResource(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::tpu::v2::DeleteQueuedResourceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::tpu::v2::DeleteQueuedResourceRequest const& request) {
+        return child_->AsyncDeleteQueuedResource(cq, std::move(context),
+                                                 std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> TpuLogging::DeleteQueuedResource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::tpu::v2::DeleteQueuedResourceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::tpu::v2::DeleteQueuedResourceRequest const& request) {
+        return child_->DeleteQueuedResource(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+TpuLogging::AsyncResetQueuedResource(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::tpu::v2::ResetQueuedResourceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::tpu::v2::ResetQueuedResourceRequest const& request) {
+        return child_->AsyncResetQueuedResource(cq, std::move(context),
+                                                std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> TpuLogging::ResetQueuedResource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::tpu::v2::ResetQueuedResourceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::tpu::v2::ResetQueuedResourceRequest const& request) {
+        return child_->ResetQueuedResource(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::tpu::v2::GenerateServiceIdentityResponse>
 TpuLogging::GenerateServiceIdentity(
     grpc::ClientContext& context, Options const& options,

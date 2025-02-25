@@ -44,6 +44,34 @@ RowAccessPolicyServiceConnection::ListRowAccessPolicies(
       StreamRange<google::cloud::bigquery::v2::RowAccessPolicy>>();
 }
 
+StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>
+RowAccessPolicyServiceConnection::GetRowAccessPolicy(
+    google::cloud::bigquery::v2::GetRowAccessPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>
+RowAccessPolicyServiceConnection::CreateRowAccessPolicy(
+    google::cloud::bigquery::v2::CreateRowAccessPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>
+RowAccessPolicyServiceConnection::UpdateRowAccessPolicy(
+    google::cloud::bigquery::v2::UpdateRowAccessPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status RowAccessPolicyServiceConnection::DeleteRowAccessPolicy(
+    google::cloud::bigquery::v2::DeleteRowAccessPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status RowAccessPolicyServiceConnection::BatchDeleteRowAccessPolicies(
+    google::cloud::bigquery::v2::BatchDeleteRowAccessPoliciesRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquerycontrol_v2
 }  // namespace cloud

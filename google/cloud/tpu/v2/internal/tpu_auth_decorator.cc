@@ -182,6 +182,107 @@ StatusOr<google::longrunning::Operation> TpuAuth::UpdateNode(
   return child_->UpdateNode(context, options, request);
 }
 
+StatusOr<google::cloud::tpu::v2::ListQueuedResourcesResponse>
+TpuAuth::ListQueuedResources(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::tpu::v2::ListQueuedResourcesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListQueuedResources(context, options, request);
+}
+
+StatusOr<google::cloud::tpu::v2::QueuedResource> TpuAuth::GetQueuedResource(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::tpu::v2::GetQueuedResourceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetQueuedResource(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+TpuAuth::AsyncCreateQueuedResource(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::tpu::v2::CreateQueuedResourceRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateQueuedResource(cq, *std::move(context),
+                                                std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> TpuAuth::CreateQueuedResource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::tpu::v2::CreateQueuedResourceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateQueuedResource(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+TpuAuth::AsyncDeleteQueuedResource(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::tpu::v2::DeleteQueuedResourceRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteQueuedResource(cq, *std::move(context),
+                                                std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> TpuAuth::DeleteQueuedResource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::tpu::v2::DeleteQueuedResourceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteQueuedResource(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+TpuAuth::AsyncResetQueuedResource(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::tpu::v2::ResetQueuedResourceRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncResetQueuedResource(cq, *std::move(context),
+                                               std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> TpuAuth::ResetQueuedResource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::tpu::v2::ResetQueuedResourceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ResetQueuedResource(context, options, request);
+}
+
 StatusOr<google::cloud::tpu::v2::GenerateServiceIdentityResponse>
 TpuAuth::GenerateServiceIdentity(
     grpc::ClientContext& context, Options const& options,

@@ -379,7 +379,7 @@ class InstancesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.instances.v1.AggregatedListInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L761}
-  /// [google.cloud.cpp.compute.v1.InstancesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_021.proto#L726}
+  /// [google.cloud.cpp.compute.v1.InstancesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_021.proto#L730}
   ///
   // clang-format on
   StreamRange<std::pair<std::string,
@@ -424,7 +424,7 @@ class InstancesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.instances.v1.AggregatedListInstancesRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L761}
-  /// [google.cloud.cpp.compute.v1.InstancesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_021.proto#L726}
+  /// [google.cloud.cpp.compute.v1.InstancesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_021.proto#L730}
   ///
   // clang-format on
   StreamRange<std::pair<std::string,
@@ -1337,7 +1337,7 @@ class InstancesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.instances.v1.GetScreenshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1100}
-  /// [google.cloud.cpp.compute.v1.Screenshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_021.proto#L923}
+  /// [google.cloud.cpp.compute.v1.Screenshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_021.proto#L927}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Screenshot> GetScreenshot(
@@ -1369,7 +1369,7 @@ class InstancesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.instances.v1.GetScreenshotRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1100}
-  /// [google.cloud.cpp.compute.v1.Screenshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_021.proto#L923}
+  /// [google.cloud.cpp.compute.v1.Screenshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_021.proto#L927}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Screenshot> GetScreenshot(
@@ -1399,7 +1399,7 @@ class InstancesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.instances.v1.GetSerialPortOutputRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1114}
-  /// [google.cloud.cpp.compute.v1.SerialPortOutput]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_021.proto#L933}
+  /// [google.cloud.cpp.compute.v1.SerialPortOutput]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_021.proto#L937}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SerialPortOutput>
@@ -1431,7 +1431,7 @@ class InstancesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.instances.v1.GetSerialPortOutputRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1114}
-  /// [google.cloud.cpp.compute.v1.SerialPortOutput]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_021.proto#L933}
+  /// [google.cloud.cpp.compute.v1.SerialPortOutput]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_021.proto#L937}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SerialPortOutput>
@@ -1461,7 +1461,7 @@ class InstancesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.instances.v1.GetShieldedInstanceIdentityRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1147}
-  /// [google.cloud.cpp.compute.v1.ShieldedInstanceIdentity]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_021.proto#L959}
+  /// [google.cloud.cpp.compute.v1.ShieldedInstanceIdentity]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_021.proto#L963}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ShieldedInstanceIdentity>
@@ -1494,7 +1494,7 @@ class InstancesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.instances.v1.GetShieldedInstanceIdentityRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1147}
-  /// [google.cloud.cpp.compute.v1.ShieldedInstanceIdentity]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_021.proto#L959}
+  /// [google.cloud.cpp.compute.v1.ShieldedInstanceIdentity]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_021.proto#L963}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ShieldedInstanceIdentity>
@@ -1738,7 +1738,7 @@ class InstancesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.instances.v1.ListReferrersRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1284}
-  /// [google.cloud.cpp.compute.v1.Reference]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_021.proto#L884}
+  /// [google.cloud.cpp.compute.v1.Reference]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_021.proto#L888}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Reference> ListReferrers(
@@ -1782,7 +1782,7 @@ class InstancesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.instances.v1.ListReferrersRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1284}
-  /// [google.cloud.cpp.compute.v1.Reference]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_021.proto#L884}
+  /// [google.cloud.cpp.compute.v1.Reference]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_021.proto#L888}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::Reference> ListReferrers(

@@ -93,9 +93,9 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "build_bazel_rules_apple",
         urls = [
-            "https://github.com/bazelbuild/rules_apple/releases/download/3.16.1/rules_apple.3.16.1.tar.gz",
+            "https://github.com/bazelbuild/rules_apple/releases/download/3.19.0/rules_apple.3.19.0.tar.gz",
         ],
-        sha256 = "352428421c89dba8859055c3e1ba42f742c224544bf0e196c926d1cf44a2d726",
+        sha256 = "364b039b0081b4bd8df1921fce18adba7c2d295ef9e1d02fbed2919dee07be82",
     )
 
     # Load Abseil
@@ -103,10 +103,10 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_google_absl",
         urls = [
-            "https://github.com/abseil/abseil-cpp/archive/20240722.0.tar.gz",
+            "https://github.com/abseil/abseil-cpp/archive/20250127.0.tar.gz",
         ],
-        sha256 = "f50e5ac311a81382da7fa75b97310e4b9006474f9560ac46f54a9967f07d4ae3",
-        strip_prefix = "abseil-cpp-20240722.0",
+        sha256 = "16242f394245627e508ec6bb296b433c90f8d914f73b9c026fddb905e27276e8",
+        strip_prefix = "abseil-cpp-20250127.0",
     )
 
     # Load a version of googletest that we know works. This is needed to create
@@ -115,10 +115,10 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_google_googletest",
         urls = [
-            "https://github.com/google/googletest/archive/v1.15.2.tar.gz",
+            "https://github.com/google/googletest/archive/v1.16.0.tar.gz",
         ],
-        sha256 = "7b42b4d6ed48810c5362c265a17faebe90dc2373c885e5216439d37927f02926",
-        strip_prefix = "googletest-1.15.2",
+        sha256 = "78c676fc63881529bf97bf9d45948d905a66833fbfa5318ea2cd7478cb98f399",
+        strip_prefix = "googletest-1.16.0",
     )
 
     # Load the googleapis dependency.
@@ -126,10 +126,10 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_google_googleapis",
         urls = [
-            "https://github.com/googleapis/googleapis/archive/c3556b45dc35a145e04b5692bc72e01a4f58a6b2.tar.gz",
+            "https://github.com/googleapis/googleapis/archive/de1e1c0eef95687b8dc8b81be6417a4b3f7e3924.tar.gz",
         ],
-        sha256 = "1995c464c6e4a51167ba82635e1e1d31746d30c94b6b604b3f44aa65bf98713c",
-        strip_prefix = "googleapis-c3556b45dc35a145e04b5692bc72e01a4f58a6b2",
+        sha256 = "d99b4187e63e1a15670a0670076a83be865e3611c8c0eedd158ec3b632a63a23",
+        strip_prefix = "googleapis-de1e1c0eef95687b8dc8b81be6417a4b3f7e3924",
         build_file = Label("//bazel:googleapis.BUILD"),
         # Scaffolding for patching googleapis after download. For example:
         #   patches = ["googleapis.patch"]
@@ -233,10 +233,10 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "io_opentelemetry_cpp",
         urls = [
-            "https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.18.0.tar.gz",
+            "https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.19.0.tar.gz",
         ],
-        sha256 = "b149109d5983cf8290d614654a878899a68b0c8902b64c934d06f47cd50ffe2e",
-        strip_prefix = "opentelemetry-cpp-1.18.0",
+        sha256 = "e0330194b72f2fe4c0ce3ece06b02dc4aa0ab491eb75bf42c6f5e283912e468c",
+        strip_prefix = "opentelemetry-cpp-1.19.0",
         repo_mapping = {
             "@curl": "@com_github_curl_curl",
             "@com_github_google_benchmark": "@com_github_benchmark",

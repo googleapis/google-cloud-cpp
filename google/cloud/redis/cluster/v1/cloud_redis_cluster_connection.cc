@@ -129,6 +129,127 @@ CloudRedisClusterConnection::GetClusterCertificateAuthority(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
+CloudRedisClusterConnection::RescheduleClusterMaintenance(
+    google::cloud::redis::cluster::v1::
+        RescheduleClusterMaintenanceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::redis::cluster::v1::Cluster>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterConnection::RescheduleClusterMaintenance(
+    NoAwaitTag, google::cloud::redis::cluster::v1::
+                    RescheduleClusterMaintenanceRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
+CloudRedisClusterConnection::RescheduleClusterMaintenance(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::redis::cluster::v1::Cluster>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::redis::cluster::v1::BackupCollection>
+CloudRedisClusterConnection::ListBackupCollections(
+    google::cloud::redis::cluster::v1::
+        ListBackupCollectionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::redis::cluster::v1::BackupCollection>>();
+}
+
+StatusOr<google::cloud::redis::cluster::v1::BackupCollection>
+CloudRedisClusterConnection::GetBackupCollection(
+    google::cloud::redis::cluster::v1::GetBackupCollectionRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::redis::cluster::v1::Backup>
+CloudRedisClusterConnection::ListBackups(
+    google::cloud::redis::cluster::v1::
+        ListBackupsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::redis::cluster::v1::Backup>>();
+}
+
+StatusOr<google::cloud::redis::cluster::v1::Backup>
+CloudRedisClusterConnection::GetBackup(
+    google::cloud::redis::cluster::v1::GetBackupRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::protobuf::Any>>
+CloudRedisClusterConnection::DeleteBackup(
+    google::cloud::redis::cluster::v1::DeleteBackupRequest const&) {
+  return google::cloud::make_ready_future<StatusOr<google::protobuf::Any>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterConnection::DeleteBackup(
+    NoAwaitTag, google::cloud::redis::cluster::v1::DeleteBackupRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::protobuf::Any>>
+CloudRedisClusterConnection::DeleteBackup(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<StatusOr<google::protobuf::Any>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::Backup>>
+CloudRedisClusterConnection::ExportBackup(
+    google::cloud::redis::cluster::v1::ExportBackupRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::redis::cluster::v1::Backup>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterConnection::ExportBackup(
+    NoAwaitTag, google::cloud::redis::cluster::v1::ExportBackupRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::Backup>>
+CloudRedisClusterConnection::ExportBackup(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::redis::cluster::v1::Backup>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
+CloudRedisClusterConnection::BackupCluster(
+    google::cloud::redis::cluster::v1::BackupClusterRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::redis::cluster::v1::Cluster>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterConnection::BackupCluster(
+    NoAwaitTag,
+    google::cloud::redis::cluster::v1::BackupClusterRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
+CloudRedisClusterConnection::BackupCluster(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::redis::cluster::v1::Cluster>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StreamRange<google::cloud::location::Location>
 CloudRedisClusterConnection::ListLocations(
     google::cloud::location::

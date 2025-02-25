@@ -522,6 +522,21 @@ DefaultDatabaseAdminRestStub::ListDatabaseRoles(
       std::move(query_params));
 }
 
+StatusOr<google::spanner::admin::database::v1::AddSplitPointsResponse>
+DefaultDatabaseAdminRestStub::AddSplitPoints(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::spanner::admin::database::v1::AddSplitPointsRequest const&
+        request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  return rest_internal::Post<
+      google::spanner::admin::database::v1::AddSplitPointsResponse>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
+                   request.database(), ":addSplitPoints"),
+      std::move(query_params));
+}
+
 StatusOr<google::spanner::admin::database::v1::BackupSchedule>
 DefaultDatabaseAdminRestStub::CreateBackupSchedule(
     google::cloud::rest_internal::RestContext& rest_context,

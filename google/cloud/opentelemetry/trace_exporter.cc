@@ -74,6 +74,7 @@ class TraceExporter final : public opentelemetry::sdk::trace::SpanExporter {
     return opentelemetry::sdk::common::ExportResult::kFailure;
   }
 
+  bool ForceFlush(std::chrono::microseconds) noexcept override { return true; }
   bool Shutdown(std::chrono::microseconds) noexcept override { return true; }
 
  private:

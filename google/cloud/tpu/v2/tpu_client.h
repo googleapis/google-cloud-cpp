@@ -115,8 +115,8 @@ class TpuClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tpu.v2.ListNodesRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L476}
-  /// [google.cloud.tpu.v2.Node]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L289}
+  /// [google.cloud.tpu.v2.ListNodesRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L833}
+  /// [google.cloud.tpu.v2.Node]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L358}
   ///
   // clang-format on
   StreamRange<google::cloud::tpu::v2::Node> ListNodes(std::string const& parent,
@@ -154,8 +154,8 @@ class TpuClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tpu.v2.ListNodesRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L476}
-  /// [google.cloud.tpu.v2.Node]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L289}
+  /// [google.cloud.tpu.v2.ListNodesRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L833}
+  /// [google.cloud.tpu.v2.Node]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L358}
   ///
   // clang-format on
   StreamRange<google::cloud::tpu::v2::Node> ListNodes(
@@ -179,8 +179,8 @@ class TpuClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tpu.v2.GetNodeRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L503}
-  /// [google.cloud.tpu.v2.Node]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L289}
+  /// [google.cloud.tpu.v2.GetNodeRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L860}
+  /// [google.cloud.tpu.v2.Node]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L358}
   ///
   // clang-format on
   StatusOr<google::cloud::tpu::v2::Node> GetNode(std::string const& name,
@@ -209,8 +209,8 @@ class TpuClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tpu.v2.GetNodeRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L503}
-  /// [google.cloud.tpu.v2.Node]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L289}
+  /// [google.cloud.tpu.v2.GetNodeRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L860}
+  /// [google.cloud.tpu.v2.Node]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L358}
   ///
   // clang-format on
   StatusOr<google::cloud::tpu::v2::Node> GetNode(
@@ -243,8 +243,8 @@ class TpuClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tpu.v2.CreateNodeRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L512}
-  /// [google.cloud.tpu.v2.Node]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L289}
+  /// [google.cloud.tpu.v2.CreateNodeRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L869}
+  /// [google.cloud.tpu.v2.Node]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L358}
   ///
   // clang-format on
   future<StatusOr<google::cloud::tpu::v2::Node>> CreateNode(
@@ -297,8 +297,8 @@ class TpuClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tpu.v2.CreateNodeRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L512}
-  /// [google.cloud.tpu.v2.Node]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L289}
+  /// [google.cloud.tpu.v2.CreateNodeRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L869}
+  /// [google.cloud.tpu.v2.Node]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L358}
   ///
   // clang-format on
   future<StatusOr<google::cloud::tpu::v2::Node>> CreateNode(
@@ -357,8 +357,8 @@ class TpuClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tpu.v2.DeleteNodeRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L529}
-  /// [google.cloud.tpu.v2.OperationMetadata]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L720}
+  /// [google.cloud.tpu.v2.DeleteNodeRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L886}
+  /// [google.cloud.tpu.v2.OperationMetadata]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L1176}
   ///
   // clang-format on
   future<StatusOr<google::cloud::tpu::v2::OperationMetadata>> DeleteNode(
@@ -409,8 +409,8 @@ class TpuClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tpu.v2.DeleteNodeRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L529}
-  /// [google.cloud.tpu.v2.OperationMetadata]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L720}
+  /// [google.cloud.tpu.v2.DeleteNodeRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L886}
+  /// [google.cloud.tpu.v2.OperationMetadata]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L1176}
   ///
   // clang-format on
   future<StatusOr<google::cloud::tpu::v2::OperationMetadata>> DeleteNode(
@@ -474,8 +474,8 @@ class TpuClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tpu.v2.Node]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L289}
-  /// [google.cloud.tpu.v2.StopNodeRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L538}
+  /// [google.cloud.tpu.v2.Node]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L358}
+  /// [google.cloud.tpu.v2.StopNodeRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L895}
   ///
   // clang-format on
   future<StatusOr<google::cloud::tpu::v2::Node>> StopNode(
@@ -539,8 +539,8 @@ class TpuClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tpu.v2.Node]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L289}
-  /// [google.cloud.tpu.v2.StartNodeRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L547}
+  /// [google.cloud.tpu.v2.Node]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L358}
+  /// [google.cloud.tpu.v2.StartNodeRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L904}
   ///
   // clang-format on
   future<StatusOr<google::cloud::tpu::v2::Node>> StartNode(
@@ -602,8 +602,8 @@ class TpuClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tpu.v2.Node]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L289}
-  /// [google.cloud.tpu.v2.UpdateNodeRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L556}
+  /// [google.cloud.tpu.v2.Node]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L358}
+  /// [google.cloud.tpu.v2.UpdateNodeRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L913}
   ///
   // clang-format on
   future<StatusOr<google::cloud::tpu::v2::Node>> UpdateNode(
@@ -655,8 +655,8 @@ class TpuClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tpu.v2.Node]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L289}
-  /// [google.cloud.tpu.v2.UpdateNodeRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L556}
+  /// [google.cloud.tpu.v2.Node]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L358}
+  /// [google.cloud.tpu.v2.UpdateNodeRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L913}
   ///
   // clang-format on
   future<StatusOr<google::cloud::tpu::v2::Node>> UpdateNode(
@@ -692,6 +692,481 @@ class TpuClient {
 
   // clang-format off
   ///
+  /// Lists queued resources.
+  ///
+  /// @param parent  Required. The parent resource name.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.tpu.v2.QueuedResource], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.tpu.v2.ListQueuedResourcesRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L926}
+  /// [google.cloud.tpu.v2.QueuedResource]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L558}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::tpu::v2::QueuedResource> ListQueuedResources(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists queued resources.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.tpu.v2.ListQueuedResourcesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.tpu.v2.QueuedResource], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.tpu.v2.ListQueuedResourcesRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L926}
+  /// [google.cloud.tpu.v2.QueuedResource]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L558}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::tpu::v2::QueuedResource> ListQueuedResources(
+      google::cloud::tpu::v2::ListQueuedResourcesRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a queued resource.
+  ///
+  /// @param name  Required. The resource name.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.tpu.v2.QueuedResource])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.tpu.v2.GetQueuedResourceRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L957}
+  /// [google.cloud.tpu.v2.QueuedResource]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L558}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::tpu::v2::QueuedResource> GetQueuedResource(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets details of a queued resource.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.tpu.v2.GetQueuedResourceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.tpu.v2.QueuedResource])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.tpu.v2.GetQueuedResourceRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L957}
+  /// [google.cloud.tpu.v2.QueuedResource]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L558}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::tpu::v2::QueuedResource> GetQueuedResource(
+      google::cloud::tpu::v2::GetQueuedResourceRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a QueuedResource TPU instance.
+  ///
+  /// @param parent  Required. The parent resource name.
+  /// @param queued_resource  Required. The queued resource.
+  /// @param queued_resource_id  Optional. The unqualified resource name. Should follow the
+  ///  `^[A-Za-z0-9_.~+%-]+$` regex format.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.tpu.v2.QueuedResource] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.tpu.v2.CreateQueuedResourceRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L969}
+  /// [google.cloud.tpu.v2.QueuedResource]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L558}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::tpu::v2::QueuedResource>> CreateQueuedResource(
+      std::string const& parent,
+      google::cloud::tpu::v2::QueuedResource const& queued_resource,
+      std::string const& queued_resource_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateQueuedResource
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateQueuedResource(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::tpu::v2::QueuedResource const& queued_resource,
+      std::string const& queued_resource_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a QueuedResource TPU instance.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.tpu.v2.CreateQueuedResourceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.tpu.v2.QueuedResource] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.tpu.v2.CreateQueuedResourceRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L969}
+  /// [google.cloud.tpu.v2.QueuedResource]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L558}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::tpu::v2::QueuedResource>> CreateQueuedResource(
+      google::cloud::tpu::v2::CreateQueuedResourceRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateQueuedResource
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateQueuedResource(
+      NoAwaitTag,
+      google::cloud::tpu::v2::CreateQueuedResourceRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateQueuedResource
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::tpu::v2::QueuedResource>> CreateQueuedResource(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a QueuedResource TPU instance.
+  ///
+  /// @param name  Required. The resource name.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.tpu.v2.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.tpu.v2.DeleteQueuedResourceRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L991}
+  /// [google.cloud.tpu.v2.OperationMetadata]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L1176}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>
+  DeleteQueuedResource(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteQueuedResource
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteQueuedResource(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a QueuedResource TPU instance.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.tpu.v2.DeleteQueuedResourceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.tpu.v2.OperationMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.tpu.v2.DeleteQueuedResourceRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L991}
+  /// [google.cloud.tpu.v2.OperationMetadata]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L1176}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>
+  DeleteQueuedResource(
+      google::cloud::tpu::v2::DeleteQueuedResourceRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteQueuedResource
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteQueuedResource(
+      NoAwaitTag,
+      google::cloud::tpu::v2::DeleteQueuedResourceRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteQueuedResource
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>
+  DeleteQueuedResource(google::longrunning::Operation const& operation,
+                       Options opts = {});
+
+  // clang-format off
+  ///
+  /// Resets a QueuedResource TPU instance
+  ///
+  /// @param name  Required. The name of the queued resource.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.tpu.v2.QueuedResource] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.tpu.v2.QueuedResource]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L558}
+  /// [google.cloud.tpu.v2.ResetQueuedResourceRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L1013}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::tpu::v2::QueuedResource>> ResetQueuedResource(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief ResetQueuedResource
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> ResetQueuedResource(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Resets a QueuedResource TPU instance
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.tpu.v2.ResetQueuedResourceRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.tpu.v2.QueuedResource] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.tpu.v2.QueuedResource]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L558}
+  /// [google.cloud.tpu.v2.ResetQueuedResourceRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L1013}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::tpu::v2::QueuedResource>> ResetQueuedResource(
+      google::cloud::tpu::v2::ResetQueuedResourceRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief ResetQueuedResource
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> ResetQueuedResource(
+      NoAwaitTag,
+      google::cloud::tpu::v2::ResetQueuedResourceRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief ResetQueuedResource
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::tpu::v2::QueuedResource>> ResetQueuedResource(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
   /// Generates the Cloud TPU service identity for the project.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -713,8 +1188,8 @@ class TpuClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tpu.v2.GenerateServiceIdentityRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L575}
-  /// [google.cloud.tpu.v2.GenerateServiceIdentityResponse]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L587}
+  /// [google.cloud.tpu.v2.GenerateServiceIdentityRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L1031}
+  /// [google.cloud.tpu.v2.GenerateServiceIdentityResponse]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L1043}
   ///
   // clang-format on
   StatusOr<google::cloud::tpu::v2::GenerateServiceIdentityResponse>
@@ -749,8 +1224,8 @@ class TpuClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tpu.v2.AcceleratorType]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L593}
-  /// [google.cloud.tpu.v2.ListAcceleratorTypesRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L622}
+  /// [google.cloud.tpu.v2.AcceleratorType]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L1049}
+  /// [google.cloud.tpu.v2.ListAcceleratorTypesRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L1078}
   ///
   // clang-format on
   StreamRange<google::cloud::tpu::v2::AcceleratorType> ListAcceleratorTypes(
@@ -788,8 +1263,8 @@ class TpuClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tpu.v2.AcceleratorType]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L593}
-  /// [google.cloud.tpu.v2.ListAcceleratorTypesRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L622}
+  /// [google.cloud.tpu.v2.AcceleratorType]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L1049}
+  /// [google.cloud.tpu.v2.ListAcceleratorTypesRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L1078}
   ///
   // clang-format on
   StreamRange<google::cloud::tpu::v2::AcceleratorType> ListAcceleratorTypes(
@@ -814,8 +1289,8 @@ class TpuClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tpu.v2.AcceleratorType]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L593}
-  /// [google.cloud.tpu.v2.GetAcceleratorTypeRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L610}
+  /// [google.cloud.tpu.v2.AcceleratorType]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L1049}
+  /// [google.cloud.tpu.v2.GetAcceleratorTypeRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L1066}
   ///
   // clang-format on
   StatusOr<google::cloud::tpu::v2::AcceleratorType> GetAcceleratorType(
@@ -844,8 +1319,8 @@ class TpuClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tpu.v2.AcceleratorType]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L593}
-  /// [google.cloud.tpu.v2.GetAcceleratorTypeRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L610}
+  /// [google.cloud.tpu.v2.AcceleratorType]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L1049}
+  /// [google.cloud.tpu.v2.GetAcceleratorTypeRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L1066}
   ///
   // clang-format on
   StatusOr<google::cloud::tpu::v2::AcceleratorType> GetAcceleratorType(
@@ -879,8 +1354,8 @@ class TpuClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tpu.v2.ListRuntimeVersionsRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L684}
-  /// [google.cloud.tpu.v2.RuntimeVersion]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L658}
+  /// [google.cloud.tpu.v2.ListRuntimeVersionsRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L1140}
+  /// [google.cloud.tpu.v2.RuntimeVersion]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L1114}
   ///
   // clang-format on
   StreamRange<google::cloud::tpu::v2::RuntimeVersion> ListRuntimeVersions(
@@ -918,8 +1393,8 @@ class TpuClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tpu.v2.ListRuntimeVersionsRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L684}
-  /// [google.cloud.tpu.v2.RuntimeVersion]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L658}
+  /// [google.cloud.tpu.v2.ListRuntimeVersionsRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L1140}
+  /// [google.cloud.tpu.v2.RuntimeVersion]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L1114}
   ///
   // clang-format on
   StreamRange<google::cloud::tpu::v2::RuntimeVersion> ListRuntimeVersions(
@@ -944,8 +1419,8 @@ class TpuClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tpu.v2.GetRuntimeVersionRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L672}
-  /// [google.cloud.tpu.v2.RuntimeVersion]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L658}
+  /// [google.cloud.tpu.v2.GetRuntimeVersionRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L1128}
+  /// [google.cloud.tpu.v2.RuntimeVersion]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L1114}
   ///
   // clang-format on
   StatusOr<google::cloud::tpu::v2::RuntimeVersion> GetRuntimeVersion(
@@ -974,8 +1449,8 @@ class TpuClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tpu.v2.GetRuntimeVersionRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L672}
-  /// [google.cloud.tpu.v2.RuntimeVersion]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L658}
+  /// [google.cloud.tpu.v2.GetRuntimeVersionRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L1128}
+  /// [google.cloud.tpu.v2.RuntimeVersion]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L1114}
   ///
   // clang-format on
   StatusOr<google::cloud::tpu::v2::RuntimeVersion> GetRuntimeVersion(
@@ -1005,8 +1480,8 @@ class TpuClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.tpu.v2.GetGuestAttributesRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L786}
-  /// [google.cloud.tpu.v2.GetGuestAttributesResponse]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L803}
+  /// [google.cloud.tpu.v2.GetGuestAttributesRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L1242}
+  /// [google.cloud.tpu.v2.GetGuestAttributesResponse]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L1259}
   ///
   // clang-format on
   StatusOr<google::cloud::tpu::v2::GetGuestAttributesResponse>

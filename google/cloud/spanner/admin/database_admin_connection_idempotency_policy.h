@@ -105,6 +105,10 @@ class DatabaseAdminConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ListDatabaseRoles(
       google::spanner::admin::database::v1::ListDatabaseRolesRequest request);
 
+  virtual google::cloud::Idempotency AddSplitPoints(
+      google::spanner::admin::database::v1::AddSplitPointsRequest const&
+          request);
+
   virtual google::cloud::Idempotency CreateBackupSchedule(
       google::spanner::admin::database::v1::CreateBackupScheduleRequest const&
           request);

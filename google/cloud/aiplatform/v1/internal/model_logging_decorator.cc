@@ -100,6 +100,20 @@ ModelServiceLogging::ListModelVersions(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::aiplatform::v1::ListModelVersionCheckpointsResponse>
+ModelServiceLogging::ListModelVersionCheckpoints(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::ListModelVersionCheckpointsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::
+                 ListModelVersionCheckpointsRequest const& request) {
+        return child_->ListModelVersionCheckpoints(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::aiplatform::v1::Model> ModelServiceLogging::UpdateModel(
     grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::UpdateModelRequest const& request) {

@@ -37,7 +37,7 @@ set(GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
 )
 
 set(GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES # cmake-format: sort
-                                          "bigquerycontrol" "storage_grpc")
+                                          "storage_grpc")
 
 set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     # cmake-format: sort
@@ -60,6 +60,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "batch"
     "beyondcorp"
     "bigquery"
+    "bigquerycontrol"
     "bigtable"
     "billing"
     "binaryauthorization"
@@ -127,6 +128,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "osconfig"
     "oslogin"
     "parallelstore"
+    "parametermanager"
     "policysimulator"
     "policytroubleshooter"
     "privateca"

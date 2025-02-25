@@ -59,6 +59,21 @@ class TpuConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency UpdateNode(
       google::cloud::tpu::v2::UpdateNodeRequest const& request);
 
+  virtual google::cloud::Idempotency ListQueuedResources(
+      google::cloud::tpu::v2::ListQueuedResourcesRequest request);
+
+  virtual google::cloud::Idempotency GetQueuedResource(
+      google::cloud::tpu::v2::GetQueuedResourceRequest const& request);
+
+  virtual google::cloud::Idempotency CreateQueuedResource(
+      google::cloud::tpu::v2::CreateQueuedResourceRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteQueuedResource(
+      google::cloud::tpu::v2::DeleteQueuedResourceRequest const& request);
+
+  virtual google::cloud::Idempotency ResetQueuedResource(
+      google::cloud::tpu::v2::ResetQueuedResourceRequest const& request);
+
   virtual google::cloud::Idempotency GenerateServiceIdentity(
       google::cloud::tpu::v2::GenerateServiceIdentityRequest const& request);
 

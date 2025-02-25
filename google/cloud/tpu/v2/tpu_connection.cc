@@ -150,6 +150,83 @@ future<StatusOr<google::cloud::tpu::v2::Node>> TpuConnection::UpdateNode(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StreamRange<google::cloud::tpu::v2::QueuedResource>
+TpuConnection::ListQueuedResources(
+    google::cloud::tpu::v2::
+        ListQueuedResourcesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::tpu::v2::QueuedResource>>();
+}
+
+StatusOr<google::cloud::tpu::v2::QueuedResource>
+TpuConnection::GetQueuedResource(
+    google::cloud::tpu::v2::GetQueuedResourceRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::tpu::v2::QueuedResource>>
+TpuConnection::CreateQueuedResource(
+    google::cloud::tpu::v2::CreateQueuedResourceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::tpu::v2::QueuedResource>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> TpuConnection::CreateQueuedResource(
+    NoAwaitTag, google::cloud::tpu::v2::CreateQueuedResourceRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::tpu::v2::QueuedResource>>
+TpuConnection::CreateQueuedResource(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::tpu::v2::QueuedResource>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>
+TpuConnection::DeleteQueuedResource(
+    google::cloud::tpu::v2::DeleteQueuedResourceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::tpu::v2::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> TpuConnection::DeleteQueuedResource(
+    NoAwaitTag, google::cloud::tpu::v2::DeleteQueuedResourceRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>
+TpuConnection::DeleteQueuedResource(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::tpu::v2::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::tpu::v2::QueuedResource>>
+TpuConnection::ResetQueuedResource(
+    google::cloud::tpu::v2::ResetQueuedResourceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::tpu::v2::QueuedResource>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> TpuConnection::ResetQueuedResource(
+    NoAwaitTag, google::cloud::tpu::v2::ResetQueuedResourceRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::tpu::v2::QueuedResource>>
+TpuConnection::ResetQueuedResource(google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::tpu::v2::QueuedResource>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::tpu::v2::GenerateServiceIdentityResponse>
 TpuConnection::GenerateServiceIdentity(
     google::cloud::tpu::v2::GenerateServiceIdentityRequest const&) {
