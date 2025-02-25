@@ -30,7 +30,7 @@ namespace bigtable {
 namespace emulator {
 
 // Ensure that SetCell still works to set a cell that was not set
-// before.
+// before, when using the RowTransaction class.
 TEST(TransactonRollback, SetCellBasicFunction) {
   ::google::bigtable::admin::v2::Table schema;
   ::google::bigtable::admin::v2::ColumnFamily column_family;
@@ -60,8 +60,24 @@ TEST(TransactonRollback, SetCellBasicFunction) {
   ASSERT_STATUS_OK(status);
 
 
-  //  auto column_family_it = table->get()->find("test");
+  auto column_family_it = table->get()->find("test");
+  ASSERT_NE(column_family_it, table->get()->end());
 
+  auto cf = column_family_it->second;
+  auto column_family_row_it = cf->find(row_key);
+  ASSERT_NE(column_family_row_it, cf->end());
+
+  auto column_family_row = column_family_row_it->second;
+  auto column_row_it = column_family_row.find("test");
+  ASSERT_NE(column_row_it, column_family_row.end());
+
+  auto column_row = column_row_it->second;
+  auto timestamp_it = column_row.find(std::chrono::duration_cast<std::chrono::milliseconds>(
+          std::chrono::microseconds(1234)));
+  ASSERT_NE(timestamp_it, column_row.end());
+
+  auto value = timestamp_it->second;
+  ASSERT_EQ(value, "string");
 }
 
 }  // namespace emulator
