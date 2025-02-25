@@ -56,6 +56,12 @@ class Table {
 
   Status ReadRows(google::bigtable::v2::ReadRowsRequest const& request,
                   RowStreamer& row_streamer) const;
+  std::map<std::string, std::shared_ptr<ColumnFamily>>::iterator begin() {
+    return column_families_.begin();
+  }
+  std::map<std::string, std::shared_ptr<ColumnFamily>>::iterator end() {
+    return column_families_.end();
+  }
   std::map<std::string, std::shared_ptr<ColumnFamily>>::iterator find(std::string const &column_family) {
     return column_families_.find(column_family);
   }

@@ -58,6 +58,10 @@ TEST(TransactonRollback, SetCellBasicFunction) {
 
   auto status = table.value()->MutateRow(mutation_request);
   ASSERT_STATUS_OK(status);
+
+
+  //  auto column_family_it = table->get()->find("test");
+
 }
 
 }  // namespace emulator
