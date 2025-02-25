@@ -301,6 +301,10 @@ AsyncConnectionImpl::StartAppendableObjectUpload(AppendableUploadParams p) {
   auto retry = std::shared_ptr<storage::RetryPolicy>(retry_policy(*current));
   auto backoff =
       std::shared_ptr<storage::BackoffPolicy>(backoff_policy(*current));
+  using StreamingRpcTimeout =
+      google::cloud::internal::AsyncStreamingReadWriteRpcTimeout<
+          google::storage::v2::BidiWriteObjectRequest,
+          google::storage::v2::BidiWriteObjectResponse>;
   struct RequestPlaceholder {};
 
   using WriteResultFactory =
@@ -312,13 +316,19 @@ AsyncConnectionImpl::StartAppendableObjectUpload(AppendableUploadParams p) {
        backoff = std::move(backoff), current, function_name = __func__](
           google::storage::v2::BidiWriteObjectRequest req) {
         auto call = [stub, request = std::move(req)](
-                        CompletionQueue& cq_ref,
+                        CompletionQueue& cq,
                         std::shared_ptr<grpc::ClientContext> context,
                         google::cloud::internal::ImmutableOptions options,
                         RequestPlaceholder const&) mutable
             -> future<StatusOr<WriteObject::WriteResult>> {
-          auto rpc = stub->AsyncBidiWriteObject(cq_ref, std::move(context),
+          auto timeout = ScaleStallTimeout(
+              options->get<storage::TransferStallTimeoutOption>(),
+              options->get<storage::TransferStallMinimumRateOption>(),
+              google::storage::v2::ServiceConstants::MAX_WRITE_CHUNK_BYTES);
+          auto rpc = stub->AsyncBidiWriteObject(cq, std::move(context),
                                                 std::move(options));
+          rpc = std::make_unique<StreamingRpcTimeout>(cq, timeout, timeout,
+                                                      timeout, std::move(rpc));
           request.set_state_lookup(true);
           auto open = std::make_shared<WriteObject>(std::move(rpc), request);
           return open->Call().then([open, &request](auto f) {
