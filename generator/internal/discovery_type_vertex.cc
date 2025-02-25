@@ -495,9 +495,9 @@ StatusOr<int> DiscoveryTypeVertex::GetFieldNumber(
 
   auto qualified_type_name = [](google::protobuf::FieldDescriptor const& f) {
     if (f.type() == google::protobuf::FieldDescriptor::TYPE_MESSAGE) {
-      return f.message_type()->full_name();
+      return std::string{f.message_type()->full_name()};
     }
-    return std::string(f.type_name());
+    return std::string{f.type_name()};
   };
 
   // Keep the field number the same for existing fields.
