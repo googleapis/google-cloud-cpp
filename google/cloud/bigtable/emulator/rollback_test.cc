@@ -41,8 +41,10 @@ TEST(TransactonRollback, SetCellBasicFunction) {
   schema.set_name(table_name);
   (*schema.mutable_column_families())["test"] = column_family;
 
-  auto table = Table::Create(schema);
-  ASSERT_STATUS_OK(table);
+  auto maybe_table = Table::Create(schema);
+  ASSERT_STATUS_OK(maybe_table);
+
+  auto table = maybe_table.value();
 
   ::google::bigtable::v2::MutateRowRequest mutation_request;
   mutation_request.set_table_name(table_name);
@@ -56,12 +58,11 @@ TEST(TransactonRollback, SetCellBasicFunction) {
   set_cell_mutation->set_timestamp_micros(1234);
   set_cell_mutation->set_value("test");
 
-  auto status = table.value()->MutateRow(mutation_request);
+  auto status = table->MutateRow(mutation_request);
   ASSERT_STATUS_OK(status);
 
-
-  auto column_family_it = table->get()->find("test");
-  ASSERT_NE(column_family_it, table->get()->end());
+  auto column_family_it = table->find("test");
+  ASSERT_NE(column_family_it, table->end());
 
   auto cf = column_family_it->second;
   auto column_family_row_it = cf->find(row_key);
