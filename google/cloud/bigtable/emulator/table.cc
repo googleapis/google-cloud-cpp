@@ -221,7 +221,7 @@ Status Table::MutateRow(google::bigtable::v2::MutateRowRequest const& request) {
   std::lock_guard lock(mu_);
   assert(request.table_name() == schema_.name());
 
-  RowTransaction row_transaction(this, request);
+  RowTransaction row_transaction(this->get(), request);
 
   for (auto mutation : request.mutations()) {
     if (mutation.has_set_cell()) {

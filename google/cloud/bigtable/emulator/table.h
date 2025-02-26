@@ -36,7 +36,7 @@ namespace cloud {
 namespace bigtable {
 namespace emulator {
 
-class Table {
+class Table : public std::enable_shared_from_this<Table> {
  public:
   static StatusOr<std::shared_ptr<Table>> Create(
       google::bigtable::admin::v2::Table schema);
@@ -65,6 +65,8 @@ class Table {
   std::map<std::string, std::shared_ptr<ColumnFamily>>::iterator find(std::string const &column_family) {
     return column_families_.find(column_family);
   }
+
+  std::shared_ptr<Table> get() { return shared_from_this(); }
 
  private:
   Table() = default;
@@ -116,10 +118,10 @@ struct DeleteColumn {
 class RowTransaction {
  public:
   explicit RowTransaction(
-      Table const* table,
+      std::shared_ptr<Table> table,
       ::google::bigtable::v2::MutateRowRequest const& request)
       : request_(request) {
-    table_ = table;
+    table_ = std::move(table);
   };
 
   ~RowTransaction() {
@@ -148,7 +150,7 @@ class RowTransaction {
   void Undo();
 
   bool committed_;
-  Table const* table_;
+  std::shared_ptr<Table> table_;
   std::stack<absl::variant<DeleteValue, RestoreValue, DeleteRow, DeleteColumn>>
       undo_;
   ::google::bigtable::v2::MutateRowRequest const& request_;
