@@ -516,30 +516,15 @@ StatusOr<google::storage::v2::UpdateBucketRequest> ToProto(
   auto& bucket = *result.mutable_bucket();
   bucket.set_name(GrpcBucketIdToName(request.bucket()));
 
-  std::cout << __func__ << ": IsSubpatchLabelsDirty = "
-            << (request.patch().IsSubpatchLabelsDirty() ? "true" : "false")
-      << "\n";
-
   // The `labels` field is too special, handle separately.
   auto const& subpatch =
       storage::internal::PatchBuilderDetails::GetLabelsSubPatch(
           request.patch());
-  std::cout << __func__
-            << ": subpatch.empty()="
-            << (subpatch.empty() ? "true" : "false")
-            << ": subpatch.is_null()="
-            << (subpatch.is_null() ? "true" : "false")
-            << "\n";
-  std::cout << __func__ << ": subpatch =\n"
-            << subpatch.dump() << "\n";
 
-//  if (subpatch.is_null()) {
   if (subpatch.is_null() || subpatch.empty()) {
-    std::cout << __func__ << ": if subpatch.is_null()\n";
     bucket.clear_labels();
     result.mutable_update_mask()->add_paths("labels");
   } else {
-    std::cout << __func__ << ": else !subpatch.is_null()\n";
     // The semantics in gRPC are to replace any labels.
     for (auto const& kv : subpatch.items()) {
       result.mutable_update_mask()->add_paths("labels." + kv.key());

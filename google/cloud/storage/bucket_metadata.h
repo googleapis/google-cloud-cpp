@@ -707,8 +707,6 @@ class BucketMetadataPatchBuilder {
 
   std::string BuildPatch() const;
 
-  bool IsSubpatchLabelsDirty() const { return labels_subpatch_dirty_;}
-
   BucketMetadataPatchBuilder& SetAcl(std::vector<BucketAccessControl> const& v);
 
   /**

@@ -11,7 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-#if 0
+
 #include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/storage/internal/grpc/stub.h"
 #include "google/cloud/storage/testing/mock_storage_stub.h"
@@ -365,7 +365,8 @@ TEST_F(GrpcClientAclTest, CreateBucketAclSuccess) {
         expected.set_entity("test-new-entity");
         expected.set_role("test-new-role");
         EXPECT_THAT(request.bucket().acl(), Contains(IsProtoEqual(expected)));
-        EXPECT_THAT(request.update_mask().paths(), ElementsAre("acl"));
+        EXPECT_THAT(request.update_mask().paths(),
+                    ElementsAre("labels", "acl"));
 
         *response.mutable_acl() = request.bucket().acl();
         response.set_metageneration(response.metageneration() + 1);
@@ -429,7 +430,8 @@ TEST_F(GrpcClientAclTest, CreateBucketAclPatchFails) {
         expected.set_entity("test-new-entity");
         expected.set_role("test-new-role");
         EXPECT_THAT(request.bucket().acl(), Contains(IsProtoEqual(expected)));
-        EXPECT_THAT(request.update_mask().paths(), ElementsAre("acl"));
+        EXPECT_THAT(request.update_mask().paths(),
+                    ElementsAre("labels", "acl"));
         return Status(StatusCode::kFailedPrecondition, "conflict");
       });
 
@@ -531,7 +533,8 @@ TEST_F(GrpcClientAclTest, DeleteBucketAclPatchFails) {
         expected.set_role("test-role2");
         EXPECT_THAT(request.bucket().acl(),
                     ElementsAre(IsProtoEqual(expected)));
-        EXPECT_THAT(request.update_mask().paths(), ElementsAre("acl"));
+        EXPECT_THAT(request.update_mask().paths(),
+                    ElementsAre("labels", "acl"));
         return Status(StatusCode::kFailedPrecondition, "conflict");
       });
 
@@ -588,7 +591,8 @@ TEST_F(GrpcClientAclTest, UpdateBucketSuccess) {
         EXPECT_TRUE(TextFormat::ParseFromString(kBucketProtoText, &response));
         EXPECT_EQ(request.bucket().name(), "projects/_/buckets/test-bucket-id");
         EXPECT_EQ(request.if_metageneration_match(), response.metageneration());
-        EXPECT_THAT(request.update_mask().paths(), ElementsAre("acl"));
+        EXPECT_THAT(request.update_mask().paths(),
+                    ElementsAre("labels", "acl"));
         for (auto& a : *response.mutable_acl()) {
           if (a.entity() == "test-entity1") a.set_role("updated-role");
         }
@@ -644,7 +648,6 @@ TEST_F(GrpcClientAclTest, UpdateBucketAclFailure) {
 }
 
 TEST_F(GrpcClientAclTest, UpdateBucketAclPatchFails) {
-  std::cout << __func__ << "\n";
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .WillOnce([&](grpc::ClientContext&, Options const&,
@@ -658,13 +661,13 @@ TEST_F(GrpcClientAclTest, UpdateBucketAclPatchFails) {
   EXPECT_CALL(*mock, UpdateBucket)
       .WillOnce([](grpc::ClientContext&, Options const&,
                    v2::UpdateBucketRequest const& request) {
-        std::cout << request.DebugString() << "\n";
         EXPECT_EQ(request.bucket().name(), "projects/_/buckets/test-bucket-id");
         auto expected = v2::BucketAccessControl();
         expected.set_entity("test-entity1");
         expected.set_role("updated-role");
         EXPECT_THAT(request.bucket().acl(), Contains(IsProtoEqual(expected)));
-        EXPECT_THAT(request.update_mask().paths(), ElementsAre("acl"));
+        EXPECT_THAT(request.update_mask().paths(),
+                    ElementsAre("labels", "acl"));
         return Status(StatusCode::kFailedPrecondition, "conflict");
       });
 
@@ -698,7 +701,8 @@ TEST_F(GrpcClientAclTest, PatchBucketAclSuccess) {
         EXPECT_TRUE(TextFormat::ParseFromString(kBucketProtoText, &response));
         EXPECT_EQ(request.bucket().name(), "projects/_/buckets/test-bucket-id");
         EXPECT_EQ(request.if_metageneration_match(), response.metageneration());
-        EXPECT_THAT(request.update_mask().paths(), ElementsAre("acl"));
+        EXPECT_THAT(request.update_mask().paths(),
+                    ElementsAre("labels", "acl"));
         for (auto& a : *response.mutable_acl()) {
           if (a.entity() == "test-entity1") a.set_role("updated-role");
         }
@@ -774,7 +778,8 @@ TEST_F(GrpcClientAclTest, PatchBucketAclPatchFails) {
         expected.set_entity("test-entity1");
         expected.set_role("updated-role");
         EXPECT_THAT(request.bucket().acl(), Contains(IsProtoEqual(expected)));
-        EXPECT_THAT(request.update_mask().paths(), ElementsAre("acl"));
+        EXPECT_THAT(request.update_mask().paths(),
+                    ElementsAre("labels", "acl"));
         return Status(StatusCode::kFailedPrecondition, "conflict");
       });
 
@@ -969,7 +974,8 @@ TEST_F(GrpcClientAclTest, CreateObjectAclSuccess) {
         expected.set_entity("test-new-entity");
         expected.set_role("test-new-role");
         EXPECT_THAT(request.object().acl(), Contains(IsProtoEqual(expected)));
-        EXPECT_THAT(request.update_mask().paths(), ElementsAre("acl"));
+        EXPECT_THAT(request.update_mask().paths(),
+                    ElementsAre("acl", "metadata"));
 
         *response.mutable_acl() = request.object().acl();
         response.set_metageneration(response.metageneration() + 1);
@@ -1036,7 +1042,8 @@ TEST_F(GrpcClientAclTest, CreateObjectAclPatchFails) {
         expected.set_entity("test-new-entity");
         expected.set_role("test-new-role");
         EXPECT_THAT(request.object().acl(), Contains(IsProtoEqual(expected)));
-        EXPECT_THAT(request.update_mask().paths(), ElementsAre("acl"));
+        EXPECT_THAT(request.update_mask().paths(),
+                    ElementsAre("acl", "metadata"));
         return Status(StatusCode::kFailedPrecondition, "conflict");
       });
 
@@ -1072,7 +1079,8 @@ TEST_F(GrpcClientAclTest, DeleteObjectAclSuccess) {
         EXPECT_EQ(request.object().bucket(),
                   "projects/_/buckets/test-bucket-id");
         EXPECT_EQ(request.object().name(), "test-object-id");
-        EXPECT_THAT(request.update_mask().paths(), ElementsAre("acl"));
+        EXPECT_THAT(request.update_mask().paths(),
+                    ElementsAre("acl", "metadata"));
         *response.mutable_acl() = request.object().acl();
         response.set_metageneration(response.metageneration());
         return response;
@@ -1143,7 +1151,8 @@ TEST_F(GrpcClientAclTest, DeleteObjectAclPatchFails) {
         expected.set_role("test-role2");
         EXPECT_THAT(request.object().acl(),
                     ElementsAre(IsProtoEqual(expected)));
-        EXPECT_THAT(request.update_mask().paths(), ElementsAre("acl"));
+        EXPECT_THAT(request.update_mask().paths(),
+                    ElementsAre("acl", "metadata"));
         return Status(StatusCode::kFailedPrecondition, "conflict");
       });
 
@@ -1201,7 +1210,8 @@ TEST_F(GrpcClientAclTest, UpdateObjectAclSuccess) {
         EXPECT_EQ(request.object().bucket(),
                   "projects/_/buckets/test-bucket-id");
         EXPECT_EQ(request.object().name(), "test-object-id");
-        EXPECT_THAT(request.update_mask().paths(), ElementsAre("acl"));
+        EXPECT_THAT(request.update_mask().paths(),
+                    ElementsAre("acl", "metadata"));
         for (auto& a : *response.mutable_acl()) {
           if (a.entity() == "test-entity1") a.set_role("updated-role");
         }
@@ -1277,7 +1287,8 @@ TEST_F(GrpcClientAclTest, UpdateObjectAclPatchFails) {
         expected.set_entity("test-entity1");
         expected.set_role("updated-role");
         EXPECT_THAT(request.object().acl(), Contains(IsProtoEqual(expected)));
-        EXPECT_THAT(request.update_mask().paths(), ElementsAre("acl"));
+        EXPECT_THAT(request.update_mask().paths(),
+                    ElementsAre("acl", "metadata"));
         return Status(StatusCode::kFailedPrecondition, "conflict");
       });
 
@@ -1312,7 +1323,8 @@ TEST_F(GrpcClientAclTest, PatchObjectAclSuccess) {
         EXPECT_EQ(request.object().bucket(),
                   "projects/_/buckets/test-bucket-id");
         EXPECT_EQ(request.object().name(), "test-object-id");
-        EXPECT_THAT(request.update_mask().paths(), ElementsAre("acl"));
+        EXPECT_THAT(request.update_mask().paths(),
+                    ElementsAre("acl", "metadata"));
         for (auto& a : *response.mutable_acl()) {
           if (a.entity() == "test-entity1") a.set_role("updated-role");
         }
@@ -1391,7 +1403,8 @@ TEST_F(GrpcClientAclTest, PatchObjectAclPatchFails) {
         expected.set_entity("test-entity1");
         expected.set_role("updated-role");
         EXPECT_THAT(request.object().acl(), Contains(IsProtoEqual(expected)));
-        EXPECT_THAT(request.update_mask().paths(), ElementsAre("acl"));
+        EXPECT_THAT(request.update_mask().paths(),
+                    ElementsAre("acl", "metadata"));
         return Status(StatusCode::kFailedPrecondition, "conflict");
       });
 
@@ -1572,7 +1585,7 @@ TEST_F(GrpcClientAclTest, CreateDefaultObjectAclSuccess) {
         EXPECT_EQ(request.bucket().name(), "projects/_/buckets/test-bucket-id");
         EXPECT_EQ(request.if_metageneration_match(), response.metageneration());
         EXPECT_THAT(request.update_mask().paths(),
-                    ElementsAre("default_object_acl"));
+                    ElementsAre("labels", "default_object_acl"));
         *response.mutable_default_object_acl() =
             request.bucket().default_object_acl();
         response.set_metageneration(response.metageneration() + 1);
@@ -1638,7 +1651,7 @@ TEST_F(GrpcClientAclTest, CreateDefaultObjectAclPatchFails) {
         EXPECT_THAT(request.bucket().default_object_acl(),
                     Contains(IsProtoEqual(expected)));
         EXPECT_THAT(request.update_mask().paths(),
-                    ElementsAre("default_object_acl"));
+                    ElementsAre("labels", "default_object_acl"));
         return Status(StatusCode::kFailedPrecondition, "conflict");
       });
 
@@ -1673,7 +1686,7 @@ TEST_F(GrpcClientAclTest, DeleteDefaultObjectAclSuccess) {
         EXPECT_EQ(request.bucket().name(), "projects/_/buckets/test-bucket-id");
         EXPECT_EQ(request.if_metageneration_match(), response.metageneration());
         EXPECT_THAT(request.update_mask().paths(),
-                    ElementsAre("default_object_acl"));
+                    ElementsAre("labels", "default_object_acl"));
         *response.mutable_default_object_acl() =
             request.bucket().default_object_acl();
         response.set_metageneration(response.metageneration() + 1);
@@ -1742,7 +1755,7 @@ TEST_F(GrpcClientAclTest, DeleteDefaultObjectAclPatchFails) {
         EXPECT_THAT(request.bucket().default_object_acl(),
                     ElementsAre(IsProtoEqual(expected)));
         EXPECT_THAT(request.update_mask().paths(),
-                    ElementsAre("default_object_acl"));
+                    ElementsAre("labels", "default_object_acl"));
         return Status(StatusCode::kFailedPrecondition, "conflict");
       });
 
@@ -1800,7 +1813,7 @@ TEST_F(GrpcClientAclTest, UpdateDefaultObjectAclSuccess) {
         EXPECT_EQ(request.bucket().name(), "projects/_/buckets/test-bucket-id");
         EXPECT_EQ(request.if_metageneration_match(), response.metageneration());
         EXPECT_THAT(request.update_mask().paths(),
-                    ElementsAre("default_object_acl"));
+                    ElementsAre("labels", "default_object_acl"));
         for (auto& a : *response.mutable_default_object_acl()) {
           if (a.entity() == "test-entity3") a.set_role("updated-role");
         }
@@ -1873,7 +1886,7 @@ TEST_F(GrpcClientAclTest, UpdateDefaultObjectAclPatchFails) {
         EXPECT_THAT(request.bucket().default_object_acl(),
                     Contains(IsProtoEqual(expected)));
         EXPECT_THAT(request.update_mask().paths(),
-                    ElementsAre("default_object_acl"));
+                    ElementsAre("labels", "default_object_acl"));
         return Status(StatusCode::kFailedPrecondition, "conflict");
       });
 
@@ -1908,7 +1921,7 @@ TEST_F(GrpcClientAclTest, PatchDefaultObjectAclSuccess) {
         EXPECT_EQ(request.bucket().name(), "projects/_/buckets/test-bucket-id");
         EXPECT_EQ(request.if_metageneration_match(), response.metageneration());
         EXPECT_THAT(request.update_mask().paths(),
-                    ElementsAre("default_object_acl"));
+                    ElementsAre("labels", "default_object_acl"));
         for (auto& a : *response.mutable_default_object_acl()) {
           if (a.entity() == "test-entity3") a.set_role("updated-role");
         }
@@ -1986,7 +1999,7 @@ TEST_F(GrpcClientAclTest, PatchDefaultObjectAclPatchFails) {
         EXPECT_THAT(request.bucket().default_object_acl(),
                     Contains(IsProtoEqual(expected)));
         EXPECT_THAT(request.update_mask().paths(),
-                    ElementsAre("default_object_acl"));
+                    ElementsAre("labels", "default_object_acl"));
         return Status(StatusCode::kFailedPrecondition, "conflict");
       });
 
@@ -2006,4 +2019,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
-#endif
