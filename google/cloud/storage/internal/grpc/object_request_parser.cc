@@ -444,7 +444,7 @@ StatusOr<google::storage::v2::UpdateObjectRequest> ToProto(
   auto const& subpatch =
       storage::internal::PatchBuilderDetails::GetMetadataSubPatch(
           request.patch());
-  if (subpatch.is_null()) {
+  if (subpatch.is_null() || subpatch.empty()) {
     object.clear_metadata();
     result.mutable_update_mask()->add_paths("metadata");
   } else {
