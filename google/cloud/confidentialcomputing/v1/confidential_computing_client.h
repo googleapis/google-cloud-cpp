@@ -175,7 +175,7 @@ class ConfidentialComputingClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.confidentialcomputing.v1.VerifyAttestationRequest]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L138}
-  /// [google.cloud.confidentialcomputing.v1.VerifyAttestationResponse]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L214}
+  /// [google.cloud.confidentialcomputing.v1.VerifyAttestationResponse]: @googleapis_reference_link{google/cloud/confidentialcomputing/v1/service.proto#L218}
   ///
   // clang-format on
   StatusOr<google::cloud::confidentialcomputing::v1::VerifyAttestationResponse>

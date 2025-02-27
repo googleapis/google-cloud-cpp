@@ -52,7 +52,7 @@ done
 rm -f "${DOWNLOAD}"
 
 banner "Updating Cache for Bazel"
-bazel/deps-cache.py -p
+#bazel/deps-cache.py -p
 
 banner "Updating Bazel/CMake dependencies"
 sed -i -f - bazel/workspace0.bzl <<EOT
