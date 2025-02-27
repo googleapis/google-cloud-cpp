@@ -422,7 +422,7 @@ Status RowTransaction::SetCell(
     return maybe_column_family.status();
   }
 
-  auto column_family = maybe_column_family->get();
+  auto &column_family = maybe_column_family->get();
 
   bool row_existed = true;
   // First if the key introduces a new ColumnFamilyRow, we need to
