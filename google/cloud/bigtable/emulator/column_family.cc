@@ -97,12 +97,12 @@ class FilteredColumnFamilyStream::FilterApply {
   FilterApply(FilteredColumnFamilyStream& parent) : parent_(parent) {}
 
   bool operator()(ColumnRange const& column_range) {
-    parent_.column_ranges_.Sum(column_range.range);
+    parent_.column_ranges_.Intersect(column_range.range);
     return true;
   }
 
   bool operator()(TimestampRange const& timestamp_range) {
-    parent_.timestamp_ranges_.Sum(timestamp_range.range);
+    parent_.timestamp_ranges_.Intersect(timestamp_range.range);
     return true;
   }
 
