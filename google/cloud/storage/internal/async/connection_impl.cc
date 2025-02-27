@@ -325,6 +325,7 @@ AsyncConnectionImpl::StartAppendableObjectUpload(AppendableUploadParams p) {
               options->get<storage::TransferStallTimeoutOption>(),
               options->get<storage::TransferStallMinimumRateOption>(),
               google::storage::v2::ServiceConstants::MAX_WRITE_CHUNK_BYTES);
+          ApplyRoutingHeaders(*context, request.write_object_spec());
           auto rpc = stub->AsyncBidiWriteObject(cq, std::move(context),
                                                 std::move(options));
           rpc = std::make_unique<StreamingRpcTimeout>(cq, timeout, timeout,
