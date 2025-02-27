@@ -78,7 +78,7 @@ TEST(TransactonRollback, SetCellBasicFunction) {
   ASSERT_NE(timestamp_it, column_row.end());
 
   auto value = timestamp_it->second;
-  ASSERT_EQ(value, "string");
+  ASSERT_EQ(value, "test");
 }
 
 }  // namespace emulator

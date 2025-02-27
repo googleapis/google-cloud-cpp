@@ -122,6 +122,7 @@ class RowTransaction {
       ::google::bigtable::v2::MutateRowRequest const& request)
       : request_(request) {
     table_ = std::move(table);
+    committed_ = false;
   };
 
   ~RowTransaction() {
