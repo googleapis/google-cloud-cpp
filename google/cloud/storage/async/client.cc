@@ -145,6 +145,33 @@ AsyncClient::StartAppendableObjectUpload(
 }
 
 future<StatusOr<std::pair<AsyncWriter, AsyncToken>>>
+AsyncClient::ResumeAppendableObjectUpload(BucketName const& bucket_name,
+                                          std::string object_name,
+                                          std::int64_t generation,
+                                          Options opts) {
+  auto request = google::storage::v2::BidiWriteObjectRequest{};
+  auto& append_object_spec = *request.mutable_append_object_spec();
+
+  append_object_spec.set_bucket(BucketName(bucket_name).FullName());
+  append_object_spec.set_object(std::move(object_name));
+  append_object_spec.set_generation(std::move(generation));
+
+  return connection_
+      ->ResumeAppendableObjectUpload(
+          {std::move(request),
+           internal::MergeOptions(std::move(opts), connection_->options())})
+      .then([](auto f) -> StatusOr<std::pair<AsyncWriter, AsyncToken>> {
+        auto w = f.get();
+        if (!w) return std::move(w).status();
+        auto t = absl::holds_alternative<google::storage::v2::Object>(
+                     (*w)->PersistedState())
+                     ? AsyncToken()
+                     : storage_internal::MakeAsyncToken(w->get());
+        return std::make_pair(AsyncWriter(*std::move(w)), std::move(t));
+      });
+}
+
+future<StatusOr<std::pair<AsyncWriter, AsyncToken>>>
 AsyncClient::StartBufferedUpload(BucketName const& bucket_name,
                                  std::string object_name, Options opts) {
   auto request = google::storage::v2::StartResumableWriteRequest{};

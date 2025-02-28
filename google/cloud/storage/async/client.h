@@ -426,6 +426,23 @@ class AsyncClient {
   StartAppendableObjectUpload(
       google::storage::v2::BidiWriteObjectRequest request, Options opts = {});
 
+  /**
+   * Resume a resumable upload session for appendable objects and automatic
+   * recovery from transient failures.
+   *
+   * @snippet{doc} async/client.h resume-appendable-object-upload
+   *
+   * @param bucket_name the name of the bucket that contains the object.
+   * @param object_name the name of the object to be uploaded.
+   * @param generation the object generation to be uploaded.
+   * @param opts options controlling the behaviour of this RPC, for example the
+   * application may change the retry policy.
+   */
+  future<StatusOr<std::pair<AsyncWriter, AsyncToken>>>
+  ResumeAppendableObjectUpload(BucketName const& bucket_name,
+                               std::string object_name, std::int64_t generation,
+                               Options opts = {});
+
   /*
   [start-buffered-upload-common]
   This function always uses [resumable uploads][resumable-link]. The objects

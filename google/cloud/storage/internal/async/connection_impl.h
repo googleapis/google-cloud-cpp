@@ -74,6 +74,9 @@ class AsyncConnectionImpl
   StartAppendableObjectUpload(AppendableUploadParams p) override;
 
   future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  ResumeAppendableObjectUpload(AppendableUploadParams p) override;
+
+  future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
   StartUnbufferedUpload(UploadParams p) override;
 
   future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
@@ -136,6 +139,9 @@ class AsyncConnectionImpl
       google::storage::v2::BidiWriteObjectRequest request,
       std::shared_ptr<storage::internal::HashFunction> hash_function,
       std::int64_t persisted_size);
+
+  future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  AppendableObjectUploadImpl(AppendableUploadParams p, bool takeover = false);
 
   CompletionQueue cq_;
   std::shared_ptr<GrpcChannelRefresh> refresh_;
