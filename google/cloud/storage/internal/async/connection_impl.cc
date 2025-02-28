@@ -349,7 +349,8 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p,
                                                       timeout, std::move(rpc));
           request.set_state_lookup(true);
           auto open = std::make_shared<WriteObject>(std::move(rpc), request);
-          return open->Call().then([open, &request](auto f) {
+          return open->Call().then([open, &request](auto f) mutable {
+            open.reset();
             auto response = f.get();
             if (!response) {
               EnsureFirstMessageAppendObjectSpec(request);
