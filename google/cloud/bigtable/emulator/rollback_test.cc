@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/bigtable/emulator/column_family.h"
 #include "google/cloud/bigtable/emulator/table.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/status.h"
@@ -28,11 +29,24 @@
 #include <chrono>
 #include <cstdint>
 #include <memory>
+#include <vector>
 
 namespace google {
 namespace cloud {
 namespace bigtable {
 namespace emulator {
+
+StatusOr<std::shared_ptr<Table>> create_table(
+    std::string const& table_name, std::vector<std::string>& column_families) {
+  ::google::bigtable::admin::v2::Table schema;
+  schema.set_name(table_name);
+  for (auto& column_family_name : column_families) {
+    (*schema.mutable_column_families())[column_family_name] =
+        ::google::bigtable::admin::v2::ColumnFamily();
+  }
+
+  return Table::Create(schema);
+}
 
 Status set_cell(
     std::shared_ptr<google::cloud::bigtable::emulator::Table>& table,
@@ -115,10 +129,9 @@ TEST(TransactonRollback, SetCellBasicFunction) {
   auto const timestamp_micros = 1234;
   auto const* data = "test";
 
-  schema.set_name(table_name);
-  (*schema.mutable_column_families())[column_family_name] = column_family;
+  std::vector<std::string> column_families = {column_family_name};
+  auto maybe_table = create_table(table_name, column_families);
 
-  auto maybe_table = Table::Create(schema);
   ASSERT_STATUS_OK(maybe_table);
 
   auto table = maybe_table.value();
