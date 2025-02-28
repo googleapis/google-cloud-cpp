@@ -14,6 +14,8 @@
 
 #include "google/cloud/bigtable/emulator/table.h"
 #include "google/cloud/bigtable/table.h"
+#include "google/cloud/status.h"
+#include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 #include <google/bigtable/admin/v2/bigtable_table_admin.pb.h>
@@ -21,7 +23,10 @@
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <google/bigtable/v2/bigtable.pb.h>
 #include <google/bigtable/v2/data.pb.h>
+#include <absl/strings/str_format.h>
 #include <gtest/gtest.h>
+#include <chrono>
+#include <cstdint>
 #include <memory>
 
 namespace google {
@@ -29,17 +34,70 @@ namespace cloud {
 namespace bigtable {
 namespace emulator {
 
+Status has_cell(
+    std::shared_ptr<google::cloud::bigtable::emulator::Table>& table,
+    std::string const& column_family, std::string const& row_key,
+    std::string const& column_qualifier,
+    int64_t timestamp_micros, std::string const& value) {
+  auto column_family_it = table->find(column_family);
+  if (column_family_it == table->end()) {
+    return Status(
+        StatusCode::kNotFound,
+        absl::StrFormat("column family %s not found in table", column_family),
+        ErrorInfo());
+  }
+
+  auto const& cf = column_family_it->second;
+  auto column_family_row_it = cf->find(row_key);
+  if (column_family_row_it == cf->end()) {
+    return Status(StatusCode::kNotFound,
+                  absl::StrFormat("no row key %s found in column famiily %s",
+                                  row_key, column_family),
+                  ErrorInfo());
+  }
+
+  auto& column_family_row = column_family_row_it->second;
+  auto column_row_it = column_family_row.find(column_qualifier);
+  if (column_row_it == column_family_row.end()) {
+    return Status(
+        StatusCode::kNotFound,
+        absl::StrFormat("no column found with qualifer %s", column_qualifier),
+        ErrorInfo());
+  }
+
+  auto& column_row = column_row_it->second;
+  auto timestamp_it =
+      column_row.find(std::chrono::duration_cast<std::chrono::milliseconds>(
+          std::chrono::microseconds(timestamp_micros)));
+  if (timestamp_it == column_row.end()) {
+    return Status(StatusCode::kNotFound, "timestamp not found", ErrorInfo());
+  }
+
+  if (timestamp_it->second != value) {
+    return Status(StatusCode::kNotFound,
+                  absl::StrFormat("wrong value: expected %s, found %s", value,
+                                  timestamp_it->second),
+                  ErrorInfo());
+  }
+
+  return Status(StatusCode::kOk, "", ErrorInfo());
+}
+
 // Ensure that SetCell still works to set a cell that was not set
 // before, when using the RowTransaction class.
 TEST(TransactonRollback, SetCellBasicFunction) {
   ::google::bigtable::admin::v2::Table schema;
   ::google::bigtable::admin::v2::ColumnFamily column_family;
 
-  const auto *const table_name = "projects/test/instances/test/tables/test";
-  const auto *const row_key = "0";
+  auto const* const table_name = "projects/test/instances/test/tables/test";
+  auto const* const row_key = "0";
+  auto const* const column_family_name = "test";
+  auto const* const column_qualifer = "test";
+  auto const timestamp_micros = 1234;
+  auto const* data = "test";
 
   schema.set_name(table_name);
-  (*schema.mutable_column_families())["test"] = column_family;
+  (*schema.mutable_column_families())[column_family_name] = column_family;
 
   auto maybe_table = Table::Create(schema);
   ASSERT_STATUS_OK(maybe_table);
@@ -50,35 +108,23 @@ TEST(TransactonRollback, SetCellBasicFunction) {
   mutation_request.set_table_name(table_name);
   mutation_request.set_row_key(row_key);
 
-
-  auto *mutation_request_mutation = mutation_request.add_mutations();
-  auto *set_cell_mutation = mutation_request_mutation->mutable_set_cell();
-  set_cell_mutation->set_family_name("test");
-  set_cell_mutation->set_column_qualifier("test");
-  set_cell_mutation->set_timestamp_micros(1234);
+  auto* mutation_request_mutation = mutation_request.add_mutations();
+  auto* set_cell_mutation = mutation_request_mutation->mutable_set_cell();
+  set_cell_mutation->set_family_name(column_family_name);
+  set_cell_mutation->set_column_qualifier(column_qualifer);
+  set_cell_mutation->set_timestamp_micros(timestamp_micros);
   set_cell_mutation->set_value("test");
 
   auto status = table->MutateRow(mutation_request);
   ASSERT_STATUS_OK(status);
 
-  auto column_family_it = table->find("test");
-  ASSERT_NE(column_family_it, table->end());
-
-  const auto& cf = column_family_it->second;
-  auto column_family_row_it = cf->find(row_key);
-  ASSERT_NE(column_family_row_it, cf->end());
-
-  auto &column_family_row = column_family_row_it->second;
-  auto column_row_it = column_family_row.find("test");
-  ASSERT_NE(column_row_it, column_family_row.end());
-
-  auto &column_row = column_row_it->second;
-  auto timestamp_it = column_row.find(std::chrono::duration_cast<std::chrono::milliseconds>(
-          std::chrono::microseconds(1234)));
-  ASSERT_NE(timestamp_it, column_row.end());
-
-  auto value = timestamp_it->second;
-  ASSERT_EQ(value, "test");
+  ASSERT_STATUS_OK(has_cell(
+      table,
+      column_family_name,
+      row_key,
+      column_qualifer,
+      timestamp_micros,
+      data));
 }
 
 }  // namespace emulator
