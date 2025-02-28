@@ -493,14 +493,14 @@ void RowTransaction::Undo() {
     undo_.pop();
 
     if (auto* restore_value = absl::get_if<RestoreValue>(&op)) {
-      auto column_row = restore_value->column_row_it_->second;
+      auto& column_row = restore_value->column_row_it_->second;
       column_row.find(restore_value->timestamp_)->second =
           std::move(restore_value->value_);
       continue;
     }
 
     if (auto* delete_value = absl::get_if<DeleteValue>(&op)) {
-      auto column_row = delete_value->column_row_it_->second;
+      auto& column_row = delete_value->column_row_it_->second;
       auto timestamp_it = column_row.find(delete_value->timestamp_);
       column_row.erase(timestamp_it);
       continue;

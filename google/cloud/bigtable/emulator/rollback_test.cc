@@ -64,7 +64,7 @@ TEST(TransactonRollback, SetCellBasicFunction) {
   auto column_family_it = table->find("test");
   ASSERT_NE(column_family_it, table->end());
 
-  auto cf = column_family_it->second;
+  const auto& cf = column_family_it->second;
   auto column_family_row_it = cf->find(row_key);
   ASSERT_NE(column_family_row_it, cf->end());
 
@@ -72,7 +72,7 @@ TEST(TransactonRollback, SetCellBasicFunction) {
   auto column_row_it = column_family_row.find("test");
   ASSERT_NE(column_row_it, column_family_row.end());
 
-  auto column_row = column_row_it->second;
+  auto &column_row = column_row_it->second;
   auto timestamp_it = column_row.find(std::chrono::duration_cast<std::chrono::milliseconds>(
           std::chrono::microseconds(1234)));
   ASSERT_NE(timestamp_it, column_row.end());

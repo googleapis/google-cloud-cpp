@@ -32,6 +32,11 @@ namespace emulator {
 
 class ColumnRow {
  public:
+  ColumnRow() = default;
+  // Disable copying.
+  ColumnRow(ColumnRow const &) = delete;
+  ColumnRow& operator=(ColumnRow const &) = delete;
+
   void SetCell(std::chrono::milliseconds timestamp, std::string const& value);
   std::size_t DeleteTimeRange(
       ::google::bigtable::v2::TimestampRange const& time_range);
