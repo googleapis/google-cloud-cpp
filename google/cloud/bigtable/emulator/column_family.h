@@ -64,6 +64,11 @@ class ColumnRow {
 
 class ColumnFamilyRow {
  public:
+  ColumnFamilyRow() = default;
+  // Disable copying.
+  ColumnFamilyRow(ColumnFamilyRow const &) = delete;
+  ColumnFamilyRow& operator=(ColumnFamilyRow const &) = delete;
+
   void SetCell(std::string const& column_qualifier,
                std::chrono::milliseconds timestamp, std::string const& value);
   std::size_t DeleteColumn(

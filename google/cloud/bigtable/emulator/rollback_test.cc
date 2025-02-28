@@ -68,7 +68,7 @@ TEST(TransactonRollback, SetCellBasicFunction) {
   auto column_family_row_it = cf->find(row_key);
   ASSERT_NE(column_family_row_it, cf->end());
 
-  auto column_family_row = column_family_row_it->second;
+  auto &column_family_row = column_family_row_it->second;
   auto column_row_it = column_family_row.find("test");
   ASSERT_NE(column_row_it, column_family_row.end());
 

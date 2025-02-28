@@ -422,37 +422,31 @@ Status RowTransaction::SetCell(
     return maybe_column_family.status();
   }
 
-  auto &column_family = maybe_column_family->get();
+  auto& column_family = maybe_column_family->get();
 
   bool row_existed = true;
-  // First if the key introduces a new ColumnFamilyRow, we need to
-  // arrange for the entire ColumnFamilyrow to go when we revert
-  // the transaction.
+  bool column_existed = true;
+  bool cell_existed = true;
+
   auto row_key_it = column_family.find(request_.row_key());
+
   if (row_key_it == column_family.end()) {
     row_existed = false;
-  }
-
-  ::google::cloud::bigtable::emulator::ColumnFamilyRow column_family_row;
-  if (row_existed) {
-    column_family_row = row_key_it->second;
-  }
-
-  bool column_existed = true;
-  auto column_row_it = column_family_row.find(set_cell.column_qualifier());
-  if (!row_existed || column_row_it == column_family_row.end()) {
     column_existed = false;
-  }
-
-  bool cell_existed = true;
-  if (!row_existed || !column_existed) {
     cell_existed = false;
   } else {
-    auto timestamp_it = column_row_it->second.find(
-        std::chrono::duration_cast<std::chrono::milliseconds>(
-            std::chrono::microseconds(set_cell.timestamp_micros())));
-    if (timestamp_it == column_row_it->second.end()) {
+    auto& column_family_row = row_key_it->second;
+    auto column_row_it = column_family_row.find(set_cell.column_qualifier());
+    if (column_row_it == column_family_row.end()) {
+      column_existed = false;
       cell_existed = false;
+    } else {
+      auto timestamp_it = column_row_it->second.find(
+          std::chrono::duration_cast<std::chrono::milliseconds>(
+              std::chrono::microseconds(set_cell.timestamp_micros())));
+      if (timestamp_it == column_row_it->second.end()) {
+        cell_existed = false;
+      }
     }
   }
 
@@ -465,12 +459,11 @@ Status RowTransaction::SetCell(
   // If we have added a row, a column or a cell, we need to recompute
   // these iterators.
   row_key_it = column_family.find(request_.row_key());
-  column_family_row = row_key_it->second;
-  column_row_it = column_family_row.find(set_cell.column_qualifier());
+  auto& column_family_row = row_key_it->second;
+  auto column_row_it = column_family_row.find(set_cell.column_qualifier());
   auto timestamp_it = column_row_it->second.find(
       std::chrono::duration_cast<std::chrono::milliseconds>(
           std::chrono::microseconds(set_cell.timestamp_micros())));
-
 
   if (!row_existed) {
     DeleteRow delete_row = {row_key_it, column_family};
