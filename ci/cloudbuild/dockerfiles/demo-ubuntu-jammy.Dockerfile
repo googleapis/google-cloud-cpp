@@ -40,6 +40,7 @@ RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250127.0.tar.gz | 
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
+      -DCMAKE_CXX_STANDARD=17 \
       -DABSL_BUILD_TESTING=OFF \
       -DABSL_PROPAGATE_CXX_STD=ON \
       -DBUILD_SHARED_LIBS=yes \
@@ -60,6 +61,7 @@ RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v30.0-rc2.tar
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_CXX_STANDARD=17 \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
         -Dprotobuf_ABSL_PROVIDER=package \
@@ -80,6 +82,7 @@ RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.71.0-pre2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_CXX_STANDARD=17 \
         -DBUILD_SHARED_LIBS=yes \
         -DgRPC_INSTALL=ON \
         -DgRPC_BUILD_TESTS=OFF \
@@ -150,6 +153,7 @@ RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.19
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_CXX_STANDARD=17 \
         -DBUILD_SHARED_LIBS=yes \
         -DWITH_EXAMPLES=OFF \
         -DWITH_ABSEIL=ON \
