@@ -51,6 +51,10 @@ class MockAsyncConnection : public storage_experimental::AsyncConnection {
   MOCK_METHOD(
       future<StatusOr<
           std::unique_ptr<storage_experimental::AsyncWriterConnection>>>,
+      ResumeAppendableObjectUpload, (AppendableUploadParams), (override));
+  MOCK_METHOD(
+      future<StatusOr<
+          std::unique_ptr<storage_experimental::AsyncWriterConnection>>>,
       StartUnbufferedUpload, (UploadParams), (override));
   MOCK_METHOD(
       future<StatusOr<
