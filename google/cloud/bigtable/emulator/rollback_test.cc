@@ -116,8 +116,7 @@ Status has_cell(
   return Status(StatusCode::kOk, "", ErrorInfo());
 }
 
-// Ensure that SetCell still works to set a cell that was not set
-// before, when using the RowTransaction class.
+// Does the SetCell mutation work to set a cell to a specific value?
 TEST(TransactonRollback, SetCellBasicFunction) {
   ::google::bigtable::admin::v2::Table schema;
   ::google::bigtable::admin::v2::ColumnFamily column_family;
