@@ -228,7 +228,8 @@ google::cloud::optional<PaginationInfo> DetermineBigQueryPagination(
       FieldDescriptor const* items =
           response_message->FindFieldByName(field_name);
       if (!items->is_repeated()) return {};
-      return PaginationInfo{items->name(), items->message_type(), {}};
+      return PaginationInfo{
+          std::string{items->name()}, items->message_type(), {}};
     }
   }
 
