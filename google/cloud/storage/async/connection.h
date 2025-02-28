@@ -131,6 +131,11 @@ class AsyncConnection {
       StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
   StartAppendableObjectUpload(AppendableUploadParams p) = 0;
 
+  /// Resume an appendable upload configured for persistent sources.
+  virtual future<
+      StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+  ResumeAppendableObjectUpload(AppendableUploadParams p) = 0;
+
   /**
    * A thin wrapper around the `WriteObject()` parameters.
    *

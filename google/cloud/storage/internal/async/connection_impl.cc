@@ -293,6 +293,17 @@ AsyncConnectionImpl::ReadObjectRange(ReadObjectParams p) {
 
 future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
 AsyncConnectionImpl::StartAppendableObjectUpload(AppendableUploadParams p) {
+  return AppendableObjectUploadImpl(std::move(p));
+}
+
+future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+AsyncConnectionImpl::ResumeAppendableObjectUpload(AppendableUploadParams p) {
+  return AppendableObjectUploadImpl(std::move(p), true);
+}
+
+future<StatusOr<std::unique_ptr<storage_experimental::AsyncWriterConnection>>>
+AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p,
+                                                bool takeover) {
   auto current = internal::MakeImmutableOptions(std::move(p.options));
   auto request = p.request;
   std::int64_t persisted_size = 0;
@@ -313,10 +324,10 @@ AsyncConnectionImpl::StartAppendableObjectUpload(AppendableUploadParams p) {
 
   auto factory = WriteResultFactory(
       [stub = stub_, cq = cq_, retry = std::move(retry),
-       backoff = std::move(backoff), current, function_name = __func__](
-          google::storage::v2::BidiWriteObjectRequest req) {
-        auto call = [stub, request = std::move(req)](
-                        CompletionQueue& cq,
+       backoff = std::move(backoff), current, function_name = __func__,
+       takeover](google::storage::v2::BidiWriteObjectRequest req) {
+        auto call = [stub, request = std::move(req), takeover](
+                        google::cloud::CompletionQueue& cq,
                         std::shared_ptr<grpc::ClientContext> context,
                         google::cloud::internal::ImmutableOptions options,
                         RequestPlaceholder const&) mutable
@@ -325,7 +336,13 @@ AsyncConnectionImpl::StartAppendableObjectUpload(AppendableUploadParams p) {
               options->get<storage::TransferStallTimeoutOption>(),
               options->get<storage::TransferStallMinimumRateOption>(),
               google::storage::v2::ServiceConstants::MAX_WRITE_CHUNK_BYTES);
-          ApplyRoutingHeaders(*context, request.write_object_spec());
+
+          // Apply the routing header
+          if (takeover)
+            ApplyRoutingHeaders(*context, request.append_object_spec());
+          else
+            ApplyRoutingHeaders(*context, request.write_object_spec());
+
           auto rpc = stub->AsyncBidiWriteObject(cq, std::move(context),
                                                 std::move(options));
           rpc = std::make_unique<StreamingRpcTimeout>(cq, timeout, timeout,
