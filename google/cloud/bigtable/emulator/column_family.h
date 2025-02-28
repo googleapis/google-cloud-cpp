@@ -95,6 +95,12 @@ class ColumnFamilyRow {
 
 class ColumnFamily {
  public:
+  ColumnFamily() = default;
+  // Disable copying.
+  ColumnFamily(ColumnFamily const &) = delete;
+  ColumnFamily& operator=(ColumnFamily const &) = delete;
+
+
   using const_iterator = std::map<std::string, ColumnFamilyRow>::const_iterator;
 
   void SetCell(std::string const& row_key, std::string const& column_qualifier,
