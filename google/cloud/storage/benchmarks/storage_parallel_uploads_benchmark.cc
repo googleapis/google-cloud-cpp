@@ -107,8 +107,8 @@ StatusOr<std::string> CreateTempFile(
     std::string const& directory,
     google::cloud::internal::DefaultPRNG& generator, std::uintmax_t size_left) {
   std::size_t const single_buf_size = 4 * 1024 * 1024;
-  auto const file_name = directory + (directory.empty() ? "" : "/") +
-                         gcs_bm::MakeRandomFileName(generator);
+  auto file_name = directory + (directory.empty() ? "" : "/") +
+                   gcs_bm::MakeRandomFileName(generator);
 
   std::string random_data = gcs_bm::MakeRandomData(generator, single_buf_size);
 
