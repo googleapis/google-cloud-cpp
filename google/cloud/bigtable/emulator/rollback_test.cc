@@ -34,11 +34,30 @@ namespace cloud {
 namespace bigtable {
 namespace emulator {
 
+Status set_cell(
+    std::shared_ptr<google::cloud::bigtable::emulator::Table>& table,
+    std::string const& table_name, std::string const& row_key,
+    std::string const& column_family_name, std::string const& column_qualifier,
+    int64_t timestamp_micros, std::string const& data) {
+  ::google::bigtable::v2::MutateRowRequest mutation_request;
+  mutation_request.set_table_name(table_name);
+  mutation_request.set_row_key(row_key);
+
+  auto* mutation_request_mutation = mutation_request.add_mutations();
+  auto* set_cell_mutation = mutation_request_mutation->mutable_set_cell();
+  set_cell_mutation->set_family_name(column_family_name);
+  set_cell_mutation->set_column_qualifier(column_qualifier);
+  set_cell_mutation->set_timestamp_micros(timestamp_micros);
+  set_cell_mutation->set_value(data);
+
+  return table->MutateRow(mutation_request);
+}
+
 Status has_cell(
     std::shared_ptr<google::cloud::bigtable::emulator::Table>& table,
     std::string const& column_family, std::string const& row_key,
-    std::string const& column_qualifier,
-    int64_t timestamp_micros, std::string const& value) {
+    std::string const& column_qualifier, int64_t timestamp_micros,
+    std::string const& value) {
   auto column_family_it = table->find(column_family);
   if (column_family_it == table->end()) {
     return Status(
@@ -104,27 +123,12 @@ TEST(TransactonRollback, SetCellBasicFunction) {
 
   auto table = maybe_table.value();
 
-  ::google::bigtable::v2::MutateRowRequest mutation_request;
-  mutation_request.set_table_name(table_name);
-  mutation_request.set_row_key(row_key);
-
-  auto* mutation_request_mutation = mutation_request.add_mutations();
-  auto* set_cell_mutation = mutation_request_mutation->mutable_set_cell();
-  set_cell_mutation->set_family_name(column_family_name);
-  set_cell_mutation->set_column_qualifier(column_qualifer);
-  set_cell_mutation->set_timestamp_micros(timestamp_micros);
-  set_cell_mutation->set_value("test");
-
-  auto status = table->MutateRow(mutation_request);
+  auto status = set_cell(table, table_name, row_key, column_family_name,
+                         column_qualifer, timestamp_micros, data);
   ASSERT_STATUS_OK(status);
 
-  ASSERT_STATUS_OK(has_cell(
-      table,
-      column_family_name,
-      row_key,
-      column_qualifer,
-      timestamp_micros,
-      data));
+  ASSERT_STATUS_OK(has_cell(table, column_family_name, row_key, column_qualifer,
+                            timestamp_micros, data));
 }
 
 }  // namespace emulator
