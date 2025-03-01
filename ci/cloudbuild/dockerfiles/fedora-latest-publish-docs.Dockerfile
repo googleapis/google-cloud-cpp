@@ -67,6 +67,7 @@ RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.19
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
+      -DCMAKE_CXX_STANDARD=17 \
         -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE \
         -DBUILD_SHARED_LIBS=ON \
         -DWITH_EXAMPLES=OFF \

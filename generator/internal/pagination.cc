@@ -133,11 +133,11 @@ google::cloud::optional<PaginationInfo> DetermineAlternatePagination(
   if (!items->is_repeated()) return {};
 
   if (items->is_map()) {
-    return PaginationInfo{items->name(),
+    return PaginationInfo{std::string{items->name()},
                           items->message_type()->map_value()->message_type(),
                           items->message_type()->map_key()};
   }
-  return PaginationInfo{items->name(), items->message_type(), {}};
+  return PaginationInfo{std::string{items->name()}, items->message_type(), {}};
 }
 
 // For the BigQuery v2 proto definitions, the paging conventions
@@ -180,7 +180,8 @@ google::cloud::optional<PaginationInfo> DetermineBigQueryPagination(
       FieldDescriptor const* items =
           response_message->FindFieldByName(field_name);
       if (!items->is_repeated()) return {};
-      return PaginationInfo{items->name(), items->message_type(), {}};
+      return PaginationInfo{
+          std::string{items->name()}, items->message_type(), {}};
     }
   }
 

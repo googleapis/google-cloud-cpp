@@ -231,8 +231,8 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       if (get_iam_policy_extension_ && set_iam_policy_extension_ == &method) {
         auto response_type = ProtoNameToCppName(
             set_iam_policy_extension_->output_type()->full_name());
-        auto set_method_name = set_iam_policy_extension_->name();
-        auto get_method_name = get_iam_policy_extension_->name();
+        std::string set_method_name{set_iam_policy_extension_->name()};
+        std::string get_method_name{get_iam_policy_extension_->name()};
         HeaderPrint({
             PredicatedFragment<void>(""),
             {R"""(
@@ -533,8 +533,8 @@ $client_class_name$::Async$method_name$(Options opts) {
       if (get_iam_policy_extension_ && set_iam_policy_extension_ == &method) {
         auto response_type = ProtoNameToCppName(
             set_iam_policy_extension_->output_type()->full_name());
-        auto set_method_name = set_iam_policy_extension_->name();
-        auto get_method_name = get_iam_policy_extension_->name();
+        std::string set_method_name{set_iam_policy_extension_->name()};
+        std::string get_method_name{get_iam_policy_extension_->name()};
         CcPrint({
             PredicatedFragment<void>(""),
             {"\nStatusOr<" + response_type + ">\n"},

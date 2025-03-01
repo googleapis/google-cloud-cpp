@@ -44,7 +44,8 @@ absl::optional<std::string> IncludePathForWellKnownProtobufType(
       new std::unordered_map<std::string, std::string>(
           {{"google.protobuf.Duration", "google/protobuf/duration.pb.h"}});
   if (parameter.type() == google::protobuf::FieldDescriptor::TYPE_MESSAGE) {
-    auto iter = kTypeIncludeMap->find(parameter.message_type()->full_name());
+    auto iter = kTypeIncludeMap->find(
+        std::string{parameter.message_type()->full_name()});
     if (iter != kTypeIncludeMap->end()) {
       return iter->second;
     }
@@ -216,7 +217,7 @@ bool ServiceCodeGenerator::HasRequestId() const {
 
 bool ServiceCodeGenerator::HasRequestId(
     google::protobuf::MethodDescriptor const& method) const {
-  auto mv = service_method_vars_.find(method.full_name());
+  auto mv = service_method_vars_.find(std::string{method.full_name()});
   if (mv == service_method_vars_.end()) return false;
   auto const& method_vars = mv->second;
   return method_vars.find("request_id_field_name") != method_vars.end();
@@ -261,7 +262,7 @@ bool ServiceCodeGenerator::MethodSignatureUsesDeprecatedField() const {
 bool ServiceCodeGenerator::OmitMethodSignature(
     google::protobuf::MethodDescriptor const& method,
     int method_signature_number) const {
-  auto method_vars = service_method_vars_.find(method.full_name());
+  auto method_vars = service_method_vars_.find(std::string{method.full_name()});
   if (method_vars == service_method_vars_.end()) {
     GCP_LOG(FATAL) << method.full_name()
                    << " not found in service_method_vars_\n";
@@ -286,8 +287,9 @@ std::string ServiceCodeGenerator::vars(std::string const& key) const {
 VarsDictionary ServiceCodeGenerator::MergeServiceAndMethodVars(
     google::protobuf::MethodDescriptor const& method) const {
   auto vars = service_vars_;
-  vars.insert(service_method_vars_.at(method.full_name()).begin(),
-              service_method_vars_.at(method.full_name()).end());
+  std::string const method_full_name{method.full_name()};
+  vars.insert(service_method_vars_.at(method_full_name).begin(),
+              service_method_vars_.at(method_full_name).end());
   return vars;
 }
 

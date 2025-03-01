@@ -572,7 +572,7 @@ std::string CppTypeToString(FieldDescriptor const* field) {
   GCP_LOG(FATAL) << "FieldDescriptor " << field->cpp_type_name()
                  << " not handled";
   /*NOTREACHED*/
-  return field->cpp_type_name();
+  return std::string{field->cpp_type_name()};
 }
 
 std::string FormatMethodCommentsMethodSignature(
@@ -880,13 +880,13 @@ std::map<std::string, VarsDictionary> CreateMethodVars(
     if (method.options().HasExtension(google::api::http)) {
       http_rule = method.options().GetExtension(google::api::http);
     }
-    service_methods_vars[method.full_name()] =
+    service_methods_vars[std::string{method.full_name()}] =
         GetMethodVars(service, service_config, method, http_rule, "grpc_stub",
                       idempotency_overrides, omitted_rpcs);
   }
   for (auto const& mixin_method : mixin_methods) {
     auto const& method = mixin_method.method.get();
-    service_methods_vars[method.full_name()] = GetMethodVars(
+    service_methods_vars[std::string{method.full_name()}] = GetMethodVars(
         service, service_config, method, mixin_method.http_override,
         mixin_method.grpc_stub_name, idempotency_overrides, omitted_rpcs);
   }

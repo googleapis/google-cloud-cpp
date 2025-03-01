@@ -29,9 +29,9 @@ absl::optional<std::pair<std::string, ProtoDefinitionLocation>> GetLocation(
   if (d == nullptr) return absl::nullopt;
   google::protobuf::SourceLocation loc;
   d->GetSourceLocation(&loc);
-  return std::make_pair(
-      d->full_name(),
-      ProtoDefinitionLocation{d->file()->name(), loc.start_line + 1});
+  return std::make_pair(std::string{d->full_name()},
+                        ProtoDefinitionLocation{std::string{d->file()->name()},
+                                                loc.start_line + 1});
 }
 
 absl::optional<std::pair<std::string, ProtoDefinitionLocation>>

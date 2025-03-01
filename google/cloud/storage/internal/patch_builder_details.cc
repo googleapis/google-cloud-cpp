@@ -36,7 +36,9 @@ nlohmann::json const& PatchBuilderDetails::GetPatch(
 
 nlohmann::json const& PatchBuilderDetails::GetLabelsSubPatch(
     storage::BucketMetadataPatchBuilder const& patch) {
-  static auto const* const kEmpty = [] { return new nlohmann::json({}); }();
+  static auto const* const kEmpty = [] {
+    return new nlohmann::json(nlohmann::json::object());
+  }();
   if (!patch.labels_subpatch_dirty_) return *kEmpty;
   return GetPatch(patch.labels_subpatch_);
 }
@@ -53,7 +55,9 @@ nlohmann::json const& PatchBuilderDetails::GetPatch(
 
 nlohmann::json const& PatchBuilderDetails::GetMetadataSubPatch(
     storage::ObjectMetadataPatchBuilder const& patch) {
-  static auto const* const kEmpty = [] { return new nlohmann::json({}); }();
+  static auto const* const kEmpty = [] {
+    return new nlohmann::json(nlohmann::json::object());
+  }();
   if (!patch.metadata_subpatch_dirty_) return *kEmpty;
   return GetPatch(patch.metadata_subpatch_);
 }
