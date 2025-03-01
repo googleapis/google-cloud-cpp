@@ -77,6 +77,7 @@ RUN curl -fsSL https://github.com/google/googletest/archive/v1.15.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE="Release" \
+      -DCMAKE_CXX_STANDARD=17 \
       -DBUILD_SHARED_LIBS=yes \
       -S . -B cmake-out -GNinja  && \
     cmake --build cmake-out --target install && \

@@ -39,6 +39,8 @@ RUN pip3 install setuptools wheel
 # Bazel needs the '-devel' version with javac.
 RUN dnf makecache && dnf install -y java-latest-openjdk-devel
 
+RUN dnf makecache && dnf install -y glibc glibc-devel
+
 # Sets root's password to the empty string to enable users to get a root shell
 # inside the container with `su -` and no password. Sudo would not work because
 # we run these containers as the invoking user's uid, which does not exist in
