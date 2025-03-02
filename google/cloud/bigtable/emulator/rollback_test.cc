@@ -14,7 +14,6 @@
 
 #include "google/cloud/bigtable/emulator/column_family.h"
 #include "google/cloud/bigtable/emulator/table.h"
-#include "google/cloud/bigtable/table.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -72,25 +71,6 @@ Status set_cells(
     set_cell_mutation->set_timestamp_micros(m.timestamp_micros);
     set_cell_mutation->set_value(m.data);
   }
-
-  return table->MutateRow(mutation_request);
-}
-
-Status set_cell(
-    std::shared_ptr<google::cloud::bigtable::emulator::Table>& table,
-    std::string const& table_name, std::string const& row_key,
-    std::string const& column_family_name, std::string const& column_qualifier,
-    int64_t timestamp_micros, std::string const& data) {
-  ::google::bigtable::v2::MutateRowRequest mutation_request;
-  mutation_request.set_table_name(table_name);
-  mutation_request.set_row_key(row_key);
-
-  auto* mutation_request_mutation = mutation_request.add_mutations();
-  auto* set_cell_mutation = mutation_request_mutation->mutable_set_cell();
-  set_cell_mutation->set_family_name(column_family_name);
-  set_cell_mutation->set_column_qualifier(column_qualifier);
-  set_cell_mutation->set_timestamp_micros(timestamp_micros);
-  set_cell_mutation->set_value(data);
 
   return table->MutateRow(mutation_request);
 }
@@ -215,11 +195,14 @@ TEST(TransactonRollback, SetCellBasicFunction) {
   auto maybe_table = create_table(table_name, column_families);
 
   ASSERT_STATUS_OK(maybe_table);
-
   auto table = maybe_table.value();
 
-  auto status = set_cell(table, table_name, row_key, column_family_name,
-                         column_qualifer, timestamp_micros, data);
+  std::vector<SetCellParams> v;
+  SetCellParams p = {column_family_name, column_qualifer, timestamp_micros, data};
+  v.push_back(p);
+
+  auto status = set_cells(table, table_name, row_key, v);
+
   ASSERT_STATUS_OK(status);
 
   ASSERT_STATUS_OK(has_cell(table, column_family_name, row_key, column_qualifer,
