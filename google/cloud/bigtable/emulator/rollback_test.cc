@@ -116,6 +116,61 @@ Status has_cell(
   return Status(StatusCode::kOk, "", ErrorInfo());
 }
 
+Status has_column(
+    std::shared_ptr<google::cloud::bigtable::emulator::Table>& table,
+    std::string const& column_family, std::string const& row_key,
+    std::string const& column_qualifier) {
+  auto column_family_it = table->find(column_family);
+  if (column_family_it == table->end()) {
+    return Status(
+        StatusCode::kNotFound,
+        absl::StrFormat("column family %s not found in table", column_family),
+        ErrorInfo());
+  }
+
+  auto const& cf = column_family_it->second;
+  auto column_family_row_it = cf->find(row_key);
+  if (column_family_row_it == cf->end()) {
+    return Status(StatusCode::kNotFound,
+                  absl::StrFormat("no row key %s found in column famiily %s",
+                                  row_key, column_family),
+                  ErrorInfo());
+  }
+
+  auto& column_family_row = column_family_row_it->second;
+  auto column_row_it = column_family_row.find(column_qualifier);
+  if (column_row_it == column_family_row.end()) {
+    return Status(
+        StatusCode::kNotFound,
+        absl::StrFormat("no column found with qualifer %s", column_qualifier),
+        ErrorInfo());
+  }
+
+  return Status(StatusCode::kOk, "", ErrorInfo());
+}
+
+Status has_row(std::shared_ptr<google::cloud::bigtable::emulator::Table>& table,
+               std::string const& column_family, std::string const& row_key) {
+  auto column_family_it = table->find(column_family);
+  if (column_family_it == table->end()) {
+    return Status(
+        StatusCode::kNotFound,
+        absl::StrFormat("column family %s not found in table", column_family),
+        ErrorInfo());
+  }
+
+  auto const& cf = column_family_it->second;
+  auto column_family_row_it = cf->find(row_key);
+  if (column_family_row_it == cf->end()) {
+    return Status(StatusCode::kNotFound,
+                  absl::StrFormat("no row key %s found in column famiily %s",
+                                  row_key, column_family),
+                  ErrorInfo());
+  }
+
+  return Status(StatusCode::kOk, "", ErrorInfo());
+}
+
 // Does the SetCell mutation work to set a cell to a specific value?
 TEST(TransactonRollback, SetCellBasicFunction) {
   ::google::bigtable::admin::v2::Table schema;
