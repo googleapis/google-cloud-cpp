@@ -446,8 +446,8 @@ Status RowTransaction::SetCell(
               std::chrono::microseconds(set_cell.timestamp_micros())));
       if (timestamp_it == column_row_it->second.end()) {
         cell_existed = false;
-      } else{
-        value_to_restore = timestamp_it->second;
+      } else {
+        value_to_restore = std::move(timestamp_it->second);
       }
     }
   }
