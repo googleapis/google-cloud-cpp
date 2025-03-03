@@ -6,13 +6,15 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
 
 ## v2.36.0 - 2025-03
 
-### [Storage](/google/cloud/storage/README.md)
+### New Libraries
 
-- docs(storage): remove grpc docs from in-depth topics ([#14989](https://github.com/googleapis/google-cloud-cpp/pull/14989))
+We are happy to announce the following GA libraries. Unless specifically noted,
+the APIs in these libraries are stable, and are ready for production use.
+
+- [Parameter Manager API](/google/cloud/parametermanager/README.md)
 
 ### [Common Libraries](/google/cloud/README.md)
 
-- doc: fix typo in doc link ([#14990](https://github.com/googleapis/google-cloud-cpp/pull/14990))
 - feat(parametermanager): generate library ([#14971](https://github.com/googleapis/google-cloud-cpp/pull/14971))
 
 ### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
