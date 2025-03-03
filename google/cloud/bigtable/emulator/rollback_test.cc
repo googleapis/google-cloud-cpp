@@ -58,7 +58,6 @@ Status set_cells(
     std::shared_ptr<google::cloud::bigtable::emulator::Table>& table,
     std::string const& table_name, std::string const& row_key,
     std::vector<SetCellParams>& set_cell_params) {
-
   ::google::bigtable::v2::MutateRowRequest mutation_request;
   mutation_request.set_table_name(table_name);
   mutation_request.set_row_key(row_key);
@@ -198,7 +197,8 @@ TEST(TransactonRollback, SetCellBasicFunction) {
   auto table = maybe_table.value();
 
   std::vector<SetCellParams> v;
-  SetCellParams p = {column_family_name, column_qualifer, timestamp_micros, data};
+  SetCellParams p = {column_family_name, column_qualifer, timestamp_micros,
+                     data};
   v.push_back(p);
 
   auto status = set_cells(table, table_name, row_key, v);
@@ -249,7 +249,8 @@ TEST(TransactonRollback, TestRestoreValue) {
   // RestoreValue will restore the previous value in cell with
   // timestamp 1000.
   std::vector<SetCellParams> w;
-  // Everything is the same but we try and modify the value in the cell cell set above.
+  // Everything is the same but we try and modify the value in the cell cell set
+  // above.
   p.data = "new data";
   w.push_back(p);
 
@@ -260,9 +261,9 @@ TEST(TransactonRollback, TestRestoreValue) {
   w.push_back(p);
 
   status = set_cells(table, table_name, row_key, w);
-  ASSERT_NE(status.ok(), true); // The whole mutation chain should
-                                // fail because the 2nd mutation
-                                // contains an invalid column family.
+  ASSERT_NE(status.ok(), true);  // The whole mutation chain should
+                                 // fail because the 2nd mutation
+                                 // contains an invalid column family.
 
   // And the first mutation should have been rolled back by
   // RestoreValue and so should contain the old value, and not "new
@@ -270,7 +271,6 @@ TEST(TransactonRollback, TestRestoreValue) {
   ASSERT_STATUS_OK(has_cell(table, valid_column_family_name, row_key,
                             column_qualifer, good_mutation_timestamp_micros,
                             good_mutation_data));
-
 }
 
 }  // namespace emulator
