@@ -324,6 +324,95 @@ TEST(TransactonRollback, DeleteValue) {
                                  // should not have set anything.
 }
 
+// Test that if a successful SetCell mutation in a chain of SetCell
+// mutations in one transaction introduces a new column but a
+// subsequent SetCell mutation fails (we simulate this by passing an
+// column family name that is not in the table schema) then the column
+// and any of the cells introduced is deleted in the rollback, but
+// that any pre-transaction-attemot data in the row is unaffected.
+TEST(TransactonRollback, DeleteColumn) {
+  ::google::bigtable::admin::v2::Table schema;
+  ::google::bigtable::admin::v2::ColumnFamily column_family;
+
+  auto const* const table_name = "projects/test/instances/test/tables/test";
+  auto const* const row_key = "0";
+  // The table will be set up with a schema with
+  // valid_column_family_name and mutations with this column family
+  // name are expected to succeed. We will simulate a transaction
+  // failure by setting some other not-pre-provisioned column family
+  // name.
+  auto const* const valid_column_family_name = "test";
+  std::vector<std::string> column_families = {valid_column_family_name};
+  auto maybe_table = create_table(table_name, column_families);
+  ASSERT_STATUS_OK(maybe_table);
+  auto table = maybe_table.value();
+
+  std::vector<SetCellParams> v = {
+      {valid_column_family_name, "test", 1000, "data"}};
+  auto status = set_cells(table, table_name, row_key, v);
+  ASSERT_STATUS_OK(status);
+  ASSERT_STATUS_OK(has_cell(table, valid_column_family_name, row_key,
+                            v[0].column_qualifier, v[0].timestamp_micros,
+                            v[0].data));
+
+  // Introduce a new column in a chain of SetCell mutations, a
+  // subsequent one of which must fail due to an invalid schema
+  // assumption (bad column family name).
+  v = {{valid_column_family_name, "new_column", 2000, "new data"},
+       {"invalid_column_family_name", "test", 3000, "more new data"}};
+
+  status = set_cells(table, table_name, row_key, v);
+  ASSERT_NE(status.ok(),
+            true);  // We expect the chain of mutations to
+                    // fail alltogether because the last one must fail.
+
+  // The original column ("test") should still exist.
+  status = has_column(table, valid_column_family_name, row_key, "test");
+  ASSERT_STATUS_OK(status);
+
+  // Bit the new column introduced should have been rolled back.
+  status = has_column(table, v[0].column_family_name, row_key,
+                      v[0].column_qualifier);
+  ASSERT_NE(status.ok(), true);
+}
+
+// Test that a chain of SetCell mutations that initially introduces a
+// new row, but one of which eventually fails, will end with the whole
+// row rolled back.
+TEST(TransactonRollback, DeleteRow) {
+  ::google::bigtable::admin::v2::Table schema;
+  ::google::bigtable::admin::v2::ColumnFamily column_family;
+
+  auto const* const table_name = "projects/test/instances/test/tables/test";
+  auto const* const row_key = "0";
+  // The table will be set up with a schema with
+  // valid_column_family_name and mutations with this column family
+  // name are expected to succeed. We will simulate a transaction
+  // failure by setting some other not-pre-provisioned column family
+  // name.
+  auto const* const valid_column_family_name = "test";
+  std::vector<std::string> column_families = {valid_column_family_name};
+  auto maybe_table = create_table(table_name, column_families);
+  ASSERT_STATUS_OK(maybe_table);
+  auto table = maybe_table.value();
+
+  // First SetCell should succeed and introduce a new row with key
+  // "0". The second one will fail due to bad schema settings. We
+  // expect not to find the row after the row mutation call returns.
+  std::vector<SetCellParams> v = {
+      {valid_column_family_name, "test", 1000, "data"},
+      {"invalid_column_family_name", "test", 2000,
+       "more new data which should never be written"}};
+
+  auto status = set_cells(table, table_name, row_key, v);
+  ASSERT_NE(status.ok(),
+            true);  // We expect the chain of mutations to
+                    // fail alltogether because the last one must fail.
+
+  status = has_row(table, valid_column_family_name, row_key);
+  ASSERT_NE(status.ok(), true);
+}
+
 }  // namespace emulator
 }  // namespace bigtable
 }  // namespace cloud
