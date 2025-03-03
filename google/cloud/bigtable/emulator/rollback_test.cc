@@ -209,6 +209,70 @@ TEST(TransactonRollback, SetCellBasicFunction) {
                             timestamp_micros, data));
 }
 
+// Test that an old value is correctly restored in a pre-populated
+// cell, when one of a set of SetCell mutations fails after the cell
+// had been updated with a new value.
+TEST(TransactonRollback, TestRestoreValue) {
+  ::google::bigtable::admin::v2::Table schema;
+  ::google::bigtable::admin::v2::ColumnFamily column_family;
+
+  auto const* const table_name = "projects/test/instances/test/tables/test";
+  auto const* const row_key = "0";
+  // The table will be set up with a schema with
+  // valid_column_family_name and mutations with this column family
+  // name are expected to succeed. We will simulate a transaction
+  // failure by setting some other not-pre-provisioned column family
+  // name.
+  auto const* const valid_column_family_name = "test";
+  auto const* const column_qualifer = "test";
+  int64_t good_mutation_timestamp_micros = 1000;
+  auto const* const good_mutation_data = "expected to succeed";
+
+  std::vector<std::string> column_families = {valid_column_family_name};
+  auto maybe_table = create_table(table_name, column_families);
+  ASSERT_STATUS_OK(maybe_table);
+  auto table = maybe_table.value();
+
+  std::vector<SetCellParams> v;
+  SetCellParams p = {valid_column_family_name, column_qualifer,
+                     good_mutation_timestamp_micros, good_mutation_data};
+  v.push_back(p);
+
+  auto status = set_cells(table, table_name, row_key, v);
+  ASSERT_STATUS_OK(status);
+  ASSERT_STATUS_OK(has_cell(table, valid_column_family_name, row_key,
+                            column_qualifer, good_mutation_timestamp_micros,
+                            good_mutation_data));
+
+  // Now atomically try 2 mutations. One modifies the above set cell,
+  // and the other one is expected to fail. The test is that
+  // RestoreValue will restore the previous value in cell with
+  // timestamp 1000.
+  std::vector<SetCellParams> w;
+  // Everything is the same but we try and modify the value in the cell cell set above.
+  p.data = "new data";
+  w.push_back(p);
+
+  // Because "invalid_column_family" does not exist in the table
+  // schema, a mutation with these SetCell parameters is expected to
+  // fail.
+  p = {"invalid_column_family", "test2", 1000, "expected to fail"};
+  w.push_back(p);
+
+  status = set_cells(table, table_name, row_key, w);
+  ASSERT_NE(status.ok(), true); // The whole mutation chain should
+                                // fail because the 2nd mutation
+                                // contains an invalid column family.
+
+  // And the first mutation should have been rolled back by
+  // RestoreValue and so should contain the old value, and not "new
+  // data".
+  ASSERT_STATUS_OK(has_cell(table, valid_column_family_name, row_key,
+                            column_qualifer, good_mutation_timestamp_micros,
+                            good_mutation_data));
+
+}
+
 }  // namespace emulator
 }  // namespace bigtable
 }  // namespace cloud
