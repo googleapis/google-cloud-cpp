@@ -273,6 +273,57 @@ TEST(TransactonRollback, TestRestoreValue) {
                             good_mutation_data));
 }
 
+// Test that a new cell introduced in a chain of SetCell mutations is
+// deleted on rollback if a subsequent mutation fails.
+TEST(TransactonRollback, DeleteValue) {
+  ::google::bigtable::admin::v2::Table schema;
+  ::google::bigtable::admin::v2::ColumnFamily column_family;
+
+  auto const* const table_name = "projects/test/instances/test/tables/test";
+  auto const* const row_key = "0";
+  // The table will be set up with a schema with
+  // valid_column_family_name and mutations with this column family
+  // name are expected to succeed. We will simulate a transaction
+  // failure by setting some other not-pre-provisioned column family
+  // name.
+  auto const* const valid_column_family_name = "test";
+  std::vector<std::string> column_families = {valid_column_family_name};
+  auto maybe_table = create_table(table_name, column_families);
+  ASSERT_STATUS_OK(maybe_table);
+  auto table = maybe_table.value();
+
+  // To test that we do not delete a row or column that we should not,
+  // let us first commit a transaction on the same row where we will
+  // do the DeleteValue test.
+  std::vector<SetCellParams> v = {
+      {valid_column_family_name, "test", 1000, "data"}};
+  auto status = set_cells(table, table_name, row_key, v);
+  ASSERT_STATUS_OK(status);
+  ASSERT_STATUS_OK(has_cell(table, valid_column_family_name, row_key,
+                            v[0].column_qualifier, v[0].timestamp_micros,
+                            v[0].data));
+
+  // We then setup a transaction chain with 2 SetCells, the first one
+  // should succeed to add a new cell and the second one should fail
+  // (because it assumes an invalid schema in column family name). We
+  // expect the first cell to not exist after the rollback (and of
+  // course also no data from the 2nd failing SetCell mutation should
+  // exist either).
+  v = {{valid_column_family_name, "test", 2000, "new data"},
+       {"invalid_column_family_name", "test", 3000, "more new data"}};
+
+  status = set_cells(table, table_name, row_key, v);
+  ASSERT_NE(status.ok(), true);  // We expect the chain of mutations to
+                                 // fail alltogether.
+  status = has_cell(table, v[0].column_family_name, row_key,
+                    v[0].column_qualifier, v[0].timestamp_micros, v[0].data);
+  ASSERT_NE(status.ok(), true);  // Undo should delete the cell
+  status = has_cell(table, v[1].column_family_name, row_key,
+                    v[1].column_qualifier, v[1].timestamp_micros, v[1].data);
+  ASSERT_NE(status.ok(), true);  // Also the SetCell with invalud shema
+                                 // should not have set anything.
+}
+
 }  // namespace emulator
 }  // namespace bigtable
 }  // namespace cloud
