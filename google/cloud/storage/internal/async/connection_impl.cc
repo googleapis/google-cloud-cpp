@@ -55,6 +55,7 @@
 #include "google/cloud/internal/async_streaming_write_rpc_timeout.h"
 #include "google/cloud/internal/make_status.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
