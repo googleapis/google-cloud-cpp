@@ -115,6 +115,12 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
    */
   std::shared_ptr<SpannerStub> GetStub(Session const& session);
 
+  /**
+   * Returns the number of sessions in the session pool plus the number of
+   * sessions allocated to running transactions.
+   */
+  int total_sessions() const { return total_sessions_; }
+
  private:
   friend std::shared_ptr<SessionPool> MakeSessionPool(
       spanner::Database, std::vector<std::shared_ptr<SpannerStub>>,
@@ -207,6 +213,10 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   // Remove the named session from the pool (if it is present).
   void Erase(std::string const& session_name);
 
+  // Performs the necessary bookkeeping when a session is removed from use.
+  void DecrementSessionCount(std::unique_lock<std::mutex> const& lk,
+                             Session& session);
+
   spanner::Database const db_;
   google::cloud::CompletionQueue cq_;
   Options const opts_;
@@ -220,9 +230,11 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   std::condition_variable cond_;
   SessionHolder multiplexed_session_;               // GUARDED_BY(mu_)
   std::vector<std::unique_ptr<Session>> sessions_;  // GUARDED_BY(mu_)
-  int total_sessions_ = 0;                          // GUARDED_BY(mu_)
-  int create_calls_in_progress_ = 0;                // GUARDED_BY(mu_)
-  int num_waiting_for_session_ = 0;                 // GUARDED_BY(mu_)
+  // total_sessions_ tracks the number of sessions in the pool, a.k.a.
+  // sessions_.size(), plus the sessions that have been allocated.
+  int total_sessions_ = 0;            // GUARDED_BY(mu_)
+  int create_calls_in_progress_ = 0;  // GUARDED_BY(mu_)
+  int num_waiting_for_session_ = 0;   // GUARDED_BY(mu_)
 
   // Lower bound on all `sessions_[i]->last_use_time()` values.
   Session::Clock::time_point last_use_time_lower_bound_ =
