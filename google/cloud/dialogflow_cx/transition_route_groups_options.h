@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-dialogflow_cx-options
  */
 struct TransitionRouteGroupsRetryPolicyOption {
-  using Type = std::shared_ptr<TransitionRouteGroupsRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

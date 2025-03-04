@@ -33,8 +33,7 @@ namespace backupdr_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<backupdr_v1::BackupDRRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<backupdr_v1::BackupDRRetryPolicyOption>()->clone();
 }
 
@@ -74,8 +73,7 @@ BackupDRConnectionImpl::ListManagementServers(
       StreamRange<google::cloud::backupdr::v1::ManagementServer>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<backupdr_v1::BackupDRRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::backupdr::v1::ListManagementServersRequest const& r) {
@@ -403,8 +401,7 @@ BackupDRConnectionImpl::ListBackupVaults(
       StreamRange<google::cloud::backupdr::v1::BackupVault>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<backupdr_v1::BackupDRRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::backupdr::v1::ListBackupVaultsRequest const& r) {
@@ -438,8 +435,7 @@ BackupDRConnectionImpl::FetchUsableBackupVaults(
       StreamRange<google::cloud::backupdr::v1::BackupVault>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<backupdr_v1::BackupDRRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::backupdr::v1::FetchUsableBackupVaultsRequest const&
@@ -674,8 +670,7 @@ BackupDRConnectionImpl::ListDataSources(
       StreamRange<google::cloud::backupdr::v1::DataSource>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<backupdr_v1::BackupDRRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::backupdr::v1::ListDataSourcesRequest const& r) {
@@ -813,8 +808,7 @@ BackupDRConnectionImpl::ListBackups(
       StreamRange<google::cloud::backupdr::v1::Backup>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<backupdr_v1::BackupDRRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::backupdr::v1::ListBackupsRequest const& r) {
@@ -1233,8 +1227,7 @@ BackupDRConnectionImpl::ListBackupPlans(
       StreamRange<google::cloud::backupdr::v1::BackupPlan>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<backupdr_v1::BackupDRRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::backupdr::v1::ListBackupPlansRequest const& r) {
@@ -1472,8 +1465,7 @@ BackupDRConnectionImpl::ListBackupPlanAssociations(
       StreamRange<google::cloud::backupdr::v1::BackupPlanAssociation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<backupdr_v1::BackupDRRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::backupdr::v1::ListBackupPlanAssociationsRequest const&
@@ -1787,8 +1779,7 @@ BackupDRConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<backupdr_v1::BackupDRRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {
@@ -1874,8 +1865,7 @@ BackupDRConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<backupdr_v1::BackupDRRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

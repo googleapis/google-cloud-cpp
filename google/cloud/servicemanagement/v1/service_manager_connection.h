@@ -40,11 +40,7 @@ namespace servicemanagement_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `ServiceManagerConnection`.
-class ServiceManagerRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<ServiceManagerRetryPolicy> clone() const = 0;
-};
+class ServiceManagerRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `ServiceManagerConnection` based on counting errors.
@@ -85,7 +81,7 @@ class ServiceManagerLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<ServiceManagerRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<ServiceManagerLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -154,7 +150,7 @@ class ServiceManagerLimitedTimeRetryPolicy : public ServiceManagerRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<ServiceManagerRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<ServiceManagerLimitedTimeRetryPolicy>(
         maximum_duration());
   }

@@ -32,8 +32,7 @@ namespace monitoring_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<monitoring_v3::UptimeCheckServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<monitoring_v3::UptimeCheckServiceRetryPolicyOption>()
       ->clone();
 }
@@ -73,8 +72,7 @@ UptimeCheckServiceConnectionImpl::ListUptimeCheckConfigs(
       StreamRange<google::monitoring::v3::UptimeCheckConfig>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<monitoring_v3::UptimeCheckServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::monitoring::v3::ListUptimeCheckConfigsRequest const& r) {
@@ -166,8 +164,7 @@ UptimeCheckServiceConnectionImpl::ListUptimeCheckIps(
       StreamRange<google::monitoring::v3::UptimeCheckIp>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<monitoring_v3::UptimeCheckServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::monitoring::v3::ListUptimeCheckIpsRequest const& r) {

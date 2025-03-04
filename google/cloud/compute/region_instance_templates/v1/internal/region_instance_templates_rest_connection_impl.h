@@ -91,9 +91,7 @@ class RegionInstanceTemplatesRestConnectionImpl
           ListRegionInstanceTemplatesRequest request) override;
 
  private:
-  static std::unique_ptr<
-      compute_region_instance_templates_v1::RegionInstanceTemplatesRetryPolicy>
-  retry_policy(Options const& options) {
+  static std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
     return options
         .get<compute_region_instance_templates_v1::
                  RegionInstanceTemplatesRetryPolicyOption>()

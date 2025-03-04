@@ -40,11 +40,7 @@ namespace contactcenterinsights_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `ContactCenterInsightsConnection`.
-class ContactCenterInsightsRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<ContactCenterInsightsRetryPolicy> clone() const = 0;
-};
+class ContactCenterInsightsRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `ContactCenterInsightsConnection` based on counting
@@ -89,7 +85,7 @@ class ContactCenterInsightsLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<ContactCenterInsightsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<ContactCenterInsightsLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -159,7 +155,7 @@ class ContactCenterInsightsLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<ContactCenterInsightsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<ContactCenterInsightsLimitedTimeRetryPolicy>(
         maximum_duration());
   }

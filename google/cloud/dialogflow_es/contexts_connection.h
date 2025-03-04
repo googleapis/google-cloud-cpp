@@ -37,11 +37,7 @@ namespace dialogflow_es {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `ContextsConnection`.
-class ContextsRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<ContextsRetryPolicy> clone() const = 0;
-};
+class ContextsRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `ContextsConnection` based on counting errors.
@@ -81,7 +77,7 @@ class ContextsLimitedErrorCountRetryPolicy : public ContextsRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<ContextsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<ContextsLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -149,7 +145,7 @@ class ContextsLimitedTimeRetryPolicy : public ContextsRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<ContextsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<ContextsLimitedTimeRetryPolicy>(maximum_duration());
   }
 

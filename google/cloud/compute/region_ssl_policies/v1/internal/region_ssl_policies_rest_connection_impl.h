@@ -100,9 +100,7 @@ class RegionSslPoliciesRestConnectionImpl
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
-  static std::unique_ptr<
-      compute_region_ssl_policies_v1::RegionSslPoliciesRetryPolicy>
-  retry_policy(Options const& options) {
+  static std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
     return options
         .get<compute_region_ssl_policies_v1::
                  RegionSslPoliciesRetryPolicyOption>()

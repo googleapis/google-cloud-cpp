@@ -99,8 +99,7 @@ class VpnTunnelsRestConnectionImpl
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
-  static std::unique_ptr<compute_vpn_tunnels_v1::VpnTunnelsRetryPolicy>
-  retry_policy(Options const& options) {
+  static std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
     return options.get<compute_vpn_tunnels_v1::VpnTunnelsRetryPolicyOption>()
         ->clone();
   }

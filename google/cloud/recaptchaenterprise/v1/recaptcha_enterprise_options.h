@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-recaptchaenterprise-options
  */
 struct RecaptchaEnterpriseServiceRetryPolicyOption {
-  using Type = std::shared_ptr<RecaptchaEnterpriseServiceRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

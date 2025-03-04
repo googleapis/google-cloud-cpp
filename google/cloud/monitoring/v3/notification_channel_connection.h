@@ -37,12 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `NotificationChannelServiceConnection`.
 class NotificationChannelServiceRetryPolicy
-    : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<NotificationChannelServiceRetryPolicy> clone()
-      const = 0;
-};
+    : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `NotificationChannelServiceConnection` based on counting
@@ -88,8 +83,7 @@ class NotificationChannelServiceLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<NotificationChannelServiceRetryPolicy> clone()
-      const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<
         NotificationChannelServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
@@ -163,8 +157,7 @@ class NotificationChannelServiceLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<NotificationChannelServiceRetryPolicy> clone()
-      const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<NotificationChannelServiceLimitedTimeRetryPolicy>(
         maximum_duration());
   }

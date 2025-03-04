@@ -36,11 +36,7 @@ namespace workflows_executions_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `ExecutionsConnection`.
-class ExecutionsRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<ExecutionsRetryPolicy> clone() const = 0;
-};
+class ExecutionsRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `ExecutionsConnection` based on counting errors.
@@ -80,7 +76,7 @@ class ExecutionsLimitedErrorCountRetryPolicy : public ExecutionsRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<ExecutionsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<ExecutionsLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -149,7 +145,7 @@ class ExecutionsLimitedTimeRetryPolicy : public ExecutionsRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<ExecutionsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<ExecutionsLimitedTimeRetryPolicy>(
         maximum_duration());
   }

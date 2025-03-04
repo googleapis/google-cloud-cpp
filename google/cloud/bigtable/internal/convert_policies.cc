@@ -44,8 +44,7 @@ Options MakeInstanceAdminOptions(
     std::shared_ptr<bigtable::PollingPolicy> const& polling) {
   return MakeGrpcSetupOptions(retry, backoff, polling)
       .set<bigtable_admin::BigtableInstanceAdminRetryPolicyOption>(
-          MakeCommonRetryPolicy<
-              bigtable_admin::BigtableInstanceAdminRetryPolicy>(retry->clone()))
+          MakeCommonRetryPolicy<google::cloud::RetryPolicy>(retry->clone()))
       .set<bigtable_admin::BigtableInstanceAdminBackoffPolicyOption>(
           MakeCommonBackoffPolicy(backoff->clone()))
       .set<bigtable_admin::BigtableInstanceAdminPollingPolicyOption>(
@@ -58,8 +57,7 @@ Options MakeTableAdminOptions(
     std::shared_ptr<bigtable::PollingPolicy> const& polling) {
   return MakeGrpcSetupOptions(retry, backoff, polling)
       .set<bigtable_admin::BigtableTableAdminRetryPolicyOption>(
-          MakeCommonRetryPolicy<bigtable_admin::BigtableTableAdminRetryPolicy>(
-              retry->clone()))
+          MakeCommonRetryPolicy<google::cloud::RetryPolicy>(retry->clone()))
       .set<bigtable_admin::BigtableTableAdminBackoffPolicyOption>(
           MakeCommonBackoffPolicy(backoff->clone()))
       .set<bigtable_admin::BigtableTableAdminPollingPolicyOption>(

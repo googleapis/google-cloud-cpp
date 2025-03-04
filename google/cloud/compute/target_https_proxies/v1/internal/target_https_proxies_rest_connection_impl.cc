@@ -61,9 +61,7 @@ TargetHttpsProxiesRestConnectionImpl::AggregatedListTargetHttpsProxies(
       google::cloud::cpp::compute::v1::TargetHttpsProxiesScopedList>>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           compute_target_https_proxies_v1::TargetHttpsProxiesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::target_https_proxies::v1::
@@ -372,9 +370,7 @@ TargetHttpsProxiesRestConnectionImpl::ListTargetHttpsProxies(
       StreamRange<google::cloud::cpp::compute::v1::TargetHttpsProxy>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           compute_target_https_proxies_v1::TargetHttpsProxiesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::target_https_proxies::v1::

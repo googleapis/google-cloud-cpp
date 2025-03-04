@@ -32,8 +32,7 @@ namespace orgpolicy_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<orgpolicy_v2::OrgPolicyRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<orgpolicy_v2::OrgPolicyRetryPolicyOption>()->clone();
 }
 
@@ -69,8 +68,7 @@ OrgPolicyConnectionImpl::ListConstraints(
       StreamRange<google::cloud::orgpolicy::v2::Constraint>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<orgpolicy_v2::OrgPolicyRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::orgpolicy::v2::ListConstraintsRequest const& r) {
@@ -103,8 +101,7 @@ OrgPolicyConnectionImpl::ListPolicies(
       StreamRange<google::cloud::orgpolicy::v2::Policy>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<orgpolicy_v2::OrgPolicyRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::orgpolicy::v2::ListPoliciesRequest const& r) {
@@ -255,8 +252,7 @@ OrgPolicyConnectionImpl::ListCustomConstraints(
       StreamRange<google::cloud::orgpolicy::v2::CustomConstraint>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<orgpolicy_v2::OrgPolicyRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::orgpolicy::v2::ListCustomConstraintsRequest const& r) {

@@ -39,11 +39,7 @@ namespace compute_global_addresses_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `GlobalAddressesConnection`.
-class GlobalAddressesRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<GlobalAddressesRetryPolicy> clone() const = 0;
-};
+class GlobalAddressesRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `GlobalAddressesConnection` based on counting errors.
@@ -84,7 +80,7 @@ class GlobalAddressesLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<GlobalAddressesRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<GlobalAddressesLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -154,7 +150,7 @@ class GlobalAddressesLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<GlobalAddressesRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<GlobalAddressesLimitedTimeRetryPolicy>(
         maximum_duration());
   }

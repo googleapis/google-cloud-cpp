@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-policysimulator-options
  */
 struct SimulatorRetryPolicyOption {
-  using Type = std::shared_ptr<SimulatorRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

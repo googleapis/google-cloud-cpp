@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-accessapproval-options
  */
 struct AccessApprovalRetryPolicyOption {
-  using Type = std::shared_ptr<AccessApprovalRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

@@ -69,9 +69,7 @@ class InstanceSettingsRestConnectionImpl
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
-  static std::unique_ptr<
-      compute_instance_settings_v1::InstanceSettingsRetryPolicy>
-  retry_policy(Options const& options) {
+  static std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
     return options
         .get<compute_instance_settings_v1::InstanceSettingsRetryPolicyOption>()
         ->clone();

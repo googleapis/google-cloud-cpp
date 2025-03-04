@@ -68,6 +68,9 @@ class RetryPolicy {
   /// non-retryable) error.
   virtual bool IsPermanentFailure(Status const& status) const = 0;
   ///@}
+
+  /// Creates a new instance of the policy, reset to the initial state.
+  virtual std::unique_ptr<RetryPolicy> clone() const = 0;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

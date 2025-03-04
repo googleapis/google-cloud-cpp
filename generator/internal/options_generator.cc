@@ -64,7 +64,7 @@ Status OptionsGenerator::GenerateHeader() {
  * @ingroup $product_options_page$
  */
 struct $retry_policy_name$Option {
-  using Type = std::shared_ptr<$retry_policy_name$>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

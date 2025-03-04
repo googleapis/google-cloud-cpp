@@ -518,7 +518,7 @@ class TestUniverseDomainRetryPolicy
     return impl_.IsPermanentFailure(status);
   }
   int maximum_failures() const { return impl_.maximum_failures(); }
-  std::unique_ptr<internal::UniverseDomainRetryPolicy> clone() const override {
+  std::unique_ptr<google::cloud::RetryPolicy> clone() const override {
     return std::make_unique<TestUniverseDomainRetryPolicy>(maximum_failures());
   }
 

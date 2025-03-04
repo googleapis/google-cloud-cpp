@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-baremetalsolution-options
  */
 struct BareMetalSolutionRetryPolicyOption {
-  using Type = std::shared_ptr<BareMetalSolutionRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

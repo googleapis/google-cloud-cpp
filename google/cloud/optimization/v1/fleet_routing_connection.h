@@ -39,11 +39,7 @@ namespace optimization_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `FleetRoutingConnection`.
-class FleetRoutingRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<FleetRoutingRetryPolicy> clone() const = 0;
-};
+class FleetRoutingRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `FleetRoutingConnection` based on counting errors.
@@ -84,7 +80,7 @@ class FleetRoutingLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<FleetRoutingRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<FleetRoutingLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -153,7 +149,7 @@ class FleetRoutingLimitedTimeRetryPolicy : public FleetRoutingRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<FleetRoutingRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<FleetRoutingLimitedTimeRetryPolicy>(
         maximum_duration());
   }

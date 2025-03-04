@@ -36,12 +36,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `PublicCertificateAuthorityServiceConnection`.
 class PublicCertificateAuthorityServiceRetryPolicy
-    : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<PublicCertificateAuthorityServiceRetryPolicy> clone()
-      const = 0;
-};
+    : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `PublicCertificateAuthorityServiceConnection` based on
@@ -88,8 +83,7 @@ class PublicCertificateAuthorityServiceLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<PublicCertificateAuthorityServiceRetryPolicy> clone()
-      const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<
         PublicCertificateAuthorityServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
@@ -164,8 +158,7 @@ class PublicCertificateAuthorityServiceLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<PublicCertificateAuthorityServiceRetryPolicy> clone()
-      const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<
         PublicCertificateAuthorityServiceLimitedTimeRetryPolicy>(
         maximum_duration());

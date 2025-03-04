@@ -40,11 +40,7 @@ namespace datastream_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `DatastreamConnection`.
-class DatastreamRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<DatastreamRetryPolicy> clone() const = 0;
-};
+class DatastreamRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `DatastreamConnection` based on counting errors.
@@ -84,7 +80,7 @@ class DatastreamLimitedErrorCountRetryPolicy : public DatastreamRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<DatastreamRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<DatastreamLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -153,7 +149,7 @@ class DatastreamLimitedTimeRetryPolicy : public DatastreamRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<DatastreamRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<DatastreamLimitedTimeRetryPolicy>(
         maximum_duration());
   }

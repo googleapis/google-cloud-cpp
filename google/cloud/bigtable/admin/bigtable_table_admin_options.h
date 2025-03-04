@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-bigtable-options
  */
 struct BigtableTableAdminRetryPolicyOption {
-  using Type = std::shared_ptr<BigtableTableAdminRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

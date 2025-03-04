@@ -33,8 +33,7 @@ namespace certificatemanager_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<certificatemanager_v1::CertificateManagerRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options
       .get<certificatemanager_v1::CertificateManagerRetryPolicyOption>()
       ->clone();
@@ -84,9 +83,7 @@ CertificateManagerConnectionImpl::ListCertificates(
       StreamRange<google::cloud::certificatemanager::v1::Certificate>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           certificatemanager_v1::CertificateManagerRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::certificatemanager::v1::ListCertificatesRequest const&
@@ -427,9 +424,7 @@ CertificateManagerConnectionImpl::ListCertificateMaps(
       StreamRange<google::cloud::certificatemanager::v1::CertificateMap>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           certificatemanager_v1::CertificateManagerRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::certificatemanager::v1::
                                       ListCertificateMapsRequest const& r) {
@@ -766,9 +761,7 @@ CertificateManagerConnectionImpl::ListCertificateMapEntries(
       StreamRange<google::cloud::certificatemanager::v1::CertificateMapEntry>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           certificatemanager_v1::CertificateManagerRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::certificatemanager::v1::
@@ -1103,9 +1096,7 @@ CertificateManagerConnectionImpl::ListDnsAuthorizations(
       StreamRange<google::cloud::certificatemanager::v1::DnsAuthorization>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           certificatemanager_v1::CertificateManagerRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::certificatemanager::v1::
                                       ListDnsAuthorizationsRequest const& r) {
@@ -1442,9 +1433,7 @@ CertificateManagerConnectionImpl::ListCertificateIssuanceConfigs(
       google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           certificatemanager_v1::CertificateManagerRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::certificatemanager::v1::
@@ -1693,9 +1682,7 @@ CertificateManagerConnectionImpl::ListTrustConfigs(
       StreamRange<google::cloud::certificatemanager::v1::TrustConfig>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           certificatemanager_v1::CertificateManagerRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::certificatemanager::v1::ListTrustConfigsRequest const&
@@ -2036,9 +2023,7 @@ CertificateManagerConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           certificatemanager_v1::CertificateManagerRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {
@@ -2085,9 +2070,7 @@ CertificateManagerConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           certificatemanager_v1::CertificateManagerRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

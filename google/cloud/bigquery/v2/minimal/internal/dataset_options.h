@@ -31,7 +31,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * Use with `google::cloud::Options` to configure the retry policy.
  */
 struct DatasetRetryPolicyOption {
-  using Type = std::shared_ptr<DatasetRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

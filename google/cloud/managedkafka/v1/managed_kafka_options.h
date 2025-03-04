@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-managedkafka-options
  */
 struct ManagedKafkaRetryPolicyOption {
-  using Type = std::shared_ptr<ManagedKafkaRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

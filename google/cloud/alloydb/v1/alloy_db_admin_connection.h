@@ -40,11 +40,7 @@ namespace alloydb_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `AlloyDBAdminConnection`.
-class AlloyDBAdminRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<AlloyDBAdminRetryPolicy> clone() const = 0;
-};
+class AlloyDBAdminRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `AlloyDBAdminConnection` based on counting errors.
@@ -85,7 +81,7 @@ class AlloyDBAdminLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<AlloyDBAdminRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<AlloyDBAdminLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -154,7 +150,7 @@ class AlloyDBAdminLimitedTimeRetryPolicy : public AlloyDBAdminRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<AlloyDBAdminRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<AlloyDBAdminLimitedTimeRetryPolicy>(
         maximum_duration());
   }

@@ -40,11 +40,7 @@ namespace iam_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `PoliciesConnection`.
-class PoliciesRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<PoliciesRetryPolicy> clone() const = 0;
-};
+class PoliciesRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `PoliciesConnection` based on counting errors.
@@ -84,7 +80,7 @@ class PoliciesLimitedErrorCountRetryPolicy : public PoliciesRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<PoliciesRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<PoliciesLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -152,7 +148,7 @@ class PoliciesLimitedTimeRetryPolicy : public PoliciesRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<PoliciesRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<PoliciesLimitedTimeRetryPolicy>(maximum_duration());
   }
 

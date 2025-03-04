@@ -36,11 +36,7 @@ namespace compute_regions_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `RegionsConnection`.
-class RegionsRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<RegionsRetryPolicy> clone() const = 0;
-};
+class RegionsRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `RegionsConnection` based on counting errors.
@@ -80,7 +76,7 @@ class RegionsLimitedErrorCountRetryPolicy : public RegionsRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<RegionsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<RegionsLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -148,7 +144,7 @@ class RegionsLimitedTimeRetryPolicy : public RegionsRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<RegionsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<RegionsLimitedTimeRetryPolicy>(maximum_duration());
   }
 

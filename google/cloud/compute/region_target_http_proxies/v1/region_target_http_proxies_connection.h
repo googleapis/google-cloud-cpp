@@ -41,9 +41,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `RegionTargetHttpProxiesConnection`.
 class RegionTargetHttpProxiesRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<RegionTargetHttpProxiesRetryPolicy> clone() const = 0;
 };
 
 /**
@@ -89,7 +86,7 @@ class RegionTargetHttpProxiesLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<RegionTargetHttpProxiesRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<
         RegionTargetHttpProxiesLimitedErrorCountRetryPolicy>(
         maximum_failures());
@@ -161,7 +158,7 @@ class RegionTargetHttpProxiesLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<RegionTargetHttpProxiesRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<RegionTargetHttpProxiesLimitedTimeRetryPolicy>(
         maximum_duration());
   }

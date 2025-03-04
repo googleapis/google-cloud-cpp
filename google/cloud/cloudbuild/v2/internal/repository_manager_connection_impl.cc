@@ -33,8 +33,7 @@ namespace cloudbuild_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<cloudbuild_v2::RepositoryManagerRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<cloudbuild_v2::RepositoryManagerRetryPolicyOption>()
       ->clone();
 }
@@ -187,8 +186,7 @@ RepositoryManagerConnectionImpl::ListConnections(
       StreamRange<google::devtools::cloudbuild::v2::Connection>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<cloudbuild_v2::RepositoryManagerRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::devtools::cloudbuild::v2::ListConnectionsRequest const& r) {
@@ -616,8 +614,7 @@ RepositoryManagerConnectionImpl::ListRepositories(
       StreamRange<google::devtools::cloudbuild::v2::Repository>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<cloudbuild_v2::RepositoryManagerRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::devtools::cloudbuild::v2::ListRepositoriesRequest const& r) {
@@ -778,8 +775,7 @@ RepositoryManagerConnectionImpl::FetchLinkableRepositories(
       StreamRange<google::devtools::cloudbuild::v2::Repository>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<cloudbuild_v2::RepositoryManagerRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::devtools::cloudbuild::v2::

@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-vmwareengine-options
  */
 struct VmwareEngineRetryPolicyOption {
-  using Type = std::shared_ptr<VmwareEngineRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

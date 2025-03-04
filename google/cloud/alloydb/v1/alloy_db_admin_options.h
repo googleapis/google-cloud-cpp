@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-alloydb-options
  */
 struct AlloyDBAdminRetryPolicyOption {
-  using Type = std::shared_ptr<AlloyDBAdminRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

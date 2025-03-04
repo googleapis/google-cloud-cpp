@@ -33,8 +33,7 @@ namespace networksecurity_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<networksecurity_v1::NetworkSecurityRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<networksecurity_v1::NetworkSecurityRetryPolicyOption>()
       ->clone();
 }
@@ -81,8 +80,7 @@ NetworkSecurityConnectionImpl::ListAuthorizationPolicies(
       StreamRange<google::cloud::networksecurity::v1::AuthorizationPolicy>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<networksecurity_v1::NetworkSecurityRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::networksecurity::v1::
@@ -419,8 +417,7 @@ NetworkSecurityConnectionImpl::ListServerTlsPolicies(
       StreamRange<google::cloud::networksecurity::v1::ServerTlsPolicy>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<networksecurity_v1::NetworkSecurityRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::networksecurity::v1::
                                       ListServerTlsPoliciesRequest const& r) {
@@ -756,8 +753,7 @@ NetworkSecurityConnectionImpl::ListClientTlsPolicies(
       StreamRange<google::cloud::networksecurity::v1::ClientTlsPolicy>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<networksecurity_v1::NetworkSecurityRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::networksecurity::v1::
                                       ListClientTlsPoliciesRequest const& r) {
@@ -1092,8 +1088,7 @@ NetworkSecurityConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<networksecurity_v1::NetworkSecurityRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {
@@ -1180,8 +1175,7 @@ NetworkSecurityConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<networksecurity_v1::NetworkSecurityRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

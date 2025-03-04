@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-sql-options
  */
 struct SqlOperationsServiceRetryPolicyOption {
-  using Type = std::shared_ptr<SqlOperationsServiceRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

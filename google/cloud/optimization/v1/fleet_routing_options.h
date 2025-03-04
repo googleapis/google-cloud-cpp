@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-optimization-options
  */
 struct FleetRoutingRetryPolicyOption {
-  using Type = std::shared_ptr<FleetRoutingRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

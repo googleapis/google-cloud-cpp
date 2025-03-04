@@ -31,8 +31,7 @@ namespace eventarc_publishing_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<eventarc_publishing_v1::PublisherRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<eventarc_publishing_v1::PublisherRetryPolicyOption>()
       ->clone();
 }

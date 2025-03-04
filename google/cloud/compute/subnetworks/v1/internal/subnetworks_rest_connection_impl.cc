@@ -57,8 +57,7 @@ SubnetworksRestConnectionImpl::AggregatedListSubnetworks(
       std::string, google::cloud::cpp::compute::v1::SubnetworksScopedList>>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_subnetworks_v1::SubnetworksRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::subnetworks::v1::
@@ -524,8 +523,7 @@ SubnetworksRestConnectionImpl::ListSubnetworks(
       StreamRange<google::cloud::cpp::compute::v1::Subnetwork>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_subnetworks_v1::SubnetworksRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::cpp::compute::subnetworks::v1::
                                       ListSubnetworksRequest const& r) {
@@ -559,8 +557,7 @@ SubnetworksRestConnectionImpl::ListUsable(
       StreamRange<google::cloud::cpp::compute::v1::UsableSubnetwork>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_subnetworks_v1::SubnetworksRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest const&

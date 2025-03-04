@@ -40,11 +40,7 @@ namespace gkebackup_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `BackupForGKEConnection`.
-class BackupForGKERetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<BackupForGKERetryPolicy> clone() const = 0;
-};
+class BackupForGKERetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `BackupForGKEConnection` based on counting errors.
@@ -85,7 +81,7 @@ class BackupForGKELimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<BackupForGKERetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<BackupForGKELimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -154,7 +150,7 @@ class BackupForGKELimitedTimeRetryPolicy : public BackupForGKERetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<BackupForGKERetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<BackupForGKELimitedTimeRetryPolicy>(
         maximum_duration());
   }

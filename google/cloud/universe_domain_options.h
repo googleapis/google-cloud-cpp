@@ -70,16 +70,13 @@ struct UniverseDomainOption {
 /**
  * The retry policy used in querying the universe domain from some credentials.
  */
-class UniverseDomainRetryPolicy : public RetryPolicy {
- public:
-  virtual std::unique_ptr<UniverseDomainRetryPolicy> clone() const = 0;
-};
+class UniverseDomainRetryPolicy : public google::cloud::RetryPolicy {};
 
 /**
  * Use with `google::cloud::Options` to configure the retry policy.
  */
 struct UniverseDomainRetryPolicyOption {
-  using Type = std::shared_ptr<UniverseDomainRetryPolicy>;
+  using Type = std::shared_ptr<google::cloud::RetryPolicy>;
 };
 
 /**

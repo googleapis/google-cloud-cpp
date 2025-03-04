@@ -146,7 +146,7 @@ class GoldenThingAdminRestConnectionImpl
   AsyncDropDatabase(google::test::admin::database::v1::DropDatabaseRequest const& request) override;
 
  private:
-  static std::unique_ptr<golden_v1::GoldenThingAdminRetryPolicy>
+  static std::unique_ptr<RetryPolicy>
   retry_policy(Options const& options) {
     return options.get<golden_v1::GoldenThingAdminRetryPolicyOption>()->clone();
   }

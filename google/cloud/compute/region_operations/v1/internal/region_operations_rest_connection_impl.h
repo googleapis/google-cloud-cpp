@@ -67,9 +67,7 @@ class RegionOperationsRestConnectionImpl
           request) override;
 
  private:
-  static std::unique_ptr<
-      compute_region_operations_v1::RegionOperationsRetryPolicy>
-  retry_policy(Options const& options) {
+  static std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
     return options
         .get<compute_region_operations_v1::RegionOperationsRetryPolicyOption>()
         ->clone();

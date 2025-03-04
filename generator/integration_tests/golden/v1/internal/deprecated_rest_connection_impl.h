@@ -52,7 +52,7 @@ class DeprecatedServiceRestConnectionImpl
   Noop(google::test::deprecated::v1::DeprecatedServiceRequest const& request) override;
 
  private:
-  static std::unique_ptr<golden_v1::DeprecatedServiceRetryPolicy>
+  static std::unique_ptr<RetryPolicy>
   retry_policy(Options const& options) {
     return options.get<golden_v1::DeprecatedServiceRetryPolicyOption>()->clone();
   }

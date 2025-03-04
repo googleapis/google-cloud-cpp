@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-datacatalog-options
  */
 struct PolicyTagManagerRetryPolicyOption {
-  using Type = std::shared_ptr<PolicyTagManagerRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

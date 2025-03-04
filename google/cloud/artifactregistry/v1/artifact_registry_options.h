@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-artifactregistry-options
  */
 struct ArtifactRegistryRetryPolicyOption {
-  using Type = std::shared_ptr<ArtifactRegistryRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

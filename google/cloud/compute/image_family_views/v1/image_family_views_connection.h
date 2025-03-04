@@ -35,11 +35,7 @@ namespace compute_image_family_views_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `ImageFamilyViewsConnection`.
-class ImageFamilyViewsRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<ImageFamilyViewsRetryPolicy> clone() const = 0;
-};
+class ImageFamilyViewsRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `ImageFamilyViewsConnection` based on counting errors.
@@ -80,7 +76,7 @@ class ImageFamilyViewsLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<ImageFamilyViewsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<ImageFamilyViewsLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -150,7 +146,7 @@ class ImageFamilyViewsLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<ImageFamilyViewsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<ImageFamilyViewsLimitedTimeRetryPolicy>(
         maximum_duration());
   }

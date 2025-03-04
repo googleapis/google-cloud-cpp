@@ -40,11 +40,7 @@ namespace resourcemanager_v3 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `TagHoldsConnection`.
-class TagHoldsRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<TagHoldsRetryPolicy> clone() const = 0;
-};
+class TagHoldsRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `TagHoldsConnection` based on counting errors.
@@ -84,7 +80,7 @@ class TagHoldsLimitedErrorCountRetryPolicy : public TagHoldsRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<TagHoldsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<TagHoldsLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -152,7 +148,7 @@ class TagHoldsLimitedTimeRetryPolicy : public TagHoldsRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<TagHoldsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<TagHoldsLimitedTimeRetryPolicy>(maximum_duration());
   }
 

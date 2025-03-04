@@ -52,6 +52,10 @@ bool ExactlyOnceRetryPolicy::IsPermanentFailure(Status const& status) const {
   });
 }
 
+std::unique_ptr<RetryPolicy> ExactlyOnceRetryPolicy::clone() const {
+  return std::make_unique<ExactlyOnceRetryPolicy>(ack_id_);
+}
+
 bool ExactlyOnceRetryable(StatusCode code) {
   // Of these, `kDeadlineExceeded` might be controversial.  There is no (as of
   // this writing) mechanism for applications to set a deadline on these

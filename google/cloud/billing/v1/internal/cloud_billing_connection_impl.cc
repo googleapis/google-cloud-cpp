@@ -32,8 +32,7 @@ namespace billing_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<billing_v1::CloudBillingRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<billing_v1::CloudBillingRetryPolicyOption>()->clone();
 }
 
@@ -85,8 +84,7 @@ CloudBillingConnectionImpl::ListBillingAccounts(
       StreamRange<google::cloud::billing::v1::BillingAccount>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<billing_v1::CloudBillingRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::billing::v1::ListBillingAccountsRequest const& r) {
@@ -150,8 +148,7 @@ CloudBillingConnectionImpl::ListProjectBillingInfo(
       StreamRange<google::cloud::billing::v1::ProjectBillingInfo>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<billing_v1::CloudBillingRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::billing::v1::ListProjectBillingInfoRequest const& r) {

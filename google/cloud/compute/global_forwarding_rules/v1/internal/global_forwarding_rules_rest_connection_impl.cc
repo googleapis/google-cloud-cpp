@@ -330,9 +330,7 @@ GlobalForwardingRulesRestConnectionImpl::ListGlobalForwardingRules(
       StreamRange<google::cloud::cpp::compute::v1::ForwardingRule>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_global_forwarding_rules_v1::
-                                   GlobalForwardingRulesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::global_forwarding_rules::v1::

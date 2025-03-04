@@ -41,11 +41,7 @@ namespace aiplatform_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `IndexEndpointServiceConnection`.
-class IndexEndpointServiceRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<IndexEndpointServiceRetryPolicy> clone() const = 0;
-};
+class IndexEndpointServiceRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `IndexEndpointServiceConnection` based on counting errors.
@@ -89,7 +85,7 @@ class IndexEndpointServiceLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<IndexEndpointServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<IndexEndpointServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -159,7 +155,7 @@ class IndexEndpointServiceLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<IndexEndpointServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<IndexEndpointServiceLimitedTimeRetryPolicy>(
         maximum_duration());
   }

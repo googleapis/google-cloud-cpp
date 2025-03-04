@@ -502,10 +502,7 @@ InstanceGroupManagerResizeRequestsRestConnectionImpl::
       google::cloud::cpp::compute::v1::InstanceGroupManagerResizeRequest>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<compute_instance_group_manager_resize_requests_v1::
-                               InstanceGroupManagerResizeRequestsRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::instance_group_manager_resize_requests::

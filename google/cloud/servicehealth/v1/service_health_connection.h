@@ -36,11 +36,7 @@ namespace servicehealth_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `ServiceHealthConnection`.
-class ServiceHealthRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<ServiceHealthRetryPolicy> clone() const = 0;
-};
+class ServiceHealthRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `ServiceHealthConnection` based on counting errors.
@@ -81,7 +77,7 @@ class ServiceHealthLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<ServiceHealthRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<ServiceHealthLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -150,7 +146,7 @@ class ServiceHealthLimitedTimeRetryPolicy : public ServiceHealthRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<ServiceHealthRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<ServiceHealthLimitedTimeRetryPolicy>(
         maximum_duration());
   }

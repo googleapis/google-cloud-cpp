@@ -70,8 +70,7 @@ class TableServiceRestConnectionImpl
       google::cloud::bigquery::v2::ListTablesRequest request) override;
 
  private:
-  static std::unique_ptr<bigquerycontrol_v2::TableServiceRetryPolicy>
-  retry_policy(Options const& options) {
+  static std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
     return options.get<bigquerycontrol_v2::TableServiceRetryPolicyOption>()
         ->clone();
   }

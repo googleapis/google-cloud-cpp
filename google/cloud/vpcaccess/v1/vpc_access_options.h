@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-vpcaccess-options
  */
 struct VpcAccessServiceRetryPolicyOption {
-  using Type = std::shared_ptr<VpcAccessServiceRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

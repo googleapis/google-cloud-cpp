@@ -39,11 +39,7 @@ namespace compute_snapshots_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `SnapshotsConnection`.
-class SnapshotsRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<SnapshotsRetryPolicy> clone() const = 0;
-};
+class SnapshotsRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `SnapshotsConnection` based on counting errors.
@@ -83,7 +79,7 @@ class SnapshotsLimitedErrorCountRetryPolicy : public SnapshotsRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<SnapshotsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<SnapshotsLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -152,7 +148,7 @@ class SnapshotsLimitedTimeRetryPolicy : public SnapshotsRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<SnapshotsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<SnapshotsLimitedTimeRetryPolicy>(
         maximum_duration());
   }

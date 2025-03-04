@@ -39,11 +39,7 @@ namespace compute_backend_services_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `BackendServicesConnection`.
-class BackendServicesRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<BackendServicesRetryPolicy> clone() const = 0;
-};
+class BackendServicesRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `BackendServicesConnection` based on counting errors.
@@ -84,7 +80,7 @@ class BackendServicesLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<BackendServicesRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<BackendServicesLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -154,7 +150,7 @@ class BackendServicesLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<BackendServicesRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<BackendServicesLimitedTimeRetryPolicy>(
         maximum_duration());
   }

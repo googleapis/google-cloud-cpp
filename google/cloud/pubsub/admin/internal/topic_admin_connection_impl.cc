@@ -32,8 +32,7 @@ namespace pubsub_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<pubsub_admin::TopicAdminRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<pubsub_admin::TopicAdminRetryPolicyOption>()->clone();
 }
 
@@ -108,8 +107,7 @@ StreamRange<google::pubsub::v1::Topic> TopicAdminConnectionImpl::ListTopics(
       StreamRange<google::pubsub::v1::Topic>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<pubsub_admin::TopicAdminRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::pubsub::v1::ListTopicsRequest const& r) {
@@ -139,8 +137,7 @@ StreamRange<std::string> TopicAdminConnectionImpl::ListTopicSubscriptions(
   return google::cloud::internal::MakePaginationRange<StreamRange<std::string>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<pubsub_admin::TopicAdminRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::pubsub::v1::ListTopicSubscriptionsRequest const& r) {
@@ -170,8 +167,7 @@ StreamRange<std::string> TopicAdminConnectionImpl::ListTopicSnapshots(
   return google::cloud::internal::MakePaginationRange<StreamRange<std::string>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<pubsub_admin::TopicAdminRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::pubsub::v1::ListTopicSnapshotsRequest const& r) {

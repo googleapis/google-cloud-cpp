@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-datacatalog-options
  */
 struct LineageRetryPolicyOption {
-  using Type = std::shared_ptr<LineageRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

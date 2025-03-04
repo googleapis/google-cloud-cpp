@@ -212,8 +212,7 @@ class InstanceAdminRestConnectionImpl
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  static std::unique_ptr<spanner_admin::InstanceAdminRetryPolicy> retry_policy(
-      Options const& options) {
+  static std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
     return options.get<spanner_admin::InstanceAdminRetryPolicyOption>()
         ->clone();
   }

@@ -36,11 +36,7 @@ namespace datacatalog_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `PolicyTagManagerConnection`.
-class PolicyTagManagerRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<PolicyTagManagerRetryPolicy> clone() const = 0;
-};
+class PolicyTagManagerRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `PolicyTagManagerConnection` based on counting errors.
@@ -81,7 +77,7 @@ class PolicyTagManagerLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<PolicyTagManagerRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<PolicyTagManagerLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -151,7 +147,7 @@ class PolicyTagManagerLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<PolicyTagManagerRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<PolicyTagManagerLimitedTimeRetryPolicy>(
         maximum_duration());
   }

@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-discoveryengine-options
  */
 struct GroundedGenerationServiceRetryPolicyOption {
-  using Type = std::shared_ptr<GroundedGenerationServiceRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

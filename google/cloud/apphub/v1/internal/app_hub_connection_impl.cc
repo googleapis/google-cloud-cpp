@@ -33,8 +33,7 @@ namespace apphub_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<apphub_v1::AppHubRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<apphub_v1::AppHubRetryPolicyOption>()->clone();
 }
 
@@ -90,8 +89,7 @@ AppHubConnectionImpl::ListServiceProjectAttachments(
       StreamRange<google::cloud::apphub::v1::ServiceProjectAttachment>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<apphub_v1::AppHubRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::apphub::v1::ListServiceProjectAttachmentsRequest const&
@@ -350,8 +348,7 @@ AppHubConnectionImpl::ListDiscoveredServices(
       StreamRange<google::cloud::apphub::v1::DiscoveredService>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<apphub_v1::AppHubRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::apphub::v1::ListDiscoveredServicesRequest const& r) {
@@ -415,8 +412,7 @@ AppHubConnectionImpl::ListServices(
       StreamRange<google::cloud::apphub::v1::Service>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<apphub_v1::AppHubRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::apphub::v1::ListServicesRequest const& r) {
@@ -731,8 +727,7 @@ AppHubConnectionImpl::ListDiscoveredWorkloads(
       StreamRange<google::cloud::apphub::v1::DiscoveredWorkload>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<apphub_v1::AppHubRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::apphub::v1::ListDiscoveredWorkloadsRequest const& r) {
@@ -796,8 +791,7 @@ AppHubConnectionImpl::ListWorkloads(
       StreamRange<google::cloud::apphub::v1::Workload>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<apphub_v1::AppHubRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::apphub::v1::ListWorkloadsRequest const& r) {
@@ -1111,8 +1105,7 @@ AppHubConnectionImpl::ListApplications(
       StreamRange<google::cloud::apphub::v1::Application>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<apphub_v1::AppHubRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::apphub::v1::ListApplicationsRequest const& r) {
@@ -1433,8 +1426,7 @@ AppHubConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<apphub_v1::AppHubRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {
@@ -1520,8 +1512,7 @@ AppHubConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<apphub_v1::AppHubRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

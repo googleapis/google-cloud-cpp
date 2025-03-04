@@ -39,11 +39,7 @@ namespace compute_firewalls_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `FirewallsConnection`.
-class FirewallsRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<FirewallsRetryPolicy> clone() const = 0;
-};
+class FirewallsRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `FirewallsConnection` based on counting errors.
@@ -83,7 +79,7 @@ class FirewallsLimitedErrorCountRetryPolicy : public FirewallsRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<FirewallsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<FirewallsLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -152,7 +148,7 @@ class FirewallsLimitedTimeRetryPolicy : public FirewallsRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<FirewallsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<FirewallsLimitedTimeRetryPolicy>(
         maximum_duration());
   }

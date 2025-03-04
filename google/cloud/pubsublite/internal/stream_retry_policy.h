@@ -37,6 +37,10 @@ class StreamRetryPolicy : public google::cloud::RetryPolicy {
     return retryable_codes_.find(s.code()) == retryable_codes_.end();
   }
 
+  std::unique_ptr<google::cloud::RetryPolicy> clone() const override {
+    return std::make_unique<StreamRetryPolicy>();
+  }
+
  private:
   class StatusCodeHash {
    public:
