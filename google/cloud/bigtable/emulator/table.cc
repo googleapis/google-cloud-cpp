@@ -247,13 +247,10 @@ Status Table::MutateRow(google::bigtable::v2::MutateRowRequest const& request) {
         // FIXME no such row or column
       }
     } else if (mutation.has_delete_from_family()) {
-      auto maybe_column_family =
-          FindColumnFamily(mutation.delete_from_family());
-      if (!maybe_column_family) {
-        return maybe_column_family.status();
-      }
-      if (maybe_column_family->get().DeleteRow(request.row_key())) {
-        // FIXME no such row existed in that column family
+      auto const& delete_from_family = mutation.delete_from_family();
+      auto status = row_transaction.DeleteFromFamily(delete_from_family);
+      if (!status.ok()) {
+        return status;
       }
     } else if (mutation.has_delete_from_row()) {
       bool row_existed = false;
