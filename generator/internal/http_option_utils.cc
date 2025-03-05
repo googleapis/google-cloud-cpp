@@ -221,7 +221,7 @@ absl::optional<QueryParameterInfo> DetermineQueryParameterInfo(
     } else {
       // But also consider protobuf well known types that wrap simple types.
       auto iter = kSupportedWellKnownValueTypes->find(
-          field.message_type()->full_name());
+          std::string{field.message_type()->full_name()});
       if (iter != kSupportedWellKnownValueTypes->end()) {
         param_info = QueryParameterInfo{
             iter->second, absl::StrCat("request.", field.name(), "().value()"),
