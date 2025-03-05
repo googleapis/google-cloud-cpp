@@ -6,6 +6,10 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
 
 ## v2.37.0 - TBD
 
+**BREAKING CHANGES**
+
+Client library `resourcesettings` is being removed because the service has been turned down.
+
 ## v2.36.0 - 2025-03
 
 ### New Libraries
