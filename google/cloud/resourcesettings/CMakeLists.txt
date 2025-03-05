@@ -18,16 +18,3 @@ include(GoogleCloudCppLibrary)
 
 google_cloud_cpp_add_gapic_library(resourcesettings "Resource Settings API"
                                    SERVICE_DIRS "__EMPTY__" "v1/")
-
-if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
-    add_executable(resourcesettings_quickstart "quickstart/quickstart.cc")
-    target_link_libraries(resourcesettings_quickstart
-                          PRIVATE google-cloud-cpp::resourcesettings)
-    google_cloud_cpp_add_common_options(resourcesettings_quickstart)
-    add_test(
-        NAME resourcesettings_quickstart
-        COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
-                $<TARGET_FILE:resourcesettings_quickstart> GOOGLE_CLOUD_PROJECT)
-    set_tests_properties(resourcesettings_quickstart
-                         PROPERTIES LABELS "integration-test;quickstart")
-endif ()

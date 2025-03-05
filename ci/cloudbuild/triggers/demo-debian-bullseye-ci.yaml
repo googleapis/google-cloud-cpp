@@ -1,14 +1,11 @@
-createTime: '2021-08-17T14:42:37.946358416Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   push:
     branch: v2.22.x
-id: 99ed51ab-3b42-4046-8698-6ea54b39afaa
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 name: v2-22-x-demo-debian-bullseye-ci
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/99ed51ab-3b42-4046-8698-6ea54b39afaa
 substitutions:
   _BUILD_NAME: demo-install
   _DISTRO: demo-debian-bullseye

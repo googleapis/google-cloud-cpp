@@ -1,15 +1,12 @@
-createTime: '2021-04-16T13:00:31.944469840Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: v2.22.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-id: 0ada9a21-5379-48e2-9e6d-8c388d6333e5
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: coverage-pr
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/0ada9a21-5379-48e2-9e6d-8c388d6333e5
+name: v2-22-x-coverage-pr
 substitutions:
   _BUILD_NAME: coverage
   _DISTRO: fedora-latest-bazel

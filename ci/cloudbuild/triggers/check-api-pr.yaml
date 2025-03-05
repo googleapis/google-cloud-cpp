@@ -1,4 +1,3 @@
-createTime: '2021-04-30T13:51:18.047210322Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
@@ -6,10 +5,8 @@ github:
   pullRequest:
     branch: v2.22.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-id: 9d4afe6c-48fc-4bc4-8b40-68312b2c0fec
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 name: v2-22-x-check-api-pr
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/9d4afe6c-48fc-4bc4-8b40-68312b2c0fec
 substitutions:
   _BUILD_NAME: check-api
   _DISTRO: fedora-latest-cmake

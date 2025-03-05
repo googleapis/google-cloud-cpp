@@ -1,14 +1,11 @@
-createTime: '2022-05-13T19:36:13.788953133Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   push:
     branch: v2.22.x
-id: a646ace3-c0a6-4acf-8e42-72c8d2aece0c
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 name: v2-22-x-demo-ubuntu-jammy-ci
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/a646ace3-c0a6-4acf-8e42-72c8d2aece0c
 substitutions:
   _BUILD_NAME: demo-install
   _DISTRO: demo-ubuntu-jammy

@@ -1,14 +1,11 @@
-createTime: '2023-10-30T21:38:59.771402989Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   push:
     branch: v2.22.x
-id: 9858e9c0-2f5a-45ad-9e5b-3af30eaf30af
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 name: v2-22-x-conformance-ci
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/9858e9c0-2f5a-45ad-9e5b-3af30eaf30af
 substitutions:
   _BUILD_NAME: conformance
   _DISTRO: fedora-latest-bazel

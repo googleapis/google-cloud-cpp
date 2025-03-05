@@ -1,4 +1,3 @@
-createTime: '2021-04-23T21:24:42.026459567Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
@@ -6,10 +5,8 @@ github:
   pullRequest:
     branch: v2.22.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-id: 7957a267-70de-4e1b-a6b9-99469602a8af
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 name: v2-22-x-publish-docs-pr
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/7957a267-70de-4e1b-a6b9-99469602a8af
 substitutions:
   _BUILD_NAME: publish-docs
   _DISTRO: fedora-latest-publish-docs

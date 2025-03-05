@@ -1,13 +1,11 @@
-createTime: '2021-03-30T00:38:59.589682412Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
-id: 2d35a7fd-e273-44d4-b592-fc8810327a27
+    branch: v2.22.x
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: checkers-ci
+name: v2-22-x-checkers-ci
 substitutions:
   _BUILD_NAME: checkers
   _DISTRO: checkers

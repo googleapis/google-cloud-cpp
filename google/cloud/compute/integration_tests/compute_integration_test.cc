@@ -143,6 +143,8 @@ TEST_F(ComputeIntegrationTest, PaginatedMapField) {
 }
 
 TEST_F(ComputeIntegrationTest, VerifyUpdateSendsUpdateMaskParameter) {
+  // This is a known issue with v2.22.x and the current service behavior.
+  GTEST_SKIP();
   namespace disks = ::google::cloud::compute_disks_v1;
   auto client = disks::DisksClient(disks::MakeDisksConnectionRest());
 

@@ -1,14 +1,11 @@
-createTime: '2022-06-24T18:22:48.436591174Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   push:
     branch: v2.22.x
-id: d5596043-576e-41b2-b324-72805c5983e1
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 name: v2-22-x-demo-alpine-stable-ci
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/d5596043-576e-41b2-b324-72805c5983e1
 substitutions:
   _BUILD_NAME: demo-install
   _DISTRO: demo-alpine-stable

@@ -1,13 +1,10 @@
-createTime: '2023-06-13T12:46:50.379194817Z'
 description: Compiles using gRPC at HEAD
 gitFileSource:
   path: ci/cloudbuild/cloudbuild.yaml
   repoType: GITHUB
   revision: refs/heads/main
   uri: https://github.com/googleapis/google-cloud-cpp
-id: 7dc9cea4-9d0b-4d0f-9947-5b79bfee5c12
 name: v2-22-x-protobuf-at-head
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/7dc9cea4-9d0b-4d0f-9947-5b79bfee5c12
 sourceToBuild:
   ref: refs/heads/main
   repoType: GITHUB

@@ -1,14 +1,11 @@
-createTime: '2021-04-13T23:36:00.260269718Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   push:
     branch: v2.22.x
-id: 3b91bcd6-80af-4aa0-9e64-60047f5a65f5
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 name: v2-22-x-demo-opensuse-leap-ci
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/3b91bcd6-80af-4aa0-9e64-60047f5a65f5
 substitutions:
   _BUILD_NAME: demo-install
   _DISTRO: demo-opensuse-leap

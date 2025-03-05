@@ -1,11 +1,9 @@
-createTime: '2021-04-13T23:35:58.117686333Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   push:
     branch: v2.22.x
-id: efe44360-59b3-4784-96f6-ebe03ecdd2f7
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 name: v2-22-x-demo-fedora-ci
 substitutions:
