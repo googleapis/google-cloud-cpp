@@ -436,20 +436,20 @@ Status RowTransaction::DeleteFromFamily(
       column_family_it != table_it->second->end()) {
     RestoreRow restore_row;
 
-    restore_row.table_it = table_it;
-    restore_row.row_key = request_.row_key();
+    restore_row.table_it_ = table_it;
+    restore_row.row_key_ = request_.row_key();
     std::vector<RestoreRow::Cell> cells;
     for (auto const& column : column_family_it->second) {
       for (auto const& column_row : column.second) {
         RestoreRow::Cell cell;
 
-        cell.column_qualifer = std::move(column.first);
-        cell.timestamp = column_row.first;  // Wait, is this correct?
-        cell.value = std::move(column_row.second);
+        cell.column_qualifer_ = std::move(column.first);
+        cell.timestamp_ = column_row.first;  // Wait, is this correct?
+        cell.value_ = std::move(column_row.second);
         cells.push_back(cell);
       }
     }
-    restore_row.cells = cells;
+    restore_row.cells_ = cells;
     table_it->second->DeleteRow(request_.row_key());  // Is certain
                                                       // to succeed
                                                       // unless we
@@ -571,13 +571,13 @@ void RowTransaction::Undo() {
     }
 
     if (auto* restore_row = absl::get_if<RestoreRow>(&op)) {
-      for (auto const& cell : restore_row->cells) {
+      for (auto const& cell : restore_row->cells_) {
         // Take care to use std::move() to avoid copying potentially
         // very larg values (the column qualifier and cell values can
         // be very large.
-        restore_row->table_it->second->SetCell(
-            restore_row->row_key, std::move(cell.column_qualifer),
-            cell.timestamp, std::move(cell.value));
+        restore_row->table_it_->second->SetCell(
+            restore_row->row_key_, std::move(cell.column_qualifer_),
+            cell.timestamp_, std::move(cell.value_));
       }
     }
 
