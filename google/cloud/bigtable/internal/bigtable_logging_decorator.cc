@@ -159,6 +159,18 @@ BigtableLogging::ReadModifyWriteRow(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::bigtable::v2::PrepareQueryResponse>
+BigtableLogging::PrepareQuery(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::v2::PrepareQueryRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::bigtable::v2::PrepareQueryRequest const& request) {
+        return child_->PrepareQuery(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::bigtable::v2::ExecuteQueryResponse>>
 BigtableLogging::ExecuteQuery(

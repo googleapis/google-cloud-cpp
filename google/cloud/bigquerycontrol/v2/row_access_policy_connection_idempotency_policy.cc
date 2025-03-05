@@ -41,6 +41,36 @@ RowAccessPolicyServiceConnectionIdempotencyPolicy::ListRowAccessPolicies(
   return Idempotency::kIdempotent;
 }
 
+Idempotency
+RowAccessPolicyServiceConnectionIdempotencyPolicy::GetRowAccessPolicy(
+    google::cloud::bigquery::v2::GetRowAccessPolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+RowAccessPolicyServiceConnectionIdempotencyPolicy::CreateRowAccessPolicy(
+    google::cloud::bigquery::v2::CreateRowAccessPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+RowAccessPolicyServiceConnectionIdempotencyPolicy::UpdateRowAccessPolicy(
+    google::cloud::bigquery::v2::UpdateRowAccessPolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+RowAccessPolicyServiceConnectionIdempotencyPolicy::DeleteRowAccessPolicy(
+    google::cloud::bigquery::v2::DeleteRowAccessPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+RowAccessPolicyServiceConnectionIdempotencyPolicy::BatchDeleteRowAccessPolicies(
+    google::cloud::bigquery::v2::BatchDeleteRowAccessPoliciesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<RowAccessPolicyServiceConnectionIdempotencyPolicy>
 MakeDefaultRowAccessPolicyServiceConnectionIdempotencyPolicy() {
   return std::make_unique<RowAccessPolicyServiceConnectionIdempotencyPolicy>();

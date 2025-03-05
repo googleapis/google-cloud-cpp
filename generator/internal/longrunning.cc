@@ -48,7 +48,9 @@ absl::variant<std::string, Descriptor const*> FullyQualifyMessageType(
 
 struct FullyQualifiedMessageTypeVisitor {
   std::string operator()(std::string const& s) const { return s; }
-  std::string operator()(Descriptor const* d) const { return d->full_name(); }
+  std::string operator()(Descriptor const* d) const {
+    return std::string{d->full_name()};
+  }
 };
 
 struct FormatDoxygenLinkVisitor {
@@ -118,7 +120,8 @@ void SetLongrunningOperationMethodVars(
   if (IsHttpLongrunningOperation(method)) {
     method_vars["longrunning_response_type"] = ProtoNameToCppName(absl::visit(
         FullyQualifiedMessageTypeVisitor(),
-        FullyQualifyMessageType(method, method.output_type()->full_name())));
+        FullyQualifyMessageType(
+            method, std::string{method.output_type()->full_name()})));
     absl::variant<std::string, google::protobuf::Descriptor const*>
         deduced_response_type = method.output_type();
     method_vars["longrunning_deduced_response_message_type"] =
@@ -166,10 +169,11 @@ void SetLongrunningOperationServiceVars(
       return;
     }
     if (IsHttpLongrunningOperation(*method)) {
-      service_vars["longrunning_response_type"] = ProtoNameToCppName(
-          absl::visit(FullyQualifiedMessageTypeVisitor(),
-                      FullyQualifyMessageType(
-                          *method, method->output_type()->full_name())));
+      service_vars["longrunning_response_type"] =
+          ProtoNameToCppName(absl::visit(
+              FullyQualifiedMessageTypeVisitor(),
+              FullyQualifyMessageType(
+                  *method, std::string{method->output_type()->full_name()})));
       auto operation_service_extension =
           method->options().GetExtension(google::cloud::operation_service);
 

@@ -59,6 +59,12 @@ class ConversationsMetadata : public ConversationsStub {
       google::cloud::dialogflow::v2::CompleteConversationRequest const& request)
       override;
 
+  StatusOr<google::cloud::dialogflow::v2::IngestContextReferencesResponse>
+  IngestContextReferences(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::IngestContextReferencesRequest const&
+          request) override;
+
   StatusOr<google::cloud::dialogflow::v2::ListMessagesResponse> ListMessages(
       grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::ListMessagesRequest const& request)
@@ -86,6 +92,12 @@ class ConversationsMetadata : public ConversationsStub {
   SearchKnowledge(grpc::ClientContext& context, Options const& options,
                   google::cloud::dialogflow::v2::SearchKnowledgeRequest const&
                       request) override;
+
+  StatusOr<google::cloud::dialogflow::v2::GenerateSuggestionsResponse>
+  GenerateSuggestions(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::dialogflow::v2::GenerateSuggestionsRequest const& request)
+      override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,

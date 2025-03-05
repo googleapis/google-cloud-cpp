@@ -267,6 +267,138 @@ BigtableInstanceAdminConnection::ListHotTablets(
       StreamRange<google::bigtable::admin::v2::HotTablet>>();
 }
 
+future<StatusOr<google::bigtable::admin::v2::LogicalView>>
+BigtableInstanceAdminConnection::CreateLogicalView(
+    google::bigtable::admin::v2::CreateLogicalViewRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::bigtable::admin::v2::LogicalView>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminConnection::CreateLogicalView(
+    NoAwaitTag, google::bigtable::admin::v2::CreateLogicalViewRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::bigtable::admin::v2::LogicalView>>
+BigtableInstanceAdminConnection::CreateLogicalView(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::bigtable::admin::v2::LogicalView>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::bigtable::admin::v2::LogicalView>
+BigtableInstanceAdminConnection::GetLogicalView(
+    google::bigtable::admin::v2::GetLogicalViewRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::bigtable::admin::v2::LogicalView>
+BigtableInstanceAdminConnection::ListLogicalViews(
+    google::bigtable::admin::v2::
+        ListLogicalViewsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::bigtable::admin::v2::LogicalView>>();
+}
+
+future<StatusOr<google::bigtable::admin::v2::LogicalView>>
+BigtableInstanceAdminConnection::UpdateLogicalView(
+    google::bigtable::admin::v2::UpdateLogicalViewRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::bigtable::admin::v2::LogicalView>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminConnection::UpdateLogicalView(
+    NoAwaitTag, google::bigtable::admin::v2::UpdateLogicalViewRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::bigtable::admin::v2::LogicalView>>
+BigtableInstanceAdminConnection::UpdateLogicalView(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::bigtable::admin::v2::LogicalView>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+Status BigtableInstanceAdminConnection::DeleteLogicalView(
+    google::bigtable::admin::v2::DeleteLogicalViewRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
+BigtableInstanceAdminConnection::CreateMaterializedView(
+    google::bigtable::admin::v2::CreateMaterializedViewRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::bigtable::admin::v2::MaterializedView>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminConnection::CreateMaterializedView(
+    NoAwaitTag,
+    google::bigtable::admin::v2::CreateMaterializedViewRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
+BigtableInstanceAdminConnection::CreateMaterializedView(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::bigtable::admin::v2::MaterializedView>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::bigtable::admin::v2::MaterializedView>
+BigtableInstanceAdminConnection::GetMaterializedView(
+    google::bigtable::admin::v2::GetMaterializedViewRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::bigtable::admin::v2::MaterializedView>
+BigtableInstanceAdminConnection::ListMaterializedViews(
+    google::bigtable::admin::v2::
+        ListMaterializedViewsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::bigtable::admin::v2::MaterializedView>>();
+}
+
+future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
+BigtableInstanceAdminConnection::UpdateMaterializedView(
+    google::bigtable::admin::v2::UpdateMaterializedViewRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::bigtable::admin::v2::MaterializedView>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminConnection::UpdateMaterializedView(
+    NoAwaitTag,
+    google::bigtable::admin::v2::UpdateMaterializedViewRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
+BigtableInstanceAdminConnection::UpdateMaterializedView(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::bigtable::admin::v2::MaterializedView>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+Status BigtableInstanceAdminConnection::DeleteMaterializedView(
+    google::bigtable::admin::v2::DeleteMaterializedViewRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<BigtableInstanceAdminConnection>
 MakeBigtableInstanceAdminConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

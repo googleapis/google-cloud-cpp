@@ -49,6 +49,8 @@ readonly SED_ARGS=(
   -e '/^rpc$/d'
   # TODO:(#14896) Skip gkeconnect as it transitions from grpc to REST transport.
   -e '/^gkeconnect/d'
+  # TODO:(#15015) Remove the next line when resourcesettings is removed from vcpkg
+  -e '/^resourcesettings/d'
 )
 mapfile -t features < <(
   env -C "${vcpkg_dir}" ./vcpkg search google-cloud-cpp |
@@ -58,6 +60,7 @@ mapfile -t features < <(
 feature_list="$(printf ";%s" "${features[@]}")"
 feature_list="${feature_list:1}"
 io::run cmake -G Ninja \
+  -DCMAKE_CXX_STANDARD=17 \
   -S "${PROJECT_ROOT}/ci/verify_quickstart" \
   -B "${PROJECT_ROOT}/cmake-out/quickstart" \
   -DCMAKE_TOOLCHAIN_FILE="${vcpkg_dir}/scripts/buildsystems/vcpkg.cmake" \

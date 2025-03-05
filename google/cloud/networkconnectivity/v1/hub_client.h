@@ -115,8 +115,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.Hub]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L395}
-  /// [google.cloud.networkconnectivity.v1.ListHubsRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L786}
+  /// [google.cloud.networkconnectivity.v1.Hub]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L428}
+  /// [google.cloud.networkconnectivity.v1.ListHubsRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L841}
   ///
   // clang-format on
   StreamRange<google::cloud::networkconnectivity::v1::Hub> ListHubs(
@@ -154,8 +154,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.Hub]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L395}
-  /// [google.cloud.networkconnectivity.v1.ListHubsRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L786}
+  /// [google.cloud.networkconnectivity.v1.Hub]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L428}
+  /// [google.cloud.networkconnectivity.v1.ListHubsRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L841}
   ///
   // clang-format on
   StreamRange<google::cloud::networkconnectivity::v1::Hub> ListHubs(
@@ -180,8 +180,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.GetHubRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L827}
-  /// [google.cloud.networkconnectivity.v1.Hub]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L395}
+  /// [google.cloud.networkconnectivity.v1.GetHubRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L882}
+  /// [google.cloud.networkconnectivity.v1.Hub]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L428}
   ///
   // clang-format on
   StatusOr<google::cloud::networkconnectivity::v1::Hub> GetHub(
@@ -210,8 +210,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.GetHubRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L827}
-  /// [google.cloud.networkconnectivity.v1.Hub]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L395}
+  /// [google.cloud.networkconnectivity.v1.GetHubRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L882}
+  /// [google.cloud.networkconnectivity.v1.Hub]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L428}
   ///
   // clang-format on
   StatusOr<google::cloud::networkconnectivity::v1::Hub> GetHub(
@@ -245,8 +245,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.CreateHubRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L840}
-  /// [google.cloud.networkconnectivity.v1.Hub]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L395}
+  /// [google.cloud.networkconnectivity.v1.CreateHubRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L895}
+  /// [google.cloud.networkconnectivity.v1.Hub]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L428}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::Hub>> CreateHub(
@@ -300,8 +300,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.CreateHubRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L840}
-  /// [google.cloud.networkconnectivity.v1.Hub]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L395}
+  /// [google.cloud.networkconnectivity.v1.CreateHubRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L895}
+  /// [google.cloud.networkconnectivity.v1.Hub]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L428}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::Hub>> CreateHub(
@@ -367,8 +367,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.Hub]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L395}
-  /// [google.cloud.networkconnectivity.v1.UpdateHubRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L875}
+  /// [google.cloud.networkconnectivity.v1.Hub]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L428}
+  /// [google.cloud.networkconnectivity.v1.UpdateHubRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L930}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::Hub>> UpdateHub(
@@ -421,8 +421,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.Hub]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L395}
-  /// [google.cloud.networkconnectivity.v1.UpdateHubRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L875}
+  /// [google.cloud.networkconnectivity.v1.Hub]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L428}
+  /// [google.cloud.networkconnectivity.v1.UpdateHubRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L930}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::Hub>> UpdateHub(
@@ -482,8 +482,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.DeleteHubRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L906}
-  /// [google.cloud.networkconnectivity.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/common.proto#L40}
+  /// [google.cloud.networkconnectivity.v1.DeleteHubRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L961}
+  /// [google.cloud.networkconnectivity.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/common.proto#L48}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
@@ -534,8 +534,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.DeleteHubRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L906}
-  /// [google.cloud.networkconnectivity.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/common.proto#L40}
+  /// [google.cloud.networkconnectivity.v1.DeleteHubRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L961}
+  /// [google.cloud.networkconnectivity.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/common.proto#L48}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
@@ -600,8 +600,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.ListHubSpokesRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L935}
-  /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L497}
+  /// [google.cloud.networkconnectivity.v1.ListHubSpokesRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L990}
+  /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L530}
   ///
   // clang-format on
   StreamRange<google::cloud::networkconnectivity::v1::Spoke> ListHubSpokes(
@@ -641,8 +641,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.ListHubSpokesRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L935}
-  /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L497}
+  /// [google.cloud.networkconnectivity.v1.ListHubSpokesRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L990}
+  /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L530}
   ///
   // clang-format on
   StreamRange<google::cloud::networkconnectivity::v1::Spoke> ListHubSpokes(
@@ -677,8 +677,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.HubStatusEntry]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1070}
-  /// [google.cloud.networkconnectivity.v1.QueryHubStatusRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1007}
+  /// [google.cloud.networkconnectivity.v1.HubStatusEntry]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1125}
+  /// [google.cloud.networkconnectivity.v1.QueryHubStatusRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1062}
   ///
   // clang-format on
   StreamRange<google::cloud::networkconnectivity::v1::HubStatusEntry>
@@ -717,8 +717,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.HubStatusEntry]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1070}
-  /// [google.cloud.networkconnectivity.v1.QueryHubStatusRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1007}
+  /// [google.cloud.networkconnectivity.v1.HubStatusEntry]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1125}
+  /// [google.cloud.networkconnectivity.v1.QueryHubStatusRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1062}
   ///
   // clang-format on
   StreamRange<google::cloud::networkconnectivity::v1::HubStatusEntry>
@@ -754,8 +754,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.ListSpokesRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1147}
-  /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L497}
+  /// [google.cloud.networkconnectivity.v1.ListSpokesRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1202}
+  /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L530}
   ///
   // clang-format on
   StreamRange<google::cloud::networkconnectivity::v1::Spoke> ListSpokes(
@@ -794,8 +794,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.ListSpokesRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1147}
-  /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L497}
+  /// [google.cloud.networkconnectivity.v1.ListSpokesRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1202}
+  /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L530}
   ///
   // clang-format on
   StreamRange<google::cloud::networkconnectivity::v1::Spoke> ListSpokes(
@@ -820,8 +820,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.GetSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1186}
-  /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L497}
+  /// [google.cloud.networkconnectivity.v1.GetSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1241}
+  /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L530}
   ///
   // clang-format on
   StatusOr<google::cloud::networkconnectivity::v1::Spoke> GetSpoke(
@@ -850,8 +850,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.GetSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1186}
-  /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L497}
+  /// [google.cloud.networkconnectivity.v1.GetSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1241}
+  /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L530}
   ///
   // clang-format on
   StatusOr<google::cloud::networkconnectivity::v1::Spoke> GetSpoke(
@@ -885,8 +885,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.CreateSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1198}
-  /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L497}
+  /// [google.cloud.networkconnectivity.v1.CreateSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1253}
+  /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L530}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>> CreateSpoke(
@@ -940,8 +940,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.CreateSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1198}
-  /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L497}
+  /// [google.cloud.networkconnectivity.v1.CreateSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1253}
+  /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L530}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>> CreateSpoke(
@@ -1006,8 +1006,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L497}
-  /// [google.cloud.networkconnectivity.v1.UpdateSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1233}
+  /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L530}
+  /// [google.cloud.networkconnectivity.v1.UpdateSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1288}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>> UpdateSpoke(
@@ -1059,8 +1059,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L497}
-  /// [google.cloud.networkconnectivity.v1.UpdateSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1233}
+  /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L530}
+  /// [google.cloud.networkconnectivity.v1.UpdateSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1288}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>> UpdateSpoke(
@@ -1124,8 +1124,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.RejectHubSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1335}
-  /// [google.cloud.networkconnectivity.v1.RejectHubSpokeResponse]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1374}
+  /// [google.cloud.networkconnectivity.v1.RejectHubSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1390}
+  /// [google.cloud.networkconnectivity.v1.RejectHubSpokeResponse]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1429}
   ///
   // clang-format on
   future<
@@ -1181,8 +1181,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.RejectHubSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1335}
-  /// [google.cloud.networkconnectivity.v1.RejectHubSpokeResponse]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1374}
+  /// [google.cloud.networkconnectivity.v1.RejectHubSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1390}
+  /// [google.cloud.networkconnectivity.v1.RejectHubSpokeResponse]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1429}
   ///
   // clang-format on
   future<
@@ -1250,8 +1250,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.AcceptHubSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1292}
-  /// [google.cloud.networkconnectivity.v1.AcceptHubSpokeResponse]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1328}
+  /// [google.cloud.networkconnectivity.v1.AcceptHubSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1347}
+  /// [google.cloud.networkconnectivity.v1.AcceptHubSpokeResponse]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1383}
   ///
   // clang-format on
   future<
@@ -1305,8 +1305,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.AcceptHubSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1292}
-  /// [google.cloud.networkconnectivity.v1.AcceptHubSpokeResponse]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1328}
+  /// [google.cloud.networkconnectivity.v1.AcceptHubSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1347}
+  /// [google.cloud.networkconnectivity.v1.AcceptHubSpokeResponse]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1383}
   ///
   // clang-format on
   future<
@@ -1349,6 +1349,252 @@ class HubServiceClient {
 
   // clang-format off
   ///
+  /// Accepts a proposal to update a Network Connectivity Center spoke in a hub.
+  ///
+  /// @param name  Required. The name of the hub to accept spoke update.
+  /// @param spoke_uri  Required. The URI of the spoke to accept update.
+  /// @param spoke_etag  Required. The etag of the spoke to accept update.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networkconnectivity.v1.AcceptSpokeUpdateResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkconnectivity.v1.AcceptSpokeUpdateRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1436}
+  /// [google.cloud.networkconnectivity.v1.AcceptSpokeUpdateResponse]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1478}
+  ///
+  // clang-format on
+  future<StatusOr<
+      google::cloud::networkconnectivity::v1::AcceptSpokeUpdateResponse>>
+  AcceptSpokeUpdate(std::string const& name, std::string const& spoke_uri,
+                    std::string const& spoke_etag, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief AcceptSpokeUpdate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> AcceptSpokeUpdate(
+      NoAwaitTag, std::string const& name, std::string const& spoke_uri,
+      std::string const& spoke_etag, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Accepts a proposal to update a Network Connectivity Center spoke in a hub.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networkconnectivity.v1.AcceptSpokeUpdateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networkconnectivity.v1.AcceptSpokeUpdateResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkconnectivity.v1.AcceptSpokeUpdateRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1436}
+  /// [google.cloud.networkconnectivity.v1.AcceptSpokeUpdateResponse]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1478}
+  ///
+  // clang-format on
+  future<StatusOr<
+      google::cloud::networkconnectivity::v1::AcceptSpokeUpdateResponse>>
+  AcceptSpokeUpdate(
+      google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief AcceptSpokeUpdate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> AcceptSpokeUpdate(
+      NoAwaitTag,
+      google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief AcceptSpokeUpdate
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<
+      google::cloud::networkconnectivity::v1::AcceptSpokeUpdateResponse>>
+  AcceptSpokeUpdate(google::longrunning::Operation const& operation,
+                    Options opts = {});
+
+  // clang-format off
+  ///
+  /// Rejects a proposal to update a Network Connectivity Center spoke in a hub.
+  ///
+  /// @param name  Required. The name of the hub to reject spoke update.
+  /// @param spoke_uri  Required. The URI of the spoke to reject update.
+  /// @param spoke_etag  Required. The etag of the spoke to reject update.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networkconnectivity.v1.RejectSpokeUpdateResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkconnectivity.v1.RejectSpokeUpdateRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1485}
+  /// [google.cloud.networkconnectivity.v1.RejectSpokeUpdateResponse]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1530}
+  ///
+  // clang-format on
+  future<StatusOr<
+      google::cloud::networkconnectivity::v1::RejectSpokeUpdateResponse>>
+  RejectSpokeUpdate(std::string const& name, std::string const& spoke_uri,
+                    std::string const& spoke_etag, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief RejectSpokeUpdate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> RejectSpokeUpdate(
+      NoAwaitTag, std::string const& name, std::string const& spoke_uri,
+      std::string const& spoke_etag, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Rejects a proposal to update a Network Connectivity Center spoke in a hub.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.networkconnectivity.v1.RejectSpokeUpdateRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.networkconnectivity.v1.RejectSpokeUpdateResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.networkconnectivity.v1.RejectSpokeUpdateRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1485}
+  /// [google.cloud.networkconnectivity.v1.RejectSpokeUpdateResponse]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1530}
+  ///
+  // clang-format on
+  future<StatusOr<
+      google::cloud::networkconnectivity::v1::RejectSpokeUpdateResponse>>
+  RejectSpokeUpdate(
+      google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief RejectSpokeUpdate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> RejectSpokeUpdate(
+      NoAwaitTag,
+      google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief RejectSpokeUpdate
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<
+      google::cloud::networkconnectivity::v1::RejectSpokeUpdateResponse>>
+  RejectSpokeUpdate(google::longrunning::Operation const& operation,
+                    Options opts = {});
+
+  // clang-format off
+  ///
   /// Deletes a Network Connectivity Center spoke.
   ///
   /// @param name  Required. The name of the spoke to delete.
@@ -1372,8 +1618,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.DeleteSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1264}
-  /// [google.cloud.networkconnectivity.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/common.proto#L40}
+  /// [google.cloud.networkconnectivity.v1.DeleteSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1319}
+  /// [google.cloud.networkconnectivity.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/common.proto#L48}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
@@ -1424,8 +1670,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.DeleteSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1264}
-  /// [google.cloud.networkconnectivity.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/common.proto#L40}
+  /// [google.cloud.networkconnectivity.v1.DeleteSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1319}
+  /// [google.cloud.networkconnectivity.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/common.proto#L48}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
@@ -1480,8 +1726,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.GetRouteTableRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1381}
-  /// [google.cloud.networkconnectivity.v1.RouteTable]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L604}
+  /// [google.cloud.networkconnectivity.v1.GetRouteTableRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1537}
+  /// [google.cloud.networkconnectivity.v1.RouteTable]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L658}
   ///
   // clang-format on
   StatusOr<google::cloud::networkconnectivity::v1::RouteTable> GetRouteTable(
@@ -1510,8 +1756,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.GetRouteTableRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1381}
-  /// [google.cloud.networkconnectivity.v1.RouteTable]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L604}
+  /// [google.cloud.networkconnectivity.v1.GetRouteTableRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1537}
+  /// [google.cloud.networkconnectivity.v1.RouteTable]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L658}
   ///
   // clang-format on
   StatusOr<google::cloud::networkconnectivity::v1::RouteTable> GetRouteTable(
@@ -1537,8 +1783,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.GetRouteRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1393}
-  /// [google.cloud.networkconnectivity.v1.Route]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L643}
+  /// [google.cloud.networkconnectivity.v1.GetRouteRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1549}
+  /// [google.cloud.networkconnectivity.v1.Route]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L697}
   ///
   // clang-format on
   StatusOr<google::cloud::networkconnectivity::v1::Route> GetRoute(
@@ -1567,8 +1813,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.GetRouteRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1393}
-  /// [google.cloud.networkconnectivity.v1.Route]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L643}
+  /// [google.cloud.networkconnectivity.v1.GetRouteRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1549}
+  /// [google.cloud.networkconnectivity.v1.Route]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L697}
   ///
   // clang-format on
   StatusOr<google::cloud::networkconnectivity::v1::Route> GetRoute(
@@ -1602,8 +1848,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.ListRoutesRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1406}
-  /// [google.cloud.networkconnectivity.v1.Route]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L643}
+  /// [google.cloud.networkconnectivity.v1.ListRoutesRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1562}
+  /// [google.cloud.networkconnectivity.v1.Route]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L697}
   ///
   // clang-format on
   StreamRange<google::cloud::networkconnectivity::v1::Route> ListRoutes(
@@ -1641,8 +1887,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.ListRoutesRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1406}
-  /// [google.cloud.networkconnectivity.v1.Route]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L643}
+  /// [google.cloud.networkconnectivity.v1.ListRoutesRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1562}
+  /// [google.cloud.networkconnectivity.v1.Route]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L697}
   ///
   // clang-format on
   StreamRange<google::cloud::networkconnectivity::v1::Route> ListRoutes(
@@ -1676,8 +1922,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.ListRouteTablesRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1447}
-  /// [google.cloud.networkconnectivity.v1.RouteTable]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L604}
+  /// [google.cloud.networkconnectivity.v1.ListRouteTablesRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1603}
+  /// [google.cloud.networkconnectivity.v1.RouteTable]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L658}
   ///
   // clang-format on
   StreamRange<google::cloud::networkconnectivity::v1::RouteTable>
@@ -1715,8 +1961,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.ListRouteTablesRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1447}
-  /// [google.cloud.networkconnectivity.v1.RouteTable]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L604}
+  /// [google.cloud.networkconnectivity.v1.ListRouteTablesRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1603}
+  /// [google.cloud.networkconnectivity.v1.RouteTable]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L658}
   ///
   // clang-format on
   StreamRange<google::cloud::networkconnectivity::v1::RouteTable>
@@ -1742,8 +1988,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.GetGroupRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1812}
-  /// [google.cloud.networkconnectivity.v1.Group]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L724}
+  /// [google.cloud.networkconnectivity.v1.GetGroupRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1992}
+  /// [google.cloud.networkconnectivity.v1.Group]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L778}
   ///
   // clang-format on
   StatusOr<google::cloud::networkconnectivity::v1::Group> GetGroup(
@@ -1772,8 +2018,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.GetGroupRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1812}
-  /// [google.cloud.networkconnectivity.v1.Group]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L724}
+  /// [google.cloud.networkconnectivity.v1.GetGroupRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1992}
+  /// [google.cloud.networkconnectivity.v1.Group]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L778}
   ///
   // clang-format on
   StatusOr<google::cloud::networkconnectivity::v1::Group> GetGroup(
@@ -1807,8 +2053,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.Group]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L724}
-  /// [google.cloud.networkconnectivity.v1.ListGroupsRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1488}
+  /// [google.cloud.networkconnectivity.v1.Group]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L778}
+  /// [google.cloud.networkconnectivity.v1.ListGroupsRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1644}
   ///
   // clang-format on
   StreamRange<google::cloud::networkconnectivity::v1::Group> ListGroups(
@@ -1846,8 +2092,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.Group]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L724}
-  /// [google.cloud.networkconnectivity.v1.ListGroupsRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1488}
+  /// [google.cloud.networkconnectivity.v1.Group]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L778}
+  /// [google.cloud.networkconnectivity.v1.ListGroupsRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1644}
   ///
   // clang-format on
   StreamRange<google::cloud::networkconnectivity::v1::Group> ListGroups(
@@ -1884,8 +2130,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.Group]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L724}
-  /// [google.cloud.networkconnectivity.v1.UpdateGroupRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1825}
+  /// [google.cloud.networkconnectivity.v1.Group]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L778}
+  /// [google.cloud.networkconnectivity.v1.UpdateGroupRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L2005}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::Group>> UpdateGroup(
@@ -1937,8 +2183,8 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.networkconnectivity.v1.Group]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L724}
-  /// [google.cloud.networkconnectivity.v1.UpdateGroupRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1825}
+  /// [google.cloud.networkconnectivity.v1.Group]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L778}
+  /// [google.cloud.networkconnectivity.v1.UpdateGroupRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L2005}
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::Group>> UpdateGroup(

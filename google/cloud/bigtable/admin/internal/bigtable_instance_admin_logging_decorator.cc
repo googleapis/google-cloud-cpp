@@ -404,6 +404,210 @@ BigtableInstanceAdminLogging::ListHotTablets(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+BigtableInstanceAdminLogging::AsyncCreateLogicalView(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::admin::v2::CreateLogicalViewRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::bigtable::admin::v2::CreateLogicalViewRequest const&
+                 request) {
+        return child_->AsyncCreateLogicalView(cq, std::move(context),
+                                              std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminLogging::CreateLogicalView(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::CreateLogicalViewRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::bigtable::admin::v2::CreateLogicalViewRequest const&
+                 request) {
+        return child_->CreateLogicalView(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::bigtable::admin::v2::LogicalView>
+BigtableInstanceAdminLogging::GetLogicalView(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::GetLogicalViewRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::bigtable::admin::v2::GetLogicalViewRequest const& request) {
+        return child_->GetLogicalView(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::bigtable::admin::v2::ListLogicalViewsResponse>
+BigtableInstanceAdminLogging::ListLogicalViews(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::ListLogicalViewsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::bigtable::admin::v2::ListLogicalViewsRequest const& request) {
+        return child_->ListLogicalViews(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BigtableInstanceAdminLogging::AsyncUpdateLogicalView(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::admin::v2::UpdateLogicalViewRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::bigtable::admin::v2::UpdateLogicalViewRequest const&
+                 request) {
+        return child_->AsyncUpdateLogicalView(cq, std::move(context),
+                                              std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminLogging::UpdateLogicalView(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::UpdateLogicalViewRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::bigtable::admin::v2::UpdateLogicalViewRequest const&
+                 request) {
+        return child_->UpdateLogicalView(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+Status BigtableInstanceAdminLogging::DeleteLogicalView(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::DeleteLogicalViewRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::bigtable::admin::v2::DeleteLogicalViewRequest const&
+                 request) {
+        return child_->DeleteLogicalView(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BigtableInstanceAdminLogging::AsyncCreateMaterializedView(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::admin::v2::CreateMaterializedViewRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::bigtable::admin::v2::CreateMaterializedViewRequest const&
+                 request) {
+        return child_->AsyncCreateMaterializedView(cq, std::move(context),
+                                                   std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminLogging::CreateMaterializedView(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::CreateMaterializedViewRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::bigtable::admin::v2::CreateMaterializedViewRequest const&
+                 request) {
+        return child_->CreateMaterializedView(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::bigtable::admin::v2::MaterializedView>
+BigtableInstanceAdminLogging::GetMaterializedView(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::GetMaterializedViewRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::bigtable::admin::v2::GetMaterializedViewRequest const&
+                 request) {
+        return child_->GetMaterializedView(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::bigtable::admin::v2::ListMaterializedViewsResponse>
+BigtableInstanceAdminLogging::ListMaterializedViews(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::ListMaterializedViewsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::bigtable::admin::v2::ListMaterializedViewsRequest const&
+                 request) {
+        return child_->ListMaterializedViews(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BigtableInstanceAdminLogging::AsyncUpdateMaterializedView(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::admin::v2::UpdateMaterializedViewRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::bigtable::admin::v2::UpdateMaterializedViewRequest const&
+                 request) {
+        return child_->AsyncUpdateMaterializedView(cq, std::move(context),
+                                                   std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminLogging::UpdateMaterializedView(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::UpdateMaterializedViewRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::bigtable::admin::v2::UpdateMaterializedViewRequest const&
+                 request) {
+        return child_->UpdateMaterializedView(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+Status BigtableInstanceAdminLogging::DeleteMaterializedView(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::DeleteMaterializedViewRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::bigtable::admin::v2::DeleteMaterializedViewRequest const&
+                 request) {
+        return child_->DeleteMaterializedView(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

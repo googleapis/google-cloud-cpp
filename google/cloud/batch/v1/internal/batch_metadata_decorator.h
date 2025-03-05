@@ -57,6 +57,16 @@ class BatchServiceMetadata : public BatchServiceStub {
       grpc::ClientContext& context, Options options,
       google::cloud::batch::v1::DeleteJobRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncCancelJob(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::batch::v1::CancelJobRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> CancelJob(
+      grpc::ClientContext& context, Options options,
+      google::cloud::batch::v1::CancelJobRequest const& request) override;
+
   StatusOr<google::cloud::batch::v1::ListJobsResponse> ListJobs(
       grpc::ClientContext& context, Options const& options,
       google::cloud::batch::v1::ListJobsRequest const& request) override;

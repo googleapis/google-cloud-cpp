@@ -115,6 +115,7 @@
 @com_google_googleapis//google/cloud/aiplatform/v1:notebook_runtime.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:notebook_runtime_template_ref.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:notebook_service.proto
+@com_google_googleapis//google/cloud/aiplatform/v1:notebook_software_config.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:openapi.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:operation.proto
 @com_google_googleapis//google/cloud/aiplatform/v1:persistent_resource.proto

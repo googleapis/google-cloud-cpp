@@ -955,6 +955,85 @@ StatusOr<google::longrunning::Operation> NetAppMetadata::DeleteBackupPolicy(
   return child_->DeleteBackupPolicy(context, options, request);
 }
 
+StatusOr<google::cloud::netapp::v1::ListQuotaRulesResponse>
+NetAppMetadata::ListQuotaRules(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::netapp::v1::ListQuotaRulesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListQuotaRules(context, options, request);
+}
+
+StatusOr<google::cloud::netapp::v1::QuotaRule> NetAppMetadata::GetQuotaRule(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::netapp::v1::GetQuotaRuleRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetQuotaRule(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetAppMetadata::AsyncCreateQuotaRule(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::CreateQuotaRuleRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateQuotaRule(cq, std::move(context),
+                                      std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppMetadata::CreateQuotaRule(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::CreateQuotaRuleRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateQuotaRule(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetAppMetadata::AsyncUpdateQuotaRule(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("quota_rule.name=",
+                           internal::UrlEncode(request.quota_rule().name())));
+  return child_->AsyncUpdateQuotaRule(cq, std::move(context),
+                                      std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppMetadata::UpdateQuotaRule(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("quota_rule.name=",
+                           internal::UrlEncode(request.quota_rule().name())));
+  return child_->UpdateQuotaRule(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NetAppMetadata::AsyncDeleteQuotaRule(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteQuotaRule(cq, std::move(context),
+                                      std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> NetAppMetadata::DeleteQuotaRule(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteQuotaRule(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 NetAppMetadata::ListLocations(
     grpc::ClientContext& context, Options const& options,

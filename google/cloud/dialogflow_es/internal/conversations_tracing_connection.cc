@@ -72,6 +72,16 @@ ConversationsTracingConnection::CompleteConversation(
   return internal::EndSpan(*span, child_->CompleteConversation(request));
 }
 
+StatusOr<google::cloud::dialogflow::v2::IngestContextReferencesResponse>
+ConversationsTracingConnection::IngestContextReferences(
+    google::cloud::dialogflow::v2::IngestContextReferencesRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationsConnection::IngestContextReferences");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->IngestContextReferences(request));
+}
+
 StreamRange<google::cloud::dialogflow::v2::Message>
 ConversationsTracingConnection::ListMessages(
     google::cloud::dialogflow::v2::ListMessagesRequest request) {
@@ -120,6 +130,15 @@ ConversationsTracingConnection::SearchKnowledge(
       "dialogflow_es::ConversationsConnection::SearchKnowledge");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SearchKnowledge(request));
+}
+
+StatusOr<google::cloud::dialogflow::v2::GenerateSuggestionsResponse>
+ConversationsTracingConnection::GenerateSuggestions(
+    google::cloud::dialogflow::v2::GenerateSuggestionsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationsConnection::GenerateSuggestions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GenerateSuggestions(request));
 }
 
 StreamRange<google::cloud::location::Location>

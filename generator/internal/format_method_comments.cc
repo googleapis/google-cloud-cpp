@@ -54,7 +54,8 @@ auto constexpr kDeprecationComment = R"""( @deprecated This RPC is deprecated.
 ProtoDefinitionLocation Location(google::protobuf::Descriptor const& d) {
   google::protobuf::SourceLocation loc;
   d.GetSourceLocation(&loc);
-  return ProtoDefinitionLocation{d.file()->name(), loc.start_line + 1};
+  return ProtoDefinitionLocation{std::string{d.file()->name()},
+                                 loc.start_line + 1};
 }
 
 std::string ReturnCommentString(

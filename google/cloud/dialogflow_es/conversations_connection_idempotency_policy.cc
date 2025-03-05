@@ -54,6 +54,11 @@ Idempotency ConversationsConnectionIdempotencyPolicy::CompleteConversation(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency ConversationsConnectionIdempotencyPolicy::IngestContextReferences(
+    google::cloud::dialogflow::v2::IngestContextReferencesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency ConversationsConnectionIdempotencyPolicy::ListMessages(
     google::cloud::dialogflow::v2::ListMessagesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
@@ -78,6 +83,11 @@ ConversationsConnectionIdempotencyPolicy::GenerateStatelessSuggestion(
 
 Idempotency ConversationsConnectionIdempotencyPolicy::SearchKnowledge(
     google::cloud::dialogflow::v2::SearchKnowledgeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ConversationsConnectionIdempotencyPolicy::GenerateSuggestions(
+    google::cloud::dialogflow::v2::GenerateSuggestionsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

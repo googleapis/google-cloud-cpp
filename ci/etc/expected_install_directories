@@ -996,11 +996,6 @@
 ./include/google/cloud/resourcemanager/v3
 ./include/google/cloud/resourcemanager/v3/internal
 ./include/google/cloud/resourcemanager/v3/mocks
-./include/google/cloud/resourcesettings
-./include/google/cloud/resourcesettings/mocks
-./include/google/cloud/resourcesettings/v1
-./include/google/cloud/resourcesettings/v1/internal
-./include/google/cloud/resourcesettings/v1/mocks
 ./include/google/cloud/retail
 ./include/google/cloud/retail/mocks
 ./include/google/cloud/retail/v2
@@ -1471,8 +1466,6 @@
 ./lib64/cmake/google_cloud_cpp_redis_mocks
 ./lib64/cmake/google_cloud_cpp_resourcemanager
 ./lib64/cmake/google_cloud_cpp_resourcemanager_mocks
-./lib64/cmake/google_cloud_cpp_resourcesettings
-./lib64/cmake/google_cloud_cpp_resourcesettings_mocks
 ./lib64/cmake/google_cloud_cpp_retail
 ./lib64/cmake/google_cloud_cpp_retail_mocks
 ./lib64/cmake/google_cloud_cpp_run

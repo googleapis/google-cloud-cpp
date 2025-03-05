@@ -112,6 +112,18 @@ DefaultBigtableStub::ReadModifyWriteRow(
   return response;
 }
 
+StatusOr<google::bigtable::v2::PrepareQueryResponse>
+DefaultBigtableStub::PrepareQuery(
+    grpc::ClientContext& context, Options const&,
+    google::bigtable::v2::PrepareQueryRequest const& request) {
+  google::bigtable::v2::PrepareQueryResponse response;
+  auto status = grpc_stub_->PrepareQuery(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::bigtable::v2::ExecuteQueryResponse>>
 DefaultBigtableStub::ExecuteQuery(

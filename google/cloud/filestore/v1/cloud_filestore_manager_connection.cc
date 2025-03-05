@@ -333,6 +333,29 @@ CloudFilestoreManagerConnection::UpdateBackup(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::filestore::v1::Instance>>
+CloudFilestoreManagerConnection::PromoteReplica(
+    google::cloud::filestore::v1::PromoteReplicaRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::filestore::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerConnection::PromoteReplica(
+    NoAwaitTag, google::cloud::filestore::v1::PromoteReplicaRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::filestore::v1::Instance>>
+CloudFilestoreManagerConnection::PromoteReplica(
+    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::filestore::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StreamRange<google::cloud::location::Location>
 CloudFilestoreManagerConnection::ListLocations(
     google::cloud::location::
