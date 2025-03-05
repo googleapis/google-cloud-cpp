@@ -54,9 +54,11 @@ python.toolchain(
 bazel_dep(name = "grpc", version = "1.71.0-pre3", repo_name = "com_github_grpc_grpc")
 archive_override(
     module_name = "grpc",
-    strip_prefix = "grpc-1.71.0-pre3",
+#    strip_prefix = "grpc-1.71.0-pre3",
+    strip_prefix = "grpc-3293a3025d03a1d71bbcfd750f1936f3d63e7982",
     urls = [
-        "https://github.com/grpc/grpc/archive/v1.71.0-pre3.tar.gz",
+#        "https://github.com/grpc/grpc/archive/v1.71.0-pre3.tar.gz",
+        "https://github.com/grpc/grpc/archive/3293a3025d03a1d71bbcfd750f1936f3d63e7982.tar.gz",
     ],
 )
 
