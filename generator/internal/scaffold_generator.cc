@@ -405,8 +405,7 @@ this library.
   google::protobuf::io::Printer printer(&output, '$');
   printer.Print(
       variables,
-      absl::StrCat(kText1, FormatCloudServiceDocsLink(variables), kText2)
-          .c_str());
+      absl::StrCat(kText1, FormatCloudServiceDocsLink(variables), kText2));
 }
 
 void GenerateBuild(std::ostream& os,
@@ -540,8 +539,7 @@ which should give you a taste of the $title$ C++ client library API.
   google::protobuf::io::Printer printer(&output, '$');
   printer.Print(
       variables,
-      absl::StrCat(kText1, FormatCloudServiceDocsLink(variables), kText2)
-          .c_str());
+      absl::StrCat(kText1, FormatCloudServiceDocsLink(variables), kText2));
 }
 
 void GenerateDoxygenEnvironmentPage(
@@ -1045,7 +1043,7 @@ $$(BIN)/quickstart: quickstart.cc
 )""";
   google::protobuf::io::OstreamOutputStream output(&os);
   google::protobuf::io::Printer printer(&output, '$');
-  printer.Print(variables, format.c_str());
+  printer.Print(variables, format);
 }
 
 void GenerateQuickstartWorkspace(
@@ -1053,7 +1051,7 @@ void GenerateQuickstartWorkspace(
     std::string const& contents) {
   google::protobuf::io::OstreamOutputStream output(&os);
   google::protobuf::io::Printer printer(&output, '$');
-  printer.Print(variables, contents.c_str());
+  printer.Print(variables, contents);
 }
 
 void GenerateQuickstartBuild(

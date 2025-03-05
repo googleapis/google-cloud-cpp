@@ -71,10 +71,19 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "rules_cc",
         urls = [
-            "https://github.com/bazelbuild/rules_cc/releases/download/0.0.17/rules_cc-0.0.17.tar.gz",
+            "https://github.com/bazelbuild/rules_cc/releases/download/0.1.1/rules_cc-0.1.1.tar.gz",
         ],
-        sha256 = "abc605dd850f813bb37004b77db20106a19311a96b2da1c92b789da529d28fe1",
-        strip_prefix = "rules_cc-0.0.17",
+        sha256 = "712d77868b3152dd618c4d64faaddefcc5965f90f5de6e6dd1d5ddcd0be82d42",
+        strip_prefix = "rules_cc-0.1.1",
+    )
+
+    maybe(
+        http_archive,
+        name = "com_envoyproxy_protoc_gen_validate",
+        urls = [
+            "https://github.com/bufbuild/protoc-gen-validate/archive/v1.2.1.tar.gz",
+        ],
+        strip_prefix = "protoc-gen-validate-1.2.1",
     )
 
     # protobuf requires this
@@ -101,7 +110,7 @@ def gl_cpp_workspace0(name = None):
     # Load Abseil
     maybe(
         http_archive,
-        name = "com_google_absl",
+        name = "abseil-cpp",
         urls = [
             "https://github.com/abseil/abseil-cpp/archive/20250127.1.tar.gz",
         ],
@@ -137,7 +146,7 @@ def gl_cpp_workspace0(name = None):
         # protobuf message. No changes to `patches` should ever be
         # committed to the main branch.
         patch_tool = "patch",
-        patch_args = ["-p1"],
+        patch_args = ["-p1", "-l", "-n"],
         patches = [],
     )
 
@@ -146,10 +155,10 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_google_protobuf",
         urls = [
-            "https://github.com/protocolbuffers/protobuf/archive/v30.0-rc1.tar.gz",
+            "https://github.com/protocolbuffers/protobuf/archive/v30.2.tar.gz",
         ],
-        sha256 = "e787459d3d5be3bced7b2e1b17e6e83f8a66cb827ca1654e071f3bacb16f8605",
-        strip_prefix = "protobuf-30.0-rc1",
+        sha256 = "07a43d88fe5a38e434c7f94129cad56a4c43a51f99336074d0799c2f7d4e44c5",
+        strip_prefix = "protobuf-30.2",
     )
 
     # Load BoringSSL. This could be automatically loaded by gRPC. But as of
@@ -172,10 +181,13 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_github_grpc_grpc",
         urls = [
-            "https://github.com/grpc/grpc/archive/v1.70.1.tar.gz",
+            "https://github.com/grpc/grpc/archive/v1.71.0.tar.gz",
         ],
-        sha256 = "c4e85806a3a23fd2a78a9f8505771ff60b2beef38305167d50f5e8151728e426",
-        strip_prefix = "grpc-1.70.1",
+        repo_mapping = {
+            "@com_google_absl": "@abseil-cpp",
+        },
+        sha256 = "0d631419e54ec5b29def798623ee3bf5520dac77abeab3284ef7027ec2363f91",
+        strip_prefix = "grpc-1.71.0",
     )
 
     # We use the cc_proto_library() rule from @com_google_protobuf, which

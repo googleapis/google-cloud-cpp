@@ -41,8 +41,8 @@ cc_library(
     }),
     deps = [
         "//:common",
-        "@com_google_absl//absl/debugging:failure_signal_handler",
-        "@com_google_absl//absl/debugging:symbolize",
+        "@abseil-cpp//absl/debugging:failure_signal_handler",
+        "@abseil-cpp//absl/debugging:symbolize",
         "@com_google_googletest//:gtest_main",
     ] + select({
         "//google/cloud:enable_opentelemetry": [
