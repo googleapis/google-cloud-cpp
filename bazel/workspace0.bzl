@@ -77,6 +77,15 @@ def gl_cpp_workspace0(name = None):
         strip_prefix = "rules_cc-0.0.17",
     )
 
+    maybe(
+        http_archive,
+        name = "com_envoyproxy_protoc_gen_validate",
+        urls = [
+            "https://github.com/bufbuild/protoc-gen-validate/archive/v1.2.1.tar.gz",
+        ],
+        strip_prefix = "protoc-gen-validate-1.2.1",
+    )
+
     # protobuf requires this
     maybe(
         http_archive,
@@ -172,10 +181,10 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_github_grpc_grpc",
         urls = [
-            "https://github.com/grpc/grpc/archive/v1.70.1.tar.gz",
+            "https://github.com/grpc/grpc/archive/v1.71.0-pre2.tar.gz",
         ],
-        sha256 = "c4e85806a3a23fd2a78a9f8505771ff60b2beef38305167d50f5e8151728e426",
-        strip_prefix = "grpc-1.70.1",
+        sha256 = "666b792b329fec8f4490ad2b5423345523d597add25ee57c1bfdb53fa0d34f8a",
+        strip_prefix = "grpc-1.71.0-pre2",
     )
 
     # We use the cc_proto_library() rule from @com_google_protobuf, which
