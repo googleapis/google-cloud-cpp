@@ -30,9 +30,9 @@ licenses(["notice"])  # Apache 2.0
         "//:pubsub",
         "//google/cloud/pubsub:pubsub_client_testing_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "@com_google_absl//absl/base",
-        "@com_google_absl//absl/strings",
-        "@com_google_absl//absl/strings:cord",
-        "@com_google_absl//absl/strings:str_format",
+        "@abseil-cpp//absl/base",
+        "@abseil-cpp//absl/strings",
+        "@abseil-cpp//absl/strings:cord",
+        "@abseil-cpp//absl/strings:str_format",
     ],
 ) for program in pubsub_client_benchmark_programs]

@@ -35,6 +35,7 @@ readonly ENABLED_FEATURES
 io::log_h2 "Configuring"
 vcpkg_root="$(vcpkg::root_dir)"
 cmake -GNinja -S . -B cmake-out/build \
+  "-DCMAKE_CXX_STANDARD=17" \
   "-DCMAKE_TOOLCHAIN_FILE=${vcpkg_root}/scripts/buildsystems/vcpkg.cmake" \
   "-DVCPKG_MANIFEST_DIR=ci/etc/oldest-deps" \
   "-DVCPKG_FEATURE_FLAGS=versions,manifest" \
