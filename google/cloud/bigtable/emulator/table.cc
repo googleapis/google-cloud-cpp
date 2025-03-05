@@ -570,6 +570,17 @@ void RowTransaction::Undo() {
       continue;
     }
 
+    if (auto* restore_row = absl::get_if<RestoreRow>(&op)) {
+      for (auto const& cell : restore_row->cells) {
+        // Take care to use std::move() to avoid copying potentially
+        // very larg values (the column qualifier and cell values can
+        // be very large.
+        restore_row->table_it->second->SetCell(
+            restore_row->row_key, std::move(cell.column_qualifer),
+            cell.timestamp, std::move(cell.value));
+      }
+    }
+
     // If we get here, there is an type of undo log that has not been
     // implemented!
     std::abort();
