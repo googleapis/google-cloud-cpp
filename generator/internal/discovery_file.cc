@@ -62,8 +62,8 @@ Status DiscoveryFile::FormatFile(
       {"version", document_properties.version}};
   google::protobuf::io::OstreamOutputStream output(&output_stream);
   google::protobuf::io::Printer printer(&output, '$');
-  printer.Print(vars, CopyrightLicenseFileHeader().c_str());
-  printer.Print(vars, GeneratedProtoPreamble().c_str());
+  printer.Print(vars, CopyrightLicenseFileHeader());
+  printer.Print(vars, GeneratedProtoPreamble());
   printer.Print(vars, R"""(
 syntax = "proto3";
 
@@ -73,7 +73,7 @@ package $package_name$;
   if (!import_paths_.empty()) {
     printer.Print("\n");
     for (auto const& path : import_paths_) {
-      printer.Print(vars, absl::StrFormat("import \"%s\";\n", path).c_str());
+      printer.Print(vars, absl::StrFormat("import \"%s\";\n", path));
     }
   }
 
@@ -84,14 +84,14 @@ package $package_name$;
     if (!service_definition) {
       return std::move(service_definition).status();
     }
-    printer.Print(vars, std::move(service_definition)->c_str());
+    printer.Print(vars, *service_definition);
   }
 
   for (auto const& t : types_) {
     auto message = t->JsonToProtobufMessage(types, package_name_);
     if (!message) return std::move(message).status();
     printer.Print("\n");
-    printer.Print(vars, std::move(message)->c_str());
+    printer.Print(vars, *message);
   }
 
   return {};
