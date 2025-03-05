@@ -1,3 +1,7 @@
+# Code coverage output artefacts
+code_coverage.info
+code_coverage_report/
+
 # Common build output directory names
 .build/
 _build/
