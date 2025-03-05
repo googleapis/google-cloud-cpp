@@ -1047,9 +1047,9 @@ class SecureSourceManagerClient {
   ///
   /// CreateBranchRule creates a branch rule in a given repository.
   ///
-  /// @param parent 
-  /// @param branch_rule 
-  /// @param branch_rule_id 
+  /// @param parent
+  /// @param branch_rule
+  /// @param branch_rule_id
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -1170,7 +1170,7 @@ class SecureSourceManagerClient {
   ///
   /// ListBranchRules lists branch rules in a given repository.
   ///
-  /// @param parent 
+  /// @param parent
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -1304,7 +1304,7 @@ class SecureSourceManagerClient {
   ///
   /// UpdateBranchRule updates a branch rule.
   ///
-  /// @param branch_rule 
+  /// @param branch_rule
   /// @param update_mask  Required. Field mask is used to specify the fields to be overwritten in the
   ///  branchRule resource by the update.
   ///  The fields specified in the update_mask are relative to the resource, not
@@ -1429,7 +1429,7 @@ class SecureSourceManagerClient {
   ///
   /// DeleteBranchRule deletes a branch rule.
   ///
-  /// @param name 
+  /// @param name
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
