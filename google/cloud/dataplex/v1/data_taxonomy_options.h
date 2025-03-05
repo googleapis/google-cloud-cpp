@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-dataplex-options
  */
 struct DataTaxonomyServiceRetryPolicyOption {
-  using Type = std::shared_ptr<DataTaxonomyServiceRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

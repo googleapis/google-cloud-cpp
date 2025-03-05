@@ -33,8 +33,7 @@ namespace securesourcemanager_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<securesourcemanager_v1::SecureSourceManagerRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options
       .get<securesourcemanager_v1::SecureSourceManagerRetryPolicyOption>()
       ->clone();
@@ -84,9 +83,7 @@ SecureSourceManagerConnectionImpl::ListInstances(
       StreamRange<google::cloud::securesourcemanager::v1::Instance>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           securesourcemanager_v1::SecureSourceManagerRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::securesourcemanager::v1::ListInstancesRequest const&
@@ -329,9 +326,7 @@ SecureSourceManagerConnectionImpl::ListRepositories(
       StreamRange<google::cloud::securesourcemanager::v1::Repository>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           securesourcemanager_v1::SecureSourceManagerRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::securesourcemanager::v1::ListRepositoriesRequest const&
@@ -714,9 +709,7 @@ SecureSourceManagerConnectionImpl::ListBranchRules(
       StreamRange<google::cloud::securesourcemanager::v1::BranchRule>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           securesourcemanager_v1::SecureSourceManagerRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::securesourcemanager::v1::ListBranchRulesRequest const&
@@ -960,9 +953,7 @@ SecureSourceManagerConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           securesourcemanager_v1::SecureSourceManagerRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {
@@ -1051,9 +1042,7 @@ SecureSourceManagerConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           securesourcemanager_v1::SecureSourceManagerRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

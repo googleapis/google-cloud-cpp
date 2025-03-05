@@ -35,11 +35,7 @@ namespace talent_v4 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `CompletionConnection`.
-class CompletionRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<CompletionRetryPolicy> clone() const = 0;
-};
+class CompletionRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `CompletionConnection` based on counting errors.
@@ -79,7 +75,7 @@ class CompletionLimitedErrorCountRetryPolicy : public CompletionRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<CompletionRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<CompletionLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -148,7 +144,7 @@ class CompletionLimitedTimeRetryPolicy : public CompletionRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<CompletionRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<CompletionLimitedTimeRetryPolicy>(
         maximum_duration());
   }

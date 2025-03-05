@@ -62,7 +62,7 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
                      RowFunctor on_row, FinishFunctor on_finish,
                      bigtable::RowSet row_set, std::int64_t rows_limit,
                      bigtable::Filter filter, bool reverse,
-                     std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
+                     std::unique_ptr<google::cloud::RetryPolicy> retry_policy,
                      std::unique_ptr<BackoffPolicy> backoff_policy,
                      bool enable_server_retries) {
     auto reader = std::shared_ptr<AsyncRowReader>(new AsyncRowReader(
@@ -80,7 +80,7 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
                  RowFunctor on_row, FinishFunctor on_finish,
                  bigtable::RowSet row_set, std::int64_t rows_limit,
                  bigtable::Filter filter, bool reverse,
-                 std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
+                 std::unique_ptr<google::cloud::RetryPolicy> retry_policy,
                  std::unique_ptr<BackoffPolicy> backoff_policy,
                  bool enable_server_retries)
       : cq_(std::move(cq)),
@@ -141,7 +141,7 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
   std::int64_t rows_limit_;
   bigtable::Filter filter_;
   bool reverse_;
-  std::unique_ptr<bigtable::DataRetryPolicy> retry_policy_;
+  std::unique_ptr<google::cloud::RetryPolicy> retry_policy_;
   std::unique_ptr<BackoffPolicy> backoff_policy_;
   bool enable_server_retries_;
   std::unique_ptr<bigtable::internal::ReadRowsParser> parser_;

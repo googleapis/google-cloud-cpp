@@ -32,8 +32,7 @@ namespace talent_v4_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<talent_v4::CompanyServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<talent_v4::CompanyServiceRetryPolicyOption>()->clone();
 }
 
@@ -125,8 +124,7 @@ CompanyServiceConnectionImpl::ListCompanies(
       StreamRange<google::cloud::talent::v4::Company>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<talent_v4::CompanyServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::talent::v4::ListCompaniesRequest const& r) {

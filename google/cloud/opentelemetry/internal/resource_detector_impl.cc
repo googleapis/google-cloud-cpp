@@ -171,10 +171,10 @@ class Parser {
 class GcpResourceDetector
     : public opentelemetry::sdk::resource::ResourceDetector {
  public:
-  explicit GcpResourceDetector(HttpClientFactory factory,
-                               std::unique_ptr<RetryPolicy> retry,
-                               std::unique_ptr<BackoffPolicy> backoff,
-                               Options options)
+  explicit GcpResourceDetector(
+      HttpClientFactory factory,
+      std::unique_ptr<google::cloud::RetryPolicy> retry,
+      std::unique_ptr<BackoffPolicy> backoff, Options options)
       : client_factory_(std::move(factory)),
         retry_(std::move(retry)),
         backoff_(std::move(backoff)),
@@ -234,7 +234,7 @@ class GcpResourceDetector
 
   rest_internal::RestRequest request_;
   HttpClientFactory client_factory_;
-  std::unique_ptr<RetryPolicy> retry_;
+  std::unique_ptr<google::cloud::RetryPolicy> retry_;
   std::unique_ptr<BackoffPolicy> backoff_;
   Options options_;
   opentelemetry::sdk::resource::ResourceAttributes attributes_;
@@ -244,7 +244,7 @@ class GcpResourceDetector
 
 std::unique_ptr<opentelemetry::sdk::resource::ResourceDetector>
 MakeResourceDetector(HttpClientFactory factory,
-                     std::unique_ptr<RetryPolicy> retry,
+                     std::unique_ptr<google::cloud::RetryPolicy> retry,
                      std::unique_ptr<BackoffPolicy> backoff, Options options) {
   return std::make_unique<GcpResourceDetector>(
       std::move(factory), std::move(retry), std::move(backoff),

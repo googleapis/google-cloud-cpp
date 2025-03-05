@@ -41,11 +41,7 @@ namespace run_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `JobsConnection`.
-class JobsRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<JobsRetryPolicy> clone() const = 0;
-};
+class JobsRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `JobsConnection` based on counting errors.
@@ -85,7 +81,7 @@ class JobsLimitedErrorCountRetryPolicy : public JobsRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<JobsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<JobsLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -152,7 +148,7 @@ class JobsLimitedTimeRetryPolicy : public JobsRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<JobsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<JobsLimitedTimeRetryPolicy>(maximum_duration());
   }
 

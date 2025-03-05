@@ -33,8 +33,7 @@ namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<aiplatform_v1::PipelineServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<aiplatform_v1::PipelineServiceRetryPolicyOption>()
       ->clone();
 }
@@ -110,8 +109,7 @@ PipelineServiceConnectionImpl::ListTrainingPipelines(
       StreamRange<google::cloud::aiplatform::v1::TrainingPipeline>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::PipelineServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::aiplatform::v1::ListTrainingPipelinesRequest const&
@@ -286,8 +284,7 @@ PipelineServiceConnectionImpl::ListPipelineJobs(
       StreamRange<google::cloud::aiplatform::v1::PipelineJob>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::PipelineServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::aiplatform::v1::ListPipelineJobsRequest const& r) {
@@ -622,8 +619,7 @@ PipelineServiceConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::PipelineServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {
@@ -710,8 +706,7 @@ PipelineServiceConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::PipelineServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

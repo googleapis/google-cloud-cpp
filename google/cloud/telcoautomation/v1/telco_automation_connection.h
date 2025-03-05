@@ -40,11 +40,7 @@ namespace telcoautomation_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `TelcoAutomationConnection`.
-class TelcoAutomationRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<TelcoAutomationRetryPolicy> clone() const = 0;
-};
+class TelcoAutomationRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `TelcoAutomationConnection` based on counting errors.
@@ -85,7 +81,7 @@ class TelcoAutomationLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<TelcoAutomationRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<TelcoAutomationLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -155,7 +151,7 @@ class TelcoAutomationLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<TelcoAutomationRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<TelcoAutomationLimitedTimeRetryPolicy>(
         maximum_duration());
   }

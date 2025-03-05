@@ -35,11 +35,7 @@ namespace eventarc_publishing_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `PublisherConnection`.
-class PublisherRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<PublisherRetryPolicy> clone() const = 0;
-};
+class PublisherRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `PublisherConnection` based on counting errors.
@@ -79,7 +75,7 @@ class PublisherLimitedErrorCountRetryPolicy : public PublisherRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<PublisherRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<PublisherLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -148,7 +144,7 @@ class PublisherLimitedTimeRetryPolicy : public PublisherRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<PublisherRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<PublisherLimitedTimeRetryPolicy>(
         maximum_duration());
   }

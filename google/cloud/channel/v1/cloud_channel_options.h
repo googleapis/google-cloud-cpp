@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-channel-options
  */
 struct CloudChannelServiceRetryPolicyOption {
-  using Type = std::shared_ptr<CloudChannelServiceRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

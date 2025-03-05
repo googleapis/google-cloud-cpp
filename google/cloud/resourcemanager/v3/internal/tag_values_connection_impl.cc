@@ -33,8 +33,7 @@ namespace resourcemanager_v3_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<resourcemanager_v3::TagValuesRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<resourcemanager_v3::TagValuesRetryPolicyOption>()->clone();
 }
 
@@ -77,8 +76,7 @@ TagValuesConnectionImpl::ListTagValues(
       StreamRange<google::cloud::resourcemanager::v3::TagValue>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<resourcemanager_v3::TagValuesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::resourcemanager::v3::ListTagValuesRequest const& r) {

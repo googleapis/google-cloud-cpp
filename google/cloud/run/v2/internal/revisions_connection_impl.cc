@@ -33,8 +33,7 @@ namespace run_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<run_v2::RevisionsRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<run_v2::RevisionsRetryPolicyOption>()->clone();
 }
 
@@ -86,8 +85,7 @@ RevisionsConnectionImpl::ListRevisions(
       StreamRange<google::cloud::run::v2::Revision>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<run_v2::RevisionsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::run::v2::ListRevisionsRequest const& r) {
@@ -208,8 +206,7 @@ RevisionsConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<run_v2::RevisionsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

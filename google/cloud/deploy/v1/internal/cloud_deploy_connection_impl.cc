@@ -33,8 +33,7 @@ namespace deploy_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<deploy_v1::CloudDeployRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<deploy_v1::CloudDeployRetryPolicyOption>()->clone();
 }
 
@@ -74,8 +73,7 @@ CloudDeployConnectionImpl::ListDeliveryPipelines(
       StreamRange<google::cloud::deploy::v1::DeliveryPipeline>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<deploy_v1::CloudDeployRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::deploy::v1::ListDeliveryPipelinesRequest const& r) {
@@ -403,8 +401,7 @@ CloudDeployConnectionImpl::ListTargets(
       StreamRange<google::cloud::deploy::v1::Target>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<deploy_v1::CloudDeployRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::deploy::v1::ListTargetsRequest const& r) {
@@ -734,8 +731,7 @@ CloudDeployConnectionImpl::ListCustomTargetTypes(
       StreamRange<google::cloud::deploy::v1::CustomTargetType>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<deploy_v1::CloudDeployRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::deploy::v1::ListCustomTargetTypesRequest const& r) {
@@ -1063,8 +1059,7 @@ CloudDeployConnectionImpl::ListReleases(
       StreamRange<google::cloud::deploy::v1::Release>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<deploy_v1::CloudDeployRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::deploy::v1::ListReleasesRequest const& r) {
@@ -1489,8 +1484,7 @@ CloudDeployConnectionImpl::ListDeployPolicies(
       StreamRange<google::cloud::deploy::v1::DeployPolicy>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<deploy_v1::CloudDeployRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::deploy::v1::ListDeployPoliciesRequest const& r) {
@@ -1579,8 +1573,7 @@ CloudDeployConnectionImpl::ListRollouts(
       StreamRange<google::cloud::deploy::v1::Rollout>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<deploy_v1::CloudDeployRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::deploy::v1::ListRolloutsRequest const& r) {
@@ -1745,8 +1738,7 @@ CloudDeployConnectionImpl::ListJobRuns(
       StreamRange<google::cloud::deploy::v1::JobRun>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<deploy_v1::CloudDeployRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::deploy::v1::ListJobRunsRequest const& r) {
@@ -2109,8 +2101,7 @@ CloudDeployConnectionImpl::ListAutomations(
       StreamRange<google::cloud::deploy::v1::Automation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<deploy_v1::CloudDeployRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::deploy::v1::ListAutomationsRequest const& r) {
@@ -2158,8 +2149,7 @@ CloudDeployConnectionImpl::ListAutomationRuns(
       StreamRange<google::cloud::deploy::v1::AutomationRun>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<deploy_v1::CloudDeployRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::deploy::v1::ListAutomationRunsRequest const& r) {
@@ -2207,8 +2197,7 @@ CloudDeployConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<deploy_v1::CloudDeployRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {
@@ -2295,8 +2284,7 @@ CloudDeployConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<deploy_v1::CloudDeployRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

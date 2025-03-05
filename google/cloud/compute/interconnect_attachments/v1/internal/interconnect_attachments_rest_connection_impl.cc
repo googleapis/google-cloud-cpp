@@ -64,9 +64,7 @@ InterconnectAttachmentsRestConnectionImpl::
       google::cloud::cpp::compute::v1::InterconnectAttachmentsScopedList>>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_interconnect_attachments_v1::
-                                   InterconnectAttachmentsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::interconnect_attachments::v1::
@@ -388,9 +386,7 @@ InterconnectAttachmentsRestConnectionImpl::ListInterconnectAttachments(
       StreamRange<google::cloud::cpp::compute::v1::InterconnectAttachment>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_interconnect_attachments_v1::
-                                   InterconnectAttachmentsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::interconnect_attachments::v1::

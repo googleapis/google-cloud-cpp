@@ -329,9 +329,7 @@ ExternalVpnGatewaysRestConnectionImpl::ListExternalVpnGateways(
       StreamRange<google::cloud::cpp::compute::v1::ExternalVpnGateway>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           compute_external_vpn_gateways_v1::ExternalVpnGatewaysRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::external_vpn_gateways::v1::

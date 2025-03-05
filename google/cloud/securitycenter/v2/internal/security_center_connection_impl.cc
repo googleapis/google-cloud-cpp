@@ -33,8 +33,7 @@ namespace securitycenter_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<securitycenter_v2::SecurityCenterRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<securitycenter_v2::SecurityCenterRetryPolicyOption>()
       ->clone();
 }
@@ -449,8 +448,7 @@ SecurityCenterConnectionImpl::GroupFindings(
       StreamRange<google::cloud::securitycenter::v2::GroupResult>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<securitycenter_v2::SecurityCenterRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::securitycenter::v2::GroupFindingsRequest const& r) {
@@ -484,8 +482,7 @@ SecurityCenterConnectionImpl::ListAttackPaths(
       StreamRange<google::cloud::securitycenter::v2::AttackPath>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<securitycenter_v2::SecurityCenterRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::securitycenter::v2::ListAttackPathsRequest const& r) {
@@ -519,8 +516,7 @@ SecurityCenterConnectionImpl::ListBigQueryExports(
       StreamRange<google::cloud::securitycenter::v2::BigQueryExport>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<securitycenter_v2::SecurityCenterRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::securitycenter::v2::ListBigQueryExportsRequest const&
@@ -556,8 +552,7 @@ SecurityCenterConnectionImpl::ListFindings(
                       ListFindingsResult>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<securitycenter_v2::SecurityCenterRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::securitycenter::v2::ListFindingsRequest const& r) {
@@ -591,8 +586,7 @@ SecurityCenterConnectionImpl::ListMuteConfigs(
       StreamRange<google::cloud::securitycenter::v2::MuteConfig>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<securitycenter_v2::SecurityCenterRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::securitycenter::v2::ListMuteConfigsRequest const& r) {
@@ -627,8 +621,7 @@ SecurityCenterConnectionImpl::ListNotificationConfigs(
       StreamRange<google::cloud::securitycenter::v2::NotificationConfig>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<securitycenter_v2::SecurityCenterRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::securitycenter::v2::
                                       ListNotificationConfigsRequest const& r) {
@@ -663,8 +656,7 @@ SecurityCenterConnectionImpl::ListResourceValueConfigs(
       StreamRange<google::cloud::securitycenter::v2::ResourceValueConfig>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<securitycenter_v2::SecurityCenterRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::securitycenter::v2::
@@ -699,8 +691,7 @@ SecurityCenterConnectionImpl::ListSources(
       StreamRange<google::cloud::securitycenter::v2::Source>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<securitycenter_v2::SecurityCenterRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::securitycenter::v2::ListSourcesRequest const& r) {
@@ -733,8 +724,7 @@ SecurityCenterConnectionImpl::ListValuedResources(
       StreamRange<google::cloud::securitycenter::v2::ValuedResource>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<securitycenter_v2::SecurityCenterRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::securitycenter::v2::ListValuedResourcesRequest const&
@@ -952,8 +942,7 @@ SecurityCenterConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<securitycenter_v2::SecurityCenterRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

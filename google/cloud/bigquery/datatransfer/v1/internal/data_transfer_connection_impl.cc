@@ -32,8 +32,7 @@ namespace bigquery_datatransfer_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<bigquery_datatransfer_v1::DataTransferServiceRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options
       .get<bigquery_datatransfer_v1::DataTransferServiceRetryPolicyOption>()
       ->clone();
@@ -94,9 +93,7 @@ DataTransferServiceConnectionImpl::ListDataSources(
       StreamRange<google::cloud::bigquery::datatransfer::v1::DataSource>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           bigquery_datatransfer_v1::DataTransferServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::bigquery::datatransfer::v1::
                                       ListDataSourcesRequest const& r) {
@@ -193,9 +190,7 @@ DataTransferServiceConnectionImpl::ListTransferConfigs(
       StreamRange<google::cloud::bigquery::datatransfer::v1::TransferConfig>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           bigquery_datatransfer_v1::DataTransferServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::bigquery::datatransfer::v1::
                                       ListTransferConfigsRequest const& r) {
@@ -295,9 +290,7 @@ DataTransferServiceConnectionImpl::ListTransferRuns(
       StreamRange<google::cloud::bigquery::datatransfer::v1::TransferRun>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           bigquery_datatransfer_v1::DataTransferServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::bigquery::datatransfer::v1::
                                       ListTransferRunsRequest const& r) {
@@ -332,9 +325,7 @@ DataTransferServiceConnectionImpl::ListTransferLogs(
       StreamRange<google::cloud::bigquery::datatransfer::v1::TransferMessage>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           bigquery_datatransfer_v1::DataTransferServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::bigquery::datatransfer::v1::
                                       ListTransferLogsRequest const& r) {
@@ -414,9 +405,7 @@ DataTransferServiceConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           bigquery_datatransfer_v1::DataTransferServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {

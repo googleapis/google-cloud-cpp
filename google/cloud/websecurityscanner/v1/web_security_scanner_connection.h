@@ -36,11 +36,7 @@ namespace websecurityscanner_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `WebSecurityScannerConnection`.
-class WebSecurityScannerRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<WebSecurityScannerRetryPolicy> clone() const = 0;
-};
+class WebSecurityScannerRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `WebSecurityScannerConnection` based on counting errors.
@@ -83,7 +79,7 @@ class WebSecurityScannerLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<WebSecurityScannerRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<WebSecurityScannerLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -153,7 +149,7 @@ class WebSecurityScannerLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<WebSecurityScannerRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<WebSecurityScannerLimitedTimeRetryPolicy>(
         maximum_duration());
   }

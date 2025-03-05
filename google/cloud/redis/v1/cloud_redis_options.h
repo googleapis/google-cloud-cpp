@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-redis-options
  */
 struct CloudRedisRetryPolicyOption {
-  using Type = std::shared_ptr<CloudRedisRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

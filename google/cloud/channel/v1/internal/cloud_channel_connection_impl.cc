@@ -33,8 +33,7 @@ namespace channel_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<channel_v1::CloudChannelServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<channel_v1::CloudChannelServiceRetryPolicyOption>()
       ->clone();
 }
@@ -78,8 +77,7 @@ CloudChannelServiceConnectionImpl::ListCustomers(
       StreamRange<google::cloud::channel::v1::Customer>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::channel::v1::ListCustomersRequest const& r) {
@@ -290,8 +288,7 @@ CloudChannelServiceConnectionImpl::ListEntitlements(
       StreamRange<google::cloud::channel::v1::Entitlement>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::channel::v1::ListEntitlementsRequest const& r) {
@@ -325,8 +322,7 @@ CloudChannelServiceConnectionImpl::ListTransferableSkus(
       StreamRange<google::cloud::channel::v1::TransferableSku>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::channel::v1::ListTransferableSkusRequest const& r) {
@@ -361,8 +357,7 @@ CloudChannelServiceConnectionImpl::ListTransferableOffers(
       StreamRange<google::cloud::channel::v1::TransferableOffer>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::channel::v1::ListTransferableOffersRequest const& r) {
@@ -1330,8 +1325,7 @@ CloudChannelServiceConnectionImpl::ListChannelPartnerLinks(
       StreamRange<google::cloud::channel::v1::ChannelPartnerLink>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::channel::v1::ListChannelPartnerLinksRequest const& r) {
@@ -1429,8 +1423,7 @@ CloudChannelServiceConnectionImpl::ListCustomerRepricingConfigs(
       StreamRange<google::cloud::channel::v1::CustomerRepricingConfig>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::channel::v1::ListCustomerRepricingConfigsRequest const&
@@ -1531,8 +1524,7 @@ CloudChannelServiceConnectionImpl::ListChannelPartnerRepricingConfigs(
       StreamRange<google::cloud::channel::v1::ChannelPartnerRepricingConfig>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::channel::v1::
@@ -1622,8 +1614,7 @@ CloudChannelServiceConnectionImpl::ListSkuGroups(
       StreamRange<google::cloud::channel::v1::SkuGroup>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::channel::v1::ListSkuGroupsRequest const& r) {
@@ -1657,8 +1648,7 @@ CloudChannelServiceConnectionImpl::ListSkuGroupBillableSkus(
       StreamRange<google::cloud::channel::v1::BillableSku>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::channel::v1::ListSkuGroupBillableSkusRequest const&
@@ -1706,8 +1696,7 @@ CloudChannelServiceConnectionImpl::ListProducts(
       StreamRange<google::cloud::channel::v1::Product>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::channel::v1::ListProductsRequest const& r) {
@@ -1740,8 +1729,7 @@ CloudChannelServiceConnectionImpl::ListSkus(
       StreamRange<google::cloud::channel::v1::Sku>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::channel::v1::ListSkusRequest const& r) {
@@ -1772,8 +1760,7 @@ CloudChannelServiceConnectionImpl::ListOffers(
       StreamRange<google::cloud::channel::v1::Offer>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::channel::v1::ListOffersRequest const& r) {
@@ -1806,8 +1793,7 @@ CloudChannelServiceConnectionImpl::ListPurchasableSkus(
       StreamRange<google::cloud::channel::v1::PurchasableSku>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::channel::v1::ListPurchasableSkusRequest const& r) {
@@ -1841,8 +1827,7 @@ CloudChannelServiceConnectionImpl::ListPurchasableOffers(
       StreamRange<google::cloud::channel::v1::PurchasableOffer>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::channel::v1::ListPurchasableOffersRequest const& r) {
@@ -1921,8 +1906,7 @@ StreamRange<std::string> CloudChannelServiceConnectionImpl::ListSubscribers(
   return google::cloud::internal::MakePaginationRange<StreamRange<std::string>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::channel::v1::ListSubscribersRequest const& r) {
@@ -1955,8 +1939,7 @@ CloudChannelServiceConnectionImpl::ListEntitlementChanges(
       StreamRange<google::cloud::channel::v1::EntitlementChange>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::channel::v1::ListEntitlementChangesRequest const& r) {
@@ -1990,8 +1973,7 @@ CloudChannelServiceConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

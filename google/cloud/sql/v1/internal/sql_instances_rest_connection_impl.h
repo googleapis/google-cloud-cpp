@@ -189,8 +189,7 @@ class SqlInstancesServiceRestConnectionImpl
           request) override;
 
  private:
-  static std::unique_ptr<sql_v1::SqlInstancesServiceRetryPolicy> retry_policy(
-      Options const& options) {
+  static std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
     return options.get<sql_v1::SqlInstancesServiceRetryPolicyOption>()->clone();
   }
 

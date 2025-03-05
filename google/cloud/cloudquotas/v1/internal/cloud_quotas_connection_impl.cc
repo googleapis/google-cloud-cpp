@@ -32,8 +32,7 @@ namespace cloudquotas_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<cloudquotas_v1::CloudQuotasRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<cloudquotas_v1::CloudQuotasRetryPolicyOption>()->clone();
 }
 
@@ -70,8 +69,7 @@ CloudQuotasConnectionImpl::ListQuotaInfos(
       StreamRange<google::api::cloudquotas::v1::QuotaInfo>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<cloudquotas_v1::CloudQuotasRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::api::cloudquotas::v1::ListQuotaInfosRequest const& r) {
@@ -119,8 +117,7 @@ CloudQuotasConnectionImpl::ListQuotaPreferences(
       StreamRange<google::api::cloudquotas::v1::QuotaPreference>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<cloudquotas_v1::CloudQuotasRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::api::cloudquotas::v1::ListQuotaPreferencesRequest const& r) {

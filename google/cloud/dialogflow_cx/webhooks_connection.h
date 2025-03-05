@@ -37,11 +37,7 @@ namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `WebhooksConnection`.
-class WebhooksRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<WebhooksRetryPolicy> clone() const = 0;
-};
+class WebhooksRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `WebhooksConnection` based on counting errors.
@@ -81,7 +77,7 @@ class WebhooksLimitedErrorCountRetryPolicy : public WebhooksRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<WebhooksRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<WebhooksLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -149,7 +145,7 @@ class WebhooksLimitedTimeRetryPolicy : public WebhooksRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<WebhooksRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<WebhooksLimitedTimeRetryPolicy>(maximum_duration());
   }
 

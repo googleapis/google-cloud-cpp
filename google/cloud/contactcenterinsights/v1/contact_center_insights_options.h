@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-contactcenterinsights-options
  */
 struct ContactCenterInsightsRetryPolicyOption {
-  using Type = std::shared_ptr<ContactCenterInsightsRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

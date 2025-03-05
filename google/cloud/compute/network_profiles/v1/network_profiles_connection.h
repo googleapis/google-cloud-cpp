@@ -36,11 +36,7 @@ namespace compute_network_profiles_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `NetworkProfilesConnection`.
-class NetworkProfilesRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<NetworkProfilesRetryPolicy> clone() const = 0;
-};
+class NetworkProfilesRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `NetworkProfilesConnection` based on counting errors.
@@ -81,7 +77,7 @@ class NetworkProfilesLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<NetworkProfilesRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<NetworkProfilesLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -151,7 +147,7 @@ class NetworkProfilesLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<NetworkProfilesRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<NetworkProfilesLimitedTimeRetryPolicy>(
         maximum_duration());
   }

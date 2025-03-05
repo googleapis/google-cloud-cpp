@@ -248,7 +248,7 @@ void StreamingSubscriptionBatchSource::ExtendLeases(
 }
 
 void StreamingSubscriptionBatchSource::StartStream(
-    std::shared_ptr<pubsub::RetryPolicy> retry_policy,
+    std::shared_ptr<google::cloud::RetryPolicy> retry_policy,
     std::shared_ptr<pubsub::BackoffPolicy> backoff_policy) {
   internal::OptionsSpan span(*options_);
 

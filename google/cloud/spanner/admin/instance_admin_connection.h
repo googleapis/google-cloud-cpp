@@ -40,11 +40,7 @@ namespace spanner_admin {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `InstanceAdminConnection`.
-class InstanceAdminRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<InstanceAdminRetryPolicy> clone() const = 0;
-};
+class InstanceAdminRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `InstanceAdminConnection` based on counting errors.
@@ -85,7 +81,7 @@ class InstanceAdminLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<InstanceAdminRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<InstanceAdminLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -154,7 +150,7 @@ class InstanceAdminLimitedTimeRetryPolicy : public InstanceAdminRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<InstanceAdminRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<InstanceAdminLimitedTimeRetryPolicy>(
         maximum_duration());
   }

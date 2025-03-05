@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-iap-options
  */
 struct IdentityAwareProxyAdminServiceRetryPolicyOption {
-  using Type = std::shared_ptr<IdentityAwareProxyAdminServiceRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

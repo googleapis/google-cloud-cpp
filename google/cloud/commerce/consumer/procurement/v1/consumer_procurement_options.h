@@ -38,7 +38,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-commerce-options
  */
 struct ConsumerProcurementServiceRetryPolicyOption {
-  using Type = std::shared_ptr<ConsumerProcurementServiceRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

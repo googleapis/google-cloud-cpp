@@ -41,12 +41,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `GlobalPublicDelegatedPrefixesConnection`.
 class GlobalPublicDelegatedPrefixesRetryPolicy
-    : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<GlobalPublicDelegatedPrefixesRetryPolicy> clone()
-      const = 0;
-};
+    : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `GlobalPublicDelegatedPrefixesConnection` based on
@@ -92,8 +87,7 @@ class GlobalPublicDelegatedPrefixesLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<GlobalPublicDelegatedPrefixesRetryPolicy> clone()
-      const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<
         GlobalPublicDelegatedPrefixesLimitedErrorCountRetryPolicy>(
         maximum_failures());
@@ -168,8 +162,7 @@ class GlobalPublicDelegatedPrefixesLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<GlobalPublicDelegatedPrefixesRetryPolicy> clone()
-      const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<
         GlobalPublicDelegatedPrefixesLimitedTimeRetryPolicy>(
         maximum_duration());

@@ -45,21 +45,22 @@ class RetryObjectReadSource : public ObjectReadSource {
  public:
   using ReadSourceFactory =
       std::function<StatusOr<std::unique_ptr<ObjectReadSource>>(
-          ReadObjectRangeRequest const&, RetryPolicy&, BackoffPolicy&)>;
+          ReadObjectRangeRequest const&, google::cloud::RetryPolicy&,
+          BackoffPolicy&)>;
 
-  RetryObjectReadSource(ReadSourceFactory factory,
-                        google::cloud::internal::ImmutableOptions options,
-                        ReadObjectRangeRequest request,
-                        std::unique_ptr<ObjectReadSource> child,
-                        std::unique_ptr<RetryPolicy> retry_policy,
-                        std::unique_ptr<BackoffPolicy> backoff_policy,
-                        std::function<void(std::chrono::milliseconds)> backoff);
-  RetryObjectReadSource(ReadSourceFactory factory,
-                        google::cloud::internal::ImmutableOptions options,
-                        ReadObjectRangeRequest request,
-                        std::unique_ptr<ObjectReadSource> child,
-                        std::unique_ptr<RetryPolicy> retry_policy,
-                        std::unique_ptr<BackoffPolicy> backoff_policy);
+  RetryObjectReadSource(
+      ReadSourceFactory factory,
+      google::cloud::internal::ImmutableOptions options,
+      ReadObjectRangeRequest request, std::unique_ptr<ObjectReadSource> child,
+      std::unique_ptr<google::cloud::RetryPolicy> retry_policy,
+      std::unique_ptr<BackoffPolicy> backoff_policy,
+      std::function<void(std::chrono::milliseconds)> backoff);
+  RetryObjectReadSource(
+      ReadSourceFactory factory,
+      google::cloud::internal::ImmutableOptions options,
+      ReadObjectRangeRequest request, std::unique_ptr<ObjectReadSource> child,
+      std::unique_ptr<google::cloud::RetryPolicy> retry_policy,
+      std::unique_ptr<BackoffPolicy> backoff_policy);
 
   bool IsOpen() const override { return child_ && child_->IsOpen(); }
   StatusOr<HttpResponse> Close() override { return child_->Close(); }
@@ -67,7 +68,8 @@ class RetryObjectReadSource : public ObjectReadSource {
 
  private:
   bool HandleResult(StatusOr<ReadSourceResult> const& r);
-  Status MakeChild(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy);
+  Status MakeChild(google::cloud::RetryPolicy& retry_policy,
+                   BackoffPolicy& backoff_policy);
   StatusOr<std::unique_ptr<ObjectReadSource>> ReadDiscard(
       std::unique_ptr<ObjectReadSource> child, std::int64_t count) const;
 
@@ -76,7 +78,7 @@ class RetryObjectReadSource : public ObjectReadSource {
   ReadObjectRangeRequest request_;
   std::unique_ptr<ObjectReadSource> child_;
   absl::optional<std::int64_t> generation_;
-  std::unique_ptr<RetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<google::cloud::RetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
   OffsetDirection offset_direction_;
   std::int64_t current_offset_ = 0;

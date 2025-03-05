@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-translate-options
  */
 struct TranslationServiceRetryPolicyOption {
-  using Type = std::shared_ptr<TranslationServiceRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

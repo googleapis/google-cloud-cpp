@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-iam-options
  */
 struct IAMRetryPolicyOption {
-  using Type = std::shared_ptr<IAMRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

@@ -33,8 +33,7 @@ namespace gkebackup_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<gkebackup_v1::BackupForGKERetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<gkebackup_v1::BackupForGKERetryPolicyOption>()->clone();
 }
 
@@ -168,8 +167,7 @@ BackupForGKEConnectionImpl::ListBackupPlans(
       StreamRange<google::cloud::gkebackup::v1::BackupPlan>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<gkebackup_v1::BackupForGKERetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::gkebackup::v1::ListBackupPlansRequest const& r) {
@@ -493,8 +491,7 @@ BackupForGKEConnectionImpl::ListBackups(
       StreamRange<google::cloud::gkebackup::v1::Backup>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<gkebackup_v1::BackupForGKERetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::gkebackup::v1::ListBackupsRequest const& r) {
@@ -722,8 +719,7 @@ BackupForGKEConnectionImpl::ListVolumeBackups(
       StreamRange<google::cloud::gkebackup::v1::VolumeBackup>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<gkebackup_v1::BackupForGKERetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::gkebackup::v1::ListVolumeBackupsRequest const& r) {
@@ -864,8 +860,7 @@ BackupForGKEConnectionImpl::ListRestorePlans(
       StreamRange<google::cloud::gkebackup::v1::RestorePlan>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<gkebackup_v1::BackupForGKERetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::gkebackup::v1::ListRestorePlansRequest const& r) {
@@ -1190,8 +1185,7 @@ BackupForGKEConnectionImpl::ListRestores(
       StreamRange<google::cloud::gkebackup::v1::Restore>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<gkebackup_v1::BackupForGKERetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::gkebackup::v1::ListRestoresRequest const& r) {
@@ -1421,8 +1415,7 @@ BackupForGKEConnectionImpl::ListVolumeRestores(
       StreamRange<google::cloud::gkebackup::v1::VolumeRestore>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<gkebackup_v1::BackupForGKERetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::gkebackup::v1::ListVolumeRestoresRequest const& r) {
@@ -1488,8 +1481,7 @@ BackupForGKEConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<gkebackup_v1::BackupForGKERetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {
@@ -1576,8 +1568,7 @@ BackupForGKEConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<gkebackup_v1::BackupForGKERetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

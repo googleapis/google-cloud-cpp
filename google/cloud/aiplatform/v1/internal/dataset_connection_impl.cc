@@ -33,8 +33,7 @@ namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<aiplatform_v1::DatasetServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<aiplatform_v1::DatasetServiceRetryPolicyOption>()->clone();
 }
 
@@ -198,8 +197,7 @@ DatasetServiceConnectionImpl::ListDatasets(
       StreamRange<google::cloud::aiplatform::v1::Dataset>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::DatasetServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::aiplatform::v1::ListDatasetsRequest const& r) {
@@ -727,8 +725,7 @@ DatasetServiceConnectionImpl::ListDatasetVersions(
       StreamRange<google::cloud::aiplatform::v1::DatasetVersion>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::DatasetServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::aiplatform::v1::ListDatasetVersionsRequest const& r) {
@@ -858,8 +855,7 @@ DatasetServiceConnectionImpl::ListDataItems(
       StreamRange<google::cloud::aiplatform::v1::DataItem>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::DatasetServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::aiplatform::v1::ListDataItemsRequest const& r) {
@@ -892,8 +888,7 @@ DatasetServiceConnectionImpl::SearchDataItems(
       StreamRange<google::cloud::aiplatform::v1::DataItemView>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::DatasetServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::aiplatform::v1::SearchDataItemsRequest const& r) {
@@ -926,8 +921,7 @@ DatasetServiceConnectionImpl::ListSavedQueries(
       StreamRange<google::cloud::aiplatform::v1::SavedQuery>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::DatasetServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::aiplatform::v1::ListSavedQueriesRequest const& r) {
@@ -1069,8 +1063,7 @@ DatasetServiceConnectionImpl::ListAnnotations(
       StreamRange<google::cloud::aiplatform::v1::Annotation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::DatasetServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::aiplatform::v1::ListAnnotationsRequest const& r) {
@@ -1103,8 +1096,7 @@ DatasetServiceConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::DatasetServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {
@@ -1191,8 +1183,7 @@ DatasetServiceConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::DatasetServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

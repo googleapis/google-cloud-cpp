@@ -33,8 +33,7 @@ namespace video_stitcher_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<video_stitcher_v1::VideoStitcherServiceRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options
       .get<video_stitcher_v1::VideoStitcherServiceRetryPolicyOption>()
       ->clone();
@@ -177,9 +176,7 @@ VideoStitcherServiceConnectionImpl::ListCdnKeys(
       StreamRange<google::cloud::video::stitcher::v1::CdnKey>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<video_stitcher_v1::VideoStitcherServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::video::stitcher::v1::ListCdnKeysRequest const& r) {
@@ -447,9 +444,7 @@ VideoStitcherServiceConnectionImpl::ListVodStitchDetails(
       StreamRange<google::cloud::video::stitcher::v1::VodStitchDetail>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<video_stitcher_v1::VideoStitcherServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::video::stitcher::v1::ListVodStitchDetailsRequest const&
@@ -500,9 +495,7 @@ VideoStitcherServiceConnectionImpl::ListVodAdTagDetails(
       StreamRange<google::cloud::video::stitcher::v1::VodAdTagDetail>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<video_stitcher_v1::VideoStitcherServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::video::stitcher::v1::ListVodAdTagDetailsRequest const&
@@ -553,9 +546,7 @@ VideoStitcherServiceConnectionImpl::ListLiveAdTagDetails(
       StreamRange<google::cloud::video::stitcher::v1::LiveAdTagDetail>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<video_stitcher_v1::VideoStitcherServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::video::stitcher::v1::ListLiveAdTagDetailsRequest const&
@@ -700,9 +691,7 @@ VideoStitcherServiceConnectionImpl::ListSlates(
       StreamRange<google::cloud::video::stitcher::v1::Slate>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<video_stitcher_v1::VideoStitcherServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::video::stitcher::v1::ListSlatesRequest const& r) {
@@ -1065,9 +1054,7 @@ VideoStitcherServiceConnectionImpl::ListLiveConfigs(
       StreamRange<google::cloud::video::stitcher::v1::LiveConfig>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<video_stitcher_v1::VideoStitcherServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::video::stitcher::v1::ListLiveConfigsRequest const& r) {
@@ -1401,9 +1388,7 @@ VideoStitcherServiceConnectionImpl::ListVodConfigs(
       StreamRange<google::cloud::video::stitcher::v1::VodConfig>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<video_stitcher_v1::VideoStitcherServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::video::stitcher::v1::ListVodConfigsRequest const& r) {
@@ -1640,9 +1625,7 @@ VideoStitcherServiceConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<video_stitcher_v1::VideoStitcherServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

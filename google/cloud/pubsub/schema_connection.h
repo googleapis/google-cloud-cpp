@@ -36,11 +36,7 @@ namespace pubsub {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `SchemaServiceConnection`.
-class SchemaServiceRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<SchemaServiceRetryPolicy> clone() const = 0;
-};
+class SchemaServiceRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `SchemaServiceConnection` based on counting errors.
@@ -81,7 +77,7 @@ class SchemaServiceLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<SchemaServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<SchemaServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -150,7 +146,7 @@ class SchemaServiceLimitedTimeRetryPolicy : public SchemaServiceRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<SchemaServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<SchemaServiceLimitedTimeRetryPolicy>(
         maximum_duration());
   }

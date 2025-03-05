@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-talent-options
  */
 struct CompletionRetryPolicyOption {
-  using Type = std::shared_ptr<CompletionRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

@@ -33,8 +33,7 @@ namespace metastore_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<metastore_v1::DataprocMetastoreRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<metastore_v1::DataprocMetastoreRetryPolicyOption>()
       ->clone();
 }
@@ -78,8 +77,7 @@ DataprocMetastoreConnectionImpl::ListServices(
       StreamRange<google::cloud::metastore::v1::Service>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<metastore_v1::DataprocMetastoreRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::metastore::v1::ListServicesRequest const& r) {
@@ -400,8 +398,7 @@ DataprocMetastoreConnectionImpl::ListMetadataImports(
       StreamRange<google::cloud::metastore::v1::MetadataImport>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<metastore_v1::DataprocMetastoreRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::metastore::v1::ListMetadataImportsRequest const& r) {
@@ -819,8 +816,7 @@ DataprocMetastoreConnectionImpl::ListBackups(
       StreamRange<google::cloud::metastore::v1::Backup>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<metastore_v1::DataprocMetastoreRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::metastore::v1::ListBackupsRequest const& r) {
@@ -1329,8 +1325,7 @@ DataprocMetastoreConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<metastore_v1::DataprocMetastoreRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {
@@ -1417,8 +1412,7 @@ DataprocMetastoreConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<metastore_v1::DataprocMetastoreRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

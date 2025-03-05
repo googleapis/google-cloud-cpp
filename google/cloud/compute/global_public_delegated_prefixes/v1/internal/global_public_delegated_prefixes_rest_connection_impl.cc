@@ -336,9 +336,7 @@ GlobalPublicDelegatedPrefixesRestConnectionImpl::
       StreamRange<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_global_public_delegated_prefixes_v1::
-                                   GlobalPublicDelegatedPrefixesRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::global_public_delegated_prefixes::v1::

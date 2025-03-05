@@ -33,8 +33,7 @@ namespace contactcenterinsights_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<contactcenterinsights_v1::ContactCenterInsightsRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options
       .get<contactcenterinsights_v1::ContactCenterInsightsRetryPolicyOption>()
       ->clone();
@@ -229,9 +228,7 @@ ContactCenterInsightsConnectionImpl::ListConversations(
       StreamRange<google::cloud::contactcenterinsights::v1::Conversation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           contactcenterinsights_v1::ContactCenterInsightsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::contactcenterinsights::v1::
                                       ListConversationsRequest const& r) {
@@ -393,9 +390,7 @@ ContactCenterInsightsConnectionImpl::ListAnalyses(
       StreamRange<google::cloud::contactcenterinsights::v1::Analysis>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           contactcenterinsights_v1::ContactCenterInsightsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::contactcenterinsights::v1::ListAnalysesRequest const&
@@ -1582,9 +1577,7 @@ ContactCenterInsightsConnectionImpl::ListPhraseMatchers(
       StreamRange<google::cloud::contactcenterinsights::v1::PhraseMatcher>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           contactcenterinsights_v1::ContactCenterInsightsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::contactcenterinsights::v1::
                                       ListPhraseMatchersRequest const& r) {
@@ -1732,9 +1725,7 @@ ContactCenterInsightsConnectionImpl::ListAnalysisRules(
       StreamRange<google::cloud::contactcenterinsights::v1::AnalysisRule>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           contactcenterinsights_v1::ContactCenterInsightsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::contactcenterinsights::v1::
                                       ListAnalysisRulesRequest const& r) {
@@ -1944,9 +1935,7 @@ ContactCenterInsightsConnectionImpl::ListViews(
       StreamRange<google::cloud::contactcenterinsights::v1::View>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           contactcenterinsights_v1::ContactCenterInsightsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::contactcenterinsights::v1::ListViewsRequest const& r) {
@@ -2171,9 +2160,7 @@ ContactCenterInsightsConnectionImpl::ListQaQuestions(
       StreamRange<google::cloud::contactcenterinsights::v1::QaQuestion>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           contactcenterinsights_v1::ContactCenterInsightsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::contactcenterinsights::v1::
                                       ListQaQuestionsRequest const& r) {
@@ -2270,9 +2257,7 @@ ContactCenterInsightsConnectionImpl::ListQaScorecards(
       StreamRange<google::cloud::contactcenterinsights::v1::QaScorecard>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           contactcenterinsights_v1::ContactCenterInsightsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::contactcenterinsights::v1::
                                       ListQaScorecardsRequest const& r) {
@@ -2486,9 +2471,7 @@ ContactCenterInsightsConnectionImpl::ListQaScorecardRevisions(
       google::cloud::contactcenterinsights::v1::QaScorecardRevision>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           contactcenterinsights_v1::ContactCenterInsightsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::contactcenterinsights::v1::
@@ -2541,9 +2524,7 @@ ContactCenterInsightsConnectionImpl::ListFeedbackLabels(
       StreamRange<google::cloud::contactcenterinsights::v1::FeedbackLabel>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           contactcenterinsights_v1::ContactCenterInsightsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::contactcenterinsights::v1::
                                       ListFeedbackLabelsRequest const& r) {
@@ -2626,9 +2607,7 @@ ContactCenterInsightsConnectionImpl::ListAllFeedbackLabels(
       StreamRange<google::cloud::contactcenterinsights::v1::FeedbackLabel>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           contactcenterinsights_v1::ContactCenterInsightsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::contactcenterinsights::v1::
                                       ListAllFeedbackLabelsRequest const& r) {
@@ -2862,9 +2841,7 @@ ContactCenterInsightsConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           contactcenterinsights_v1::ContactCenterInsightsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

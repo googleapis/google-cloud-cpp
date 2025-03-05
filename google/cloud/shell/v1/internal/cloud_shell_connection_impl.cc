@@ -32,8 +32,7 @@ namespace shell_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<shell_v1::CloudShellServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<shell_v1::CloudShellServiceRetryPolicyOption>()->clone();
 }
 

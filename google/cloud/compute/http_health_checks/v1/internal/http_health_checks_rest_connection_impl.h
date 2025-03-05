@@ -112,9 +112,7 @@ class HttpHealthChecksRestConnectionImpl
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
-  static std::unique_ptr<
-      compute_http_health_checks_v1::HttpHealthChecksRetryPolicy>
-  retry_policy(Options const& options) {
+  static std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
     return options
         .get<compute_http_health_checks_v1::HttpHealthChecksRetryPolicyOption>()
         ->clone();

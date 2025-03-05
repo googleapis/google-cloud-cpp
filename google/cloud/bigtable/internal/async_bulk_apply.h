@@ -44,7 +44,7 @@ class AsyncBulkApplier : public std::enable_shared_from_this<AsyncBulkApplier> {
   static future<std::vector<bigtable::FailedMutation>> Create(
       CompletionQueue cq, std::shared_ptr<BigtableStub> stub,
       std::shared_ptr<MutateRowsLimiter> limiter,
-      std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
+      std::unique_ptr<google::cloud::RetryPolicy> retry_policy,
       std::unique_ptr<BackoffPolicy> backoff_policy, bool enable_server_retries,
       bigtable::IdempotentMutationPolicy& idempotent_policy,
       std::string const& app_profile_id, std::string const& table_name,
@@ -53,7 +53,7 @@ class AsyncBulkApplier : public std::enable_shared_from_this<AsyncBulkApplier> {
  private:
   AsyncBulkApplier(CompletionQueue cq, std::shared_ptr<BigtableStub> stub,
                    std::shared_ptr<MutateRowsLimiter> limiter,
-                   std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
+                   std::unique_ptr<google::cloud::RetryPolicy> retry_policy,
                    std::unique_ptr<BackoffPolicy> backoff_policy,
                    bool enable_server_retries,
                    bigtable::IdempotentMutationPolicy& idempotent_policy,
@@ -69,7 +69,7 @@ class AsyncBulkApplier : public std::enable_shared_from_this<AsyncBulkApplier> {
   CompletionQueue cq_;
   std::shared_ptr<BigtableStub> stub_;
   std::shared_ptr<MutateRowsLimiter> limiter_;
-  std::unique_ptr<bigtable::DataRetryPolicy> retry_policy_;
+  std::unique_ptr<google::cloud::RetryPolicy> retry_policy_;
   std::unique_ptr<BackoffPolicy> backoff_policy_;
   bool enable_server_retries_;
   BulkMutatorState state_;

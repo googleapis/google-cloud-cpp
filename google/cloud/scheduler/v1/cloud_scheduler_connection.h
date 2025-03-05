@@ -36,11 +36,7 @@ namespace scheduler_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `CloudSchedulerConnection`.
-class CloudSchedulerRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<CloudSchedulerRetryPolicy> clone() const = 0;
-};
+class CloudSchedulerRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `CloudSchedulerConnection` based on counting errors.
@@ -81,7 +77,7 @@ class CloudSchedulerLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<CloudSchedulerRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<CloudSchedulerLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -150,7 +146,7 @@ class CloudSchedulerLimitedTimeRetryPolicy : public CloudSchedulerRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<CloudSchedulerRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<CloudSchedulerLimitedTimeRetryPolicy>(
         maximum_duration());
   }

@@ -280,7 +280,8 @@ TEST(RetryObjectReadSourceTest, RetryPolicyExhaustedOnResetSession) {
 TEST(RetryObjectReadSourceTest, ResumePolicyOrder) {
   ::testing::MockFunction<void(std::chrono::milliseconds)> backoff;
   ::testing::MockFunction<StatusOr<std::unique_ptr<ObjectReadSource>>(
-      ReadObjectRangeRequest const&, RetryPolicy&, BackoffPolicy&)>
+      ReadObjectRangeRequest const&, google::cloud::RetryPolicy&,
+      BackoffPolicy&)>
       factory;
 
   auto make_partial = [] {
@@ -501,7 +502,8 @@ TEST(RetryObjectReadSourceTest, TracingEnabled) {
 
   ::testing::MockFunction<void(std::chrono::milliseconds)> backoff;
   ::testing::MockFunction<StatusOr<std::unique_ptr<ObjectReadSource>>(
-      ReadObjectRangeRequest const&, RetryPolicy&, BackoffPolicy&)>
+      ReadObjectRangeRequest const&, google::cloud::RetryPolicy&,
+      BackoffPolicy&)>
       factory;
 
   auto make_partial = [] {
@@ -553,7 +555,8 @@ TEST(RetryObjectReadSourceTest, TracingDisabled) {
 
   ::testing::MockFunction<void(std::chrono::milliseconds)> backoff;
   ::testing::MockFunction<StatusOr<std::unique_ptr<ObjectReadSource>>(
-      ReadObjectRangeRequest const&, RetryPolicy&, BackoffPolicy&)>
+      ReadObjectRangeRequest const&, google::cloud::RetryPolicy&,
+      BackoffPolicy&)>
       factory;
 
   auto make_partial = [] {

@@ -36,11 +36,7 @@ namespace compute_node_types_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `NodeTypesConnection`.
-class NodeTypesRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<NodeTypesRetryPolicy> clone() const = 0;
-};
+class NodeTypesRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `NodeTypesConnection` based on counting errors.
@@ -80,7 +76,7 @@ class NodeTypesLimitedErrorCountRetryPolicy : public NodeTypesRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<NodeTypesRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<NodeTypesLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -149,7 +145,7 @@ class NodeTypesLimitedTimeRetryPolicy : public NodeTypesRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<NodeTypesRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<NodeTypesLimitedTimeRetryPolicy>(
         maximum_duration());
   }

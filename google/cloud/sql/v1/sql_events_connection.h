@@ -35,11 +35,7 @@ namespace sql_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `SqlEventsServiceConnection`.
-class SqlEventsServiceRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<SqlEventsServiceRetryPolicy> clone() const = 0;
-};
+class SqlEventsServiceRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `SqlEventsServiceConnection` based on counting errors.
@@ -80,7 +76,7 @@ class SqlEventsServiceLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<SqlEventsServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<SqlEventsServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -150,7 +146,7 @@ class SqlEventsServiceLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<SqlEventsServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<SqlEventsServiceLimitedTimeRetryPolicy>(
         maximum_duration());
   }

@@ -35,11 +35,7 @@ namespace sql_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `SqlSslCertsServiceConnection`.
-class SqlSslCertsServiceRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<SqlSslCertsServiceRetryPolicy> clone() const = 0;
-};
+class SqlSslCertsServiceRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `SqlSslCertsServiceConnection` based on counting errors.
@@ -82,7 +78,7 @@ class SqlSslCertsServiceLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<SqlSslCertsServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<SqlSslCertsServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -152,7 +148,7 @@ class SqlSslCertsServiceLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<SqlSslCertsServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<SqlSslCertsServiceLimitedTimeRetryPolicy>(
         maximum_duration());
   }

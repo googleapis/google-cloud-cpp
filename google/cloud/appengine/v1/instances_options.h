@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-appengine-options
  */
 struct InstancesRetryPolicyOption {
-  using Type = std::shared_ptr<InstancesRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

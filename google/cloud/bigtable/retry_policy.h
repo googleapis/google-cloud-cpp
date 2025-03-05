@@ -25,12 +25,7 @@ namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `bigtable::DataConnection`.
-class DataRetryPolicy : public google::cloud::RetryPolicy {
- public:
-  /// Create a new instance with the initial configuration, as-if no errors had
-  /// been processed.
-  virtual std::unique_ptr<DataRetryPolicy> clone() const = 0;
-};
+class DataRetryPolicy : public google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `bigtable::DataConnection` based on counting errors.
@@ -71,7 +66,7 @@ class DataLimitedErrorCountRetryPolicy : public DataRetryPolicy {
   bool IsPermanentFailure(Status const& s) const override {
     return impl_.IsPermanentFailure(s);
   }
-  std::unique_ptr<DataRetryPolicy> clone() const override {
+  std::unique_ptr<google::cloud::RetryPolicy> clone() const override {
     return std::make_unique<DataLimitedErrorCountRetryPolicy>(
         impl_.maximum_failures());
   }
@@ -139,7 +134,7 @@ class DataLimitedTimeRetryPolicy : public DataRetryPolicy {
   bool IsPermanentFailure(Status const& s) const override {
     return impl_.IsPermanentFailure(s);
   }
-  std::unique_ptr<DataRetryPolicy> clone() const override {
+  std::unique_ptr<google::cloud::RetryPolicy> clone() const override {
     return std::make_unique<DataLimitedTimeRetryPolicy>(
         impl_.maximum_duration());
   }

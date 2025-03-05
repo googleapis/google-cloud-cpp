@@ -39,11 +39,7 @@ namespace compute_https_health_checks_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `HttpsHealthChecksConnection`.
-class HttpsHealthChecksRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<HttpsHealthChecksRetryPolicy> clone() const = 0;
-};
+class HttpsHealthChecksRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `HttpsHealthChecksConnection` based on counting errors.
@@ -84,7 +80,7 @@ class HttpsHealthChecksLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<HttpsHealthChecksRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<HttpsHealthChecksLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -154,7 +150,7 @@ class HttpsHealthChecksLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<HttpsHealthChecksRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<HttpsHealthChecksLimitedTimeRetryPolicy>(
         maximum_duration());
   }

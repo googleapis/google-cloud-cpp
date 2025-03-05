@@ -40,12 +40,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `VideoIntelligenceServiceConnection`.
 class VideoIntelligenceServiceRetryPolicy
-    : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<VideoIntelligenceServiceRetryPolicy> clone()
-      const = 0;
-};
+    : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `VideoIntelligenceServiceConnection` based on counting
@@ -90,7 +85,7 @@ class VideoIntelligenceServiceLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<VideoIntelligenceServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<
         VideoIntelligenceServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
@@ -164,7 +159,7 @@ class VideoIntelligenceServiceLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<VideoIntelligenceServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<VideoIntelligenceServiceLimitedTimeRetryPolicy>(
         maximum_duration());
   }

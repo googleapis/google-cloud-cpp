@@ -36,11 +36,7 @@ namespace bigquery_storage_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `BigQueryReadConnection`.
-class BigQueryReadRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<BigQueryReadRetryPolicy> clone() const = 0;
-};
+class BigQueryReadRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `BigQueryReadConnection` based on counting errors.
@@ -81,7 +77,7 @@ class BigQueryReadLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<BigQueryReadRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<BigQueryReadLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -150,7 +146,7 @@ class BigQueryReadLimitedTimeRetryPolicy : public BigQueryReadRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<BigQueryReadRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<BigQueryReadLimitedTimeRetryPolicy>(
         maximum_duration());
   }

@@ -32,8 +32,7 @@ namespace iap_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<iap_v1::IdentityAwareProxyAdminServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<iap_v1::IdentityAwareProxyAdminServiceRetryPolicyOption>()
       ->clone();
 }
@@ -150,9 +149,7 @@ IdentityAwareProxyAdminServiceConnectionImpl::ListTunnelDestGroups(
       StreamRange<google::cloud::iap::v1::TunnelDestGroup>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<iap_v1::IdentityAwareProxyAdminServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::iap::v1::ListTunnelDestGroupsRequest const& r) {

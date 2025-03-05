@@ -36,11 +36,7 @@ namespace compute_global_operations_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `GlobalOperationsConnection`.
-class GlobalOperationsRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<GlobalOperationsRetryPolicy> clone() const = 0;
-};
+class GlobalOperationsRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `GlobalOperationsConnection` based on counting errors.
@@ -81,7 +77,7 @@ class GlobalOperationsLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<GlobalOperationsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<GlobalOperationsLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -151,7 +147,7 @@ class GlobalOperationsLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<GlobalOperationsRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<GlobalOperationsLimitedTimeRetryPolicy>(
         maximum_duration());
   }

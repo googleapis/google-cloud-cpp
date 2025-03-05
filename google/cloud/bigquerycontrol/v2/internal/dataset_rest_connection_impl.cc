@@ -122,8 +122,7 @@ DatasetServiceRestConnectionImpl::ListDatasets(
       StreamRange<google::cloud::bigquery::v2::ListFormatDataset>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<bigquerycontrol_v2::DatasetServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::bigquery::v2::ListDatasetsRequest const& r) {

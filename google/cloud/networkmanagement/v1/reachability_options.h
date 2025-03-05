@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-networkmanagement-options
  */
 struct ReachabilityServiceRetryPolicyOption {
-  using Type = std::shared_ptr<ReachabilityServiceRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

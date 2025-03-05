@@ -40,11 +40,7 @@ namespace batch_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `BatchServiceConnection`.
-class BatchServiceRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<BatchServiceRetryPolicy> clone() const = 0;
-};
+class BatchServiceRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `BatchServiceConnection` based on counting errors.
@@ -85,7 +81,7 @@ class BatchServiceLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<BatchServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<BatchServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -154,7 +150,7 @@ class BatchServiceLimitedTimeRetryPolicy : public BatchServiceRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<BatchServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<BatchServiceLimitedTimeRetryPolicy>(
         maximum_duration());
   }

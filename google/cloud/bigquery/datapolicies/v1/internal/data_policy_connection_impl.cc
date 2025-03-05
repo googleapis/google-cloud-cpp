@@ -32,8 +32,7 @@ namespace bigquery_datapolicies_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<bigquery_datapolicies_v1::DataPolicyServiceRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options
       .get<bigquery_datapolicies_v1::DataPolicyServiceRetryPolicyOption>()
       ->clone();
@@ -158,9 +157,7 @@ DataPolicyServiceConnectionImpl::ListDataPolicies(
       StreamRange<google::cloud::bigquery::datapolicies::v1::DataPolicy>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           bigquery_datapolicies_v1::DataPolicyServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::bigquery::datapolicies::v1::
                                       ListDataPoliciesRequest const& r) {

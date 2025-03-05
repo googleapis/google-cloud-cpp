@@ -109,8 +109,7 @@ class RegionUrlMapsRestConnectionImpl
           request) override;
 
  private:
-  static std::unique_ptr<compute_region_url_maps_v1::RegionUrlMapsRetryPolicy>
-  retry_policy(Options const& options) {
+  static std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
     return options
         .get<compute_region_url_maps_v1::RegionUrlMapsRetryPolicyOption>()
         ->clone();

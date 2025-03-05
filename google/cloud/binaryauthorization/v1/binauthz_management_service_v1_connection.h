@@ -37,12 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `BinauthzManagementServiceV1Connection`.
 class BinauthzManagementServiceV1RetryPolicy
-    : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<BinauthzManagementServiceV1RetryPolicy> clone()
-      const = 0;
-};
+    : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `BinauthzManagementServiceV1Connection` based on counting
@@ -88,8 +83,7 @@ class BinauthzManagementServiceV1LimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<BinauthzManagementServiceV1RetryPolicy> clone()
-      const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<
         BinauthzManagementServiceV1LimitedErrorCountRetryPolicy>(
         maximum_failures());
@@ -163,8 +157,7 @@ class BinauthzManagementServiceV1LimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<BinauthzManagementServiceV1RetryPolicy> clone()
-      const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<BinauthzManagementServiceV1LimitedTimeRetryPolicy>(
         maximum_duration());
   }

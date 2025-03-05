@@ -33,8 +33,7 @@ namespace documentai_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<documentai_v1::DocumentProcessorServiceRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options
       .get<documentai_v1::DocumentProcessorServiceRetryPolicyOption>()
       ->clone();
@@ -205,9 +204,7 @@ DocumentProcessorServiceConnectionImpl::ListProcessorTypes(
       StreamRange<google::cloud::documentai::v1::ProcessorType>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<documentai_v1::DocumentProcessorServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::documentai::v1::ListProcessorTypesRequest const& r) {
@@ -256,9 +253,7 @@ DocumentProcessorServiceConnectionImpl::ListProcessors(
       StreamRange<google::cloud::documentai::v1::Processor>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<documentai_v1::DocumentProcessorServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::documentai::v1::ListProcessorsRequest const& r) {
@@ -418,9 +413,7 @@ DocumentProcessorServiceConnectionImpl::ListProcessorVersions(
       StreamRange<google::cloud::documentai::v1::ProcessorVersion>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<documentai_v1::DocumentProcessorServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::documentai::v1::ListProcessorVersionsRequest const&
@@ -1346,9 +1339,7 @@ DocumentProcessorServiceConnectionImpl::ListEvaluations(
       StreamRange<google::cloud::documentai::v1::Evaluation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<documentai_v1::DocumentProcessorServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::documentai::v1::ListEvaluationsRequest const& r) {
@@ -1381,9 +1372,7 @@ DocumentProcessorServiceConnectionImpl::ListLocations(
       StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<documentai_v1::DocumentProcessorServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::location::ListLocationsRequest const& r) {
@@ -1430,9 +1419,7 @@ DocumentProcessorServiceConnectionImpl::ListOperations(
       StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry =
-           std::shared_ptr<documentai_v1::DocumentProcessorServiceRetryPolicy>(
-               retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::longrunning::ListOperationsRequest const& r) {

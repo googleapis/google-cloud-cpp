@@ -64,9 +64,7 @@ NetworkEndpointGroupsRestConnectionImpl::AggregatedListNetworkEndpointGroups(
       google::cloud::cpp::compute::v1::NetworkEndpointGroupsScopedList>>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_network_endpoint_groups_v1::
-                                   NetworkEndpointGroupsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::network_endpoint_groups::v1::
@@ -649,9 +647,7 @@ NetworkEndpointGroupsRestConnectionImpl::ListNetworkEndpointGroups(
       StreamRange<google::cloud::cpp::compute::v1::NetworkEndpointGroup>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_network_endpoint_groups_v1::
-                                   NetworkEndpointGroupsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::network_endpoint_groups::v1::
@@ -689,9 +685,7 @@ NetworkEndpointGroupsRestConnectionImpl::ListNetworkEndpoints(
       google::cloud::cpp::compute::v1::NetworkEndpointWithHealthStatus>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_network_endpoint_groups_v1::
-                                   NetworkEndpointGroupsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::network_endpoint_groups::v1::

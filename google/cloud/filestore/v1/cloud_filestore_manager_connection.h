@@ -40,11 +40,7 @@ namespace filestore_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `CloudFilestoreManagerConnection`.
-class CloudFilestoreManagerRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<CloudFilestoreManagerRetryPolicy> clone() const = 0;
-};
+class CloudFilestoreManagerRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `CloudFilestoreManagerConnection` based on counting
@@ -89,7 +85,7 @@ class CloudFilestoreManagerLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<CloudFilestoreManagerRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<CloudFilestoreManagerLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -159,7 +155,7 @@ class CloudFilestoreManagerLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<CloudFilestoreManagerRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<CloudFilestoreManagerLimitedTimeRetryPolicy>(
         maximum_duration());
   }

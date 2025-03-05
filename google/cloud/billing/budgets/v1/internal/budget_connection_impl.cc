@@ -32,8 +32,7 @@ namespace billing_budgets_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<billing_budgets_v1::BudgetServiceRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<billing_budgets_v1::BudgetServiceRetryPolicyOption>()
       ->clone();
 }
@@ -117,8 +116,7 @@ BudgetServiceConnectionImpl::ListBudgets(
       StreamRange<google::cloud::billing::budgets::v1::Budget>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<billing_budgets_v1::BudgetServiceRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::billing::budgets::v1::ListBudgetsRequest const& r) {

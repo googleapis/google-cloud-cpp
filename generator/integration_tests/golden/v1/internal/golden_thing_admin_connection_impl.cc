@@ -34,7 +34,7 @@ namespace golden_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<golden_v1::GoldenThingAdminRetryPolicy>
+std::unique_ptr<RetryPolicy>
 retry_policy(Options const& options) {
   return options.get<golden_v1::GoldenThingAdminRetryPolicyOption>()->clone();
 }
@@ -73,7 +73,7 @@ GoldenThingAdminConnectionImpl::ListDatabases(google::test::admin::database::v1:
   return google::cloud::internal::MakePaginationRange<StreamRange<google::test::admin::database::v1::Database>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<golden_v1::GoldenThingAdminRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::test::admin::database::v1::ListDatabasesRequest const& r) {
         return google::cloud::internal::RetryLoop(
@@ -455,7 +455,7 @@ GoldenThingAdminConnectionImpl::ListBackups(google::test::admin::database::v1::L
   return google::cloud::internal::MakePaginationRange<StreamRange<google::test::admin::database::v1::Backup>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<golden_v1::GoldenThingAdminRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::test::admin::database::v1::ListBackupsRequest const& r) {
         return google::cloud::internal::RetryLoop(
@@ -562,7 +562,7 @@ GoldenThingAdminConnectionImpl::ListDatabaseOperations(google::test::admin::data
   return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<golden_v1::GoldenThingAdminRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::test::admin::database::v1::ListDatabaseOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
@@ -590,7 +590,7 @@ GoldenThingAdminConnectionImpl::ListBackupOperations(google::test::admin::databa
   return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<golden_v1::GoldenThingAdminRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::test::admin::database::v1::ListBackupOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
@@ -710,7 +710,7 @@ GoldenThingAdminConnectionImpl::ListOperations(google::longrunning::ListOperatio
   return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<golden_v1::GoldenThingAdminRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(

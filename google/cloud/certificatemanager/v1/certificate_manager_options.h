@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-certificatemanager-options
  */
 struct CertificateManagerRetryPolicyOption {
-  using Type = std::shared_ptr<CertificateManagerRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

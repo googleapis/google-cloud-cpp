@@ -321,8 +321,7 @@ TargetPoolsRestConnectionImpl::AggregatedListTargetPools(
       std::string, google::cloud::cpp::compute::v1::TargetPoolsScopedList>>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_target_pools_v1::TargetPoolsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cpp::compute::target_pools::v1::
@@ -656,8 +655,7 @@ TargetPoolsRestConnectionImpl::ListTargetPools(
       StreamRange<google::cloud::cpp::compute::v1::TargetPool>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<compute_target_pools_v1::TargetPoolsRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options, google::cloud::cpp::compute::target_pools::
                                       v1::ListTargetPoolsRequest const& r) {

@@ -31,8 +31,7 @@ namespace iam_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<iam_v1::IAMPolicyRetryPolicy> retry_policy(
-    Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options.get<iam_v1::IAMPolicyRetryPolicyOption>()->clone();
 }
 

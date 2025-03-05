@@ -35,11 +35,7 @@ namespace talent_v4 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `EventServiceConnection`.
-class EventServiceRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<EventServiceRetryPolicy> clone() const = 0;
-};
+class EventServiceRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `EventServiceConnection` based on counting errors.
@@ -80,7 +76,7 @@ class EventServiceLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<EventServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<EventServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -149,7 +145,7 @@ class EventServiceLimitedTimeRetryPolicy : public EventServiceRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<EventServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<EventServiceLimitedTimeRetryPolicy>(
         maximum_duration());
   }

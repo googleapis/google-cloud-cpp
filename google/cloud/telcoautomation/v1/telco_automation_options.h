@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-telcoautomation-options
  */
 struct TelcoAutomationRetryPolicyOption {
-  using Type = std::shared_ptr<TelcoAutomationRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**

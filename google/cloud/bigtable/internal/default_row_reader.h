@@ -52,7 +52,7 @@ class DefaultRowReader : public RowReaderImpl {
       std::shared_ptr<BigtableStub> stub, std::string app_profile_id,
       std::string table_name, bigtable::RowSet row_set, std::int64_t rows_limit,
       bigtable::Filter filter, bool reverse,
-      std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
+      std::unique_ptr<google::cloud::RetryPolicy> retry_policy,
       std::unique_ptr<BackoffPolicy> backoff_policy, bool enable_server_retries,
       Sleeper sleeper = [](auto d) { std::this_thread::sleep_for(d); });
 
@@ -97,7 +97,7 @@ class DefaultRowReader : public RowReaderImpl {
   std::int64_t rows_limit_;
   bigtable::Filter filter_;
   bool reverse_;
-  std::unique_ptr<bigtable::DataRetryPolicy> retry_policy_;
+  std::unique_ptr<google::cloud::RetryPolicy> retry_policy_;
   std::unique_ptr<BackoffPolicy> backoff_policy_;
   bool enable_server_retries_;
   Sleeper sleeper_;

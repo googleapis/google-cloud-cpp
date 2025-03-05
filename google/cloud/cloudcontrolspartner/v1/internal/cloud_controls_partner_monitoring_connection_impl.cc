@@ -32,9 +32,7 @@ namespace cloudcontrolspartner_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<
-    cloudcontrolspartner_v1::CloudControlsPartnerMonitoringRetryPolicy>
-retry_policy(Options const& options) {
+std::unique_ptr<RetryPolicy> retry_policy(Options const& options) {
   return options
       .get<cloudcontrolspartner_v1::
                CloudControlsPartnerMonitoringRetryPolicyOption>()
@@ -84,9 +82,7 @@ CloudControlsPartnerMonitoringConnectionImpl::ListViolations(
       StreamRange<google::cloud::cloudcontrolspartner::v1::Violation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<
-           cloudcontrolspartner_v1::CloudControlsPartnerMonitoringRetryPolicy>(
-           retry_policy(*current)),
+       retry = std::shared_ptr<RetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
           Options const& options,
           google::cloud::cloudcontrolspartner::v1::ListViolationsRequest const&

@@ -39,11 +39,7 @@ namespace compute_images_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `ImagesConnection`.
-class ImagesRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<ImagesRetryPolicy> clone() const = 0;
-};
+class ImagesRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `ImagesConnection` based on counting errors.
@@ -83,7 +79,7 @@ class ImagesLimitedErrorCountRetryPolicy : public ImagesRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<ImagesRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<ImagesLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -150,7 +146,7 @@ class ImagesLimitedTimeRetryPolicy : public ImagesRetryPolicy {
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<ImagesRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<ImagesLimitedTimeRetryPolicy>(maximum_duration());
   }
 

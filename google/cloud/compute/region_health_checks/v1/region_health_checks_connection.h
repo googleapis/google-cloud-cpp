@@ -40,11 +40,7 @@ namespace compute_region_health_checks_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `RegionHealthChecksConnection`.
-class RegionHealthChecksRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<RegionHealthChecksRetryPolicy> clone() const = 0;
-};
+class RegionHealthChecksRetryPolicy : public ::google::cloud::RetryPolicy {};
 
 /**
  * A retry policy for `RegionHealthChecksConnection` based on counting errors.
@@ -87,7 +83,7 @@ class RegionHealthChecksLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<RegionHealthChecksRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<RegionHealthChecksLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -157,7 +153,7 @@ class RegionHealthChecksLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<RegionHealthChecksRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<RegionHealthChecksLimitedTimeRetryPolicy>(
         maximum_duration());
   }

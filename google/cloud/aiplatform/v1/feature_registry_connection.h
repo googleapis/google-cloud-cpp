@@ -42,9 +42,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// The retry policy for `FeatureRegistryServiceConnection`.
 class FeatureRegistryServiceRetryPolicy : public ::google::cloud::RetryPolicy {
- public:
-  /// Creates a new instance of the policy, reset to the initial state.
-  virtual std::unique_ptr<FeatureRegistryServiceRetryPolicy> clone() const = 0;
 };
 
 /**
@@ -90,7 +87,7 @@ class FeatureRegistryServiceLimitedErrorCountRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<FeatureRegistryServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<FeatureRegistryServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
@@ -160,7 +157,7 @@ class FeatureRegistryServiceLimitedTimeRetryPolicy
   bool IsPermanentFailure(Status const& status) const override {
     return impl_.IsPermanentFailure(status);
   }
-  std::unique_ptr<FeatureRegistryServiceRetryPolicy> clone() const override {
+  std::unique_ptr<RetryPolicy> clone() const override {
     return std::make_unique<FeatureRegistryServiceLimitedTimeRetryPolicy>(
         maximum_duration());
   }

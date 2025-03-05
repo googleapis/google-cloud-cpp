@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @ingroup google-cloud-appengine-options
  */
 struct AuthorizedCertificatesRetryPolicyOption {
-  using Type = std::shared_ptr<AuthorizedCertificatesRetryPolicy>;
+  using Type = std::shared_ptr<RetryPolicy>;
 };
 
 /**
