@@ -30,7 +30,7 @@ mapfile -t cmake_args < <(cmake::common_args)
 read -r ENABLED_FEATURES < <(features::always_build_cmake)
 readonly ENABLED_FEATURES
 
-io::run cmake "${cmake_args[@]}" -DGOOGLE_CLOUD_CPP_ENABLE="${ENABLED_FEATURES}"
+io::run cmake "${cmake_args[@]}" -DGOOGLE_CLOUD_CPP_ENABLE="${ENABLED_FEATURES}" -DCMAKE_CXX_STANDARD=17
 io::run cmake --build cmake-out
 mapfile -t ctest_args < <(ctest::common_args)
 io::run env -C cmake-out GOOGLE_CLOUD_CPP_STORAGE_HAVE_REST_CLIENT=yes \

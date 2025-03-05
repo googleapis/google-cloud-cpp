@@ -40,10 +40,10 @@ cc_library(
     deps = [
         "//:common",
         "//:grpc_utils",
-        "@com_google_absl//absl/container:fixed_array",
-        "@com_google_absl//absl/numeric:int128",
-        "@com_google_absl//absl/strings",
-        "@com_google_absl//absl/time",
+        "@abseil-cpp//absl/container:fixed_array",
+        "@abseil-cpp//absl/numeric:int128",
+        "@abseil-cpp//absl/strings",
+        "@abseil-cpp//absl/time",
         "@com_google_googleapis//google/longrunning:longrunning_cc_grpc",
         "@com_google_googleapis//google/spanner/admin/database/v1:database_cc_grpc",
         "@com_google_googleapis//google/spanner/admin/instance/v1:instance_cc_grpc",
@@ -106,7 +106,7 @@ cc_library(
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "//protos:system_includes",
         "//protos/google/cloud/spanner/testing:singer_cc_proto",
-        "@com_google_absl//absl/strings",
+        "@abseil-cpp//absl/strings",
         "@com_google_googletest//:gtest_main",
     ],
 )
@@ -137,7 +137,7 @@ cc_library(
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "//protos:system_includes",
         "//protos/google/cloud/spanner/testing:singer_cc_proto",
-        "@com_google_absl//absl/numeric:int128",
+        "@abseil-cpp//absl/numeric:int128",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in spanner_client_unit_tests]

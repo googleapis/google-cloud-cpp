@@ -39,6 +39,10 @@ RUN pip3 install setuptools wheel
 # Bazel needs the '-devel' version with javac.
 RUN dnf makecache && dnf install -y java-latest-openjdk-devel
 
+RUN dnf makecache && dnf install -y glibc glibc-devel
+
+RUN dnf makecache && dnf install -y clang-tools-extra
+
 # Sets root's password to the empty string to enable users to get a root shell
 # inside the container with `su -` and no password. Sudo would not work because
 # we run these containers as the invoking user's uid, which does not exist in
@@ -137,7 +141,7 @@ RUN curl -fsSL https://github.com/nlohmann/json/archive/v3.11.3.tar.gz | \
     cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/protobuf
-RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v30.0-rc1.tar.gz | \
+RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v30.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_CXX_STANDARD=20 \
@@ -170,7 +174,7 @@ RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.20
 
 WORKDIR /var/tmp/build/grpc
 RUN dnf makecache && dnf install -y c-ares-devel re2-devel
-RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.70.1.tar.gz | \
+RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.71.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_CXX_STANDARD=20 \
