@@ -370,9 +370,13 @@ std::shared_ptr<SpannerStub> SessionPool::GetStub(Session const& session) {
   return GetStub(std::unique_lock<std::mutex>(mu_));
 }
 
-void SessionPool::DecrementSessionCount(
-    std::unique_lock<std::mutex> const&,
-    google::cloud::spanner_internal::Session& session) {
+int SessionPool::total_sessions() const {
+  std::lock_guard<std::mutex> lk(mu_);
+  return total_sessions_;
+}
+
+void SessionPool::DecrementSessionCount(std::unique_lock<std::mutex> const&,
+                                        Session const& session) {
   --total_sessions_;
   auto const& channel = session.channel();
   if (channel) {
