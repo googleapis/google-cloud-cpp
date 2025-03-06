@@ -1213,6 +1213,97 @@ CloudFilestoreManagerConnectionImpl::UpdateBackup(
       polling_policy(*current), __func__);
 }
 
+future<StatusOr<google::cloud::filestore::v1::Instance>>
+CloudFilestoreManagerConnectionImpl::PromoteReplica(
+    google::cloud::filestore::v1::PromoteReplicaRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->PromoteReplica(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::filestore::v1::Instance>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::filestore::v1::PromoteReplicaRequest const& request) {
+        return stub->AsyncPromoteReplica(cq, std::move(context),
+                                         std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::filestore::v1::Instance>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerConnectionImpl::PromoteReplica(
+    NoAwaitTag,
+    google::cloud::filestore::v1::PromoteReplicaRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->PromoteReplica(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::filestore::v1::PromoteReplicaRequest const& request) {
+        return stub_->PromoteReplica(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::filestore::v1::Instance>>
+CloudFilestoreManagerConnectionImpl::PromoteReplica(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::common::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::filestore::v1::Instance>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to PromoteReplica",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::filestore::v1::Instance>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::filestore::v1::Instance>,
+      polling_policy(*current), __func__);
+}
+
 StreamRange<google::cloud::location::Location>
 CloudFilestoreManagerConnectionImpl::ListLocations(
     google::cloud::location::ListLocationsRequest request) {

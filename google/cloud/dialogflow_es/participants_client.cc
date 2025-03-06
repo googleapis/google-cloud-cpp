@@ -128,6 +128,18 @@ ParticipantsClient::AnalyzeContent(
 
 StatusOr<google::cloud::dialogflow::v2::AnalyzeContentResponse>
 ParticipantsClient::AnalyzeContent(
+    std::string const& participant,
+    google::cloud::dialogflow::v2::AudioInput const& audio_input,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dialogflow::v2::AnalyzeContentRequest request;
+  request.set_participant(participant);
+  *request.mutable_audio_input() = audio_input;
+  return connection_->AnalyzeContent(request);
+}
+
+StatusOr<google::cloud::dialogflow::v2::AnalyzeContentResponse>
+ParticipantsClient::AnalyzeContent(
     google::cloud::dialogflow::v2::AnalyzeContentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
