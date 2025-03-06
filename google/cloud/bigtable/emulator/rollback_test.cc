@@ -482,6 +482,65 @@ TEST(TransactonRollback, DeleteFromFamilyBasicFunction) {
   ASSERT_EQ(true, has_row(table, second_column_family_name, row_key).ok());
 }
 
+// Test that DeleteFromfamily can be rolled back in case a subsequent
+// mutation fails.
+TEST(TransactonRollback, DeleteFromFamilyRollback) {
+  ::google::bigtable::admin::v2::Table schema;
+  ::google::bigtable::admin::v2::ColumnFamily column_family;
+
+  auto const* const table_name = "projects/test/instances/test/tables/test";
+  auto const* const row_key = "0";
+  auto const* const column_family_name = "test";
+  auto const* const column_qualifer = "test";
+  auto const timestamp_micros = 1234;
+  auto const* data = "test";
+
+  // Failure of one of the mutations is simalted by having a mutation
+  // with this column family, which has not been provisioned. Previous
+  // successful mutations should be rolled back when RowTransaction
+  // sees a mutation with this invlaid column family name.
+  auto const* const column_family_not_in_schema =
+      "i_do_not_exist_in_the_schema";
+
+  std::vector<std::string> column_families = {column_family_name};
+  auto maybe_table = create_table(table_name, column_families);
+
+  ASSERT_STATUS_OK(maybe_table);
+  auto table = maybe_table.value();
+
+  std::vector<SetCellParams> v;
+  SetCellParams p = {column_family_name, column_qualifer, timestamp_micros,
+                     data};
+  v.push_back(p);
+
+  auto status = set_cells(table, table_name, row_key, v);
+  ASSERT_STATUS_OK(status);
+  ASSERT_STATUS_OK(has_cell(table, column_family_name, row_key, column_qualifer,
+                            timestamp_micros, data));
+  ASSERT_STATUS_OK(
+      has_column(table, column_family_name, row_key, column_qualifer));
+  ASSERT_STATUS_OK(has_row(table, column_family_name, row_key));
+
+  // Setup two DeleteFromfamily mutation: The first one uses the
+  // correct table schema (a column family that exists and is expected
+  // to succeed to delete the row saved above. The second one uses a
+  // column family not provisioned and should fail, which should
+  // trigger a rollback of the previous row deletion. In the end, the
+  // above row should still exist and all its data should be intact.
+  status =
+      delete_from_families(table, table_name, row_key,
+                           {column_family_name, column_family_not_in_schema});
+  ASSERT_NE(true, status.ok());  // The overall chain of mutations should fail.
+
+  // Check that the row deleted by the first mutation is restored,
+  // with all its data.
+  ASSERT_STATUS_OK(has_cell(table, column_family_name, row_key, column_qualifer,
+                            timestamp_micros, data));
+  ASSERT_STATUS_OK(
+      has_column(table, column_family_name, row_key, column_qualifer));
+  ASSERT_STATUS_OK(has_row(table, column_family_name, row_key));
+}
+
 }  // namespace emulator
 }  // namespace bigtable
 }  // namespace cloud

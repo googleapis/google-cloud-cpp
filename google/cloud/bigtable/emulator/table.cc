@@ -576,6 +576,7 @@ void RowTransaction::Undo() {
             restore_row->row_key_, std::move(cell.column_qualifer_),
             cell.timestamp_, std::move(cell.value_));
       }
+      continue;
     }
 
     // If we get here, there is an type of undo log that has not been
