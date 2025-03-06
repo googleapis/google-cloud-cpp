@@ -17,6 +17,7 @@
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "gmock/gmock.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 #include <google/bigtable/admin/v2/bigtable_table_admin.pb.h>
 #include <google/bigtable/admin/v2/table.pb.h>
@@ -34,6 +35,7 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 namespace emulator {
+using std::string;
 
 struct SetCellParams {
   std::string column_family_name;
@@ -52,6 +54,24 @@ StatusOr<std::shared_ptr<Table>> create_table(
   }
 
   return Table::Create(schema);
+}
+
+Status delete_from_families(
+    std::shared_ptr<google::cloud::bigtable::emulator::Table>& table,
+    std::string const& table_name, std::string const& row_key,
+    std::vector<string> const& column_families) {
+  ::google::bigtable::v2::MutateRowRequest mutation_request;
+  mutation_request.set_table_name(table_name);
+  mutation_request.set_row_key(row_key);
+
+  for (auto column_family : column_families) {
+    auto* mutation_request_mutation = mutation_request.add_mutations();
+    auto* delete_from_family_mutation =
+        mutation_request_mutation->mutable_delete_from_family();
+    delete_from_family_mutation->set_family_name(column_family);
+  }
+
+  return table->MutateRow(mutation_request);
 }
 
 Status set_cells(
@@ -411,6 +431,55 @@ TEST(TransactonRollback, DeleteRow) {
 
   status = has_row(table, valid_column_family_name, row_key);
   ASSERT_NE(status.ok(), true);
+}
+
+// Does the DeleteFromfamily mutation work to delete a row from a
+// specific family and does it rows with the same row key in othe
+// column families alone?
+TEST(TransactonRollback, DeleteFromFamilyBasicFunction) {
+  ::google::bigtable::admin::v2::Table schema;
+  ::google::bigtable::admin::v2::ColumnFamily column_family;
+
+  auto const* const table_name = "projects/test/instances/test/tables/test";
+  auto const* const row_key = "0";
+  auto const* const column_family_name = "test";
+  auto const* const column_qualifer = "test";
+  auto const timestamp_micros = 1234;
+  auto const* data = "test";
+
+  auto const* const second_column_family_name = "test2";
+
+  std::vector<std::string> column_families = {column_family_name, second_column_family_name};
+  auto maybe_table = create_table(table_name, column_families);
+
+  ASSERT_STATUS_OK(maybe_table);
+  auto table = maybe_table.value();
+
+  std::vector<SetCellParams> v;
+  SetCellParams p = {column_family_name, column_qualifer, timestamp_micros,
+                     data};
+  v.push_back(p);
+
+  p = {second_column_family_name, column_qualifer, timestamp_micros, data};
+  v.push_back(p);
+
+  auto status = set_cells(table, table_name, row_key, v);
+  ASSERT_STATUS_OK(status);
+  ASSERT_STATUS_OK(has_cell(table, column_family_name, row_key, column_qualifer,
+                            timestamp_micros, data));
+  ASSERT_STATUS_OK(
+      has_column(table, column_family_name, row_key, column_qualifer));
+  ASSERT_STATUS_OK(has_row(table, column_family_name, row_key));
+
+  // Having established that the data is there, test the basic
+  // functionality of the DeleteFromFamily mutation by trying to
+  // delete it.
+  ASSERT_STATUS_OK(
+      delete_from_families(table, table_name, row_key, {column_family_name}));
+  ASSERT_NE(true, has_row(table, column_family_name, row_key).ok());
+
+  // Ensure that we did not delete a row in anothe column family.
+  ASSERT_EQ(true, has_row(table, second_column_family_name, row_key).ok());
 }
 
 }  // namespace emulator
