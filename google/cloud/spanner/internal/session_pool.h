@@ -119,7 +119,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
    * Returns the number of sessions in the session pool plus the number of
    * sessions allocated to running transactions.
    */
-  int total_sessions() const { return total_sessions_; }
+  int total_sessions() const;
 
  private:
   friend std::shared_ptr<SessionPool> MakeSessionPool(
@@ -215,7 +215,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
 
   // Performs the necessary bookkeeping when a session is removed from use.
   void DecrementSessionCount(std::unique_lock<std::mutex> const& lk,
-                             Session& session);
+                             Session const& session);
 
   spanner::Database const db_;
   google::cloud::CompletionQueue cq_;
@@ -226,7 +226,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   int const max_pool_size_;
   std::mt19937 random_generator_;
 
-  std::mutex mu_;
+  mutable std::mutex mu_;
   std::condition_variable cond_;
   SessionHolder multiplexed_session_;               // GUARDED_BY(mu_)
   std::vector<std::unique_ptr<Session>> sessions_;  // GUARDED_BY(mu_)
