@@ -453,6 +453,16 @@ BigtableInstanceAdminClient::UpdateAppProfile(
   return connection_->UpdateAppProfile(operation);
 }
 
+Status BigtableInstanceAdminClient::DeleteAppProfile(std::string const& name,
+                                                     bool ignore_warnings,
+                                                     Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::bigtable::admin::v2::DeleteAppProfileRequest request;
+  request.set_name(name);
+  request.set_ignore_warnings(ignore_warnings);
+  return connection_->DeleteAppProfile(request);
+}
+
 Status BigtableInstanceAdminClient::DeleteAppProfile(
     google::bigtable::admin::v2::DeleteAppProfileRequest const& request,
     Options opts) {

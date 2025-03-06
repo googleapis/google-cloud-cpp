@@ -120,6 +120,11 @@ Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::UpdateBackup(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::PromoteReplica(
+    google::cloud::filestore::v1::PromoteReplicaRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::ListLocations(
     google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;

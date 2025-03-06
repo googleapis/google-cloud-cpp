@@ -62,7 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.dialogflow.v2.AnswerRecord]:
-/// @googleapis_reference_link{google/cloud/dialogflow/v2/answer_record.proto#L99}
+/// @googleapis_reference_link{google/cloud/dialogflow/v2/answer_record.proto#L98}
 ///
 class AnswerRecordsClient {
  public:
@@ -119,8 +119,8 @@ class AnswerRecordsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.AnswerRecord]: @googleapis_reference_link{google/cloud/dialogflow/v2/answer_record.proto#L99}
-  /// [google.cloud.dialogflow.v2.ListAnswerRecordsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/answer_record.proto#L126}
+  /// [google.cloud.dialogflow.v2.AnswerRecord]: @googleapis_reference_link{google/cloud/dialogflow/v2/answer_record.proto#L98}
+  /// [google.cloud.dialogflow.v2.ListAnswerRecordsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/answer_record.proto#L125}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::v2::AnswerRecord> ListAnswerRecords(
@@ -159,8 +159,8 @@ class AnswerRecordsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.AnswerRecord]: @googleapis_reference_link{google/cloud/dialogflow/v2/answer_record.proto#L99}
-  /// [google.cloud.dialogflow.v2.ListAnswerRecordsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/answer_record.proto#L126}
+  /// [google.cloud.dialogflow.v2.AnswerRecord]: @googleapis_reference_link{google/cloud/dialogflow/v2/answer_record.proto#L98}
+  /// [google.cloud.dialogflow.v2.ListAnswerRecordsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/answer_record.proto#L125}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::v2::AnswerRecord> ListAnswerRecords(
@@ -186,8 +186,8 @@ class AnswerRecordsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.AnswerRecord]: @googleapis_reference_link{google/cloud/dialogflow/v2/answer_record.proto#L99}
-  /// [google.cloud.dialogflow.v2.UpdateAnswerRecordRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/answer_record.proto#L174}
+  /// [google.cloud.dialogflow.v2.AnswerRecord]: @googleapis_reference_link{google/cloud/dialogflow/v2/answer_record.proto#L98}
+  /// [google.cloud.dialogflow.v2.UpdateAnswerRecordRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/answer_record.proto#L183}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::AnswerRecord> UpdateAnswerRecord(
@@ -217,8 +217,8 @@ class AnswerRecordsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.AnswerRecord]: @googleapis_reference_link{google/cloud/dialogflow/v2/answer_record.proto#L99}
-  /// [google.cloud.dialogflow.v2.UpdateAnswerRecordRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/answer_record.proto#L174}
+  /// [google.cloud.dialogflow.v2.AnswerRecord]: @googleapis_reference_link{google/cloud/dialogflow/v2/answer_record.proto#L98}
+  /// [google.cloud.dialogflow.v2.UpdateAnswerRecordRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/answer_record.proto#L183}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::AnswerRecord> UpdateAnswerRecord(

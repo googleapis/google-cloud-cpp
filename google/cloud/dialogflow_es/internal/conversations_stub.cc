@@ -78,6 +78,20 @@ DefaultConversationsStub::CompleteConversation(
   return response;
 }
 
+StatusOr<google::cloud::dialogflow::v2::IngestContextReferencesResponse>
+DefaultConversationsStub::IngestContextReferences(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dialogflow::v2::IngestContextReferencesRequest const&
+        request) {
+  google::cloud::dialogflow::v2::IngestContextReferencesResponse response;
+  auto status =
+      grpc_stub_->IngestContextReferences(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::dialogflow::v2::ListMessagesResponse>
 DefaultConversationsStub::ListMessages(
     grpc::ClientContext& context, Options const&,
@@ -138,6 +152,18 @@ DefaultConversationsStub::SearchKnowledge(
     google::cloud::dialogflow::v2::SearchKnowledgeRequest const& request) {
   google::cloud::dialogflow::v2::SearchKnowledgeResponse response;
   auto status = grpc_stub_->SearchKnowledge(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::dialogflow::v2::GenerateSuggestionsResponse>
+DefaultConversationsStub::GenerateSuggestions(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::dialogflow::v2::GenerateSuggestionsRequest const& request) {
+  google::cloud::dialogflow::v2::GenerateSuggestionsResponse response;
+  auto status = grpc_stub_->GenerateSuggestions(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
