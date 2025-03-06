@@ -118,6 +118,9 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   /**
    * Returns the number of sessions in the session pool plus the number of
    * sessions allocated to running transactions.
+   *
+   * @note This function should only be used for testing as other threads
+   *   could be modifying the underlying value immediately after it returns.
    */
   int total_sessions() const;
 
