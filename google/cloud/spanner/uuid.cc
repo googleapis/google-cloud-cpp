@@ -68,10 +68,12 @@ StatusOr<uint64_t> ParseHexBlock(absl::string_view& str,
 }
 }  // namespace
 
-Uuid::Uuid(absl::uint128 value) : uuid_(std::move(value)) {}
+Uuid::Uuid() : uuid_(0) {}
+
+Uuid::Uuid(absl::uint128 value) : uuid_(value) {}
 
 Uuid::Uuid(std::uint64_t high_bits, std::uint64_t low_bits)
-    : Uuid(absl::MakeUint128(std::move(high_bits), std::move(low_bits))) {}
+    : Uuid(absl::MakeUint128(high_bits, low_bits)) {}
 
 bool operator==(Uuid const& lhs, Uuid const& rhs) {
   return lhs.uuid_ == rhs.uuid_;
@@ -80,31 +82,6 @@ bool operator==(Uuid const& lhs, Uuid const& rhs) {
 bool operator<(Uuid const& lhs, Uuid const& rhs) {
   return lhs.uuid_ < rhs.uuid_;
 }
-
-// void Uuid::AppendToString(std::string* output) const {
-//   constexpr int kUuidStringLen = 36;
-//   constexpr int kHyphenPos[] = {8, 13, 18, 23};
-//   auto to_hex = [](uint64_t v, int start_index, int end_index, char* out) {
-//     static constexpr char hex_char[] = {'0', '1', '2', '3', '4', '5', '6',
-//     '7',
-//                                         '8', '9', 'a', 'b', 'c', 'd', 'e',
-//                                         'f'};
-//     for (int i = start_index; i >= end_index; --i) {
-//       *out++ = hex_char[(v >> (i * 4)) & 0xf];
-//     }
-//   };
-//   output->resize(output->size() + kUuidStringLen);
-//   char* target = &((*output)[output->size() - kUuidStringLen]);
-//   to_hex(high_bits_, 15, 8, target);
-//   *(target + kHyphenPos[0]) = '-';
-//   to_hex(high_bits_, 7, 4, target + kHyphenPos[0] + 1);
-//   *(target + kHyphenPos[1]) = '-';
-//   to_hex(high_bits_, 3, 0, target + kHyphenPos[1] + 1);
-//   *(target + kHyphenPos[2]) = '-';
-//   to_hex(low_bits_, 15, 12, target + kHyphenPos[2] + 1);
-//   *(target + kHyphenPos[3]) = '-';
-//   to_hex(low_bits_, 11, 0, target + kHyphenPos[3] + 1);
-// }
 
 Uuid::operator std::string() const {
   constexpr int kUuidStringLen = 36;
@@ -164,11 +141,9 @@ StatusOr<Uuid> MakeUuid(absl::string_view str) {
   }
 
   auto high_bits = ParseHexBlock(str, original_str);
-  if (!high_bits.ok()) {
-  }
+  if (!high_bits.ok()) return std::move(high_bits.status());
   auto low_bits = ParseHexBlock(str, original_str);
-  if (!low_bits.ok()) {
-  }
+  if (!low_bits.ok()) return std::move(low_bits.status());
 
   if (!str.empty()) {
     return internal::InvalidArgumentError(
