@@ -36,7 +36,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class Uuid {
  public:
   /// Default construction yields a zero value UUID.
-  Uuid() = default;
+  Uuid();
 
   /// Construct a UUID from a packed integer.
   explicit Uuid(absl::uint128 value);
@@ -71,6 +71,9 @@ class Uuid {
   }
   ///@}
 
+  /// @name Conversion to packed integer representation.
+  explicit operator absl::uint128() const { return uuid_; }
+
   /// @name Conversion to a lower case string using formatted:
   /// [8 hex-digits]-[4 hex-digits]-[4 hex-digits]-[4 hex-digits]-[12
   /// hex-digits] Example:
@@ -95,10 +98,10 @@ class Uuid {
  *  - Hyphens between any pair of hexadecimal digits are allowed.
  *
  * Example inputs:
- *  -
- *  -
- *  -
- *
+ *  - {0b6ed04c-a16d-fc46-5281-7f9978c13738}
+ *  - 0b6ed04ca16dfc4652817f9978c13738
+ *  - 7Bf8-A7b8-1917-1919-2625-F208-c582-4254
+ *  - {DECAFBAD-DEAD-FADE-CAFE-FEEDFACEBEEF}
  */
 StatusOr<Uuid> MakeUuid(absl::string_view s);
 
