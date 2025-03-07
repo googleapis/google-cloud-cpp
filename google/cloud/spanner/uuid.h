@@ -1,0 +1,110 @@
+// Copyright 2025 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_UUID_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_UUID_H
+
+#include "google/cloud/spanner/version.h"
+#include "google/cloud/status_or.h"
+#include "absl/numeric/int128.h"
+#include "absl/strings/string_view.h"
+#include <iosfwd>
+#include <string>
+
+namespace google {
+namespace cloud {
+namespace spanner {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+/**
+ * A representation of the Spanner UUID type: A fixed size 16 byte value
+ * that can be represented as a 32-digit hexadecimal string.
+ *
+ * @see https://cloud.google.com/spanner/docs/data-types#uuid_type
+ */
+class Uuid {
+ public:
+  /// Default construction yields a zero value UUID.
+  Uuid() = default;
+
+  /// Construct a UUID from a packed integer.
+  explicit Uuid(absl::uint128 value);
+
+  /// Construct a UUID from two 64 bit pieces.
+  Uuid(std::uint64_t high_bits, std::uint64_t low_bits);
+
+  /// @name Regular value type, supporting copy, assign, move.
+  ///@{
+  Uuid(Uuid&&) = default;
+  Uuid& operator=(Uuid&&) = default;
+  Uuid(Uuid const&) = default;
+  Uuid& operator=(Uuid const&) = default;
+  ///@}
+
+  /// @name Relational operators
+  ///
+  ///@{
+  friend bool operator==(Uuid const& lhs, Uuid const& rhs);
+  friend bool operator!=(Uuid const& lhs, Uuid const& rhs) {
+    return !(lhs == rhs);
+  }
+  friend bool operator<(Uuid const& lhs, Uuid const& rhs);
+  friend bool operator<=(Uuid const& lhs, Uuid const& rhs) {
+    return !(rhs < lhs);
+  }
+  friend bool operator>=(Uuid const& lhs, Uuid const& rhs) {
+    return !(lhs < rhs);
+  }
+  friend bool operator>(Uuid const& lhs, Uuid const& rhs) {
+    return (rhs < lhs);
+  }
+  ///@}
+
+  /// @name Conversion to a lower case string using formatted:
+  /// [8 hex-digits]-[4 hex-digits]-[4 hex-digits]-[4 hex-digits]-[12
+  /// hex-digits] Example:
+  explicit operator std::string() const;
+
+  /// @name Output streaming
+  friend std::ostream& operator<<(std::ostream& os, Uuid uuid) {
+    return os << std::string(uuid);
+  }
+
+ private:
+  absl::uint128 uuid_;
+};
+
+/**
+ * Parses a textual representation a `Uuid` from a string of hexadecimal digits.
+ * Returns an error if unable to parse the given input.
+ *
+ * Acceptable input strings must consist of [0-f] digits with formatting such:
+ *  - Upper, lower, or mixed case.
+ *  - Optional curly bracers around the entire UUID string.
+ *  - Hyphens between any pair of hexadecimal digits are allowed.
+ *
+ * Example inputs:
+ *  -
+ *  -
+ *  -
+ *
+ */
+StatusOr<Uuid> MakeUuid(absl::string_view s);
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace spanner
+}  // namespace cloud
+}  // namespace google
+
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_UUID_H
