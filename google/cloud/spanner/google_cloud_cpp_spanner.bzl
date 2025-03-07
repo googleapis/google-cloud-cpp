@@ -119,6 +119,7 @@ google_cloud_cpp_spanner_hdrs = [
     "tracing_options.h",
     "transaction.h",
     "update_instance_request_builder.h",
+    "uuid.h",
     "value.h",
     "version.h",
     "version_info.h",
@@ -198,6 +199,7 @@ google_cloud_cpp_spanner_srcs = [
     "sql_statement.cc",
     "timestamp.cc",
     "transaction.cc",
+    "uuid.cc",
     "value.cc",
     "version.cc",
 ]
