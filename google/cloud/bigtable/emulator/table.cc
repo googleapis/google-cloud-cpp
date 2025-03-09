@@ -283,46 +283,39 @@ Status Table::MutateRow(
   return Status();
 }
 
-class FilteredTableStream : public MergeCellStreams  {
- public:
-  FilteredTableStream(
-      std::vector<std::shared_ptr<FilteredColumnFamilyStream>> cf_streams)
-      : MergeCellStreams(CreateCellStreams(std::move(cf_streams))) {}
-
-  bool ApplyFilter(InternalFilter const& internal_filter) override {
-    if (!absl::holds_alternative<FamilyNameRegex>(internal_filter)) {
-      return MergeCellStreams::ApplyFilter(internal_filter);
-    }
-    for (auto stream_it = unfinished_streams_.begin();
-         stream_it != unfinished_streams_.end(); ++stream_it) {
-      auto* cf_stream =
-          dynamic_cast<FilteredColumnFamilyStream const*>(&(*stream_it)->impl());
-      assert(cf_stream);
-      if (re2::RE2::PartialMatch(
-              cf_stream->column_family_name(),
-              *absl::get<FamilyNameRegex>(internal_filter).regex)) {
-        auto last_it = std::prev(unfinished_streams_.end());
-        if (stream_it == last_it) {
-          unfinished_streams_.pop_back();
-          break;
-        }
-        stream_it->swap(unfinished_streams_.back());
+bool FilteredTableStream::ApplyFilter(InternalFilter const& internal_filter) {
+  if (!absl::holds_alternative<FamilyNameRegex>(internal_filter)) {
+    return MergeCellStreams::ApplyFilter(internal_filter);
+  }
+  for (auto stream_it = unfinished_streams_.begin();
+       stream_it != unfinished_streams_.end(); ++stream_it) {
+    auto* cf_stream =
+        dynamic_cast<FilteredColumnFamilyStream const*>(&(*stream_it)->impl());
+    assert(cf_stream);
+    if (!re2::RE2::PartialMatch(
+            cf_stream->column_family_name(),
+            *absl::get<FamilyNameRegex>(internal_filter).regex)) {
+      auto last_it = std::prev(unfinished_streams_.end());
+      if (stream_it == last_it) {
         unfinished_streams_.pop_back();
+        break;
       }
+      stream_it->swap(unfinished_streams_.back());
+      unfinished_streams_.pop_back();
     }
-    return true;
   }
- private:
-  static std::vector<CellStream> CreateCellStreams(
-      std::vector<std::shared_ptr<FilteredColumnFamilyStream>> cf_streams) {
-    std::vector<CellStream> res;
-    res.reserve(cf_streams.size());
-    for (auto& stream : cf_streams) {
-      res.emplace_back(std::move(stream));
-    }
-    return res;
+  return true;
+}
+
+std::vector<CellStream> FilteredTableStream::CreateCellStreams(
+    std::vector<std::unique_ptr<FilteredColumnFamilyStream>> cf_streams) {
+  std::vector<CellStream> res;
+  res.reserve(cf_streams.size());
+  for (auto& stream : cf_streams) {
+    res.emplace_back(CellStream(std::move(stream)));
   }
-};
+  return res;
+}
 
 StatusOr<StringRangeSet> CreateStringRangeSet(
     google::bigtable::v2::RowSet const& row_set) {
@@ -361,21 +354,26 @@ Status Table::ReadRows(google::bigtable::v2::ReadRowsRequest const& request,
     row_set = std::make_shared<StringRangeSet>(StringRangeSet::All());
   }
   std::lock_guard lock(mu_);
-  std::vector<std::shared_ptr<FilteredColumnFamilyStream>> per_cf_streams;
-  for (auto const & column_family: column_families_) {
-    per_cf_streams.emplace_back(std::make_shared<FilteredColumnFamilyStream>(
-        *column_family.second, column_family.first, row_set));
-  }
-  auto stream = CellStream(
-      std::make_shared<FilteredTableStream>(std::move(per_cf_streams)));
-  FilterContext ctx;
-  if (request.has_filter()) {
-    auto maybe_stream = CreateFilter(request.filter(), std::move(stream), ctx);
-    if (!maybe_stream) {
-      return maybe_stream.status();
+  auto table_stream_ctor = [row_set = std::move(row_set), this] {
+    std::vector<std::unique_ptr<FilteredColumnFamilyStream>> per_cf_streams;
+    for (auto const& column_family : column_families_) {
+      per_cf_streams.emplace_back(std::make_unique<FilteredColumnFamilyStream>(
+          *column_family.second, column_family.first, row_set));
     }
-    stream = *maybe_stream;
+    return CellStream(
+        std::make_unique<FilteredTableStream>(std::move(per_cf_streams)));
+  };
+  FilterContext ctx;
+  StatusOr<CellStream> maybe_stream;
+  if (request.has_filter()) {
+    maybe_stream = CreateFilter(request.filter(), table_stream_ctor, ctx);
+  } else {
+    maybe_stream = table_stream_ctor();
   }
+  if (!maybe_stream) {
+    return maybe_stream.status();
+  }
+  CellStream &stream = *maybe_stream;
   for (; stream; ++stream) {
     std::cout << "Row: " << stream->row_key()
               << " column_family: " << stream->column_family()

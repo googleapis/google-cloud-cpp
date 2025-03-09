@@ -37,6 +37,86 @@ std::string DumpStream(
   return ss.str();
 }
 
+TEST(FilteredTableStream, Empty) {
+  FilteredTableStream stream({});
+  EXPECT_EQ("", DumpStream(stream));
+}
+
+TEST(FilteredTableStream, EmptyColumnFamilies) {
+  ColumnFamily fam1;
+  ColumnFamily fam2;
+  auto ffam1 = std::make_unique<FilteredColumnFamilyStream>(
+      fam1, "fam1", std::make_unique<StringRangeSet>(StringRangeSet::All()));
+  auto ffam2 = std::make_unique<FilteredColumnFamilyStream>(
+      fam2, "fam2", std::make_unique<StringRangeSet>(StringRangeSet::All()));
+  std::vector<std::unique_ptr<FilteredColumnFamilyStream>> fams;
+  fams.emplace_back(std::move(ffam1));
+  fams.emplace_back(std::move(ffam2));
+  FilteredTableStream stream(std::move(fams));
+  EXPECT_EQ("", DumpStream(stream));
+}
+
+TEST(FilteredTableStream, ColumnFamiliesAreFiltered) {
+  using testing_util::chrono_literals::operator""_ms;
+
+  ColumnFamily fam1;
+  ColumnFamily fam2;
+  fam1.SetCell("row0", "col0", 10_ms, "foo");
+  fam2.SetCell("row0", "col0", 10_ms, "foo");
+  auto ffam1 = std::make_unique<FilteredColumnFamilyStream>(
+      fam1, "fam1", std::make_unique<StringRangeSet>(StringRangeSet::All()));
+  auto ffam2 = std::make_unique<FilteredColumnFamilyStream>(
+      fam2, "fam2", std::make_unique<StringRangeSet>(StringRangeSet::All()));
+  std::vector<std::unique_ptr<FilteredColumnFamilyStream>> fams;
+  fams.emplace_back(std::move(ffam1));
+  fams.emplace_back(std::move(ffam2));
+  FilteredTableStream stream(std::move(fams));
+  auto family_pattern = std::make_shared<re2::RE2>("fam1");
+  ASSERT_TRUE(family_pattern->ok());
+  stream.ApplyFilter(FamilyNameRegex{family_pattern});
+  EXPECT_EQ("row0 fam1:col0 @10ms: foo\n", DumpStream(stream));
+}
+
+TEST(FilteredTableStream, OtherFiltersArePropagated) {
+  using testing_util::chrono_literals::operator""_ms;
+
+  ColumnFamily fam1;
+  ColumnFamily fam2;
+  fam1.SetCell("row1", "col1", 10_ms, "foo");
+  fam1.SetCell("row0", "col1", 10_ms, "foo");  // row key regex
+  fam2.SetCell("row1", "col1", 10_ms, "foo");  // column family regex
+  fam1.SetCell("row1", "col2", 10_ms, "foo");  // column qualifier regex
+  fam1.SetCell("row1", "a1", 10_ms, "foo");  // column range
+  fam1.SetCell("row1", "col1", 1000_ms, "foo");  // timestamp range
+  auto ffam1 = std::make_unique<FilteredColumnFamilyStream>(
+      fam1, "fam1", std::make_unique<StringRangeSet>(StringRangeSet::All()));
+  auto ffam2 = std::make_unique<FilteredColumnFamilyStream>(
+      fam2, "fam2", std::make_unique<StringRangeSet>(StringRangeSet::All()));
+  std::vector<std::unique_ptr<FilteredColumnFamilyStream>> fams;
+  fams.emplace_back(std::move(ffam1));
+  fams.emplace_back(std::move(ffam2));
+  FilteredTableStream stream(std::move(fams));
+
+  auto row_key_pattern = std::make_shared<re2::RE2>("row1");
+  ASSERT_TRUE(row_key_pattern->ok());
+  EXPECT_TRUE(stream.ApplyFilter(RowKeyRegex{row_key_pattern}));
+
+  auto family_pattern = std::make_shared<re2::RE2>("fam1");
+  ASSERT_TRUE(family_pattern->ok());
+  EXPECT_TRUE(stream.ApplyFilter(FamilyNameRegex{family_pattern}));
+
+  auto qualifier_pattern = std::make_shared<re2::RE2>("1$");
+  ASSERT_TRUE(qualifier_pattern->ok());
+  EXPECT_TRUE(stream.ApplyFilter(ColumnRegex{qualifier_pattern}));
+
+  EXPECT_TRUE(stream.ApplyFilter(
+      ColumnRange{StringRangeSet::Range("co", false, "com", false)}));
+
+  EXPECT_TRUE(stream.ApplyFilter(
+      TimestampRange{TimestampRangeSet::Range(0_ms, 300_ms)}));
+
+  EXPECT_EQ("row1 fam1:col1 @10ms: foo\n", DumpStream(stream));
+}
 
 }  // anonymous namespace
 }  // namespace emulator

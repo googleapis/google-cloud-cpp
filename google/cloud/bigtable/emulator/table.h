@@ -67,6 +67,20 @@ class Table {
   std::map<std::string, std::shared_ptr<ColumnFamily>> column_families_;
 };
 
+// This class is public only to enable testing.
+class FilteredTableStream : public MergeCellStreams  {
+ public:
+  FilteredTableStream(
+      std::vector<std::unique_ptr<FilteredColumnFamilyStream>> cf_streams)
+      : MergeCellStreams(CreateCellStreams(std::move(cf_streams))) {}
+
+  bool ApplyFilter(InternalFilter const& internal_filter) override;
+
+ private:
+  static std::vector<CellStream> CreateCellStreams(
+      std::vector<std::unique_ptr<FilteredColumnFamilyStream>> cf_streams);
+};
+
 }  // namespace emulator
 }  // namespace bigtable
 }  // namespace cloud

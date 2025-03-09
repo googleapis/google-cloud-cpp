@@ -65,7 +65,7 @@ class AbstractCellStreamImpl {
 
 class CellStream {
  public:
-  CellStream(std::shared_ptr<AbstractCellStreamImpl> impl)
+  CellStream(std::unique_ptr<AbstractCellStreamImpl> impl)
       : impl_(std::move(impl)) {}
 
   bool ApplyFilter(InternalFilter const& internal_filter) {
@@ -76,13 +76,13 @@ class CellStream {
   void Next(NextMode mode = NextMode::kCell);
   void operator++() { Next(); }
   CellView operator++(int);
-  CellView operator*() const { return Value(); }
+  CellView const& operator*() const { return Value(); }
   CellView const* operator->() const { return &Value(); }
   explicit operator bool() const { return HasValue(); }
   AbstractCellStreamImpl const &impl() const { return *impl_; }
 
  private:
-  std::shared_ptr<AbstractCellStreamImpl> impl_;
+  std::unique_ptr<AbstractCellStreamImpl> impl_;
 };
 
 class FilterContext {
@@ -124,9 +124,10 @@ class MergeCellStreams : public AbstractCellStreamImpl {
 
 CellStream JoinCellStreams(std::vector<CellStream> cell_streams);
 
+using CellStreamConstructor = std::function<CellStream()>;
 StatusOr<CellStream> CreateFilter(
-    ::google::bigtable::v2::RowFilter const& filter, CellStream source,
-    FilterContext const& ctx);
+    ::google::bigtable::v2::RowFilter const& filter,
+    CellStreamConstructor source_ctor, FilterContext const& ctx);
 
 }  // namespace emulator
 }  // namespace bigtable
