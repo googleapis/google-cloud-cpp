@@ -85,7 +85,7 @@ class Table : public std::enable_shared_from_this<Table> {
   std::map<std::string, std::shared_ptr<ColumnFamily>> column_families_;
 };
 
-struct RestoreRow {
+struct RestoreColumnFamilyRow {
   std::map<std::string, std::shared_ptr<ColumnFamily>>::iterator table_it_;
   std::string row_key_;
   struct Cell {
@@ -164,7 +164,7 @@ class RowTransaction {
 
   bool committed_;
   std::shared_ptr<Table> table_;
-  std::stack<absl::variant<DeleteValue, RestoreValue, DeleteRow, DeleteColumn, RestoreRow>>
+  std::stack<absl::variant<DeleteValue, RestoreValue, DeleteRow, DeleteColumn, RestoreColumnFamilyRow>>
       undo_;
   ::google::bigtable::v2::MutateRowRequest const& request_;
 };

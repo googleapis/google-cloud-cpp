@@ -430,14 +430,14 @@ Status RowTransaction::DeleteFromFamily(
 
   if (auto column_family_it = table_it->second->find(request_.row_key());
       column_family_it != table_it->second->end()) {
-    RestoreRow restore_row;
+    RestoreColumnFamilyRow restore_row;
 
     restore_row.table_it_ = table_it;
     restore_row.row_key_ = request_.row_key();
-    std::vector<RestoreRow::Cell> cells;
+    std::vector<RestoreColumnFamilyRow::Cell> cells;
     for (auto const& column : column_family_it->second) {
       for (auto const& column_row : column.second) {
-        RestoreRow::Cell cell;
+        RestoreColumnFamilyRow::Cell cell;
 
         cell.column_qualifer_ = std::move(column.first);
         cell.timestamp_ = column_row.first;  // Wait, is this correct?
@@ -566,7 +566,7 @@ void RowTransaction::Undo() {
       continue;
     }
 
-    if (auto* restore_row = absl::get_if<RestoreRow>(&op)) {
+    if (auto* restore_row = absl::get_if<RestoreColumnFamilyRow>(&op)) {
       for (auto const& cell : restore_row->cells_) {
         // Take care to use std::move() to avoid copying potentially
         // very larg values (the column qualifier and cell values can
