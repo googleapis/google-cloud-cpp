@@ -432,20 +432,20 @@ Status RowTransaction::DeleteFromFamily(
       column_family_it != table_it->second->end()) {
     RestoreColumnFamilyRow restore_row;
 
-    restore_row.table_it_ = table_it;
-    restore_row.row_key_ = request_.row_key();
+    restore_row.table_it = table_it;
+    restore_row.row_key = request_.row_key();
     std::vector<RestoreColumnFamilyRow::Cell> cells;
     for (auto const& column : column_family_it->second) {
       for (auto const& column_row : column.second) {
         RestoreColumnFamilyRow::Cell cell;
 
-        cell.column_qualifer_ = std::move(column.first);
-        cell.timestamp_ = column_row.first;  // Wait, is this correct?
-        cell.value_ = std::move(column_row.second);
+        cell.column_qualifer = std::move(column.first);
+        cell.timestamp = column_row.first;  // Wait, is this correct?
+        cell.value = std::move(column_row.second);
         cells.push_back(cell);
       }
     }
-    restore_row.cells_ = cells;
+    restore_row.cells = cells;
     table_it->second->DeleteRow(request_.row_key());  // Is certain
                                                       // to succeed
                                                       // unless we
@@ -543,15 +543,15 @@ void RowTransaction::Undo() {
     undo_.pop();
 
     if (auto* restore_value = absl::get_if<RestoreValue>(&op)) {
-      auto& column_row = restore_value->column_row_it_->second;
-      column_row.find(restore_value->timestamp_)->second =
-          std::move(restore_value->value_);
+      auto& column_row = restore_value->column_row_it->second;
+      column_row.find(restore_value->timestamp)->second =
+          std::move(restore_value->value);
       continue;
     }
 
     if (auto* delete_value = absl::get_if<DeleteValue>(&op)) {
-      auto& column_row = delete_value->column_row_it_->second;
-      auto timestamp_it = column_row.find(delete_value->timestamp_);
+      auto& column_row = delete_value->column_row_it->second;
+      auto timestamp_it = column_row.find(delete_value->timestamp);
       column_row.erase(timestamp_it);
       continue;
     }
@@ -567,13 +567,13 @@ void RowTransaction::Undo() {
     }
 
     if (auto* restore_row = absl::get_if<RestoreColumnFamilyRow>(&op)) {
-      for (auto const& cell : restore_row->cells_) {
+      for (auto const& cell : restore_row->cells) {
         // Take care to use std::move() to avoid copying potentially
         // very larg values (the column qualifier and cell values can
         // be very large.
-        restore_row->table_it_->second->SetCell(
-            restore_row->row_key_, std::move(cell.column_qualifer_),
-            cell.timestamp_, std::move(cell.value_));
+        restore_row->table_it->second->SetCell(
+            restore_row->row_key, std::move(cell.column_qualifer),
+            cell.timestamp, std::move(cell.value));
       }
       continue;
     }

@@ -86,29 +86,29 @@ class Table : public std::enable_shared_from_this<Table> {
 };
 
 struct RestoreColumnFamilyRow {
-  std::map<std::string, std::shared_ptr<ColumnFamily>>::iterator table_it_;
-  std::string row_key_;
+  std::map<std::string, std::shared_ptr<ColumnFamily>>::iterator table_it;
+  std::string row_key;
   struct Cell {
-    std::string column_qualifer_;
-    std::chrono::milliseconds timestamp_;
-    std::string value_;
+    std::string column_qualifer;
+    std::chrono::milliseconds timestamp;
+    std::string value;
   };
-  std::vector<Cell> cells_;
+  std::vector<Cell> cells;
 };
 
 struct RestoreValue {
   // The iterator to the `columns_` member of a relevant `ColumnFamilyRow` where
   // we should reinsert the value.
-  std::map<std::string, ColumnRow>::iterator column_row_it_;
-  std::chrono::milliseconds timestamp_;
-  std::string value_;
+  std::map<std::string, ColumnRow>::iterator column_row_it;
+  std::chrono::milliseconds timestamp;
+  std::string value;
 };
 
 struct DeleteValue {
   // The iterator to the `columns_` member of a relevant `ColumnFamilyRow` where
   // we should delete value.
-  std::map<std::string, ColumnRow>::iterator column_row_it_;
-  std::chrono::milliseconds timestamp_;
+  std::map<std::string, ColumnRow>::iterator column_row_it;
+  std::chrono::milliseconds timestamp;
 };
 
 struct DeleteRow {
