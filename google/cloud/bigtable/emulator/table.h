@@ -86,7 +86,7 @@ class Table : public std::enable_shared_from_this<Table> {
 };
 
 struct RestoreColumnFamilyRow {
-  std::map<std::string, std::shared_ptr<ColumnFamily>>::iterator table_it;
+  std::map<std::string, std::shared_ptr<ColumnFamily>>::iterator column_family_it;
   std::string row_key;
   struct Cell {
     std::string column_qualifer;

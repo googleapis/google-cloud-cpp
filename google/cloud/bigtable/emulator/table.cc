@@ -439,7 +439,7 @@ Status RowTransaction::DeleteFromFamily(
   }
   RestoreColumnFamilyRow restore_row;
 
-  restore_row.table_it = column_family_it;
+  restore_row.column_family_it = column_family_it;
   restore_row.row_key = request_.row_key();
   std::vector<RestoreColumnFamilyRow::Cell> cells;
   for (auto const& column_family_row_it : column_family_row_it->second) {
@@ -576,7 +576,7 @@ void RowTransaction::Undo() {
         // Take care to use std::move() to avoid copying potentially
         // very larg values (the column qualifier and cell values can
         // be very large.
-        restore_row->table_it->second->SetCell(
+        restore_row->column_family_it->second->SetCell(
             restore_row->row_key, std::move(cell.column_qualifer),
             cell.timestamp, std::move(cell.value));
       }
