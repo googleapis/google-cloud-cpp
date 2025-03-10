@@ -24,7 +24,6 @@ namespace {
 
 using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::StatusIs;
-
 using ::testing::Eq;
 using ::testing::HasSubstr;
 
