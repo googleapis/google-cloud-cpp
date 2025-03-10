@@ -451,7 +451,7 @@ Status RowTransaction::DeleteFromFamily(
                                                       // unless we
                                                       // run out of
                                                       // memory.
-    undo_.emplace(restore_row);
+    undo_.emplace(std::move(restore_row));
   } else {
     // The row does not exist
     return Status(StatusCode::kNotFound,
