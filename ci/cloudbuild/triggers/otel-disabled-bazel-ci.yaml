@@ -4,10 +4,10 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
+    branch: v2.22.x
 id: 95ef05ac-0f7d-46b6-ae3c-bf9e3b1bd342
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: otel-disabled-bazel-ci
+name: v2-22-x-otel-disabled-bazel-ci
 resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/95ef05ac-0f7d-46b6-ae3c-bf9e3b1bd342
 substitutions:
   _BUILD_NAME: otel-disabled-bazel

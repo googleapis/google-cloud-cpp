@@ -4,10 +4,10 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
+    branch: v2.22.x
 id: 11fcbd32-d016-4661-ba98-31c65277739c
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: generate-libraries-ci
+name: v2-22-x-generate-libraries-ci
 substitutions:
   _BUILD_NAME: generate-libraries
   _DISTRO: checkers

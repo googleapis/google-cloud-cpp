@@ -4,10 +4,10 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
+    branch: v2.22.x
 id: 7af338de-c46d-41ff-a96b-f58e3b720fc5
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: xsan-ci
+name: v2-22-x-xsan-ci
 resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/7af338de-c46d-41ff-a96b-f58e3b720fc5
 substitutions:
   _BUILD_NAME: xsan

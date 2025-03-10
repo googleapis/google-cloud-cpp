@@ -4,11 +4,11 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: v2.22.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
 id: 03976e73-5154-457f-813f-4d33bb162e70
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: conformance-pr
+name: v2-22-x-conformance-pr
 resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/03976e73-5154-457f-813f-4d33bb162e70
 substitutions:
   _BUILD_NAME: conformance

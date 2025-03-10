@@ -4,11 +4,11 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: v2.22.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
 id: 55c2722f-ba23-4b27-af94-cee7095098e2
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: demo-rockylinux-9-pr
+name: v2-22-x-demo-rockylinux-9-pr
 resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/55c2722f-ba23-4b27-af94-cee7095098e2
 substitutions:
   _BUILD_NAME: demo-install

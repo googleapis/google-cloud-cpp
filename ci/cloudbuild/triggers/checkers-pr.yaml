@@ -4,11 +4,11 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: v2.22.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
 id: 746bbc75-cdf8-4172-bb08-0c2335479a8b
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: checkers-pr
+name: v2-22-x-checkers-pr
 substitutions:
   _BUILD_NAME: checkers
   _DISTRO: checkers

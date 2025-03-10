@@ -4,10 +4,10 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
+    branch: v2.22.x
 id: de5ea0bf-fef1-433d-aa17-4cb50ab8278b
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: demo-rockylinux-9-ci
+name: v2-22-x-demo-rockylinux-9-ci
 resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/de5ea0bf-fef1-433d-aa17-4cb50ab8278b
 substitutions:
   _BUILD_NAME: demo-install

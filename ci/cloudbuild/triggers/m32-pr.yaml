@@ -4,11 +4,11 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: v2.22.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
 id: 5eaadd40-1942-4c3f-b3ac-b4feae945a54
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: m32-pr
+name: v2-22-x-m32-pr
 resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/5eaadd40-1942-4c3f-b3ac-b4feae945a54
 substitutions:
   _BUILD_NAME: m32

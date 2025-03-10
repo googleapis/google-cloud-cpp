@@ -4,11 +4,11 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: v2.22.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
 id: 679ab848-3bcc-4e46-b4e5-4cd86d4b1405
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: xsan-pr
+name: v2-22-x-xsan-pr
 resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/679ab848-3bcc-4e46-b4e5-4cd86d4b1405
 substitutions:
   _BUILD_NAME: xsan

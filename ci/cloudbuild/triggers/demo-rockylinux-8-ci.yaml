@@ -4,10 +4,10 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
+    branch: v2.22.x
 id: 4bae470c-ca3a-4e49-bdc5-e5c16b37b70b
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: demo-rockylinux-8-ci
+name: v2-22-x-demo-rockylinux-8-ci
 substitutions:
   _BUILD_NAME: demo-install
   _DISTRO: demo-rockylinux-8

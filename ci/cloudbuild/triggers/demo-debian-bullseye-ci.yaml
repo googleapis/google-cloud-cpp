@@ -4,10 +4,10 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
+    branch: v2.22.x
 id: 99ed51ab-3b42-4046-8698-6ea54b39afaa
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: demo-debian-bullseye-ci
+name: v2-22-x-demo-debian-bullseye-ci
 resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/99ed51ab-3b42-4046-8698-6ea54b39afaa
 substitutions:
   _BUILD_NAME: demo-install

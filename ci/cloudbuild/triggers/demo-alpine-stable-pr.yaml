@@ -4,11 +4,11 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: v2.22.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
 id: 85f2a500-3643-4ac3-96be-4b824a69762f
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: demo-alpine-stable-pr
+name: v2-22-x-demo-alpine-stable-pr
 resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/85f2a500-3643-4ac3-96be-4b824a69762f
 substitutions:
   _BUILD_NAME: demo-install
