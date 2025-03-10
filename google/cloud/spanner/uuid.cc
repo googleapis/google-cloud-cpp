@@ -138,9 +138,9 @@ StatusOr<Uuid> MakeUuid(absl::string_view str) {
   }
 
   auto high_bits = ParseHexBlock(str, original_str);
-  if (!high_bits.ok()) return std::move(high_bits.status());
+  if (!high_bits.ok()) return std::move(high_bits).status();
   auto low_bits = ParseHexBlock(str, original_str);
-  if (!low_bits.ok()) return std::move(low_bits.status());
+  if (!low_bits.ok()) return std::move(low_bits).status();
 
   if (!str.empty()) {
     return internal::InvalidArgumentError(
