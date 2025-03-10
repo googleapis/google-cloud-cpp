@@ -428,37 +428,37 @@ Status RowTransaction::DeleteFromFamily(
                   ErrorInfo());
   }
 
-  if (auto column_family_row_it = column_family_it->second->find(request_.row_key());
-      column_family_row_it != column_family_it->second->end()) {
-    RestoreColumnFamilyRow restore_row;
-
-    restore_row.table_it = column_family_it;
-    restore_row.row_key = request_.row_key();
-    std::vector<RestoreColumnFamilyRow::Cell> cells;
-    for (auto const& column_family_row_it : column_family_row_it->second) {
-      for (auto const& column_row_it : column_family_row_it.second) {
-        RestoreColumnFamilyRow::Cell cell;
-
-        cell.column_qualifer = std::move(column_family_row_it.first);
-        cell.timestamp = column_row_it.first;
-        cell.value = std::move(column_row_it.second);
-        cells.push_back(cell);
-      }
-    }
-    restore_row.cells = std::move(cells);
-    column_family_it->second->DeleteRow(request_.row_key());  // Is certain
-                                                      // to succeed
-                                                      // unless we
-                                                      // run out of
-                                                      // memory.
-    undo_.emplace(std::move(restore_row));
-  } else {
+  std::map<std::string, ColumnFamilyRow>::iterator column_family_row_it;
+  if (column_family_row_it = column_family_it->second->find(request_.row_key());
+      column_family_row_it == column_family_it->second->end()) {
     // The row does not exist
     return Status(StatusCode::kNotFound,
                   absl::StrFormat("row key %s not found in column family %s",
                                   request_.row_key(), column_family_it->first),
                   ErrorInfo());
   }
+  RestoreColumnFamilyRow restore_row;
+
+  restore_row.table_it = column_family_it;
+  restore_row.row_key = request_.row_key();
+  std::vector<RestoreColumnFamilyRow::Cell> cells;
+  for (auto const& column_family_row_it : column_family_row_it->second) {
+    for (auto const& column_row_it : column_family_row_it.second) {
+      RestoreColumnFamilyRow::Cell cell;
+
+      cell.column_qualifer = std::move(column_family_row_it.first);
+      cell.timestamp = column_row_it.first;
+      cell.value = std::move(column_row_it.second);
+      cells.push_back(cell);
+    }
+  }
+  restore_row.cells = std::move(cells);
+  column_family_it->second->DeleteRow(request_.row_key());  // Is certain
+                                                            // to succeed
+                                                            // unless we
+                                                            // run out of
+                                                            // memory.
+  undo_.emplace(std::move(restore_row));
 
   return Status();
 }
