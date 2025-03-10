@@ -140,6 +140,7 @@ void RangeSetIntersectImpl(RangeSetType& disjoint_ranges,
        range_it != disjoint_ranges.end();) {
     if (!detail::HasOverlap(*range_it, intersected_range)) {
       disjoint_ranges.erase(range_it++);
+      continue;
     }
     if (typename RangeType::StartLess()(*range_it, intersected_range)) {
       RangeType to_update = std::move(*range_it);

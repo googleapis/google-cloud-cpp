@@ -788,12 +788,45 @@ TEST(TimestampRangeSet, IntersectAll) {
   ASSERT_EQ(TSRanges({{3_ms, 5_ms}}), trs.disjoint_ranges());
 }
 
-TEST(TimestampRangeSet, IntersectPartial) {
+TEST(TimestampRangeSet, IntersectPartialShorter) {
   using testing_util::chrono_literals::operator""_ms;
 
-  auto trs = TimestampRangeSet::All();
-  trs.Intersect(TimestampRangeSet::Range(3_ms, 5_ms));
-  ASSERT_EQ(TSRanges({{3_ms, 5_ms}}), trs.disjoint_ranges());
+  auto trs = TimestampRangeSet::Empty();
+  trs.Sum(TimestampRangeSet::Range(1_ms, 4_ms));
+  trs.Sum(TimestampRangeSet::Range(5_ms, 6_ms));
+  trs.Sum(TimestampRangeSet::Range(7_ms, 10_ms));
+  trs.Intersect(TimestampRangeSet::Range(3_ms, 8_ms));
+  ASSERT_EQ(TSRanges({{3_ms, 4_ms}, {5_ms, 6_ms}, {7_ms, 8_ms}}),
+            trs.disjoint_ranges());
+}
+
+TEST(TimestampRangeSet, IntersectPartialLonger) {
+  using testing_util::chrono_literals::operator""_ms;
+
+  auto trs = TimestampRangeSet::Empty();
+  trs.Sum(TimestampRangeSet::Range(3_ms, 4_ms));
+  trs.Sum(TimestampRangeSet::Range(5_ms, 6_ms));
+  trs.Sum(TimestampRangeSet::Range(7_ms, 8_ms));
+  trs.Intersect(TimestampRangeSet::Range(1_ms, 10_ms));
+  ASSERT_EQ(TSRanges({{3_ms, 4_ms}, {5_ms, 6_ms}, {7_ms, 8_ms}}),
+            trs.disjoint_ranges());
+}
+
+TEST(TimestampRangeSet, IntersectDistinct) {
+  using testing_util::chrono_literals::operator""_ms;
+
+  auto trs = TimestampRangeSet::Empty();
+  trs.Sum(TimestampRangeSet::Range(3_ms, 4_ms));
+  trs.Intersect(TimestampRangeSet::Range(7_ms, 10_ms));
+  ASSERT_EQ(TSRanges({}), trs.disjoint_ranges());
+}
+
+TEST(StringRangeSet, IntersectDistinct) {
+  auto srs = StringRangeSet::All();
+  srs.Intersect({StringRangeSet::Range("col0", false, "col0", false)});
+  srs.Intersect({StringRangeSet::Range("col2", false, "col2", false)});
+  std::set<StringRangeSet::Range, StringRangeSet::Range::StartLess> empty;
+  ASSERT_EQ(empty, srs.disjoint_ranges());
 }
 
 }  // anonymous namespace

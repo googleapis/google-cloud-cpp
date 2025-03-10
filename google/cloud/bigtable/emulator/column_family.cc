@@ -97,12 +97,12 @@ class FilteredColumnFamilyStream::FilterApply {
   FilterApply(FilteredColumnFamilyStream& parent) : parent_(parent) {}
 
   bool operator()(ColumnRange const& column_range) {
-    parent_.column_ranges_.Sum(column_range.range);
+    parent_.column_ranges_.Intersect(column_range.range);
     return true;
   }
 
   bool operator()(TimestampRange const& timestamp_range) {
-    parent_.timestamp_ranges_.Sum(timestamp_range.range);
+    parent_.timestamp_ranges_.Intersect(timestamp_range.range);
     return true;
   }
 
@@ -132,7 +132,6 @@ FilteredColumnFamilyStream::FilteredColumnFamilyStream(
       rows_(RangeFilteredMapView<ColumnFamily, StringRangeSet>(column_family,
                                                                *row_ranges_),
             std::cref(row_regexes_)),
-      row_it_(rows_.begin()),
       initialized_(false) {}
 
 bool FilteredColumnFamilyStream::ApplyFilter(
@@ -143,14 +142,14 @@ bool FilteredColumnFamilyStream::ApplyFilter(
 
 bool FilteredColumnFamilyStream::HasValue() const {
   InitializeIfNeeded();
-  return row_it_ != rows_.end();
+  return *row_it_ != rows_.end();
 }
 CellView const& FilteredColumnFamilyStream::Value() const {
   InitializeIfNeeded();
   if (!cur_value_) {
-    cur_value_ =
-        CellView(row_it_->first, column_family_name_, column_it_.value()->first,
-                 cell_it_.value()->first, cell_it_.value()->second);
+    cur_value_ = CellView((*row_it_)->first, column_family_name_,
+                          column_it_.value()->first, cell_it_.value()->first,
+                          cell_it_.value()->second);
   }
   return cur_value_.value();
 }
@@ -158,7 +157,7 @@ CellView const& FilteredColumnFamilyStream::Value() const {
 bool FilteredColumnFamilyStream::Next(NextMode mode) {
   InitializeIfNeeded();
   cur_value_.reset();
-  assert(row_it_ != rows_.end());
+  assert(*row_it_ != rows_.end());
   assert(column_it_.value() != columns_.value().end());
   assert(cell_it_.value() != cells_.value().end());
 
@@ -174,13 +173,14 @@ bool FilteredColumnFamilyStream::Next(NextMode mode) {
       return true;
     }
   }
-  ++row_it_;
+  ++(*row_it_);
   PointToFirstCellAfterRowChange();
   return true;
 }
 
 void FilteredColumnFamilyStream::InitializeIfNeeded() const {
   if (!initialized_) {
+    row_it_ = rows_.begin();
     PointToFirstCellAfterRowChange();
     initialized_ = true;
   }
@@ -201,10 +201,10 @@ bool FilteredColumnFamilyStream::PointToFirstCellAfterColumnChange() const {
 
 // Returns whether we've managed to find another cell
 bool FilteredColumnFamilyStream::PointToFirstCellAfterRowChange() const {
-  for (; row_it_ != rows_.end(); ++row_it_) {
+  for (; (*row_it_) != rows_.end(); ++(*row_it_)) {
     columns_ = RegexFiteredMapView<
         RangeFilteredMapView<ColumnFamilyRow, StringRangeSet>>(
-        RangeFilteredMapView<ColumnFamilyRow, StringRangeSet>(row_it_->second,
+        RangeFilteredMapView<ColumnFamilyRow, StringRangeSet>((*row_it_)->second,
                                                               column_ranges_),
         column_regexes_);
     column_it_ = columns_.value().begin();

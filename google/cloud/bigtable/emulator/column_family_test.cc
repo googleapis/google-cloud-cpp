@@ -186,7 +186,7 @@ row2 :col0 @10ms: qux
 }
 
 std::string DumpFilteredColumnFamilyStream(
-    FilteredColumnFamilyStream& stream, NextMode next_mode = NextMode::kCell) {
+    AbstractCellStreamImpl& stream, NextMode next_mode = NextMode::kCell) {
   std::stringstream ss;
   for (; stream.HasValue(); stream.Next(next_mode)) {
     auto const& cell = stream.Value();
@@ -236,49 +236,43 @@ TEST(FilteredColumnFamilyStream, FilterByTimestampRange) {
   using testing_util::chrono_literals::operator""_ms;
 
   ColumnFamily fam;
-  fam.SetCell("row0", "col0", 10_ms, "foo");
-  fam.SetCell("row0", "col0", 20_ms, "bar");  // Filter out
-  fam.SetCell("row0", "col0", 30_ms, "baz");
-  fam.SetCell("row0", "col1", 100_ms, "foo");  // Filter out
-  fam.SetCell("row0", "col1", 150_ms, "foo");  // Filter out
-  fam.SetCell("row0", "col1", 190_ms, "foo");  // Filter out
-  fam.SetCell("row0", "col2", 200_ms, "foo");
-  fam.SetCell("row0", "col2", 220_ms, "foo");
-  fam.SetCell("row0", "col2", 240_ms, "foo");
+  fam.SetCell("row0", "col0", 100_ms, "foo");
+  fam.SetCell("row0", "col0", 300_ms, "bar");  // Filter out
+
+  fam.SetCell("row0", "col1", 200_ms, "foo");  // Filter out
+  fam.SetCell("row0", "col1", 250_ms, "foo");  // Filter out
+  fam.SetCell("row0", "col1", 290_ms, "foo");  // Filter out
+  fam.SetCell("row0", "col2", 100_ms, "foo");
+  fam.SetCell("row0", "col2", 120_ms, "foo");
+  fam.SetCell("row0", "col2", 140_ms, "foo");
   fam.SetCell("row0", "col3", 300_ms, "foo");  // Filter out
   fam.SetCell("row0", "col3", 300_ms, "foo");  // Filter out
   fam.SetCell("row0", "col3", 300_ms, "foo");  // Filter out
-  fam.SetCell("row1", "col0", 10_ms, "foo");
   fam.SetCell("row1", "col0", 20_ms, "bar");  // Filter out
-  fam.SetCell("row1", "col0", 30_ms, "baz");
-  fam.SetCell("row1", "col1", 100_ms, "foo");  // Filter out
-  fam.SetCell("row1", "col1", 150_ms, "foo");  // Filter out
-  fam.SetCell("row1", "col1", 190_ms, "foo");  // Filter out
-  fam.SetCell("row1", "col2", 200_ms, "foo");
-  fam.SetCell("row1", "col2", 220_ms, "foo");
-  fam.SetCell("row1", "col2", 240_ms, "foo");
+  fam.SetCell("row1", "col0", 10_ms, "baz");
+  fam.SetCell("row1", "col1", 200_ms, "foo");  // Filter out
+  fam.SetCell("row1", "col1", 250_ms, "foo");  // Filter out
+  fam.SetCell("row1", "col1", 290_ms, "foo");  // Filter out
+  fam.SetCell("row1", "col2", 100_ms, "foo");
+  fam.SetCell("row1", "col2", 120_ms, "foo");
+  fam.SetCell("row1", "col2", 140_ms, "foo");
   fam.SetCell("row1", "col3", 300_ms, "foo");  // Filter out
   fam.SetCell("row1", "col3", 300_ms, "foo");  // Filter out
   fam.SetCell("row1", "col3", 300_ms, "foo");  // Filter out
   auto included_rows = std::make_shared<StringRangeSet>(StringRangeSet::All());
   FilteredColumnFamilyStream filtered_stream(fam, "cf1", included_rows);
   filtered_stream.ApplyFilter(
-      TimestampRange{TimestampRangeSet::Range(0_ms, 20_ms)});
+      TimestampRange{TimestampRangeSet::Range(0_ms, 300_ms)});
   filtered_stream.ApplyFilter(
-      TimestampRange{TimestampRangeSet::Range(30_ms, 100_ms)});
-  filtered_stream.ApplyFilter(
-      TimestampRange{TimestampRangeSet::Range(200_ms, 300_ms)});
+      TimestampRange{TimestampRangeSet::Range(100_ms, 200_ms)});
   EXPECT_EQ(R"""(
-row0 cf1:col0 @10ms: foo
-row0 cf1:col0 @30ms: baz
-row0 cf1:col2 @200ms: foo
-row0 cf1:col2 @220ms: foo
-row0 cf1:col2 @240ms: foo
-row1 cf1:col0 @10ms: foo
-row1 cf1:col0 @30ms: baz
-row1 cf1:col2 @200ms: foo
-row1 cf1:col2 @220ms: foo
-row1 cf1:col2 @240ms: foo
+row0 cf1:col0 @100ms: foo
+row0 cf1:col2 @100ms: foo
+row0 cf1:col2 @120ms: foo
+row0 cf1:col2 @140ms: foo
+row1 cf1:col2 @100ms: foo
+row1 cf1:col2 @120ms: foo
+row1 cf1:col2 @140ms: foo
 )""", "\n" + DumpFilteredColumnFamilyStream(filtered_stream));
 }
 
@@ -286,24 +280,22 @@ TEST(FilteredColumnFamilyStream, FilterByColumnRange) {
   using testing_util::chrono_literals::operator""_ms;
 
   ColumnFamily fam;
-  fam.SetCell("row0", "col0", 10_ms, "foo");
-  fam.SetCell("row0", "col1", 100_ms, "foo");  // Filter out
+  fam.SetCell("row0", "col0", 10_ms, "foo");  // Filter out
+  fam.SetCell("row0", "col1", 100_ms, "foo");
   fam.SetCell("row0", "col2", 200_ms, "foo");
   fam.SetCell("row0", "col3", 300_ms, "foo");  // Filter out
   fam.SetCell("row0", "col3", 300_ms, "foo");  // Filter out
-  fam.SetCell("row1", "col2", 300_ms, "foo");
-  fam.SetCell("row2", "col0", 300_ms, "foo");  
+  fam.SetCell("row2", "col1", 300_ms, "foo");  
   auto included_rows = std::make_shared<StringRangeSet>(StringRangeSet::All());
   FilteredColumnFamilyStream filtered_stream(fam, "cf1", included_rows);
   filtered_stream.ApplyFilter(
-      ColumnRange{StringRangeSet::Range("col0", false, "col0", false)});
+      ColumnRange{StringRangeSet::Range("col1", false, "col4", false)});
   filtered_stream.ApplyFilter(
-      ColumnRange{StringRangeSet::Range("col2", false, "col2", false)});
+      ColumnRange{StringRangeSet::Range("col1", false, "col2", false)});
   EXPECT_EQ(R"""(
-row0 cf1:col0 @10ms: foo
+row0 cf1:col1 @100ms: foo
 row0 cf1:col2 @200ms: foo
-row1 cf1:col2 @300ms: foo
-row2 cf1:col0 @300ms: foo
+row2 cf1:col1 @300ms: foo
 )""", "\n" + DumpFilteredColumnFamilyStream(filtered_stream));
 }
 
@@ -376,6 +368,8 @@ row1 cf1:col1 @100ms: foo
 row3 cf1:col3 @300ms: foo
 )""", "\n" + DumpFilteredColumnFamilyStream(filtered_stream));
 }
+
+// Add Next Column, Next Row tests
 
 }  // anonymous namespace
 }  // namespace emulator

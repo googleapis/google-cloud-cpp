@@ -38,7 +38,6 @@ add_library(
     to_grpc_status.cc
     to_grpc_status.h)
 
-
 target_link_libraries(
     bigtable_emulator_common
     google-cloud-cpp::bigtable
@@ -61,9 +60,10 @@ if (BUILD_TESTING)
         filter_test.cc
         filtered_map_test.cc
         rollback_test.cc
+        range_set_test.cc
         row_iterators_test.cc
         server_test.cc
-        range_set_test.cc)
+        table_test.cc)
     export_list_to_bazel("bigtable_emulator_unit_tests.bzl"
                          "bigtable_emulator_unit_tests" YEAR "2024")
 

@@ -180,8 +180,8 @@ class FilteredColumnFamilyStream : public AbstractCellStreamImpl {
   // If row_it_ == rows_.end() we've reached the end.
   // We keep the invariant that if (row_it_ != rows_.end()) then
   // cell_it_ != cells.end() && column_it_ != columns_.end()
-  mutable RegexFiteredMapView<
-      RangeFilteredMapView<ColumnFamily, StringRangeSet>>::const_iterator
+  mutable absl::optional<RegexFiteredMapView<
+      RangeFilteredMapView<ColumnFamily, StringRangeSet>>::const_iterator>
       row_it_;
   mutable absl::optional<RegexFiteredMapView<
       RangeFilteredMapView<ColumnFamilyRow, StringRangeSet>>::const_iterator>
