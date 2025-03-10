@@ -445,7 +445,7 @@ Status RowTransaction::DeleteFromFamily(
         cells.push_back(cell);
       }
     }
-    restore_row.cells = cells;
+    restore_row.cells = std::move(cells);
     column_family_it->second->DeleteRow(request_.row_key());  // Is certain
                                                       // to succeed
                                                       // unless we
