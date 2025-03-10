@@ -21,7 +21,6 @@ namespace google {
 namespace cloud {
 namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
 namespace {
 
 constexpr int kMaxUuidNumberOfHexDigits = 32;
@@ -68,8 +67,6 @@ StatusOr<uint64_t> ParseHexBlock(absl::string_view& str,
 }
 }  // namespace
 
-Uuid::Uuid() : uuid_(0) {}
-
 Uuid::Uuid(absl::uint128 value) : uuid_(value) {}
 
 Uuid::Uuid(std::uint64_t high_bits, std::uint64_t low_bits)
@@ -86,7 +83,7 @@ bool operator<(Uuid const& lhs, Uuid const& rhs) {
 Uuid::operator std::string() const {
   constexpr int kUuidStringLen = 36;
   constexpr int kHyphenPos[] = {8, 13, 18, 23};
-  auto to_hex = [](uint64_t v, int start_index, int end_index, char* out) {
+  auto to_hex = [](std::uint64_t v, int start_index, int end_index, char* out) {
     static constexpr char kHexChar[] = {'0', '1', '2', '3', '4', '5', '6', '7',
                                         '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
     for (int i = start_index; i >= end_index; --i) {
