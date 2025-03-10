@@ -542,31 +542,36 @@ void RowTransaction::Undo() {
     auto op = undo_.top();
     undo_.pop();
 
-    if (auto* restore_value = absl::get_if<RestoreValue>(&op)) {
+    auto* restore_value = absl::get_if<RestoreValue>(&op);
+    if (restore_value) {
       auto& column_row = restore_value->column_row_it->second;
       column_row.find(restore_value->timestamp)->second =
           std::move(restore_value->value);
       continue;
     }
 
-    if (auto* delete_value = absl::get_if<DeleteValue>(&op)) {
+    auto* delete_value = absl::get_if<DeleteValue>(&op);
+    if (delete_value) {
       auto& column_row = delete_value->column_row_it->second;
       auto timestamp_it = column_row.find(delete_value->timestamp);
       column_row.erase(timestamp_it);
       continue;
     }
 
-    if (auto* delete_row = absl::get_if<DeleteRow>(&op)) {
+    auto* delete_row = absl::get_if<DeleteRow>(&op);
+    if (delete_row) {
       delete_row->column_family.erase(delete_row->row_it);
       continue;
     }
 
-    if (auto* delete_column = absl::get_if<DeleteColumn>(&op)) {
+    auto* delete_column = absl::get_if<DeleteColumn>(&op);
+    if (delete_column) {
       delete_column->column_family_row.erase(delete_column->column_row_it);
       continue;
     }
 
-    if (auto* restore_row = absl::get_if<RestoreColumnFamilyRow>(&op)) {
+    auto* restore_row = absl::get_if<RestoreColumnFamilyRow>(&op);
+    if (restore_row) {
       for (auto const& cell : restore_row->cells) {
         // Take care to use std::move() to avoid copying potentially
         // very larg values (the column qualifier and cell values can
