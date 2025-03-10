@@ -19,7 +19,7 @@ very strict settings, so even small changes around the patches break them.
 Sometimes one can use `patch(1)` manually, with looser settings, and use that to
 update the patches.
 
-\[PR#17988\] is probably a good example of the changes you will need to make.
+[PR#17988] is probably a good example of the changes you will need to make.
 
 ## Prepare your environment
 
@@ -127,10 +127,10 @@ Run the command agan if needed.
 env CC=gcc-11 CXX=g++-11 conan create --build missing  --build-require  --version ${TAG} recipes/google-cloud-cpp/2.x 2>&1 | tee create.log
 ```
 
-Review \[Conan's policy\]\[conan-old-version-policy\] with respect to old
-versions. The policy only requires keeping 3 minor versions of the current major
-release series. Take advantage of the policy to clean up old versions **and**
-the code to support them.
+Review [Conan's policy][conan-old-version-policy] with respect to old versions.
+The policy only requires keeping 3 minor versions of the current major release
+series. Take advantage of the policy to clean up old versions **and** the code
+to support them.
 
 For example, if you are updating Conan to support v2.19.0 and Conan already
 supports v2.5.0, v2.12.0, v2.15.1, and v1.40.1 you can remove v2.5.0. You cannot
