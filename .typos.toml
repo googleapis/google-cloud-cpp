@@ -1,17 +1,14 @@
 [files]
 extend-exclude = [
-    # We don't name any of the files in these lists
-    "external/googleapis/protolists/*.list",
+    # It does not like "intoto_*.proto"
+    "external/googleapis/protolists/grafeas.list",
     # The discovery docs have one or more typos in their comments and enum
     # fields. These typos can be propagated to the generated .h files.
     # TODO(#11736): Try and get typos fixed upstream.
     "generator/discovery/compute_public_google_rest_v1.json",
-    "generator/discovery/bigquery_public_google_rest_v2.json",
     "protos/google/cloud/compute/*/*/*.proto",
-    "protos/google/cloud/bigquery/*/*/*.proto",
     "google/cloud/compute/*/*/*.h",
     # Truncates strings, which might not form valid words.
-    "google/cloud/bigquery/v2/minimal/internal/job_request_test.cc",
     "google/cloud/internal/debug_string_protobuf_test.cc",
     # Testing input file
     "google/cloud/testing_util/rest_testing_large_json.json",
@@ -25,10 +22,8 @@ extend-exclude = [
     "google/cloud/baremetalsolution/v2/bare_metal_solution_client.h",
     "google/cloud/channel/v1/cloud_channel_client.h",
     "google/cloud/cloudbuild/v2/repository_manager_client.h",
-    "google/cloud/dialogflow_es/generators_client.h",
     "google/cloud/managedidentities/v1/managed_identities_client.h",
     "google/cloud/monitoring/v3/uptime_check_client.h",
-    "google/cloud/networkconnectivity/v1/policy_based_routing_client.h",
     "google/cloud/rapidmigrationassessment/v1/rapid_migration_assessment_client.h",
     "google/cloud/resourcemanager/v3/projects_client.h",
     # The tool complains about `FIELDs` :shrug:
@@ -37,11 +32,10 @@ extend-exclude = [
     # keyfiles (or private keys) and contain character sequences that almost
     # look like words.
     "ci/etc/invalidated-keyfile.json",
-    "google/cloud/internal/curl_rest_client_integration_test.cc",
+    "google/cloud/internal/rest_client_integration_test.cc",
     "google/cloud/internal/grpc_service_account_authentication_test.cc",
     "google/cloud/internal/oauth2_google_credentials_test.cc",
     "google/cloud/internal/oauth2_service_account_credentials_test.cc",
-    "google/cloud/internal/rest_client_integration_test.cc",
     "google/cloud/testing_util/credentials_constants.h",
     "google/cloud/storage/client_options_test.cc",
     "google/cloud/storage/client_sign_policy_document_test.cc",
@@ -51,7 +45,6 @@ extend-exclude = [
     "google/cloud/storage/testing/constants.h",
     "google/cloud/storage/tests/unified_credentials_integration_test.cc",
     "google/cloud/storage/tools/make_jwt_assertion_for_test_data.py",
-    "google/cloud/universe_domain_test.cc",
     # Input data for DocFX tests. It contains many long hex strings that confuse
     # the spell checker.
     "docfx/testing/inputs.cc",
@@ -66,8 +59,5 @@ extend-ignore-identifiers-re = [
   # This pattern can be found in long hex strings.
   "[0-9]caf[0-9]",
   # This is a GCS dual-region name.
-  "NAM4",
-  # Metadata is mispelled in this proto message name found in
-  # google/cloud/aiplatform/v1/vizier_service.proto
-  "CheckTrialEarlyStoppingStateMetatdata"
+  "NAM4"
 ]
