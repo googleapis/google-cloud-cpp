@@ -413,9 +413,11 @@ Status RowTransaction::MergeToCell(
 Status RowTransaction::DeleteFromFamily(
     ::google::bigtable::v2::Mutation_DeleteFromFamily const&
         delete_from_family) {
-  auto maybe_column_family = table_->FindColumnFamily(delete_from_family);
-  if (!maybe_column_family) {
-    return maybe_column_family.status();
+  // If the request references an incorrect schema (non-existent
+  // column family) then return a failure status error immediately.
+  auto status = table_->FindColumnFamily(delete_from_family);
+  if (!status.ok()) {
+    return status.status();
   }
 
   auto table_it = table_->find(delete_from_family.family_name());
