@@ -63,7 +63,7 @@ class MockBigtableStub : public bigtable_internal::BigtableStub {
                google::bigtable::v2::ReadModifyWriteRowRequest const&),
               (override));
   MOCK_METHOD(StatusOr<google::bigtable::v2::PrepareQueryResponse>,
-              PrepareQueryResponse,
+              PrepareQuery,
               (grpc::ClientContext&, Options const&,
                google::bigtable::v2::PrepareQueryRequest const&),
               (override));
