@@ -227,6 +227,187 @@ StorageControlClient::ListManagedFolders(
   return connection_->ListManagedFolders(std::move(request));
 }
 
+future<StatusOr<google::storage::control::v2::AnywhereCache>>
+StorageControlClient::CreateAnywhereCache(
+    std::string const& parent,
+    google::storage::control::v2::AnywhereCache const& anywhere_cache,
+    std::string const& anywhere_cache_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::CreateAnywhereCacheRequest request;
+  request.set_parent(parent);
+  *request.mutable_anywhere_cache() = anywhere_cache;
+  request.set_anywhere_cache_id(anywhere_cache_id);
+  return connection_->CreateAnywhereCache(request);
+}
+
+StatusOr<google::longrunning::Operation>
+StorageControlClient::CreateAnywhereCache(
+    NoAwaitTag, std::string const& parent,
+    google::storage::control::v2::AnywhereCache const& anywhere_cache,
+    std::string const& anywhere_cache_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::CreateAnywhereCacheRequest request;
+  request.set_parent(parent);
+  *request.mutable_anywhere_cache() = anywhere_cache;
+  request.set_anywhere_cache_id(anywhere_cache_id);
+  return connection_->CreateAnywhereCache(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::storage::control::v2::AnywhereCache>>
+StorageControlClient::CreateAnywhereCache(
+    google::storage::control::v2::CreateAnywhereCacheRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateAnywhereCache(request);
+}
+
+StatusOr<google::longrunning::Operation>
+StorageControlClient::CreateAnywhereCache(
+    NoAwaitTag,
+    google::storage::control::v2::CreateAnywhereCacheRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateAnywhereCache(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::storage::control::v2::AnywhereCache>>
+StorageControlClient::CreateAnywhereCache(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateAnywhereCache(operation);
+}
+
+future<StatusOr<google::storage::control::v2::AnywhereCache>>
+StorageControlClient::UpdateAnywhereCache(
+    google::storage::control::v2::AnywhereCache const& anywhere_cache,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::UpdateAnywhereCacheRequest request;
+  *request.mutable_anywhere_cache() = anywhere_cache;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateAnywhereCache(request);
+}
+
+StatusOr<google::longrunning::Operation>
+StorageControlClient::UpdateAnywhereCache(
+    NoAwaitTag,
+    google::storage::control::v2::AnywhereCache const& anywhere_cache,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::UpdateAnywhereCacheRequest request;
+  *request.mutable_anywhere_cache() = anywhere_cache;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateAnywhereCache(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::storage::control::v2::AnywhereCache>>
+StorageControlClient::UpdateAnywhereCache(
+    google::storage::control::v2::UpdateAnywhereCacheRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateAnywhereCache(request);
+}
+
+StatusOr<google::longrunning::Operation>
+StorageControlClient::UpdateAnywhereCache(
+    NoAwaitTag,
+    google::storage::control::v2::UpdateAnywhereCacheRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateAnywhereCache(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::storage::control::v2::AnywhereCache>>
+StorageControlClient::UpdateAnywhereCache(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateAnywhereCache(operation);
+}
+
+StatusOr<google::storage::control::v2::AnywhereCache>
+StorageControlClient::DisableAnywhereCache(std::string const& name,
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::DisableAnywhereCacheRequest request;
+  request.set_name(name);
+  return connection_->DisableAnywhereCache(request);
+}
+
+StatusOr<google::storage::control::v2::AnywhereCache>
+StorageControlClient::DisableAnywhereCache(
+    google::storage::control::v2::DisableAnywhereCacheRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DisableAnywhereCache(request);
+}
+
+StatusOr<google::storage::control::v2::AnywhereCache>
+StorageControlClient::PauseAnywhereCache(std::string const& name,
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::PauseAnywhereCacheRequest request;
+  request.set_name(name);
+  return connection_->PauseAnywhereCache(request);
+}
+
+StatusOr<google::storage::control::v2::AnywhereCache>
+StorageControlClient::PauseAnywhereCache(
+    google::storage::control::v2::PauseAnywhereCacheRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PauseAnywhereCache(request);
+}
+
+StatusOr<google::storage::control::v2::AnywhereCache>
+StorageControlClient::ResumeAnywhereCache(std::string const& name,
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::ResumeAnywhereCacheRequest request;
+  request.set_name(name);
+  return connection_->ResumeAnywhereCache(request);
+}
+
+StatusOr<google::storage::control::v2::AnywhereCache>
+StorageControlClient::ResumeAnywhereCache(
+    google::storage::control::v2::ResumeAnywhereCacheRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ResumeAnywhereCache(request);
+}
+
+StatusOr<google::storage::control::v2::AnywhereCache>
+StorageControlClient::GetAnywhereCache(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::GetAnywhereCacheRequest request;
+  request.set_name(name);
+  return connection_->GetAnywhereCache(request);
+}
+
+StatusOr<google::storage::control::v2::AnywhereCache>
+StorageControlClient::GetAnywhereCache(
+    google::storage::control::v2::GetAnywhereCacheRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetAnywhereCache(request);
+}
+
+StreamRange<google::storage::control::v2::AnywhereCache>
+StorageControlClient::ListAnywhereCaches(std::string const& parent,
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::storage::control::v2::ListAnywhereCachesRequest request;
+  request.set_parent(parent);
+  return connection_->ListAnywhereCaches(request);
+}
+
+StreamRange<google::storage::control::v2::AnywhereCache>
+StorageControlClient::ListAnywhereCaches(
+    google::storage::control::v2::ListAnywhereCachesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListAnywhereCaches(std::move(request));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagecontrol_v2
 }  // namespace cloud

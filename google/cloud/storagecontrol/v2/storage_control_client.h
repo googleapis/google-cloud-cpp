@@ -116,8 +116,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.CreateFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L232}
-  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L171}
+  /// [google.storage.control.v2.CreateFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L323}
+  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L262}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::Folder> CreateFolder(
@@ -149,8 +149,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.CreateFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L232}
-  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L171}
+  /// [google.storage.control.v2.CreateFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L323}
+  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L262}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::Folder> CreateFolder(
@@ -175,7 +175,7 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.DeleteFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L269}
+  /// [google.storage.control.v2.DeleteFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L360}
   ///
   // clang-format on
   Status DeleteFolder(std::string const& name, Options opts = {});
@@ -202,7 +202,7 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.DeleteFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L269}
+  /// [google.storage.control.v2.DeleteFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L360}
   ///
   // clang-format on
   Status DeleteFolder(
@@ -229,8 +229,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L171}
-  /// [google.storage.control.v2.GetFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L206}
+  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L262}
+  /// [google.storage.control.v2.GetFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L297}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::Folder> GetFolder(
@@ -260,8 +260,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L171}
-  /// [google.storage.control.v2.GetFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L206}
+  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L262}
+  /// [google.storage.control.v2.GetFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L297}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::Folder> GetFolder(
@@ -297,8 +297,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L171}
-  /// [google.storage.control.v2.ListFoldersRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L295}
+  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L262}
+  /// [google.storage.control.v2.ListFoldersRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L386}
   ///
   // clang-format on
   StreamRange<google::storage::control::v2::Folder> ListFolders(
@@ -337,8 +337,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L171}
-  /// [google.storage.control.v2.ListFoldersRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L295}
+  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L262}
+  /// [google.storage.control.v2.ListFoldersRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L386}
   ///
   // clang-format on
   StreamRange<google::storage::control::v2::Folder> ListFolders(
@@ -375,8 +375,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L171}
-  /// [google.storage.control.v2.RenameFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L354}
+  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L262}
+  /// [google.storage.control.v2.RenameFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L445}
   ///
   // clang-format on
   future<StatusOr<google::storage::control::v2::Folder>> RenameFolder(
@@ -431,8 +431,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L171}
-  /// [google.storage.control.v2.RenameFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L354}
+  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L262}
+  /// [google.storage.control.v2.RenameFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L445}
   ///
   // clang-format on
   future<StatusOr<google::storage::control::v2::Folder>> RenameFolder(
@@ -486,8 +486,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.GetStorageLayoutRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L466}
-  /// [google.storage.control.v2.StorageLayout]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L423}
+  /// [google.storage.control.v2.GetStorageLayoutRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L557}
+  /// [google.storage.control.v2.StorageLayout]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L514}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::StorageLayout> GetStorageLayout(
@@ -516,8 +516,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.GetStorageLayoutRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L466}
-  /// [google.storage.control.v2.StorageLayout]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L423}
+  /// [google.storage.control.v2.GetStorageLayoutRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L557}
+  /// [google.storage.control.v2.StorageLayout]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L514}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::StorageLayout> GetStorageLayout(
@@ -548,8 +548,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.CreateManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L545}
-  /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L489}
+  /// [google.storage.control.v2.CreateManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L636}
+  /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L580}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::ManagedFolder> CreateManagedFolder(
@@ -580,8 +580,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.CreateManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L545}
-  /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L489}
+  /// [google.storage.control.v2.CreateManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L636}
+  /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L580}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::ManagedFolder> CreateManagedFolder(
@@ -606,7 +606,7 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.DeleteManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L573}
+  /// [google.storage.control.v2.DeleteManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L664}
   ///
   // clang-format on
   Status DeleteManagedFolder(std::string const& name, Options opts = {});
@@ -632,7 +632,7 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.DeleteManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L573}
+  /// [google.storage.control.v2.DeleteManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L664}
   ///
   // clang-format on
   Status DeleteManagedFolder(
@@ -659,8 +659,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.GetManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L517}
-  /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L489}
+  /// [google.storage.control.v2.GetManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L608}
+  /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L580}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::ManagedFolder> GetManagedFolder(
@@ -689,8 +689,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.GetManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L517}
-  /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L489}
+  /// [google.storage.control.v2.GetManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L608}
+  /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L580}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::ManagedFolder> GetManagedFolder(
@@ -724,8 +724,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.ListManagedFoldersRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L607}
-  /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L489}
+  /// [google.storage.control.v2.ListManagedFoldersRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L698}
+  /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L580}
   ///
   // clang-format on
   StreamRange<google::storage::control::v2::ManagedFolder> ListManagedFolders(
@@ -763,12 +763,574 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.ListManagedFoldersRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L607}
-  /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L489}
+  /// [google.storage.control.v2.ListManagedFoldersRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L698}
+  /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L580}
   ///
   // clang-format on
   StreamRange<google::storage::control::v2::ManagedFolder> ListManagedFolders(
       google::storage::control::v2::ListManagedFoldersRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates an Anywhere Cache instance.
+  ///
+  /// @param parent  Required. The bucket to which this cache belongs.
+  ///  Format: `projects/{project}/buckets/{bucket}`
+  /// @param anywhere_cache  Required. Properties of the Anywhere Cache instance being created.
+  ///  The parent bucket name is specified in the `parent` field. Server uses the
+  ///  default value of `ttl` or `admission_policy` if not specified in
+  ///  request.
+  /// @param anywhere_cache_id  Required. System generated Anywhere Cache ID.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.storage.control.v2.AnywhereCache] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L786}
+  /// [google.storage.control.v2.CreateAnywhereCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L834}
+  ///
+  // clang-format on
+  future<StatusOr<google::storage::control::v2::AnywhereCache>>
+  CreateAnywhereCache(
+      std::string const& parent,
+      google::storage::control::v2::AnywhereCache const& anywhere_cache,
+      std::string const& anywhere_cache_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateAnywhereCache
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateAnywhereCache(
+      NoAwaitTag, std::string const& parent,
+      google::storage::control::v2::AnywhereCache const& anywhere_cache,
+      std::string const& anywhere_cache_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates an Anywhere Cache instance.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.storage.control.v2.CreateAnywhereCacheRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.storage.control.v2.AnywhereCache] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L786}
+  /// [google.storage.control.v2.CreateAnywhereCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L834}
+  ///
+  // clang-format on
+  future<StatusOr<google::storage::control::v2::AnywhereCache>>
+  CreateAnywhereCache(
+      google::storage::control::v2::CreateAnywhereCacheRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateAnywhereCache
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateAnywhereCache(
+      NoAwaitTag,
+      google::storage::control::v2::CreateAnywhereCacheRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateAnywhereCache
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::storage::control::v2::AnywhereCache>>
+  CreateAnywhereCache(google::longrunning::Operation const& operation,
+                      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates an Anywhere Cache instance. Mutable fields include `ttl` and
+  /// `admission_policy`.
+  ///
+  /// @param anywhere_cache  Required. The Anywhere Cache instance to be updated.
+  /// @param update_mask  Required. List of fields to be updated. Mutable fields of AnywhereCache
+  ///  include `ttl` and `admission_policy`.
+  ///  @n
+  ///  To specify ALL fields, specify a single field with the value `*`. Note: We
+  ///  recommend against doing this. If a new field is introduced at a later time,
+  ///  an older client updating with the `*` may accidentally reset the new
+  ///  field's value.
+  ///  @n
+  ///  Not specifying any fields is an error.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.storage.control.v2.AnywhereCache] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L786}
+  /// [google.storage.control.v2.UpdateAnywhereCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L863}
+  ///
+  // clang-format on
+  future<StatusOr<google::storage::control::v2::AnywhereCache>>
+  UpdateAnywhereCache(
+      google::storage::control::v2::AnywhereCache const& anywhere_cache,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateAnywhereCache
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateAnywhereCache(
+      NoAwaitTag,
+      google::storage::control::v2::AnywhereCache const& anywhere_cache,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates an Anywhere Cache instance. Mutable fields include `ttl` and
+  /// `admission_policy`.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.storage.control.v2.UpdateAnywhereCacheRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.storage.control.v2.AnywhereCache] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L786}
+  /// [google.storage.control.v2.UpdateAnywhereCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L863}
+  ///
+  // clang-format on
+  future<StatusOr<google::storage::control::v2::AnywhereCache>>
+  UpdateAnywhereCache(
+      google::storage::control::v2::UpdateAnywhereCacheRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateAnywhereCache
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateAnywhereCache(
+      NoAwaitTag,
+      google::storage::control::v2::UpdateAnywhereCacheRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateAnywhereCache
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::storage::control::v2::AnywhereCache>>
+  UpdateAnywhereCache(google::longrunning::Operation const& operation,
+                      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Disables an Anywhere Cache instance. A disabled instance is read-only. The
+  /// disablement could be revoked by calling ResumeAnywhereCache. The cache
+  /// instance will be deleted automatically if it remains in the disabled state
+  /// for at least one hour.
+  ///
+  /// @param name  Required. The name field in the request should be:
+  ///  `projects/{project}/buckets/{bucket}/anywhereCaches/{anywhere_cache}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.storage.control.v2.AnywhereCache])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L786}
+  /// [google.storage.control.v2.DisableAnywhereCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L889}
+  ///
+  // clang-format on
+  StatusOr<google::storage::control::v2::AnywhereCache> DisableAnywhereCache(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Disables an Anywhere Cache instance. A disabled instance is read-only. The
+  /// disablement could be revoked by calling ResumeAnywhereCache. The cache
+  /// instance will be deleted automatically if it remains in the disabled state
+  /// for at least one hour.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.storage.control.v2.DisableAnywhereCacheRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.storage.control.v2.AnywhereCache])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L786}
+  /// [google.storage.control.v2.DisableAnywhereCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L889}
+  ///
+  // clang-format on
+  StatusOr<google::storage::control::v2::AnywhereCache> DisableAnywhereCache(
+      google::storage::control::v2::DisableAnywhereCacheRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Pauses an Anywhere Cache instance.
+  ///
+  /// @param name  Required. The name field in the request should be:
+  ///  `projects/{project}/buckets/{bucket}/anywhereCaches/{anywhere_cache}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.storage.control.v2.AnywhereCache])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L786}
+  /// [google.storage.control.v2.PauseAnywhereCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L909}
+  ///
+  // clang-format on
+  StatusOr<google::storage::control::v2::AnywhereCache> PauseAnywhereCache(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Pauses an Anywhere Cache instance.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.storage.control.v2.PauseAnywhereCacheRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.storage.control.v2.AnywhereCache])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L786}
+  /// [google.storage.control.v2.PauseAnywhereCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L909}
+  ///
+  // clang-format on
+  StatusOr<google::storage::control::v2::AnywhereCache> PauseAnywhereCache(
+      google::storage::control::v2::PauseAnywhereCacheRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Resumes a disabled or paused Anywhere Cache instance.
+  ///
+  /// @param name  Required. The name field in the request should be:
+  ///  `projects/{project}/buckets/{bucket}/anywhereCaches/{anywhere_cache}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.storage.control.v2.AnywhereCache])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L786}
+  /// [google.storage.control.v2.ResumeAnywhereCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L929}
+  ///
+  // clang-format on
+  StatusOr<google::storage::control::v2::AnywhereCache> ResumeAnywhereCache(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Resumes a disabled or paused Anywhere Cache instance.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.storage.control.v2.ResumeAnywhereCacheRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.storage.control.v2.AnywhereCache])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L786}
+  /// [google.storage.control.v2.ResumeAnywhereCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L929}
+  ///
+  // clang-format on
+  StatusOr<google::storage::control::v2::AnywhereCache> ResumeAnywhereCache(
+      google::storage::control::v2::ResumeAnywhereCacheRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets an Anywhere Cache instance.
+  ///
+  /// @param name  Required. The name field in the request should be:
+  ///  `projects/{project}/buckets/{bucket}/anywhereCaches/{anywhere_cache}`
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.storage.control.v2.AnywhereCache])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L786}
+  /// [google.storage.control.v2.GetAnywhereCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L949}
+  ///
+  // clang-format on
+  StatusOr<google::storage::control::v2::AnywhereCache> GetAnywhereCache(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets an Anywhere Cache instance.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.storage.control.v2.GetAnywhereCacheRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.storage.control.v2.AnywhereCache])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L786}
+  /// [google.storage.control.v2.GetAnywhereCacheRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L949}
+  ///
+  // clang-format on
+  StatusOr<google::storage::control::v2::AnywhereCache> GetAnywhereCache(
+      google::storage::control::v2::GetAnywhereCacheRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists Anywhere Cache instances for a given bucket.
+  ///
+  /// @param parent  Required. The bucket to which this cache belongs.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.storage.control.v2.AnywhereCache], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L786}
+  /// [google.storage.control.v2.ListAnywhereCachesRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L968}
+  ///
+  // clang-format on
+  StreamRange<google::storage::control::v2::AnywhereCache> ListAnywhereCaches(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists Anywhere Cache instances for a given bucket.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.storage.control.v2.ListAnywhereCachesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.storage.control.v2.AnywhereCache], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.storage.control.v2.AnywhereCache]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L786}
+  /// [google.storage.control.v2.ListAnywhereCachesRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L968}
+  ///
+  // clang-format on
+  StreamRange<google::storage::control::v2::AnywhereCache> ListAnywhereCaches(
+      google::storage::control::v2::ListAnywhereCachesRequest request,
       Options opts = {});
 
  private:

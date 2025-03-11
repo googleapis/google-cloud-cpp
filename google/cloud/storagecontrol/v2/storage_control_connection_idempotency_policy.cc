@@ -94,6 +94,41 @@ Idempotency StorageControlConnectionIdempotencyPolicy::ListManagedFolders(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency StorageControlConnectionIdempotencyPolicy::CreateAnywhereCache(
+    google::storage::control::v2::CreateAnywhereCacheRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency StorageControlConnectionIdempotencyPolicy::UpdateAnywhereCache(
+    google::storage::control::v2::UpdateAnywhereCacheRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency StorageControlConnectionIdempotencyPolicy::DisableAnywhereCache(
+    google::storage::control::v2::DisableAnywhereCacheRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency StorageControlConnectionIdempotencyPolicy::PauseAnywhereCache(
+    google::storage::control::v2::PauseAnywhereCacheRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency StorageControlConnectionIdempotencyPolicy::ResumeAnywhereCache(
+    google::storage::control::v2::ResumeAnywhereCacheRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency StorageControlConnectionIdempotencyPolicy::GetAnywhereCache(
+    google::storage::control::v2::GetAnywhereCacheRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency StorageControlConnectionIdempotencyPolicy::ListAnywhereCaches(
+    google::storage::control::v2::ListAnywhereCachesRequest) {  // NOLINT
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<StorageControlConnectionIdempotencyPolicy>
 MakeDefaultStorageControlConnectionIdempotencyPolicy() {
   return std::make_unique<StorageControlConnectionIdempotencyPolicy>();
