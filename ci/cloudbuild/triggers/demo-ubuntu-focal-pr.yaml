@@ -4,11 +4,11 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: v2.22.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
 id: 22188f98-620b-4a43-b5f7-34f206d70062
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: demo-ubuntu-focal-pr
+name: v2-22-x-demo-ubuntu-focal-pr
 substitutions:
   _BUILD_NAME: demo-install
   _DISTRO: demo-ubuntu-focal

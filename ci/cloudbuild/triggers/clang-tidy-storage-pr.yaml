@@ -4,11 +4,11 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: v2.22.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
 id: 163b45f9-e55c-48fb-948d-c1f4539f1524
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: clang-tidy-storage-pr
+name: v2-22-x-clang-tidy-storage-pr
 resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/163b45f9-e55c-48fb-948d-c1f4539f1524
 substitutions:
   _BUILD_NAME: clang-tidy

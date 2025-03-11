@@ -4,11 +4,11 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: v2.22.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
 id: 4bc5ac63-ff83-4063-b5f6-c1d04c0ce706
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: cmake-gcs-rest-pr
+name: v2-22-x-cmake-gcs-rest-pr
 resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/4bc5ac63-ff83-4063-b5f6-c1d04c0ce706
 substitutions:
   _BUILD_NAME: cmake-gcs-rest

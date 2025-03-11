@@ -4,11 +4,11 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: v2.22.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
 id: 7957a267-70de-4e1b-a6b9-99469602a8af
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: publish-docs-pr
+name: v2-22-x-publish-docs-pr
 resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/7957a267-70de-4e1b-a6b9-99469602a8af
 substitutions:
   _BUILD_NAME: publish-docs

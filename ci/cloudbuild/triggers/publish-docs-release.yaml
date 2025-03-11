@@ -4,9 +4,9 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^v2.*.x$
+    branch: v2.22.x
 id: d8deccfb-08d6-4ab7-b8fe-1d59c2d346ea
-name: publish-docs-release
+name: v2-22-x-publish-docs-release
 resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/d8deccfb-08d6-4ab7-b8fe-1d59c2d346ea
 substitutions:
   _BUILD_NAME: publish-docs

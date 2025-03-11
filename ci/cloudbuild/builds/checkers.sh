@@ -78,16 +78,6 @@ readonly TIMEFORMAT="... %R seconds"
 # https://github.com/googleapis/google-cloud-cpp/issues/4152
 enable -n printf
 
-# Check for typos first so we don't generate more new files w/ the same typos.
-printf "%-50s" "Running typos:" >&2
-time {
-  # See https://github.com/crate-ci/typos for more details.
-  # A couple useful invocations:
-  #  $ typos --write-changes  # writes spelling fixes back to disk
-  #  $ typos --dump-config -  # dumps effective config to stdout
-  typos
-}
-
 printf "%-50s" "Running check-include-guards:" >&2
 time {
   git_files -z -- '*.h' |

@@ -4,10 +4,10 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
+    branch: v2.22.x
 id: ab963829-28af-4d7c-8aa4-e2598f8b8862
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: noex-ci
+name: v2-22-x-noex-ci
 resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/ab963829-28af-4d7c-8aa4-e2598f8b8862
 substitutions:
   _BUILD_NAME: noex

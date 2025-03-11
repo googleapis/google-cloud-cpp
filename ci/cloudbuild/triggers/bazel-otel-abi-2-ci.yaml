@@ -3,11 +3,11 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: v2.22.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
 id: abfbaa6f-e1a0-4298-af45-78f9dc1a9831
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: bazel-otel-abi-2-ci
+name: v2-22-x-bazel-otel-abi-2-ci
 resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/abfbaa6f-e1a0-4298-af45-78f9dc1a9831
 substitutions:
   _BUILD_NAME: bazel-otel-abi-2

@@ -4,10 +4,10 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
+    branch: v2.22.x
 id: b7d483f7-b301-4b82-b9d8-73970983c9e0
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: demo-centos-7-ci
+name: v2-22-x-demo-centos-7-ci
 substitutions:
   _BUILD_NAME: demo-install
   _DISTRO: demo-centos-7

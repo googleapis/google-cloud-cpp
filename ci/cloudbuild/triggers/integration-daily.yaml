@@ -6,7 +6,7 @@ gitFileSource:
   revision: refs/heads/main
   uri: https://github.com/googleapis/google-cloud-cpp
 id: 03b9bb52-8d28-4095-9ca4-653f8602acf7
-name: integration-daily
+name: v2-22-x-integration-daily
 resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/03b9bb52-8d28-4095-9ca4-653f8602acf7
 sourceToBuild:
   ref: refs/heads/main
