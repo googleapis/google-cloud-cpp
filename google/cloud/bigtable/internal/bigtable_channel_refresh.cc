@@ -73,10 +73,10 @@ BigtableChannelRefresh::ReadModifyWriteRow(
 
 StatusOr<google::bigtable::v2::PrepareQueryResponse>
 BigtableChannelRefresh::PrepareQuery(
-   grpc::ClientContext& client_context, Options const& options,
-   google::bigtable::v2::PrepareQueryRequest const& request) {
-    return child_->PrepareQuery(client_context, options, request);
-  }
+    grpc::ClientContext& client_context, Options const& options,
+    google::bigtable::v2::PrepareQueryRequest const& request) {
+  return child_->PrepareQuery(client_context, options, request);
+}
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::bigtable::v2::ExecuteQueryResponse>>
