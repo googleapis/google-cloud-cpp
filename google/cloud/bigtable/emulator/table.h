@@ -170,7 +170,7 @@ class RowTransaction {
 
   bool committed_;
   std::shared_ptr<Table> table_;
-  std::stack<absl::variant<DeleteValue, RestoreValue, DeleteRow, DeleteColumn, RestoreColumnFamilyRow>>
+  std::stack<absl::variant<DeleteValue, RestoreValue, RestoreColumnFamilyRow>>
       undo_;
   ::google::bigtable::v2::MutateRowRequest const& request_;
 };

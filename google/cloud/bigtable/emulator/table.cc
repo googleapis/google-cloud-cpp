@@ -558,18 +558,6 @@ void RowTransaction::Undo() {
       continue;
     }
 
-    auto* delete_row = absl::get_if<DeleteRow>(&op);
-    if (delete_row) {
-      delete_row->column_family.erase(delete_row->row_it);
-      continue;
-    }
-
-    auto* delete_column = absl::get_if<DeleteColumn>(&op);
-    if (delete_column) {
-      delete_column->column_family_row.erase(delete_column->column_row_it);
-      continue;
-    }
-
     auto* restore_row = absl::get_if<RestoreColumnFamilyRow>(&op);
     if (restore_row) {
       for (auto const& cell : restore_row->cells) {
