@@ -103,9 +103,6 @@ struct RestoreColumnFamilyRow {
 };
 
 struct RestoreValue {
-  // The iterator to the `columns_` member of a relevant `ColumnFamilyRow` where
-  // we should reinsert the value.
-  std::map<std::string, ColumnRow>::iterator column_row_it;
   ColumnFamily& column_family;
   std::string row_key;
   std::string column_qualifier;

@@ -530,9 +530,7 @@ Status RowTransaction::SetCell(
     DeleteValue delete_value = {column_row_it, timestamp_it->first};
     undo_.emplace(delete_value);
   } else {
-    RestoreValue restore_value = {column_row_it,
-                                  column_family,
-                                  column_family_row_it->first,
+    RestoreValue restore_value = {column_family, column_family_row_it->first,
                                   std::move(set_cell.column_qualifier()),
                                   timestamp_it->first,
                                   std::move(value_to_restore)};
