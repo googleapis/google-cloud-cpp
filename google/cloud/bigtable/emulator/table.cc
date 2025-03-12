@@ -20,6 +20,7 @@
 #include "google/cloud/bigtable/internal/google_bytes_traits.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/protobuf/util/field_mask_util.h"
+#include <google/bigtable/v2/data.pb.h>
 #include <absl/strings/str_format.h>
 #include <re2/re2.h>
 #include <chrono>
@@ -473,21 +474,16 @@ Status RowTransaction::SetCell(
 
   auto& column_family = maybe_column_family->get();
 
-  bool row_existed = true;
-  bool column_existed = true;
   bool cell_existed = true;
 
   auto column_family_row_it = column_family.find(request_.row_key());
   std::string value_to_restore;
   if (column_family_row_it == column_family.end()) {
-    row_existed = false;
-    column_existed = false;
     cell_existed = false;
   } else {
     auto& column_family_row = column_family_row_it->second;
     auto column_row_it = column_family_row.find(set_cell.column_qualifier());
     if (column_row_it == column_family_row.end()) {
-      column_existed = false;
       cell_existed = false;
     } else {
       auto timestamp_it = column_row_it->second.find(
@@ -516,18 +512,10 @@ Status RowTransaction::SetCell(
       std::chrono::duration_cast<std::chrono::milliseconds>(
           std::chrono::microseconds(set_cell.timestamp_micros())));
 
-  if (!row_existed) {
-    DeleteRow delete_row = {column_family_row_it, column_family};
-    undo_.emplace(delete_row);
-  }
-
-  if (!column_existed) {
-    DeleteColumn delete_column_row = {column_row_it, column_family_row};
-    undo_.emplace(delete_column_row);
-  }
-
   if (!cell_existed) {
-    DeleteValue delete_value = {column_row_it, timestamp_it->first};
+    DeleteValue delete_value = {column_family, column_family_row_it->first,
+                                std::move(set_cell.column_qualifier()),
+                                timestamp_it->first};
     undo_.emplace(delete_value);
   } else {
     RestoreValue restore_value = {column_family, column_family_row_it->first,
@@ -556,9 +544,17 @@ void RowTransaction::Undo() {
 
     auto* delete_value = absl::get_if<DeleteValue>(&op);
     if (delete_value) {
-      auto& column_row = delete_value->column_row_it->second;
-      auto timestamp_it = column_row.find(delete_value->timestamp);
-      column_row.erase(timestamp_it);
+      ::google::bigtable::v2::TimestampRange range;
+      auto start_micros = delete_value->timestamp.count() * 1000;
+      // The following is an exclusive upper bound, 1ms higher Since
+      // timestamps have millisecond resolution, 2 timestamps have to
+      // be at least 1ms apart which means that setting this as the
+      // end of the range guarantees that we delete at most 1 (because
+      // the upper bound is exclusive).
+      auto end_micros = start_micros + 1000;
+      range.set_start_timestamp_micros(start_micros);
+      range.set_end_timestamp_micros(end_micros);
+      delete_value->column_family.DeleteColumn(delete_value->row_key, std::move(delete_value->column_qualifier), range);
       continue;
     }
 
