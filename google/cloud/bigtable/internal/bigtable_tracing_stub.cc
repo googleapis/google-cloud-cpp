@@ -125,6 +125,18 @@ BigtableTracingStub::ReadModifyWriteRow(
       context, *span, child_->ReadModifyWriteRow(context, options, request));
 }
 
+StatusOr<google::bigtable::v2::PrepareQueryResponse>
+BigtableTracingStub::PrepareQuery(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::v2::PrepareQueryRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "PrepareQuery");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->PrepareQuery(context, options, request));
+}
+
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::bigtable::v2::ExecuteQueryResponse>>
 BigtableTracingStub::ExecuteQuery(

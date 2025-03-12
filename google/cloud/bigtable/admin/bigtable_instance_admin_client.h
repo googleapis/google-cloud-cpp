@@ -136,7 +136,7 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.CreateInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L325}
+  /// [google.bigtable.admin.v2.CreateInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L436}
   /// [google.bigtable.admin.v2.Instance]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L40}
   ///
   // clang-format on
@@ -201,7 +201,7 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.CreateInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L325}
+  /// [google.bigtable.admin.v2.CreateInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L436}
   /// [google.bigtable.admin.v2.Instance]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L40}
   ///
   // clang-format on
@@ -256,7 +256,7 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.GetInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L352}
+  /// [google.bigtable.admin.v2.GetInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L463}
   /// [google.bigtable.admin.v2.Instance]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L40}
   ///
   // clang-format on
@@ -286,7 +286,7 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.GetInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L352}
+  /// [google.bigtable.admin.v2.GetInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L463}
   /// [google.bigtable.admin.v2.Instance]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L40}
   ///
   // clang-format on
@@ -313,8 +313,8 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.ListInstancesRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L364}
-  /// [google.bigtable.admin.v2.ListInstancesResponse]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L379}
+  /// [google.bigtable.admin.v2.ListInstancesRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L475}
+  /// [google.bigtable.admin.v2.ListInstancesResponse]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L490}
   ///
   // clang-format on
   StatusOr<google::bigtable::admin::v2::ListInstancesResponse> ListInstances(
@@ -343,8 +343,8 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.ListInstancesRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L364}
-  /// [google.bigtable.admin.v2.ListInstancesResponse]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L379}
+  /// [google.bigtable.admin.v2.ListInstancesRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L475}
+  /// [google.bigtable.admin.v2.ListInstancesResponse]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L490}
   ///
   // clang-format on
   StatusOr<google::bigtable::admin::v2::ListInstancesResponse> ListInstances(
@@ -411,7 +411,7 @@ class BigtableInstanceAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.bigtable.admin.v2.Instance]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L40}
-  /// [google.bigtable.admin.v2.PartialUpdateInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L396}
+  /// [google.bigtable.admin.v2.PartialUpdateInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L507}
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Instance>> PartialUpdateInstance(
@@ -465,7 +465,7 @@ class BigtableInstanceAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.bigtable.admin.v2.Instance]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L40}
-  /// [google.bigtable.admin.v2.PartialUpdateInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L396}
+  /// [google.bigtable.admin.v2.PartialUpdateInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L507}
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Instance>> PartialUpdateInstance(
@@ -517,7 +517,7 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.DeleteInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L407}
+  /// [google.bigtable.admin.v2.DeleteInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L518}
   ///
   // clang-format on
   Status DeleteInstance(std::string const& name, Options opts = {});
@@ -543,7 +543,7 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.DeleteInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L407}
+  /// [google.bigtable.admin.v2.DeleteInstanceRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L518}
   ///
   // clang-format on
   Status DeleteInstance(
@@ -588,7 +588,7 @@ class BigtableInstanceAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.bigtable.admin.v2.Cluster]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L148}
-  /// [google.bigtable.admin.v2.CreateClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L419}
+  /// [google.bigtable.admin.v2.CreateClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L530}
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Cluster>> CreateCluster(
@@ -647,7 +647,7 @@ class BigtableInstanceAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.bigtable.admin.v2.Cluster]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L148}
-  /// [google.bigtable.admin.v2.CreateClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L419}
+  /// [google.bigtable.admin.v2.CreateClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L530}
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Cluster>> CreateCluster(
@@ -702,7 +702,7 @@ class BigtableInstanceAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.bigtable.admin.v2.Cluster]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L148}
-  /// [google.bigtable.admin.v2.GetClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L440}
+  /// [google.bigtable.admin.v2.GetClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L551}
   ///
   // clang-format on
   StatusOr<google::bigtable::admin::v2::Cluster> GetCluster(
@@ -732,7 +732,7 @@ class BigtableInstanceAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.bigtable.admin.v2.Cluster]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L148}
-  /// [google.bigtable.admin.v2.GetClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L440}
+  /// [google.bigtable.admin.v2.GetClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L551}
   ///
   // clang-format on
   StatusOr<google::bigtable::admin::v2::Cluster> GetCluster(
@@ -761,8 +761,8 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.ListClustersRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L452}
-  /// [google.bigtable.admin.v2.ListClustersResponse]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L470}
+  /// [google.bigtable.admin.v2.ListClustersRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L563}
+  /// [google.bigtable.admin.v2.ListClustersResponse]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L581}
   ///
   // clang-format on
   StatusOr<google::bigtable::admin::v2::ListClustersResponse> ListClusters(
@@ -791,8 +791,8 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.ListClustersRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L452}
-  /// [google.bigtable.admin.v2.ListClustersResponse]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L470}
+  /// [google.bigtable.admin.v2.ListClustersRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L563}
+  /// [google.bigtable.admin.v2.ListClustersResponse]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L581}
   ///
   // clang-format on
   StatusOr<google::bigtable::admin::v2::ListClustersResponse> ListClusters(
@@ -905,7 +905,7 @@ class BigtableInstanceAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.bigtable.admin.v2.Cluster]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L148}
-  /// [google.bigtable.admin.v2.PartialUpdateClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L599}
+  /// [google.bigtable.admin.v2.PartialUpdateClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L710}
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Cluster>> PartialUpdateCluster(
@@ -969,7 +969,7 @@ class BigtableInstanceAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.bigtable.admin.v2.Cluster]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L148}
-  /// [google.bigtable.admin.v2.PartialUpdateClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L599}
+  /// [google.bigtable.admin.v2.PartialUpdateClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L710}
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Cluster>> PartialUpdateCluster(
@@ -1021,7 +1021,7 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.DeleteClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L486}
+  /// [google.bigtable.admin.v2.DeleteClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L597}
   ///
   // clang-format on
   Status DeleteCluster(std::string const& name, Options opts = {});
@@ -1047,7 +1047,7 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.DeleteClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L486}
+  /// [google.bigtable.admin.v2.DeleteClusterRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L597}
   ///
   // clang-format on
   Status DeleteCluster(
@@ -1079,7 +1079,7 @@ class BigtableInstanceAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L274}
-  /// [google.bigtable.admin.v2.CreateAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L610}
+  /// [google.bigtable.admin.v2.CreateAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L721}
   ///
   // clang-format on
   StatusOr<google::bigtable::admin::v2::AppProfile> CreateAppProfile(
@@ -1111,7 +1111,7 @@ class BigtableInstanceAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L274}
-  /// [google.bigtable.admin.v2.CreateAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L610}
+  /// [google.bigtable.admin.v2.CreateAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L721}
   ///
   // clang-format on
   StatusOr<google::bigtable::admin::v2::AppProfile> CreateAppProfile(
@@ -1138,7 +1138,7 @@ class BigtableInstanceAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L274}
-  /// [google.bigtable.admin.v2.GetAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L634}
+  /// [google.bigtable.admin.v2.GetAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L745}
   ///
   // clang-format on
   StatusOr<google::bigtable::admin::v2::AppProfile> GetAppProfile(
@@ -1168,7 +1168,7 @@ class BigtableInstanceAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L274}
-  /// [google.bigtable.admin.v2.GetAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L634}
+  /// [google.bigtable.admin.v2.GetAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L745}
   ///
   // clang-format on
   StatusOr<google::bigtable::admin::v2::AppProfile> GetAppProfile(
@@ -1207,7 +1207,7 @@ class BigtableInstanceAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L274}
-  /// [google.bigtable.admin.v2.ListAppProfilesRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L646}
+  /// [google.bigtable.admin.v2.ListAppProfilesRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L757}
   ///
   // clang-format on
   StreamRange<google::bigtable::admin::v2::AppProfile> ListAppProfiles(
@@ -1246,7 +1246,7 @@ class BigtableInstanceAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L274}
-  /// [google.bigtable.admin.v2.ListAppProfilesRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L646}
+  /// [google.bigtable.admin.v2.ListAppProfilesRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L757}
   ///
   // clang-format on
   StreamRange<google::bigtable::admin::v2::AppProfile> ListAppProfiles(
@@ -1281,7 +1281,7 @@ class BigtableInstanceAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L274}
-  /// [google.bigtable.admin.v2.UpdateAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L692}
+  /// [google.bigtable.admin.v2.UpdateAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L803}
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::AppProfile>> UpdateAppProfile(
@@ -1334,7 +1334,7 @@ class BigtableInstanceAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.bigtable.admin.v2.AppProfile]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L274}
-  /// [google.bigtable.admin.v2.UpdateAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L692}
+  /// [google.bigtable.admin.v2.UpdateAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L803}
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::AppProfile>> UpdateAppProfile(
@@ -1388,7 +1388,7 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.DeleteAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L706}
+  /// [google.bigtable.admin.v2.DeleteAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L817}
   ///
   // clang-format on
   Status DeleteAppProfile(std::string const& name, bool ignore_warnings,
@@ -1415,7 +1415,7 @@ class BigtableInstanceAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.bigtable.admin.v2.DeleteAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L706}
+  /// [google.bigtable.admin.v2.DeleteAppProfileRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L817}
   ///
   // clang-format on
   Status DeleteAppProfile(
@@ -1660,7 +1660,7 @@ class BigtableInstanceAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.bigtable.admin.v2.HotTablet]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L424}
-  /// [google.bigtable.admin.v2.ListHotTabletsRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L725}
+  /// [google.bigtable.admin.v2.ListHotTabletsRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L836}
   ///
   // clang-format on
   StreamRange<google::bigtable::admin::v2::HotTablet> ListHotTablets(
@@ -1700,11 +1700,866 @@ class BigtableInstanceAdminClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.bigtable.admin.v2.HotTablet]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L424}
-  /// [google.bigtable.admin.v2.ListHotTabletsRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L725}
+  /// [google.bigtable.admin.v2.ListHotTabletsRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L836}
   ///
   // clang-format on
   StreamRange<google::bigtable::admin::v2::HotTablet> ListHotTablets(
       google::bigtable::admin::v2::ListHotTabletsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a logical view within an instance.
+  ///
+  /// @param parent  Required. The parent instance where this logical view will be created.
+  ///  Format: `projects/{project}/instances/{instance}`.
+  /// @param logical_view  Required. The logical view to create.
+  /// @param logical_view_id  Required. The ID to use for the logical view, which will become the final
+  ///  component of the logical view's resource name.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.bigtable.admin.v2.LogicalView] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.CreateLogicalViewRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L889}
+  /// [google.bigtable.admin.v2.LogicalView]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L464}
+  ///
+  // clang-format on
+  future<StatusOr<google::bigtable::admin::v2::LogicalView>> CreateLogicalView(
+      std::string const& parent,
+      google::bigtable::admin::v2::LogicalView const& logical_view,
+      std::string const& logical_view_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateLogicalView
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateLogicalView(
+      NoAwaitTag, std::string const& parent,
+      google::bigtable::admin::v2::LogicalView const& logical_view,
+      std::string const& logical_view_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a logical view within an instance.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.bigtable.admin.v2.CreateLogicalViewRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.bigtable.admin.v2.LogicalView] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.CreateLogicalViewRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L889}
+  /// [google.bigtable.admin.v2.LogicalView]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L464}
+  ///
+  // clang-format on
+  future<StatusOr<google::bigtable::admin::v2::LogicalView>> CreateLogicalView(
+      google::bigtable::admin::v2::CreateLogicalViewRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateLogicalView
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateLogicalView(
+      NoAwaitTag,
+      google::bigtable::admin::v2::CreateLogicalViewRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateLogicalView
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::bigtable::admin::v2::LogicalView>> CreateLogicalView(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets information about a logical view.
+  ///
+  /// @param name  Required. The unique name of the requested logical view. Values are of the
+  ///  form `projects/{project}/instances/{instance}/logicalViews/{logical_view}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.bigtable.admin.v2.LogicalView])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.GetLogicalViewRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L921}
+  /// [google.bigtable.admin.v2.LogicalView]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L464}
+  ///
+  // clang-format on
+  StatusOr<google::bigtable::admin::v2::LogicalView> GetLogicalView(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets information about a logical view.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.bigtable.admin.v2.GetLogicalViewRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.bigtable.admin.v2.LogicalView])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.GetLogicalViewRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L921}
+  /// [google.bigtable.admin.v2.LogicalView]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L464}
+  ///
+  // clang-format on
+  StatusOr<google::bigtable::admin::v2::LogicalView> GetLogicalView(
+      google::bigtable::admin::v2::GetLogicalViewRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists information about logical views in an instance.
+  ///
+  /// @param parent  Required. The unique name of the instance for which the list of logical
+  ///  views is requested. Values are of the form
+  ///  `projects/{project}/instances/{instance}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.bigtable.admin.v2.LogicalView], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.ListLogicalViewsRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L933}
+  /// [google.bigtable.admin.v2.LogicalView]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L464}
+  ///
+  // clang-format on
+  StreamRange<google::bigtable::admin::v2::LogicalView> ListLogicalViews(
+      std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists information about logical views in an instance.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.bigtable.admin.v2.ListLogicalViewsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.bigtable.admin.v2.LogicalView], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.ListLogicalViewsRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L933}
+  /// [google.bigtable.admin.v2.LogicalView]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L464}
+  ///
+  // clang-format on
+  StreamRange<google::bigtable::admin::v2::LogicalView> ListLogicalViews(
+      google::bigtable::admin::v2::ListLogicalViewsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a logical view within an instance.
+  ///
+  /// @param logical_view  Required. The logical view to update.
+  ///  @n
+  ///  The logical view's `name` field is used to identify the view to update.
+  ///  Format:
+  ///  `projects/{project}/instances/{instance}/logicalViews/{logical_view}`.
+  /// @param update_mask  Optional. The list of fields to update.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.bigtable.admin.v2.LogicalView] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.LogicalView]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L464}
+  /// [google.bigtable.admin.v2.UpdateLogicalViewRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L967}
+  ///
+  // clang-format on
+  future<StatusOr<google::bigtable::admin::v2::LogicalView>> UpdateLogicalView(
+      google::bigtable::admin::v2::LogicalView const& logical_view,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateLogicalView
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateLogicalView(
+      NoAwaitTag, google::bigtable::admin::v2::LogicalView const& logical_view,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a logical view within an instance.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.bigtable.admin.v2.UpdateLogicalViewRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.bigtable.admin.v2.LogicalView] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.LogicalView]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L464}
+  /// [google.bigtable.admin.v2.UpdateLogicalViewRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L967}
+  ///
+  // clang-format on
+  future<StatusOr<google::bigtable::admin::v2::LogicalView>> UpdateLogicalView(
+      google::bigtable::admin::v2::UpdateLogicalViewRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateLogicalView
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateLogicalView(
+      NoAwaitTag,
+      google::bigtable::admin::v2::UpdateLogicalViewRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateLogicalView
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::bigtable::admin::v2::LogicalView>> UpdateLogicalView(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a logical view from an instance.
+  ///
+  /// @param name  Required. The unique name of the logical view to be deleted.
+  ///  Format:
+  ///  `projects/{project}/instances/{instance}/logicalViews/{logical_view}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.DeleteLogicalViewRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L994}
+  ///
+  // clang-format on
+  Status DeleteLogicalView(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a logical view from an instance.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.bigtable.admin.v2.DeleteLogicalViewRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.DeleteLogicalViewRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L994}
+  ///
+  // clang-format on
+  Status DeleteLogicalView(
+      google::bigtable::admin::v2::DeleteLogicalViewRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a materialized view within an instance.
+  ///
+  /// @param parent  Required. The parent instance where this materialized view will be created.
+  ///  Format: `projects/{project}/instances/{instance}`.
+  /// @param materialized_view  Required. The materialized view to create.
+  /// @param materialized_view_id  Required. The ID to use for the materialized view, which will become the
+  ///  final component of the materialized view's resource name.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.bigtable.admin.v2.MaterializedView] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.CreateMaterializedViewRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L1013}
+  /// [google.bigtable.admin.v2.MaterializedView]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L488}
+  ///
+  // clang-format on
+  future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
+  CreateMaterializedView(
+      std::string const& parent,
+      google::bigtable::admin::v2::MaterializedView const& materialized_view,
+      std::string const& materialized_view_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateMaterializedView
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateMaterializedView(
+      NoAwaitTag, std::string const& parent,
+      google::bigtable::admin::v2::MaterializedView const& materialized_view,
+      std::string const& materialized_view_id, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a materialized view within an instance.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.bigtable.admin.v2.CreateMaterializedViewRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.bigtable.admin.v2.MaterializedView] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.CreateMaterializedViewRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L1013}
+  /// [google.bigtable.admin.v2.MaterializedView]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L488}
+  ///
+  // clang-format on
+  future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
+  CreateMaterializedView(
+      google::bigtable::admin::v2::CreateMaterializedViewRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateMaterializedView
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateMaterializedView(
+      NoAwaitTag,
+      google::bigtable::admin::v2::CreateMaterializedViewRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateMaterializedView
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
+  CreateMaterializedView(google::longrunning::Operation const& operation,
+                         Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets information about a materialized view.
+  ///
+  /// @param name  Required. The unique name of the requested materialized view. Values are of
+  ///  the form
+  ///  `projects/{project}/instances/{instance}/materializedViews/{materialized_view}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.bigtable.admin.v2.MaterializedView])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.GetMaterializedViewRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L1046}
+  /// [google.bigtable.admin.v2.MaterializedView]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L488}
+  ///
+  // clang-format on
+  StatusOr<google::bigtable::admin::v2::MaterializedView> GetMaterializedView(
+      std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets information about a materialized view.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.bigtable.admin.v2.GetMaterializedViewRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.bigtable.admin.v2.MaterializedView])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.GetMaterializedViewRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L1046}
+  /// [google.bigtable.admin.v2.MaterializedView]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L488}
+  ///
+  // clang-format on
+  StatusOr<google::bigtable::admin::v2::MaterializedView> GetMaterializedView(
+      google::bigtable::admin::v2::GetMaterializedViewRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists information about materialized views in an instance.
+  ///
+  /// @param parent  Required. The unique name of the instance for which the list of
+  ///  materialized views is requested. Values are of the form
+  ///  `projects/{project}/instances/{instance}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.bigtable.admin.v2.MaterializedView], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.ListMaterializedViewsRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L1059}
+  /// [google.bigtable.admin.v2.MaterializedView]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L488}
+  ///
+  // clang-format on
+  StreamRange<google::bigtable::admin::v2::MaterializedView>
+  ListMaterializedViews(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists information about materialized views in an instance.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.bigtable.admin.v2.ListMaterializedViewsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.bigtable.admin.v2.MaterializedView], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.ListMaterializedViewsRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L1059}
+  /// [google.bigtable.admin.v2.MaterializedView]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L488}
+  ///
+  // clang-format on
+  StreamRange<google::bigtable::admin::v2::MaterializedView>
+  ListMaterializedViews(
+      google::bigtable::admin::v2::ListMaterializedViewsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a materialized view within an instance.
+  ///
+  /// @param materialized_view  Required. The materialized view to update.
+  ///  @n
+  ///  The materialized view's `name` field is used to identify the view to
+  ///  update. Format:
+  ///  `projects/{project}/instances/{instance}/materializedViews/{materialized_view}`.
+  /// @param update_mask  Optional. The list of fields to update.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.bigtable.admin.v2.MaterializedView] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.MaterializedView]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L488}
+  /// [google.bigtable.admin.v2.UpdateMaterializedViewRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L1093}
+  ///
+  // clang-format on
+  future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
+  UpdateMaterializedView(
+      google::bigtable::admin::v2::MaterializedView const& materialized_view,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateMaterializedView
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateMaterializedView(
+      NoAwaitTag,
+      google::bigtable::admin::v2::MaterializedView const& materialized_view,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a materialized view within an instance.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.bigtable.admin.v2.UpdateMaterializedViewRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.bigtable.admin.v2.MaterializedView] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.MaterializedView]: @googleapis_reference_link{google/bigtable/admin/v2/instance.proto#L488}
+  /// [google.bigtable.admin.v2.UpdateMaterializedViewRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L1093}
+  ///
+  // clang-format on
+  future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
+  UpdateMaterializedView(
+      google::bigtable::admin::v2::UpdateMaterializedViewRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateMaterializedView
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateMaterializedView(
+      NoAwaitTag,
+      google::bigtable::admin::v2::UpdateMaterializedViewRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateMaterializedView
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
+  UpdateMaterializedView(google::longrunning::Operation const& operation,
+                         Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a materialized view from an instance.
+  ///
+  /// @param name  Required. The unique name of the materialized view to be deleted.
+  ///  Format:
+  ///  `projects/{project}/instances/{instance}/materializedViews/{materialized_view}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.DeleteMaterializedViewRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L1121}
+  ///
+  // clang-format on
+  Status DeleteMaterializedView(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a materialized view from an instance.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.bigtable.admin.v2.DeleteMaterializedViewRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.bigtable.admin.v2.DeleteMaterializedViewRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L1121}
+  ///
+  // clang-format on
+  Status DeleteMaterializedView(
+      google::bigtable::admin::v2::DeleteMaterializedViewRequest const& request,
       Options opts = {});
 
  private:

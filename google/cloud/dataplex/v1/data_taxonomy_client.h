@@ -63,7 +63,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-class DataTaxonomyServiceClient {
+class GOOGLE_CLOUD_CPP_DEPRECATED(
+    "DataTaxonomyService has been deprecated and will be turned down in the "
+    "future.") DataTaxonomyServiceClient {
  public:
   explicit DataTaxonomyServiceClient(
       std::shared_ptr<DataTaxonomyServiceConnection> connection,
@@ -93,11 +95,11 @@ class DataTaxonomyServiceClient {
 
   // clang-format off
   ///
+  /// @deprecated This RPC is deprecated.
+  ///
   /// Create a DataTaxonomy resource.
   ///
-  /// @param parent  Required. The resource name of the data taxonomy location, of the form:
-  ///  projects/{project_number}/locations/{location_id}
-  ///  where `location_id` refers to a GCP region.
+  /// @param parent
   /// @param data_taxonomy  Required. DataTaxonomy resource.
   /// @param data_taxonomy_id  Required. DataTaxonomy identifier.
   ///  * Must contain only lowercase letters, numbers and hyphens.
@@ -125,10 +127,11 @@ class DataTaxonomyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateDataTaxonomyRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L450}
-  /// [google.cloud.dataplex.v1.DataTaxonomy]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L227}
+  /// [google.cloud.dataplex.v1.CreateDataTaxonomyRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L469}
+  /// [google.cloud.dataplex.v1.DataTaxonomy]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L243}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
   CreateDataTaxonomy(
       std::string const& parent,
@@ -136,6 +139,8 @@ class DataTaxonomyServiceClient {
       std::string const& data_taxonomy_id, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief CreateDataTaxonomy
   ///
@@ -146,12 +151,15 @@ class DataTaxonomyServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> CreateDataTaxonomy(
       NoAwaitTag, std::string const& parent,
       google::cloud::dataplex::v1::DataTaxonomy const& data_taxonomy,
       std::string const& data_taxonomy_id, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Create a DataTaxonomy resource.
   ///
@@ -181,16 +189,19 @@ class DataTaxonomyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateDataTaxonomyRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L450}
-  /// [google.cloud.dataplex.v1.DataTaxonomy]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L227}
+  /// [google.cloud.dataplex.v1.CreateDataTaxonomyRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L469}
+  /// [google.cloud.dataplex.v1.DataTaxonomy]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L243}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
   CreateDataTaxonomy(
       google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief CreateDataTaxonomy
   ///
@@ -201,12 +212,15 @@ class DataTaxonomyServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> CreateDataTaxonomy(
       NoAwaitTag,
       google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief CreateDataTaxonomy
   ///
@@ -215,11 +229,14 @@ class DataTaxonomyServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
   CreateDataTaxonomy(google::longrunning::Operation const& operation,
                      Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Updates a DataTaxonomy resource.
   ///
@@ -245,16 +262,19 @@ class DataTaxonomyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataTaxonomy]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L227}
-  /// [google.cloud.dataplex.v1.UpdateDataTaxonomyRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L478}
+  /// [google.cloud.dataplex.v1.DataTaxonomy]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L243}
+  /// [google.cloud.dataplex.v1.UpdateDataTaxonomyRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L496}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
   UpdateDataTaxonomy(
       google::cloud::dataplex::v1::DataTaxonomy const& data_taxonomy,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief UpdateDataTaxonomy
   ///
@@ -265,12 +285,15 @@ class DataTaxonomyServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> UpdateDataTaxonomy(
       NoAwaitTag,
       google::cloud::dataplex::v1::DataTaxonomy const& data_taxonomy,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Updates a DataTaxonomy resource.
   ///
@@ -300,16 +323,19 @@ class DataTaxonomyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataTaxonomy]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L227}
-  /// [google.cloud.dataplex.v1.UpdateDataTaxonomyRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L478}
+  /// [google.cloud.dataplex.v1.DataTaxonomy]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L243}
+  /// [google.cloud.dataplex.v1.UpdateDataTaxonomyRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L496}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
   UpdateDataTaxonomy(
       google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief UpdateDataTaxonomy
   ///
@@ -320,12 +346,15 @@ class DataTaxonomyServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> UpdateDataTaxonomy(
       NoAwaitTag,
       google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief UpdateDataTaxonomy
   ///
@@ -334,11 +363,14 @@ class DataTaxonomyServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
   UpdateDataTaxonomy(google::longrunning::Operation const& operation,
                      Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Deletes a DataTaxonomy resource. All attributes within the DataTaxonomy
   /// must be deleted before the DataTaxonomy can be deleted.
@@ -365,14 +397,17 @@ class DataTaxonomyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteDataTaxonomyRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L548}
+  /// [google.cloud.dataplex.v1.DeleteDataTaxonomyRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L568}
   /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteDataTaxonomy(std::string const& name, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief DeleteDataTaxonomy
   ///
@@ -383,10 +418,13 @@ class DataTaxonomyServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> DeleteDataTaxonomy(
       NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Deletes a DataTaxonomy resource. All attributes within the DataTaxonomy
   /// must be deleted before the DataTaxonomy can be deleted.
@@ -417,16 +455,19 @@ class DataTaxonomyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteDataTaxonomyRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L548}
+  /// [google.cloud.dataplex.v1.DeleteDataTaxonomyRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L568}
   /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteDataTaxonomy(
       google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief DeleteDataTaxonomy
   ///
@@ -437,12 +478,15 @@ class DataTaxonomyServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> DeleteDataTaxonomy(
       NoAwaitTag,
       google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief DeleteDataTaxonomy
   ///
@@ -451,11 +495,14 @@ class DataTaxonomyServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteDataTaxonomy(google::longrunning::Operation const& operation,
                      Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Lists DataTaxonomy resources in a project and location.
   ///
@@ -484,14 +531,17 @@ class DataTaxonomyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataTaxonomy]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L227}
-  /// [google.cloud.dataplex.v1.ListDataTaxonomiesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L504}
+  /// [google.cloud.dataplex.v1.DataTaxonomy]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L243}
+  /// [google.cloud.dataplex.v1.ListDataTaxonomiesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L524}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StreamRange<google::cloud::dataplex::v1::DataTaxonomy> ListDataTaxonomies(
       std::string const& parent, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Lists DataTaxonomy resources in a project and location.
   ///
@@ -523,20 +573,22 @@ class DataTaxonomyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataTaxonomy]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L227}
-  /// [google.cloud.dataplex.v1.ListDataTaxonomiesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L504}
+  /// [google.cloud.dataplex.v1.DataTaxonomy]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L243}
+  /// [google.cloud.dataplex.v1.ListDataTaxonomiesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L524}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StreamRange<google::cloud::dataplex::v1::DataTaxonomy> ListDataTaxonomies(
       google::cloud::dataplex::v1::ListDataTaxonomiesRequest request,
       Options opts = {});
 
   // clang-format off
   ///
+  /// @deprecated This RPC is deprecated.
+  ///
   /// Retrieves a DataTaxonomy resource.
   ///
-  /// @param name  Required. The resource name of the DataTaxonomy:
-  ///  projects/{project_number}/locations/{location_id}/dataTaxonomies/{data_taxonomy_id}
+  /// @param name
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -550,14 +602,17 @@ class DataTaxonomyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataTaxonomy]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L227}
-  /// [google.cloud.dataplex.v1.GetDataTaxonomyRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L492}
+  /// [google.cloud.dataplex.v1.DataTaxonomy]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L243}
+  /// [google.cloud.dataplex.v1.GetDataTaxonomyRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L512}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::cloud::dataplex::v1::DataTaxonomy> GetDataTaxonomy(
       std::string const& name, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Retrieves a DataTaxonomy resource.
   ///
@@ -580,15 +635,18 @@ class DataTaxonomyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataTaxonomy]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L227}
-  /// [google.cloud.dataplex.v1.GetDataTaxonomyRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L492}
+  /// [google.cloud.dataplex.v1.DataTaxonomy]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L243}
+  /// [google.cloud.dataplex.v1.GetDataTaxonomyRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L512}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::cloud::dataplex::v1::DataTaxonomy> GetDataTaxonomy(
       google::cloud::dataplex::v1::GetDataTaxonomyRequest const& request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Create a DataAttributeBinding resource.
   ///
@@ -621,10 +679,11 @@ class DataTaxonomyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateDataAttributeBindingRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L676}
-  /// [google.cloud.dataplex.v1.DataAttributeBinding]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L356}
+  /// [google.cloud.dataplex.v1.CreateDataAttributeBindingRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L698}
+  /// [google.cloud.dataplex.v1.DataAttributeBinding]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L374}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
   CreateDataAttributeBinding(
       std::string const& parent,
@@ -633,6 +692,8 @@ class DataTaxonomyServiceClient {
       std::string const& data_attribute_binding_id, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief CreateDataAttributeBinding
   ///
@@ -643,6 +704,7 @@ class DataTaxonomyServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> CreateDataAttributeBinding(
       NoAwaitTag, std::string const& parent,
       google::cloud::dataplex::v1::DataAttributeBinding const&
@@ -650,6 +712,8 @@ class DataTaxonomyServiceClient {
       std::string const& data_attribute_binding_id, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Create a DataAttributeBinding resource.
   ///
@@ -679,10 +743,11 @@ class DataTaxonomyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateDataAttributeBindingRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L676}
-  /// [google.cloud.dataplex.v1.DataAttributeBinding]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L356}
+  /// [google.cloud.dataplex.v1.CreateDataAttributeBindingRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L698}
+  /// [google.cloud.dataplex.v1.DataAttributeBinding]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L374}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
   CreateDataAttributeBinding(
       google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const&
@@ -690,6 +755,8 @@ class DataTaxonomyServiceClient {
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief CreateDataAttributeBinding
   ///
@@ -700,6 +767,7 @@ class DataTaxonomyServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> CreateDataAttributeBinding(
       NoAwaitTag,
       google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const&
@@ -708,6 +776,8 @@ class DataTaxonomyServiceClient {
 
   // clang-format off
   ///
+  /// @deprecated This RPC is deprecated.
+  ///
   /// @copybrief CreateDataAttributeBinding
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
@@ -715,11 +785,14 @@ class DataTaxonomyServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
   CreateDataAttributeBinding(google::longrunning::Operation const& operation,
                              Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Updates a DataAttributeBinding resource.
   ///
@@ -745,10 +818,11 @@ class DataTaxonomyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataAttributeBinding]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L356}
-  /// [google.cloud.dataplex.v1.UpdateDataAttributeBindingRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L704}
+  /// [google.cloud.dataplex.v1.DataAttributeBinding]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L374}
+  /// [google.cloud.dataplex.v1.UpdateDataAttributeBindingRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L726}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
   UpdateDataAttributeBinding(
       google::cloud::dataplex::v1::DataAttributeBinding const&
@@ -756,6 +830,8 @@ class DataTaxonomyServiceClient {
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief UpdateDataAttributeBinding
   ///
@@ -766,6 +842,7 @@ class DataTaxonomyServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> UpdateDataAttributeBinding(
       NoAwaitTag,
       google::cloud::dataplex::v1::DataAttributeBinding const&
@@ -773,6 +850,8 @@ class DataTaxonomyServiceClient {
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Updates a DataAttributeBinding resource.
   ///
@@ -802,10 +881,11 @@ class DataTaxonomyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataAttributeBinding]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L356}
-  /// [google.cloud.dataplex.v1.UpdateDataAttributeBindingRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L704}
+  /// [google.cloud.dataplex.v1.DataAttributeBinding]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L374}
+  /// [google.cloud.dataplex.v1.UpdateDataAttributeBindingRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L726}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
   UpdateDataAttributeBinding(
       google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const&
@@ -813,6 +893,8 @@ class DataTaxonomyServiceClient {
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief UpdateDataAttributeBinding
   ///
@@ -823,6 +905,7 @@ class DataTaxonomyServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> UpdateDataAttributeBinding(
       NoAwaitTag,
       google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const&
@@ -831,6 +914,8 @@ class DataTaxonomyServiceClient {
 
   // clang-format off
   ///
+  /// @deprecated This RPC is deprecated.
+  ///
   /// @copybrief UpdateDataAttributeBinding
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
@@ -838,11 +923,14 @@ class DataTaxonomyServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
   UpdateDataAttributeBinding(google::longrunning::Operation const& operation,
                              Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Deletes a DataAttributeBinding resource. All attributes within the
   /// DataAttributeBinding must be deleted before the DataAttributeBinding can be
@@ -870,14 +958,17 @@ class DataTaxonomyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteDataAttributeBindingRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L778}
+  /// [google.cloud.dataplex.v1.DeleteDataAttributeBindingRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L800}
   /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteDataAttributeBinding(std::string const& name, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief DeleteDataAttributeBinding
   ///
@@ -888,10 +979,13 @@ class DataTaxonomyServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> DeleteDataAttributeBinding(
       NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Deletes a DataAttributeBinding resource. All attributes within the
   /// DataAttributeBinding must be deleted before the DataAttributeBinding can be
@@ -923,10 +1017,11 @@ class DataTaxonomyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteDataAttributeBindingRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L778}
+  /// [google.cloud.dataplex.v1.DeleteDataAttributeBindingRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L800}
   /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteDataAttributeBinding(
       google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&
@@ -934,6 +1029,8 @@ class DataTaxonomyServiceClient {
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief DeleteDataAttributeBinding
   ///
@@ -944,6 +1041,7 @@ class DataTaxonomyServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> DeleteDataAttributeBinding(
       NoAwaitTag,
       google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&
@@ -952,6 +1050,8 @@ class DataTaxonomyServiceClient {
 
   // clang-format off
   ///
+  /// @deprecated This RPC is deprecated.
+  ///
   /// @copybrief DeleteDataAttributeBinding
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
@@ -959,11 +1059,14 @@ class DataTaxonomyServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteDataAttributeBinding(google::longrunning::Operation const& operation,
                              Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Lists DataAttributeBinding resources in a project and location.
   ///
@@ -991,14 +1094,17 @@ class DataTaxonomyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataAttributeBinding]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L356}
-  /// [google.cloud.dataplex.v1.ListDataAttributeBindingsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L731}
+  /// [google.cloud.dataplex.v1.DataAttributeBinding]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L374}
+  /// [google.cloud.dataplex.v1.ListDataAttributeBindingsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L753}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StreamRange<google::cloud::dataplex::v1::DataAttributeBinding>
   ListDataAttributeBindings(std::string const& parent, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Lists DataAttributeBinding resources in a project and location.
   ///
@@ -1030,16 +1136,19 @@ class DataTaxonomyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataAttributeBinding]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L356}
-  /// [google.cloud.dataplex.v1.ListDataAttributeBindingsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L731}
+  /// [google.cloud.dataplex.v1.DataAttributeBinding]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L374}
+  /// [google.cloud.dataplex.v1.ListDataAttributeBindingsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L753}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StreamRange<google::cloud::dataplex::v1::DataAttributeBinding>
   ListDataAttributeBindings(
       google::cloud::dataplex::v1::ListDataAttributeBindingsRequest request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Retrieves a DataAttributeBinding resource.
   ///
@@ -1058,14 +1167,17 @@ class DataTaxonomyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataAttributeBinding]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L356}
-  /// [google.cloud.dataplex.v1.GetDataAttributeBindingRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L719}
+  /// [google.cloud.dataplex.v1.DataAttributeBinding]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L374}
+  /// [google.cloud.dataplex.v1.GetDataAttributeBindingRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L741}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>
   GetDataAttributeBinding(std::string const& name, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Retrieves a DataAttributeBinding resource.
   ///
@@ -1088,10 +1200,11 @@ class DataTaxonomyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataAttributeBinding]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L356}
-  /// [google.cloud.dataplex.v1.GetDataAttributeBindingRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L719}
+  /// [google.cloud.dataplex.v1.DataAttributeBinding]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L374}
+  /// [google.cloud.dataplex.v1.GetDataAttributeBindingRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L741}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>
   GetDataAttributeBinding(
       google::cloud::dataplex::v1::GetDataAttributeBindingRequest const&
@@ -1099,6 +1212,8 @@ class DataTaxonomyServiceClient {
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Create a DataAttribute resource.
   ///
@@ -1131,10 +1246,11 @@ class DataTaxonomyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateDataAttributeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L564}
-  /// [google.cloud.dataplex.v1.DataAttribute]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L287}
+  /// [google.cloud.dataplex.v1.CreateDataAttributeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L586}
+  /// [google.cloud.dataplex.v1.DataAttribute]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L304}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
   CreateDataAttribute(
       std::string const& parent,
@@ -1142,6 +1258,8 @@ class DataTaxonomyServiceClient {
       std::string const& data_attribute_id, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief CreateDataAttribute
   ///
@@ -1152,12 +1270,15 @@ class DataTaxonomyServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> CreateDataAttribute(
       NoAwaitTag, std::string const& parent,
       google::cloud::dataplex::v1::DataAttribute const& data_attribute,
       std::string const& data_attribute_id, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Create a DataAttribute resource.
   ///
@@ -1187,16 +1308,19 @@ class DataTaxonomyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.CreateDataAttributeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L564}
-  /// [google.cloud.dataplex.v1.DataAttribute]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L287}
+  /// [google.cloud.dataplex.v1.CreateDataAttributeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L586}
+  /// [google.cloud.dataplex.v1.DataAttribute]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L304}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
   CreateDataAttribute(
       google::cloud::dataplex::v1::CreateDataAttributeRequest const& request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief CreateDataAttribute
   ///
@@ -1207,12 +1331,15 @@ class DataTaxonomyServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> CreateDataAttribute(
       NoAwaitTag,
       google::cloud::dataplex::v1::CreateDataAttributeRequest const& request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief CreateDataAttribute
   ///
@@ -1221,11 +1348,14 @@ class DataTaxonomyServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
   CreateDataAttribute(google::longrunning::Operation const& operation,
                       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Updates a DataAttribute resource.
   ///
@@ -1251,16 +1381,19 @@ class DataTaxonomyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataAttribute]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L287}
-  /// [google.cloud.dataplex.v1.UpdateDataAttributeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L591}
+  /// [google.cloud.dataplex.v1.DataAttribute]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L304}
+  /// [google.cloud.dataplex.v1.UpdateDataAttributeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L613}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
   UpdateDataAttribute(
       google::cloud::dataplex::v1::DataAttribute const& data_attribute,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief UpdateDataAttribute
   ///
@@ -1271,12 +1404,15 @@ class DataTaxonomyServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> UpdateDataAttribute(
       NoAwaitTag,
       google::cloud::dataplex::v1::DataAttribute const& data_attribute,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Updates a DataAttribute resource.
   ///
@@ -1306,16 +1442,19 @@ class DataTaxonomyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataAttribute]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L287}
-  /// [google.cloud.dataplex.v1.UpdateDataAttributeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L591}
+  /// [google.cloud.dataplex.v1.DataAttribute]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L304}
+  /// [google.cloud.dataplex.v1.UpdateDataAttributeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L613}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
   UpdateDataAttribute(
       google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief UpdateDataAttribute
   ///
@@ -1326,12 +1465,15 @@ class DataTaxonomyServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> UpdateDataAttribute(
       NoAwaitTag,
       google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief UpdateDataAttribute
   ///
@@ -1340,11 +1482,14 @@ class DataTaxonomyServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
   UpdateDataAttribute(google::longrunning::Operation const& operation,
                       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Deletes a Data Attribute resource.
   ///
@@ -1370,14 +1515,17 @@ class DataTaxonomyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteDataAttributeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L660}
+  /// [google.cloud.dataplex.v1.DeleteDataAttributeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L682}
   /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteDataAttribute(std::string const& name, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief DeleteDataAttribute
   ///
@@ -1388,10 +1536,13 @@ class DataTaxonomyServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> DeleteDataAttribute(
       NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Deletes a Data Attribute resource.
   ///
@@ -1421,16 +1572,19 @@ class DataTaxonomyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DeleteDataAttributeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L660}
+  /// [google.cloud.dataplex.v1.DeleteDataAttributeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L682}
   /// [google.cloud.dataplex.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L770}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteDataAttribute(
       google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief DeleteDataAttribute
   ///
@@ -1441,12 +1595,15 @@ class DataTaxonomyServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> DeleteDataAttribute(
       NoAwaitTag,
       google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief DeleteDataAttribute
   ///
@@ -1455,11 +1612,14 @@ class DataTaxonomyServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteDataAttribute(google::longrunning::Operation const& operation,
                       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Lists Data Attribute resources in a DataTaxonomy.
   ///
@@ -1487,14 +1647,17 @@ class DataTaxonomyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataAttribute]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L287}
-  /// [google.cloud.dataplex.v1.ListDataAttributesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L617}
+  /// [google.cloud.dataplex.v1.DataAttribute]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L304}
+  /// [google.cloud.dataplex.v1.ListDataAttributesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L639}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StreamRange<google::cloud::dataplex::v1::DataAttribute> ListDataAttributes(
       std::string const& parent, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Lists Data Attribute resources in a DataTaxonomy.
   ///
@@ -1526,15 +1689,18 @@ class DataTaxonomyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataAttribute]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L287}
-  /// [google.cloud.dataplex.v1.ListDataAttributesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L617}
+  /// [google.cloud.dataplex.v1.DataAttribute]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L304}
+  /// [google.cloud.dataplex.v1.ListDataAttributesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L639}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StreamRange<google::cloud::dataplex::v1::DataAttribute> ListDataAttributes(
       google::cloud::dataplex::v1::ListDataAttributesRequest request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Retrieves a Data Attribute resource.
   ///
@@ -1553,14 +1719,17 @@ class DataTaxonomyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataAttribute]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L287}
-  /// [google.cloud.dataplex.v1.GetDataAttributeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L605}
+  /// [google.cloud.dataplex.v1.DataAttribute]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L304}
+  /// [google.cloud.dataplex.v1.GetDataAttributeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L627}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::cloud::dataplex::v1::DataAttribute> GetDataAttribute(
       std::string const& name, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Retrieves a Data Attribute resource.
   ///
@@ -1583,10 +1752,11 @@ class DataTaxonomyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataAttribute]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L287}
-  /// [google.cloud.dataplex.v1.GetDataAttributeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L605}
+  /// [google.cloud.dataplex.v1.DataAttribute]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L304}
+  /// [google.cloud.dataplex.v1.GetDataAttributeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L627}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::cloud::dataplex::v1::DataAttribute> GetDataAttribute(
       google::cloud::dataplex::v1::GetDataAttributeRequest const& request,
       Options opts = {});
