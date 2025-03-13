@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EMULATOR_COLUMN_FAMILY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EMULATOR_COLUMN_FAMILY_H
 
+#include "google/cloud/bigtable/cell.h"
 #include "google/cloud/bigtable/emulator/cell_view.h"
 #include "google/cloud/bigtable/emulator/filter.h"
 #include "google/cloud/bigtable/emulator/filtered_map.h"
@@ -30,6 +31,11 @@ namespace cloud {
 namespace bigtable {
 namespace emulator {
 
+struct Cell {
+  std::chrono::milliseconds timestamp;
+  std::string value;
+};
+
 class ColumnRow {
  public:
   ColumnRow() = default;
@@ -38,7 +44,7 @@ class ColumnRow {
   ColumnRow& operator=(ColumnRow const &) = delete;
 
   void SetCell(std::chrono::milliseconds timestamp, std::string const& value);
-  std::size_t DeleteTimeRange(
+  std::vector<Cell> DeleteTimeRange(
       ::google::bigtable::v2::TimestampRange const& time_range);
 
   bool HasCells() const { return !cells_.empty(); }
@@ -76,7 +82,7 @@ class ColumnFamilyRow {
 
   void SetCell(std::string const& column_qualifier,
                std::chrono::milliseconds timestamp, std::string const& value);
-  std::size_t DeleteColumn(
+  std::vector<Cell> DeleteColumn(
       std::string const& column_qualifier,
       ::google::bigtable::v2::TimestampRange const& time_range);
   bool HasColumns() { return !columns_.empty(); }
@@ -116,7 +122,7 @@ class ColumnFamily {
   void SetCell(std::string const& row_key, std::string const& column_qualifier,
                std::chrono::milliseconds timestamp, std::string const& value);
   bool DeleteRow(std::string const& row_key);
-  std::size_t DeleteColumn(
+  std::vector<Cell> DeleteColumn(
       std::string const& row_key, std::string const& column_qualifier,
       ::google::bigtable::v2::TimestampRange const& time_range);
 

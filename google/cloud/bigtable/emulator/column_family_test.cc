@@ -127,7 +127,7 @@ col2 @10ms: qux
   EXPECT_EQ("qux", fam_row.upper_bound("col1")->second.begin()->second);
 
   EXPECT_EQ(1, fam_row.DeleteColumn("col1",
-                                    ::google::bigtable::v2::TimestampRange{}));
+                                    ::google::bigtable::v2::TimestampRange{}).size());
 
   // Verify that there is no empty column.
   EXPECT_EQ(2, std::distance(fam_row.begin(), fam_row.end()));
@@ -135,7 +135,7 @@ col2 @10ms: qux
   google::bigtable::v2::TimestampRange not_matching_range;
   not_matching_range.set_start_timestamp_micros(10);
   not_matching_range.set_end_timestamp_micros(20);
-  EXPECT_EQ(0, fam_row.DeleteColumn("col2", not_matching_range));
+  EXPECT_EQ(0, fam_row.DeleteColumn("col2", not_matching_range).size());
 
   EXPECT_EQ(R"""(
 col0 @10ms: baz
@@ -168,7 +168,7 @@ row2 :col0 @10ms: qux
             DumpColumnFamilyRow(fam.upper_bound("row1")->second));
 
   EXPECT_EQ(1, fam.DeleteColumn("row1", "col0",
-                                ::google::bigtable::v2::TimestampRange{}));
+                                ::google::bigtable::v2::TimestampRange{}).size());
 
   // Verify that there is no empty row
   EXPECT_EQ(2, std::distance(fam.begin(), fam.end()));
@@ -285,7 +285,7 @@ TEST(FilteredColumnFamilyStream, FilterByColumnRange) {
   fam.SetCell("row0", "col2", 200_ms, "foo");
   fam.SetCell("row0", "col3", 300_ms, "foo");  // Filter out
   fam.SetCell("row0", "col3", 300_ms, "foo");  // Filter out
-  fam.SetCell("row2", "col1", 300_ms, "foo");  
+  fam.SetCell("row2", "col1", 300_ms, "foo");
   auto included_rows = std::make_shared<StringRangeSet>(StringRangeSet::All());
   FilteredColumnFamilyStream filtered_stream(fam, "cf1", included_rows);
   filtered_stream.ApplyFilter(
@@ -313,7 +313,7 @@ TEST(FilteredColumnFamilyStream, FilterByColumnRegex) {
   fam.SetCell("row0", "col3", 300_ms, "foo");  // Filter out
   fam.SetCell("row0", "col3", 300_ms, "foo");  // Filter out
   fam.SetCell("row1", "col2", 300_ms, "foo");
-  fam.SetCell("row2", "col0", 300_ms, "foo");  
+  fam.SetCell("row2", "col0", 300_ms, "foo");
   auto included_rows = std::make_shared<StringRangeSet>(StringRangeSet::All());
   FilteredColumnFamilyStream filtered_stream(fam, "cf1", included_rows);
   filtered_stream.ApplyFilter(ColumnRegex{pattern1});
@@ -376,5 +376,3 @@ row3 cf1:col3 @300ms: foo
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google
-
-

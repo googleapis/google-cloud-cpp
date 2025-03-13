@@ -249,7 +249,7 @@ Status Table::MutateRow(google::bigtable::v2::MutateRowRequest const& request) {
       }
       if (maybe_column_family->get().DeleteColumn(
               request.row_key(), delete_from_column.column_qualifier(),
-              delete_from_column.time_range()) == 0) {
+              delete_from_column.time_range()).empty()) {
         // FIXME no such row or column
       }
     } else if (mutation.has_delete_from_family()) {

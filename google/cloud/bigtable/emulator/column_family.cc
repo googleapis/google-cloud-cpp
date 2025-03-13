@@ -29,9 +29,9 @@ void ColumnRow::SetCell(std::chrono::milliseconds timestamp,
   cells_[timestamp] = std::move(value);
 }
 
-std::size_t ColumnRow::DeleteTimeRange(
+std::vector<Cell> ColumnRow::DeleteTimeRange(
     ::google::bigtable::v2::TimestampRange const& time_range) {
-  std::size_t num_erased = 0;
+  std::vector<Cell> deleted_cells;
   for (auto cell_it = cells_.lower_bound(
            std::chrono::duration_cast<std::chrono::milliseconds>(
                std::chrono::microseconds(time_range.start_timestamp_micros())));
@@ -40,10 +40,11 @@ std::size_t ColumnRow::DeleteTimeRange(
         cell_it->first < std::chrono::duration_cast<std::chrono::milliseconds>(
                              std::chrono::microseconds(
                                  time_range.end_timestamp_micros())));) {
+    Cell cell = {std::move(cell_it->first), std::move(cell_it->second)};
+    deleted_cells.push_back(cell);
     cells_.erase(cell_it++);
-    ++num_erased;
   }
-  return num_erased;
+  return deleted_cells;
 }
 
 void ColumnFamilyRow::SetCell(std::string const& column_qualifier,
@@ -52,12 +53,12 @@ void ColumnFamilyRow::SetCell(std::string const& column_qualifier,
   columns_[column_qualifier].SetCell(timestamp, value);
 }
 
-std::size_t ColumnFamilyRow::DeleteColumn(
+std::vector<Cell> ColumnFamilyRow::DeleteColumn(
     std::string const& column_qualifier,
     ::google::bigtable::v2::TimestampRange const& time_range) {
   auto column_it = columns_.find(column_qualifier);
   if (column_it == columns_.end()) {
-    return 0;
+    return std::vector<Cell>();
   }
   auto res = column_it->second.DeleteTimeRange(time_range);
   if (!column_it->second.HasCells()) {
@@ -77,19 +78,19 @@ bool ColumnFamily::DeleteRow(std::string const& row_key) {
   return rows_.erase(row_key) > 0;
 }
 
-std::size_t ColumnFamily::DeleteColumn(
+std::vector<Cell> ColumnFamily::DeleteColumn(
     std::string const& row_key, std::string const& column_qualifier,
     ::google::bigtable::v2::TimestampRange const& time_range) {
   auto row_it = rows_.find(row_key);
   if (row_it != rows_.end()) {
-    auto num_erased_cells =
+    auto erased_cells =
         row_it->second.DeleteColumn(column_qualifier, time_range);
     if (!row_it->second.HasColumns()) {
       rows_.erase(row_it);
     }
-    return num_erased_cells;
+    return erased_cells;
   }
-  return 0;
+  return std::vector<Cell>();
 }
 
 class FilteredColumnFamilyStream::FilterApply {
