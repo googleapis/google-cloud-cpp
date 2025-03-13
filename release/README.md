@@ -269,7 +269,9 @@ sed -i "/REPO googleapis\/google-cloud-cpp/ {n; n; s/SHA512 .*/SHA512 ${SHA512[0
 
 #### Update the [SHA512] of googleapis repo
 
-You can find the `GOOGLEAPIS_SHA512` from your release PR. For example, in [PR#15008], it is `b151ec2ae29c2c955c56784c0ce388b2d8c4a84c`.
+You can find the `GOOGLEAPIS_SHA512` from your release PR. For example, in
+[PR#15008], it is `b151ec2ae29c2c955c56784c0ce388b2d8c4a84c`.
+
 ```shell
 GOOGLEAPIS_SHA512=...
 SHA512=($(curl -fSsL https://github.com/googleapis/googleapis/archive/${GOOGLEAPIS_SHA512}.tar.gz | sha512sum))
@@ -421,8 +423,8 @@ ______________________________________________________________________
 [github-guides]: https://guides.github.com/
 [googleapis-sha-update-policy]: https://github.com/googleapis/google-cloud-cpp/blob/main/doc/adr/2024-08-13-googleapis-sha-update-policy.md
 [pr#138]: https://github.com/conda-forge/google-cloud-cpp-feedstock/pull/138
-[pr#32391]: https://github.com/microsoft/vcpkg/pull/32391
 [pr#15008]: https://github.com/googleapis/google-cloud-cpp/pull/15008
+[pr#32391]: https://github.com/microsoft/vcpkg/pull/32391
 [sha512]: https://learn.microsoft.com/en-us/vcpkg/maintainers/functions/vcpkg_from_github#sha512
 [vcpkg port]: https://github.com/Microsoft/vcpkg/tree/master/ports/google-cloud-cpp
 [`changelog.md`]: /CHANGELOG.md
