@@ -569,6 +569,297 @@ BigtableInstanceAdminClient::ListHotTablets(
   return connection_->ListHotTablets(std::move(request));
 }
 
+future<StatusOr<google::bigtable::admin::v2::LogicalView>>
+BigtableInstanceAdminClient::CreateLogicalView(
+    std::string const& parent,
+    google::bigtable::admin::v2::LogicalView const& logical_view,
+    std::string const& logical_view_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::bigtable::admin::v2::CreateLogicalViewRequest request;
+  request.set_parent(parent);
+  *request.mutable_logical_view() = logical_view;
+  request.set_logical_view_id(logical_view_id);
+  return connection_->CreateLogicalView(request);
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminClient::CreateLogicalView(
+    NoAwaitTag, std::string const& parent,
+    google::bigtable::admin::v2::LogicalView const& logical_view,
+    std::string const& logical_view_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::bigtable::admin::v2::CreateLogicalViewRequest request;
+  request.set_parent(parent);
+  *request.mutable_logical_view() = logical_view;
+  request.set_logical_view_id(logical_view_id);
+  return connection_->CreateLogicalView(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::bigtable::admin::v2::LogicalView>>
+BigtableInstanceAdminClient::CreateLogicalView(
+    google::bigtable::admin::v2::CreateLogicalViewRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateLogicalView(request);
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminClient::CreateLogicalView(
+    NoAwaitTag,
+    google::bigtable::admin::v2::CreateLogicalViewRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateLogicalView(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::bigtable::admin::v2::LogicalView>>
+BigtableInstanceAdminClient::CreateLogicalView(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateLogicalView(operation);
+}
+
+StatusOr<google::bigtable::admin::v2::LogicalView>
+BigtableInstanceAdminClient::GetLogicalView(std::string const& name,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::bigtable::admin::v2::GetLogicalViewRequest request;
+  request.set_name(name);
+  return connection_->GetLogicalView(request);
+}
+
+StatusOr<google::bigtable::admin::v2::LogicalView>
+BigtableInstanceAdminClient::GetLogicalView(
+    google::bigtable::admin::v2::GetLogicalViewRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetLogicalView(request);
+}
+
+StreamRange<google::bigtable::admin::v2::LogicalView>
+BigtableInstanceAdminClient::ListLogicalViews(std::string const& parent,
+                                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::bigtable::admin::v2::ListLogicalViewsRequest request;
+  request.set_parent(parent);
+  return connection_->ListLogicalViews(request);
+}
+
+StreamRange<google::bigtable::admin::v2::LogicalView>
+BigtableInstanceAdminClient::ListLogicalViews(
+    google::bigtable::admin::v2::ListLogicalViewsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListLogicalViews(std::move(request));
+}
+
+future<StatusOr<google::bigtable::admin::v2::LogicalView>>
+BigtableInstanceAdminClient::UpdateLogicalView(
+    google::bigtable::admin::v2::LogicalView const& logical_view,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::bigtable::admin::v2::UpdateLogicalViewRequest request;
+  *request.mutable_logical_view() = logical_view;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateLogicalView(request);
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminClient::UpdateLogicalView(
+    NoAwaitTag, google::bigtable::admin::v2::LogicalView const& logical_view,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::bigtable::admin::v2::UpdateLogicalViewRequest request;
+  *request.mutable_logical_view() = logical_view;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateLogicalView(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::bigtable::admin::v2::LogicalView>>
+BigtableInstanceAdminClient::UpdateLogicalView(
+    google::bigtable::admin::v2::UpdateLogicalViewRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateLogicalView(request);
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminClient::UpdateLogicalView(
+    NoAwaitTag,
+    google::bigtable::admin::v2::UpdateLogicalViewRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateLogicalView(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::bigtable::admin::v2::LogicalView>>
+BigtableInstanceAdminClient::UpdateLogicalView(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateLogicalView(operation);
+}
+
+Status BigtableInstanceAdminClient::DeleteLogicalView(std::string const& name,
+                                                      Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::bigtable::admin::v2::DeleteLogicalViewRequest request;
+  request.set_name(name);
+  return connection_->DeleteLogicalView(request);
+}
+
+Status BigtableInstanceAdminClient::DeleteLogicalView(
+    google::bigtable::admin::v2::DeleteLogicalViewRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteLogicalView(request);
+}
+
+future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
+BigtableInstanceAdminClient::CreateMaterializedView(
+    std::string const& parent,
+    google::bigtable::admin::v2::MaterializedView const& materialized_view,
+    std::string const& materialized_view_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::bigtable::admin::v2::CreateMaterializedViewRequest request;
+  request.set_parent(parent);
+  *request.mutable_materialized_view() = materialized_view;
+  request.set_materialized_view_id(materialized_view_id);
+  return connection_->CreateMaterializedView(request);
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminClient::CreateMaterializedView(
+    NoAwaitTag, std::string const& parent,
+    google::bigtable::admin::v2::MaterializedView const& materialized_view,
+    std::string const& materialized_view_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::bigtable::admin::v2::CreateMaterializedViewRequest request;
+  request.set_parent(parent);
+  *request.mutable_materialized_view() = materialized_view;
+  request.set_materialized_view_id(materialized_view_id);
+  return connection_->CreateMaterializedView(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
+BigtableInstanceAdminClient::CreateMaterializedView(
+    google::bigtable::admin::v2::CreateMaterializedViewRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateMaterializedView(request);
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminClient::CreateMaterializedView(
+    NoAwaitTag,
+    google::bigtable::admin::v2::CreateMaterializedViewRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateMaterializedView(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
+BigtableInstanceAdminClient::CreateMaterializedView(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateMaterializedView(operation);
+}
+
+StatusOr<google::bigtable::admin::v2::MaterializedView>
+BigtableInstanceAdminClient::GetMaterializedView(std::string const& name,
+                                                 Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::bigtable::admin::v2::GetMaterializedViewRequest request;
+  request.set_name(name);
+  return connection_->GetMaterializedView(request);
+}
+
+StatusOr<google::bigtable::admin::v2::MaterializedView>
+BigtableInstanceAdminClient::GetMaterializedView(
+    google::bigtable::admin::v2::GetMaterializedViewRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetMaterializedView(request);
+}
+
+StreamRange<google::bigtable::admin::v2::MaterializedView>
+BigtableInstanceAdminClient::ListMaterializedViews(std::string const& parent,
+                                                   Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::bigtable::admin::v2::ListMaterializedViewsRequest request;
+  request.set_parent(parent);
+  return connection_->ListMaterializedViews(request);
+}
+
+StreamRange<google::bigtable::admin::v2::MaterializedView>
+BigtableInstanceAdminClient::ListMaterializedViews(
+    google::bigtable::admin::v2::ListMaterializedViewsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListMaterializedViews(std::move(request));
+}
+
+future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
+BigtableInstanceAdminClient::UpdateMaterializedView(
+    google::bigtable::admin::v2::MaterializedView const& materialized_view,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::bigtable::admin::v2::UpdateMaterializedViewRequest request;
+  *request.mutable_materialized_view() = materialized_view;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateMaterializedView(request);
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminClient::UpdateMaterializedView(
+    NoAwaitTag,
+    google::bigtable::admin::v2::MaterializedView const& materialized_view,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::bigtable::admin::v2::UpdateMaterializedViewRequest request;
+  *request.mutable_materialized_view() = materialized_view;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateMaterializedView(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
+BigtableInstanceAdminClient::UpdateMaterializedView(
+    google::bigtable::admin::v2::UpdateMaterializedViewRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateMaterializedView(request);
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminClient::UpdateMaterializedView(
+    NoAwaitTag,
+    google::bigtable::admin::v2::UpdateMaterializedViewRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateMaterializedView(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
+BigtableInstanceAdminClient::UpdateMaterializedView(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateMaterializedView(operation);
+}
+
+Status BigtableInstanceAdminClient::DeleteMaterializedView(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::bigtable::admin::v2::DeleteMaterializedViewRequest request;
+  request.set_name(name);
+  return connection_->DeleteMaterializedView(request);
+}
+
+Status BigtableInstanceAdminClient::DeleteMaterializedView(
+    google::bigtable::admin::v2::DeleteMaterializedViewRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteMaterializedView(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_admin
 }  // namespace cloud
