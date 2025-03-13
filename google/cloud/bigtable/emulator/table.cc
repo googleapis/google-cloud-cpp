@@ -226,7 +226,7 @@ Status Table::MutateRow(google::bigtable::v2::MutateRowRequest const& request) {
 
   RowTransaction row_transaction(this->get(), request);
 
-  for (auto mutation : request.mutations()) {
+  for (const auto& mutation : request.mutations()) {
     if (mutation.has_set_cell()) {
       auto const& set_cell = mutation.set_cell();
       auto status = row_transaction.SetCell(set_cell);
