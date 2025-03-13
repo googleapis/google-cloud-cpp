@@ -1,0 +1,25 @@
+/*!
+@page financialservices-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[EndpointOption](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `financialservices_v1::AMLClient`:
+
+@snippet aml_client_samples.cc set-client-endpoint
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page financialservices_v1::AMLClient-endpoint-snippet Override financialservices_v1::AMLClient Endpoint Configuration
+
+@snippet google/cloud/financialservices/v1/samples/aml_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->
