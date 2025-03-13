@@ -234,9 +234,13 @@ Status Table::MutateRow(google::bigtable::v2::MutateRowRequest const& request) {
         return status;
       }
     } else if (mutation.has_add_to_cell()) {
-      // FIXME
+      return UnimplementedError(
+          "Unsupported mutation type.",
+          GCP_ERROR_INFO().WithMetadata("mutation", mutation.DebugString()));
     } else if (mutation.has_merge_to_cell()) {
-      // FIXME
+      return UnimplementedError(
+          "Unsupported mutation type.",
+          GCP_ERROR_INFO().WithMetadata("mutation", mutation.DebugString()));
     } else if (mutation.has_delete_from_column()) {
       auto const& delete_from_column = mutation.delete_from_column();
       auto maybe_column_family = FindColumnFamily(delete_from_column);
