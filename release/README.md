@@ -365,6 +365,12 @@ In your development fork:
   ```
 - If this is the first patch release for that branch, you need to update the GCB
   triggers.
+  - Update convert-to-branch-triggers.sh from HEAD/main as previous releases
+    likely contain a bug that preserves the trigger `id` and will overwrite the
+    `main` CI triggers instead of creating new triggers on `${BRANCH}`.
+    ```shell
+    git checkout main -- ci/cloudbuild/convert-to-branch-triggers.sh
+    ```
   - Update the Google Cloud Build trigger definitions to compile this branch:
     ```shell
     ci/cloudbuild/convert-to-branch-triggers.sh --branch "${BRANCH}"
