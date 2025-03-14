@@ -29,8 +29,8 @@ constexpr int kMaxUuidNumberOfHexDigits = 32;
 // Helper function to parse a single hexadecimal block of a UUID.
 // A hexadecimal block is a 16-digit hexadecimal number, which is represented
 // as 8 bytes.
-StatusOr<uint64_t> ParseHexBlock(absl::string_view& str,
-                                 absl::string_view original_str) {
+StatusOr<std::uint64_t> ParseHexBlock(absl::string_view& str,
+                                      absl::string_view original_str) {
   constexpr int kMaxUuidBlockLength = 16;
   static auto const* char_to_hex = new absl::flat_hash_map<char, std::uint8_t>(
       {{'0', 0x00}, {'1', 0x01}, {'2', 0x02}, {'3', 0x03}, {'4', 0x04},
@@ -38,24 +38,24 @@ StatusOr<uint64_t> ParseHexBlock(absl::string_view& str,
        {'a', 0x0a}, {'b', 0x0b}, {'c', 0x0c}, {'d', 0x0d}, {'e', 0x0e},
        {'f', 0x0f}, {'A', 0x0a}, {'B', 0x0b}, {'C', 0x0c}, {'D', 0x0d},
        {'E', 0x0e}, {'F', 0x0f}});
-  uint64_t block = 0;
+  std::uint64_t block = 0;
   for (int j = 0; j < kMaxUuidBlockLength; ++j) {
     absl::ConsumePrefix(&str, "-");
     if (str.empty()) {
       return internal::InvalidArgumentError(
-          absl::StrFormat("UUID must be at least %d characters long: %s",
+          absl::StrFormat("UUID must contain %d hexadecimal digits: %s",
                           kMaxUuidNumberOfHexDigits, original_str),
           GCP_ERROR_INFO());
     }
-    if (str[0] == '-') {
-      return internal::InvalidArgumentError(
-          absl::StrFormat("UUID cannot contain consecutive hyphens: %s",
-                          original_str),
-          GCP_ERROR_INFO());
-    }
-
     auto it = char_to_hex->find(str[0]);
     if (it == char_to_hex->end()) {
+      if (str[0] == '-') {
+        return internal::InvalidArgumentError(
+            absl::StrFormat("UUID cannot contain consecutive hyphens: %s",
+                            original_str),
+            GCP_ERROR_INFO());
+      }
+
       return internal::InvalidArgumentError(
           absl::StrFormat("UUID contains invalid character (%c): %s", str[0],
                           original_str),
@@ -83,55 +83,54 @@ bool operator<(Uuid const& lhs, Uuid const& rhs) {
 
 Uuid::operator std::string() const {
   constexpr int kUuidStringLen = 36;
-  constexpr int kHyphenPos[] = {8, 13, 18, 23};
+  constexpr int kChunkLength[] = {8, 4, 4, 4, 12};
   auto to_hex = [](std::uint64_t v, int start_index, int end_index, char* out) {
     static constexpr char kHexChar[] = {'0', '1', '2', '3', '4', '5', '6', '7',
                                         '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
     for (int i = start_index; i >= end_index; --i) {
       *out++ = kHexChar[(v >> (i * 4)) & 0xf];
     }
+    return start_index - end_index + 1;
   };
 
   std::string output;
   output.resize(kUuidStringLen);
   char* target = &((output)[output.size() - kUuidStringLen]);
-  auto high_bits = Uint128High64(uuid_);
-  auto low_bits = Uint128Low64(uuid_);
-  to_hex(high_bits, 15, 8, target);
-  *(target + kHyphenPos[0]) = '-';
-  to_hex(high_bits, 7, 4, target + kHyphenPos[0] + 1);
-  *(target + kHyphenPos[1]) = '-';
-  to_hex(high_bits, 3, 0, target + kHyphenPos[1] + 1);
-  *(target + kHyphenPos[2]) = '-';
-  to_hex(low_bits, 15, 12, target + kHyphenPos[2] + 1);
-  *(target + kHyphenPos[3]) = '-';
-  to_hex(low_bits, 11, 0, target + kHyphenPos[3] + 1);
-
+  char* const last = &((output)[output.size()]);
+  auto bits = Uint128High64(uuid_);
+  int start = 16;
+  for (auto length : kChunkLength) {
+    int end = start - length;
+    target += to_hex(bits, start - 1, end, target);
+    // Only hyphens write to valid addresses.
+    if (target < last) *(target++) = '-';
+    if (end == 0) {
+      start = 16;
+      bits = Uint128Low64(uuid_);
+    } else {
+      start = end;
+    }
+  }
   return output;
 }
 
 StatusOr<Uuid> MakeUuid(absl::string_view str) {
-  // Early checks for invalid length or leading hyphen
-  if (str.size() < kMaxUuidNumberOfHexDigits) {
+  if (str.empty()) {
     return internal::InvalidArgumentError(
-        absl::StrFormat("UUID must be at least %d characters long: %s",
-                        kMaxUuidNumberOfHexDigits, str),
-        GCP_ERROR_INFO());
+        absl::StrFormat("UUID cannot be empty"), GCP_ERROR_INFO());
   }
+
   std::string original_str = std::string(str);
   // Check and remove optional braces
-  bool has_braces = (str[0] == '{');
-  if (has_braces) {
-    if (str[str.size() - 1] != '}') {
+  if (absl::ConsumePrefix(&str, "{")) {
+    if (!absl::ConsumeSuffix(&str, "}")) {
       return internal::InvalidArgumentError(
           absl::StrFormat("UUID missing closing '}': %s", original_str),
           GCP_ERROR_INFO());
     }
-    str.remove_prefix(1);
-    str.remove_suffix(1);
   }
 
-  // Check for leading hyphen after braces.
+  // Check for leading hyphen after stripping any surrounding braces.
   if (str[0] == '-') {
     return internal::InvalidArgumentError(
         absl::StrFormat("UUID cannot begin with '-': %s", original_str),

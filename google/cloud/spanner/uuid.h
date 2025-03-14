@@ -66,9 +66,7 @@ class Uuid {
   friend bool operator>=(Uuid const& lhs, Uuid const& rhs) {
     return !(lhs < rhs);
   }
-  friend bool operator>(Uuid const& lhs, Uuid const& rhs) {
-    return (rhs < lhs);
-  }
+  friend bool operator>(Uuid const& lhs, Uuid const& rhs) { return rhs < lhs; }
   ///@}
 
   /// @name Conversion to packed integer representation.

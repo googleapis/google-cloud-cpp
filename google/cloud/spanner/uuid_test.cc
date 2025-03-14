@@ -112,9 +112,9 @@ INSTANTIATE_TEST_SUITE_P(
     MakeUuid, MakeUuidTest,
     testing::Values(
         // Error Paths
-        MakeUuidTestParam{"Empty", "", 0x0, 0x0,
-                          Status{StatusCode::kInvalidArgument,
-                                 "UUID must be at least 32 characters long:"}},
+        MakeUuidTestParam{
+            "Empty", "", 0x0, 0x0,
+            Status{StatusCode::kInvalidArgument, "UUID cannot be empty"}},
         MakeUuidTestParam{
             "MissingClosingCurlyBrace", "{0b6ed04ca16dfc4652817f9978c13738",
             0x0, 0x0,
@@ -140,7 +140,7 @@ INSTANTIATE_TEST_SUITE_P(
                           "00-00-00-00-00-00-00-00-00-00-00-00-00-00-00", 0x0,
                           0x0,
                           Status{StatusCode::kInvalidArgument,
-                                 "UUID must be at least 32 characters long:"}},
+                                 "UUID must contain 32 hexadecimal digits:"}},
         // Success Paths
         MakeUuidTestParam{
             "Zero", "00000000000000000000000000000000", 0x0, 0x0, {}},
