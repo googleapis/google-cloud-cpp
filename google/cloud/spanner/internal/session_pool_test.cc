@@ -601,21 +601,26 @@ TEST_F(SessionPoolTest, SessionRefreshNotFound) {
     // Wait for "s2" to need refreshing before releasing "s1".
     clock->AdvanceTime(keep_alive_interval * 2);
   }
+  EXPECT_EQ(pool->total_sessions(), 2);
 
   // Simulate completion of pending operations, which will result in
   // a call to RefreshExpiringSessions(). This should refresh "s2" and
   // satisfy the AsyncExecuteSql() expectation, which fails the call.
   impl->SimulateCompletion(true);
+  EXPECT_EQ(pool->total_sessions(), 1);
 
   // We should still be able to allocate session "s1".
   auto s1 = pool->Allocate();
   ASSERT_STATUS_OK(s1);
   EXPECT_EQ("s1", (*s1)->session_name());
+  EXPECT_EQ(pool->total_sessions(), 1);
+
   // However "s2" will be gone now, so a new allocation will produce
   // "s3", satisfying the final BatchCreateSessions() expectation.
   auto s3 = pool->Allocate();
   ASSERT_STATUS_OK(s3);
   EXPECT_EQ("s3", (*s3)->session_name());
+  EXPECT_EQ(pool->total_sessions(), 2);
 
   // Cancel all pending operations, satisfying any remaining futures. When
   // compiling with exceptions disabled the destructors eventually invoke

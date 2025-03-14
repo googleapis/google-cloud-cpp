@@ -99,6 +99,15 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
    */
   std::shared_ptr<SpannerStub> GetStub(Session const& session);
 
+  /**
+   * Returns the number of sessions in the session pool plus the number of
+   * sessions allocated to running transactions.
+   *
+   * @note This function should only be used for testing as other threads
+   *   could be modifying the underlying value immediately after it returns.
+   */
+  int total_sessions() const;
+
  private:
   friend std::shared_ptr<SessionPool> MakeSessionPool(
       spanner::Database, std::vector<std::shared_ptr<SpannerStub>>,
@@ -179,6 +188,10 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   // Remove the named session from the pool (if it is present).
   void Erase(std::string const& session_name);
 
+  // Performs the necessary bookkeeping when a session is removed from use.
+  void DecrementSessionCount(std::unique_lock<std::mutex> const& lk,
+                             Session const& session);
+
   spanner::Database const db_;
   google::cloud::CompletionQueue cq_;
   Options const opts_;
@@ -188,7 +201,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   int const max_pool_size_;
   std::mt19937 random_generator_;
 
-  std::mutex mu_;
+  mutable std::mutex mu_;
   std::condition_variable cond_;
   std::vector<std::unique_ptr<Session>> sessions_;  // GUARDED_BY(mu_)
   int total_sessions_ = 0;                          // GUARDED_BY(mu_)
