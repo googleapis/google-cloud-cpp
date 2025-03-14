@@ -599,6 +599,8 @@ TEST(TransactonRollback, DeleteFromColumnBasicFunction) {
 
   ASSERT_STATUS_OK(delete_from_column(
       table, table_name, row_key, column_family_name, column_qualifer, range));
+  status = has_column(table, column_family_name, row_key, column_qualifer);
+  ASSERT_EQ(false, status.ok());
 }
 
 }  // namespace emulator
