@@ -619,6 +619,58 @@ TEST(TransactonRollback, DeleteFromColumnBasicFunction) {
   ASSERT_EQ(false, status.ok());
 }
 
+// Does DeleteFromColumn rollback work?
+TEST(TransactonRollback, DeleteFromColumnRollback) {
+  ::google::bigtable::admin::v2::Table schema;
+  ::google::bigtable::admin::v2::ColumnFamily column_family;
+
+  auto const* const table_name = "projects/test/instances/test/tables/test";
+  auto const* const row_key = "0";
+  auto const* const column_family_name = "test";
+  auto const* const column_qualifer = "test";
+  // Simulate mutation failure and cause rollback by attempting a
+  // mutation with a non-existent column family name.
+  auto const* const bad_column_family_name = "this_column_family_does_not_exist";
+  auto const* data = "test";
+
+  std::vector<std::string> column_families = {column_family_name};
+  auto maybe_table = create_table(table_name, column_families);
+
+  ASSERT_STATUS_OK(maybe_table);
+  auto table = maybe_table.value();
+
+  std::vector<SetCellParams> v = {
+      {column_family_name, column_qualifer, 1000, data},
+      {column_family_name, column_qualifer, 2000, data},
+      {column_family_name, column_qualifer, 3000, data},
+  };
+
+  auto status = set_cells(table, table_name, row_key, v);
+  ASSERT_STATUS_OK(status);
+  ASSERT_STATUS_OK(has_cell(table, column_family_name, row_key, column_qualifer,
+                            1000, data));
+  ASSERT_STATUS_OK(has_cell(table, column_family_name, row_key, column_qualifer,
+                            2000, data));
+  ASSERT_STATUS_OK(has_cell(table, column_family_name, row_key, column_qualifer,
+                            3000, data));
+
+  // The first mutation will succeed. The second assumes a schema that
+  // does not exist - it should fail and cause rollback of the column
+  // deletion in the first mutation.
+  std::vector<DeleteFromColumnParams> dv = {
+      {column_family_name, column_qualifer,
+       new_timestamp_range(v[0].timestamp_micros,
+                           v[2].timestamp_micros + 1000)},
+      {bad_column_family_name, column_qualifer, new_timestamp_range(1000, 2000)},
+  };
+  // The mutation chains should fail and rollback should occur.
+  ASSERT_EQ(false, delete_from_columns(table, table_name, row_key, dv).ok());
+
+  // The column should have been restored.
+  ASSERT_STATUS_OK(has_column(table, column_family_name, row_key, column_qualifer));
+}
+
+
 }  // namespace emulator
 }  // namespace bigtable
 }  // namespace cloud
