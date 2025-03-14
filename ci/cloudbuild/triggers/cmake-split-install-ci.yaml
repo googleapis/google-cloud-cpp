@@ -1,14 +1,11 @@
-createTime: '2023-07-10T15:26:52.770667141Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   push:
     branch: v2.22.x
-id: 0b727502-82fe-41a1-a4e2-73f9375718ad
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 name: v2-22-x-cmake-split-install-ci
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/0b727502-82fe-41a1-a4e2-73f9375718ad
 substitutions:
   _BUILD_NAME: cmake-split-install
   _DISTRO: fedora-latest-cmake

@@ -1,4 +1,3 @@
-createTime: '2022-02-08T12:44:28.719440875Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
@@ -6,10 +5,8 @@ github:
   pullRequest:
     branch: v2.22.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-id: 914bc7a4-afa2-4faf-8a0e-571218e8fd83
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 name: v2-22-x-bazel-oldest-pr
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/914bc7a4-afa2-4faf-8a0e-571218e8fd83
 substitutions:
   _BUILD_NAME: bazel-oldest
   _DISTRO: fedora-latest-bazel

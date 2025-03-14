@@ -1,4 +1,3 @@
-createTime: '2023-10-24T17:38:54.756444054Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
@@ -6,10 +5,8 @@ github:
   pullRequest:
     branch: v2.22.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-id: 94fbc973-ea4b-49e9-a1ce-db3994993675
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 name: v2-22-x-clang-tidy-bigquery-pr
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/94fbc973-ea4b-49e9-a1ce-db3994993675
 substitutions:
   _BUILD_NAME: clang-tidy
   _DISTRO: fedora-latest-cmake

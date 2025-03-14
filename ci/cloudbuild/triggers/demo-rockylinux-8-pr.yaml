@@ -1,14 +1,12 @@
-createTime: '2021-06-22T19:09:24.671165812Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: v2.22.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-id: 629ca4db-4d6b-42d2-9cbf-4d5394cdbc49
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: demo-rockylinux-8-pr
+name: v2-22-x-demo-rockylinux-8-pr
 substitutions:
   _BUILD_NAME: demo-install
   _DISTRO: demo-rockylinux-8

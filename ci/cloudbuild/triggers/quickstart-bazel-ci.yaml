@@ -1,13 +1,11 @@
-createTime: '2021-03-29T23:07:34.524944837Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
-id: 1967685b-bdf1-48e2-abe5-593db92382ef
+    branch: v2.22.x
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: quickstart-bazel-ci
+name: v2-22-x-quickstart-bazel-ci
 substitutions:
   _BUILD_NAME: quickstart-bazel
   _DISTRO: ubuntu-focal

@@ -1,14 +1,11 @@
-createTime: '2023-10-24T17:38:59.377179872Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   push:
     branch: v2.22.x
-id: dcb2a46a-01f9-4b02-8c34-79943099e25f
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 name: v2-22-x-clang-tidy-storage-ci
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/dcb2a46a-01f9-4b02-8c34-79943099e25f
 substitutions:
   _BUILD_NAME: clang-tidy
   _DISTRO: fedora-latest-cmake

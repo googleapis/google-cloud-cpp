@@ -1,4 +1,3 @@
-createTime: '2022-05-13T19:36:14.958592625Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
@@ -6,10 +5,8 @@ github:
   pullRequest:
     branch: v2.22.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-id: f190d45e-015f-4e09-bc3f-864aebf18316
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 name: v2-22-x-demo-ubuntu-jammy-pr
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/f190d45e-015f-4e09-bc3f-864aebf18316
 substitutions:
   _BUILD_NAME: demo-install
   _DISTRO: demo-ubuntu-jammy

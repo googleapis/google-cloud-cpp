@@ -34,6 +34,8 @@ class GrpcServiceAccountIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {};
 
 TEST_F(GrpcServiceAccountIntegrationTest, GetServiceAccount) {
+  // This is a known issue with v2.22.x and the current service behavior.
+  GTEST_SKIP();
   ScopedEnvironment grpc_config("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
                                 "metadata");
   auto const project_id = GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");

@@ -1,4 +1,3 @@
-createTime: '2021-08-17T14:43:32.603712645Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
@@ -6,10 +5,8 @@ github:
   pullRequest:
     branch: v2.22.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-id: 3cc016a1-2a35-467a-94af-4eab3822cbfd
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 name: v2-22-x-demo-debian-bullseye-pr
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/3cc016a1-2a35-467a-94af-4eab3822cbfd
 substitutions:
   _BUILD_NAME: demo-install
   _DISTRO: demo-debian-bullseye

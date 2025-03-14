@@ -1,11 +1,9 @@
-createTime: '2021-04-13T23:35:53.882502588Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   push:
     branch: v2.22.x
-id: f65e90ce-2bea-4833-8dce-5349df077427
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 name: v2-22-x-demo-debian-buster-ci
 substitutions:

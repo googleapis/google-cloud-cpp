@@ -1,14 +1,11 @@
-createTime: '2021-04-14T19:46:44.349528722Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   push:
     branch: v2.22.x
-id: 431b657a-77ea-4448-8f1f-16af521409e5
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 name: v2-22-x-libcxx-ci
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/431b657a-77ea-4448-8f1f-16af521409e5
 substitutions:
   _BUILD_NAME: libcxx
   _DISTRO: fedora-latest-bazel

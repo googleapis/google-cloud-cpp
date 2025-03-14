@@ -1,14 +1,11 @@
-createTime: '2022-11-29T04:06:34.344761147Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   push:
     branch: v2.22.x
-id: 95ef05ac-0f7d-46b6-ae3c-bf9e3b1bd342
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 name: v2-22-x-otel-disabled-bazel-ci
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/95ef05ac-0f7d-46b6-ae3c-bf9e3b1bd342
 substitutions:
   _BUILD_NAME: otel-disabled-bazel
   _DISTRO: fedora-latest-bazel

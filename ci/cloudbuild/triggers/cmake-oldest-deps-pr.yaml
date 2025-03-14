@@ -1,4 +1,3 @@
-createTime: '2021-04-28T12:39:51.473360103Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
@@ -6,7 +5,6 @@ github:
   pullRequest:
     branch: v2.22.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-id: 384786a7-5ee5-49e2-8866-369fe55c7d04
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 name: v2-22-x-cmake-oldest-deps-pr
 substitutions:

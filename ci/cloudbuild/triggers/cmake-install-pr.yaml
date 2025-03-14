@@ -1,15 +1,12 @@
-createTime: '2021-04-09T18:15:41.397491676Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: v2.22.x
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-id: 1e40a006-1073-4d1b-82ca-03528fd3fd51
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: cmake-install-pr
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/1e40a006-1073-4d1b-82ca-03528fd3fd51
+name: v2-22-x-cmake-install-pr
 substitutions:
   _BUILD_NAME: cmake-install
   _DISTRO: fedora-latest-cmake
