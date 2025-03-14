@@ -668,6 +668,13 @@ TEST(TransactonRollback, DeleteFromColumnRollback) {
 
   // The column should have been restored.
   ASSERT_STATUS_OK(has_column(table, column_family_name, row_key, column_qualifer));
+  // Check that the data is where and what we expect.
+  ASSERT_STATUS_OK(has_cell(table, column_family_name, row_key, column_qualifer,
+                            1000, data));
+  ASSERT_STATUS_OK(has_cell(table, column_family_name, row_key, column_qualifer,
+                            2000, data));
+  ASSERT_STATUS_OK(has_cell(table, column_family_name, row_key, column_qualifer,
+                            3000, data));
 }
 
 
