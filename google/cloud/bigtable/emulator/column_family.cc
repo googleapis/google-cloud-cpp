@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/emulator/column_family.h"
 #include <chrono>
+#include <map>
 
 namespace google {
 namespace cloud {
@@ -74,8 +75,22 @@ void ColumnFamily::SetCell(std::string const& row_key,
   rows_[row_key].SetCell(column_qualifier, timestamp, value);
 }
 
-bool ColumnFamily::DeleteRow(std::string const& row_key) {
-  return rows_.erase(row_key) > 0;
+std::map<std::string, std::vector<Cell>> ColumnFamily::DeleteRow(std::string const& row_key) {
+  std::map<std::string, std::vector<Cell>> res;
+
+  auto& column_family_row = rows_[row_key];
+
+  for (const auto& column_it : column_family_row) {
+    // Not setting start and end timestamps selects all cells for deletion.
+    ::google::bigtable::v2::TimestampRange time_range;
+
+    auto deleted_column = DeleteColumn(row_key, column_it.first, time_range);
+    if (deleted_column.size() > 0) {
+      res[std::move(column_it.first)] = std::move(deleted_column);
+    }
+  }
+
+  return res;
 }
 
 std::vector<Cell> ColumnFamily::DeleteColumn(

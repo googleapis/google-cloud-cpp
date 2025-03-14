@@ -121,7 +121,7 @@ class ColumnFamily {
 
   void SetCell(std::string const& row_key, std::string const& column_qualifier,
                std::chrono::milliseconds timestamp, std::string const& value);
-  bool DeleteRow(std::string const& row_key);
+  std::map<std::string, std::vector<Cell>> DeleteRow(std::string const& row_key);
   std::vector<Cell> DeleteColumn(
       std::string const& row_key, std::string const& column_qualifier,
       ::google::bigtable::v2::TimestampRange const& time_range);
