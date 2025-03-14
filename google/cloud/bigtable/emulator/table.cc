@@ -243,14 +243,9 @@ Status Table::MutateRow(google::bigtable::v2::MutateRowRequest const& request) {
           GCP_ERROR_INFO().WithMetadata("mutation", mutation.DebugString()));
     } else if (mutation.has_delete_from_column()) {
       auto const& delete_from_column = mutation.delete_from_column();
-      auto maybe_column_family = FindColumnFamily(delete_from_column);
-      if (!maybe_column_family) {
-        return maybe_column_family.status();
-      }
-      if (maybe_column_family->get().DeleteColumn(
-              request.row_key(), delete_from_column.column_qualifier(),
-              delete_from_column.time_range()).empty()) {
-        // FIXME no such row or column
+      auto status = row_transaction.DeleteFromColumn(delete_from_column);
+      if (!status.ok()) {
+        return status;
       }
     } else if (mutation.has_delete_from_family()) {
       auto const& delete_from_family = mutation.delete_from_family();
@@ -414,6 +409,31 @@ Status RowTransaction::MergeToCell(
   return UnimplementedError(
       "Unsupported mutation type.",
       GCP_ERROR_INFO().WithMetadata("mutation", merge_to_cell.DebugString()));
+}
+
+Status RowTransaction::DeleteFromColumn(
+    ::google::bigtable::v2::Mutation_DeleteFromColumn const&
+        delete_from_column) {
+  auto status = table_->FindColumnFamily(delete_from_column);
+  if (!status.ok()) {
+    return status.status();
+  }
+
+  auto& column_family = status->get();
+
+  auto deleted_cells = column_family.DeleteColumn(
+      request_.row_key(), delete_from_column.column_qualifier(),
+      delete_from_column.time_range());
+
+  for (auto cell : deleted_cells) {
+    RestoreValue restore_value = {column_family, request_.row_key(),
+                                  delete_from_column.column_qualifier(),
+                                  std::move(cell.timestamp),
+                                  std::move(cell.value)};
+    undo_.emplace(restore_value);
+  }
+
+  return Status();
 }
 
 Status RowTransaction::DeleteFromFamily(
