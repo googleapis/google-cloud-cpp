@@ -753,6 +753,10 @@
 ./include/google/cloud/filestore/v1
 ./include/google/cloud/filestore/v1/internal
 ./include/google/cloud/filestore/v1/mocks
+./include/google/cloud/financialservices
+./include/google/cloud/financialservices/v1
+./include/google/cloud/financialservices/v1/internal
+./include/google/cloud/financialservices/v1/mocks
 ./include/google/cloud/functions
 ./include/google/cloud/functions/mocks
 ./include/google/cloud/functions/v1
@@ -996,11 +1000,6 @@
 ./include/google/cloud/resourcemanager/v3
 ./include/google/cloud/resourcemanager/v3/internal
 ./include/google/cloud/resourcemanager/v3/mocks
-./include/google/cloud/resourcesettings
-./include/google/cloud/resourcesettings/mocks
-./include/google/cloud/resourcesettings/v1
-./include/google/cloud/resourcesettings/v1/internal
-./include/google/cloud/resourcesettings/v1/mocks
 ./include/google/cloud/retail
 ./include/google/cloud/retail/mocks
 ./include/google/cloud/retail/v2
@@ -1387,6 +1386,8 @@
 ./lib64/cmake/google_cloud_cpp_eventarc_mocks
 ./lib64/cmake/google_cloud_cpp_filestore
 ./lib64/cmake/google_cloud_cpp_filestore_mocks
+./lib64/cmake/google_cloud_cpp_financialservices
+./lib64/cmake/google_cloud_cpp_financialservices_mocks
 ./lib64/cmake/google_cloud_cpp_functions
 ./lib64/cmake/google_cloud_cpp_functions_mocks
 ./lib64/cmake/google_cloud_cpp_gkebackup
@@ -1471,8 +1472,6 @@
 ./lib64/cmake/google_cloud_cpp_redis_mocks
 ./lib64/cmake/google_cloud_cpp_resourcemanager
 ./lib64/cmake/google_cloud_cpp_resourcemanager_mocks
-./lib64/cmake/google_cloud_cpp_resourcesettings
-./lib64/cmake/google_cloud_cpp_resourcesettings_mocks
 ./lib64/cmake/google_cloud_cpp_retail
 ./lib64/cmake/google_cloud_cpp_retail_mocks
 ./lib64/cmake/google_cloud_cpp_run

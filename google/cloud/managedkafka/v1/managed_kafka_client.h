@@ -490,7 +490,7 @@ class ManagedKafkaClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.managedkafka.v1.DeleteClusterRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L310}
-  /// [google.cloud.managedkafka.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L250}
+  /// [google.cloud.managedkafka.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L247}
   ///
   // clang-format on
   future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>
@@ -541,7 +541,7 @@ class ManagedKafkaClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.managedkafka.v1.DeleteClusterRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L310}
-  /// [google.cloud.managedkafka.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L250}
+  /// [google.cloud.managedkafka.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L247}
   ///
   // clang-format on
   future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>
@@ -607,7 +607,7 @@ class ManagedKafkaClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.managedkafka.v1.ListTopicsRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L340}
-  /// [google.cloud.managedkafka.v1.Topic]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L177}
+  /// [google.cloud.managedkafka.v1.Topic]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L174}
   ///
   // clang-format on
   StreamRange<google::cloud::managedkafka::v1::Topic> ListTopics(
@@ -646,7 +646,7 @@ class ManagedKafkaClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.managedkafka.v1.ListTopicsRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L340}
-  /// [google.cloud.managedkafka.v1.Topic]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L177}
+  /// [google.cloud.managedkafka.v1.Topic]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L174}
   ///
   // clang-format on
   StreamRange<google::cloud::managedkafka::v1::Topic> ListTopics(
@@ -674,7 +674,7 @@ class ManagedKafkaClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.managedkafka.v1.GetTopicRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L375}
-  /// [google.cloud.managedkafka.v1.Topic]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L177}
+  /// [google.cloud.managedkafka.v1.Topic]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L174}
   ///
   // clang-format on
   StatusOr<google::cloud::managedkafka::v1::Topic> GetTopic(
@@ -704,7 +704,7 @@ class ManagedKafkaClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.managedkafka.v1.GetTopicRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L375}
-  /// [google.cloud.managedkafka.v1.Topic]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L177}
+  /// [google.cloud.managedkafka.v1.Topic]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L174}
   ///
   // clang-format on
   StatusOr<google::cloud::managedkafka::v1::Topic> GetTopic(
@@ -738,7 +738,7 @@ class ManagedKafkaClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.managedkafka.v1.CreateTopicRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L388}
-  /// [google.cloud.managedkafka.v1.Topic]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L177}
+  /// [google.cloud.managedkafka.v1.Topic]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L174}
   ///
   // clang-format on
   StatusOr<google::cloud::managedkafka::v1::Topic> CreateTopic(
@@ -770,7 +770,7 @@ class ManagedKafkaClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.managedkafka.v1.CreateTopicRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L388}
-  /// [google.cloud.managedkafka.v1.Topic]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L177}
+  /// [google.cloud.managedkafka.v1.Topic]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L174}
   ///
   // clang-format on
   StatusOr<google::cloud::managedkafka::v1::Topic> CreateTopic(
@@ -800,7 +800,7 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.managedkafka.v1.Topic]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L177}
+  /// [google.cloud.managedkafka.v1.Topic]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L174}
   /// [google.cloud.managedkafka.v1.UpdateTopicRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L411}
   ///
   // clang-format on
@@ -831,7 +831,7 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.managedkafka.v1.Topic]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L177}
+  /// [google.cloud.managedkafka.v1.Topic]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L174}
   /// [google.cloud.managedkafka.v1.UpdateTopicRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L411}
   ///
   // clang-format on
@@ -918,7 +918,7 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.managedkafka.v1.ConsumerGroup]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L229}
+  /// [google.cloud.managedkafka.v1.ConsumerGroup]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L226}
   /// [google.cloud.managedkafka.v1.ListConsumerGroupsRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L437}
   ///
   // clang-format on
@@ -957,7 +957,7 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.managedkafka.v1.ConsumerGroup]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L229}
+  /// [google.cloud.managedkafka.v1.ConsumerGroup]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L226}
   /// [google.cloud.managedkafka.v1.ListConsumerGroupsRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L437}
   ///
   // clang-format on
@@ -985,7 +985,7 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.managedkafka.v1.ConsumerGroup]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L229}
+  /// [google.cloud.managedkafka.v1.ConsumerGroup]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L226}
   /// [google.cloud.managedkafka.v1.GetConsumerGroupRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L473}
   ///
   // clang-format on
@@ -1015,7 +1015,7 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.managedkafka.v1.ConsumerGroup]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L229}
+  /// [google.cloud.managedkafka.v1.ConsumerGroup]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L226}
   /// [google.cloud.managedkafka.v1.GetConsumerGroupRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L473}
   ///
   // clang-format on
@@ -1046,7 +1046,7 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.managedkafka.v1.ConsumerGroup]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L229}
+  /// [google.cloud.managedkafka.v1.ConsumerGroup]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L226}
   /// [google.cloud.managedkafka.v1.UpdateConsumerGroupRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L485}
   ///
   // clang-format on
@@ -1077,7 +1077,7 @@ class ManagedKafkaClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.managedkafka.v1.ConsumerGroup]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L229}
+  /// [google.cloud.managedkafka.v1.ConsumerGroup]: @googleapis_reference_link{google/cloud/managedkafka/v1/resources.proto#L226}
   /// [google.cloud.managedkafka.v1.UpdateConsumerGroupRequest]: @googleapis_reference_link{google/cloud/managedkafka/v1/managed_kafka.proto#L485}
   ///
   // clang-format on

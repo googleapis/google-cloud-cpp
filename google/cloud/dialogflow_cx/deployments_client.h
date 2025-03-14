@@ -62,7 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.dialogflow.cx.v3.Deployment]:
-/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L65}
+/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L64}
 ///
 class DeploymentsClient {
  public:
@@ -120,8 +120,8 @@ class DeploymentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.Deployment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L65}
-  /// [google.cloud.dialogflow.cx.v3.ListDeploymentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L131}
+  /// [google.cloud.dialogflow.cx.v3.Deployment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L64}
+  /// [google.cloud.dialogflow.cx.v3.ListDeploymentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L130}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::Deployment> ListDeployments(
@@ -160,8 +160,8 @@ class DeploymentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.Deployment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L65}
-  /// [google.cloud.dialogflow.cx.v3.ListDeploymentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L131}
+  /// [google.cloud.dialogflow.cx.v3.Deployment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L64}
+  /// [google.cloud.dialogflow.cx.v3.ListDeploymentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L130}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::Deployment> ListDeployments(
@@ -189,8 +189,8 @@ class DeploymentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.Deployment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L65}
-  /// [google.cloud.dialogflow.cx.v3.GetDeploymentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L166}
+  /// [google.cloud.dialogflow.cx.v3.Deployment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L64}
+  /// [google.cloud.dialogflow.cx.v3.GetDeploymentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L165}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Deployment> GetDeployment(
@@ -220,8 +220,8 @@ class DeploymentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.Deployment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L65}
-  /// [google.cloud.dialogflow.cx.v3.GetDeploymentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L166}
+  /// [google.cloud.dialogflow.cx.v3.Deployment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L64}
+  /// [google.cloud.dialogflow.cx.v3.GetDeploymentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L165}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Deployment> GetDeployment(

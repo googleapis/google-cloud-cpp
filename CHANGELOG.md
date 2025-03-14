@@ -4,7 +4,18 @@
 breaking changes in the upcoming 3.x release. This release is scheduled for
 2024-12 or 2025-01.
 
-## v2.36.0 - TBD
+## v2.37.0 - TBD
+
+We are happy to announce the following GA libraries. Unless specifically noted,
+the APIs in these libraries are stable, and are ready for production use.
+
+- [Financial Services API](/google/cloud/financialservices/README.md)
+
+**BREAKING CHANGES**
+
+Client library `resourcesettings` is being removed because the service has been turned down.
+
+## v2.36.0 - 2025-03
 
 ### New Libraries
 
@@ -12,6 +23,10 @@ We are happy to announce the following GA libraries. Unless specifically noted,
 the APIs in these libraries are stable, and are ready for production use.
 
 - [Parameter Manager API](/google/cloud/parametermanager/README.md)
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2025-02-27T08:14:18-08:00](https://github.com/googleapis/googleapis/tree/b151ec2ae29c2c955c56784c0ce388b2d8c4a84c)
 
 ## v2.35.0 - 2025-02
 

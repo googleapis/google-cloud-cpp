@@ -144,6 +144,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/eventarc/publishing/v1:publishing_cc_grpc"
   )"
   ["filestore"]="@com_google_googleapis//google/cloud/filestore/v1:filestore_cc_grpc"
+  ["financialservices"]="@com_google_googleapis//google/cloud/financialservices/v1:financialservices_cc_grpc"
   ["functions"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/cloud/functions/v1:functions_cc_grpc" \
@@ -243,7 +244,6 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/redis/v1:redis_cc_grpc"
   )"
   ["resourcemanager"]="@com_google_googleapis//google/cloud/resourcemanager/v3:resourcemanager_cc_grpc"
-  ["resourcesettings"]="@com_google_googleapis//google/cloud/resourcesettings/v1:resourcesettings_cc_grpc"
   ["retail"]="@com_google_googleapis//google/cloud/retail/v2:retail_cc_grpc"
   ["run"]="@com_google_googleapis//google/cloud/run/v2:run_cc_grpc"
   ["scheduler"]="@com_google_googleapis//google/cloud/scheduler/v1:scheduler_cc_grpc"

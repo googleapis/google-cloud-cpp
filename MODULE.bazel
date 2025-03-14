@@ -16,7 +16,7 @@
 
 module(
     name = "google_cloud_cpp",
-    version = "2.36.0-rc",  # Updated by CMake
+    version = "2.37.0-rc",  # Updated by CMake
     compatibility_level = 2,  # Updated by CMake
 )
 
@@ -32,7 +32,7 @@ bazel_dep(name = "curl", version = "8.8.0.bcr.3", repo_name = "com_github_curl_c
 bazel_dep(name = "crc32c", version = "1.1.0", repo_name = "com_github_google_crc32c")
 bazel_dep(name = "opentelemetry-cpp", version = "1.19.0", repo_name = "io_opentelemetry_cpp")
 bazel_dep(name = "rules_proto", version = "7.1.0")
-bazel_dep(name = "rules_python", version = "1.1.0")
+bazel_dep(name = "rules_python", version = "1.2.0")
 
 bazel_dep(name = "googletest", version = "1.15.2", dev_dependency = True, repo_name = "com_google_googletest")
 bazel_dep(name = "google_benchmark", version = "1.9.1", dev_dependency = True, repo_name = "com_google_benchmark")
@@ -55,12 +55,12 @@ python.toolchain(
 bazel_dep(name = "googleapis", version = "0.0.0", repo_name = "com_google_googleapis")
 archive_override(
     module_name = "googleapis",
-    integrity = "sha256-2ZtBh+Y+GhVnCgZwB2qDvoZeNhHIwO7dFY7DtjKmOiM=",
+    integrity = "sha256-l8qgUy/rKjnfbJZL17rT6ErwZ4cZSkuAQAAIe5il/UU=",
     patch_strip = 1,
     patches = ["//bazel:googleapis.modules.patch"],
-    strip_prefix = "googleapis-de1e1c0eef95687b8dc8b81be6417a4b3f7e3924",
+    strip_prefix = "googleapis-f575c85d9aff9a29e49b759f43bd12f4a82ecded",
     urls = [
-        "https://github.com/googleapis/googleapis/archive/de1e1c0eef95687b8dc8b81be6417a4b3f7e3924.tar.gz",
+        "https://github.com/googleapis/googleapis/archive/f575c85d9aff9a29e49b759f43bd12f4a82ecded.tar.gz",
     ],
 )
 

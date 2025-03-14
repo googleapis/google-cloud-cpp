@@ -90,6 +90,9 @@ class CloudFilestoreManagerConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency UpdateBackup(
       google::cloud::filestore::v1::UpdateBackupRequest const& request);
 
+  virtual google::cloud::Idempotency PromoteReplica(
+      google::cloud::filestore::v1::PromoteReplicaRequest const& request);
+
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

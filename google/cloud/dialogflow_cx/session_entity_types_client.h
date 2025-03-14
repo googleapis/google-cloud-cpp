@@ -62,7 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.dialogflow.cx.v3.SessionEntityType]:
-/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L122}
+/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L121}
 ///
 class SessionEntityTypesClient {
  public:
@@ -125,8 +125,8 @@ class SessionEntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.ListSessionEntityTypesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L173}
-  /// [google.cloud.dialogflow.cx.v3.SessionEntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L122}
+  /// [google.cloud.dialogflow.cx.v3.ListSessionEntityTypesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L172}
+  /// [google.cloud.dialogflow.cx.v3.SessionEntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L121}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::SessionEntityType>
@@ -164,8 +164,8 @@ class SessionEntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.ListSessionEntityTypesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L173}
-  /// [google.cloud.dialogflow.cx.v3.SessionEntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L122}
+  /// [google.cloud.dialogflow.cx.v3.ListSessionEntityTypesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L172}
+  /// [google.cloud.dialogflow.cx.v3.SessionEntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L121}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::SessionEntityType>
@@ -197,8 +197,8 @@ class SessionEntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.GetSessionEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L210}
-  /// [google.cloud.dialogflow.cx.v3.SessionEntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L122}
+  /// [google.cloud.dialogflow.cx.v3.GetSessionEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L209}
+  /// [google.cloud.dialogflow.cx.v3.SessionEntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L121}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
@@ -227,8 +227,8 @@ class SessionEntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.GetSessionEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L210}
-  /// [google.cloud.dialogflow.cx.v3.SessionEntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L122}
+  /// [google.cloud.dialogflow.cx.v3.GetSessionEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L209}
+  /// [google.cloud.dialogflow.cx.v3.SessionEntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L121}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
@@ -262,8 +262,8 @@ class SessionEntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CreateSessionEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L228}
-  /// [google.cloud.dialogflow.cx.v3.SessionEntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L122}
+  /// [google.cloud.dialogflow.cx.v3.CreateSessionEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L227}
+  /// [google.cloud.dialogflow.cx.v3.SessionEntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L121}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
@@ -296,8 +296,8 @@ class SessionEntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CreateSessionEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L228}
-  /// [google.cloud.dialogflow.cx.v3.SessionEntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L122}
+  /// [google.cloud.dialogflow.cx.v3.CreateSessionEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L227}
+  /// [google.cloud.dialogflow.cx.v3.SessionEntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L121}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
@@ -331,8 +331,8 @@ class SessionEntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.SessionEntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L122}
-  /// [google.cloud.dialogflow.cx.v3.UpdateSessionEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L250}
+  /// [google.cloud.dialogflow.cx.v3.SessionEntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L121}
+  /// [google.cloud.dialogflow.cx.v3.UpdateSessionEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L249}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
@@ -364,8 +364,8 @@ class SessionEntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.SessionEntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L122}
-  /// [google.cloud.dialogflow.cx.v3.UpdateSessionEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L250}
+  /// [google.cloud.dialogflow.cx.v3.SessionEntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L121}
+  /// [google.cloud.dialogflow.cx.v3.UpdateSessionEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L249}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
@@ -396,7 +396,7 @@ class SessionEntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeleteSessionEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L267}
+  /// [google.cloud.dialogflow.cx.v3.DeleteSessionEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L266}
   ///
   // clang-format on
   Status DeleteSessionEntityType(std::string const& name, Options opts = {});
@@ -422,7 +422,7 @@ class SessionEntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeleteSessionEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L267}
+  /// [google.cloud.dialogflow.cx.v3.DeleteSessionEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L266}
   ///
   // clang-format on
   Status DeleteSessionEntityType(

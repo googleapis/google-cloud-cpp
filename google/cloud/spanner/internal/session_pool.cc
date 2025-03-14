@@ -199,6 +199,7 @@ void SessionPool::Erase(std::string const& session_name) {
       target = std::move(session);  // deferred deletion
       session = std::move(sessions_.back());
       sessions_.pop_back();
+      DecrementSessionCount(lk, *target);
       break;
     }
   }
@@ -369,6 +370,20 @@ std::shared_ptr<SpannerStub> SessionPool::GetStub(Session const& session) {
   return GetStub(std::unique_lock<std::mutex>(mu_));
 }
 
+int SessionPool::total_sessions() const {
+  std::lock_guard<std::mutex> lk(mu_);
+  return total_sessions_;
+}
+
+void SessionPool::DecrementSessionCount(std::unique_lock<std::mutex> const&,
+                                        Session const& session) {
+  --total_sessions_;
+  auto const& channel = session.channel();
+  if (channel) {
+    --channel->session_count;
+  }
+}
+
 StatusOr<SessionHolder> SessionPool::Allocate(std::unique_lock<std::mutex> lk,
                                               bool dissociate_from_pool) {
   // We choose to ignore the internal::CurrentOptions() here as it is
@@ -381,11 +396,7 @@ StatusOr<SessionHolder> SessionPool::Allocate(std::unique_lock<std::mutex> lk,
       auto session = std::move(sessions_.back());
       sessions_.pop_back();
       if (dissociate_from_pool) {
-        --total_sessions_;
-        auto const& channel = session->channel();
-        if (channel) {
-          --channel->session_count;
-        }
+        DecrementSessionCount(lk, *session);
       }
       return {MakeSessionHolder(std::move(session), dissociate_from_pool)};
     }
@@ -442,11 +453,7 @@ void SessionPool::Release(std::unique_ptr<Session> session) {
   if (session->is_bad()) {
     // Once we have support for background processing, we may want to signal
     // that to replenish this bad session.
-    --total_sessions_;
-    auto const& channel = session->channel();
-    if (channel) {
-      --channel->session_count;
-    }
+    DecrementSessionCount(lk, *session);
     return;
   }
   session->update_last_use_time();

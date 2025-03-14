@@ -68,6 +68,13 @@ class MockConversationsConnection
                    request),
               (override));
 
+  MOCK_METHOD(
+      StatusOr<google::cloud::dialogflow::v2::IngestContextReferencesResponse>,
+      IngestContextReferences,
+      (google::cloud::dialogflow::v2::IngestContextReferencesRequest const&
+           request),
+      (override));
+
   MOCK_METHOD((StreamRange<google::cloud::dialogflow::v2::Message>),
               ListMessages,
               (google::cloud::dialogflow::v2::ListMessagesRequest request),
@@ -100,6 +107,13 @@ class MockConversationsConnection
       StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>,
       SearchKnowledge,
       (google::cloud::dialogflow::v2::SearchKnowledgeRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::dialogflow::v2::GenerateSuggestionsResponse>,
+      GenerateSuggestions,
+      (google::cloud::dialogflow::v2::GenerateSuggestionsRequest const&
+           request),
       (override));
 
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,

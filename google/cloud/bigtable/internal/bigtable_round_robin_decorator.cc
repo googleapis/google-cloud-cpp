@@ -81,6 +81,13 @@ BigtableRoundRobin::ReadModifyWriteRow(
   return Child()->ReadModifyWriteRow(context, options, request);
 }
 
+StatusOr<google::bigtable::v2::PrepareQueryResponse>
+BigtableRoundRobin::PrepareQuery(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::v2::PrepareQueryRequest const& request) {
+  return Child()->PrepareQuery(context, options, request);
+}
+
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::bigtable::v2::ExecuteQueryResponse>>
 BigtableRoundRobin::ExecuteQuery(

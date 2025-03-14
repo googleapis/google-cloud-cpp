@@ -52,6 +52,10 @@ class ConversationsConnectionIdempotencyPolicy {
       google::cloud::dialogflow::v2::CompleteConversationRequest const&
           request);
 
+  virtual google::cloud::Idempotency IngestContextReferences(
+      google::cloud::dialogflow::v2::IngestContextReferencesRequest const&
+          request);
+
   virtual google::cloud::Idempotency ListMessages(
       google::cloud::dialogflow::v2::ListMessagesRequest request);
 
@@ -69,6 +73,9 @@ class ConversationsConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency SearchKnowledge(
       google::cloud::dialogflow::v2::SearchKnowledgeRequest const& request);
+
+  virtual google::cloud::Idempotency GenerateSuggestions(
+      google::cloud::dialogflow::v2::GenerateSuggestionsRequest const& request);
 
   virtual google::cloud::Idempotency ListLocations(
       google::cloud::location::ListLocationsRequest request);

@@ -102,6 +102,14 @@ BigtableAuth::ReadModifyWriteRow(
   return child_->ReadModifyWriteRow(context, options, request);
 }
 
+StatusOr<google::bigtable::v2::PrepareQueryResponse> BigtableAuth::PrepareQuery(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::v2::PrepareQueryRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->PrepareQuery(context, options, request);
+}
+
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::bigtable::v2::ExecuteQueryResponse>>
 BigtableAuth::ExecuteQuery(

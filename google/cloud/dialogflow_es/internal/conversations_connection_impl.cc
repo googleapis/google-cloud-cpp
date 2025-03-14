@@ -140,6 +140,23 @@ ConversationsConnectionImpl::CompleteConversation(
       *current, request, __func__);
 }
 
+StatusOr<google::cloud::dialogflow::v2::IngestContextReferencesResponse>
+ConversationsConnectionImpl::IngestContextReferences(
+    google::cloud::dialogflow::v2::IngestContextReferencesRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->IngestContextReferences(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::v2::IngestContextReferencesRequest const&
+              request) {
+        return stub_->IngestContextReferences(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 StreamRange<google::cloud::dialogflow::v2::Message>
 ConversationsConnectionImpl::ListMessages(
     google::cloud::dialogflow::v2::ListMessagesRequest request) {
@@ -234,6 +251,21 @@ ConversationsConnectionImpl::SearchKnowledge(
              google::cloud::dialogflow::v2::SearchKnowledgeRequest const&
                  request) {
         return stub_->SearchKnowledge(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::cloud::dialogflow::v2::GenerateSuggestionsResponse>
+ConversationsConnectionImpl::GenerateSuggestions(
+    google::cloud::dialogflow::v2::GenerateSuggestionsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GenerateSuggestions(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::v2::GenerateSuggestionsRequest const&
+                 request) {
+        return stub_->GenerateSuggestions(context, options, request);
       },
       *current, request, __func__);
 }
