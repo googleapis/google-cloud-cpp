@@ -69,5 +69,6 @@ spanner_client_unit_tests = [
     "timestamp_test.cc",
     "transaction_test.cc",
     "update_instance_request_builder_test.cc",
+    "uuid_test.cc",
     "value_test.cc",
 ]
