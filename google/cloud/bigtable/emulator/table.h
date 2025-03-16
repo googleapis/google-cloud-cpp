@@ -15,6 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EMULATOR_TABLE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EMULATOR_TABLE_H
 
+#include "google/cloud/bigtable/emulator/column_family.h"
+#include "google/cloud/bigtable/emulator/filter.h"
+#include "google/cloud/bigtable/emulator/row_streamer.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
@@ -22,9 +25,6 @@
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <google/protobuf/field_mask.pb.h>
 #include <google/protobuf/util/time_util.h>
-#include "google/cloud/bigtable/emulator/filter.h"
-#include "google/cloud/bigtable/emulator/column_family.h"
-#include "google/cloud/bigtable/emulator/row_streamer.h"
 #include <map>
 
 namespace google {
@@ -47,7 +47,7 @@ class Table {
 
   bool IsDeleteProtected() const;
 
-  Status MutateRow(google::bigtable::v2::MutateRowRequest const & request);
+  Status MutateRow(google::bigtable::v2::MutateRowRequest const& request);
 
   Status ReadRows(google::bigtable::v2::ReadRowsRequest const& request,
                   RowStreamer& row_streamer) const;
@@ -68,9 +68,9 @@ class Table {
 };
 
 // This class is public only to enable testing.
-class FilteredTableStream : public MergeCellStreams  {
+class FilteredTableStream : public MergeCellStreams {
  public:
-  FilteredTableStream(
+  explicit FilteredTableStream(
       std::vector<std::unique_ptr<FilteredColumnFamilyStream>> cf_streams)
       : MergeCellStreams(CreateCellStreams(std::move(cf_streams))) {}
 

@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/emulator/cluster.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/internal/make_status.h"
 #include "absl/strings/match.h"
 
 namespace google {
@@ -27,8 +27,7 @@ namespace {
 namespace btadmin = google::bigtable::admin::v2;
 
 StatusOr<btadmin::Table> ApplyView(std::string const& table_name,
-                                   Table const &table,
-                                   btadmin::Table_View view,
+                                   Table const& table, btadmin::Table_View view,
                                    btadmin::Table_View default_view) {
   if (view == btadmin::Table::VIEW_UNSPECIFIED) {
     view = default_view;
@@ -80,7 +79,7 @@ StatusOr<btadmin::Table> Cluster::CreateTable(std::string const& table_name,
     return maybe_table.status();
   }
   {
-    std::lock_guard lock(mu_);
+    std::lock_guard<std::mutex> lock(mu_);
     if (!table_by_name_.emplace(table_name, *maybe_table).second) {
       return google::cloud::internal::AlreadyExistsError(
           "Table already exists.",
@@ -94,7 +93,7 @@ StatusOr<std::vector<btadmin::Table>> Cluster::ListTables(
     std::string const& instance_name, btadmin::Table_View view) const {
   std::map<std::string, std::shared_ptr<Table>> table_by_name_copy;
   {
-    std::lock_guard lock(mu_);
+    std::lock_guard<std::mutex> lock(mu_);
     table_by_name_copy = table_by_name_;
   }
   std::vector<btadmin::Table> res;
@@ -119,7 +118,7 @@ StatusOr<btadmin::Table> Cluster::GetTable(std::string const& table_name,
                                            btadmin::Table_View view) const {
   std::shared_ptr<Table> found_table;
   {
-    std::lock_guard lock(mu_);
+    std::lock_guard<std::mutex> lock(mu_);
     auto it = table_by_name_.find(table_name);
     if (it == table_by_name_.end()) {
       return NotFoundError("No such table.", GCP_ERROR_INFO().WithMetadata(
@@ -132,12 +131,11 @@ StatusOr<btadmin::Table> Cluster::GetTable(std::string const& table_name,
 
 Status Cluster::DeleteTable(std::string const& table_name) {
   {
-    std::lock_guard lock(mu_);
+    std::lock_guard<std::mutex> lock(mu_);
     auto it = table_by_name_.find(table_name);
     if (it == table_by_name_.end()) {
-      return NotFoundError(
-          "No such table.",
-          GCP_ERROR_INFO().WithMetadata("table_name", table_name));
+      return NotFoundError("No such table.", GCP_ERROR_INFO().WithMetadata(
+                                                 "table_name", table_name));
     }
     if (it->second->IsDeleteProtected()) {
       return FailedPreconditionError(
@@ -150,7 +148,7 @@ Status Cluster::DeleteTable(std::string const& table_name) {
 }
 
 bool Cluster::HasTable(std::string const& table_name) const {
-  std::lock_guard lock(mu_);
+  std::lock_guard<std::mutex> lock(mu_);
   return table_by_name_.find(table_name) != table_by_name_.end();
 }
 
@@ -160,9 +158,8 @@ StatusOr<std::shared_ptr<Table>> Cluster::FindTable(
     std::lock_guard<std::mutex> lock(mu_);
     auto it = table_by_name_.find(table_name);
     if (it == table_by_name_.end()) {
-      return NotFoundError(
-          "No such table.",
-          GCP_ERROR_INFO().WithMetadata("table_name", table_name));
+      return NotFoundError("No such table.", GCP_ERROR_INFO().WithMetadata(
+                                                 "table_name", table_name));
     }
     return it->second;
   }

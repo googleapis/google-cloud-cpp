@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/testing_util/is_proto_equal.h"
-#include <gmock/gmock.h>
 #include "google/cloud/bigtable/data_connection.h"
 #include "google/cloud/bigtable/table.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
@@ -58,4 +58,3 @@ TEST(DummyFilter, Simple) {
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google
-

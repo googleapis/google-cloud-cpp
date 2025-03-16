@@ -205,9 +205,9 @@ add_library(
     internal/retry_context.cc
     internal/retry_context.h
     internal/retry_traits.h
-    internal/row_reader_impl.h
     internal/row_range_helpers.cc
     internal/row_range_helpers.h
+    internal/row_reader_impl.h
     internal/rpc_policy_parameters.h
     internal/rpc_policy_parameters.inc
     internal/traced_row_reader.cc

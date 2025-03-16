@@ -26,7 +26,7 @@ void ColumnRow::SetCell(std::chrono::milliseconds timestamp,
     timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
         std::chrono::system_clock::now().time_since_epoch());
   }
-  cells_[timestamp] = std::move(value);
+  cells_[timestamp] = value;
 }
 
 std::size_t ColumnRow::DeleteTimeRange(
@@ -94,7 +94,7 @@ std::size_t ColumnFamily::DeleteColumn(
 
 class FilteredColumnFamilyStream::FilterApply {
  public:
-  FilterApply(FilteredColumnFamilyStream& parent) : parent_(parent) {}
+  explicit FilterApply(FilteredColumnFamilyStream& parent) : parent_(parent) {}
 
   bool operator()(ColumnRange const& column_range) {
     parent_.column_ranges_.Intersect(column_range.range);
@@ -124,15 +124,14 @@ class FilteredColumnFamilyStream::FilterApply {
 
 FilteredColumnFamilyStream::FilteredColumnFamilyStream(
     ColumnFamily const& column_family, std::string column_family_name,
-    std::shared_ptr<StringRangeSet> row_set)
+    std::shared_ptr<StringRangeSet const> row_set)
     : column_family_name_(std::move(column_family_name)),
       row_ranges_(std::move(row_set)),
       column_ranges_(StringRangeSet::All()),
       timestamp_ranges_(TimestampRangeSet::All()),
       rows_(RangeFilteredMapView<ColumnFamily, StringRangeSet>(column_family,
                                                                *row_ranges_),
-            std::cref(row_regexes_)),
-      initialized_(false) {}
+            std::cref(row_regexes_)) {}
 
 bool FilteredColumnFamilyStream::ApplyFilter(
     InternalFilter const& internal_filter) {
@@ -204,8 +203,8 @@ bool FilteredColumnFamilyStream::PointToFirstCellAfterRowChange() const {
   for (; (*row_it_) != rows_.end(); ++(*row_it_)) {
     columns_ = RegexFiteredMapView<
         RangeFilteredMapView<ColumnFamilyRow, StringRangeSet>>(
-        RangeFilteredMapView<ColumnFamilyRow, StringRangeSet>((*row_it_)->second,
-                                                              column_ranges_),
+        RangeFilteredMapView<ColumnFamilyRow, StringRangeSet>(
+            (*row_it_)->second, column_ranges_),
         column_regexes_);
     column_it_ = columns_.value().begin();
     if (PointToFirstCellAfterColumnChange()) {

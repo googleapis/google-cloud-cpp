@@ -15,13 +15,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EMULATOR_COLUMN_FAMILY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EMULATOR_COLUMN_FAMILY_H
 
-#include <google/bigtable/admin/v2/table.pb.h>
-#include <google/bigtable/v2/data.pb.h>
-#include "google/cloud/bigtable/emulator/range_set.h"
+#include "google/cloud/bigtable/emulator/cell_view.h"
 #include "google/cloud/bigtable/emulator/filter.h"
 #include "google/cloud/bigtable/emulator/filtered_map.h"
-#include "google/cloud/bigtable/emulator/cell_view.h"
+#include "google/cloud/bigtable/emulator/range_set.h"
 #include "absl/types/optional.h"
+#include <google/bigtable/admin/v2/table.pb.h>
+#include <google/bigtable/v2/data.pb.h>
 #include <map>
 
 namespace google {
@@ -29,9 +29,28 @@ namespace cloud {
 namespace bigtable {
 namespace emulator {
 
+/**
+ * Objects of this class hold contents of a specific column in a specific row.
+ *
+ * This is essentially a blessed map from timestamps to values.
+ */
 class ColumnRow {
  public:
+  /**
+   * Insert or update and existing cell at a given timestamp.
+   *
+   * @param timestamp the time stamp at which the value will be inserted or
+   *     updated. If it equals zero then number of milliseconds since epoch will
+   *     be used instead.
+   * @param value the value to insert/update.
+   */
   void SetCell(std::chrono::milliseconds timestamp, std::string const& value);
+  /**
+   * Delete cells falling into a given timestamp range.
+   *
+   * @param time_range the timestamp range dictating which values to delete.
+   * @return number of deleted cells.
+   */
   std::size_t DeleteTimeRange(
       ::google::bigtable::v2::TimestampRange const& time_range);
 
@@ -51,10 +70,35 @@ class ColumnRow {
   std::map<std::chrono::milliseconds, std::string> cells_;
 };
 
+/**
+ * Objects of this class hold contents of a specific row in a column family.
+ *
+ * The users of this class may access the columns for a given row via
+ * references to `ColumnRow`.
+ *
+ * It is guaranteed that every returned `ColumnRow` contains at least one cell.
+ */
 class ColumnFamilyRow {
  public:
+  /**
+   * Insert or update and existing cell at a given column and timestamp.
+   *
+   * @param column_qualifier the column qualifier at which to update the value.
+   * @param timestamp the time stamp at which the value will be inserted or
+   *     updated. If it equals zero then number of milliseconds since epoch will
+   *     be used instead.
+   * @param value the value to insert/update.
+   */
   void SetCell(std::string const& column_qualifier,
                std::chrono::milliseconds timestamp, std::string const& value);
+  /**
+   * Delete cells falling into a given timestamp range in one column.
+   *
+   * @param column_qualifier the column qualifier from which to delete the
+   *     values.
+   * @param time_range the timestamp range dictating which values to delete.
+   * @return number of deleted cells.
+   */
   std::size_t DeleteColumn(
       std::string const& column_qualifier,
       ::google::bigtable::v2::TimestampRange const& time_range);
@@ -73,13 +117,47 @@ class ColumnFamilyRow {
   std::map<std::string, ColumnRow> columns_;
 };
 
+/**
+ * Objects of this class hold contents of a column family indexed by rows.
+ *
+ * The users of this class may access individual rows via references to
+ * `ColumnFamilyRow`.
+ *
+ * It is guaranteed that every returned `ColumnFamilyRow` contains at least one
+ * `ColumnRow`.
+ */
 class ColumnFamily {
  public:
   using const_iterator = std::map<std::string, ColumnFamilyRow>::const_iterator;
 
+  /**
+   * Insert or update and existing cell at a given row, column and timestamp.
+   *
+   * @param row_key the row key at which to update the value.
+   * @param column_qualifier the column qualifier at which to update the value.
+   * @param timestamp the time stamp at which the value will be inserted or
+   *     updated. If it equals zero then number of milliseconds since epoch will
+   *     be used instead.
+   * @param value the value to insert/update.
+   */
   void SetCell(std::string const& row_key, std::string const& column_qualifier,
                std::chrono::milliseconds timestamp, std::string const& value);
+  /**
+   * Delete the whole row from this column family.
+   *
+   * @param row_key the row key to remove.
+   * @return whether such a row existed.
+   */
   bool DeleteRow(std::string const& row_key);
+  /**
+   * Delete cells from a row falling into a given timestamp range in one column.
+   *
+   * @param row_key the row key to remove the cells from.
+   * @param column_qualifier the column qualifier from which to delete the
+   *     values.
+   * @param time_range the timestamp range dictating which values to delete.
+   * @return number of deleted cells.
+   */
   std::size_t DeleteColumn(
       std::string const& row_key, std::string const& column_qualifier,
       ::google::bigtable::v2::TimestampRange const& time_range);
@@ -97,11 +175,37 @@ class ColumnFamily {
   std::map<std::string, ColumnFamilyRow> rows_;
 };
 
+/**
+ * A stream of cells which allows for filtering unwanted ones.
+ *
+ * In absence of any filters, objects of this class stream the contents of a
+ * whole `ColumnFamily` just like true `Bigtable` would.
+ *
+ * The users can apply the following filters:
+ * * row sets - to only stream cells for relevant rows
+ * * row regexes - ditto
+ * * column ranges - to only stream cells with given column qualifiers
+ * * column regexes - ditto
+ * * timestamp ranges - to only stream cells with timestamps in given ranges
+ *
+ * Objects of this class are not thread safe. Their users need to ensure that
+ * underlying `ColumnFamily` object tree doesn't change.
+ */
 class FilteredColumnFamilyStream : public AbstractCellStreamImpl {
  public:
+  /**
+   * Construct a new object.
+   *
+   * @column_family the family to iterate over. It should not change over this
+   *     objects lifetime.
+   * @column_family_name the name of this column family. It will be used to
+   *     populate the returned `CellView`s.
+   * @row_set the row set indicating which row keys include in the returned
+   *     values.
+   */
   FilteredColumnFamilyStream(ColumnFamily const& column_family,
                              std::string column_family_name,
-                             std::shared_ptr<StringRangeSet> row_set);
+                             std::shared_ptr<StringRangeSet const> row_set);
   bool ApplyFilter(InternalFilter const& internal_filter) override;
   bool HasValue() const override;
   CellView const& Value() const override;
@@ -112,9 +216,21 @@ class FilteredColumnFamilyStream : public AbstractCellStreamImpl {
   class FilterApply;
 
   void InitializeIfNeeded() const;
-  // Returns whether we've managed to find another cell in currently pointed row
+  /**
+   * Adjust the internal iterators after `column_it_` advanced.
+   *
+   * We need to make sure that either we reach the end of the column family or:
+   * * `column_it_` doesn't point to `end()`
+   * * `cell_it` points to a cell in the column family pointed to by
+   *     `column_it_`
+   */
   bool PointToFirstCellAfterColumnChange() const;
-  // Returns whether we've managed to find another cell
+  /**
+   * Adjust the internal iterators after `row_it_` advanced.
+   *
+   * Similarly to `PointToFirstCellAfterColumnChange()` it ensures that all
+   * internal iterators are valid (or we've reached `end()`).
+   */
   bool PointToFirstCellAfterRowChange() const;
 
   std::string column_family_name_;
@@ -133,8 +249,9 @@ class FilteredColumnFamilyStream : public AbstractCellStreamImpl {
       cells_;
 
   // If row_it_ == rows_.end() we've reached the end.
-  // We keep the invariant that if (row_it_ != rows_.end()) then
-  // cell_it_ != cells.end() && column_it_ != columns_.end()
+  // We maintain the following invariant:
+  //   if (row_it_ != rows_.end()) then
+  //   cell_it_ != cells.end() && column_it_ != columns_.end().
   mutable absl::optional<RegexFiteredMapView<
       RangeFilteredMapView<ColumnFamily, StringRangeSet>>::const_iterator>
       row_it_;
@@ -145,7 +262,7 @@ class FilteredColumnFamilyStream : public AbstractCellStreamImpl {
       RangeFilteredMapView<ColumnRow, TimestampRangeSet>::const_iterator>
       cell_it_;
   mutable absl::optional<CellView> cur_value_;
-  mutable bool initialized_;
+  mutable bool initialized_{false};
 };
 
 }  // namespace emulator

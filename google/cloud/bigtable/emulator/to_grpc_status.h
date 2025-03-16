@@ -31,4 +31,3 @@ namespace emulator {
 }  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EMULATOR_TO_GRPC_STATUS_H
-

@@ -27,8 +27,6 @@ add_library(
     filtered_map.h
     range_set.cc
     range_set.h
-    row_iterators.cc
-    row_iterators.h
     row_streamer.cc
     row_streamer.h
     server.cc
@@ -56,13 +54,8 @@ if (BUILD_TESTING)
     # List the unit tests, then setup the targets and dependencies.
     set(bigtable_emulator_unit_tests
         # cmake-format: sort
-        column_family_test.cc
-        filter_test.cc
-        filtered_map_test.cc
-        range_set_test.cc
-        row_iterators_test.cc
-        server_test.cc
-        table_test.cc)
+        column_family_test.cc filter_test.cc filtered_map_test.cc
+        range_set_test.cc server_test.cc table_test.cc)
     export_list_to_bazel("bigtable_emulator_unit_tests.bzl"
                          "bigtable_emulator_unit_tests" YEAR "2024")
 
@@ -89,9 +82,8 @@ if (BUILD_TESTING)
     endforeach ()
 endif ()
 
-set(bigtable_emulator_programs
-    # cmake-format: sort
-    emulator.cc)
+set(bigtable_emulator_programs # cmake-format: sort
+                               emulator.cc)
 export_list_to_bazel("bigtable_emulator_programs.bzl"
                      "bigtable_emulator_programs" YEAR "2024")
 

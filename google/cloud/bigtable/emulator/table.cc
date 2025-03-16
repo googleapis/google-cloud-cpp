@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <chrono>
-#include <re2/re2.h>
 #include "google/cloud/bigtable/emulator/table.h"
 #include "google/cloud/bigtable/emulator/filter.h"
 #include "google/cloud/bigtable/emulator/filtered_map.h"
-#include "google/cloud/bigtable/emulator/row_iterators.h"
 #include "google/cloud/bigtable/internal/google_bytes_traits.h"
-#include "google/protobuf/util/field_mask_util.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/protobuf/util/field_mask_util.h"
+#include <re2/re2.h>
+#include <chrono>
 
 namespace google {
 namespace cloud {
@@ -28,7 +27,6 @@ namespace bigtable {
 namespace emulator {
 
 namespace btadmin = ::google::bigtable::admin::v2;
-namespace btproto = ::google::bigtable::v2;
 
 StatusOr<std::shared_ptr<Table>> Table::Create(
     google::bigtable::admin::v2::Table schema) {
@@ -45,7 +43,7 @@ Status Table::Construct(google::bigtable::admin::v2::Table schema) {
   // that luxury here, so we need to make sure that the changes performed in
   // this member function are reflected in other threads. The simplest way to do
   // this is the mutex.
-  std::lock_guard lock(mu_);
+  std::lock_guard<std::mutex> lock(mu_);
   schema_ = std::move(schema);
   if (schema_.granularity() ==
       btadmin::Table::TIMESTAMP_GRANULARITY_UNSPECIFIED) {
@@ -54,38 +52,35 @@ Status Table::Construct(google::bigtable::admin::v2::Table schema) {
   if (schema_.cluster_states_size() > 0) {
     return InvalidArgumentError(
         "`cluster_states` not empty.",
-        GCP_ERROR_INFO().WithMetadata("schema", schema.DebugString()));
+        GCP_ERROR_INFO().WithMetadata("schema", schema_.DebugString()));
   }
   if (schema_.has_restore_info()) {
     return InvalidArgumentError(
         "`restore_info` not empty.",
-        GCP_ERROR_INFO().WithMetadata("schema", schema.DebugString()));
+        GCP_ERROR_INFO().WithMetadata("schema", schema_.DebugString()));
   }
   if (schema_.has_change_stream_config()) {
     return UnimplementedError(
         "`change_stream_config` not empty.",
-        GCP_ERROR_INFO().WithMetadata(
-            "schema", schema.DebugString()));
+        GCP_ERROR_INFO().WithMetadata("schema", schema_.DebugString()));
   }
   if (schema_.has_automated_backup_policy()) {
     return UnimplementedError(
         "`automated_backup_policy` not empty.",
-        GCP_ERROR_INFO().WithMetadata(
-            "schema", schema.DebugString()));
+        GCP_ERROR_INFO().WithMetadata("schema", schema_.DebugString()));
   }
-  for (auto const &column_family_def : schema_.column_families()) {
-    column_families_.emplace(
-        column_family_def.first,
-        std::make_shared<ColumnFamily>());
+  for (auto const& column_family_def : schema_.column_families()) {
+    column_families_.emplace(column_family_def.first,
+                             std::make_shared<ColumnFamily>());
   }
   return Status();
 }
 
+// NOLINTBEGIN(readability-function-cognitive-complexity)
 StatusOr<btadmin::Table> Table::ModifyColumnFamilies(
     btadmin::ModifyColumnFamiliesRequest const& request) {
-  std::cout << "Modify column families: " << request.DebugString()
-            << std::endl;
-  std::unique_lock lock(mu_);
+  std::cout << "Modify column families: " << request.DebugString() << std::endl;
+  std::unique_lock<std::mutex> lock(mu_);
   auto new_schema = schema_;
   auto new_column_families = column_families_;
   for (auto const& modification : request.modifications()) {
@@ -97,25 +92,22 @@ StatusOr<btadmin::Table> Table::ModifyColumnFamilies(
                                           modification.DebugString()));
       }
       if (new_column_families.erase(modification.id()) == 0) {
-        return NotFoundError(
-            "No such column family.",
-            GCP_ERROR_INFO().WithMetadata("modification",
-                                          modification.DebugString()));
+        return NotFoundError("No such column family.",
+                             GCP_ERROR_INFO().WithMetadata(
+                                 "modification", modification.DebugString()));
       }
       if (new_schema.mutable_column_families()->erase(modification.id()) == 0) {
-        return InternalError(
-            "Column family with no schema.",
-            GCP_ERROR_INFO().WithMetadata("modification",
-                                          modification.DebugString()));
+        return InternalError("Column family with no schema.",
+                             GCP_ERROR_INFO().WithMetadata(
+                                 "modification", modification.DebugString()));
       }
     } else if (modification.has_update()) {
       auto& cfs = *new_schema.mutable_column_families();
       auto cf_it = cfs.find(modification.id());
       if (cf_it == cfs.end()) {
-        return NotFoundError(
-            "No such column family.",
-            GCP_ERROR_INFO().WithMetadata("modification",
-                                          modification.DebugString()));
+        return NotFoundError("No such column family.",
+                             GCP_ERROR_INFO().WithMetadata(
+                                 "modification", modification.DebugString()));
       }
       using google::protobuf::util::FieldMaskUtil;
 
@@ -154,10 +146,9 @@ StatusOr<btadmin::Table> Table::ModifyColumnFamilies(
       if (!new_schema.mutable_column_families()
                ->emplace(modification.id(), modification.create())
                .second) {
-        return InternalError(
-            "Column family with schema but no data.",
-            GCP_ERROR_INFO().WithMetadata("modification",
-                                          modification.DebugString()));
+        return InternalError("Column family with schema but no data.",
+                             GCP_ERROR_INFO().WithMetadata(
+                                 "modification", modification.DebugString()));
       }
     } else {
       return UnimplementedError(
@@ -166,15 +157,16 @@ StatusOr<btadmin::Table> Table::ModifyColumnFamilies(
                                         modification.DebugString()));
     }
   }
-  // Defer destorying potentially large objects to after releasing the lock.
+  // Defer destroying potentially large objects to after releasing the lock.
   column_families_.swap(new_column_families);
   schema_ = new_schema;
   lock.unlock();
   return new_schema;
 }
+// NOLINTEND(readability-function-cognitive-complexity)
 
 google::bigtable::admin::v2::Table Table::GetSchema() const {
-  std::lock_guard lock(mu_);
+  std::lock_guard<std::mutex> lock(mu_);
   return schema_;
 }
 
@@ -193,8 +185,7 @@ Status Table::Update(google::bigtable::admin::v2::Table const& new_schema,
           to_update)) {
     return InvalidArgumentError(
         "Update mask is invalid.",
-        GCP_ERROR_INFO().WithMetadata(
-            "mask", to_update.DebugString()));
+        GCP_ERROR_INFO().WithMetadata("mask", to_update.DebugString()));
   }
   google::protobuf::FieldMask disallowed_mask;
   FieldMaskUtil::Subtract<google::bigtable::admin::v2::Table>(
@@ -202,10 +193,9 @@ Status Table::Update(google::bigtable::admin::v2::Table const& new_schema,
   if (disallowed_mask.paths_size() > 0) {
     return UnimplementedError(
         "Update mask contains disallowed fields.",
-        GCP_ERROR_INFO().WithMetadata(
-            "mask", disallowed_mask.DebugString()));
+        GCP_ERROR_INFO().WithMetadata("mask", disallowed_mask.DebugString()));
   }
-  std::lock_guard lock(mu_);
+  std::lock_guard<std::mutex> lock(mu_);
   FieldMaskUtil::MergeMessageTo(new_schema, to_update,
                                 FieldMaskUtil::MergeOptions(), &schema_);
   return Status();
@@ -223,15 +213,15 @@ StatusOr<std::reference_wrapper<ColumnFamily>> Table::FindColumnFamily(
   return std::ref(*column_family_it->second);
 }
 
-Status Table::MutateRow(
-    google::bigtable::v2::MutateRowRequest const &request) {
+// NOLINTBEGIN(readability-function-cognitive-complexity)
+Status Table::MutateRow(google::bigtable::v2::MutateRowRequest const& request) {
   // FIXME - add atomicity
   // FIXME - determine what happens when row/column family/column does not exist
-  std::lock_guard lock(mu_);
+  std::lock_guard<std::mutex> lock(mu_);
   assert(request.table_name() == schema_.name());
-  for (auto mutation : request.mutations()) {
+  for (auto const& mutation : request.mutations()) {
     if (mutation.has_set_cell()) {
-      auto const & set_cell = mutation.set_cell();
+      auto const& set_cell = mutation.set_cell();
       auto maybe_column_family = FindColumnFamily(set_cell);
       if (!maybe_column_family) {
         return maybe_column_family.status();
@@ -241,14 +231,13 @@ Status Table::MutateRow(
           std::chrono::duration_cast<std::chrono::milliseconds>(
               std::chrono::microseconds(set_cell.timestamp_micros())),
           set_cell.value());
-    } else if (mutation.has_add_to_cell()) {
-      // FIXME
-    } else if (mutation.has_merge_to_cell()) {
-      // FIXME
+      //} else if (mutation.has_add_to_cell()) {
+      //  // FIXME
+      //} else if (mutation.has_merge_to_cell()) {
+      //  // FIXME
     } else if (mutation.has_delete_from_column()) {
-      auto const & delete_from_column = mutation.delete_from_column();
-      auto maybe_column_family =
-          FindColumnFamily(delete_from_column);
+      auto const& delete_from_column = mutation.delete_from_column();
+      auto maybe_column_family = FindColumnFamily(delete_from_column);
       if (!maybe_column_family) {
         return maybe_column_family.status();
       }
@@ -282,6 +271,7 @@ Status Table::MutateRow(
   }
   return Status();
 }
+// NOLINTEND(readability-function-cognitive-complexity)
 
 bool FilteredTableStream::ApplyFilter(InternalFilter const& internal_filter) {
   if (!absl::holds_alternative<FamilyNameRegex>(internal_filter)) {
@@ -289,7 +279,7 @@ bool FilteredTableStream::ApplyFilter(InternalFilter const& internal_filter) {
   }
   for (auto stream_it = unfinished_streams_.begin();
        stream_it != unfinished_streams_.end(); ++stream_it) {
-    auto* cf_stream =
+    auto const* cf_stream =
         dynamic_cast<FilteredColumnFamilyStream const*>(&(*stream_it)->impl());
     assert(cf_stream);
     if (!re2::RE2::PartialMatch(
@@ -312,7 +302,7 @@ std::vector<CellStream> FilteredTableStream::CreateCellStreams(
   std::vector<CellStream> res;
   res.reserve(cf_streams.size());
   for (auto& stream : cf_streams) {
-    res.emplace_back(CellStream(std::move(stream)));
+    res.emplace_back(std::move(stream));
   }
   return res;
 }
@@ -326,7 +316,7 @@ StatusOr<StringRangeSet> CreateStringRangeSet(
           "`row_key` empty",
           GCP_ERROR_INFO().WithMetadata("row_set", row_set.DebugString()));
     }
-    res.Sum(StringRangeSet::Range(row_key, false, row_key, false)); 
+    res.Sum(StringRangeSet::Range(row_key, false, row_key, false));
   }
   for (auto const& row_range : row_set.row_ranges()) {
     auto maybe_range = StringRangeSet::Range::FromRowRange(row_range);
@@ -353,9 +343,10 @@ Status Table::ReadRows(google::bigtable::v2::ReadRowsRequest const& request,
   } else {
     row_set = std::make_shared<StringRangeSet>(StringRangeSet::All());
   }
-  std::lock_guard lock(mu_);
+  std::lock_guard<std::mutex> lock(mu_);
   auto table_stream_ctor = [row_set = std::move(row_set), this] {
     std::vector<std::unique_ptr<FilteredColumnFamilyStream>> per_cf_streams;
+    per_cf_streams.reserve(column_families_.size());
     for (auto const& column_family : column_families_) {
       per_cf_streams.emplace_back(std::make_unique<FilteredColumnFamilyStream>(
           *column_family.second, column_family.first, row_set));
@@ -363,17 +354,16 @@ Status Table::ReadRows(google::bigtable::v2::ReadRowsRequest const& request,
     return CellStream(
         std::make_unique<FilteredTableStream>(std::move(per_cf_streams)));
   };
-  FilterContext ctx;
   StatusOr<CellStream> maybe_stream;
   if (request.has_filter()) {
-    maybe_stream = CreateFilter(request.filter(), table_stream_ctor, ctx);
+    maybe_stream = CreateFilter(request.filter(), table_stream_ctor);
   } else {
     maybe_stream = table_stream_ctor();
   }
   if (!maybe_stream) {
     return maybe_stream.status();
   }
-  CellStream &stream = *maybe_stream;
+  CellStream& stream = *maybe_stream;
   for (; stream; ++stream) {
     std::cout << "Row: " << stream->row_key()
               << " column_family: " << stream->column_family()
@@ -396,7 +386,7 @@ Status Table::ReadRows(google::bigtable::v2::ReadRowsRequest const& request,
 }
 
 bool Table::IsDeleteProtected() const {
-  std::lock_guard lock(mu_);
+  std::lock_guard<std::mutex> lock(mu_);
   return IsDeleteProtectedNoLock();
 }
 

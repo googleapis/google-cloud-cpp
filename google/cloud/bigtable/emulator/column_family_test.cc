@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/emulator/row_iterators.h"
+#include "google/cloud/bigtable/emulator/column_family.h"
 #include "google/cloud/bigtable/row_range.h"
-#include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/chrono_literals.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
@@ -229,7 +229,8 @@ row1 cf1:col1 @30ms: foo
 row2 cf1:col0 @10ms: qux
 row2 cf1:col2 @40ms: qux
 row2 cf1:col2 @50ms: qux
-)""", "\n" + DumpFilteredColumnFamilyStream(filtered_stream));
+)""",
+            "\n" + DumpFilteredColumnFamilyStream(filtered_stream));
 }
 
 TEST(FilteredColumnFamilyStream, FilterByTimestampRange) {
@@ -248,7 +249,7 @@ TEST(FilteredColumnFamilyStream, FilterByTimestampRange) {
   fam.SetCell("row0", "col3", 300_ms, "foo");  // Filter out
   fam.SetCell("row0", "col3", 300_ms, "foo");  // Filter out
   fam.SetCell("row0", "col3", 300_ms, "foo");  // Filter out
-  fam.SetCell("row1", "col0", 20_ms, "bar");  // Filter out
+  fam.SetCell("row1", "col0", 20_ms, "bar");   // Filter out
   fam.SetCell("row1", "col0", 10_ms, "baz");
   fam.SetCell("row1", "col1", 200_ms, "foo");  // Filter out
   fam.SetCell("row1", "col1", 250_ms, "foo");  // Filter out
@@ -273,7 +274,8 @@ row0 cf1:col2 @140ms: foo
 row1 cf1:col2 @100ms: foo
 row1 cf1:col2 @120ms: foo
 row1 cf1:col2 @140ms: foo
-)""", "\n" + DumpFilteredColumnFamilyStream(filtered_stream));
+)""",
+            "\n" + DumpFilteredColumnFamilyStream(filtered_stream));
 }
 
 TEST(FilteredColumnFamilyStream, FilterByColumnRange) {
@@ -285,7 +287,7 @@ TEST(FilteredColumnFamilyStream, FilterByColumnRange) {
   fam.SetCell("row0", "col2", 200_ms, "foo");
   fam.SetCell("row0", "col3", 300_ms, "foo");  // Filter out
   fam.SetCell("row0", "col3", 300_ms, "foo");  // Filter out
-  fam.SetCell("row2", "col1", 300_ms, "foo");  
+  fam.SetCell("row2", "col1", 300_ms, "foo");
   auto included_rows = std::make_shared<StringRangeSet>(StringRangeSet::All());
   FilteredColumnFamilyStream filtered_stream(fam, "cf1", included_rows);
   filtered_stream.ApplyFilter(
@@ -296,7 +298,8 @@ TEST(FilteredColumnFamilyStream, FilterByColumnRange) {
 row0 cf1:col1 @100ms: foo
 row0 cf1:col2 @200ms: foo
 row2 cf1:col1 @300ms: foo
-)""", "\n" + DumpFilteredColumnFamilyStream(filtered_stream));
+)""",
+            "\n" + DumpFilteredColumnFamilyStream(filtered_stream));
 }
 
 TEST(FilteredColumnFamilyStream, FilterByColumnRegex) {
@@ -313,7 +316,7 @@ TEST(FilteredColumnFamilyStream, FilterByColumnRegex) {
   fam.SetCell("row0", "col3", 300_ms, "foo");  // Filter out
   fam.SetCell("row0", "col3", 300_ms, "foo");  // Filter out
   fam.SetCell("row1", "col2", 300_ms, "foo");
-  fam.SetCell("row2", "col0", 300_ms, "foo");  
+  fam.SetCell("row2", "col0", 300_ms, "foo");
   auto included_rows = std::make_shared<StringRangeSet>(StringRangeSet::All());
   FilteredColumnFamilyStream filtered_stream(fam, "cf1", included_rows);
   filtered_stream.ApplyFilter(ColumnRegex{pattern1});
@@ -323,7 +326,8 @@ row0 cf1:col0 @10ms: foo
 row0 cf1:col2 @200ms: foo
 row1 cf1:col2 @300ms: foo
 row2 cf1:col0 @300ms: foo
-)""", "\n" + DumpFilteredColumnFamilyStream(filtered_stream));
+)""",
+            "\n" + DumpFilteredColumnFamilyStream(filtered_stream));
 }
 
 TEST(FilteredColumnFamilyStream, FilterRowKeyRegex) {
@@ -345,7 +349,8 @@ TEST(FilteredColumnFamilyStream, FilterRowKeyRegex) {
   EXPECT_EQ(R"""(
 row0 cf1:col0 @10ms: foo
 row2 cf1:col2 @200ms: foo
-)""", "\n" + DumpFilteredColumnFamilyStream(filtered_stream));
+)""",
+            "\n" + DumpFilteredColumnFamilyStream(filtered_stream));
 }
 
 TEST(FilteredColumnFamilyStream, FilterRowSet) {
@@ -366,7 +371,8 @@ TEST(FilteredColumnFamilyStream, FilterRowSet) {
 row0 cf1:col0 @10ms: foo
 row1 cf1:col1 @100ms: foo
 row3 cf1:col3 @300ms: foo
-)""", "\n" + DumpFilteredColumnFamilyStream(filtered_stream));
+)""",
+            "\n" + DumpFilteredColumnFamilyStream(filtered_stream));
 }
 
 // Add Next Column, Next Row tests
@@ -376,5 +382,3 @@ row3 cf1:col3 @300ms: foo
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google
-
-

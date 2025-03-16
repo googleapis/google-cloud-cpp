@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EMULATOR_RANGE_SET_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EMULATOR_RANGE_SET_H
 
-#include "absl/types/variant.h"
 #include "google/cloud/status_or.h"
+#include "absl/types/variant.h"
 #include <chrono>
 #include <ostream>
 #include <set>
@@ -35,6 +35,16 @@ namespace cloud {
 namespace bigtable {
 namespace emulator {
 
+/**
+ * Objects of this class hold a sorted, disjoint set of string ranges.
+ *
+ * Users of this class can intersect and sum the ranges held by this structure.
+ *
+ * The ranges can be open or closed on each end and the end may hold a special
+ * value - infinity.
+ *
+ * Ranges starts are never larger than ends.
+ */
 class StringRangeSet {
  public:
   class Range {
@@ -50,7 +60,7 @@ class StringRangeSet {
     static StatusOr<Range> FromColumnRange(
         google::bigtable::v2::ColumnRange const& column_range);
 
-    Value const& start() const & { return start_; }
+    Value const& start() const& { return start_; }
     std::string const& start_finite() const& {
       return absl::get<std::string>(start_);
     }
@@ -58,14 +68,14 @@ class StringRangeSet {
     bool start_closed() const { return !start_open_; }
     void set_start(Range const& source);
 
-    Value const& end() const & { return end_; }
+    Value const& end() const& { return end_; }
     bool end_open() const { return end_open_; }
     bool end_closed() const { return !end_open_; }
     void set_end(Range const& source);
 
-    bool IsBelowStart(Value const &value) const;
-    bool IsAboveEnd(Value const &value) const;
-    bool IsWithin(Value const &value) const;
+    bool IsBelowStart(Value const& value) const;
+    bool IsAboveEnd(Value const& value) const;
+    bool IsWithin(Value const& value) const;
     bool IsEmpty() const;
 
     static bool IsEmpty(StringRangeSet::Range::Value const& start,
@@ -94,12 +104,11 @@ class StringRangeSet {
   static StringRangeSet All();
   static StringRangeSet Empty();
   void Sum(Range inserted_range);
-  void Intersect(Range const &intersected_range);
+  void Intersect(Range const& intersected_range);
 
   std::set<Range, Range::StartLess> const& disjoint_ranges() const {
     return disjoint_ranges_;
   };
-
 
  private:
   std::set<Range, Range::StartLess> disjoint_ranges_;
@@ -114,10 +123,18 @@ std::ostream& operator<<(std::ostream& os,
 bool operator==(StringRangeSet::Range const& lhs,
                 StringRangeSet::Range const& rhs);
 
-std::ostream& operator<<(std::ostream& os,
-                         StringRangeSet::Range const& range);
+std::ostream& operator<<(std::ostream& os, StringRangeSet::Range const& range);
 
-
+/**
+ * Objects of this class hold a sorted, disjoint set of timestamp ranges.
+ *
+ * Users of this class can intersect and sum the ranges held by this structure.
+ *
+ * The ranges have are open on the left and closed on the right. A value zero on
+ * the end is treated as infinity.
+ *
+ * Ranges starts are never larger than ends.
+ */
 class TimestampRangeSet {
  public:
   class Range {
@@ -130,12 +147,16 @@ class TimestampRangeSet {
 
     Value start() const { return start_; }
     Value start_finite() const { return start_; }
+    // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
     bool start_open() const { return false; }
+    // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
     bool start_closed() const { return true; }
     void set_start(Range const& source) { start_ = source.start_; }
 
     Value end() const { return end_; }
+    // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
     bool end_open() const { return true; }
+    // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
     bool end_closed() const { return false; }
     void set_end(Range const& source) { end_ = source.end_; }
 
@@ -163,7 +184,7 @@ class TimestampRangeSet {
   static TimestampRangeSet All();
   static TimestampRangeSet Empty();
   void Sum(Range inserted_range);
-  void Intersect(Range const &intersected_range);
+  void Intersect(Range const& intersected_range);
 
   std::set<Range, Range::StartLess> const& disjoint_ranges() const {
     return disjoint_ranges_;
