@@ -83,17 +83,34 @@ std::map<std::string, std::vector<Cell>> ColumnFamily::DeleteRow(
 
   for (auto column_it = column_family_row.begin();
        column_it != column_family_row.end();
-       column_it = column_family_row.begin()) {  // DeleteColumn can
+       column_it = column_family_row.begin()) {  // Why we call
+                                                 // column_family_row.begin()
+                                                 // every iteration:
+                                                 // DeleteColumn can
                                                  // invalidate the
                                                  // iterator by
                                                  // deleting a column
                                                  // family row's keys
-                                                 // (the columnn
-                                                 // qualifiers,
-                                                 // therefore we need
-                                                 // to re-calculate the
+                                                 // (the column
+                                                 // qualifiers and
+                                                 // their column
+                                                 // rows), therefore
+                                                 // we need to
+                                                 // re-calculate the
                                                  // beginning of the
-                                                 // map every loop).
+                                                 // map every loop. At
+                                                 // the same time
+                                                 // because we are
+                                                 // removing all cells
+                                                 // of every column,
+                                                 // we know
+                                                 // DeleteColumn will
+                                                 // eventually remove
+                                                 // all the columns
+                                                 // and the row
+                                                 // itself, so this
+                                                 // loop will
+                                                 // terminate.
 
     // Not setting start and end timestamps selects all cells for deletion.
     ::google::bigtable::v2::TimestampRange time_range;
