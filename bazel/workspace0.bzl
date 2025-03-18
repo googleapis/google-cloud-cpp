@@ -183,6 +183,9 @@ def gl_cpp_workspace0(name = None):
         urls = [
             "https://github.com/grpc/grpc/archive/v1.71.0.tar.gz",
         ],
+        repo_mapping = {
+            "@com_google_absl": "@abseil-cpp",
+        },
         sha256 = "0d631419e54ec5b29def798623ee3bf5520dac77abeab3284ef7027ec2363f91",
         strip_prefix = "grpc-1.71.0",
     )

@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM opensuse/leap:16
+FROM opensuse/leap:15.6
 ARG NCPU=4
 
 #RUN zypper refresh && zypper remove abseil-cpp-devel
