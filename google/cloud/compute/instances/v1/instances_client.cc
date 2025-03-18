@@ -808,6 +808,66 @@ InstancesClient::RemoveResourcePolicies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstancesClient::ReportHostAsFaulty(
+    std::string const& project, std::string const& zone,
+    std::string const& instance,
+    google::cloud::cpp::compute::v1::InstancesReportHostAsFaultyRequest const&
+        instances_report_host_as_faulty_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::instances::v1::ReportHostAsFaultyRequest request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_instance(instance);
+  *request.mutable_instances_report_host_as_faulty_request_resource() =
+      instances_report_host_as_faulty_request_resource;
+  return connection_->ReportHostAsFaulty(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesClient::ReportHostAsFaulty(
+    NoAwaitTag, std::string const& project, std::string const& zone,
+    std::string const& instance,
+    google::cloud::cpp::compute::v1::InstancesReportHostAsFaultyRequest const&
+        instances_report_host_as_faulty_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::instances::v1::ReportHostAsFaultyRequest request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_instance(instance);
+  *request.mutable_instances_report_host_as_faulty_request_resource() =
+      instances_report_host_as_faulty_request_resource;
+  return connection_->ReportHostAsFaulty(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstancesClient::ReportHostAsFaulty(
+    google::cloud::cpp::compute::instances::v1::ReportHostAsFaultyRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ReportHostAsFaulty(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesClient::ReportHostAsFaulty(
+    NoAwaitTag,
+    google::cloud::cpp::compute::instances::v1::ReportHostAsFaultyRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ReportHostAsFaulty(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstancesClient::ReportHostAsFaulty(
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ReportHostAsFaulty(operation);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesClient::Reset(std::string const& project, std::string const& zone,
                        std::string const& instance, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

@@ -63,6 +63,20 @@ class RoutersRestLogging : public RoutersRestStub {
       google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&
           request) override;
 
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncDeleteRoutePolicy(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::routers::v1::DeleteRoutePolicyRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRoutePolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::routers::v1::DeleteRoutePolicyRequest const&
+          request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::Router> GetRouter(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -80,6 +94,13 @@ class RoutersRestLogging : public RoutersRestStub {
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::RoutersGetRoutePolicyResponse>
+  GetRoutePolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::routers::v1::GetRoutePolicyRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::RouterStatusResponse>
@@ -109,6 +130,19 @@ class RoutersRestLogging : public RoutersRestStub {
       google::cloud::cpp::compute::routers::v1::ListRoutersRequest const&
           request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::RoutersListBgpRoutes> ListBgpRoutes(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::routers::v1::ListBgpRoutesRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::RoutersListRoutePolicies>
+  ListRoutePolicies(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::routers::v1::ListRoutePoliciesRequest const&
+          request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncPatchRouter(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
@@ -120,6 +154,20 @@ class RoutersRestLogging : public RoutersRestStub {
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncPatchRoutePolicy(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::routers::v1::PatchRoutePolicyRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRoutePolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::routers::v1::PatchRoutePolicyRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse> Preview(
@@ -140,6 +188,20 @@ class RoutersRestLogging : public RoutersRestStub {
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncUpdateRoutePolicy(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::routers::v1::UpdateRoutePolicyRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateRoutePolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::routers::v1::UpdateRoutePolicyRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

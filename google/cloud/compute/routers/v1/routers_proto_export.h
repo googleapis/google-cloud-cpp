@@ -28,6 +28,7 @@
 // IWYU pragma: begin_exports
 #include <google/cloud/compute/v1/internal/common_013.pb.h>
 #include <google/cloud/compute/v1/internal/common_016.pb.h>
+#include <google/cloud/compute/v1/internal/common_031.pb.h>
 #include <google/cloud/compute/v1/internal/common_109.pb.h>
 // IWYU pragma: end_exports
 

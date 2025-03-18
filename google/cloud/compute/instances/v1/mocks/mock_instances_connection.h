@@ -533,6 +533,47 @@ class MockInstancesConnection
   /// using ::testing::_;
   /// using ::testing::Matcher;
   /// EXPECT_CALL(*mock,
+  /// ReportHostAsFaulty(Matcher<google::cloud::cpp::compute::instances::v1::ReportHostAsFaultyRequest
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              ReportHostAsFaulty,
+              (google::cloud::cpp::compute::instances::v1::
+                   ReportHostAsFaultyRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// EXPECT_CALL(*mock, ReportHostAsFaulty(_, _))
+  /// @endcode
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              ReportHostAsFaulty,
+              (NoAwaitTag, google::cloud::cpp::compute::instances::v1::
+                               ReportHostAsFaultyRequest const& request),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
+  /// ReportHostAsFaulty(Matcher<google::cloud::cpp::compute::v1::Operation
+  /// const&>(_)))
+  /// @endcode
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              ReportHostAsFaulty,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  /// To disambiguate calls, use:
+  ///
+  /// @code
+  /// using ::testing::_;
+  /// using ::testing::Matcher;
+  /// EXPECT_CALL(*mock,
   /// Reset(Matcher<google::cloud::cpp::compute::instances::v1::ResetRequest
   /// const&>(_)))
   /// @endcode

@@ -456,6 +456,39 @@ InstancesTracingConnection::RemoveResourcePolicies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstancesTracingConnection::ReportHostAsFaulty(
+    google::cloud::cpp::compute::instances::v1::ReportHostAsFaultyRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_instances_v1::InstancesConnection::ReportHostAsFaulty");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ReportHostAsFaulty(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesTracingConnection::ReportHostAsFaulty(
+    NoAwaitTag,
+    google::cloud::cpp::compute::instances::v1::ReportHostAsFaultyRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_instances_v1::InstancesConnection::ReportHostAsFaulty");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->ReportHostAsFaulty(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstancesTracingConnection::ReportHostAsFaulty(
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_instances_v1::InstancesConnection::ReportHostAsFaulty");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ReportHostAsFaulty(operation));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesTracingConnection::Reset(
     google::cloud::cpp::compute::instances::v1::ResetRequest const& request) {
   auto span =
