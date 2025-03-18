@@ -146,8 +146,7 @@ class RowTransaction {
   Status DeleteFromFamily(
       ::google::bigtable::v2::Mutation_DeleteFromFamily const&
           delete_from_family);
-  Status DeleteFromRow(
-      ::google::bigtable::v2::Mutation_DeleteFromRow const& delete_from_row);
+  Status DeleteFromRow();
 
  private:
   void Undo();

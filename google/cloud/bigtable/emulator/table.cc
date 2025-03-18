@@ -436,6 +436,32 @@ Status RowTransaction::DeleteFromColumn(
   return Status();
 }
 
+Status RowTransaction::DeleteFromRow() {
+  bool row_existed;
+  for (auto& column_family : table_->column_families_) {
+    auto deleted_columns = column_family.second->DeleteRow(request_.row_key());
+
+    for (auto& column : deleted_columns) {
+      for (auto& cell : column.second) {
+        RestoreValue restrore_value = {
+            *column_family.second, request_.row_key(), std::move(column.first),
+            cell.timestamp, std::move(cell.value)};
+        undo_.emplace(restrore_value);
+        row_existed = true;
+      }
+    }
+  }
+
+  if (row_existed) {
+    return Status();
+  }
+
+  return Status(
+      StatusCode::kNotFound,
+      absl::StrFormat("row %s not found in table", request_.row_key()),
+      ErrorInfo());
+}
+
 Status RowTransaction::DeleteFromFamily(
     ::google::bigtable::v2::Mutation_DeleteFromFamily const&
         delete_from_family) {
