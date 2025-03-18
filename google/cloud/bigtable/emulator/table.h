@@ -85,23 +85,6 @@ class Table : public std::enable_shared_from_this<Table> {
   std::map<std::string, std::shared_ptr<ColumnFamily>> column_families_;
 };
 
-struct RestoreColumnFamilyRow {
-  // We hold the table lock and any operation to delete a column
-  // family will need to acquire the same lock. Therefore we are sure
-  // that a column family cannot disappear concurrent to a chain of
-  // mutations on the same row. So for column families alone (but not
-  // for other maps) it is safe to store their iterator in the undo
-  // log. It is unsafe for all other maps.
-  std::map<std::string, std::shared_ptr<ColumnFamily>>::iterator column_family_it;
-  std::string row_key;
-  struct Cell {
-    std::string column_qualifer;
-    std::chrono::milliseconds timestamp;
-    std::string value;
-  };
-  std::vector<Cell> cells;
-};
-
 struct RestoreValue {
   ColumnFamily& column_family;
   std::string row_key;
