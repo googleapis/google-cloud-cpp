@@ -110,7 +110,7 @@ def gl_cpp_workspace0(name = None):
     # Load Abseil
     maybe(
         http_archive,
-        name = "com_google_absl",
+        name = "abseil-cpp",
         urls = [
             "https://github.com/abseil/abseil-cpp/archive/20250127.0.tar.gz",
         ],

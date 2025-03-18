@@ -56,7 +56,7 @@ cc_library(
         "//google/cloud/storage:storage_client_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@com_github_curl_curl//:curl",
-        "@com_google_absl//absl/strings",
+        "@abseil-cpp//absl/strings",
     ],
 ) for program in storage_benchmark_programs]
 

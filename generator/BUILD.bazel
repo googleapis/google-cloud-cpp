@@ -35,8 +35,8 @@ cc_library(
         "//google/cloud:google_cloud_cpp_rest_internal",
         "@com_github_jbeder_yaml_cpp//:yaml-cpp",
         "@com_github_nlohmann_json//:json",
-        "@com_google_absl//absl/strings",
-        "@com_google_absl//absl/strings:str_format",
+        "@abseil-cpp//absl/strings",
+        "@abseil-cpp//absl/strings:str_format",
         "@com_google_googleapis//:googleapis_system_includes",
         "@com_google_googleapis//google/api:client_cc_proto",
         "@com_google_googleapis//google/api:field_info_cc_proto",
@@ -116,8 +116,8 @@ cc_binary(
     deps = [
         ":generator_config_cc_proto",
         ":google_cloud_cpp_generator",
-        "@com_google_absl//absl/flags:commandlineflag",
-        "@com_google_absl//absl/flags:flag",
-        "@com_google_absl//absl/flags:parse",
+        "@abseil-cpp//absl/flags:commandlineflag",
+        "@abseil-cpp//absl/flags:flag",
+        "@abseil-cpp//absl/flags:parse",
     ],
 )
