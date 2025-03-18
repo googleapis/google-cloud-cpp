@@ -32,7 +32,7 @@ btproto::RowRange RowRangeHelpers::Empty() {
   return result;
 }
 
-bool RowRangeHelpers::IsEmpty(btproto::RowRange const &row_range) {
+bool RowRangeHelpers::IsEmpty(btproto::RowRange const& row_range) {
   RowKeyType unused;
   // We do not want to copy the strings unnecessarily, so initialize a reference
   // pointing to *_key_closed() or *_key_open(), as needed.
@@ -200,21 +200,17 @@ void RowRangeHelpers::SanitizeEmptyEndKeys(
 
 bool RowRangeHelpers::StartLess::operator()(
     btproto::RowRange const& left, btproto::RowRange const& right) const {
-  if (!left.has_start_key_open() &&
-      !left.has_start_key_closed()) {
+  if (!left.has_start_key_open() && !left.has_start_key_closed()) {
     // left is empty
-    return right.has_start_key_open() ||
-           right.has_start_key_closed();
+    return right.has_start_key_open() || right.has_start_key_closed();
   }
   // left is non-empty
-  if (!right.has_start_key_open() &&
-      !right.has_start_key_closed()) {
+  if (!right.has_start_key_open() && !right.has_start_key_closed()) {
     return false;
   }
   // both are non-empty
-  auto const& left_start = left.has_start_key_closed()
-                               ? left.start_key_closed()
-                               : left.start_key_open();
+  auto const& left_start = left.has_start_key_closed() ? left.start_key_closed()
+                                                       : left.start_key_open();
   auto const& right_start = right.has_start_key_closed()
                                 ? right.start_key_closed()
                                 : right.start_key_open();
@@ -224,14 +220,13 @@ bool RowRangeHelpers::StartLess::operator()(
     return cmp < 0;
   }
   // same row key in both
-  return left.has_start_key_closed() &&
-         right.has_start_key_open();
+  return left.has_start_key_closed() && right.has_start_key_open();
 }
 
 bool RowRangeHelpers::EndLess::operator()(
     btproto::RowRange const& left, btproto::RowRange const& right) const {
   if (!right.has_end_key_open() && !right.has_end_key_closed()) {
-    // right is inifinite
+    // right is infinite
     return left.has_end_key_open() || left.has_end_key_closed();
   }
   // right is finite
@@ -257,5 +252,3 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google
-
-

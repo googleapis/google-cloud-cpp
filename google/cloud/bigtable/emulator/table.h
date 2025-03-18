@@ -159,9 +159,9 @@ class RowTransaction {
 };
 
 // This class is public only to enable testing.
-class FilteredTableStream : public MergeCellStreams  {
+class FilteredTableStream : public MergeCellStreams {
  public:
-  FilteredTableStream(
+  explicit FilteredTableStream(
       std::vector<std::unique_ptr<FilteredColumnFamilyStream>> cf_streams)
       : MergeCellStreams(CreateCellStreams(std::move(cf_streams))) {}
 

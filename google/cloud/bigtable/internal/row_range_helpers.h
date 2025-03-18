@@ -30,19 +30,19 @@ class RowRangeHelpers {
   static google::bigtable::v2::RowRange Empty();
   static bool IsEmpty(google::bigtable::v2::RowRange const& row_range);
   static bool BelowStart(google::bigtable::v2::RowRange const& row_range,
-                                 RowKeyType const& key);
+                         RowKeyType const& key);
   static bool AboveEnd(google::bigtable::v2::RowRange const& row_range,
-                               RowKeyType const& key);
+                       RowKeyType const& key);
   static std::pair<bool, google::bigtable::v2::RowRange> Intersect(
       google::bigtable::v2::RowRange const& lhs,
       google::bigtable::v2::RowRange const& rhs);
   /// Return true if @p key is in the range.
   template <typename T>
   static bool Contains(google::bigtable::v2::RowRange const& row_range,
-                               T const& key) {
+                       T const& key) {
     return !BelowStart(row_range, key) && !AboveEnd(row_range, key);
   }
-  static void SanitizeEmptyEndKeys(google::bigtable::v2::RowRange &row_range);
+  static void SanitizeEmptyEndKeys(google::bigtable::v2::RowRange& row_range);
 
   /// A Functor describing the order on range starts.
   struct StartLess {

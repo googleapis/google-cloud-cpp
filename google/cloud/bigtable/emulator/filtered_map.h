@@ -16,18 +16,35 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EMULATOR_FILTERED_MAP_H
 
 #include "google/cloud/bigtable/emulator/range_set.h"
+#include <re2/re2.h>
 #include <functional>
 #include <iterator>
-#include <re2/re2.h>
 
 namespace google {
 namespace cloud {
 namespace bigtable {
 namespace emulator {
 
+/**
+ * A map view filtering elements by whether their keys fall into a range set.
+ *
+ * Objects of this type provide a lightweight wrapper around `std::map`, which
+ * provides a iterator, which will skip over unwanted elements.
+ *
+ * This class is not very generic. It should be thought of as a crude way of
+ * deduplicating code.
+ *
+ * The unfiltered elements' keys should fall into a given range set - either
+ * `StringRangeSet` or by `TimestampRangeSet`.
+ *
+ * @tparam Map the type of the map to be wrapped, an instantiation of `std::map`
+ * @tparam PermittedRanges the type of the filter, either `StringRangeSet` or
+ *   `TimestampRangeSet`
+ */
 template <typename Map, typename PermittedRanges>
 class RangeFilteredMapView {
  public:
+  // NOLINTNEXTLINE(readability-identifier-naming)
   class const_iterator {
    public:
     using iterator_category = std::input_iterator_tag;
@@ -75,6 +92,7 @@ class RangeFilteredMapView {
     pointer operator->() const { return &*unfiltered_pos_; }
 
    private:
+    // Adjust `unfiltered_pos_` after we transition to a different range.
     void AdvanceToNextRange() {
       if (filter_pos_ == parent_.get().filter_.get().disjoint_ranges().end()) {
         // We've reached the end.
@@ -99,6 +117,8 @@ class RangeFilteredMapView {
       }
     }
 
+    // After `unfiltered_pos_` was increased, make sure it's within a valid
+    // range.
     void EnsureIteratorValid() {
       // `unfiltered_pos_` may point to a row which is past the end of the range
       // pointed by filter_pos_. Make sure this only happens when the iteration
@@ -119,6 +139,17 @@ class RangeFilteredMapView {
         typename PermittedRanges::Range::StartLess>::const_iterator filter_pos_;
   };
 
+  /**
+   * Create a new object.
+   *
+   * Objects of this class store references to arguments passed in the
+   * constructor. The user is responsible for making sure that the referenced
+   * objects continue to exist throughout the lifetime of this object. They
+   * should also not change.
+   *
+   * @unfiltered the map whose elements need to be filtered.
+   * @filter the range set which dictates which ranges should remain unfiltered.
+   */
   RangeFilteredMapView(Map const& unfiltered, PermittedRanges const& filter)
       : unfiltered_(std::cref(unfiltered)), filter_(std::cref(filter)) {}
 
@@ -136,9 +167,23 @@ class RangeFilteredMapView {
   std::reference_wrapper<PermittedRanges const> filter_;
 };
 
+/**
+ * A map view filtering elements by whether their keys match a regex.
+ *
+ * Objects of this type provide a lightweight wrapper around `std::map`, which
+ * provides a iterator, which will skip over unwanted elements.
+ *
+ * This class is not very generic. It should be thought of as a crude way of
+ * deduplicating code.
+ *
+ * Elements whose keys match all regexes are not filtered out.
+ *
+ * @tparam Map the type of the map to be wrapped, an instantiation of `std::map`
+ */
 template <typename Map>
 class RegexFiteredMapView {
  public:
+  // NOLINTNEXTLINE(readability-identifier-naming)
   class const_iterator {
    public:
     using iterator_category = std::input_iterator_tag;
@@ -180,6 +225,7 @@ class RegexFiteredMapView {
     pointer operator->() const { return &*unfiltered_pos_; }
 
    private:
+    // Make sure that `unfiltered_pos_` points to an unfiltered elem or end().
     void EnsureIteratorValid() {
       for (; unfiltered_pos_ != parent_.get().unfiltered_.end() &&
              std::any_of(parent_.get().filters_.get().begin(),
@@ -196,6 +242,18 @@ class RegexFiteredMapView {
     typename Map::const_iterator unfiltered_pos_;
   };
 
+  /**
+   * Create a new object.
+   *
+   * Objects of this class store references to arguments passed in the
+   * constructor. The user is responsible for making sure that the referenced
+   * objects continue to exist throughout the lifetime of this object. They
+   * should also not change.
+   *
+   * @unfiltered the map whose elements need to be filtered.
+   * @filters the regexes which element's keys have match to not be filtered
+   *   out.
+   */
   RegexFiteredMapView(
       Map unfiltered,
       std::vector<std::shared_ptr<re2::RE2 const>> const& filters)

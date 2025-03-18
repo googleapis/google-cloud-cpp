@@ -28,8 +28,11 @@ class EmulatorServer {
  public:
   virtual ~EmulatorServer() = default;
 
+  /// Return the port to which the server bound.
   virtual int bound_port() = 0;
+  /// Initiate shutting the server down.
   virtual void Shutdown() = 0;
+  /// Wait until the server shuts down.
   virtual void Wait() = 0;
 };
 

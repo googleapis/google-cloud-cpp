@@ -26,7 +26,6 @@ RowStreamer::RowStreamer(grpc::ServerWriter<btproto::ReadRowsResponse>& writer)
     : writer_(writer) {}
 
 bool RowStreamer::Stream(CellView const& cell) {
-  std::cout << "Attempting to stream" << std::endl;
   btproto::ReadRowsResponse::CellChunk chunk;
   if (!current_row_key_ || current_row_key_ != cell.row_key()) {
     if (!pending_chunks_.empty()) {
@@ -60,12 +59,10 @@ bool RowStreamer::Stream(CellView const& cell) {
   if (pending_chunks_.size() > 200) {
     return Flush(false);
   }
-  std::cout << "Not flushing" << std::endl;
   return true;
 }
 
 bool RowStreamer::Flush(bool stream_finished) {
-    std::cout << "Flushing" << std::endl;
   absl::optional<btproto::ReadRowsResponse::CellChunk> dont_flush_this;
   if (stream_finished) {
     if (!pending_chunks_.empty()) {
@@ -81,14 +78,13 @@ bool RowStreamer::Flush(bool stream_finished) {
     }
   }
   btproto::ReadRowsResponse resp;
-  for (auto &chunk : pending_chunks_) {
+  for (auto& chunk : pending_chunks_) {
     *resp.add_chunks() = std::move(chunk);
   }
   pending_chunks_.resize(0);
   if (dont_flush_this) {
     pending_chunks_.emplace_back(*std::move(dont_flush_this));
   }
-  std::cout << "Writing: " << resp.DebugString() << std::endl;
   return writer_.Write(resp);
 }
 
@@ -96,4 +92,3 @@ bool RowStreamer::Flush(bool stream_finished) {
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google
-

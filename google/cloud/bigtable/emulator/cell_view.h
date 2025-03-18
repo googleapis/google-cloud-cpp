@@ -15,10 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EMULATOR_CELL_VIEW_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EMULATOR_CELL_VIEW_H
 
-#include <string>
+#include <absl/types/optional.h>
 #include <chrono>
 #include <functional>
-#include <absl/types/optional.h>
+#include <string>
 
 namespace google {
 namespace cloud {
