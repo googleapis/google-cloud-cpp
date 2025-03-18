@@ -88,7 +88,7 @@ RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250127.0.tar.gz | 
 
 # ```bash
 WORKDIR /var/tmp/build/protobuf
-RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v30.0-rc2.tar.gz | \
+RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v30.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -130,7 +130,7 @@ RUN curl -fsSL https://github.com/google/re2/archive/2024-07-02.tar.gz | \
 
 # ```bash
 WORKDIR /var/tmp/build/grpc
-RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.71.0-pre2.tar.gz | \
+RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.71.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_CXX_STANDARD=17 \

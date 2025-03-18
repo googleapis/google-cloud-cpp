@@ -15,16 +15,10 @@
 FROM opensuse/leap:15
 ARG NCPU=4
 
-#RUN zypper refresh && zypper remove abseil-cpp-devel
-
 RUN zypper refresh && \
     zypper install --allow-downgrade -y automake cmake curl gcc gcc-c++ \
-        git gzip libtool make ninja patch tar wget
-
-
-RUN zypper refresh && \
-    zypper install --allow-downgrade -y c-ares-devel \
-        libcurl-devel libopenssl-devel libcrc32c-devel
+        git gzip libtool make ninja patch tar wget \
+        c-ares-devel libcurl-devel libopenssl-devel libcrc32c-devel
 
 RUN (echo "/usr/local/lib" ; echo "/usr/local/lib64") | \
     tee /etc/ld.so.conf.d/usrlocal.conf
@@ -85,7 +79,7 @@ RUN curl -fsSL https://github.com/google/benchmark/archive/v1.9.1.tar.gz | \
     ldconfig && cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/protobuf
-RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v30.0-rc2.tar.gz | \
+RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v30.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -118,7 +112,7 @@ RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.19
     ldconfig && cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/grpc
-RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.71.0-pre2.tar.gz | \
+RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.71.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \

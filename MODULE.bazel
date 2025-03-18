@@ -23,10 +23,9 @@ module(
 bazel_dep(name = "platforms", version = "0.0.11")
 bazel_dep(name = "bazel_skylib", version = "1.7.1")
 bazel_dep(name = "rules_cc", version = "0.0.17")
-bazel_dep(name = "abseil-cpp", version = "20240722.1", repo_name = "com_google_absl")
-bazel_dep(name = "protobuf", version = "30.0-rc1", repo_name = "com_google_protobuf")
+bazel_dep(name = "abseil-cpp", version = "20250127.0", repo_name = "abseil-cpp")
+bazel_dep(name = "protobuf", version = "30.0", repo_name = "com_google_protobuf")
 bazel_dep(name = "boringssl", version = "0.0.0-20230215-5c22014")
-bazel_dep(name = "grpc", version = "1.70.1", repo_name = "com_github_grpc_grpc")
 bazel_dep(name = "nlohmann_json", version = "3.11.3", repo_name = "com_github_nlohmann_json")
 bazel_dep(name = "curl", version = "8.8.0.bcr.2", repo_name = "com_github_curl_curl")
 bazel_dep(name = "crc32c", version = "1.1.0", repo_name = "com_github_google_crc32c")
@@ -52,6 +51,7 @@ python.toolchain(
     python_version = "3.11",
 )
 
+bazel_dep(name = "grpc", version = "1.71.0", repo_name = "com_github_grpc_grpc")
 bazel_dep(name = "googleapis", version = "0.0.0", repo_name = "com_google_googleapis")
 archive_override(
     module_name = "googleapis",
