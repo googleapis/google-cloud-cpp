@@ -110,7 +110,7 @@ def gl_cpp_workspace0(name = None):
     # Load Abseil
     maybe(
         http_archive,
-        name = "com_google_absl",
+        name = "abseil-cpp",
         urls = [
             "https://github.com/abseil/abseil-cpp/archive/20250127.1.tar.gz",
         ],
@@ -155,10 +155,10 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_google_protobuf",
         urls = [
-            "https://github.com/protocolbuffers/protobuf/archive/v30.0-rc1.tar.gz",
+            "https://github.com/protocolbuffers/protobuf/archive/v30.0.tar.gz",
         ],
-        sha256 = "e787459d3d5be3bced7b2e1b17e6e83f8a66cb827ca1654e071f3bacb16f8605",
-        strip_prefix = "protobuf-30.0-rc1",
+        sha256 = "9df0e9e8ebe39f4fbbb9cf7db3d811287fe3616b2f191eb2bf5eaa12539c881f",
+        strip_prefix = "protobuf-30.0",
     )
 
     # Load BoringSSL. This could be automatically loaded by gRPC. But as of
@@ -181,10 +181,13 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_github_grpc_grpc",
         urls = [
-            "https://github.com/grpc/grpc/archive/v1.71.0-pre2.tar.gz",
+            "https://github.com/grpc/grpc/archive/v1.71.0.tar.gz",
         ],
-        sha256 = "666b792b329fec8f4490ad2b5423345523d597add25ee57c1bfdb53fa0d34f8a",
-        strip_prefix = "grpc-1.71.0-pre2",
+        repo_mapping = {
+            "@com_google_absl": "@abseil-cpp",
+        },
+        sha256 = "0d631419e54ec5b29def798623ee3bf5520dac77abeab3284ef7027ec2363f91",
+        strip_prefix = "grpc-1.71.0",
     )
 
     # We use the cc_proto_library() rule from @com_google_protobuf, which
