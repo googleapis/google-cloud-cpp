@@ -22,8 +22,8 @@ RUN zypper refresh && \
         git gzip libtool make ninja patch tar wget
 
 
-RUN zypper refresh && \
-    zypper install --allow-downgrade -y c-ares-devel
+#RUN zypper refresh && \
+#    zypper install --allow-downgrade -y c-ares-devel
 
 RUN zypper refresh && \
     zypper install --allow-downgrade -y libcurl-devel
