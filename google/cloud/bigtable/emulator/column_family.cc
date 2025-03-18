@@ -90,6 +90,8 @@ std::map<std::string, std::vector<Cell>> ColumnFamily::DeleteRow(std::string con
     }
   }
 
+  rows_.erase(row_key);
+
   return res;
 }
 
