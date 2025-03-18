@@ -21,6 +21,7 @@ export USE_BAZEL_VERSION=7.5.0
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/bazel.sh
 source module ci/cloudbuild/builds/lib/cloudcxxrc.sh
+source module ci/lib/io.sh
 
 export CC=clang
 export CXX=clang++
@@ -32,4 +33,4 @@ args+=(
   # Only run the unit tests, no need to waste time running everything.
   --test_tag_filters=-integration-test
 )
-bazel test "${args[@]}" -- "${BAZEL_TARGETS[@]}"
+io::run bazel test "${args[@]}" -- "${BAZEL_TARGETS[@]}"
