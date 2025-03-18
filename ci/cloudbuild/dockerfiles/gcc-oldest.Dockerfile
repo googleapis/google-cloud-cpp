@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM opensuse/leap:15
+FROM opensuse/leap:16
 ARG NCPU=4
 
 #RUN zypper refresh && zypper remove abseil-cpp-devel
@@ -22,8 +22,8 @@ RUN zypper refresh && \
         git gzip libtool make ninja patch tar wget
 
 
-#RUN zypper refresh && \
-#    zypper install --allow-downgrade -y c-ares-devel
+RUN zypper refresh && \
+    zypper install --allow-downgrade -y c-ares-devel
 
 RUN zypper refresh && \
     zypper install --allow-downgrade -y libcurl-devel
