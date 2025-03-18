@@ -106,7 +106,7 @@ cc_library(
         "//:grpc_utils",
         "//google/cloud:google_cloud_cpp_rest_internal",
         "//google/cloud:google_cloud_cpp_rest_protobuf_internal",
-        "@com_google_absl//absl/strings",
+        "@abseil-cpp//absl/strings",
         "@com_google_googleapis//google/longrunning:longrunning_cc_grpc",
     ],
 )
