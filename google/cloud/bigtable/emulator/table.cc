@@ -254,12 +254,9 @@ Status Table::MutateRow(google::bigtable::v2::MutateRowRequest const& request) {
         return status;
       }
     } else if (mutation.has_delete_from_row()) {
-      bool row_existed = false;
-      for (auto& column_family : column_families_) {
-        row_existed |= column_family.second->DeleteRow(request.row_key()).size();
-      }
-      if (!row_existed) {
-        // FIXME no such row existed
+      auto status = row_transaction.DeleteFromRow();
+      if (!status.ok()) {
+        return status;
       }
     } else {
       return UnimplementedError(

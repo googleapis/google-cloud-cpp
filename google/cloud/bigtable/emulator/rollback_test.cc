@@ -677,6 +677,57 @@ TEST(TransactonRollback, DeleteFromColumnRollback) {
                             3000, data));
 }
 
+// Can we delete a row from all column families?
+TEST(TransactonRollback, DeleteFromRowBasicFunction) {
+  ::google::bigtable::admin::v2::Table schema;
+  ::google::bigtable::admin::v2::ColumnFamily column_family;
+
+  auto const* const table_name = "projects/test/instances/test/tables/test";
+  auto const* const row_key = "0";
+  auto const* const column_family_name = "column_family_1";
+  auto const* const column_qualifer = "column_qualifier";
+  auto const timestamp_micros = 1000;
+  auto const* data = "value";
+  auto const* const second_column_family_name = "column_family_2";
+
+  std::vector<std::string> column_families = {column_family_name,
+                                              second_column_family_name};
+  auto maybe_table = create_table(table_name, column_families);
+
+  ASSERT_STATUS_OK(maybe_table);
+  auto table = maybe_table.value();
+
+  std::vector<SetCellParams> v;
+  SetCellParams p = {column_family_name, column_qualifer, timestamp_micros,
+                     data};
+  v.push_back(p);
+
+  p = {second_column_family_name, column_qualifer, timestamp_micros, data};
+  v.push_back(p);
+
+  auto status = set_cells(table, table_name, row_key, v);
+  ASSERT_STATUS_OK(status);
+  ASSERT_STATUS_OK(has_cell(table, column_family_name, row_key, column_qualifer,
+                            timestamp_micros, data));
+  ASSERT_STATUS_OK(
+      has_column(table, second_column_family_name, row_key, column_qualifer));
+  ASSERT_STATUS_OK(has_row(table, column_family_name, row_key));
+
+  ::google::bigtable::v2::MutateRowRequest mutation_request;
+  mutation_request.set_table_name(table_name);
+  mutation_request.set_row_key(row_key);
+
+  auto* mutation_request_mutation = mutation_request.add_mutations();
+  mutation_request_mutation->mutable_delete_from_row();
+
+  ASSERT_STATUS_OK(table->MutateRow(mutation_request));
+  ASSERT_EQ(false, has_cell(table, column_family_name, row_key, column_qualifer,
+                            timestamp_micros, data)
+                       .ok());
+  ASSERT_EQ(false, has_column(table, second_column_family_name, row_key,
+                              column_qualifer)
+                       .ok());
+}
 
 }  // namespace emulator
 }  // namespace bigtable
