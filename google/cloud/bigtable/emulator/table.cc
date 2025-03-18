@@ -454,7 +454,6 @@ Status RowTransaction::DeleteFromFamily(
                   ErrorInfo());
   }
 
-
   std::map<std::string, ColumnFamilyRow>::iterator column_family_row_it;
   if (column_family_row_it = column_family_it->second->find(request_.row_key());
       column_family_row_it == column_family_it->second->end()) {
@@ -466,9 +465,11 @@ Status RowTransaction::DeleteFromFamily(
   }
 
   auto deleted = column_family_it->second->DeleteRow(request_.row_key());
-  for (const auto& column :  deleted) {
-    for (const auto& cell : column.second) {
-      RestoreValue restore_value = {*column_family_it->second, request_.row_key(), std::move(column.first), cell.timestamp, std::move(cell.value)};
+  for (auto const& column : deleted) {
+    for (auto const& cell : column.second) {
+      RestoreValue restore_value = {*column_family_it->second,
+                                    request_.row_key(), std::move(column.first),
+                                    cell.timestamp, std::move(cell.value)};
       undo_.emplace(restore_value);
     }
   }
