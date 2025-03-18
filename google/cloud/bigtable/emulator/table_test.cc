@@ -14,9 +14,9 @@
 
 #include "google/cloud/bigtable/emulator/table.h"
 #include "google/cloud/bigtable/row_range.h"
+#include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "google/cloud/testing_util/chrono_literals.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -25,8 +25,8 @@ namespace bigtable {
 namespace emulator {
 namespace {
 
-std::string DumpStream(
-    AbstractCellStreamImpl& stream, NextMode next_mode = NextMode::kCell) {
+std::string DumpStream(AbstractCellStreamImpl& stream,
+                       NextMode next_mode = NextMode::kCell) {
   std::stringstream ss;
   for (; stream.HasValue(); stream.Next(next_mode)) {
     auto const& cell = stream.Value();
@@ -83,10 +83,10 @@ TEST(FilteredTableStream, OtherFiltersArePropagated) {
   ColumnFamily fam1;
   ColumnFamily fam2;
   fam1.SetCell("row1", "col1", 10_ms, "foo");
-  fam1.SetCell("row0", "col1", 10_ms, "foo");  // row key regex
-  fam2.SetCell("row1", "col1", 10_ms, "foo");  // column family regex
-  fam1.SetCell("row1", "col2", 10_ms, "foo");  // column qualifier regex
-  fam1.SetCell("row1", "a1", 10_ms, "foo");  // column range
+  fam1.SetCell("row0", "col1", 10_ms, "foo");    // row key regex
+  fam2.SetCell("row1", "col1", 10_ms, "foo");    // column family regex
+  fam1.SetCell("row1", "col2", 10_ms, "foo");    // column qualifier regex
+  fam1.SetCell("row1", "a1", 10_ms, "foo");      // column range
   fam1.SetCell("row1", "col1", 1000_ms, "foo");  // timestamp range
   auto ffam1 = std::make_unique<FilteredColumnFamilyStream>(
       fam1, "fam1", std::make_unique<StringRangeSet>(StringRangeSet::All()));

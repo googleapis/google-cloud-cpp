@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/emulator/cluster.h"
 #include "google/cloud/bigtable/emulator/server.h"
+#include "google/cloud/bigtable/emulator/cluster.h"
 #include "google/cloud/bigtable/emulator/to_grpc_status.h"
 #include "google/cloud/internal/make_status.h"
-#include <google/protobuf/util/time_util.h>
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
+#include <google/protobuf/util/time_util.h>
 #include <grpcpp/server.h>
 #include <grpcpp/server_builder.h>
 
@@ -32,7 +32,7 @@ namespace btadmin = ::google::bigtable::admin::v2;
 
 class EmulatorService final : public btproto::Bigtable::Service {
  public:
-  EmulatorService(std::shared_ptr<Cluster> cluster)
+  explicit EmulatorService(std::shared_ptr<Cluster> cluster)
       : cluster_(std::move(cluster)) {}
 
   grpc::Status ReadRows(
@@ -92,14 +92,13 @@ class EmulatorService final : public btproto::Bigtable::Service {
 
 class EmulatorTableService final : public btadmin::BigtableTableAdmin::Service {
  public:
-  EmulatorTableService(std::shared_ptr<Cluster> cluster)
+  explicit EmulatorTableService(std::shared_ptr<Cluster> cluster)
       : cluster_(std::move(cluster)) {}
   grpc::Status CreateTable(grpc::ServerContext* /* context */,
                            btadmin::CreateTableRequest const* request,
                            btadmin::Table* response) override {
     auto table_name = request->parent() + "/tables/" + request->table_id();
-    auto maybe_table =
-        cluster_->CreateTable(table_name, request->table());
+    auto maybe_table = cluster_->CreateTable(table_name, request->table());
     if (!maybe_table) {
       return ToGrpcStatus(maybe_table.status());
     }
@@ -107,17 +106,16 @@ class EmulatorTableService final : public btadmin::BigtableTableAdmin::Service {
     return grpc::Status::OK;
   }
 
-  grpc::Status ListTables(
-      grpc::ServerContext* /* context */,
-      btadmin::ListTablesRequest const* request,
-      btadmin::ListTablesResponse* response) override {
-
+  grpc::Status ListTables(grpc::ServerContext* /* context */,
+                          btadmin::ListTablesRequest const* request,
+                          btadmin::ListTablesResponse* response) override {
     if (!request->page_token().empty()) {
       return ToGrpcStatus(UnimplementedError(
           "Pagination is not supported.",
           GCP_ERROR_INFO().WithMetadata("page_token", request->page_token())));
     }
-    auto maybe_tables = cluster_->ListTables(request->parent(), request->view());
+    auto maybe_tables =
+        cluster_->ListTables(request->parent(), request->view());
     if (!maybe_tables) {
       return ToGrpcStatus(maybe_tables.status());
     }
@@ -132,7 +130,7 @@ class EmulatorTableService final : public btadmin::BigtableTableAdmin::Service {
       response->set_next_page_token("unsupported");
       maybe_tables->resize(request->page_size());
     }
-    for (auto &table : *maybe_tables) {
+    for (auto& table : *maybe_tables) {
       *response->add_tables() = std::move(table);
     }
     return grpc::Status::OK;
@@ -149,10 +147,9 @@ class EmulatorTableService final : public btadmin::BigtableTableAdmin::Service {
     return grpc::Status::OK;
   }
 
-  grpc::Status UpdateTable(
-      grpc::ServerContext* /* context */,
-      btadmin::UpdateTableRequest const* request,
-      google::longrunning::Operation* response) override {
+  grpc::Status UpdateTable(grpc::ServerContext* /* context */,
+                           btadmin::UpdateTableRequest const* request,
+                           google::longrunning::Operation* response) override {
     auto maybe_table = cluster_->FindTable(request->table().name());
     if (!maybe_table) {
       return ToGrpcStatus(maybe_table.status());
@@ -256,11 +253,9 @@ class DefaultEmulatorServer : public EmulatorServer {
     builder_.RegisterService(&table_service_);
     server_ = builder_.BuildAndStart();
   }
-  virtual ~DefaultEmulatorServer() = default;
-
-  virtual int bound_port() { return bound_port_; }
-  virtual void Shutdown() { server_->Shutdown(); }
-  virtual void Wait() { server_->Wait(); }
+  int bound_port() override { return bound_port_; }
+  void Shutdown() override { server_->Shutdown(); }
+  void Wait() override { server_->Wait(); }
 
  private:
   int bound_port_;

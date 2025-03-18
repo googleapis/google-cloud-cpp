@@ -22,17 +22,17 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 namespace emulator {
+
 /**
  * An emulated cluster, which manages the lifecycle of all tables.
  *
  * This emulated cluster holds tables from all projects and instances - they are
- * merely a component of table names.
+ * merely components of table names.
  */
 class Cluster {
  public:
   StatusOr<google::bigtable::admin::v2::Table> CreateTable(
-      std::string const& table_name,
-      google::bigtable::admin::v2::Table schema);
+      std::string const& table_name, google::bigtable::admin::v2::Table schema);
 
   StatusOr<std::vector<google::bigtable::admin::v2::Table>> ListTables(
       std::string const& instance_name,
@@ -42,19 +42,23 @@ class Cluster {
       std::string const& table_name,
       google::bigtable::admin::v2::Table_View view) const;
 
-  Status DeleteTable(std::string const &table_name);
+  Status DeleteTable(std::string const& table_name);
 
-  bool HasTable(std::string const &table_name) const;
+  bool HasTable(std::string const& table_name) const;
 
   StatusOr<std::shared_ptr<Table>> FindTable(std::string const& table_name);
 
  private:
-
   mutable std::mutex mu_;
-  // All the tables indexed by their names (i.e.
-  // projects/{}/instances/{}/tables/{}). We're holding the tables by
-  // `shared_ptr`s in order to be able to allow for more concurrency - every
-  // access to a table should start with creating a copy of the shared pointer.
+
+  /**
+   * All the tables indexed by their names.
+   *
+   * The names are in the form `/ projects/{}/instances/{}/tables/{}`. We're
+   * holding the tables by `shared_ptr`s in order to be able to allow for more
+   * concurrency - every access to a table should start with creating a copy of
+   * the shared pointer.
+   */
   std::map<std::string, std::shared_ptr<Table>> table_by_name_;
 };
 

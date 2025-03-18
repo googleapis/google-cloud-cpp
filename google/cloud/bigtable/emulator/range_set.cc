@@ -48,16 +48,22 @@ bool ConsecutiveRowKeys(StringRangeSet::Range::Value const& lhs,
 bool HasOverlap(StringRangeSet::Range const& lhs,
                 StringRangeSet::Range const& rhs) {
   auto const start_cmp = CompareRangeValues(lhs.start(), rhs.start());
-  StringRangeSet::Range const& intersect_start =
-      (start_cmp == 0) ? (lhs.start_open() ? lhs : rhs)
-                       : ((start_cmp > 0) ? lhs : rhs);
+  StringRangeSet::Range const* intersect_start;
+  if (start_cmp == 0) {
+    intersect_start = lhs.start_open() ? &lhs : &rhs;
+  } else {
+    intersect_start = (start_cmp > 0) ? &lhs : &rhs;
+  }
   auto const end_cmp = CompareRangeValues(lhs.end(), rhs.end());
-  StringRangeSet::Range const& intersect_end = (end_cmp == 0)
-                                                 ? (lhs.end_open() ? lhs : rhs)
-                                                 : ((end_cmp < 0) ? lhs : rhs);
+  StringRangeSet::Range const* intersect_end;
+  if (end_cmp == 0) {
+    intersect_end = lhs.end_open() ? &lhs : &rhs;
+  } else {
+    intersect_end = (end_cmp < 0) ? &lhs : &rhs;
+  }
   return !StringRangeSet::Range::IsEmpty(
-      intersect_start.start(), intersect_start.start_open(),
-      intersect_end.end(), intersect_end.end_open());
+      intersect_start->start(), intersect_start->start_open(),
+      intersect_end->end(), intersect_end->end_open());
 }
 
 bool HasOverlap(TimestampRangeSet::Range const& lhs,
@@ -74,7 +80,7 @@ bool DisjointAndSortedRangesAdjacent(StringRangeSet::Range const& lhs,
   assert(!HasOverlap(lhs, rhs));
   assert(StringRangeSet::Range::StartLess()(lhs, rhs));
   if (lhs.end_closed() && rhs.start_open() && lhs.end() == rhs.start()) {
-      return true;
+    return true;
   }
   if (lhs.end_open() && rhs.start_closed() && lhs.end() == rhs.start()) {
     return true;
@@ -96,8 +102,7 @@ bool DisjointAndSortedRangesAdjacent(TimestampRangeSet::Range const& lhs,
 }
 
 template <typename RangeSetType, typename RangeType>
-void RangeSetSumImpl(RangeSetType& disjoint_ranges,
-                            RangeType inserted_range) {
+void RangeSetSumImpl(RangeSetType& disjoint_ranges, RangeType inserted_range) {
   // Remove all ranges which either have an overlap with `inserted_range` or are
   // adjacent to it. Then add `inserted_range` with `start` and `end`
   // adjusted to cover what the removed ranges used to cover.
@@ -161,18 +166,18 @@ void RangeSetIntersectImpl(RangeSetType& disjoint_ranges,
 }  // namespace detail
 
 StringRangeSet::Range::Range(Value start, bool start_open, Value end,
-                           bool end_open)
+                             bool end_open)
     : start_(std::move(start)),
       start_open_(start_open),
       end_(std::move(end)),
       end_open_(end_open) {
-  assert(!Range::ValueLess()(end, start));
-  assert(!absl::holds_alternative<StringRangeSet::Range::Infinity>(start) ||
+  assert(!Range::ValueLess()(end_, start_));
+  assert(!absl::holds_alternative<StringRangeSet::Range::Infinity>(start_) ||
          !start_open_);
-  assert(!absl::holds_alternative<StringRangeSet::Range::Infinity>(end) ||
+  assert(!absl::holds_alternative<StringRangeSet::Range::Infinity>(end_) ||
          !end_open_);
-  assert(!absl::holds_alternative<StringRangeSet::Range::Infinity>(start) ||
-         absl::holds_alternative<StringRangeSet::Range::Infinity>(end));
+  assert(!absl::holds_alternative<StringRangeSet::Range::Infinity>(start_) ||
+         absl::holds_alternative<StringRangeSet::Range::Infinity>(end_));
 }
 
 StatusOr<StringRangeSet::Range> StringRangeSet::Range::FromRowRange(
@@ -301,7 +306,7 @@ void StringRangeSet::Range::set_end(Range const& source) {
   end_open_ = source.end_open();
 }
 
-bool StringRangeSet::Range::IsBelowStart(Value const &value) const {
+bool StringRangeSet::Range::IsBelowStart(Value const& value) const {
   auto const cmp = detail::CompareRangeValues(value, start_);
   if (cmp != 0) {
     return cmp < 0;
@@ -329,7 +334,7 @@ bool StringRangeSet::Range::IsEmpty(StringRangeSet::Range::Value const& start,
   return false;
 }
 
-bool StringRangeSet::Range::IsAboveEnd(Value const &value) const {
+bool StringRangeSet::Range::IsAboveEnd(Value const& value) const {
   auto const cmp = detail::CompareRangeValues(value, end_);
   if (cmp != 0) {
     return cmp > 0;
@@ -337,7 +342,7 @@ bool StringRangeSet::Range::IsAboveEnd(Value const &value) const {
   return end_open_;
 }
 
-bool StringRangeSet::Range::IsWithin(Value const &value) const {
+bool StringRangeSet::Range::IsWithin(Value const& value) const {
   return !IsAboveEnd(value) && !IsBelowStart(value);
 }
 
@@ -345,13 +350,13 @@ bool StringRangeSet::Range::IsEmpty() const {
   return Range::IsEmpty(start_, start_open_, end_, end_open_);
 }
 
-bool StringRangeSet::Range::ValueLess::operator()(Range::Value const& lhs,
-                                              Range::Value const& rhs) const {
+bool StringRangeSet::Range::ValueLess::operator()(
+    Range::Value const& lhs, Range::Value const& rhs) const {
   return detail::CompareRangeValues(lhs, rhs) < 0;
 }
 
 bool StringRangeSet::Range::StartLess::operator()(Range const& lhs,
-                                              Range const& rhs) const {
+                                                  Range const& rhs) const {
   auto res = detail::CompareRangeValues(lhs.start(), rhs.start());
   if (res == 0) {
     return lhs.start_closed() && rhs.start_open();
@@ -360,7 +365,7 @@ bool StringRangeSet::Range::StartLess::operator()(Range const& lhs,
 }
 
 bool StringRangeSet::Range::EndLess::operator()(Range const& lhs,
-                                            Range const& rhs) const {
+                                                Range const& rhs) const {
   auto res = detail::CompareRangeValues(lhs.end(), rhs.end());
   if (res == 0) {
     return lhs.end_open() && rhs.end_closed();
@@ -374,16 +379,14 @@ StringRangeSet StringRangeSet::All() {
   return res;
 }
 
-StringRangeSet StringRangeSet::Empty() {
-  return StringRangeSet{};
-}
+StringRangeSet StringRangeSet::Empty() { return StringRangeSet{}; }
 
 void StringRangeSet::Sum(StringRangeSet::Range inserted_range) {
   detail::RangeSetSumImpl(disjoint_ranges_, std::move(inserted_range));
 }
 
-void StringRangeSet::Intersect(StringRangeSet::Range const& inserted_range) {
-  detail::RangeSetIntersectImpl(disjoint_ranges_, inserted_range);
+void StringRangeSet::Intersect(StringRangeSet::Range const& intersected_range) {
+  detail::RangeSetIntersectImpl(disjoint_ranges_, intersected_range);
 }
 
 bool operator==(StringRangeSet::Range::Value const& lhs,
@@ -413,8 +416,7 @@ bool operator==(StringRangeSet::Range const& lhs,
          lhs.end() == rhs.end() && lhs.end_open() == rhs.end_open();
 }
 
-std::ostream& operator<<(std::ostream& os,
-                         StringRangeSet::Range const& range) {
+std::ostream& operator<<(std::ostream& os, StringRangeSet::Range const& range) {
   os << (range.start_closed() ? "[" : "(") << range.start() << ","
      << range.end() << (range.end_closed() ? "]" : ")");
   return os;
@@ -422,11 +424,11 @@ std::ostream& operator<<(std::ostream& os,
 
 TimestampRangeSet::Range::Range(Value start, Value end)
     : start_(std::move(start)), end_(std::move(end)) {
-  assert(end == std::chrono::milliseconds::zero() || start <= end);
+  assert(end_ == std::chrono::milliseconds::zero() || start_ <= end_);
 }
 
 StatusOr<TimestampRangeSet::Range> TimestampRangeSet::Range::FromTimestampRange(
-        google::bigtable::v2::TimestampRange const& timestamp_range) {
+    google::bigtable::v2::TimestampRange const& timestamp_range) {
   auto start = std::chrono::duration_cast<std::chrono::milliseconds>(
       std::chrono::microseconds(timestamp_range.start_timestamp_micros()));
   auto end = std::chrono::duration_cast<std::chrono::milliseconds>(
@@ -457,12 +459,12 @@ bool TimestampRangeSet::Range::IsEmpty(TimestampRangeSet::Range::Value start,
 }
 
 bool TimestampRangeSet::Range::StartLess::operator()(Range const& lhs,
-                                              Range const& rhs) const {
+                                                     Range const& rhs) const {
   return lhs.start() < rhs.start();
 }
 
 bool TimestampRangeSet::Range::EndLess::operator()(Range const& lhs,
-                                            Range const& rhs) const {
+                                                   Range const& rhs) const {
   if (lhs.end() == std::chrono::milliseconds::zero()) {
     return false;
   }
@@ -478,9 +480,7 @@ TimestampRangeSet TimestampRangeSet::All() {
   return res;
 }
 
-TimestampRangeSet TimestampRangeSet::Empty() {
-  return TimestampRangeSet{};
-}
+TimestampRangeSet TimestampRangeSet::Empty() { return TimestampRangeSet{}; }
 
 void TimestampRangeSet::Sum(TimestampRangeSet::Range inserted_range) {
   detail::RangeSetSumImpl(disjoint_ranges_, std::move(inserted_range));
@@ -507,7 +507,6 @@ std::ostream& operator<<(std::ostream& os,
   os << ")";
   return os;
 }
-
 
 }  // namespace emulator
 }  // namespace bigtable

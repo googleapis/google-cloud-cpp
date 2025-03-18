@@ -14,9 +14,9 @@
 
 #include "google/cloud/bigtable/emulator/filtered_map.h"
 #include "google/cloud/bigtable/row_range.h"
+#include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "google/cloud/testing_util/chrono_literals.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
@@ -124,9 +124,9 @@ TEST(RangeFilteredMapView, NoEntriesBeforeOpenFilter) {
 
 TEST(RangeFilteredMapView, MultipleFilters) {
   std::map<std::string, int> unfiltered{
-      {"AA", 0},   {"AAA", 0},  {"AAAa", 0}, {"AAAb", 0}, {"AAB", 0},
-      {"AAC", 0},  {"BB", 0},   {"BBB", 0},  {"BBBa", 0}, {"BBBb", 0},
-      {"CCCa", 0}, {"CCCb", 0}, {"CCD", 0},  {"CCE", 0}};
+      {"AA", 0},   {"AAA", 0}, {"AAAa", 0}, {"AAAb", 0}, {"AAB", 0},
+      {"AAC", 0},  {"BB", 0},  {"BBB", 0},  {"BBBb", 0}, {"CCCa", 0},
+      {"CCCb", 0}, {"CCD", 0}, {"CCE", 0}};
   auto filter = StringRangeSet::Empty();
   filter.Sum(StringRangeSet::Range("AAA", kOpen, "AAB", kClosed));
   filter.Sum(StringRangeSet::Range("BBB", kClosed, "BBC", kOpen));
@@ -134,7 +134,7 @@ TEST(RangeFilteredMapView, MultipleFilters) {
   RangeFilteredMapView<decltype(unfiltered), StringRangeSet> filtered(
       unfiltered, filter);
 
-  EXPECT_EQ(Vec({"AAAa", "AAAb", "AAB", "BBB", "BBBa", "BBBb", "CCCa", "CCCb"}),
+  EXPECT_EQ(Vec({"AAAa", "AAAb", "AAB", "BBB", "BBBb", "CCCa", "CCCb"}),
             Keys(filtered));
 }
 

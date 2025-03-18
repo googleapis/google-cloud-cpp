@@ -17,8 +17,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-namespace emulator {
-}  // namespace emulator
+namespace emulator {}  // namespace emulator
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

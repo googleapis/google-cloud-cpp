@@ -18,16 +18,15 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-namespace emulator {
-}  // namespace emulator
+namespace emulator {}  // namespace emulator
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google
 
-int main() { 
+int main() {
   using namespace google::cloud::bigtable::emulator;
   auto server = CreateDefaultEmulatorServer("[::]", 8888);
   std::cout << "Server running on port " << server->bound_port() << "\n";
   server->Wait();
-  return 0; 
+  return 0;
 }

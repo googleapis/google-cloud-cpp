@@ -15,22 +15,45 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EMULATOR_ROW_STREAMER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EMULATOR_ROW_STREAMER_H
 
-#include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include "google/cloud/bigtable/emulator/cell_view.h"
-#include <grpcpp/server.h>
 #include "absl/types/optional.h"
+#include <google/bigtable/v2/bigtable.grpc.pb.h>
+#include <grpcpp/server.h>
 
 namespace google {
 namespace cloud {
 namespace bigtable {
 namespace emulator {
 
+/**
+ * Objects of this class implement the ReadRows response protocol.
+ *
+ * Incoming cells are used to populate an internal buffer, which batches them
+ * into messages, which are then written to a gRPC stream.
+ */
 class RowStreamer {
  public:
-  RowStreamer(
+  /**
+   * Create a new object.
+   *
+   * @param writer the gRPC stream to be written to. User should ensure it
+   *     outlives this object.
+   */
+  explicit RowStreamer(
       grpc::ServerWriter<google::bigtable::v2::ReadRowsResponse>& writer);
+  /// Stream a cell.
   bool Stream(CellView const& cell_view);
 
+  /**
+   * Manually flush the stream, potentially closing it.
+   *
+   * One should call `Flush(true)` before destroying this object.
+   *
+   * @param stream_finished if `true` no more cells will be streamed. If
+   *     `false`, the buffer of outstanding cells will be immediately sent to
+   *     the recipient.
+   * @return whether flushing succeeded
+   */
   bool Flush(bool stream_finished);
 
  private:
@@ -48,4 +71,3 @@ class RowStreamer {
 }  // namespace google
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EMULATOR_ROW_STREAMER_H
-

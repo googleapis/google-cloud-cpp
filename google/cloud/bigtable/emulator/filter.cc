@@ -14,13 +14,13 @@
 
 #include "google/cloud/bigtable/emulator/filter.h"
 #include "google/cloud/bigtable/emulator/range_set.h"
-#include "google/cloud/status_or.h"
+#include "google/cloud/bigtable/internal/google_bytes_traits.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/make_status.h"
-#include "google/cloud/bigtable/internal/google_bytes_traits.h"
+#include "google/cloud/status_or.h"
 #include <re2/re2.h>
-#include <random>
 #include <queue>
+#include <random>
 
 namespace google {
 namespace cloud {
@@ -32,64 +32,73 @@ bool PassAllFilters(InternalFilter const&) { return true; }
 
 }  // namespace
 
-FilterContext& FilterContext::DisallowApplyLabel() {
-  allow_apply_label_ = false;
-  return *this;
-}
-
 void CellStream::Next(NextMode mode) {
   if (impl_->Next(mode)) {
     return;
   }
   if (mode == NextMode::kColumn) {
-    std::string cur_row_key = impl_->Value().row_key();
-    std::string cur_column_family = impl_->Value().column_family();
-    std::string cur_column_qualifier = impl_->Value().column_qualifier();
-    for (impl_->Next();
-         impl_->HasValue() && cur_row_key == impl_->Value().row_key() &&
-         cur_column_family == impl_->Value().column_family() &&
-         cur_column_qualifier == impl_->Value().column_qualifier();
-         impl_->Next());
+    EmulateNextColumn();
     return;
   }
   assert(mode == NextMode::kRow);
+  EmulateNextRow();
+}
+
+void CellStream::NextColumn() {
+  if (!impl_->Next(NextMode::kColumn)) {
+    EmulateNextColumn();
+  }
+}
+
+void CellStream::EmulateNextColumn() {
   std::string cur_row_key = impl_->Value().row_key();
-  for (Next(NextMode::kColumn);
+  std::string cur_column_family = impl_->Value().column_family();
+  std::string cur_column_qualifier = impl_->Value().column_qualifier();
+  for (impl_->Next(NextMode::kCell);
+       impl_->HasValue() && cur_row_key == impl_->Value().row_key() &&
+       cur_column_family == impl_->Value().column_family() &&
+       cur_column_qualifier == impl_->Value().column_qualifier();
+       impl_->Next(NextMode::kCell));
+}
+
+void CellStream::EmulateNextRow() {
+  std::string cur_row_key = impl_->Value().row_key();
+  for (NextColumn();
        impl_->HasValue() && cur_row_key == impl_->Value().row_key();
-       impl_->Next(NextMode::kColumn));
+       NextColumn());
 }
 
 template <typename FilterFunctor, typename StateResetFunctor>
 class PerRowStateFilter {
-  static_assert(
-      google::cloud::internal::is_invocable<StateResetFunctor>::value,
-      "StateResetFunctor must be invocable with no arguments");
+  static_assert(google::cloud::internal::is_invocable<StateResetFunctor>::value,
+                "StateResetFunctor must be invocable with no arguments");
   using State =
       std::decay_t<google::cloud::internal::invoke_result_t<StateResetFunctor>>;
-  static_assert(std::is_default_constructible_v<State>,
+  static_assert(std::is_default_constructible<State>::value,
                 "State must be default constructible");
-  static_assert(std::is_assignable_v<State&, State>,
+  static_assert(std::is_assignable<State&, State>::value,
                 "State must assignable");
-  static_assert(std::is_same_v<google::cloud::internal::invoke_result_t<
-                                   FilterFunctor, State&, CellView const&>,
-                               absl::optional<NextMode>>,
+  static_assert(std::is_same<google::cloud::internal::invoke_result_t<
+                                 FilterFunctor, State&, CellView const&>,
+                             absl::optional<NextMode>>::value,
                 "Invalid result of `FilterFunctor` invocation.");
 
  public:
   PerRowStateFilter(FilterFunctor filter, StateResetFunctor reset)
       : filter_(std::move(filter)), reset_(std::move(reset)) {}
 
-  absl::optional<NextMode> operator()(CellView const &cell_view) {
+  absl::optional<NextMode> operator()(CellView const& cell_view) {
     if (!prev_row_ || prev_row_.value() != cell_view.row_key()) {
       state_ = reset_();
       prev_row_ = cell_view.row_key();
     }
     return filter_(state_, cell_view);
   }
+
  private:
   absl::optional<std::string> prev_row_;
   State state_;
-  FilterFunctor filter_; 
+  FilterFunctor filter_;
   StateResetFunctor reset_;
 };
 
@@ -100,35 +109,36 @@ class PerColumnStateFilter {
       "StateResetFunctor must be invocable with no arguments");
   using State =
       std::decay_t<google::cloud::internal::invoke_result_t<StateResetFunctor>>;
-  static_assert(std::is_default_constructible_v<State>,
+  static_assert(std::is_default_constructible<State>::value,
                 "State must be default constructible");
-  static_assert(std::is_assignable_v<State&, State>,
+  static_assert(std::is_assignable<State&, State>::value,
                 "State must assignable");
-  static_assert(std::is_same_v<google::cloud::internal::invoke_result_t<
-                                   FilterFunctor, State&, CellView const&>,
-                               absl::optional<NextMode>>,
+  static_assert(std::is_same<google::cloud::internal::invoke_result_t<
+                                 FilterFunctor, State&, CellView const&>,
+                             absl::optional<NextMode>>::value,
                 "Invali result of `FilterFunctor` invocation.");
 
  public:
   PerColumnStateFilter(FilterFunctor filter, StateResetFunctor reset)
       : filter_(std::move(filter)), reset_(std::move(reset)) {}
 
-  absl::optional<NextMode> operator()(CellView const &cell_view) {
-    if (!prev_|| !prev_->Matches(cell_view)) {
+  absl::optional<NextMode> operator()(CellView const& cell_view) {
+    if (!prev_ || !prev_->Matches(cell_view)) {
       state_ = reset_();
       prev_ = Prev(cell_view);
     }
     return filter_(state_, cell_view);
   }
+
  private:
   class Prev {
    public:
-    Prev(CellView const& cell_view)
+    explicit Prev(CellView const& cell_view)
         : row_key_(cell_view.row_key()),
           column_family_(cell_view.column_family()),
           column_qualifier_(cell_view.column_qualifier()) {}
 
-    bool Matches(CellView const &cell_view) {
+    bool Matches(CellView const& cell_view) {
       return row_key_ == cell_view.row_key() &&
              column_family_ == cell_view.column_family() &&
              column_qualifier_ == cell_view.column_qualifier();
@@ -141,7 +151,7 @@ class PerColumnStateFilter {
   };
   absl::optional<Prev> prev_;
   State state_;
-  FilterFunctor filter_; 
+  FilterFunctor filter_;
   StateResetFunctor reset_;
 };
 
@@ -151,9 +161,7 @@ class TrivialTransformer : public AbstractCellStreamImpl {
   TrivialTransformer(CellStream source, Transformer transformer)
       : source_(std::move(source)), transformer_(std::move(transformer)) {}
 
-  bool ApplyFilter(InternalFilter const& ) override {
-    return false;
-  }
+  bool ApplyFilter(InternalFilter const&) override { return false; }
 
   bool HasValue() const override { return source_.HasValue(); }
 
@@ -164,8 +172,8 @@ class TrivialTransformer : public AbstractCellStreamImpl {
     return transformed_.value();
   }
 
-  bool Next(NextMode mode) override { 
-    source_.Next(mode); 
+  bool Next(NextMode mode) override {
+    source_.Next(mode);
     transformed_.reset();
     return true;
   }
@@ -185,16 +193,15 @@ CellStream MakeTrivialTransformer(CellStream source, Transformer transformer) {
 template <typename Filter>
 class TrivialFilter : public AbstractCellStreamImpl {
   static_assert(
-      std::is_same_v<
+      std::is_same<
           google::cloud::internal::invoke_result_t<Filter, CellView const&>,
-          absl::optional<NextMode>>,
+          absl::optional<NextMode>>::value,
       "Invalid filter return type");
 
  public:
   TrivialFilter(CellStream source, Filter filter,
                 std::function<bool(InternalFilter const&)> filter_filter)
-      : initialized_(false),
-        source_(std::move(source)),
+      : source_(std::move(source)),
         filter_(std::move(filter)),
         filter_filter_(std::move(filter_filter)) {}
 
@@ -239,7 +246,7 @@ class TrivialFilter : public AbstractCellStreamImpl {
     }
   }
 
-  mutable bool initialized_;
+  mutable bool initialized_{false};
   mutable CellStream source_;
   mutable Filter filter_;
   std::function<bool(InternalFilter const&)> filter_filter_;
@@ -295,8 +302,7 @@ bool MergeCellStreams::CellStreamGreater::operator()(
   return (*lhs)->timestamp() > (*rhs)->timestamp();
 }
 
-MergeCellStreams::MergeCellStreams(std::vector<CellStream> streams)
-    : initialized_(false) {
+MergeCellStreams::MergeCellStreams(std::vector<CellStream> streams) {
   for (auto& stream : streams) {
     unfinished_streams_.emplace_back(
         std::make_unique<CellStream>(std::move(stream)));
@@ -334,7 +340,7 @@ bool MergeCellStreams::Next(NextMode mode) {
   std::pop_heap(unfinished_streams_.begin(), unfinished_streams_.end(),
                 CellStreamGreater());
   auto& stream_to_advance = unfinished_streams_.back();
-  stream_to_advance->Next();
+  stream_to_advance->Next(NextMode::kCell);
   if (stream_to_advance->HasValue()) {
     std::push_heap(unfinished_streams_.begin(), unfinished_streams_.end(),
                    CellStreamGreater());
@@ -353,7 +359,7 @@ void MergeCellStreams::InitializeIfNeeded() const {
 
 void MergeCellStreams::ReassesStreams() const {
   for (auto stream_it = unfinished_streams_.begin();
-       stream_it != unfinished_streams_.end(); ) {
+       stream_it != unfinished_streams_.end();) {
     if (!(*stream_it)->HasValue()) {
       stream_it->swap(unfinished_streams_.back());
       unfinished_streams_.pop_back();
@@ -394,25 +400,21 @@ class ConditionStream : public AbstractCellStreamImpl {
       : source_(std::move(source)),
         predicate_stream_(std::move(predicate)),
         true_stream_(std::move(true_stream)),
-        false_stream_(std::move(false_stream)),
-        initialized_(false) {}
+        false_stream_(std::move(false_stream)) {}
 
-  bool ApplyFilter(InternalFilter const& ) override {
-    return false;
-  }
+  bool ApplyFilter(InternalFilter const&) override { return false; }
 
   bool HasValue() const override {
     InitializeIfNeeded();
     return source_.HasValue();
   }
 
-  CellView const &Value() const override {
+  CellView const& Value() const override {
     InitializeIfNeeded();
     if (condition_true_) {
       return *true_stream_;
-    } else {
-      return *false_stream_;
     }
+    return *false_stream_;
   }
 
   bool Next(NextMode mode) override {
@@ -453,7 +455,7 @@ class ConditionStream : public AbstractCellStreamImpl {
       if (predicate_stream_ &&
           internal::CompareRowKey(predicate_stream_->row_key(),
                                   cell_view.row_key()) == 0) {
-        // Predicate stream did return somthing for this row.
+        // Predicate stream did return something for this row.
         condition_true_ = true;
         // Fast-forward the true stream to start at current row.
         for (; true_stream_ && internal::CompareRowKey(true_stream_->row_key(),
@@ -495,7 +497,7 @@ class ConditionStream : public AbstractCellStreamImpl {
   mutable CellStream predicate_stream_;
   mutable CellStream true_stream_;
   mutable CellStream false_stream_;
-  mutable bool initialized_;
+  mutable bool initialized_{false};
   mutable bool condition_true_;
   mutable std::string current_row_;
 };
@@ -513,9 +515,10 @@ class EmptyCellStreamImpl : public AbstractCellStreamImpl {
   bool Next(NextMode) override { return true; }
 };
 
+// NOLINTBEGIN(misc-no-recursion,readability-function-cognitive-complexity)
 StatusOr<CellStreamConstructor> CreateFilterImpl(
     ::google::bigtable::v2::RowFilter const& filter,
-    CellStreamConstructor source_ctor, FilterContext const& ctx,
+    CellStreamConstructor source_ctor,
     std::vector<CellStreamConstructor>& direct_sinks) {
   if (filter.has_pass_all_filter()) {
     if (!filter.pass_all_filter()) {
@@ -524,7 +527,8 @@ StatusOr<CellStreamConstructor> CreateFilterImpl(
           GCP_ERROR_INFO().WithMetadata("filter", filter.DebugString()));
     }
     return source_ctor;
-  } else if (filter.has_block_all_filter()) {
+  }
+  if (filter.has_block_all_filter()) {
     if (!filter.block_all_filter()) {
       return InvalidArgumentError(
           "`block_all_filter` explicitly set to `false`.",
@@ -534,7 +538,8 @@ StatusOr<CellStreamConstructor> CreateFilterImpl(
       return CellStream(std::make_unique<EmptyCellStreamImpl>());
     };
     return res;
-  } else if (filter.has_row_key_regex_filter()) {
+  }
+  if (filter.has_row_key_regex_filter()) {
     auto pattern = std::make_shared<re2::RE2>(filter.row_key_regex_filter());
     if (!pattern->ok()) {
       return InvalidArgumentError(
@@ -544,7 +549,7 @@ StatusOr<CellStreamConstructor> CreateFilterImpl(
               .WithMetadata("description", pattern->error()));
     }
     CellStreamConstructor res = [source_ctor = std::move(source_ctor),
-            pattern = std::move(pattern)] {
+                                 pattern = std::move(pattern)] {
       auto source = source_ctor();
       if (source.ApplyFilter(RowKeyRegex{pattern})) {
         return source;
@@ -560,7 +565,8 @@ StatusOr<CellStreamConstructor> CreateFilterImpl(
           });
     };
     return res;
-  } else if (filter.has_value_regex_filter()) {
+  }
+  if (filter.has_value_regex_filter()) {
     auto pattern = std::make_shared<re2::RE2>(filter.value_regex_filter());
     if (!pattern->ok()) {
       return InvalidArgumentError(
@@ -570,7 +576,7 @@ StatusOr<CellStreamConstructor> CreateFilterImpl(
               .WithMetadata("description", pattern->error()));
     }
     CellStreamConstructor res = [source_ctor = std::move(source_ctor),
-            pattern = std::move(pattern)] {
+                                 pattern = std::move(pattern)] {
       auto source = source_ctor();
       return MakeTrivialFilter(
           std::move(source),
@@ -583,10 +589,11 @@ StatusOr<CellStreamConstructor> CreateFilterImpl(
           });
     };
     return res;
-  } else if (filter.has_row_sample_filter()) {
+  }
+  if (filter.has_row_sample_filter()) {
     double pass_prob = filter.row_sample_filter();
-    if (pass_prob + std::numeric_limits<double>::epsilon() < 0
-      || pass_prob - std::numeric_limits<double>::epsilon() > 1) {
+    if (pass_prob + std::numeric_limits<double>::epsilon() < 0 ||
+        pass_prob - std::numeric_limits<double>::epsilon() > 1) {
       return InvalidArgumentError(
           "`row_sample_filter` is not a valid probability.",
           GCP_ERROR_INFO().WithMetadata("filter", filter.DebugString()));
@@ -608,7 +615,8 @@ StatusOr<CellStreamConstructor> CreateFilterImpl(
           });
     };
     return res;
-  } else if (filter.has_family_name_regex_filter()) {
+  }
+  if (filter.has_family_name_regex_filter()) {
     auto pattern =
         std::make_shared<re2::RE2>(filter.family_name_regex_filter());
     if (!pattern->ok()) {
@@ -619,7 +627,7 @@ StatusOr<CellStreamConstructor> CreateFilterImpl(
               .WithMetadata("description", pattern->error()));
     }
     CellStreamConstructor res = [source_ctor = std::move(source_ctor),
-            pattern = std::move(pattern)] {
+                                 pattern = std::move(pattern)] {
       auto source = source_ctor();
       if (source.ApplyFilter(FamilyNameRegex{pattern})) {
         return source;
@@ -636,7 +644,8 @@ StatusOr<CellStreamConstructor> CreateFilterImpl(
           });
     };
     return res;
-  } else if (filter.has_column_qualifier_regex_filter()) {
+  }
+  if (filter.has_column_qualifier_regex_filter()) {
     auto pattern =
         std::make_shared<re2::RE2>(filter.column_qualifier_regex_filter());
     if (!pattern->ok()) {
@@ -664,36 +673,37 @@ StatusOr<CellStreamConstructor> CreateFilterImpl(
           });
     };
     return res;
-  } else if (filter.has_column_range_filter()) {
+  }
+  if (filter.has_column_range_filter()) {
     auto maybe_range =
         StringRangeSet::Range::FromColumnRange(filter.column_range_filter());
     if (!maybe_range) {
       return maybe_range.status();
     }
     std::string family_name = filter.column_range_filter().family_name();
-    CellStreamConstructor res =
-        [source_ctor = std::move(source_ctor),
-         family_name = std::move(family_name),
-         range = *std::move(maybe_range)] {
-          auto source = source_ctor();
-          if (source.ApplyFilter(ColumnRange{range})) {
-            return source;
-          }
-          return MakeTrivialFilter(
-              std::move(source),
-              [range, family_name](
-                  CellView const& cell_view) -> absl::optional<NextMode> {
-                if (cell_view.column_family() == family_name &&
-                    range.IsWithin(cell_view.column_qualifier())) {
-                  return {};
-                }
-                // FIXME - we might know that we should skip the whole column
-                // family
-                return NextMode::kColumn;
-              });
-        };
+    CellStreamConstructor res = [source_ctor = std::move(source_ctor),
+                                 family_name = std::move(family_name),
+                                 range = *std::move(maybe_range)] {
+      auto source = source_ctor();
+      if (source.ApplyFilter(ColumnRange{range})) {
+        return source;
+      }
+      return MakeTrivialFilter(
+          std::move(source),
+          [range,
+           family_name](CellView const& cell_view) -> absl::optional<NextMode> {
+            if (cell_view.column_family() == family_name &&
+                range.IsWithin(cell_view.column_qualifier())) {
+              return {};
+            }
+            // FIXME - we might know that we should skip the whole column
+            // family
+            return NextMode::kColumn;
+          });
+    };
     return res;
-  } else if (filter.has_value_range_filter()) {
+  }
+  if (filter.has_value_range_filter()) {
     auto maybe_range =
         StringRangeSet::Range::FromValueRange(filter.value_range_filter());
     if (!maybe_range) {
@@ -704,8 +714,7 @@ StatusOr<CellStreamConstructor> CreateFilterImpl(
       auto source = source_ctor();
       return MakeTrivialFilter(
           std::move(source),
-          [range](
-              CellView const& cell_view) -> absl::optional<NextMode> {
+          [range](CellView const& cell_view) -> absl::optional<NextMode> {
             if (range.IsWithin(cell_view.value())) {
               return {};
             }
@@ -713,7 +722,8 @@ StatusOr<CellStreamConstructor> CreateFilterImpl(
           });
     };
     return res;
-  } else if (filter.has_cells_per_row_offset_filter()) {
+  }
+  if (filter.has_cells_per_row_offset_filter()) {
     std::int64_t cells_per_row_offset = filter.cells_per_row_offset_filter();
     if (cells_per_row_offset < 0) {
       return InvalidArgumentError(
@@ -738,7 +748,8 @@ StatusOr<CellStreamConstructor> CreateFilterImpl(
           });
     };
     return res;
-  } else if (filter.has_cells_per_row_limit_filter()) {
+  }
+  if (filter.has_cells_per_row_limit_filter()) {
     std::int64_t cells_per_row_limit = filter.cells_per_row_limit_filter();
     if (cells_per_row_limit < 0) {
       return InvalidArgumentError(
@@ -763,8 +774,10 @@ StatusOr<CellStreamConstructor> CreateFilterImpl(
           });
     };
     return res;
-  } else  if (filter.has_cells_per_column_limit_filter()) {
-    std::int64_t cells_per_column_limit = filter.cells_per_column_limit_filter();
+  }
+  if (filter.has_cells_per_column_limit_filter()) {
+    std::int64_t cells_per_column_limit =
+        filter.cells_per_column_limit_filter();
     if (cells_per_column_limit < 0) {
       return InvalidArgumentError(
           "`cells_per_column_limit_filter` is negative.",
@@ -789,7 +802,8 @@ StatusOr<CellStreamConstructor> CreateFilterImpl(
           });
     };
     return res;
-  } else if (filter.has_timestamp_range_filter()) {
+  }
+  if (filter.has_timestamp_range_filter()) {
     auto maybe_range = TimestampRangeSet::Range::FromTimestampRange(
         filter.timestamp_range_filter());
     if (!maybe_range) {
@@ -803,8 +817,7 @@ StatusOr<CellStreamConstructor> CreateFilterImpl(
       }
       return MakeTrivialFilter(
           std::move(source),
-          [range](
-              CellView const& cell_view) -> absl::optional<NextMode> {
+          [range](CellView const& cell_view) -> absl::optional<NextMode> {
             if (range.IsBelowStart(cell_view.timestamp())) {
               return NextMode::kCell;
             }
@@ -815,12 +828,8 @@ StatusOr<CellStreamConstructor> CreateFilterImpl(
           });
     };
     return res;
-  } else if (filter.has_apply_label_transformer()) {
-    if (!ctx.IsApplyLabelAllowed()) {
-      return InvalidArgumentError(
-          "Two `apply_label_transformer`s cannot coexist in one chain.",
-          GCP_ERROR_INFO().WithMetadata("filter", filter.DebugString()));
-    }
+  }
+  if (filter.has_apply_label_transformer()) {
     std::string label = filter.apply_label_transformer();
     CellStreamConstructor res = [source_ctor = std::move(source_ctor),
                                  label = std::move(label)] {
@@ -832,7 +841,8 @@ StatusOr<CellStreamConstructor> CreateFilterImpl(
                                     });
     };
     return res;
-  } else if (filter.has_strip_value_transformer()) {
+  }
+  if (filter.has_strip_value_transformer()) {
     if (!filter.strip_value_transformer()) {
       return InvalidArgumentError(
           "`strip_value_transformer` explicitly set to `false`.",
@@ -846,10 +856,10 @@ StatusOr<CellStreamConstructor> CreateFilterImpl(
       });
     };
     return res;
-  } else if (filter.has_chain()) {
+  }
+  if (filter.has_chain()) {
     CellStreamConstructor res = std::move(source_ctor);
-    // FIXME handle the contexts properly
-    for (auto const &subfilter : filter.chain().filters()) {
+    for (auto const& subfilter : filter.chain().filters()) {
       if (subfilter.has_sink()) {
         if (!subfilter.sink()) {
           return InvalidArgumentError(
@@ -861,19 +871,19 @@ StatusOr<CellStreamConstructor> CreateFilterImpl(
           return CellStream(std::make_unique<EmptyCellStreamImpl>());
         };
         return res;
-            
       }
       auto maybe_res =
-          CreateFilterImpl(subfilter, std::move(res), ctx, direct_sinks);
+          CreateFilterImpl(subfilter, std::move(res), direct_sinks);
       if (!maybe_res) {
         return maybe_res.status();
       }
       res = *std::move(maybe_res);
     }
     return res;
-  } else if (filter.has_interleave()) {
+  }
+  if (filter.has_interleave()) {
     std::vector<CellStreamConstructor> parallel_stream_ctors;
-    for (auto const & subfilter : filter.interleave().filters()) {
+    for (auto const& subfilter : filter.interleave().filters()) {
       if (subfilter.has_sink()) {
         if (!subfilter.sink()) {
           return InvalidArgumentError(
@@ -884,7 +894,7 @@ StatusOr<CellStreamConstructor> CreateFilterImpl(
         continue;
       }
       auto maybe_filter =
-          CreateFilterImpl(subfilter, source_ctor, ctx, direct_sinks);
+          CreateFilterImpl(subfilter, source_ctor, direct_sinks);
       if (!maybe_filter) {
         return maybe_filter.status();
       }
@@ -908,22 +918,23 @@ StatusOr<CellStreamConstructor> CreateFilterImpl(
           std::make_unique<MergeCellStreams>(std::move(parallel_streams)));
     };
     return res;
-  } else  if (filter.has_condition()) {
-    if (!filter.condition().has_predicate_filter()){
+  }
+  if (filter.has_condition()) {
+    if (!filter.condition().has_predicate_filter()) {
       return InvalidArgumentError(
           "`condition` must have a `predicate_filter` set.",
           GCP_ERROR_INFO().WithMetadata("filter", filter.DebugString()));
     }
-    
+
     auto maybe_predicate_stream_ctor = CreateFilterImpl(
-        filter.condition().predicate_filter(), source_ctor, ctx, direct_sinks);
+        filter.condition().predicate_filter(), source_ctor, direct_sinks);
     if (!maybe_predicate_stream_ctor) {
       return maybe_predicate_stream_ctor.status();
     }
     auto maybe_true_stream_ctor =
         filter.condition().has_true_filter()
             ? CreateFilterImpl(filter.condition().true_filter(), source_ctor,
-                               ctx, direct_sinks)
+                               direct_sinks)
             : StatusOr<CellStreamConstructor>([] {
                 return CellStream(std::make_unique<EmptyCellStreamImpl>());
               });
@@ -933,7 +944,7 @@ StatusOr<CellStreamConstructor> CreateFilterImpl(
     auto maybe_false_stream_ctor =
         filter.condition().has_false_filter()
             ? CreateFilterImpl(filter.condition().false_filter(), source_ctor,
-                               ctx, direct_sinks)
+                               direct_sinks)
             : StatusOr<CellStreamConstructor>([] {
                 return CellStream(std::make_unique<EmptyCellStreamImpl>());
               });
@@ -941,29 +952,26 @@ StatusOr<CellStreamConstructor> CreateFilterImpl(
       return maybe_false_stream_ctor.status();
     }
 
-    CellStreamConstructor res = [source_ctor = std::move(source_ctor),
-            predicate_stream_ctor = *std::move(maybe_predicate_stream_ctor),
-            true_stream_ctor = *std::move(maybe_true_stream_ctor),
-            false_stream_ctor = *std::move(maybe_false_stream_ctor)] {
-      return CellStream(std::make_unique<ConditionStream>(
-          source_ctor(), predicate_stream_ctor(), true_stream_ctor(),
-          false_stream_ctor()));
-    };
+    CellStreamConstructor res =
+        [source_ctor = std::move(source_ctor),
+         predicate_stream_ctor = *std::move(maybe_predicate_stream_ctor),
+         true_stream_ctor = *std::move(maybe_true_stream_ctor),
+         false_stream_ctor = *std::move(maybe_false_stream_ctor)] {
+          return CellStream(std::make_unique<ConditionStream>(
+              source_ctor(), predicate_stream_ctor(), true_stream_ctor(),
+              false_stream_ctor()));
+        };
     return res;
   }
   return UnimplementedError(
       "Unsupported filter.",
       GCP_ERROR_INFO().WithMetadata("filter", filter.DebugString()));
 }
-
-CellStream JoinCellStreams(std::vector<CellStream> cell_streams) {
-  return CellStream(
-      std::make_unique<MergeCellStreams>(std::move(cell_streams)));
-}
+// NOLINTEND(misc-no-recursion,readability-function-cognitive-complexity)
 
 StatusOr<CellStream> CreateFilter(
     ::google::bigtable::v2::RowFilter const& filter,
-    CellStreamConstructor source_ctor, FilterContext const& ctx) {
+    CellStreamConstructor source_ctor) {
   std::vector<CellStreamConstructor> direct_sink_ctors;
   if (filter.has_sink()) {
     if (!filter.sink()) {
@@ -974,7 +982,7 @@ StatusOr<CellStream> CreateFilter(
     return source_ctor();
   }
   auto maybe_filter_ctor =
-      CreateFilterImpl(filter, std::move(source_ctor), ctx, direct_sink_ctors);
+      CreateFilterImpl(filter, std::move(source_ctor), direct_sink_ctors);
   if (!maybe_filter_ctor) {
     return maybe_filter_ctor.status();
   }
