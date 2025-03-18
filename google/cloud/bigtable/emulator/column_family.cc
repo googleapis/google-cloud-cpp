@@ -75,18 +75,32 @@ void ColumnFamily::SetCell(std::string const& row_key,
   rows_[row_key].SetCell(column_qualifier, timestamp, value);
 }
 
-std::map<std::string, std::vector<Cell>> ColumnFamily::DeleteRow(std::string const& row_key) {
+std::map<std::string, std::vector<Cell>> ColumnFamily::DeleteRow(
+    std::string const& row_key) {
   std::map<std::string, std::vector<Cell>> res;
 
   auto& column_family_row = rows_[row_key];
 
-  for (const auto& column_it : column_family_row) {
+  for (auto column_it = column_family_row.begin();
+       column_it != column_family_row.end();
+       column_it = column_family_row.begin()) {  // DeleteColumn can
+                                                 // invalidate the
+                                                 // iterator by
+                                                 // deleting a column
+                                                 // family row's keys
+                                                 // (the columnn
+                                                 // qualifiers,
+                                                 // therefore we need
+                                                 // to re-calculate the
+                                                 // beginning of the
+                                                 // map every loop).
+
     // Not setting start and end timestamps selects all cells for deletion.
     ::google::bigtable::v2::TimestampRange time_range;
 
-    auto deleted_column = DeleteColumn(row_key, column_it.first, time_range);
+    auto deleted_column = DeleteColumn(row_key, column_it->first, time_range);
     if (deleted_column.size() > 0) {
-      res[std::move(column_it.first)] = std::move(deleted_column);
+      res[std::move(column_it->first)] = std::move(deleted_column);
     }
   }
 
@@ -133,8 +147,7 @@ class FilteredColumnFamilyStream::FilterApply {
 
   bool operator()(ColumnRegex const& column_regex) {
     parent_.column_regexes_.emplace_back(column_regex.regex);
-    return true;
-  }
+    return true;  }
 
  private:
   FilteredColumnFamilyStream& parent_;
