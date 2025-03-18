@@ -23,8 +23,16 @@ RUN zypper refresh && \
 
 
 RUN zypper refresh && \
-    zypper install --allow-downgrade -y c-ares-devel \
-        libcurl-devel libopenssl-devel libcrc32c-devel
+    zypper install --allow-downgrade -y c-ares-devel
+
+RUN zypper refresh && \
+    zypper install --allow-downgrade -y libcurl-devel
+
+RUN zypper refresh && \
+    zypper install --allow-downgrade -y libopenssl-devel
+
+RUN zypper refresh && \
+    zypper install --allow-downgrade -y libcrc32c-devel
 
 RUN (echo "/usr/local/lib" ; echo "/usr/local/lib64") | \
     tee /etc/ld.so.conf.d/usrlocal.conf
