@@ -12,27 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM opensuse/leap:15.6
+FROM opensuse/leap:15
 ARG NCPU=4
-
-#RUN zypper refresh && zypper remove abseil-cpp-devel
 
 RUN zypper refresh && \
     zypper install --allow-downgrade -y automake cmake curl gcc gcc-c++ \
-        git gzip libtool make ninja patch tar wget
-
-
-RUN zypper refresh && \
-    zypper install --allow-downgrade -y c-ares-devel
-
-RUN zypper refresh && \
-    zypper install --allow-downgrade -y libcurl-devel
-
-RUN zypper refresh && \
-    zypper install --allow-downgrade -y libopenssl-devel
-
-RUN zypper refresh && \
-    zypper install --allow-downgrade -y libcrc32c-devel
+        git gzip libtool make ninja patch tar wget \
+        c-ares-devel libcurl-devel libopenssl-devel libcrc32c-devel
 
 RUN (echo "/usr/local/lib" ; echo "/usr/local/lib64") | \
     tee /etc/ld.so.conf.d/usrlocal.conf
