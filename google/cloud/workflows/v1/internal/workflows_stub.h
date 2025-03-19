@@ -78,6 +78,12 @@ class WorkflowsStub {
       grpc::ClientContext& context, Options options,
       google::cloud::workflows::v1::UpdateWorkflowRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::workflows::v1::ListWorkflowRevisionsResponse>
+  ListWorkflowRevisions(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::workflows::v1::ListWorkflowRevisionsRequest const&
+          request) = 0;
+
   virtual StatusOr<google::cloud::location::ListLocationsResponse>
   ListLocations(
       grpc::ClientContext& context, Options const& options,
@@ -168,6 +174,12 @@ class DefaultWorkflowsStub : public WorkflowsStub {
   StatusOr<google::longrunning::Operation> UpdateWorkflow(
       grpc::ClientContext& context, Options options,
       google::cloud::workflows::v1::UpdateWorkflowRequest const& request)
+      override;
+
+  StatusOr<google::cloud::workflows::v1::ListWorkflowRevisionsResponse>
+  ListWorkflowRevisions(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::workflows::v1::ListWorkflowRevisionsRequest const& request)
       override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(

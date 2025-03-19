@@ -140,6 +140,17 @@ WorkflowsTracingConnection::UpdateWorkflow(
   return internal::EndSpan(std::move(span), child_->UpdateWorkflow(operation));
 }
 
+StreamRange<google::cloud::workflows::v1::Workflow>
+WorkflowsTracingConnection::ListWorkflowRevisions(
+    google::cloud::workflows::v1::ListWorkflowRevisionsRequest request) {
+  auto span = internal::MakeSpan(
+      "workflows_v1::WorkflowsConnection::ListWorkflowRevisions");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListWorkflowRevisions(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::workflows::v1::Workflow>(std::move(span), std::move(sr));
+}
+
 StreamRange<google::cloud::location::Location>
 WorkflowsTracingConnection::ListLocations(
     google::cloud::location::ListLocationsRequest request) {
