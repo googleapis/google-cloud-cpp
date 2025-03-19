@@ -216,6 +216,18 @@ class InstancesRestConnectionImpl
   RemoveResourcePolicies(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  ReportHostAsFaulty(google::cloud::cpp::compute::instances::v1::
+                         ReportHostAsFaultyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> ReportHostAsFaulty(
+      NoAwaitTag, google::cloud::cpp::compute::instances::v1::
+                      ReportHostAsFaultyRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  ReportHostAsFaulty(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Reset(
       google::cloud::cpp::compute::instances::v1::ResetRequest const& request)
       override;

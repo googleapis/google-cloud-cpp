@@ -354,6 +354,31 @@ InstancesConnection::RemoveResourcePolicies(
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstancesConnection::ReportHostAsFaulty(
+    google::cloud::cpp::compute::instances::v1::
+        ReportHostAsFaultyRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesConnection::ReportHostAsFaulty(
+    NoAwaitTag, google::cloud::cpp::compute::instances::v1::
+                    ReportHostAsFaultyRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstancesConnection::ReportHostAsFaulty(
+    google::cloud::cpp::compute::v1::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesConnection::Reset(
     google::cloud::cpp::compute::instances::v1::ResetRequest const&) {
   return google::cloud::make_ready_future<

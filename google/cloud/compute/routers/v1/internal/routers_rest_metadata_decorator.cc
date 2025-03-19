@@ -68,6 +68,27 @@ RoutersRestMetadata::DeleteRouter(
   return child_->DeleteRouter(rest_context, options, request);
 }
 
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RoutersRestMetadata::AsyncDeleteRoutePolicy(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::routers::v1::DeleteRoutePolicyRequest const&
+        request) {
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncDeleteRoutePolicy(cq, std::move(rest_context),
+                                        std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RoutersRestMetadata::DeleteRoutePolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::routers::v1::DeleteRoutePolicyRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteRoutePolicy(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Router>
 RoutersRestMetadata::GetRouter(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -92,6 +113,15 @@ RoutersRestMetadata::GetNatMappingInfo(
         request) {
   SetMetadata(rest_context, options);
   return child_->GetNatMappingInfo(rest_context, options, request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::RoutersGetRoutePolicyResponse>
+RoutersRestMetadata::GetRoutePolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::routers::v1::GetRoutePolicyRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->GetRoutePolicy(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RouterStatusResponse>
@@ -133,6 +163,24 @@ RoutersRestMetadata::ListRouters(
   return child_->ListRouters(rest_context, options, request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::RoutersListBgpRoutes>
+RoutersRestMetadata::ListBgpRoutes(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::routers::v1::ListBgpRoutesRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->ListBgpRoutes(rest_context, options, request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::RoutersListRoutePolicies>
+RoutersRestMetadata::ListRoutePolicies(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::routers::v1::ListRoutePoliciesRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->ListRoutePolicies(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RoutersRestMetadata::AsyncPatchRouter(
     CompletionQueue& cq,
@@ -152,6 +200,27 @@ RoutersRestMetadata::PatchRouter(
         request) {
   SetMetadata(rest_context, options);
   return child_->PatchRouter(rest_context, options, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RoutersRestMetadata::AsyncPatchRoutePolicy(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::routers::v1::PatchRoutePolicyRequest const&
+        request) {
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncPatchRoutePolicy(cq, std::move(rest_context),
+                                       std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RoutersRestMetadata::PatchRoutePolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::routers::v1::PatchRoutePolicyRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->PatchRoutePolicy(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse>
@@ -181,6 +250,27 @@ RoutersRestMetadata::UpdateRouter(
         request) {
   SetMetadata(rest_context, options);
   return child_->UpdateRouter(rest_context, options, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RoutersRestMetadata::AsyncUpdateRoutePolicy(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::cpp::compute::routers::v1::UpdateRoutePolicyRequest const&
+        request) {
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncUpdateRoutePolicy(cq, std::move(rest_context),
+                                        std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RoutersRestMetadata::UpdateRoutePolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::routers::v1::UpdateRoutePolicyRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->UpdateRoutePolicy(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

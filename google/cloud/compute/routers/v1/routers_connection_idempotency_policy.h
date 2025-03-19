@@ -44,6 +44,10 @@ class RoutersConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&
           request);
 
+  virtual google::cloud::Idempotency DeleteRoutePolicy(
+      google::cloud::cpp::compute::routers::v1::DeleteRoutePolicyRequest const&
+          request);
+
   virtual google::cloud::Idempotency GetRouter(
       google::cloud::cpp::compute::routers::v1::GetRouterRequest const&
           request);
@@ -54,6 +58,10 @@ class RoutersConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency GetNatMappingInfo(
       google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetRoutePolicy(
+      google::cloud::cpp::compute::routers::v1::GetRoutePolicyRequest const&
           request);
 
   virtual google::cloud::Idempotency GetRouterStatus(
@@ -67,8 +75,20 @@ class RoutersConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ListRouters(
       google::cloud::cpp::compute::routers::v1::ListRoutersRequest request);
 
+  virtual google::cloud::Idempotency ListBgpRoutes(
+      google::cloud::cpp::compute::routers::v1::ListBgpRoutesRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListRoutePolicies(
+      google::cloud::cpp::compute::routers::v1::ListRoutePoliciesRequest const&
+          request);
+
   virtual google::cloud::Idempotency PatchRouter(
       google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
+          request);
+
+  virtual google::cloud::Idempotency PatchRoutePolicy(
+      google::cloud::cpp::compute::routers::v1::PatchRoutePolicyRequest const&
           request);
 
   virtual google::cloud::Idempotency Preview(
@@ -76,6 +96,10 @@ class RoutersConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency UpdateRouter(
       google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateRoutePolicy(
+      google::cloud::cpp::compute::routers::v1::UpdateRoutePolicyRequest const&
           request);
 };
 
