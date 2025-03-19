@@ -223,6 +223,9 @@ class FilteredColumnFamilyStream : public AbstractCellStreamImpl {
    * * `column_it_` doesn't point to `end()`
    * * `cell_it` points to a cell in the column family pointed to by
    *     `column_it_`
+   *
+   * @return whether we've managed to find another cell in currently pointed
+   *     row.
    */
   bool PointToFirstCellAfterColumnChange() const;
   /**
@@ -230,6 +233,8 @@ class FilteredColumnFamilyStream : public AbstractCellStreamImpl {
    *
    * Similarly to `PointToFirstCellAfterColumnChange()` it ensures that all
    * internal iterators are valid (or we've reached `end()`).
+   *
+   * @return whether we've managed to find another cell
    */
   bool PointToFirstCellAfterRowChange() const;
 

@@ -68,6 +68,23 @@ void CellStream::EmulateNextRow() {
        NextColumn());
 }
 
+/**
+ * A meta functor useful for building filters which act on whole rows.
+ *
+ * Some filters (e.g. `row_sample_filter`) have a per-row state (in this
+ * example, the state is either to filter a row out or not). This state is
+ * reset every time a new row is encountered. Hence, this meta functor allows
+ * its users to specify two underlying functors:
+ * * `FilterFunctor` which given the per-row state and a cell, decides whether
+ *   to filter it out or not (if not, also how far to advance the underlying
+ *   cell stream).
+ * * `StateResetFunctor` which creates a new state for every row.
+ *
+ * @tparam FilterFunctor a functor which accepts the per-row state and a cell as
+ *     input and returns whether this cell should be included in the result.
+ * @tparam StateResetFunctor a zero-argument functor which creates a new per-row
+ *     state.
+ */
 template <typename FilterFunctor, typename StateResetFunctor>
 class PerRowStateFilter {
   static_assert(google::cloud::internal::is_invocable<StateResetFunctor>::value,
@@ -84,9 +101,24 @@ class PerRowStateFilter {
                 "Invalid result of `FilterFunctor` invocation.");
 
  public:
+  /**
+   * Create a new object.
+   *
+   * @param filter a functor which accepts the per-row state and a cell as
+   *     input and returns whether this cell should be included in the result.
+   * @param reset a zero-argument functor which creates a new per-row
+   *     state.
+   */
   PerRowStateFilter(FilterFunctor filter, StateResetFunctor reset)
       : filter_(std::move(filter)), reset_(std::move(reset)) {}
 
+  /**
+   * Decide on what to do with a cell.
+   *
+   * @param cell_view the cell in question
+   * @return if empty - include the cell in the result; if not empty - instruct
+   *     the caller by how much to advance the underlying stream.
+   */
   absl::optional<NextMode> operator()(CellView const& cell_view) {
     if (!prev_row_ || prev_row_.value() != cell_view.row_key()) {
       state_ = reset_();
@@ -102,32 +134,23 @@ class PerRowStateFilter {
   StateResetFunctor reset_;
 };
 
-template <typename FilterFunctor, typename StateResetFunctor>
-class PerColumnStateFilter {
-  static_assert(
-      google::cloud::internal::is_invocable<StateResetFunctor()>::value,
-      "StateResetFunctor must be invocable with no arguments");
-  using State =
-      std::decay_t<google::cloud::internal::invoke_result_t<StateResetFunctor>>;
-  static_assert(std::is_default_constructible<State>::value,
-                "State must be default constructible");
-  static_assert(std::is_assignable<State&, State>::value,
-                "State must assignable");
-  static_assert(std::is_same<google::cloud::internal::invoke_result_t<
-                                 FilterFunctor, State&, CellView const&>,
-                             absl::optional<NextMode>>::value,
-                "Invali result of `FilterFunctor` invocation.");
-
+/// A functor for filtering cell streams to return only first X cells per col.
+class CellsPerColumnFilter {
  public:
-  PerColumnStateFilter(FilterFunctor filter, StateResetFunctor reset)
-      : filter_(std::move(filter)), reset_(std::move(reset)) {}
+  explicit CellsPerColumnFilter(std::size_t cells_per_column_limit)
+      : cells_per_column_limit_(cells_per_column_limit),
+        cells_per_column_left_(cells_per_column_limit) {}
 
   absl::optional<NextMode> operator()(CellView const& cell_view) {
     if (!prev_ || !prev_->Matches(cell_view)) {
-      state_ = reset_();
+      cells_per_column_left_ = cells_per_column_limit_;
       prev_ = Prev(cell_view);
     }
-    return filter_(state_, cell_view);
+    if (cells_per_column_left_ > 0) {
+      --cells_per_column_left_;
+      return {};
+    }
+    return NextMode::kColumn;
   }
 
  private:
@@ -150,18 +173,32 @@ class PerColumnStateFilter {
     std::string column_qualifier_;
   };
   absl::optional<Prev> prev_;
-  State state_;
-  FilterFunctor filter_;
-  StateResetFunctor reset_;
+  std::size_t cells_per_column_limit_;
+  std::size_t cells_per_column_left_;
 };
 
+/**
+ * A meta cell stream, which is created from a cell transforming functor.
+ *
+ * @tparam Transformer an unary functor which should accept a `CellView` and
+ *     return a transformed version of it.
+ */
 template <class Transformer>
 class TrivialTransformer : public AbstractCellStreamImpl {
  public:
+  /**
+   * Create a new object.
+   *
+   * @param source underlying cell stream to be transformed.
+   * @param filter functor, which accepts a `CellView` and returns a transformed
+   *     `CellView` to be returned from this stream.
+   */
   TrivialTransformer(CellStream source, Transformer transformer)
       : source_(std::move(source)), transformer_(std::move(transformer)) {}
 
-  bool ApplyFilter(InternalFilter const&) override { return false; }
+  bool ApplyFilter(InternalFilter const& internal_filter) override {
+    return source_.ApplyFilter(internal_filter);
+  }
 
   bool HasValue() const override { return source_.HasValue(); }
 
@@ -184,12 +221,24 @@ class TrivialTransformer : public AbstractCellStreamImpl {
   mutable absl::optional<CellView> transformed_;
 };
 
+/**
+ * Create a cell stream from an underlying stream and a transforming functor.
+ *
+ * @tparam Transformer an unary functor which should accept a `CellView` and
+ *     return a transformed version of it.
+ */
 template <typename Transformer>
 CellStream MakeTrivialTransformer(CellStream source, Transformer transformer) {
   return CellStream(std::make_unique<TrivialTransformer<Transformer>>(
       std::move(source), std::move(transformer)));
 }
 
+/**
+ * A meta cell stream filtering an underlying stream according to a functor.
+ *
+ * @tparam Filter a functor, which given a cell, decides whether to filter it
+ *   out or not (if not, also how far to advance the underlying cell stream).
+ */
 template <typename Filter>
 class TrivialFilter : public AbstractCellStreamImpl {
   static_assert(
@@ -199,6 +248,19 @@ class TrivialFilter : public AbstractCellStreamImpl {
       "Invalid filter return type");
 
  public:
+  /**
+   * Create a new object.
+   *
+   * @param source underlying cell stream to be filtered.
+   * @param filter functor, which accepts a `CellView` and decides
+   *     whether to filter it out or not (if not, also how far to advance the
+   *     underlying cell stream).
+   *  @param filter_filter a functor which given an `InternalFilter` decides
+   *    whether filtering this cell streams results and then applying the
+   *    `InternalFilter` would yield the same results as applying
+   *    `InternalFilter` to the underlying stream and the perform this stream's
+   *    filtering.
+   */
   TrivialFilter(CellStream source, Filter filter,
                 std::function<bool(InternalFilter const&)> filter_filter)
       : source_(std::move(source)),
@@ -229,6 +291,7 @@ class TrivialFilter : public AbstractCellStreamImpl {
   }
 
  private:
+  /// Consume the underlying stream until an unfiltered cell is encountered.
   void EnsureCurrentNotFiltered() const {
     while (source_.HasValue()) {
       auto maybe_next_mode = filter_(*source_);
@@ -252,6 +315,19 @@ class TrivialFilter : public AbstractCellStreamImpl {
   std::function<bool(InternalFilter const&)> filter_filter_;
 };
 
+/**
+ * Create a cell stream from an underlying stream and a cell filtering functor.
+ *
+ * @param source underlying cell stream to be filtered.
+ * @param filter functor, which accepts a `CellView` and decides
+ *     whether to filter it out or not (if not, also how far to advance the
+ *     underlying cell stream).
+ *  @param filter_filter a functor which given an `InternalFilter` decides
+ *    whether filtering this cell stream's results and then applying the
+ *    `InternalFilter` would yield the same results as applying
+ *    `InternalFilter` to the underlying stream and the perform this stream's
+ *    filtering.
+ */
 template <typename Filter>
 CellStream MakeTrivialFilter(
     CellStream source, Filter filter,
@@ -260,6 +336,20 @@ CellStream MakeTrivialFilter(
       std::move(source), std::move(filter), std::move(filter_filter)));
 }
 
+/**
+ * Create a cell stream filtering underlying stream, which has a per-row state.
+ *
+ * @param source underlying cell stream to be filtered.
+ * @param filter a functor which accepts the per-row state and a cell as
+ *     input and returns whether this cell should be included in the result.
+ * @param reset a zero-argument functor which creates a new per-row
+ *     state.
+ *  @param filter_filter a functor which given an `InternalFilter` decides
+ *    whether filtering this cell stream's results and then applying the
+ *    `InternalFilter` would yield the same results as applying
+ *    `InternalFilter` to the underlying stream and the perform this stream's
+ *    filtering.
+ */
 template <typename FilterFunctor, typename StateResetFunctor>
 CellStream MakePerRowStateFilter(
     CellStream source, FilterFunctor filter, StateResetFunctor state_reset,
@@ -268,17 +358,6 @@ CellStream MakePerRowStateFilter(
                            PerRowStateFilter<FilterFunctor, StateResetFunctor>(
                                std::move(filter), std::move(state_reset)),
                            std::move(filter_filter));
-}
-
-template <typename FilterFunctor, typename StateResetFunctor>
-CellStream MakePerColumnStateFilter(
-    CellStream source, FilterFunctor filter, StateResetFunctor state_reset,
-    std::function<bool(InternalFilter const&)> filter_filter = PassAllFilters) {
-  return MakeTrivialFilter(
-      std::move(source),
-      PerColumnStateFilter<FilterFunctor, StateResetFunctor>(
-          std::move(filter), std::move(state_reset)),
-      std::move(filter_filter));
 }
 
 bool MergeCellStreams::CellStreamGreater::operator()(
@@ -393,8 +472,18 @@ bool MergeCellStreams::SkipRowOrColumn(NextMode mode) {
   return true;
 }
 
+/// A cell stream for handling a Condition filter.
 class ConditionStream : public AbstractCellStreamImpl {
  public:
+  /**
+   * Create a new object.
+   *
+   * @param source the underlying cell stream
+   * @param predicate_stream the stream deciding whether for a given row the
+   *     true branch or false branch should be selected
+   * @param true_stream the stream generating cells for the true branch
+   * @param false_stream the stream generating cells for the false branch
+   */
   ConditionStream(CellStream source, CellStream predicate,
                   CellStream true_stream, CellStream false_stream)
       : source_(std::move(source)),
@@ -502,6 +591,7 @@ class ConditionStream : public AbstractCellStreamImpl {
   mutable std::string current_row_;
 };
 
+/// A cell stream not generating any cells.
 class EmptyCellStreamImpl : public AbstractCellStreamImpl {
   bool ApplyFilter(InternalFilter const&) override { return true; }
   bool HasValue() const override { return false; }
@@ -516,6 +606,18 @@ class EmptyCellStreamImpl : public AbstractCellStreamImpl {
 };
 
 // NOLINTBEGIN(misc-no-recursion,readability-function-cognitive-complexity)
+/**
+ * Create a filter DAG constructor based on the proto definition.
+ *
+ * @param filter the protobuf definition of the filter DAG to be created
+ * @param source_ctor a zero-argument functor which can be used to create the
+ *     underlying cell stream, which this filter will work on.
+ * @param direct_sinks an accumulator which will be filled by zero-argument
+ *     functors which will create branches of the DAG whose output should bypass
+ *     any other filters (the `sink` filter).
+ * @return a zero-argument functor which will return a DAG described by
+ *     `filter`.
+ */
 StatusOr<CellStreamConstructor> CreateFilterImpl(
     ::google::bigtable::v2::RowFilter const& filter,
     CellStreamConstructor source_ctor,
@@ -786,17 +888,8 @@ StatusOr<CellStreamConstructor> CreateFilterImpl(
     CellStreamConstructor res = [source_ctor = std::move(source_ctor),
                                  cells_per_column_limit] {
       auto source = source_ctor();
-      return MakePerColumnStateFilter(
-          std::move(source),
-          [cells_per_column_limit](
-              std::int64_t& per_column_state,
-              CellView const&) -> absl::optional<NextMode> {
-            if (per_column_state++ < cells_per_column_limit) {
-              return {};
-            }
-            return NextMode::kColumn;
-          },
-          []() -> std::int64_t { return 0; },
+      return MakeTrivialFilter(
+          std::move(source), CellsPerColumnFilter(cells_per_column_limit),
           [](InternalFilter const& internal_filter) {
             return !absl::holds_alternative<TimestampRange>(internal_filter);
           });
@@ -969,6 +1062,14 @@ StatusOr<CellStreamConstructor> CreateFilterImpl(
 }
 // NOLINTEND(misc-no-recursion,readability-function-cognitive-complexity)
 
+/**
+ * Create a filter DAG based on the proto definition.
+ *
+ * @param filter the protobuf definition of the filter DAG to be created
+ * @param source_ctor a zero-argument functor which can be used to create the
+ *     underlying cell stream, which this filter will work on.
+ * @return DAG described by `filter`.
+ */
 StatusOr<CellStream> CreateFilter(
     ::google::bigtable::v2::RowFilter const& filter,
     CellStreamConstructor source_ctor) {

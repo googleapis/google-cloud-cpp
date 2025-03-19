@@ -22,6 +22,7 @@ namespace cloud {
 namespace bigtable {
 namespace emulator {
 
+/// Translate google::cloud::StatusCode into grpc::StatusCode.
 grpc::StatusCode MapStatusCode(google::cloud::StatusCode code) {
   switch (code) {
     case google::cloud::StatusCode::kOk:

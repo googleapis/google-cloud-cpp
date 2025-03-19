@@ -23,6 +23,7 @@ namespace cloud {
 namespace bigtable {
 namespace emulator {
 
+/// Convert a google::cloud::Status to grpc::Status.
 ::grpc::Status ToGrpcStatus(Status const& to_convert);
 
 }  // namespace emulator

@@ -32,6 +32,7 @@ namespace cloud {
 namespace bigtable {
 namespace emulator {
 
+/// Objects of this class represent Bigtable tables.
 class Table {
  public:
   static StatusOr<std::shared_ptr<Table>> Create(
@@ -67,7 +68,16 @@ class Table {
   std::map<std::string, std::shared_ptr<ColumnFamily>> column_families_;
 };
 
-// This class is public only to enable testing.
+/**
+ * A `AbstractCellStreamImpl` which streams filtered contents of the table.
+ *
+ * Underneath is essentially a collection of `FilteredColumnFamilyStream`s.
+ * All filters applied to `FilteredColumnFamilyStream` are propagated to the
+ * underlying `FilteredColumnFamilyStream`, except for `FamilyNameRegex`, which
+ * is handled by this subclass.
+ *
+ * This class is public only to enable testing.
+ */
 class FilteredTableStream : public MergeCellStreams {
  public:
   explicit FilteredTableStream(

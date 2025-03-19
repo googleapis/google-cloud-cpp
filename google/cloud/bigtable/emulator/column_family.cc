@@ -185,7 +185,6 @@ void FilteredColumnFamilyStream::InitializeIfNeeded() const {
   }
 }
 
-// Returns whether we've managed to find another cell in currently pointed row
 bool FilteredColumnFamilyStream::PointToFirstCellAfterColumnChange() const {
   for (; column_it_.value() != columns_.value().end(); ++(column_it_.value())) {
     cells_ = RangeFilteredMapView<ColumnRow, TimestampRangeSet>(
@@ -198,7 +197,6 @@ bool FilteredColumnFamilyStream::PointToFirstCellAfterColumnChange() const {
   return false;
 }
 
-// Returns whether we've managed to find another cell
 bool FilteredColumnFamilyStream::PointToFirstCellAfterRowChange() const {
   for (; (*row_it_) != rows_.end(); ++(*row_it_)) {
     columns_ = RegexFiteredMapView<

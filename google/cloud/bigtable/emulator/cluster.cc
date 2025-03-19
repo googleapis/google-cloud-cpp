@@ -26,6 +26,18 @@ namespace {
 
 namespace btadmin = google::bigtable::admin::v2;
 
+/**
+ * Obtain a limited view of a `Table`'s schema, by applying a `TableView`.
+ *
+ * @param table_name table name in the form of
+ *     `/projects/{}/instances/{}/tables/{}` to be returned in the
+ * @param table the table in question
+ * @param view the view to apply
+ * @param default_view the view to fall back to in case `view` is set to
+ *     `btadmin::Table::VIEW_UNSPECIFIED`. `default_view` should not be set to
+ *     `btadmin::Table::VIEW_UNSPECIFIED`.
+ * @return the trimmed schema or error
+ */
 StatusOr<btadmin::Table> ApplyView(std::string const& table_name,
                                    Table const& table, btadmin::Table_View view,
                                    btadmin::Table_View default_view) {

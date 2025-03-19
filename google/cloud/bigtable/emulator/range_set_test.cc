@@ -15,7 +15,6 @@
 #include "google/cloud/bigtable/emulator/range_set.h"
 #include "google/cloud/bigtable/row_range.h"
 #include "google/cloud/testing_util/chrono_literals.h"
-#include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
@@ -29,9 +28,6 @@ namespace {
 bool const kOpen = true;
 bool const kClosed = false;
 bool const kWhatever = true;  // to indicate it's unimportant in the test
-
-namespace btproto = ::google::bigtable::v2;
-using ::google::cloud::testing_util::IsProtoEqual;
 
 TEST(StringRangeValueOrder, Simple) {
   EXPECT_EQ(-1, detail::CompareRangeValues("A", "B"));

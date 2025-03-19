@@ -31,21 +31,70 @@ namespace emulator {
  */
 class Cluster {
  public:
+  /**
+   * Create a new table according to schema.
+   *
+   * @param table_name table's name in the form of
+   *     `/projects/{}/instances/{}/tables/{}`.
+   * @param schema the schema of the newly create table.
+   * @return the schema of the newly created table.
+   */
   StatusOr<google::bigtable::admin::v2::Table> CreateTable(
       std::string const& table_name, google::bigtable::admin::v2::Table schema);
 
+  /**
+   * List tables in the clustera.
+   *
+   * @param instance_name instances` name in the form of
+   *     `/projects/{}/instances/{}`.
+   * @param view a view to limit the amount of information returned about
+   *     tables.
+   * @return a vector of tables' schemas present in the instance trimmed
+   *     according to `view`.
+   */
   StatusOr<std::vector<google::bigtable::admin::v2::Table>> ListTables(
       std::string const& instance_name,
       google::bigtable::admin::v2::Table_View view) const;
 
+  /**
+   * Get details about a given table.
+   *
+   * @param table_name table's name in the form of
+   *     `/projects/{}/instances/{}/tables/{}`.
+   * @param view a view to limit the amount of information returned about
+   *     table.
+   * @return table's schema trimmed according to `view`.
+   */
   StatusOr<google::bigtable::admin::v2::Table> GetTable(
       std::string const& table_name,
       google::bigtable::admin::v2::Table_View view) const;
 
+  /**
+   * Delete a table by its name.
+   *
+   * @param table_name table's name in the form of
+   *     `/projects/{}/instances/{}/tables/{}`.
+   * @return whether deletion succeeded. Apart from failing to to remove a
+   *     non-existent table it might also fail if the table has deletion
+   *     protection set.
+   */
   Status DeleteTable(std::string const& table_name);
 
+  /**
+   * Check if a table exists.
+   * @param table_name table's name in the form of
+   *     `/projects/{}/instances/{}/tables/{}`.
+   * @return true if table exists.
+   */
   bool HasTable(std::string const& table_name) const;
 
+  /**
+   * Find a table by name.
+   *
+   * @param table_name table's name in the form of
+   *     `/projects/{}/instances/{}/tables/{}`.
+   * @return a pointer to the table or error if it doesn't exist.
+   */
   StatusOr<std::shared_ptr<Table>> FindTable(std::string const& table_name);
 
  private:
@@ -54,7 +103,7 @@ class Cluster {
   /**
    * All the tables indexed by their names.
    *
-   * The names are in the form `/ projects/{}/instances/{}/tables/{}`. We're
+   * The names are in the form `/projects/{}/instances/{}/tables/{}`. We're
    * holding the tables by `shared_ptr`s in order to be able to allow for more
    * concurrency - every access to a table should start with creating a copy of
    * the shared pointer.

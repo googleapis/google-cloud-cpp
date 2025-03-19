@@ -28,6 +28,42 @@ namespace cloud {
 namespace bigtable {
 namespace emulator {
 
+// The code declared in this file is used to construct filters according to
+// `::google::bigtable::v2::RowFilter` protobuf definition.
+// It describes a DAG through which cells should be routed (and potentially
+// copied in case of the `Interleave` filter).
+//
+// The simplest way of implementing such a DAG is to create an object for every
+// node of the graph, which would filter/transform the result. This, however,
+// could be very inefficient. For example, if we're only interested in the last
+// version of a cell of a specific column, the lowermost layers of the graph
+// would have to scan the whole table.
+//
+// This example shows that we should apply the filters as close to the beginning
+// of the graph as possible. The in-memory implementation could jump over
+// uninteresting columns and avoid passing all the values around. Most of the
+// filters can be applied in any order, which makes our filtering task easy.
+//
+// Unfortunately, some filters (e.g. `cells_per_row_limit_filter`) prevents us
+// from moving filters applied later in the chain to its beginning. Hence, we
+// need to keep the naive (object-per-graph-node) approach.
+//
+// We do attempt to apply the filtering as close to the root as possible via
+// `AbstractCellStreamImpl::Apply()`. This operation has different
+// implementations for different filters.
+//
+// The algorithm looks as follows:
+// * we try to build the DAG according to the proto, from the ground up
+// * every time we're about to add a new node, we first try applying the
+//   the graph we built so far by calling `Apply()` on the last node we added;
+// * these `Apply()` calls are propagated through the graph all the way to the
+//   root
+// * if the `Apply()` call fails (e.g. because there is a
+//   `cells_per_row_limit_filter` in the DAG), we will continue with adding a
+//   new node to the graph
+// * if the `Apply` call fails then we know that the lower layers will filter
+//   out the unwanted data so we can skip adding the node to the graph.
+
 /// Only return cells from rows whose keys match `regex`.
 struct RowKeyRegex {
   std::shared_ptr<re2::RE2> regex;
