@@ -14,7 +14,6 @@
 
 #include "google/cloud/spanner/uuid.h"
 #include "google/cloud/internal/make_status.h"
-#include "absl/container/flat_hash_map.h"
 #include "absl/strings/str_format.h"
 #include "absl/strings/strip.h"
 
@@ -31,7 +30,7 @@ StatusOr<std::uint64_t> ParseHexBlock(absl::string_view& str,
                                       absl::string_view original_str) {
   constexpr int kMaxUuidNumberOfHexDigits = 32;
   constexpr int kMaxUuidBlockLength = 16;
-  static auto const* char_to_hex = new absl::flat_hash_map<char, std::uint8_t>(
+  static auto const* char_to_hex = new std::unordered_map<char, std::uint8_t>(
       {{'0', 0x00}, {'1', 0x01}, {'2', 0x02}, {'3', 0x03}, {'4', 0x04},
        {'5', 0x05}, {'6', 0x06}, {'7', 0x07}, {'8', 0x08}, {'9', 0x09},
        {'a', 0x0a}, {'b', 0x0b}, {'c', 0x0c}, {'d', 0x0d}, {'e', 0x0e},
