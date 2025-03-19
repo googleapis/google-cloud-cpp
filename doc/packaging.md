@@ -570,7 +570,7 @@ the version of C++ used to compile Abseil to anything that depends on Abseil.
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250127.0.tar.gz | \
+curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250127.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -742,7 +742,7 @@ the version of C++ used to compile Abseil to anything that depends on Abseil.
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250127.0.tar.gz | \
+curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250127.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -1045,7 +1045,7 @@ version of C++ used to compile Abseil to anything that depends on Abseil.
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250127.0.tar.gz | \
+curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250127.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -1255,7 +1255,7 @@ C++ used to compile Abseil to anything that depends on Abseil.
 
 ```bash
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
-curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250127.0.tar.gz | \
+curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250127.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
