@@ -26,7 +26,7 @@ ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig
 ENV PATH=/usr/local/bin:${PATH}
 
 WORKDIR /var/tmp/build
-RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250127.0.tar.gz | \
+RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250127.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_CXX_STANDARD=17 \
