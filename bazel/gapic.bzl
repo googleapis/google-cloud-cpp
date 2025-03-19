@@ -38,23 +38,23 @@ def cc_gapic_library(name, service_dirs = [], googleapis_deps = [], additional_d
 
     native.filegroup(
         name = "srcs",
-        srcs = native.glob(sources_glob),
+        srcs = native.glob(sources_glob, allow_empty=True),
     )
 
     native.filegroup(
         name = "hdrs",
-        srcs = native.glob(include = code_glob, exclude = sources_glob),
+        srcs = native.glob(include = code_glob, exclude = sources_glob, allow_empty=True),
     )
 
     native.filegroup(
         name = "public_hdrs",
-        srcs = native.glob([d + "*.h" for d in service_dirs]),
+        srcs = native.glob([d + "*.h" for d in service_dirs], allow_empty=True),
         visibility = ["//:__pkg__"],
     )
 
     native.filegroup(
         name = "mocks",
-        srcs = native.glob([d + "mocks/*.h" for d in service_dirs]),
+        srcs = native.glob([d + "mocks/*.h" for d in service_dirs], allow_empty=True),
         visibility = ["//:__pkg__"],
     )
 
@@ -84,4 +84,4 @@ def cc_gapic_library(name, service_dirs = [], googleapis_deps = [], additional_d
             "//:" + name,
             "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         ],
-    ) for sample in native.glob([d + "samples/*_samples.cc" for d in service_dirs])]
+    ) for sample in native.glob([d + "samples/*_samples.cc" for d in service_dirs], allow_empty=True)]

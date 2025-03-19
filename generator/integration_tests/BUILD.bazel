@@ -70,7 +70,7 @@ filegroup(
     srcs = glob([
         "golden/v1/internal/*_sources.cc",
         "golden/v1/internal/streaming.cc",
-    ]),
+    ], allow_empty=True),
 )
 
 filegroup(
