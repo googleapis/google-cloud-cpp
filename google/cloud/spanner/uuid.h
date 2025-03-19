@@ -38,10 +38,10 @@ class Uuid {
   /// Default construction yields a zero value UUID.
   Uuid() = default;
 
-  /// Construct a UUID from a packed integer.
+  /// Construct a UUID from one 128 bit unsigned integer.
   explicit Uuid(absl::uint128 value);
 
-  /// Construct a UUID from two 64 bit pieces.
+  /// Construct a UUID from two unsigned 64 bit pieces.
   Uuid(std::uint64_t high_bits, std::uint64_t low_bits);
 
   /// @name Regular value type, supporting copy, assign, move.
@@ -55,11 +55,15 @@ class Uuid {
   /// @name Relational operators
   ///
   ///@{
-  friend bool operator==(Uuid const& lhs, Uuid const& rhs);
+  friend bool operator==(Uuid const& lhs, Uuid const& rhs) {
+    return lhs.uuid_ == rhs.uuid_;
+  }
   friend bool operator!=(Uuid const& lhs, Uuid const& rhs) {
     return !(lhs == rhs);
   }
-  friend bool operator<(Uuid const& lhs, Uuid const& rhs);
+  friend bool operator<(Uuid const& lhs, Uuid const& rhs) {
+    return lhs.uuid_ < rhs.uuid_;
+  }
   friend bool operator<=(Uuid const& lhs, Uuid const& rhs) {
     return !(rhs < lhs);
   }
@@ -72,7 +76,7 @@ class Uuid {
   /// @name Conversion to packed integer representation.
   explicit operator absl::uint128() const { return uuid_; }
 
-  /// @name Conversion to a lower case string using formatted:
+  /// @name Conversion to a lower case string using formatted as:
   /// [8 hex-digits]-[4 hex-digits]-[4 hex-digits]-[4 hex-digits]-[12
   /// hex-digits]
   /// Example: 0b6ed04c-a16d-fc46-5281-7f9978c13738
@@ -91,10 +95,9 @@ class Uuid {
  * Parses a textual representation a `Uuid` from a string of hexadecimal digits.
  * Returns an error if unable to parse the given input.
  *
- * Acceptable input strings must consist of [0-f] digits with formatting such:
- *  - Upper, lower, or mixed case.
- *  - Optional curly bracers around the entire UUID string.
- *  - Hyphens between any pair of hexadecimal digits are allowed.
+ * Acceptable input strings must consist of 32 hexadecimal digits: [0-9a-fA-F].
+ * Optional curly braces are allowed around the entire sequence of digits as are
+ * hyphens between any pair of hexadecimal digits.
  *
  * Example acceptable inputs:
  *  - {0b6ed04c-a16d-fc46-5281-7f9978c13738}

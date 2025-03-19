@@ -24,13 +24,12 @@ namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-constexpr int kMaxUuidNumberOfHexDigits = 32;
-
 // Helper function to parse a single hexadecimal block of a UUID.
 // A hexadecimal block is a 16-digit hexadecimal number, which is represented
 // as 8 bytes.
 StatusOr<std::uint64_t> ParseHexBlock(absl::string_view& str,
                                       absl::string_view original_str) {
+  constexpr int kMaxUuidNumberOfHexDigits = 32;
   constexpr int kMaxUuidBlockLength = 16;
   static auto const* char_to_hex = new absl::flat_hash_map<char, std::uint8_t>(
       {{'0', 0x00}, {'1', 0x01}, {'2', 0x02}, {'3', 0x03}, {'4', 0x04},
@@ -73,14 +72,6 @@ Uuid::Uuid(absl::uint128 value) : uuid_(value) {}
 Uuid::Uuid(std::uint64_t high_bits, std::uint64_t low_bits)
     : Uuid(absl::MakeUint128(high_bits, low_bits)) {}
 
-bool operator==(Uuid const& lhs, Uuid const& rhs) {
-  return lhs.uuid_ == rhs.uuid_;
-}
-
-bool operator<(Uuid const& lhs, Uuid const& rhs) {
-  return lhs.uuid_ < rhs.uuid_;
-}
-
 Uuid::operator std::string() const {
   constexpr int kUuidStringLen = 36;
   constexpr int kChunkLength[] = {8, 4, 4, 4, 12};
@@ -95,7 +86,7 @@ Uuid::operator std::string() const {
 
   std::string output;
   output.resize(kUuidStringLen);
-  char* target = &((output)[output.size() - kUuidStringLen]);
+  char* target = const_cast<char*>(output.data());
   char* const last = &((output)[output.size()]);
   auto bits = Uint128High64(uuid_);
   int start = 16;
@@ -131,7 +122,7 @@ StatusOr<Uuid> MakeUuid(absl::string_view str) {
   }
 
   // Check for leading hyphen after stripping any surrounding braces.
-  if (str[0] == '-') {
+  if (absl::StartsWith(str, "-")) {
     return internal::InvalidArgumentError(
         absl::StrFormat("UUID cannot begin with '-': %s", original_str),
         GCP_ERROR_INFO());
@@ -144,8 +135,7 @@ StatusOr<Uuid> MakeUuid(absl::string_view str) {
 
   if (!str.empty()) {
     return internal::InvalidArgumentError(
-        absl::StrFormat("Extra characters (%d) found after parsing UUID: %s",
-                        str.size(), original_str),
+        absl::StrFormat("Extra characters found after parsing UUID: %s", str),
         GCP_ERROR_INFO());
   }
 

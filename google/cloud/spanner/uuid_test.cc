@@ -118,12 +118,14 @@ INSTANTIATE_TEST_SUITE_P(
         MakeUuidTestParam{
             "MissingClosingCurlyBrace", "{0b6ed04ca16dfc4652817f9978c13738",
             0x0, 0x0,
-            Status{StatusCode::kInvalidArgument, "UUID missing closing '}':"}},
+            Status{
+                StatusCode::kInvalidArgument,
+                "UUID missing closing '}': {0b6ed04ca16dfc4652817f9978c13738"}},
         MakeUuidTestParam{
             "MissingOpeningCurlyBrace", "0b6ed04ca16dfc4652817f9978c13738}",
             0x0, 0x0,
             Status{StatusCode::kInvalidArgument,
-                   "Extra characters (1) found after parsing UUID:"}},
+                   "Extra characters found after parsing UUID: }"}},
         MakeUuidTestParam{"StartsWithInvalidHyphen",
                           "-0b6ed04ca16dfc4652817f9978c13738", 0x0, 0x0,
                           Status{StatusCode::kInvalidArgument,
@@ -135,7 +137,8 @@ INSTANTIATE_TEST_SUITE_P(
         MakeUuidTestParam{"ContainsConsecutiveHyphens",
                           "0b--6ed04ca16dfc4652817f9978c13738", 0x0, 0x0,
                           Status{StatusCode::kInvalidArgument,
-                                 "UUID cannot contain consecutive hyphens:"}},
+                                 "UUID cannot contain consecutive hyphens: "
+                                 "0b--6ed04ca16dfc4652817f9978c13738"}},
         MakeUuidTestParam{"InsufficientDigits",
                           "00-00-00-00-00-00-00-00-00-00-00-00-00-00-00", 0x0,
                           0x0,
