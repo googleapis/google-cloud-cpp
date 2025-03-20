@@ -19,8 +19,10 @@
 #include "google/cloud/status_or.h"
 #include "absl/numeric/int128.h"
 #include "absl/strings/string_view.h"
+#include <cstdint>
 #include <iosfwd>
 #include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -38,10 +40,10 @@ class Uuid {
   /// Default construction yields a zero value UUID.
   Uuid() = default;
 
-  /// Construct a UUID from one 128 bit unsigned integer.
+  /// Construct a UUID from one unsigned 128-bit integer.
   explicit Uuid(absl::uint128 value);
 
-  /// Construct a UUID from two unsigned 64 bit pieces.
+  /// Construct a UUID from two unsigned 64-bit pieces.
   Uuid(std::uint64_t high_bits, std::uint64_t low_bits);
 
   /// @name Regular value type, supporting copy, assign, move.
@@ -73,10 +75,13 @@ class Uuid {
   friend bool operator>(Uuid const& lhs, Uuid const& rhs) { return rhs < lhs; }
   ///@}
 
-  /// @name Conversion to packed integer representation.
+  /// @name Returns a pair of unsigned 64-bit integers representing the UUID.
+  std::pair<std::uint64_t, std::uint64_t> As64BitPair() const;
+
+  /// @name Conversion to unsigned 128-bit integer representation.
   explicit operator absl::uint128() const { return uuid_; }
 
-  /// @name Conversion to a lower case string using formatted as:
+  /// @name Conversion to a lower case string formatted as:
   /// [8 hex-digits]-[4 hex-digits]-[4 hex-digits]-[4 hex-digits]-[12
   /// hex-digits]
   /// Example: 0b6ed04c-a16d-fc46-5281-7f9978c13738

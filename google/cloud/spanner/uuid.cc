@@ -16,6 +16,7 @@
 #include "google/cloud/internal/make_status.h"
 #include "absl/strings/str_format.h"
 #include "absl/strings/strip.h"
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -71,6 +72,12 @@ Uuid::Uuid(absl::uint128 value) : uuid_(value) {}
 Uuid::Uuid(std::uint64_t high_bits, std::uint64_t low_bits)
     : Uuid(absl::MakeUint128(high_bits, low_bits)) {}
 
+std::pair<std::uint64_t, std::uint64_t> Uuid::As64BitPair() const {
+  return std::make_pair(Uint128High64(uuid_), Uint128Low64(uuid_));
+}
+
+// TODO(#15043): Refactor to handle all 128 bits at once instead of splitting
+// into a pair of unsigned 64-bit integers.
 Uuid::operator std::string() const {
   constexpr int kUuidStringLen = 36;
   constexpr int kChunkLength[] = {8, 4, 4, 4, 12};
@@ -127,6 +134,7 @@ StatusOr<Uuid> MakeUuid(absl::string_view str) {
         GCP_ERROR_INFO());
   }
 
+  // TODO(#15043): Refactor to parse all the bits at once.
   auto high_bits = ParseHexBlock(str, original_str);
   if (!high_bits.ok()) return std::move(high_bits).status();
   auto low_bits = ParseHexBlock(str, original_str);
