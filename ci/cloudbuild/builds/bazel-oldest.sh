@@ -30,6 +30,7 @@ mapfile -t args < <(bazel::common_args)
 args+=(
   # Test without bzlmod as WORKSPACE is still supported in bazel 7 LTS.
   --noenable_bzlmod
+  --enable_workspace
   # Only run the unit tests, no need to waste time running everything.
   --test_tag_filters=-integration-test
 )

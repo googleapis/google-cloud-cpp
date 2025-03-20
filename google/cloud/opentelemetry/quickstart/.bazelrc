@@ -45,3 +45,4 @@ build --@google_cloud_cpp//:enable_opentelemetry
 
 #Our quickstarts do not yet support bzlmod
 build --noenable_bzlmod
+build --enable_workspace
