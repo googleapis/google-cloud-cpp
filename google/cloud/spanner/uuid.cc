@@ -29,7 +29,7 @@ namespace {
 // as 8 bytes.
 StatusOr<std::uint64_t> ParseHexBlock(absl::string_view& str,
                                       absl::string_view original_str) {
-  constexpr int kMaxUuidNumberOfHexDigits = 32;
+  constexpr int kUuidNumberOfHexDigits = 32;
   constexpr int kMaxUuidBlockLength = 16;
   static auto const* char_to_hex = new std::unordered_map<char, std::uint8_t>(
       {{'0', 0x00}, {'1', 0x01}, {'2', 0x02}, {'3', 0x03}, {'4', 0x04},
@@ -43,7 +43,7 @@ StatusOr<std::uint64_t> ParseHexBlock(absl::string_view& str,
     if (str.empty()) {
       return internal::InvalidArgumentError(
           absl::StrFormat("UUID must contain %d hexadecimal digits: %s",
-                          kMaxUuidNumberOfHexDigits, original_str),
+                          kUuidNumberOfHexDigits, original_str),
           GCP_ERROR_INFO());
     }
     auto it = char_to_hex->find(str[0]);
@@ -112,12 +112,7 @@ Uuid::operator std::string() const {
 }
 
 StatusOr<Uuid> MakeUuid(absl::string_view str) {
-  if (str.empty()) {
-    return internal::InvalidArgumentError(
-        absl::StrFormat("UUID cannot be empty"), GCP_ERROR_INFO());
-  }
-
-  std::string original_str = std::string(str);
+  absl::string_view original_str = str;
   // Check and remove optional braces
   if (absl::ConsumePrefix(&str, "{")) {
     if (!absl::ConsumeSuffix(&str, "}")) {
