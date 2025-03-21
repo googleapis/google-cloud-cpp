@@ -196,6 +196,8 @@ CurlImpl::CurlImpl(CurlHandle handle,
   proxy_ = CurlOptProxy(options);
   proxy_username_ = CurlOptProxyUsername(options);
   proxy_password_ = CurlOptProxyPassword(options);
+
+  interface_ = CurlOptInterface(options);
 }
 
 CurlImpl::~CurlImpl() {
@@ -317,6 +319,10 @@ Status CurlImpl::MakeRequest(HttpMethod method, RestContext& context,
   }
   if (proxy_password_) {
     status = handle_.SetOption(CURLOPT_PROXYPASSWORD, proxy_password_->c_str());
+    if (!status.ok()) return OnTransferError(context, std::move(status));
+  }
+  if (interface_) {
+    status = handle_.SetOption(CURLOPT_INTERFACE, interface_->c_str());
     if (!status.ok()) return OnTransferError(context, std::move(status));
   }
 
@@ -784,6 +790,12 @@ absl::optional<std::string> CurlOptProxyPassword(Options const& options) {
   auto const& cfg = options.get<ProxyOption>();
   if (cfg.password().empty()) return absl::nullopt;
   return cfg.password();
+}
+
+absl::optional<std::string> CurlOptInterface(Options const& options) {
+  auto const& cfg = options.get<Interface>();
+  if (cfg.empty()) return absl::nullopt;
+  return cfg;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

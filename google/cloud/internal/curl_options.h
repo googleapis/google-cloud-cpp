@@ -129,11 +129,20 @@ struct CurlFollowLocationOption {
   using Type = bool;
 };
 
+/**
+ * Sets the interface name to use as outgoing network interface.
+ *
+ * The default is to use whatever the TCP stack finds suitable.
+ */
+struct Interface {
+  using Type = std::string;
+};
+
 using CurlOptionList = ::google::cloud::OptionList<
     ConnectionPoolSizeOption, EnableCurlSslLockingOption,
     EnableCurlSigpipeHandlerOption, MaximumCurlSocketRecvSizeOption,
     MaximumCurlSocketSendSizeOption, CAPathOption, HttpVersionOption,
-    CurlFollowLocationOption>;
+    CurlFollowLocationOption, Interface>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
