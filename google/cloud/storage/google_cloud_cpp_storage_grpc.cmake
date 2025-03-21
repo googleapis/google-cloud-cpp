@@ -458,6 +458,7 @@ set(storage_client_grpc_unit_tests
     internal/async/writer_connection_buffered_test.cc
     internal/async/writer_connection_finalized_test.cc
     internal/async/writer_connection_impl_test.cc
+    internal/async/writer_connection_resumed_test.cc
     internal/async/writer_connection_tracing_test.cc
     internal/grpc/bucket_access_control_parser_test.cc
     internal/grpc/bucket_metadata_parser_test.cc
