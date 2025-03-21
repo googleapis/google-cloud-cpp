@@ -45,10 +45,24 @@ struct RestTracingOptionsOption {
   using Type = TracingOptions;
 };
 
+/**
+ * Sets the interface name to use as outgoing network interface. The
+ * name can be an interface name, IP address, or hostname. To
+ * utilize one of these use the following special prefixes:
+ *
+ * if!<name> for interface name, host!<name for IP address or hostname,
+ * ifhost!<interface>!<host> for interface name and IP address or hostname.
+ *
+ * The default is to use whatever the TCP stack finds suitable.
+ */
+struct Interface {
+  using Type = std::string;
+};
+
 /// The complete list of options accepted by `CurlRestClient`
 using RestOptionList =
     ::google::cloud::OptionList<QuotaUserOption, RestTracingOptionsOption,
-                                ServerTimeoutOption, UserIpOption>;
+                                ServerTimeoutOption, UserIpOption, Interface>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud

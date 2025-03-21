@@ -23,6 +23,7 @@
 #include "google/cloud/internal/rest_options.h"
 #include "google/cloud/internal/user_agent_prefix.h"
 #include "google/cloud/log.h"
+#include "google/cloud/rest_options.h"
 #include "absl/strings/match.h"
 #include "absl/strings/strip.h"
 #include <algorithm>
