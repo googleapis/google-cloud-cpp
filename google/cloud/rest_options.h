@@ -50,8 +50,8 @@ struct RestTracingOptionsOption {
  * name can be an interface name, IP address, or hostname. To
  * utilize one of these use the following special prefixes:
  *
- * if!<name> for interface name, host!<name for IP address or hostname,
- * ifhost!<interface>!<host> for interface name and IP address or hostname.
+ * if![name] for interface name, host![name] for IP address or hostname,
+ * ifhost![interface]![host] for interface name and IP address or hostname.
  *
  * The default is to use whatever the TCP stack finds suitable.
  */
