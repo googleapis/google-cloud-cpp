@@ -210,6 +210,18 @@ TEST_F(GrpcConfigureClientContext, ApplyRoutingHeadersUploadIdNoMatch) {
   EXPECT_THAT(metadata, Not(Contains(Pair("x-goog-request-params", _))));
 }
 
+TEST_F(GrpcConfigureClientContext, ApplyRoutingHeadersAppendObject) {
+  auto spec = google::storage::v2::AppendObjectSpec{};
+  spec.set_bucket("projects/_/buckets/test-bucket");
+
+  grpc::ClientContext context;
+  ApplyRoutingHeaders(context, spec);
+  auto metadata = GetMetadata(context);
+  EXPECT_THAT(metadata,
+              Contains(Pair("x-goog-request-params",
+                            "bucket=projects%2F_%2Fbuckets%2Ftest-bucket")));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
