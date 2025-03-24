@@ -135,10 +135,10 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_google_googleapis",
         urls = [
-            "https://github.com/googleapis/googleapis/archive/280725e991516d4a0f136268faf5aa6d32d21b54.tar.gz",
+            "https://github.com/googleapis/googleapis/archive/53ca65d540dd1a7cb4746687daa87208dc9ea437.tar.gz",
         ],
-        sha256 = "5a9450cf1ad1187c82a2b5cdff53e4d584b6d45292b5f71b504083acb03ad7d0",
-        strip_prefix = "googleapis-280725e991516d4a0f136268faf5aa6d32d21b54",
+        sha256 = "2a7ba70873cad53f2ef12531000535db61baaa67f100321f038654f9f3565e36",
+        strip_prefix = "googleapis-53ca65d540dd1a7cb4746687daa87208dc9ea437",
         build_file = Label("//bazel:googleapis.BUILD"),
         # Scaffolding for patching googleapis after download. For example:
         #   patches = ["googleapis.patch"]
@@ -147,7 +147,8 @@ def gl_cpp_workspace0(name = None):
         # committed to the main branch.
         patch_tool = "patch",
         patch_args = ["-p1", "-l", "-n"],
-        patches = ["//bazel:googleapis.workspace.patch"],
+        patches = [],
+        # patches = ["//bazel:googleapis.workspace.patch"],
     )
 
     # Load protobuf.
