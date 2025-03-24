@@ -120,13 +120,163 @@ class RowAccessPolicyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.ListRowAccessPoliciesRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/row_access_policy.proto#L48}
-  /// [google.cloud.bigquery.v2.RowAccessPolicy]: @googleapis_reference_link{google/cloud/bigquery/v2/row_access_policy.proto#L79}
+  /// [google.cloud.bigquery.v2.ListRowAccessPoliciesRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/row_access_policy.proto#L91}
+  /// [google.cloud.bigquery.v2.RowAccessPolicy]: @googleapis_reference_link{google/cloud/bigquery/v2/row_access_policy.proto#L212}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::v2::RowAccessPolicy>
   ListRowAccessPolicies(
       google::cloud::bigquery::v2::ListRowAccessPoliciesRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets the specified row access policy by policy ID.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.v2.GetRowAccessPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.v2.RowAccessPolicy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.v2.GetRowAccessPolicyRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/row_access_policy.proto#L120}
+  /// [google.cloud.bigquery.v2.RowAccessPolicy]: @googleapis_reference_link{google/cloud/bigquery/v2/row_access_policy.proto#L212}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::bigquery::v2::RowAccessPolicy> GetRowAccessPolicy(
+      google::cloud::bigquery::v2::GetRowAccessPolicyRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a row access policy.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.v2.CreateRowAccessPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.v2.RowAccessPolicy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.v2.CreateRowAccessPolicyRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/row_access_policy.proto#L135}
+  /// [google.cloud.bigquery.v2.RowAccessPolicy]: @googleapis_reference_link{google/cloud/bigquery/v2/row_access_policy.proto#L212}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::bigquery::v2::RowAccessPolicy> CreateRowAccessPolicy(
+      google::cloud::bigquery::v2::CreateRowAccessPolicyRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a row access policy.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.v2.UpdateRowAccessPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.bigquery.v2.RowAccessPolicy])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.v2.RowAccessPolicy]: @googleapis_reference_link{google/cloud/bigquery/v2/row_access_policy.proto#L212}
+  /// [google.cloud.bigquery.v2.UpdateRowAccessPolicyRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/row_access_policy.proto#L151}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::bigquery::v2::RowAccessPolicy> UpdateRowAccessPolicy(
+      google::cloud::bigquery::v2::UpdateRowAccessPolicyRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a row access policy.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.v2.DeleteRowAccessPolicyRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.v2.DeleteRowAccessPolicyRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/row_access_policy.proto#L170}
+  ///
+  // clang-format on
+  Status DeleteRowAccessPolicy(
+      google::cloud::bigquery::v2::DeleteRowAccessPolicyRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes provided row access policies.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.bigquery.v2.BatchDeleteRowAccessPoliciesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.bigquery.v2.BatchDeleteRowAccessPoliciesRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/row_access_policy.proto#L190}
+  ///
+  // clang-format on
+  Status BatchDeleteRowAccessPolicies(
+      google::cloud::bigquery::v2::BatchDeleteRowAccessPoliciesRequest const&
+          request,
       Options opts = {});
 
  private:

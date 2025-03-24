@@ -401,7 +401,7 @@ class LoggingServiceV2Client {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.MonitoredResourceDescriptor]: @googleapis_reference_link{google/api/monitored_resource.proto#L41}
+  /// [google.api.MonitoredResourceDescriptor]: @googleapis_reference_link{google/api/monitored_resource.proto#L40}
   /// [google.logging.v2.ListMonitoredResourceDescriptorsRequest]: @googleapis_reference_link{google/logging/v2/logging.proto#L327}
   ///
   // clang-format on

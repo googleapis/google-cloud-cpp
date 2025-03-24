@@ -176,6 +176,16 @@ class CloudFilestoreManagerStub {
       grpc::ClientContext& context, Options options,
       google::cloud::filestore::v1::UpdateBackupRequest const& request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncPromoteReplica(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::filestore::v1::PromoteReplicaRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> PromoteReplica(
+      grpc::ClientContext& context, Options options,
+      google::cloud::filestore::v1::PromoteReplicaRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::location::ListLocationsResponse>
   ListLocations(
       grpc::ClientContext& context, Options const& options,
@@ -384,6 +394,18 @@ class DefaultCloudFilestoreManagerStub : public CloudFilestoreManagerStub {
   StatusOr<google::longrunning::Operation> UpdateBackup(
       grpc::ClientContext& context, Options options,
       google::cloud::filestore::v1::UpdateBackupRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncPromoteReplica(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::filestore::v1::PromoteReplicaRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> PromoteReplica(
+      grpc::ClientContext& context, Options options,
+      google::cloud::filestore::v1::PromoteReplicaRequest const& request)
       override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(

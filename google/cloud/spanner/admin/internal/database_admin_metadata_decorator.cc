@@ -309,6 +309,17 @@ DatabaseAdminMetadata::ListDatabaseRoles(
   return child_->ListDatabaseRoles(context, options, request);
 }
 
+StatusOr<google::spanner::admin::database::v1::AddSplitPointsResponse>
+DatabaseAdminMetadata::AddSplitPoints(
+    grpc::ClientContext& context, Options const& options,
+    google::spanner::admin::database::v1::AddSplitPointsRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("database=", internal::UrlEncode(request.database())));
+  return child_->AddSplitPoints(context, options, request);
+}
+
 StatusOr<google::spanner::admin::database::v1::BackupSchedule>
 DatabaseAdminMetadata::CreateBackupSchedule(
     grpc::ClientContext& context, Options const& options,

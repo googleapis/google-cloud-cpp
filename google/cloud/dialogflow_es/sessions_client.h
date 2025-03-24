@@ -142,8 +142,8 @@ class SessionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.DetectIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L112}
-  /// [google.cloud.dialogflow.v2.DetectIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L172}
+  /// [google.cloud.dialogflow.v2.DetectIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L111}
+  /// [google.cloud.dialogflow.v2.DetectIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L171}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::DetectIntentResponse> DetectIntent(
@@ -188,8 +188,8 @@ class SessionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.DetectIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L112}
-  /// [google.cloud.dialogflow.v2.DetectIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L172}
+  /// [google.cloud.dialogflow.v2.DetectIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L111}
+  /// [google.cloud.dialogflow.v2.DetectIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L171}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::DetectIntentResponse> DetectIntent(
@@ -230,8 +230,8 @@ class SessionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.StreamingDetectIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L422}
-  /// [google.cloud.dialogflow.v2.StreamingDetectIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L579}
+  /// [google.cloud.dialogflow.v2.StreamingDetectIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L421}
+  /// [google.cloud.dialogflow.v2.StreamingDetectIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L578}
   ///
   // clang-format on
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<

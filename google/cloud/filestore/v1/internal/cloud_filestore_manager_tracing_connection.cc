@@ -409,6 +409,35 @@ CloudFilestoreManagerTracingConnection::UpdateBackup(
   return internal::EndSpan(std::move(span), child_->UpdateBackup(operation));
 }
 
+future<StatusOr<google::cloud::filestore::v1::Instance>>
+CloudFilestoreManagerTracingConnection::PromoteReplica(
+    google::cloud::filestore::v1::PromoteReplicaRequest const& request) {
+  auto span = internal::MakeSpan(
+      "filestore_v1::CloudFilestoreManagerConnection::PromoteReplica");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->PromoteReplica(request));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerTracingConnection::PromoteReplica(
+    NoAwaitTag,
+    google::cloud::filestore::v1::PromoteReplicaRequest const& request) {
+  auto span = internal::MakeSpan(
+      "filestore_v1::CloudFilestoreManagerConnection::PromoteReplica");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->PromoteReplica(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::filestore::v1::Instance>>
+CloudFilestoreManagerTracingConnection::PromoteReplica(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "filestore_v1::CloudFilestoreManagerConnection::PromoteReplica");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->PromoteReplica(operation));
+}
+
 StreamRange<google::cloud::location::Location>
 CloudFilestoreManagerTracingConnection::ListLocations(
     google::cloud::location::ListLocationsRequest request) {

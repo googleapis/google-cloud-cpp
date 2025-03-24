@@ -201,6 +201,15 @@ class BatchServiceConnection {
   virtual future<StatusOr<google::cloud::batch::v1::OperationMetadata>>
   DeleteJob(google::longrunning::Operation const& operation);
 
+  virtual future<StatusOr<google::cloud::batch::v1::CancelJobResponse>>
+  CancelJob(google::cloud::batch::v1::CancelJobRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CancelJob(
+      NoAwaitTag, google::cloud::batch::v1::CancelJobRequest const& request);
+
+  virtual future<StatusOr<google::cloud::batch::v1::CancelJobResponse>>
+  CancelJob(google::longrunning::Operation const& operation);
+
   virtual StreamRange<google::cloud::batch::v1::Job> ListJobs(
       google::cloud::batch::v1::ListJobsRequest request);
 

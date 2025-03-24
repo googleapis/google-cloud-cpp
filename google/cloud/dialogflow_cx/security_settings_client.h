@@ -110,8 +110,8 @@ class SecuritySettingsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CreateSecuritySettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L162}
-  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
+  /// [google.cloud.dialogflow.cx.v3.CreateSecuritySettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L161}
+  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L194}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
@@ -144,8 +144,8 @@ class SecuritySettingsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CreateSecuritySettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L162}
-  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
+  /// [google.cloud.dialogflow.cx.v3.CreateSecuritySettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L161}
+  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L194}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
@@ -176,8 +176,8 @@ class SecuritySettingsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.GetSecuritySettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L106}
-  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
+  /// [google.cloud.dialogflow.cx.v3.GetSecuritySettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L105}
+  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L194}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
@@ -208,8 +208,8 @@ class SecuritySettingsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.GetSecuritySettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L106}
-  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
+  /// [google.cloud.dialogflow.cx.v3.GetSecuritySettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L105}
+  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L194}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
@@ -240,8 +240,8 @@ class SecuritySettingsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
-  /// [google.cloud.dialogflow.cx.v3.UpdateSecuritySettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L120}
+  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L194}
+  /// [google.cloud.dialogflow.cx.v3.UpdateSecuritySettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L119}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
@@ -274,8 +274,8 @@ class SecuritySettingsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
-  /// [google.cloud.dialogflow.cx.v3.UpdateSecuritySettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L120}
+  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L194}
+  /// [google.cloud.dialogflow.cx.v3.UpdateSecuritySettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L119}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
@@ -312,8 +312,8 @@ class SecuritySettingsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.ListSecuritySettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L133}
-  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
+  /// [google.cloud.dialogflow.cx.v3.ListSecuritySettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L132}
+  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L194}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::SecuritySettings>
@@ -351,8 +351,8 @@ class SecuritySettingsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.ListSecuritySettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L133}
-  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
+  /// [google.cloud.dialogflow.cx.v3.ListSecuritySettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L132}
+  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L194}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::SecuritySettings>
@@ -380,8 +380,8 @@ class SecuritySettingsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeleteSecuritySettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L179}
-  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
+  /// [google.cloud.dialogflow.cx.v3.DeleteSecuritySettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L178}
+  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L194}
   ///
   // clang-format on
   Status DeleteSecuritySettings(std::string const& name, Options opts = {});
@@ -408,8 +408,8 @@ class SecuritySettingsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeleteSecuritySettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L179}
-  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
+  /// [google.cloud.dialogflow.cx.v3.DeleteSecuritySettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L178}
+  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L194}
   ///
   // clang-format on
   Status DeleteSecuritySettings(

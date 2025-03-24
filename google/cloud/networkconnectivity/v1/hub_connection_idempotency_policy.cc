@@ -99,6 +99,16 @@ Idempotency HubServiceConnectionIdempotencyPolicy::AcceptHubSpoke(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency HubServiceConnectionIdempotencyPolicy::AcceptSpokeUpdate(
+    google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency HubServiceConnectionIdempotencyPolicy::RejectSpokeUpdate(
+    google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency HubServiceConnectionIdempotencyPolicy::DeleteSpoke(
     google::cloud::networkconnectivity::v1::DeleteSpokeRequest const&) {
   return Idempotency::kNonIdempotent;

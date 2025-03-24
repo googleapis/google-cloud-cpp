@@ -336,6 +336,174 @@ BigtableInstanceAdminAuth::ListHotTablets(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+BigtableInstanceAdminAuth::AsyncCreateLogicalView(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::admin::v2::CreateLogicalViewRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateLogicalView(cq, *std::move(context),
+                                             std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminAuth::CreateLogicalView(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::CreateLogicalViewRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateLogicalView(context, options, request);
+}
+
+StatusOr<google::bigtable::admin::v2::LogicalView>
+BigtableInstanceAdminAuth::GetLogicalView(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::GetLogicalViewRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetLogicalView(context, options, request);
+}
+
+StatusOr<google::bigtable::admin::v2::ListLogicalViewsResponse>
+BigtableInstanceAdminAuth::ListLogicalViews(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::ListLogicalViewsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListLogicalViews(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BigtableInstanceAdminAuth::AsyncUpdateLogicalView(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::admin::v2::UpdateLogicalViewRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateLogicalView(cq, *std::move(context),
+                                             std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminAuth::UpdateLogicalView(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::UpdateLogicalViewRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateLogicalView(context, options, request);
+}
+
+Status BigtableInstanceAdminAuth::DeleteLogicalView(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::DeleteLogicalViewRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteLogicalView(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BigtableInstanceAdminAuth::AsyncCreateMaterializedView(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::admin::v2::CreateMaterializedViewRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateMaterializedView(cq, *std::move(context),
+                                                  std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminAuth::CreateMaterializedView(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::CreateMaterializedViewRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateMaterializedView(context, options, request);
+}
+
+StatusOr<google::bigtable::admin::v2::MaterializedView>
+BigtableInstanceAdminAuth::GetMaterializedView(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::GetMaterializedViewRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetMaterializedView(context, options, request);
+}
+
+StatusOr<google::bigtable::admin::v2::ListMaterializedViewsResponse>
+BigtableInstanceAdminAuth::ListMaterializedViews(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::ListMaterializedViewsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListMaterializedViews(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BigtableInstanceAdminAuth::AsyncUpdateMaterializedView(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::admin::v2::UpdateMaterializedViewRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateMaterializedView(cq, *std::move(context),
+                                                  std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminAuth::UpdateMaterializedView(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::UpdateMaterializedViewRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateMaterializedView(context, options, request);
+}
+
+Status BigtableInstanceAdminAuth::DeleteMaterializedView(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::DeleteMaterializedViewRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteMaterializedView(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

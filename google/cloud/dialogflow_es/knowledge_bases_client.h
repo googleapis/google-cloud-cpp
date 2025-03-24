@@ -62,7 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.dialogflow.v2.KnowledgeBase]:
-/// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L131}
+/// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L130}
 ///
 class KnowledgeBasesClient {
  public:
@@ -118,8 +118,8 @@ class KnowledgeBasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.KnowledgeBase]: @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L131}
-  /// [google.cloud.dialogflow.v2.ListKnowledgeBasesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L156}
+  /// [google.cloud.dialogflow.v2.KnowledgeBase]: @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L130}
+  /// [google.cloud.dialogflow.v2.ListKnowledgeBasesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L155}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::v2::KnowledgeBase> ListKnowledgeBases(
@@ -157,8 +157,8 @@ class KnowledgeBasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.KnowledgeBase]: @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L131}
-  /// [google.cloud.dialogflow.v2.ListKnowledgeBasesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L156}
+  /// [google.cloud.dialogflow.v2.KnowledgeBase]: @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L130}
+  /// [google.cloud.dialogflow.v2.ListKnowledgeBasesRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L155}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::v2::KnowledgeBase> ListKnowledgeBases(
@@ -184,8 +184,8 @@ class KnowledgeBasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.GetKnowledgeBaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L215}
-  /// [google.cloud.dialogflow.v2.KnowledgeBase]: @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L131}
+  /// [google.cloud.dialogflow.v2.GetKnowledgeBaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L214}
+  /// [google.cloud.dialogflow.v2.KnowledgeBase]: @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L130}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::KnowledgeBase> GetKnowledgeBase(
@@ -214,8 +214,8 @@ class KnowledgeBasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.GetKnowledgeBaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L215}
-  /// [google.cloud.dialogflow.v2.KnowledgeBase]: @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L131}
+  /// [google.cloud.dialogflow.v2.GetKnowledgeBaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L214}
+  /// [google.cloud.dialogflow.v2.KnowledgeBase]: @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L130}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::KnowledgeBase> GetKnowledgeBase(
@@ -242,8 +242,8 @@ class KnowledgeBasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.CreateKnowledgeBaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L229}
-  /// [google.cloud.dialogflow.v2.KnowledgeBase]: @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L131}
+  /// [google.cloud.dialogflow.v2.CreateKnowledgeBaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L228}
+  /// [google.cloud.dialogflow.v2.KnowledgeBase]: @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L130}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::KnowledgeBase> CreateKnowledgeBase(
@@ -274,8 +274,8 @@ class KnowledgeBasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.CreateKnowledgeBaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L229}
-  /// [google.cloud.dialogflow.v2.KnowledgeBase]: @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L131}
+  /// [google.cloud.dialogflow.v2.CreateKnowledgeBaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L228}
+  /// [google.cloud.dialogflow.v2.KnowledgeBase]: @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L130}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::KnowledgeBase> CreateKnowledgeBase(
@@ -299,7 +299,7 @@ class KnowledgeBasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.DeleteKnowledgeBaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L245}
+  /// [google.cloud.dialogflow.v2.DeleteKnowledgeBaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L244}
   ///
   // clang-format on
   Status DeleteKnowledgeBase(std::string const& name, Options opts = {});
@@ -325,7 +325,7 @@ class KnowledgeBasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.DeleteKnowledgeBaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L245}
+  /// [google.cloud.dialogflow.v2.DeleteKnowledgeBaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L244}
   ///
   // clang-format on
   Status DeleteKnowledgeBase(
@@ -353,8 +353,8 @@ class KnowledgeBasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.KnowledgeBase]: @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L131}
-  /// [google.cloud.dialogflow.v2.UpdateKnowledgeBaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L263}
+  /// [google.cloud.dialogflow.v2.KnowledgeBase]: @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L130}
+  /// [google.cloud.dialogflow.v2.UpdateKnowledgeBaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L262}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::KnowledgeBase> UpdateKnowledgeBase(
@@ -384,8 +384,8 @@ class KnowledgeBasesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.KnowledgeBase]: @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L131}
-  /// [google.cloud.dialogflow.v2.UpdateKnowledgeBaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L263}
+  /// [google.cloud.dialogflow.v2.KnowledgeBase]: @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L130}
+  /// [google.cloud.dialogflow.v2.UpdateKnowledgeBaseRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L262}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::KnowledgeBase> UpdateKnowledgeBase(

@@ -187,6 +187,12 @@ class DatabaseAdminStub {
       google::spanner::admin::database::v1::ListDatabaseRolesRequest const&
           request) = 0;
 
+  virtual StatusOr<google::spanner::admin::database::v1::AddSplitPointsResponse>
+  AddSplitPoints(
+      grpc::ClientContext& context, Options const& options,
+      google::spanner::admin::database::v1::AddSplitPointsRequest const&
+          request) = 0;
+
   virtual StatusOr<google::spanner::admin::database::v1::BackupSchedule>
   CreateBackupSchedule(
       grpc::ClientContext& context, Options const& options,
@@ -399,6 +405,12 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
   ListDatabaseRoles(
       grpc::ClientContext& context, Options const& options,
       google::spanner::admin::database::v1::ListDatabaseRolesRequest const&
+          request) override;
+
+  StatusOr<google::spanner::admin::database::v1::AddSplitPointsResponse>
+  AddSplitPoints(
+      grpc::ClientContext& context, Options const& options,
+      google::spanner::admin::database::v1::AddSplitPointsRequest const&
           request) override;
 
   StatusOr<google::spanner::admin::database::v1::BackupSchedule>

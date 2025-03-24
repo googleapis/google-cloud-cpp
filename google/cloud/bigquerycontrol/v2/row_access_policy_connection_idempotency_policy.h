@@ -39,6 +39,22 @@ class RowAccessPolicyServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency ListRowAccessPolicies(
       google::cloud::bigquery::v2::ListRowAccessPoliciesRequest request);
+
+  virtual google::cloud::Idempotency GetRowAccessPolicy(
+      google::cloud::bigquery::v2::GetRowAccessPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency CreateRowAccessPolicy(
+      google::cloud::bigquery::v2::CreateRowAccessPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateRowAccessPolicy(
+      google::cloud::bigquery::v2::UpdateRowAccessPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteRowAccessPolicy(
+      google::cloud::bigquery::v2::DeleteRowAccessPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency BatchDeleteRowAccessPolicies(
+      google::cloud::bigquery::v2::BatchDeleteRowAccessPoliciesRequest const&
+          request);
 };
 
 std::unique_ptr<RowAccessPolicyServiceConnectionIdempotencyPolicy>

@@ -183,6 +183,12 @@ class DatabaseAdminAuth : public DatabaseAdminStub {
       google::spanner::admin::database::v1::ListDatabaseRolesRequest const&
           request) override;
 
+  StatusOr<google::spanner::admin::database::v1::AddSplitPointsResponse>
+  AddSplitPoints(
+      grpc::ClientContext& context, Options const& options,
+      google::spanner::admin::database::v1::AddSplitPointsRequest const&
+          request) override;
+
   StatusOr<google::spanner::admin::database::v1::BackupSchedule>
   CreateBackupSchedule(
       grpc::ClientContext& context, Options const& options,

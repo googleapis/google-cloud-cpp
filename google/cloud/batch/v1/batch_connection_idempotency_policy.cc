@@ -49,6 +49,11 @@ Idempotency BatchServiceConnectionIdempotencyPolicy::DeleteJob(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency BatchServiceConnectionIdempotencyPolicy::CancelJob(
+    google::cloud::batch::v1::CancelJobRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency BatchServiceConnectionIdempotencyPolicy::ListJobs(
     google::cloud::batch::v1::ListJobsRequest) {  // NOLINT
   return Idempotency::kIdempotent;

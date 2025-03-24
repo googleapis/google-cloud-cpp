@@ -592,6 +592,30 @@ CloudFilestoreManagerClient::UpdateBackup(
   return connection_->UpdateBackup(operation);
 }
 
+future<StatusOr<google::cloud::filestore::v1::Instance>>
+CloudFilestoreManagerClient::PromoteReplica(
+    google::cloud::filestore::v1::PromoteReplicaRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PromoteReplica(request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerClient::PromoteReplica(
+    NoAwaitTag,
+    google::cloud::filestore::v1::PromoteReplicaRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PromoteReplica(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::filestore::v1::Instance>>
+CloudFilestoreManagerClient::PromoteReplica(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PromoteReplica(operation);
+}
+
 StreamRange<google::cloud::location::Location>
 CloudFilestoreManagerClient::ListLocations(
     google::cloud::location::ListLocationsRequest request, Options opts) {

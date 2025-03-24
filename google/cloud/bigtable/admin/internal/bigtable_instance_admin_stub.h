@@ -170,6 +170,84 @@ class BigtableInstanceAdminStub {
       grpc::ClientContext& context, Options const& options,
       google::bigtable::admin::v2::ListHotTabletsRequest const& request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateLogicalView(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::admin::v2::CreateLogicalViewRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> CreateLogicalView(
+      grpc::ClientContext& context, Options options,
+      google::bigtable::admin::v2::CreateLogicalViewRequest const& request) = 0;
+
+  virtual StatusOr<google::bigtable::admin::v2::LogicalView> GetLogicalView(
+      grpc::ClientContext& context, Options const& options,
+      google::bigtable::admin::v2::GetLogicalViewRequest const& request) = 0;
+
+  virtual StatusOr<google::bigtable::admin::v2::ListLogicalViewsResponse>
+  ListLogicalViews(
+      grpc::ClientContext& context, Options const& options,
+      google::bigtable::admin::v2::ListLogicalViewsRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateLogicalView(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::admin::v2::UpdateLogicalViewRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> UpdateLogicalView(
+      grpc::ClientContext& context, Options options,
+      google::bigtable::admin::v2::UpdateLogicalViewRequest const& request) = 0;
+
+  virtual Status DeleteLogicalView(
+      grpc::ClientContext& context, Options const& options,
+      google::bigtable::admin::v2::DeleteLogicalViewRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateMaterializedView(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::admin::v2::CreateMaterializedViewRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> CreateMaterializedView(
+      grpc::ClientContext& context, Options options,
+      google::bigtable::admin::v2::CreateMaterializedViewRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::bigtable::admin::v2::MaterializedView>
+  GetMaterializedView(
+      grpc::ClientContext& context, Options const& options,
+      google::bigtable::admin::v2::GetMaterializedViewRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::bigtable::admin::v2::ListMaterializedViewsResponse>
+  ListMaterializedViews(
+      grpc::ClientContext& context, Options const& options,
+      google::bigtable::admin::v2::ListMaterializedViewsRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateMaterializedView(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::admin::v2::UpdateMaterializedViewRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> UpdateMaterializedView(
+      grpc::ClientContext& context, Options options,
+      google::bigtable::admin::v2::UpdateMaterializedViewRequest const&
+          request) = 0;
+
+  virtual Status DeleteMaterializedView(
+      grpc::ClientContext& context, Options const& options,
+      google::bigtable::admin::v2::DeleteMaterializedViewRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -329,6 +407,85 @@ class DefaultBigtableInstanceAdminStub : public BigtableInstanceAdminStub {
   StatusOr<google::bigtable::admin::v2::ListHotTabletsResponse> ListHotTablets(
       grpc::ClientContext& context, Options const& options,
       google::bigtable::admin::v2::ListHotTabletsRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateLogicalView(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::admin::v2::CreateLogicalViewRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateLogicalView(
+      grpc::ClientContext& context, Options options,
+      google::bigtable::admin::v2::CreateLogicalViewRequest const& request)
+      override;
+
+  StatusOr<google::bigtable::admin::v2::LogicalView> GetLogicalView(
+      grpc::ClientContext& context, Options const& options,
+      google::bigtable::admin::v2::GetLogicalViewRequest const& request)
+      override;
+
+  StatusOr<google::bigtable::admin::v2::ListLogicalViewsResponse>
+  ListLogicalViews(grpc::ClientContext& context, Options const& options,
+                   google::bigtable::admin::v2::ListLogicalViewsRequest const&
+                       request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateLogicalView(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::admin::v2::UpdateLogicalViewRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateLogicalView(
+      grpc::ClientContext& context, Options options,
+      google::bigtable::admin::v2::UpdateLogicalViewRequest const& request)
+      override;
+
+  Status DeleteLogicalView(
+      grpc::ClientContext& context, Options const& options,
+      google::bigtable::admin::v2::DeleteLogicalViewRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateMaterializedView(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::admin::v2::CreateMaterializedViewRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateMaterializedView(
+      grpc::ClientContext& context, Options options,
+      google::bigtable::admin::v2::CreateMaterializedViewRequest const& request)
+      override;
+
+  StatusOr<google::bigtable::admin::v2::MaterializedView> GetMaterializedView(
+      grpc::ClientContext& context, Options const& options,
+      google::bigtable::admin::v2::GetMaterializedViewRequest const& request)
+      override;
+
+  StatusOr<google::bigtable::admin::v2::ListMaterializedViewsResponse>
+  ListMaterializedViews(
+      grpc::ClientContext& context, Options const& options,
+      google::bigtable::admin::v2::ListMaterializedViewsRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateMaterializedView(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::admin::v2::UpdateMaterializedViewRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateMaterializedView(
+      grpc::ClientContext& context, Options options,
+      google::bigtable::admin::v2::UpdateMaterializedViewRequest const& request)
+      override;
+
+  Status DeleteMaterializedView(
+      grpc::ClientContext& context, Options const& options,
+      google::bigtable::admin::v2::DeleteMaterializedViewRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

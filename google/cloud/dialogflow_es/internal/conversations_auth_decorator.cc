@@ -67,6 +67,16 @@ ConversationsAuth::CompleteConversation(
   return child_->CompleteConversation(context, options, request);
 }
 
+StatusOr<google::cloud::dialogflow::v2::IngestContextReferencesResponse>
+ConversationsAuth::IngestContextReferences(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::v2::IngestContextReferencesRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->IngestContextReferences(context, options, request);
+}
+
 StatusOr<google::cloud::dialogflow::v2::ListMessagesResponse>
 ConversationsAuth::ListMessages(
     grpc::ClientContext& context, Options const& options,
@@ -113,6 +123,15 @@ ConversationsAuth::SearchKnowledge(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SearchKnowledge(context, options, request);
+}
+
+StatusOr<google::cloud::dialogflow::v2::GenerateSuggestionsResponse>
+ConversationsAuth::GenerateSuggestions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::v2::GenerateSuggestionsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GenerateSuggestions(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>

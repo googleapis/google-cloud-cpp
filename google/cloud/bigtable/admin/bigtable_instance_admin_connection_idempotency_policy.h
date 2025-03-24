@@ -99,6 +99,39 @@ class BigtableInstanceAdminConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency ListHotTablets(
       google::bigtable::admin::v2::ListHotTabletsRequest request);
+
+  virtual google::cloud::Idempotency CreateLogicalView(
+      google::bigtable::admin::v2::CreateLogicalViewRequest const& request);
+
+  virtual google::cloud::Idempotency GetLogicalView(
+      google::bigtable::admin::v2::GetLogicalViewRequest const& request);
+
+  virtual google::cloud::Idempotency ListLogicalViews(
+      google::bigtable::admin::v2::ListLogicalViewsRequest request);
+
+  virtual google::cloud::Idempotency UpdateLogicalView(
+      google::bigtable::admin::v2::UpdateLogicalViewRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteLogicalView(
+      google::bigtable::admin::v2::DeleteLogicalViewRequest const& request);
+
+  virtual google::cloud::Idempotency CreateMaterializedView(
+      google::bigtable::admin::v2::CreateMaterializedViewRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetMaterializedView(
+      google::bigtable::admin::v2::GetMaterializedViewRequest const& request);
+
+  virtual google::cloud::Idempotency ListMaterializedViews(
+      google::bigtable::admin::v2::ListMaterializedViewsRequest request);
+
+  virtual google::cloud::Idempotency UpdateMaterializedView(
+      google::bigtable::admin::v2::UpdateMaterializedViewRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteMaterializedView(
+      google::bigtable::admin::v2::DeleteMaterializedViewRequest const&
+          request);
 };
 
 std::unique_ptr<BigtableInstanceAdminConnectionIdempotencyPolicy>

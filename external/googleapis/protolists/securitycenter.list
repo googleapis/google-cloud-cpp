@@ -64,7 +64,11 @@
 @com_google_googleapis//google/cloud/securitycenter/v2:connection.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:contact_details.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:container.proto
+@com_google_googleapis//google/cloud/securitycenter/v2:data_access_event.proto
+@com_google_googleapis//google/cloud/securitycenter/v2:data_flow_event.proto
+@com_google_googleapis//google/cloud/securitycenter/v2:data_retention_deletion_event.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:database.proto
+@com_google_googleapis//google/cloud/securitycenter/v2:disk.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:exfiltration.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:external_system.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:file.proto

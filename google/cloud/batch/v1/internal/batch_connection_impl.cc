@@ -176,6 +176,94 @@ BatchServiceConnectionImpl::DeleteJob(
       polling_policy(*current), __func__);
 }
 
+future<StatusOr<google::cloud::batch::v1::CancelJobResponse>>
+BatchServiceConnectionImpl::CancelJob(
+    google::cloud::batch::v1::CancelJobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent = idempotency_policy(*current)->CancelJob(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::batch::v1::CancelJobResponse>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::batch::v1::CancelJobRequest const& request) {
+        return stub->AsyncCancelJob(cq, std::move(context), std::move(options),
+                                    request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::batch::v1::CancelJobResponse>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation> BatchServiceConnectionImpl::CancelJob(
+    NoAwaitTag, google::cloud::batch::v1::CancelJobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CancelJob(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::batch::v1::CancelJobRequest const& request) {
+        return stub_->CancelJob(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::batch::v1::CancelJobResponse>>
+BatchServiceConnectionImpl::CancelJob(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::batch::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::batch::v1::CancelJobResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CancelJob",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::batch::v1::CancelJobResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::batch::v1::CancelJobResponse>,
+      polling_policy(*current), __func__);
+}
+
 StreamRange<google::cloud::batch::v1::Job> BatchServiceConnectionImpl::ListJobs(
     google::cloud::batch::v1::ListJobsRequest request) {
   request.clear_page_token();

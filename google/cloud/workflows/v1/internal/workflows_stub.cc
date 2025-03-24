@@ -142,6 +142,18 @@ StatusOr<google::longrunning::Operation> DefaultWorkflowsStub::UpdateWorkflow(
   return response;
 }
 
+StatusOr<google::cloud::workflows::v1::ListWorkflowRevisionsResponse>
+DefaultWorkflowsStub::ListWorkflowRevisions(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::workflows::v1::ListWorkflowRevisionsRequest const& request) {
+  google::cloud::workflows::v1::ListWorkflowRevisionsResponse response;
+  auto status = grpc_stub_->ListWorkflowRevisions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultWorkflowsStub::ListLocations(
     grpc::ClientContext& context, Options const&,

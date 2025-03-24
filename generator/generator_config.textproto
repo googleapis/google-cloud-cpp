@@ -3224,15 +3224,6 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
-# Resource Settings
-service {
-  service_proto_path: "google/cloud/resourcesettings/v1/resource_settings.proto"
-  product_path: "google/cloud/resourcesettings/v1"
-  forwarding_product_path: "google/cloud/resourcesettings"
-  initial_copyright_year: "2022"
-  retryable_status_codes: ["kUnavailable"]
-}
-
 # Retail
 service {
   service_proto_path: "google/cloud/retail/v2/analytics_service.proto"

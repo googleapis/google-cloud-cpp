@@ -197,6 +197,18 @@ class CloudFilestoreManagerTracingStub : public CloudFilestoreManagerStub {
       google::cloud::filestore::v1::UpdateBackupRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncPromoteReplica(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::filestore::v1::PromoteReplicaRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> PromoteReplica(
+      grpc::ClientContext& context, Options options,
+      google::cloud::filestore::v1::PromoteReplicaRequest const& request)
+      override;
+
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;

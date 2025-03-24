@@ -345,6 +345,192 @@ BigtableInstanceAdminTracingConnection::ListHotTablets(
       google::bigtable::admin::v2::HotTablet>(std::move(span), std::move(sr));
 }
 
+future<StatusOr<google::bigtable::admin::v2::LogicalView>>
+BigtableInstanceAdminTracingConnection::CreateLogicalView(
+    google::bigtable::admin::v2::CreateLogicalViewRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::CreateLogicalView");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateLogicalView(request));
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminTracingConnection::CreateLogicalView(
+    NoAwaitTag,
+    google::bigtable::admin::v2::CreateLogicalViewRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::CreateLogicalView");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->CreateLogicalView(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::bigtable::admin::v2::LogicalView>>
+BigtableInstanceAdminTracingConnection::CreateLogicalView(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::CreateLogicalView");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateLogicalView(operation));
+}
+
+StatusOr<google::bigtable::admin::v2::LogicalView>
+BigtableInstanceAdminTracingConnection::GetLogicalView(
+    google::bigtable::admin::v2::GetLogicalViewRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::GetLogicalView");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetLogicalView(request));
+}
+
+StreamRange<google::bigtable::admin::v2::LogicalView>
+BigtableInstanceAdminTracingConnection::ListLogicalViews(
+    google::bigtable::admin::v2::ListLogicalViewsRequest request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::ListLogicalViews");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListLogicalViews(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::bigtable::admin::v2::LogicalView>(std::move(span), std::move(sr));
+}
+
+future<StatusOr<google::bigtable::admin::v2::LogicalView>>
+BigtableInstanceAdminTracingConnection::UpdateLogicalView(
+    google::bigtable::admin::v2::UpdateLogicalViewRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::UpdateLogicalView");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateLogicalView(request));
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminTracingConnection::UpdateLogicalView(
+    NoAwaitTag,
+    google::bigtable::admin::v2::UpdateLogicalViewRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::UpdateLogicalView");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span,
+                           child_->UpdateLogicalView(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::bigtable::admin::v2::LogicalView>>
+BigtableInstanceAdminTracingConnection::UpdateLogicalView(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::UpdateLogicalView");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateLogicalView(operation));
+}
+
+Status BigtableInstanceAdminTracingConnection::DeleteLogicalView(
+    google::bigtable::admin::v2::DeleteLogicalViewRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::DeleteLogicalView");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteLogicalView(request));
+}
+
+future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
+BigtableInstanceAdminTracingConnection::CreateMaterializedView(
+    google::bigtable::admin::v2::CreateMaterializedViewRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::"
+      "CreateMaterializedView");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateMaterializedView(request));
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminTracingConnection::CreateMaterializedView(
+    NoAwaitTag,
+    google::bigtable::admin::v2::CreateMaterializedViewRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::"
+      "CreateMaterializedView");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateMaterializedView(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
+BigtableInstanceAdminTracingConnection::CreateMaterializedView(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::"
+      "CreateMaterializedView");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateMaterializedView(operation));
+}
+
+StatusOr<google::bigtable::admin::v2::MaterializedView>
+BigtableInstanceAdminTracingConnection::GetMaterializedView(
+    google::bigtable::admin::v2::GetMaterializedViewRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::GetMaterializedView");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetMaterializedView(request));
+}
+
+StreamRange<google::bigtable::admin::v2::MaterializedView>
+BigtableInstanceAdminTracingConnection::ListMaterializedViews(
+    google::bigtable::admin::v2::ListMaterializedViewsRequest request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::ListMaterializedViews");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListMaterializedViews(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::bigtable::admin::v2::MaterializedView>(std::move(span),
+                                                     std::move(sr));
+}
+
+future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
+BigtableInstanceAdminTracingConnection::UpdateMaterializedView(
+    google::bigtable::admin::v2::UpdateMaterializedViewRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::"
+      "UpdateMaterializedView");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateMaterializedView(request));
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminTracingConnection::UpdateMaterializedView(
+    NoAwaitTag,
+    google::bigtable::admin::v2::UpdateMaterializedViewRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::"
+      "UpdateMaterializedView");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateMaterializedView(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
+BigtableInstanceAdminTracingConnection::UpdateMaterializedView(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::"
+      "UpdateMaterializedView");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateMaterializedView(operation));
+}
+
+Status BigtableInstanceAdminTracingConnection::DeleteMaterializedView(
+    google::bigtable::admin::v2::DeleteMaterializedViewRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::"
+      "DeleteMaterializedView");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteMaterializedView(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<bigtable_admin::BigtableInstanceAdminConnection>

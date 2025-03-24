@@ -436,7 +436,7 @@ class GroupServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.MonitoredResource]: @googleapis_reference_link{google/api/monitored_resource.proto#L93}
+  /// [google.api.MonitoredResource]: @googleapis_reference_link{google/api/monitored_resource.proto#L92}
   /// [google.monitoring.v3.ListGroupMembersRequest]: @googleapis_reference_link{google/monitoring/v3/group_service.proto#L246}
   ///
   // clang-format on
@@ -475,7 +475,7 @@ class GroupServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.MonitoredResource]: @googleapis_reference_link{google/api/monitored_resource.proto#L93}
+  /// [google.api.MonitoredResource]: @googleapis_reference_link{google/api/monitored_resource.proto#L92}
   /// [google.monitoring.v3.ListGroupMembersRequest]: @googleapis_reference_link{google/monitoring/v3/group_service.proto#L246}
   ///
   // clang-format on

@@ -170,6 +170,12 @@ class MockWorkflowsConnection : public workflows_v1::WorkflowsConnection {
               UpdateWorkflow, (google::longrunning::Operation const& operation),
               (override));
 
+  MOCK_METHOD(
+      (StreamRange<google::cloud::workflows::v1::Workflow>),
+      ListWorkflowRevisions,
+      (google::cloud::workflows::v1::ListWorkflowRevisionsRequest request),
+      (override));
+
   MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
               (google::cloud::location::ListLocationsRequest request),
               (override));

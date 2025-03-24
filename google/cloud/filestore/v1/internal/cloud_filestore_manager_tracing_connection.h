@@ -190,6 +190,18 @@ class CloudFilestoreManagerTracingConnection
   future<StatusOr<google::cloud::filestore::v1::Backup>> UpdateBackup(
       google::longrunning::Operation const& operation) override;
 
+  future<StatusOr<google::cloud::filestore::v1::Instance>> PromoteReplica(
+      google::cloud::filestore::v1::PromoteReplicaRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> PromoteReplica(
+      NoAwaitTag,
+      google::cloud::filestore::v1::PromoteReplicaRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::filestore::v1::Instance>> PromoteReplica(
+      google::longrunning::Operation const& operation) override;
+
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;
 

@@ -20,6 +20,7 @@
 @com_google_googleapis//google/cloud/bigquery/v2:job_status.proto
 @com_google_googleapis//google/cloud/bigquery/v2:json_extension.proto
 @com_google_googleapis//google/cloud/bigquery/v2:location_metadata.proto
+@com_google_googleapis//google/cloud/bigquery/v2:managed_table_type.proto
 @com_google_googleapis//google/cloud/bigquery/v2:map_target_type.proto
 @com_google_googleapis//google/cloud/bigquery/v2:model.proto
 @com_google_googleapis//google/cloud/bigquery/v2:model_reference.proto

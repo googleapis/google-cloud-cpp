@@ -72,6 +72,30 @@ BatchServiceTracingConnection::DeleteJob(
   return internal::EndSpan(std::move(span), child_->DeleteJob(operation));
 }
 
+future<StatusOr<google::cloud::batch::v1::CancelJobResponse>>
+BatchServiceTracingConnection::CancelJob(
+    google::cloud::batch::v1::CancelJobRequest const& request) {
+  auto span = internal::MakeSpan("batch_v1::BatchServiceConnection::CancelJob");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CancelJob(request));
+}
+
+StatusOr<google::longrunning::Operation>
+BatchServiceTracingConnection::CancelJob(
+    NoAwaitTag, google::cloud::batch::v1::CancelJobRequest const& request) {
+  auto span = internal::MakeSpan("batch_v1::BatchServiceConnection::CancelJob");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(*span, child_->CancelJob(NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::batch::v1::CancelJobResponse>>
+BatchServiceTracingConnection::CancelJob(
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("batch_v1::BatchServiceConnection::CancelJob");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CancelJob(operation));
+}
+
 StreamRange<google::cloud::batch::v1::Job>
 BatchServiceTracingConnection::ListJobs(
     google::cloud::batch::v1::ListJobsRequest request) {

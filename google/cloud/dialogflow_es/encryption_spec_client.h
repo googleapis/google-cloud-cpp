@@ -109,8 +109,8 @@ class EncryptionSpecServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.EncryptionSpec]: @googleapis_reference_link{google/cloud/dialogflow/v2/encryption_spec.proto#L80}
-  /// [google.cloud.dialogflow.v2.GetEncryptionSpecRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/encryption_spec.proto#L68}
+  /// [google.cloud.dialogflow.v2.EncryptionSpec]: @googleapis_reference_link{google/cloud/dialogflow/v2/encryption_spec.proto#L79}
+  /// [google.cloud.dialogflow.v2.GetEncryptionSpecRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/encryption_spec.proto#L67}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::EncryptionSpec> GetEncryptionSpec(
@@ -139,8 +139,8 @@ class EncryptionSpecServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.EncryptionSpec]: @googleapis_reference_link{google/cloud/dialogflow/v2/encryption_spec.proto#L80}
-  /// [google.cloud.dialogflow.v2.GetEncryptionSpecRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/encryption_spec.proto#L68}
+  /// [google.cloud.dialogflow.v2.EncryptionSpec]: @googleapis_reference_link{google/cloud/dialogflow/v2/encryption_spec.proto#L79}
+  /// [google.cloud.dialogflow.v2.GetEncryptionSpecRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/encryption_spec.proto#L67}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::EncryptionSpec> GetEncryptionSpec(
@@ -179,8 +179,8 @@ class EncryptionSpecServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.InitializeEncryptionSpecRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/encryption_spec.proto#L102}
-  /// [google.cloud.dialogflow.v2.InitializeEncryptionSpecResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/encryption_spec.proto#L111}
+  /// [google.cloud.dialogflow.v2.InitializeEncryptionSpecRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/encryption_spec.proto#L101}
+  /// [google.cloud.dialogflow.v2.InitializeEncryptionSpecResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/encryption_spec.proto#L110}
   ///
   // clang-format on
   future<
@@ -239,8 +239,8 @@ class EncryptionSpecServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.InitializeEncryptionSpecRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/encryption_spec.proto#L102}
-  /// [google.cloud.dialogflow.v2.InitializeEncryptionSpecResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/encryption_spec.proto#L111}
+  /// [google.cloud.dialogflow.v2.InitializeEncryptionSpecRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/encryption_spec.proto#L101}
+  /// [google.cloud.dialogflow.v2.InitializeEncryptionSpecResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/encryption_spec.proto#L110}
   ///
   // clang-format on
   future<
