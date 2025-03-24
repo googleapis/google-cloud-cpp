@@ -59,6 +59,11 @@ Idempotency WorkflowsConnectionIdempotencyPolicy::UpdateWorkflow(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency WorkflowsConnectionIdempotencyPolicy::ListWorkflowRevisions(
+    google::cloud::workflows::v1::ListWorkflowRevisionsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
 Idempotency WorkflowsConnectionIdempotencyPolicy::ListLocations(
     google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;

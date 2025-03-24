@@ -385,6 +385,41 @@ WorkflowsConnectionImpl::UpdateWorkflow(
       polling_policy(*current), __func__);
 }
 
+StreamRange<google::cloud::workflows::v1::Workflow>
+WorkflowsConnectionImpl::ListWorkflowRevisions(
+    google::cloud::workflows::v1::ListWorkflowRevisionsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListWorkflowRevisions(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::workflows::v1::Workflow>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<workflows_v1::WorkflowsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::workflows::v1::ListWorkflowRevisionsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::workflows::v1::
+                       ListWorkflowRevisionsRequest const& request) {
+              return stub->ListWorkflowRevisions(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::workflows::v1::ListWorkflowRevisionsResponse r) {
+        std::vector<google::cloud::workflows::v1::Workflow> result(
+            r.workflows().size());
+        auto& messages = *r.mutable_workflows();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
 StreamRange<google::cloud::location::Location>
 WorkflowsConnectionImpl::ListLocations(
     google::cloud::location::ListLocationsRequest request) {

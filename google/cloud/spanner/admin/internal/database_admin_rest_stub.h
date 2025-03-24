@@ -206,6 +206,13 @@ class DatabaseAdminRestStub {
       google::spanner::admin::database::v1::ListDatabaseRolesRequest const&
           request) = 0;
 
+  virtual StatusOr<google::spanner::admin::database::v1::AddSplitPointsResponse>
+  AddSplitPoints(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::spanner::admin::database::v1::AddSplitPointsRequest const&
+          request) = 0;
+
   virtual StatusOr<google::spanner::admin::database::v1::BackupSchedule>
   CreateBackupSchedule(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -445,6 +452,13 @@ class DefaultDatabaseAdminRestStub : public DatabaseAdminRestStub {
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::spanner::admin::database::v1::ListDatabaseRolesRequest const&
+          request) override;
+
+  StatusOr<google::spanner::admin::database::v1::AddSplitPointsResponse>
+  AddSplitPoints(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::spanner::admin::database::v1::AddSplitPointsRequest const&
           request) override;
 
   StatusOr<google::spanner::admin::database::v1::BackupSchedule>

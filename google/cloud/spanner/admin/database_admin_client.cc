@@ -579,6 +579,27 @@ DatabaseAdminClient::ListDatabaseRoles(
   return connection_->ListDatabaseRoles(std::move(request));
 }
 
+StatusOr<google::spanner::admin::database::v1::AddSplitPointsResponse>
+DatabaseAdminClient::AddSplitPoints(
+    std::string const& database,
+    std::vector<google::spanner::admin::database::v1::SplitPoints> const&
+        split_points,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::spanner::admin::database::v1::AddSplitPointsRequest request;
+  request.set_database(database);
+  *request.mutable_split_points() = {split_points.begin(), split_points.end()};
+  return connection_->AddSplitPoints(request);
+}
+
+StatusOr<google::spanner::admin::database::v1::AddSplitPointsResponse>
+DatabaseAdminClient::AddSplitPoints(
+    google::spanner::admin::database::v1::AddSplitPointsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AddSplitPoints(request);
+}
+
 StatusOr<google::spanner::admin::database::v1::BackupSchedule>
 DatabaseAdminClient::CreateBackupSchedule(
     std::string const& parent,

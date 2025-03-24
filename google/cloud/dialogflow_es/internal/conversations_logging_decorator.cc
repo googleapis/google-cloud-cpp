@@ -87,6 +87,21 @@ ConversationsLogging::CompleteConversation(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::dialogflow::v2::IngestContextReferencesResponse>
+ConversationsLogging::IngestContextReferences(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::v2::IngestContextReferencesRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::v2::IngestContextReferencesRequest const&
+              request) {
+        return child_->IngestContextReferences(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::dialogflow::v2::ListMessagesResponse>
 ConversationsLogging::ListMessages(
     grpc::ClientContext& context, Options const& options,
@@ -152,6 +167,19 @@ ConversationsLogging::SearchKnowledge(
              google::cloud::dialogflow::v2::SearchKnowledgeRequest const&
                  request) {
         return child_->SearchKnowledge(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::dialogflow::v2::GenerateSuggestionsResponse>
+ConversationsLogging::GenerateSuggestions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::v2::GenerateSuggestionsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::v2::GenerateSuggestionsRequest const&
+                 request) {
+        return child_->GenerateSuggestions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }

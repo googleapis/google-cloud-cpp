@@ -288,6 +288,64 @@ StatusOr<google::longrunning::Operation> HubServiceTracingStub::AcceptHubSpoke(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+HubServiceTracingStub::AsyncAcceptSpokeUpdate(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkconnectivity.v1.HubService", "AcceptSpokeUpdate");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncAcceptSpokeUpdate(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+HubServiceTracingStub::AcceptSpokeUpdate(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkconnectivity.v1.HubService", "AcceptSpokeUpdate");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->AcceptSpokeUpdate(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+HubServiceTracingStub::AsyncRejectSpokeUpdate(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkconnectivity.v1.HubService", "RejectSpokeUpdate");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f =
+      child_->AsyncRejectSpokeUpdate(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+HubServiceTracingStub::RejectSpokeUpdate(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkconnectivity.v1.HubService", "RejectSpokeUpdate");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->RejectSpokeUpdate(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
 HubServiceTracingStub::AsyncDeleteSpoke(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

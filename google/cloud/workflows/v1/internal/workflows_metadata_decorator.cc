@@ -123,6 +123,15 @@ StatusOr<google::longrunning::Operation> WorkflowsMetadata::UpdateWorkflow(
   return child_->UpdateWorkflow(context, options, request);
 }
 
+StatusOr<google::cloud::workflows::v1::ListWorkflowRevisionsResponse>
+WorkflowsMetadata::ListWorkflowRevisions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::workflows::v1::ListWorkflowRevisionsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ListWorkflowRevisions(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 WorkflowsMetadata::ListLocations(
     grpc::ClientContext& context, Options const& options,

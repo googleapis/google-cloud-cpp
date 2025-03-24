@@ -100,6 +100,43 @@ BatchServiceClient::DeleteJob(google::longrunning::Operation const& operation,
   return connection_->DeleteJob(operation);
 }
 
+future<StatusOr<google::cloud::batch::v1::CancelJobResponse>>
+BatchServiceClient::CancelJob(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::batch::v1::CancelJobRequest request;
+  request.set_name(name);
+  return connection_->CancelJob(request);
+}
+
+StatusOr<google::longrunning::Operation> BatchServiceClient::CancelJob(
+    NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::batch::v1::CancelJobRequest request;
+  request.set_name(name);
+  return connection_->CancelJob(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::batch::v1::CancelJobResponse>>
+BatchServiceClient::CancelJob(
+    google::cloud::batch::v1::CancelJobRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CancelJob(request);
+}
+
+StatusOr<google::longrunning::Operation> BatchServiceClient::CancelJob(
+    NoAwaitTag, google::cloud::batch::v1::CancelJobRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CancelJob(NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::batch::v1::CancelJobResponse>>
+BatchServiceClient::CancelJob(google::longrunning::Operation const& operation,
+                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CancelJob(operation);
+}
+
 StreamRange<google::cloud::batch::v1::Job> BatchServiceClient::ListJobs(
     std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

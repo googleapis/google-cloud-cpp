@@ -77,7 +77,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// [google.cloud.servicedirectory.v1.Endpoint]:
 /// @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L37}
 /// [google.cloud.servicedirectory.v1.Namespace]:
-/// @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
+/// @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L33}
 /// [google.cloud.servicedirectory.v1.Service]:
 /// @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L35}
 ///
@@ -137,7 +137,7 @@ class RegistrationServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.servicedirectory.v1.CreateNamespaceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L229}
-  /// [google.cloud.servicedirectory.v1.Namespace]: @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
+  /// [google.cloud.servicedirectory.v1.Namespace]: @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L33}
   ///
   // clang-format on
   StatusOr<google::cloud::servicedirectory::v1::Namespace> CreateNamespace(
@@ -169,7 +169,7 @@ class RegistrationServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.servicedirectory.v1.CreateNamespaceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L229}
-  /// [google.cloud.servicedirectory.v1.Namespace]: @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
+  /// [google.cloud.servicedirectory.v1.Namespace]: @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L33}
   ///
   // clang-format on
   StatusOr<google::cloud::servicedirectory::v1::Namespace> CreateNamespace(
@@ -206,7 +206,7 @@ class RegistrationServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.servicedirectory.v1.ListNamespacesRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L254}
-  /// [google.cloud.servicedirectory.v1.Namespace]: @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
+  /// [google.cloud.servicedirectory.v1.Namespace]: @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L33}
   ///
   // clang-format on
   StreamRange<google::cloud::servicedirectory::v1::Namespace> ListNamespaces(
@@ -245,7 +245,7 @@ class RegistrationServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.servicedirectory.v1.ListNamespacesRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L254}
-  /// [google.cloud.servicedirectory.v1.Namespace]: @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
+  /// [google.cloud.servicedirectory.v1.Namespace]: @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L33}
   ///
   // clang-format on
   StreamRange<google::cloud::servicedirectory::v1::Namespace> ListNamespaces(
@@ -271,7 +271,7 @@ class RegistrationServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.servicedirectory.v1.GetNamespaceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L327}
-  /// [google.cloud.servicedirectory.v1.Namespace]: @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
+  /// [google.cloud.servicedirectory.v1.Namespace]: @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L33}
   ///
   // clang-format on
   StatusOr<google::cloud::servicedirectory::v1::Namespace> GetNamespace(
@@ -301,7 +301,7 @@ class RegistrationServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.servicedirectory.v1.GetNamespaceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L327}
-  /// [google.cloud.servicedirectory.v1.Namespace]: @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
+  /// [google.cloud.servicedirectory.v1.Namespace]: @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L33}
   ///
   // clang-format on
   StatusOr<google::cloud::servicedirectory::v1::Namespace> GetNamespace(
@@ -327,7 +327,7 @@ class RegistrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.servicedirectory.v1.Namespace]: @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
+  /// [google.cloud.servicedirectory.v1.Namespace]: @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L33}
   /// [google.cloud.servicedirectory.v1.UpdateNamespaceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L339}
   ///
   // clang-format on
@@ -358,7 +358,7 @@ class RegistrationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.servicedirectory.v1.Namespace]: @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
+  /// [google.cloud.servicedirectory.v1.Namespace]: @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L33}
   /// [google.cloud.servicedirectory.v1.UpdateNamespaceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L339}
   ///
   // clang-format on

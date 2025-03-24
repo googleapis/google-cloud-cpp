@@ -3765,6 +3765,322 @@ NetAppConnectionImpl::DeleteBackupPolicy(
       polling_policy(*current), __func__);
 }
 
+StreamRange<google::cloud::netapp::v1::QuotaRule>
+NetAppConnectionImpl::ListQuotaRules(
+    google::cloud::netapp::v1::ListQuotaRulesRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListQuotaRules(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::netapp::v1::QuotaRule>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<netapp_v1::NetAppRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::cloud::netapp::v1::ListQuotaRulesRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::cloud::netapp::v1::ListQuotaRulesRequest const&
+                       request) {
+              return stub->ListQuotaRules(context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::cloud::netapp::v1::ListQuotaRulesResponse r) {
+        std::vector<google::cloud::netapp::v1::QuotaRule> result(
+            r.quota_rules().size());
+        auto& messages = *r.mutable_quota_rules();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::netapp::v1::QuotaRule>
+NetAppConnectionImpl::GetQuotaRule(
+    google::cloud::netapp::v1::GetQuotaRuleRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetQuotaRule(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::GetQuotaRuleRequest const& request) {
+        return stub_->GetQuotaRule(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::QuotaRule>>
+NetAppConnectionImpl::CreateQuotaRule(
+    google::cloud::netapp::v1::CreateQuotaRuleRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateQuotaRule(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::netapp::v1::QuotaRule>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::netapp::v1::CreateQuotaRuleRequest const& request) {
+        return stub->AsyncCreateQuotaRule(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::netapp::v1::QuotaRule>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation> NetAppConnectionImpl::CreateQuotaRule(
+    NoAwaitTag,
+    google::cloud::netapp::v1::CreateQuotaRuleRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateQuotaRule(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::CreateQuotaRuleRequest const& request) {
+        return stub_->CreateQuotaRule(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::QuotaRule>>
+NetAppConnectionImpl::CreateQuotaRule(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::netapp::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::netapp::v1::QuotaRule>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateQuotaRule",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::netapp::v1::QuotaRule>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::netapp::v1::QuotaRule>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::QuotaRule>>
+NetAppConnectionImpl::UpdateQuotaRule(
+    google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateQuotaRule(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::netapp::v1::QuotaRule>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request) {
+        return stub->AsyncUpdateQuotaRule(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::netapp::v1::QuotaRule>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation> NetAppConnectionImpl::UpdateQuotaRule(
+    NoAwaitTag,
+    google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateQuotaRule(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::UpdateQuotaRuleRequest const& request) {
+        return stub_->UpdateQuotaRule(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::QuotaRule>>
+NetAppConnectionImpl::UpdateQuotaRule(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::netapp::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::netapp::v1::QuotaRule>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateQuotaRule",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::netapp::v1::QuotaRule>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::netapp::v1::QuotaRule>,
+      polling_policy(*current), __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppConnectionImpl::DeleteQuotaRule(
+    google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteQuotaRule(request_copy);
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::netapp::v1::OperationMetadata>(
+      background_->cq(), current, std::move(request_copy),
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request) {
+        return stub->AsyncDeleteQuotaRule(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::netapp::v1::OperationMetadata>,
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation> NetAppConnectionImpl::DeleteQuotaRule(
+    NoAwaitTag,
+    google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteQuotaRule(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::DeleteQuotaRuleRequest const& request) {
+        return stub_->DeleteQuotaRule(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppConnectionImpl::DeleteQuotaRule(
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::netapp::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::netapp::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteQuotaRule",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::netapp::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::netapp::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
 StreamRange<google::cloud::location::Location>
 NetAppConnectionImpl::ListLocations(
     google::cloud::location::ListLocationsRequest request) {
