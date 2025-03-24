@@ -140,7 +140,6 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "recommender"
     "redis"
     "resourcemanager"
-    "resourcesettings"
     "retail"
     "run"
     "scheduler"
