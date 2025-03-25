@@ -564,7 +564,7 @@ class BackendServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.backend_services.v1.GetBackendServiceRequest]: @cloud_cpp_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L420}
-  /// [google.cloud.cpp.compute.v1.BackendService]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_000.proto#L159}
+  /// [google.cloud.cpp.compute.v1.BackendService]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_000.proto#L186}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::BackendService> GetBackendService(
@@ -596,7 +596,7 @@ class BackendServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.backend_services.v1.GetBackendServiceRequest]: @cloud_cpp_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L420}
-  /// [google.cloud.cpp.compute.v1.BackendService]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_000.proto#L159}
+  /// [google.cloud.cpp.compute.v1.BackendService]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_000.proto#L186}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::BackendService> GetBackendService(
@@ -628,7 +628,7 @@ class BackendServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.backend_services.v1.GetHealthRequest]: @cloud_cpp_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L431}
-  /// [google.cloud.cpp.compute.v1.BackendServiceGroupHealth]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_000.proto#L815}
+  /// [google.cloud.cpp.compute.v1.BackendServiceGroupHealth]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_000.proto#L870}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
@@ -664,7 +664,7 @@ class BackendServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.backend_services.v1.GetHealthRequest]: @cloud_cpp_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L431}
-  /// [google.cloud.cpp.compute.v1.BackendServiceGroupHealth]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_000.proto#L815}
+  /// [google.cloud.cpp.compute.v1.BackendServiceGroupHealth]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_000.proto#L870}
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::BackendServiceGroupHealth>
@@ -893,7 +893,7 @@ class BackendServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.backend_services.v1.ListBackendServicesRequest]: @cloud_cpp_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L486}
-  /// [google.cloud.cpp.compute.v1.BackendService]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_000.proto#L159}
+  /// [google.cloud.cpp.compute.v1.BackendService]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_000.proto#L186}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::BackendService>
@@ -934,7 +934,7 @@ class BackendServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.backend_services.v1.ListBackendServicesRequest]: @cloud_cpp_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L486}
-  /// [google.cloud.cpp.compute.v1.BackendService]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_000.proto#L159}
+  /// [google.cloud.cpp.compute.v1.BackendService]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_000.proto#L186}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::BackendService>
@@ -971,7 +971,7 @@ class BackendServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.backend_services.v1.ListUsableRequest]: @cloud_cpp_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L554}
-  /// [google.cloud.cpp.compute.v1.BackendService]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_000.proto#L159}
+  /// [google.cloud.cpp.compute.v1.BackendService]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_000.proto#L186}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::BackendService> ListUsable(
@@ -1011,7 +1011,7 @@ class BackendServicesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.cpp.compute.backend_services.v1.ListUsableRequest]: @cloud_cpp_reference_link{google/cloud/compute/backend_services/v1/backend_services.proto#L554}
-  /// [google.cloud.cpp.compute.v1.BackendService]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_000.proto#L159}
+  /// [google.cloud.cpp.compute.v1.BackendService]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_000.proto#L186}
   ///
   // clang-format on
   StreamRange<google::cloud::cpp::compute::v1::BackendService> ListUsable(

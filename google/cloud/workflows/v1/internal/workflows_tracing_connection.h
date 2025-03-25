@@ -81,6 +81,10 @@ class WorkflowsTracingConnection : public workflows_v1::WorkflowsConnection {
   future<StatusOr<google::cloud::workflows::v1::Workflow>> UpdateWorkflow(
       google::longrunning::Operation const& operation) override;
 
+  StreamRange<google::cloud::workflows::v1::Workflow> ListWorkflowRevisions(
+      google::cloud::workflows::v1::ListWorkflowRevisionsRequest request)
+      override;
+
   StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request) override;
 

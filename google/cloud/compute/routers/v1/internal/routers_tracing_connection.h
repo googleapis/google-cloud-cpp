@@ -57,6 +57,20 @@ class RoutersTracingConnection : public compute_routers_v1::RoutersConnection {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteRouter(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteRoutePolicy(
+      google::cloud::cpp::compute::routers::v1::DeleteRoutePolicyRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRoutePolicy(
+      NoAwaitTag,
+      google::cloud::cpp::compute::routers::v1::DeleteRoutePolicyRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteRoutePolicy(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StatusOr<google::cloud::cpp::compute::v1::Router> GetRouter(
       google::cloud::cpp::compute::routers::v1::GetRouterRequest const& request)
       override;
@@ -68,6 +82,11 @@ class RoutersTracingConnection : public compute_routers_v1::RoutersConnection {
   StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
   GetNatMappingInfo(
       google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::RoutersGetRoutePolicyResponse>
+  GetRoutePolicy(
+      google::cloud::cpp::compute::routers::v1::GetRoutePolicyRequest const&
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::RouterStatusResponse>
@@ -91,6 +110,15 @@ class RoutersTracingConnection : public compute_routers_v1::RoutersConnection {
       google::cloud::cpp::compute::routers::v1::ListRoutersRequest request)
       override;
 
+  StatusOr<google::cloud::cpp::compute::v1::RoutersListBgpRoutes> ListBgpRoutes(
+      google::cloud::cpp::compute::routers::v1::ListBgpRoutesRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::RoutersListRoutePolicies>
+  ListRoutePolicies(
+      google::cloud::cpp::compute::routers::v1::ListRoutePoliciesRequest const&
+          request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRouter(
       google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
           request) override;
@@ -101,6 +129,18 @@ class RoutersTracingConnection : public compute_routers_v1::RoutersConnection {
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRouter(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRoutePolicy(
+      google::cloud::cpp::compute::routers::v1::PatchRoutePolicyRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRoutePolicy(
+      NoAwaitTag,
+      google::cloud::cpp::compute::routers::v1::PatchRoutePolicyRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRoutePolicy(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse> Preview(
@@ -117,6 +157,20 @@ class RoutersTracingConnection : public compute_routers_v1::RoutersConnection {
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateRouter(
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateRoutePolicy(
+      google::cloud::cpp::compute::routers::v1::UpdateRoutePolicyRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateRoutePolicy(
+      NoAwaitTag,
+      google::cloud::cpp::compute::routers::v1::UpdateRoutePolicyRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateRoutePolicy(
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:

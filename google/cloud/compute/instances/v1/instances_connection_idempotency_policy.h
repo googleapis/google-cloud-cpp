@@ -114,6 +114,10 @@ class InstancesConnectionIdempotencyPolicy {
       google::cloud::cpp::compute::instances::v1::
           RemoveResourcePoliciesRequest const& request);
 
+  virtual google::cloud::Idempotency ReportHostAsFaulty(
+      google::cloud::cpp::compute::instances::v1::
+          ReportHostAsFaultyRequest const& request);
+
   virtual google::cloud::Idempotency Reset(
       google::cloud::cpp::compute::instances::v1::ResetRequest const& request);
 

@@ -159,6 +159,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "essentialcontacts",
     "eventarc",
     "filestore",
+    "financialservices",
     "functions",
     "gkebackup",
     "gkeconnect",

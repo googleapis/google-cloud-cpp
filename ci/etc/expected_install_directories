@@ -753,6 +753,10 @@
 ./include/google/cloud/filestore/v1
 ./include/google/cloud/filestore/v1/internal
 ./include/google/cloud/filestore/v1/mocks
+./include/google/cloud/financialservices
+./include/google/cloud/financialservices/v1
+./include/google/cloud/financialservices/v1/internal
+./include/google/cloud/financialservices/v1/mocks
 ./include/google/cloud/functions
 ./include/google/cloud/functions/mocks
 ./include/google/cloud/functions/v1
@@ -1382,6 +1386,8 @@
 ./lib64/cmake/google_cloud_cpp_eventarc_mocks
 ./lib64/cmake/google_cloud_cpp_filestore
 ./lib64/cmake/google_cloud_cpp_filestore_mocks
+./lib64/cmake/google_cloud_cpp_financialservices
+./lib64/cmake/google_cloud_cpp_financialservices_mocks
 ./lib64/cmake/google_cloud_cpp_functions
 ./lib64/cmake/google_cloud_cpp_functions_mocks
 ./lib64/cmake/google_cloud_cpp_gkebackup

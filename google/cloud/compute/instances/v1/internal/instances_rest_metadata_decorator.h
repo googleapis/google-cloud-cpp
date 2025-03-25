@@ -245,6 +245,20 @@ class InstancesRestMetadata : public InstancesRestStub {
           RemoveResourcePoliciesRequest const& request) override;
 
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AsyncReportHostAsFaulty(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instances::v1::
+          ReportHostAsFaultyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> ReportHostAsFaulty(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::instances::v1::
+          ReportHostAsFaultyRequest const& request) override;
+
+  google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncReset(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,

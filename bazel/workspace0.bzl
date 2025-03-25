@@ -93,9 +93,9 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "build_bazel_rules_apple",
         urls = [
-            "https://github.com/bazelbuild/rules_apple/releases/download/3.19.0/rules_apple.3.19.0.tar.gz",
+            "https://github.com/bazelbuild/rules_apple/releases/download/3.20.1/rules_apple.3.20.1.tar.gz",
         ],
-        sha256 = "364b039b0081b4bd8df1921fce18adba7c2d295ef9e1d02fbed2919dee07be82",
+        sha256 = "73ad768dfe824c736d0a8a81521867b1fb7a822acda2ed265897c03de6ae6767",
     )
 
     # Load Abseil
@@ -103,10 +103,10 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_google_absl",
         urls = [
-            "https://github.com/abseil/abseil-cpp/archive/20250127.0.tar.gz",
+            "https://github.com/abseil/abseil-cpp/archive/20250127.1.tar.gz",
         ],
-        sha256 = "16242f394245627e508ec6bb296b433c90f8d914f73b9c026fddb905e27276e8",
-        strip_prefix = "abseil-cpp-20250127.0",
+        sha256 = "b396401fd29e2e679cace77867481d388c807671dc2acc602a0259eeb79b7811",
+        strip_prefix = "abseil-cpp-20250127.1",
     )
 
     # Load a version of googletest that we know works. This is needed to create
@@ -126,10 +126,10 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_google_googleapis",
         urls = [
-            "https://github.com/googleapis/googleapis/archive/263055cc1fc36dc2828e50eb7a92d75b1e0e4af5.tar.gz",
+            "https://github.com/googleapis/googleapis/archive/53ca65d540dd1a7cb4746687daa87208dc9ea437.tar.gz",
         ],
-        sha256 = "8f14bcacc7baad870bc1caf7541a0fb3393d273f7408ace6852da4c9a5a347b7",
-        strip_prefix = "googleapis-263055cc1fc36dc2828e50eb7a92d75b1e0e4af5",
+        sha256 = "2a7ba70873cad53f2ef12531000535db61baaa67f100321f038654f9f3565e36",
+        strip_prefix = "googleapis-53ca65d540dd1a7cb4746687daa87208dc9ea437",
         build_file = Label("//bazel:googleapis.BUILD"),
         # Scaffolding for patching googleapis after download. For example:
         #   patches = ["googleapis.patch"]

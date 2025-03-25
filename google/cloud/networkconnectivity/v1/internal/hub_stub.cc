@@ -322,6 +322,72 @@ StatusOr<google::longrunning::Operation> DefaultHubServiceStub::AcceptHubSpoke(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DefaultHubServiceStub::AsyncAcceptSpokeUpdate(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::networkconnectivity::v1::
+                 AcceptSpokeUpdateRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncAcceptSpokeUpdate(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultHubServiceStub::AcceptSpokeUpdate(
+    grpc::ClientContext& context, Options,
+    google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->AcceptSpokeUpdate(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultHubServiceStub::AsyncRejectSpokeUpdate(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::networkconnectivity::v1::
+                 RejectSpokeUpdateRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncRejectSpokeUpdate(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultHubServiceStub::RejectSpokeUpdate(
+    grpc::ClientContext& context, Options,
+    google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RejectSpokeUpdate(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DefaultHubServiceStub::AsyncDeleteSpoke(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

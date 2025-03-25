@@ -310,6 +310,148 @@ BigtableInstanceAdminMetadata::ListHotTablets(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+BigtableInstanceAdminMetadata::AsyncCreateLogicalView(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::admin::v2::CreateLogicalViewRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateLogicalView(cq, std::move(context),
+                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminMetadata::CreateLogicalView(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::CreateLogicalViewRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateLogicalView(context, options, request);
+}
+
+StatusOr<google::bigtable::admin::v2::LogicalView>
+BigtableInstanceAdminMetadata::GetLogicalView(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::GetLogicalViewRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetLogicalView(context, options, request);
+}
+
+StatusOr<google::bigtable::admin::v2::ListLogicalViewsResponse>
+BigtableInstanceAdminMetadata::ListLogicalViews(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::ListLogicalViewsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListLogicalViews(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BigtableInstanceAdminMetadata::AsyncUpdateLogicalView(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::admin::v2::UpdateLogicalViewRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("logical_view.name=",
+                           internal::UrlEncode(request.logical_view().name())));
+  return child_->AsyncUpdateLogicalView(cq, std::move(context),
+                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminMetadata::UpdateLogicalView(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::UpdateLogicalViewRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("logical_view.name=",
+                           internal::UrlEncode(request.logical_view().name())));
+  return child_->UpdateLogicalView(context, options, request);
+}
+
+Status BigtableInstanceAdminMetadata::DeleteLogicalView(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::DeleteLogicalViewRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteLogicalView(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BigtableInstanceAdminMetadata::AsyncCreateMaterializedView(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::admin::v2::CreateMaterializedViewRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateMaterializedView(cq, std::move(context),
+                                             std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminMetadata::CreateMaterializedView(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::CreateMaterializedViewRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateMaterializedView(context, options, request);
+}
+
+StatusOr<google::bigtable::admin::v2::MaterializedView>
+BigtableInstanceAdminMetadata::GetMaterializedView(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::GetMaterializedViewRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetMaterializedView(context, options, request);
+}
+
+StatusOr<google::bigtable::admin::v2::ListMaterializedViewsResponse>
+BigtableInstanceAdminMetadata::ListMaterializedViews(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::ListMaterializedViewsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListMaterializedViews(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BigtableInstanceAdminMetadata::AsyncUpdateMaterializedView(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::admin::v2::UpdateMaterializedViewRequest const& request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("materialized_view.name=",
+                   internal::UrlEncode(request.materialized_view().name())));
+  return child_->AsyncUpdateMaterializedView(cq, std::move(context),
+                                             std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminMetadata::UpdateMaterializedView(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::UpdateMaterializedViewRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("materialized_view.name=",
+                   internal::UrlEncode(request.materialized_view().name())));
+  return child_->UpdateMaterializedView(context, options, request);
+}
+
+Status BigtableInstanceAdminMetadata::DeleteMaterializedView(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::DeleteMaterializedViewRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteMaterializedView(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

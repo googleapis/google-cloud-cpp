@@ -144,6 +144,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/eventarc/publishing/v1:publishing_cc_grpc"
   )"
   ["filestore"]="@com_google_googleapis//google/cloud/filestore/v1:filestore_cc_grpc"
+  ["financialservices"]="@com_google_googleapis//google/cloud/financialservices/v1:financialservices_cc_grpc"
   ["functions"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/cloud/functions/v1:functions_cc_grpc" \
