@@ -106,6 +106,36 @@ StatusOr<ReturnType> CreateFromJson(
   return ReturnType::CreateFromJson(*payload);
 }
 
+Status AddCustomHeaders(Options const& options,
+  RestRequestBuilder& builder) {
+    // In tests this option may not be set. And over time we want to retire it.
+    if (!options.has<CustomHeadersOption>()) return {};
+    auto custom_headers =
+        options.get<CustomHeadersOption>();
+    for (auto const& h : options.get<CustomHeadersOption>()) {
+      builder.AddHeader(h.first, h.second);
+    }
+    return {};
+}
+
+void AddOptionsToRequestBuilder(Options const& options,
+  RestRequestBuilder& builder) {
+    Status cust = AddCustomHeaders(options, builder);
+    if (options.has<UserProjectOption>()) {
+      builder.AddHeader("x-goog-user-project",
+                          options.get<UserProjectOption>());
+    }
+    if (options.has<UserIpOption>() && !options.has<QuotaUserOption>()) {
+      builder.AddHeader("x-goog-user-ip", options.get<UserIpOption>());
+    }
+    if (options.has<QuotaUserOption>()) {
+      builder.AddHeader("x-goog-quota-user", options.get<QuotaUserOption>());
+    }
+    if (options.has<FieldMaskOption>()) {
+      builder.AddHeader("x-goog-fieldmask", options.get<FieldMaskOption>());
+    }
+}
+
 Status AddAuthorizationHeader(Options const& options,
                               RestRequestBuilder& builder) {
   // In tests this option may not be set. And over time we want to retire it.
@@ -167,7 +197,7 @@ StatusOr<ListBucketsResponse> RestStub::ListBuckets(
       absl::StrCat("storage/", options.get<TargetApiVersionOption>(), "/b"));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   builder.AddQueryParameter("project", request.project_id());
   return ParseFromRestResponse<ListBucketsResponse>(
       storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
@@ -180,7 +210,7 @@ StatusOr<BucketMetadata> RestStub::CreateBucket(
       absl::StrCat("storage/", options.get<TargetApiVersionOption>(), "/b"));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   builder.AddQueryParameter("project", request.project_id());
   builder.AddHeader("Content-Type", "application/json");
   auto payload = request.json_payload();
@@ -206,7 +236,7 @@ StatusOr<BucketMetadata> RestStub::GetBucketMetadata(
                                           "/b/", request.bucket_name()));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   return CheckedFromString<BucketMetadataParser>(
       storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
@@ -219,7 +249,7 @@ StatusOr<EmptyResponse> RestStub::DeleteBucket(
                                           "/b/", request.bucket_name()));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   return ReturnEmptyResponse(
       storage_rest_client_->Delete(context, std::move(builder).BuildRequest()));
 }
@@ -232,7 +262,7 @@ StatusOr<BucketMetadata> RestStub::UpdateBucket(
                                           "/b/", request.metadata().name()));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   builder.AddHeader("Content-Type", "application/json");
   auto payload = request.json_payload();
   return CheckedFromString<BucketMetadataParser>(
@@ -248,7 +278,7 @@ StatusOr<BucketMetadata> RestStub::PatchBucket(
                                           "/b/", request.bucket()));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   builder.AddHeader("Content-Type", "application/json");
   auto payload = request.payload();
   return CheckedFromString<BucketMetadataParser>(
@@ -264,7 +294,7 @@ StatusOr<NativeIamPolicy> RestStub::GetNativeBucketIamPolicy(
                    request.bucket_name(), "/iam"));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   return CreateFromJson<NativeIamPolicy>(
       storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
@@ -277,7 +307,7 @@ StatusOr<NativeIamPolicy> RestStub::SetNativeBucketIamPolicy(
                    request.bucket_name(), "/iam"));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   builder.AddHeader("Content-Type", "application/json");
   auto const& payload = request.json_payload();
   return CreateFromJson<NativeIamPolicy>(
@@ -296,7 +326,7 @@ StatusOr<TestBucketIamPermissionsResponse> RestStub::TestBucketIamPermissions(
   for (auto const& p : request.permissions()) {
     builder.AddQueryParameter("permissions", p);
   }
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   return ParseFromRestResponse<TestBucketIamPermissionsResponse>(
       storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
@@ -309,7 +339,7 @@ StatusOr<BucketMetadata> RestStub::LockBucketRetentionPolicy(
                    request.bucket_name(), "/lockRetentionPolicy"));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   builder.AddHeader("Content-Type", "application/json");
   builder.AddOption(IfMetagenerationMatch(request.metageneration()));
   return CheckedFromString<BucketMetadataParser>(
@@ -398,7 +428,7 @@ StatusOr<ObjectMetadata> RestStub::InsertObjectMediaSimple(
                                           "/b/", request.bucket_name(), "/o"));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   if (request.HasOption<UserIp>()) {
     builder.AddQueryParameter(UserIp::name(),
                               request.GetOption<UserIp>().value());
@@ -448,7 +478,7 @@ StatusOr<ObjectMetadata> RestStub::CopyObject(
       UrlEncode(request.destination_object())));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   builder.AddHeader("Content-Type", "application/json");
   std::string json_payload("{}");
   if (request.HasOption<WithObjectMetadata>()) {
@@ -470,7 +500,7 @@ StatusOr<ObjectMetadata> RestStub::GetObjectMetadata(
       request.bucket_name(), "/o/", UrlEncode(request.object_name())));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   return CheckedFromString<ObjectMetadataParser>(
       storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
@@ -483,7 +513,7 @@ StatusOr<std::unique_ptr<ObjectReadSource>> RestStub::ReadObject(
       request.bucket_name(), "/o/", UrlEncode(request.object_name())));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
 
   builder.AddQueryParameter("alt", "media");
   // We should not guess the intent in this case.
@@ -523,7 +553,7 @@ StatusOr<ListObjectsResponse> RestStub::ListObjects(
                                           "/b/", request.bucket_name(), "/o"));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   builder.AddQueryParameter("pageToken", request.page_token());
   return ParseFromRestResponse<ListObjectsResponse>(
       storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
@@ -537,7 +567,7 @@ StatusOr<EmptyResponse> RestStub::DeleteObject(
       request.bucket_name(), "/o/", UrlEncode(request.object_name())));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   return ReturnEmptyResponse(
       storage_rest_client_->Delete(context, std::move(builder).BuildRequest()));
 }
@@ -550,7 +580,7 @@ StatusOr<ObjectMetadata> RestStub::UpdateObject(
       request.bucket_name(), "/o/", UrlEncode(request.object_name())));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   builder.AddHeader("Content-Type", "application/json");
   auto payload = request.json_payload();
   return CheckedFromString<ObjectMetadataParser>(
@@ -567,7 +597,7 @@ StatusOr<ObjectMetadata> RestStub::MoveObject(
       "/moveTo/o/", UrlEncode(request.destination_object_name())));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   builder.AddHeader("Content-Type", "application/json");
   std::string json_payload("{}");
 
@@ -584,7 +614,7 @@ StatusOr<ObjectMetadata> RestStub::PatchObject(
       request.bucket_name(), "/o/", UrlEncode(request.object_name())));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   builder.AddHeader("Content-Type", "application/json");
   auto payload = request.payload();
   return CheckedFromString<ObjectMetadataParser>(
@@ -601,7 +631,7 @@ StatusOr<ObjectMetadata> RestStub::ComposeObject(
                    UrlEncode(request.object_name()), "/compose"));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   builder.AddHeader("Content-Type", "application/json");
   auto payload = request.JsonPayload();
   return CheckedFromString<ObjectMetadataParser>(
@@ -619,7 +649,7 @@ StatusOr<RewriteObjectResponse> RestStub::RewriteObject(
       UrlEncode(request.destination_object())));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   if (!request.rewrite_token().empty()) {
     builder.AddQueryParameter("rewriteToken", request.rewrite_token());
   }
@@ -645,7 +675,7 @@ StatusOr<ObjectMetadata> RestStub::RestoreObject(
       "/restore?generation=", request.generation()));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   builder.AddHeader("Content-Type", "application/json");
   std::string json_payload("{}");
 
@@ -705,7 +735,7 @@ StatusOr<QueryResumableUploadResponse> RestStub::QueryResumableUpload(
   RestRequestBuilder builder(request.upload_session_url());
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   builder.AddHeader("Content-Range", "bytes */*");
   builder.AddHeader("Content-Type", "application/octet-stream");
 
@@ -725,7 +755,7 @@ StatusOr<EmptyResponse> RestStub::DeleteResumableUpload(
   RestRequestBuilder builder(request.upload_session_url());
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
 
   auto failure_predicate = [](rest::HttpStatusCode code) {
     return (code != rest::HttpStatusCode::kClientClosedRequest &&
@@ -743,7 +773,7 @@ StatusOr<QueryResumableUploadResponse> RestStub::UploadChunk(
   RestRequestBuilder builder(request.upload_session_url());
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   builder.AddHeader("Content-Range", request.RangeHeaderValue());
   builder.AddHeader("Content-Type", "application/octet-stream");
   // We need to explicitly disable chunked transfer encoding. libcurl uses is by
@@ -776,7 +806,7 @@ StatusOr<ListBucketAclResponse> RestStub::ListBucketAcl(
                    request.bucket_name(), "/acl"));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   return ParseFromRestResponse<ListBucketAclResponse>(
       storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
@@ -789,7 +819,7 @@ StatusOr<BucketAccessControl> RestStub::GetBucketAcl(
       request.bucket_name(), "/acl/", UrlEncode(request.entity())));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   return CheckedFromString<BucketAccessControlParser>(
       storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
@@ -802,7 +832,7 @@ StatusOr<BucketAccessControl> RestStub::CreateBucketAcl(
                    request.bucket_name(), "/acl"));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   builder.AddHeader("Content-Type", "application/json");
   nlohmann::json object;
   object["entity"] = request.entity();
@@ -821,7 +851,7 @@ StatusOr<EmptyResponse> RestStub::DeleteBucketAcl(
       request.bucket_name(), "/acl/", UrlEncode(request.entity())));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   return ReturnEmptyResponse(
       storage_rest_client_->Delete(context, std::move(builder).BuildRequest()));
 }
@@ -834,7 +864,7 @@ StatusOr<BucketAccessControl> RestStub::UpdateBucketAcl(
       request.bucket_name(), "/acl/", UrlEncode(request.entity())));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   builder.AddHeader("Content-Type", "application/json");
   nlohmann::json object;
   object["entity"] = request.entity();
@@ -853,7 +883,7 @@ StatusOr<BucketAccessControl> RestStub::PatchBucketAcl(
       request.bucket_name(), "/acl/", UrlEncode(request.entity())));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   builder.AddHeader("Content-Type", "application/json");
   auto payload = request.payload();
   return CheckedFromString<BucketAccessControlParser>(
@@ -869,7 +899,7 @@ StatusOr<ListObjectAclResponse> RestStub::ListObjectAcl(
       request.bucket_name(), "/o/", UrlEncode(request.object_name()), "/acl"));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   return ParseFromRestResponse<ListObjectAclResponse>(
       storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
@@ -882,7 +912,7 @@ StatusOr<ObjectAccessControl> RestStub::CreateObjectAcl(
       request.bucket_name(), "/o/", UrlEncode(request.object_name()), "/acl"));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   builder.AddHeader("Content-Type", "application/json");
   nlohmann::json object;
   object["entity"] = request.entity();
@@ -902,7 +932,7 @@ StatusOr<EmptyResponse> RestStub::DeleteObjectAcl(
       UrlEncode(request.entity())));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   return ReturnEmptyResponse(
       storage_rest_client_->Delete(context, std::move(builder).BuildRequest()));
 }
@@ -916,7 +946,7 @@ StatusOr<ObjectAccessControl> RestStub::GetObjectAcl(
       UrlEncode(request.entity())));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   return CheckedFromString<ObjectAccessControlParser>(
       storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
@@ -930,7 +960,7 @@ StatusOr<ObjectAccessControl> RestStub::UpdateObjectAcl(
       UrlEncode(request.entity())));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   builder.AddHeader("Content-Type", "application/json");
   nlohmann::json object;
   object["entity"] = request.entity();
@@ -950,7 +980,7 @@ StatusOr<ObjectAccessControl> RestStub::PatchObjectAcl(
       UrlEncode(request.entity())));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   builder.AddHeader("Content-Type", "application/json");
   auto payload = request.payload();
   return CheckedFromString<ObjectAccessControlParser>(
@@ -966,7 +996,7 @@ StatusOr<ListDefaultObjectAclResponse> RestStub::ListDefaultObjectAcl(
                    request.bucket_name(), "/defaultObjectAcl"));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   return ParseFromRestResponse<ListDefaultObjectAclResponse>(
       storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
@@ -979,7 +1009,7 @@ StatusOr<ObjectAccessControl> RestStub::CreateDefaultObjectAcl(
                    request.bucket_name(), "/defaultObjectAcl"));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   builder.AddHeader("Content-Type", "application/json");
   nlohmann::json object;
   object["entity"] = request.entity();
@@ -999,7 +1029,7 @@ StatusOr<EmptyResponse> RestStub::DeleteDefaultObjectAcl(
                    UrlEncode(request.entity())));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   return ReturnEmptyResponse(
       storage_rest_client_->Delete(context, std::move(builder).BuildRequest()));
 }
@@ -1013,7 +1043,7 @@ StatusOr<ObjectAccessControl> RestStub::GetDefaultObjectAcl(
                    UrlEncode(request.entity())));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   return CheckedFromString<ObjectAccessControlParser>(
       storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
@@ -1027,7 +1057,7 @@ StatusOr<ObjectAccessControl> RestStub::UpdateDefaultObjectAcl(
                    UrlEncode(request.entity())));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   builder.AddHeader("Content-Type", "application/json");
   nlohmann::json object;
   object["entity"] = request.entity();
@@ -1047,7 +1077,7 @@ StatusOr<ObjectAccessControl> RestStub::PatchDefaultObjectAcl(
                    UrlEncode(request.entity())));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   builder.AddHeader("Content-Type", "application/json");
   auto payload = request.payload();
   return CheckedFromString<ObjectAccessControlParser>(
@@ -1063,7 +1093,7 @@ StatusOr<ServiceAccount> RestStub::GetServiceAccount(
                    "/projects/", request.project_id(), "/serviceAccount"));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   return CheckedFromString<ServiceAccountParser>(
       storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
@@ -1076,7 +1106,7 @@ StatusOr<ListHmacKeysResponse> RestStub::ListHmacKeys(
                    "/projects/", request.project_id(), "/hmacKeys"));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   return ParseFromRestResponse<ListHmacKeysResponse>(
       storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
@@ -1089,7 +1119,7 @@ StatusOr<CreateHmacKeyResponse> RestStub::CreateHmacKey(
                    "/projects/", request.project_id(), "/hmacKeys"));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   builder.AddQueryParameter("serviceAccountEmail", request.service_account());
   return ParseFromRestResponse<CreateHmacKeyResponse>(
       storage_rest_client_->Post(
@@ -1105,7 +1135,7 @@ StatusOr<EmptyResponse> RestStub::DeleteHmacKey(
       request.project_id(), "/hmacKeys/", request.access_id()));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   return ReturnEmptyResponse(
       storage_rest_client_->Delete(context, std::move(builder).BuildRequest()));
 }
@@ -1118,7 +1148,7 @@ StatusOr<HmacKeyMetadata> RestStub::GetHmacKey(
       request.project_id(), "/hmacKeys/", request.access_id()));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   return CheckedFromString<HmacKeyMetadataParser>(
       storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
@@ -1131,7 +1161,7 @@ StatusOr<HmacKeyMetadata> RestStub::UpdateHmacKey(
       request.project_id(), "/hmacKeys/", request.access_id()));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   nlohmann::json json_payload;
   if (!request.resource().state().empty()) {
     json_payload["state"] = request.resource().state();
@@ -1173,7 +1203,7 @@ StatusOr<ListNotificationsResponse> RestStub::ListNotifications(
                    request.bucket_name(), "/notificationConfigs"));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   return ParseFromRestResponse<ListNotificationsResponse>(
       storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
@@ -1186,7 +1216,7 @@ StatusOr<NotificationMetadata> RestStub::CreateNotification(
                    request.bucket_name(), "/notificationConfigs"));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   builder.AddHeader("Content-Type", "application/json");
   auto payload = request.json_payload();
   return CheckedFromString<NotificationMetadataParser>(
@@ -1203,7 +1233,7 @@ StatusOr<NotificationMetadata> RestStub::GetNotification(
                    request.notification_id()));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   return CheckedFromString<NotificationMetadataParser>(
       storage_rest_client_->Get(context, std::move(builder).BuildRequest()));
 }
@@ -1217,7 +1247,7 @@ StatusOr<EmptyResponse> RestStub::DeleteNotification(
                    request.notification_id()));
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
-  request.AddOptionsToHttpRequest(builder);
+  AddOptionsToRequestBuilder(options, builder);
   return ReturnEmptyResponse(
       storage_rest_client_->Delete(context, std::move(builder).BuildRequest()));
 }
