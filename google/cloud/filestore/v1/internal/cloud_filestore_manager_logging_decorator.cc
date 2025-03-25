@@ -455,6 +455,38 @@ CloudFilestoreManagerLogging::UpdateBackup(
       context, options, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+CloudFilestoreManagerLogging::AsyncPromoteReplica(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::filestore::v1::PromoteReplicaRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::filestore::v1::PromoteReplicaRequest const& request) {
+        return child_->AsyncPromoteReplica(cq, std::move(context),
+                                           std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerLogging::PromoteReplica(
+    grpc::ClientContext& context, Options options,
+    google::cloud::filestore::v1::PromoteReplicaRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::filestore::v1::PromoteReplicaRequest const& request) {
+        return child_->PromoteReplica(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 CloudFilestoreManagerLogging::ListLocations(
     grpc::ClientContext& context, Options const& options,
