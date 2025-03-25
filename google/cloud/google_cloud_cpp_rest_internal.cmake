@@ -88,6 +88,8 @@ add_library(
     internal/oauth2_logging_credentials.h
     internal/oauth2_minimal_iam_credentials_rest.cc
     internal/oauth2_minimal_iam_credentials_rest.h
+    internal/oauth2_mtls_credentials.cc
+    internal/oauth2_mtls_credentials.h
     internal/oauth2_refreshing_credentials_wrapper.cc
     internal/oauth2_refreshing_credentials_wrapper.h
     internal/oauth2_service_account_credentials.cc
@@ -270,6 +272,7 @@ if (BUILD_TESTING)
         internal/oauth2_impersonate_service_account_credentials_test.cc
         internal/oauth2_logging_credentials_test.cc
         internal/oauth2_minimal_iam_credentials_rest_test.cc
+        internal/oauth2_mtls_credentials_test.cc
         internal/oauth2_refreshing_credentials_wrapper_test.cc
         internal/oauth2_service_account_credentials_test.cc
         internal/oauth2_universe_domain_test.cc

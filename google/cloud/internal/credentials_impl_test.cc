@@ -122,6 +122,24 @@ TEST(Credentials, ApiKeyCredentials) {
   EXPECT_EQ("api-key", visitor.api_key);
 }
 
+TEST(Credentials, MtlsCredentials) {
+  TestCredentialsVisitor visitor;
+
+  MtlsCredentialsConfig::Rest rest_config;
+  rest_config.ssl_client_cert_file = "my-cert-file";
+  MtlsCredentialsConfig config;
+  config.config = std::move(rest_config);
+  auto credentials = MakeMtlsCredentials(ExperimentalTag{}, config);
+  CredentialsVisitor::dispatch(*credentials, visitor);
+  EXPECT_EQ("MtlsConfig", visitor.name);
+  auto mtls = visitor.mtls_config;
+  ASSERT_TRUE(
+      absl::holds_alternative<MtlsCredentialsConfig::Rest>(mtls.config));
+  EXPECT_EQ(
+      "my-cert-file",
+      absl::get<MtlsCredentialsConfig::Rest>(mtls.config).ssl_client_cert_file);
+}
+
 }  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

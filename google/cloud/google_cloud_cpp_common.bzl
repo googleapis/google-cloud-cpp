@@ -99,6 +99,7 @@ google_cloud_cpp_common_hdrs = [
     "kms_key_name.h",
     "location.h",
     "log.h",
+    "mtls_credentials_config.h",
     "no_await_tag.h",
     "opentelemetry_options.h",
     "optional.h",

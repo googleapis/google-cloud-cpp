@@ -63,6 +63,11 @@ std::shared_ptr<Credentials> MakeApiKeyCredentials(std::string api_key,
                                                   std::move(opts));
 }
 
+std::shared_ptr<Credentials> MakeMtlsCredentials(
+    ExperimentalTag, MtlsCredentialsConfig const& config, Options opts) {
+  return std::make_shared<internal::MtlsConfig>(config, std::move(opts));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

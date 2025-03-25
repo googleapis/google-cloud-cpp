@@ -157,6 +157,7 @@ add_library(
     location.h
     log.cc
     log.h
+    mtls_credentials_config.h
     no_await_tag.h
     opentelemetry_options.h
     optional.h

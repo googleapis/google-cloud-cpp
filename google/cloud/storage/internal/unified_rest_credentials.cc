@@ -44,6 +44,7 @@ using ::google::cloud::internal::ExternalAccountConfig;
 using ::google::cloud::internal::GoogleDefaultCredentialsConfig;
 using ::google::cloud::internal::ImpersonateServiceAccountConfig;
 using ::google::cloud::internal::InsecureCredentialsConfig;
+using ::google::cloud::internal::MtlsConfig;
 using ::google::cloud::internal::ServiceAccountConfig;
 using ::google::cloud::oauth2_internal::Decorate;
 
@@ -140,6 +141,10 @@ std::shared_ptr<oauth2::Credentials> MapCredentials(
       // would have to grow the deprecated `storage::oauth2::Credentials` class
       // to support setting the `x-goog-api-key` header. For these reasons, we
       // just return anonymous (no-op) credentials.
+      result = google::cloud::storage::oauth2::CreateAnonymousCredentials();
+    }
+
+    void visit(internal::MtlsConfig const& cfg) override {
       result = google::cloud::storage::oauth2::CreateAnonymousCredentials();
     }
 
