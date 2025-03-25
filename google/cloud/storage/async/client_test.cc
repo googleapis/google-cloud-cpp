@@ -379,6 +379,145 @@ TEST(AsyncClient, ReadObject2) {
              "empty response", [](auto const& p) { return p.size(); }, 0)));
 }
 
+TEST(AsyncClient, StartAppendableObjectUpload1) {
+  auto constexpr kExpectedRequest = R"pb(
+    write_object_spec {
+      resource { bucket: "projects/_/buckets/test-bucket" name: "test-object" }
+      appendable: true
+    }
+  )pb";
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(
+          Return(Options{}.set<TestOption<0>>("O0").set<TestOption<1>>("O1")));
+
+  EXPECT_CALL(*mock, StartAppendableObjectUpload)
+      .WillOnce([&](AsyncConnection::AppendableUploadParams const& p) {
+        EXPECT_THAT(p.options.get<TestOption<0>>(), "O0");
+        EXPECT_THAT(p.options.get<TestOption<1>>(), "O1-function");
+        EXPECT_THAT(p.options.get<TestOption<2>>(), "O2-function");
+        auto expected = google::storage::v2::BidiWriteObjectRequest{};
+        EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
+        EXPECT_THAT(p.request, IsProtoEqual(expected));
+        auto writer = std::make_unique<MockAsyncWriterConnection>();
+        EXPECT_CALL(*writer, PersistedState).WillOnce(Return(0));
+        EXPECT_CALL(*writer, Finalize).WillRepeatedly([] {
+          return make_ready_future(make_status_or(TestProtoObject()));
+        });
+        return make_ready_future(make_status_or(
+            std::unique_ptr<AsyncWriterConnection>(std::move(writer))));
+      });
+
+  auto client = AsyncClient(mock);
+  auto wt =
+      client
+          .StartAppendableObjectUpload(BucketName("test-bucket"), "test-object",
+                                       Options{}
+                                           .set<TestOption<1>>("O1-function")
+                                           .set<TestOption<2>>("O2-function"))
+          .get();
+  ASSERT_STATUS_OK(wt);
+  AsyncWriter w;
+  AsyncToken t;
+  std::tie(w, t) = *std::move(wt);
+  EXPECT_TRUE(t.valid());
+  auto object = w.Finalize(std::move(t)).get();
+  EXPECT_THAT(object, IsOkAndHolds(IsProtoEqual(TestProtoObject())));
+}
+
+TEST(AsyncClient, StartAppendableObjectUpload2) {
+  auto constexpr kExpectedRequest = R"pb(
+    write_object_spec {
+      resource { bucket: "projects/_/buckets/test-bucket", name: "test-object" }
+      appendable: true
+    }
+  )pb";
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(
+          Return(Options{}.set<TestOption<0>>("O0").set<TestOption<1>>("O1")));
+
+  EXPECT_CALL(*mock, StartAppendableObjectUpload)
+      .WillOnce([&](AsyncConnection::AppendableUploadParams const& p) {
+        EXPECT_THAT(p.options.get<TestOption<0>>(), "O0");
+        EXPECT_THAT(p.options.get<TestOption<1>>(), "O1-function");
+        EXPECT_THAT(p.options.get<TestOption<2>>(), "O2-function");
+        auto expected = google::storage::v2::BidiWriteObjectRequest{};
+        EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
+        EXPECT_THAT(p.request, IsProtoEqual(expected));
+        auto writer = std::make_unique<MockAsyncWriterConnection>();
+        EXPECT_CALL(*writer, PersistedState).WillOnce(Return(0));
+        EXPECT_CALL(*writer, Finalize).WillRepeatedly([] {
+          return make_ready_future(make_status_or(TestProtoObject()));
+        });
+        return make_ready_future(make_status_or(
+            std::unique_ptr<AsyncWriterConnection>(std::move(writer))));
+      });
+
+  auto client = AsyncClient(mock);
+  auto request = google::storage::v2::BidiWriteObjectRequest{};
+  ASSERT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &request));
+  auto wt = client
+                .StartAppendableObjectUpload(
+                    std::move(request), Options{}
+                                            .set<TestOption<1>>("O1-function")
+                                            .set<TestOption<2>>("O2-function"))
+                .get();
+  ASSERT_STATUS_OK(wt);
+  AsyncWriter w;
+  AsyncToken t;
+  std::tie(w, t) = *std::move(wt);
+  EXPECT_TRUE(t.valid());
+  auto object = w.Finalize(std::move(t)).get();
+  EXPECT_THAT(object, IsOkAndHolds(IsProtoEqual(TestProtoObject())));
+}
+
+TEST(AsyncClient, ResumeAppendableObjectUpload1) {
+  auto constexpr kExpectedRequest = R"pb(
+    append_object_spec {
+      bucket: "projects/_/buckets/test-bucket",
+      object: "test-object",
+      generation: 42
+    }
+  )pb";
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(
+          Return(Options{}.set<TestOption<0>>("O0").set<TestOption<1>>("O1")));
+
+  EXPECT_CALL(*mock, ResumeAppendableObjectUpload)
+      .WillOnce([&](AsyncConnection::AppendableUploadParams const& p) {
+        EXPECT_THAT(p.options.get<TestOption<0>>(), "O0");
+        EXPECT_THAT(p.options.get<TestOption<1>>(), "O1-function");
+        EXPECT_THAT(p.options.get<TestOption<2>>(), "O2-function");
+        auto expected = google::storage::v2::BidiWriteObjectRequest{};
+        EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
+        EXPECT_THAT(p.request, IsProtoEqual(expected));
+        auto writer = std::make_unique<MockAsyncWriterConnection>();
+        EXPECT_CALL(*writer, PersistedState)
+            .WillRepeatedly(Return(TestProtoObject()));
+
+        return make_ready_future(make_status_or(
+            std::unique_ptr<AsyncWriterConnection>(std::move(writer))));
+      });
+
+  auto client = AsyncClient(mock);
+  auto wt = client
+                .ResumeAppendableObjectUpload(
+                    BucketName("test-bucket"), "test-object", 42,
+                    Options{}
+                        .set<TestOption<1>>("O1-function")
+                        .set<TestOption<2>>("O2-function"))
+                .get();
+  ASSERT_STATUS_OK(wt);
+  AsyncWriter w;
+  AsyncToken t;
+  std::tie(w, t) = *std::move(wt);
+  EXPECT_FALSE(t.valid());
+  EXPECT_THAT(w.PersistedState(), VariantWith<google::storage::v2::Object>(
+                                      IsProtoEqual(TestProtoObject())));
+}
+
 TEST(AsyncClient, StartBufferedUpload1) {
   auto constexpr kExpectedRequest = R"pb(
     write_object_spec {
