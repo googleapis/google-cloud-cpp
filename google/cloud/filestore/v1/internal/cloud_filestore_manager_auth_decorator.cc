@@ -404,6 +404,35 @@ CloudFilestoreManagerAuth::UpdateBackup(
   return child_->UpdateBackup(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+CloudFilestoreManagerAuth::AsyncPromoteReplica(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::filestore::v1::PromoteReplicaRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncPromoteReplica(cq, *std::move(context),
+                                          std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerAuth::PromoteReplica(
+    grpc::ClientContext& context, Options options,
+    google::cloud::filestore::v1::PromoteReplicaRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->PromoteReplica(context, options, request);
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 CloudFilestoreManagerAuth::ListLocations(
     grpc::ClientContext& context, Options const& options,

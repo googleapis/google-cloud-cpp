@@ -434,6 +434,36 @@ DefaultCloudFilestoreManagerStub::UpdateBackup(
   return response;
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultCloudFilestoreManagerStub::AsyncPromoteReplica(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::filestore::v1::PromoteReplicaRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::filestore::v1::PromoteReplicaRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::filestore::v1::PromoteReplicaRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncPromoteReplica(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCloudFilestoreManagerStub::PromoteReplica(
+    grpc::ClientContext& context, Options,
+    google::cloud::filestore::v1::PromoteReplicaRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->PromoteReplica(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultCloudFilestoreManagerStub::ListLocations(
     grpc::ClientContext& context, Options const&,
