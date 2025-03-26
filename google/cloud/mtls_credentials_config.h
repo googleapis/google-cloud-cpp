@@ -75,7 +75,7 @@ struct MtlsCredentialsConfig {
     SslCertType ssl_cert_type_ = SslCertType::kPEM;
   };
 
-  struct gRpc {
+  struct Grpc {
     /// gRPC only supports PEM files.
     enum class SslCertType {
       kPEM = 0,
@@ -98,7 +98,7 @@ struct MtlsCredentialsConfig {
     std::string pem_cert_chain;
   };
 
-  absl::variant<Rest, gRpc> config;
+  absl::variant<Rest, Grpc> config;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

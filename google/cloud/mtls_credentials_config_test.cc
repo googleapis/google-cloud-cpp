@@ -22,7 +22,6 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::testing::Eq;
-using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 
 TEST(MtlsCredentialsConfigTest, Construction) {

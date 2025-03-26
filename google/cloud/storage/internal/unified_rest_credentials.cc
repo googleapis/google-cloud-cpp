@@ -144,7 +144,7 @@ std::shared_ptr<oauth2::Credentials> MapCredentials(
       result = google::cloud::storage::oauth2::CreateAnonymousCredentials();
     }
 
-    void visit(internal::MtlsConfig const& cfg) override {
+    void visit(internal::MtlsConfig const&) override {
       result = google::cloud::storage::oauth2::CreateAnonymousCredentials();
     }
 

@@ -18,7 +18,7 @@
 namespace google {
 namespace cloud {
 
-MtlsCredentialsConfig::Rest::Rest() {}
+MtlsCredentialsConfig::Rest::Rest() {}  // NOLINT(modernize-use-equals-default)
 
 MtlsCredentialsConfig::Rest::Rest(std::string ssl_client_cert_filename)
     : ssl_client_cert_filename_(std::move(ssl_client_cert_filename)) {}

@@ -43,7 +43,7 @@ class MtlsCredentials : public oauth2_internal::Credentials {
   StatusOr<AccessToken> GetToken(
       std::chrono::system_clock::time_point tp) override;
 
-  absl::optional<MtlsCredentialsConfig::Rest> MtlsConfig() const {
+  absl::optional<MtlsCredentialsConfig::Rest> MtlsConfig() const override {
     return mtls_config_rest_;
   }
 
