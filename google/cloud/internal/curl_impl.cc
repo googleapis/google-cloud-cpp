@@ -337,13 +337,13 @@ Status CurlImpl::MakeRequest(HttpMethod method, RestContext& context,
             .c_str());
     if (!status.ok()) return OnTransferError(context, std::move(status));
 
-    status = handle_.SetOption(CURLOPT_SSLCERT,
-                               mtls_config_->ssl_client_cert_file().c_str());
+    status = handle_.SetOption(
+        CURLOPT_SSLCERT, mtls_config_->ssl_client_cert_filename().c_str());
     if (!status.ok()) return OnTransferError(context, std::move(status));
 
-    if (mtls_config_->ssl_key_file().has_value()) {
+    if (mtls_config_->ssl_key_filename().has_value()) {
       status = handle_.SetOption(CURLOPT_SSLKEY,
-                                 mtls_config_->ssl_key_file()->c_str());
+                                 mtls_config_->ssl_key_filename()->c_str());
       if (!status.ok()) return OnTransferError(context, std::move(status));
       if (mtls_config_->ssl_key_file_password().has_value()) {
         status = handle_.SetOption(

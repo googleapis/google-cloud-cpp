@@ -18,23 +18,22 @@
 namespace google {
 namespace cloud {
 
-MtlsCredentialsConfig::Rest::Rest() : ssl_client_cert_file_() {}
-
-MtlsCredentialsConfig::Rest::Rest(std::string ssl_client_cert_file)
-    : ssl_client_cert_file_(std::move(ssl_client_cert_file)) {}
-MtlsCredentialsConfig::Rest::Rest(std::string ssl_client_cert,
+MtlsCredentialsConfig::Rest::Rest(std::string ssl_client_cert_filename)
+    : ssl_client_cert_filename_(std::move(ssl_client_cert_filename)) {}
+MtlsCredentialsConfig::Rest::Rest(std::string ssl_client_cert_filename,
                                   std::string ssl_key_file,
                                   std::string ssl_key_file_password)
-    : ssl_client_cert_file_(std::move(ssl_client_cert)),
+    : ssl_client_cert_filename_(std::move(ssl_client_cert_filename)),
       ssl_key_file_(SslKeyFile{std::move(ssl_key_file),
                                std::move(ssl_key_file_password)}) {}
 
-std::string MtlsCredentialsConfig::Rest::ssl_client_cert_file() const {
-  return ssl_client_cert_file_;
+std::string MtlsCredentialsConfig::Rest::ssl_client_cert_filename() const {
+  return ssl_client_cert_filename_;
 }
 
-absl::optional<std::string> MtlsCredentialsConfig::Rest::ssl_key_file() const {
-  if (ssl_key_file_.has_value()) return ssl_key_file_->ssl_key_file;
+absl::optional<std::string> MtlsCredentialsConfig::Rest::ssl_key_filename()
+    const {
+  if (ssl_key_file_.has_value()) return ssl_key_file_->ssl_key_filename;
   return absl::nullopt;
 }
 

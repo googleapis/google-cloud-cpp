@@ -135,7 +135,7 @@ TEST(Credentials, MtlsCredentials) {
   ASSERT_TRUE(
       absl::holds_alternative<MtlsCredentialsConfig::Rest>(mtls.config));
   EXPECT_EQ("my-cert-file", absl::get<MtlsCredentialsConfig::Rest>(mtls.config)
-                                .ssl_client_cert_file());
+                                .ssl_client_cert_filename());
 }
 
 }  // namespace
