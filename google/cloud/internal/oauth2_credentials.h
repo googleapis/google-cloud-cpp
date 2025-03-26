@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OAUTH2_CREDENTIALS_H
 
 #include "google/cloud/access_token.h"
+#include "google/cloud/mtls_credentials_config.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
@@ -122,6 +123,8 @@ class Credentials {
    */
   virtual StatusOr<std::pair<std::string, std::string>> AuthenticationHeader(
       std::chrono::system_clock::time_point tp);
+
+  virtual absl::optional<MtlsCredentialsConfig::Rest> MtlsConfig() const;
 };
 
 /**

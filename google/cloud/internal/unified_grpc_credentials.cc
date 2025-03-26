@@ -20,6 +20,7 @@
 #include "google/cloud/internal/grpc_channel_credentials_authentication.h"
 #include "google/cloud/internal/grpc_impersonate_service_account.h"
 #include "google/cloud/internal/grpc_service_account_authentication.h"
+#include "google/cloud/internal/make_status.h"
 #include <grpcpp/security/credentials.h>
 #include <fstream>
 
@@ -128,6 +129,11 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
     }
     void visit(ApiKeyConfig const& cfg) override {
       result = std::make_unique<GrpcApiKeyAuthentication>(cfg.api_key());
+    }
+    void visit(MtlsConfig const&) override {
+      ErrorCredentialsConfig error{internal::UnimplementedError(
+          "mTLS support for gRPC transport is unimplemented")};
+      result = std::make_unique<GrpcErrorCredentialsAuthentication>(error);
     }
   } visitor(std::move(cq), std::move(options));
 

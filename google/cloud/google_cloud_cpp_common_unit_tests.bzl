@@ -77,6 +77,7 @@ google_cloud_cpp_common_unit_tests = [
     "log_test.cc",
     "mocks/current_options_test.cc",
     "mocks/mock_stream_range_test.cc",
+    "mtls_credentials_config_test.cc",
     "options_test.cc",
     "polling_policy_test.cc",
     "project_test.cc",

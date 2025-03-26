@@ -15,6 +15,7 @@
 #include "google/cloud/internal/unified_rest_credentials.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/make_jwt_assertion.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/oauth2_access_token_credentials.h"
 #include "google/cloud/internal/oauth2_anonymous_credentials.h"
 #include "google/cloud/internal/oauth2_api_key_credentials.h"
@@ -23,6 +24,7 @@
 #include "google/cloud/internal/oauth2_external_account_credentials.h"
 #include "google/cloud/internal/oauth2_google_credentials.h"
 #include "google/cloud/internal/oauth2_impersonate_service_account_credentials.h"
+#include "google/cloud/internal/oauth2_mtls_credentials.h"
 #include "google/cloud/internal/oauth2_service_account_credentials.h"
 
 namespace google {
@@ -39,6 +41,7 @@ using ::google::cloud::internal::ExternalAccountConfig;
 using ::google::cloud::internal::GoogleDefaultCredentialsConfig;
 using ::google::cloud::internal::ImpersonateServiceAccountConfig;
 using ::google::cloud::internal::InsecureCredentialsConfig;
+using ::google::cloud::internal::MtlsConfig;
 using ::google::cloud::internal::ServiceAccountConfig;
 using ::google::cloud::oauth2_internal::Decorate;
 
@@ -141,6 +144,21 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
     void visit(ApiKeyConfig const& cfg) override {
       result =
           std::make_shared<oauth2_internal::ApiKeyCredentials>(cfg.api_key());
+    }
+
+    void visit(MtlsConfig const& cfg) override {
+      if (absl::holds_alternative<MtlsCredentialsConfig::Rest>(
+              cfg.mtls_credentials_config().config)) {
+        MtlsCredentialsConfig::Rest mtls_config =
+            absl::get<MtlsCredentialsConfig::Rest>(
+                cfg.mtls_credentials_config().config);
+        result =
+            std::make_shared<oauth2_internal::MtlsCredentials>(mtls_config);
+
+      } else {
+        result = MakeErrorCredentials(
+            internal::InvalidArgumentError("Expecting MtlsCredentials::Rest."));
+      }
     }
 
    private:

@@ -101,6 +101,11 @@ ApiKeyConfig::ApiKeyConfig(std::string api_key, Options opts)
     : api_key_(std::move(api_key)),
       options_(PopulateAuthOptions(std::move(opts))) {}
 
+MtlsConfig::MtlsConfig(google::cloud::MtlsCredentialsConfig config,
+                       google::cloud::Options opts)
+    : config_(std::move(config)),
+      options_(PopulateAuthOptions(std::move(opts))) {}
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud

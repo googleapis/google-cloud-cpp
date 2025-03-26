@@ -22,6 +22,7 @@
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/internal/rest_request.h"
 #include "google/cloud/internal/rest_response.h"
+#include "google/cloud/mtls_credentials_config.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -85,6 +86,8 @@ class CurlImpl {
   void SetHeader(std::pair<std::string, std::string> const& header);
   void SetHeaders(RestContext const& context, RestRequest const& request);
 
+  void SetMtlsConfig(absl::optional<MtlsCredentialsConfig::Rest> mtls_config);
+
   std::string MakeEscapedString(std::string const& s);
 
   void SetUrl(std::string const& endpoint, RestRequest const& request,
@@ -142,6 +145,8 @@ class CurlImpl {
   absl::optional<std::string> proxy_;
   absl::optional<std::string> proxy_username_;
   absl::optional<std::string> proxy_password_;
+
+  absl::optional<MtlsCredentialsConfig::Rest> mtls_config_;
 
   CurlReceivedHeaders received_headers_;
   std::string url_;

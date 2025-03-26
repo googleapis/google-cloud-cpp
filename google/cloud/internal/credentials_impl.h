@@ -40,6 +40,7 @@ class ImpersonateServiceAccountConfig;
 class ServiceAccountConfig;
 class ExternalAccountConfig;
 class ApiKeyConfig;
+class MtlsConfig;
 
 std::shared_ptr<Credentials> MakeErrorCredentials(Status error_status);
 
@@ -54,6 +55,7 @@ class CredentialsVisitor {
   virtual void visit(ServiceAccountConfig const&) = 0;
   virtual void visit(ExternalAccountConfig const&) = 0;
   virtual void visit(ApiKeyConfig const&) = 0;
+  virtual void visit(MtlsConfig const&) = 0;
 
   static void dispatch(Credentials const& credentials,
                        CredentialsVisitor& visitor);
@@ -180,6 +182,23 @@ class ApiKeyConfig : public Credentials {
   void dispatch(CredentialsVisitor& v) const override { v.visit(*this); }
 
   std::string api_key_;
+  Options options_;
+};
+
+class MtlsConfig : public Credentials {
+ public:
+  MtlsConfig(MtlsCredentialsConfig config, Options opts);
+  ~MtlsConfig() override = default;
+
+  MtlsCredentialsConfig const& mtls_credentials_config() const {
+    return config_;
+  }
+  Options const& options() const { return options_; }
+
+ private:
+  void dispatch(CredentialsVisitor& v) const override { v.visit(*this); }
+
+  MtlsCredentialsConfig config_;
   Options options_;
 };
 

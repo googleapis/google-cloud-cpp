@@ -16,8 +16,10 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CREDENTIALS_H
 
 #include "google/cloud/common_options.h"
+#include "google/cloud/mtls_credentials_config.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
+#include "absl/types/variant.h"
 #include <chrono>
 #include <memory>
 #include <string>
@@ -332,6 +334,9 @@ std::shared_ptr<Credentials> MakeExternalAccountCredentials(
  */
 std::shared_ptr<Credentials> MakeApiKeyCredentials(std::string api_key,
                                                    Options opts = {});
+
+std::shared_ptr<Credentials> MakeMtlsCredentials(
+    ExperimentalTag, MtlsCredentialsConfig const& config, Options opts = {});
 
 /**
  * Configure the delegates for `MakeImpersonateServiceAccountCredentials()`

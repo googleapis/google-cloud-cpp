@@ -55,6 +55,10 @@ StatusOr<std::pair<std::string, std::string>> Credentials::AuthenticationHeader(
                         absl::StrCat("Bearer ", token->token));
 }
 
+absl::optional<MtlsCredentialsConfig::Rest> Credentials::MtlsConfig() const {
+  return absl::nullopt;
+}
+
 StatusOr<std::string> AuthenticationHeaderJoined(
     Credentials& credentials, std::chrono::system_clock::time_point tp) {
   auto header = credentials.AuthenticationHeader(tp);
