@@ -28,20 +28,45 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 struct MtlsCredentialsConfig {
-  struct Rest {
-    enum class SslCertType { kPEM = 0, kDER, kP12 };
+  /**
+   * Stores the client SSL certificate along with any other needed values to
+   * access the certificate.
+   *
+   * The data in this class is used to set various options in libcurl:
+   *  - ssl_client_cert_file: CURLOPT_SSLCERT
+   *  - ssl_key_file: CURLOPT_SSLKEY
+   *  - ssl_key_file_password: CURLOPT_KEYPASSWD
+   *  - ssl_cert_type: CURLOPT_SSLCERTTYPE - defaults to PEM
+   *
+   *  Please see https://curl.se/libcurl/c/easy_setopt_options.html for more
+   *  detailed information on the behavior of setting these options.
+   */
+  class Rest {
+   public:
+    enum class SslCertType { kPEM, kDER, kP12 };
 
-    /// https://curl.se/libcurl/c/CURLOPT_SSLCERT.html
-    std::string ssl_client_cert_file;
+    Rest();
+    explicit Rest(std::string ssl_client_cert_file);
+    Rest(std::string ssl_client_cert, std::string ssl_key_file,
+         std::string ssl_key_file_password);
 
-    /// https://curl.se/libcurl/c/CURLOPT_SSLKEY.html
-    std::string ssl_key_file;
+    std::string ssl_client_cert_file() const;
+    absl::optional<std::string> ssl_key_file() const;
+    absl::optional<std::string> ssl_key_file_password() const;
+    SslCertType ssl_cert_type() const;
 
-    /// https://curl.se/libcurl/c/CURLOPT_KEYPASSWD.html
-    std::string ssl_key_file_password;
+    Rest& set_cert_type(SslCertType ssl_cert_type);
 
-    /// https://curl.se/libcurl/c/CURLOPT_SSLCERTTYPE.html
-    SslCertType ssl_cert_type;
+    static std::string ToString(SslCertType type);
+
+   private:
+    struct SslKeyFile {
+      std::string ssl_key_file;
+      std::string ssl_key_file_password;
+    };
+    std::string ssl_client_cert_file_;
+    absl::optional<SslKeyFile> ssl_key_file_ = absl::nullopt;
+    SslCertType ssl_cert_type_ = SslCertType::kPEM;
   };
 
   struct gRpc {

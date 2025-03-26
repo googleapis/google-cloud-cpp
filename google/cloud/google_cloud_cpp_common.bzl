@@ -162,6 +162,7 @@ google_cloud_cpp_common_srcs = [
     "kms_key_name.cc",
     "location.cc",
     "log.cc",
+    "mtls_credentials_config.cc",
     "options.cc",
     "project.cc",
     "status.cc",

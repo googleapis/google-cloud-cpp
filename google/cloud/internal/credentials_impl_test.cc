@@ -125,8 +125,7 @@ TEST(Credentials, ApiKeyCredentials) {
 TEST(Credentials, MtlsCredentials) {
   TestCredentialsVisitor visitor;
 
-  MtlsCredentialsConfig::Rest rest_config;
-  rest_config.ssl_client_cert_file = "my-cert-file";
+  MtlsCredentialsConfig::Rest rest_config{"my-cert-file"};
   MtlsCredentialsConfig config;
   config.config = std::move(rest_config);
   auto credentials = MakeMtlsCredentials(ExperimentalTag{}, config);
@@ -135,9 +134,8 @@ TEST(Credentials, MtlsCredentials) {
   auto mtls = visitor.mtls_config;
   ASSERT_TRUE(
       absl::holds_alternative<MtlsCredentialsConfig::Rest>(mtls.config));
-  EXPECT_EQ(
-      "my-cert-file",
-      absl::get<MtlsCredentialsConfig::Rest>(mtls.config).ssl_client_cert_file);
+  EXPECT_EQ("my-cert-file", absl::get<MtlsCredentialsConfig::Rest>(mtls.config)
+                                .ssl_client_cert_file());
 }
 
 }  // namespace

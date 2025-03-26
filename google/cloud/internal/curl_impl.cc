@@ -254,6 +254,11 @@ void CurlImpl::SetHeaders(RestContext const& context,
   }
 }
 
+void CurlImpl::SetMtlsConfig(
+    absl::optional<MtlsCredentialsConfig::Rest> mtls_config) {
+  mtls_config_ = std::move(mtls_config);
+}
+
 std::string CurlImpl::MakeEscapedString(std::string const& s) {
   return handle_.MakeEscapedString(s).get();
 }
@@ -318,6 +323,29 @@ Status CurlImpl::MakeRequest(HttpMethod method, RestContext& context,
   if (proxy_password_) {
     status = handle_.SetOption(CURLOPT_PROXYPASSWORD, proxy_password_->c_str());
     if (!status.ok()) return OnTransferError(context, std::move(status));
+  }
+
+  if (mtls_config_.has_value()) {
+    status = handle_.SetOption(
+        CURLOPT_SSLCERTTYPE,
+        MtlsCredentialsConfig::Rest::ToString(mtls_config_->ssl_cert_type())
+            .c_str());
+    if (!status.ok()) return OnTransferError(context, std::move(status));
+
+    status = handle_.SetOption(CURLOPT_SSLCERT,
+                               mtls_config_->ssl_client_cert_file().c_str());
+    if (!status.ok()) return OnTransferError(context, std::move(status));
+
+    if (mtls_config_->ssl_key_file().has_value()) {
+      status = handle_.SetOption(CURLOPT_SSLKEY,
+                                 mtls_config_->ssl_key_file()->c_str());
+      if (!status.ok()) return OnTransferError(context, std::move(status));
+      if (mtls_config_->ssl_key_file_password().has_value()) {
+        status = handle_.SetOption(
+            CURLOPT_KEYPASSWD, mtls_config_->ssl_key_file_password()->c_str());
+        if (!status.ok()) return OnTransferError(context, std::move(status));
+      }
+    }
   }
 
   if (method == HttpMethod::kGet) {
