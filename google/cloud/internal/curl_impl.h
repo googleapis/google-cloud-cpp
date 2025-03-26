@@ -143,6 +143,8 @@ class CurlImpl {
   absl::optional<std::string> proxy_username_;
   absl::optional<std::string> proxy_password_;
 
+  absl::optional<std::string> interface_;
+
   CurlReceivedHeaders received_headers_;
   std::string url_;
   HttpStatusCode http_code_;
@@ -191,6 +193,9 @@ absl::optional<std::string> CurlOptProxyUsername(Options const& options);
 
 /// Compute the CURLOPT_PROXYPASSWORD setting from @p options.
 absl::optional<std::string> CurlOptProxyPassword(Options const& options);
+
+/// Compute the CURLOPT_INTERFACE setting from @p options.
+absl::optional<std::string> CurlOptInterface(Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal

@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/curl_impl.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/rest_options.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <vector>
@@ -180,6 +181,12 @@ TEST_F(CurlImplTest, CurlOptProxyPassword) {
       CurlOptProxyPassword(Options{}.set<ProxyOption>(
           ProxyConfig().set_hostname("hostname").set_password("password"))),
       absl::make_optional(std::string("password")));
+}
+
+TEST_F(CurlImplTest, CurlOptInterface) {
+  EXPECT_EQ(CurlOptInterface(Options{}), absl::nullopt);
+  EXPECT_EQ(CurlOptInterface(Options{}.set<Interface>("interface")),
+            absl::make_optional(std::string("interface")));
 }
 
 }  // namespace
