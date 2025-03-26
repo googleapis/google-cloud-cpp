@@ -40,6 +40,12 @@ struct MtlsCredentialsConfig {
    *
    *  Please see https://curl.se/libcurl/c/easy_setopt_options.html for more
    *  detailed information on the behavior of setting these options.
+   *
+   *  Additionally, you may need to set
+   *   - google::cloud::CARootsFilePathOption to modify CURLOPT_CAINFO and/or
+   *   - google::cloud::CAPathOption to modify CURLOPT_CAPATH
+   *  if you're certificates are not in the system default location.
+   *
    */
   class Rest {
    public:

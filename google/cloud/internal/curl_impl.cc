@@ -326,6 +326,11 @@ Status CurlImpl::MakeRequest(HttpMethod method, RestContext& context,
   }
 
   if (mtls_config_.has_value()) {
+    status = handle_.SetOption(CURLOPT_SSL_VERIFYPEER, 1);
+    if (!status.ok()) return OnTransferError(context, std::move(status));
+    status = handle_.SetOption(CURLOPT_SSL_VERIFYHOST, 2);
+    if (!status.ok()) return OnTransferError(context, std::move(status));
+
     status = handle_.SetOption(
         CURLOPT_SSLCERTTYPE,
         MtlsCredentialsConfig::Rest::ToString(mtls_config_->ssl_cert_type())
