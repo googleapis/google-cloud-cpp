@@ -51,7 +51,7 @@ struct MtlsCredentialsConfig {
    public:
     enum class SslCertType { kPEM, kDER, kP12 };
 
-    Rest() = default;
+    Rest();
     explicit Rest(std::string ssl_client_cert_filename);
     Rest(std::string ssl_client_cert, std::string ssl_key_filename,
          std::string ssl_key_file_password);
