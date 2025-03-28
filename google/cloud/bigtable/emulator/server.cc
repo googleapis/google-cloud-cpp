@@ -54,6 +54,7 @@ class EmulatorService final : public btproto::Bigtable::Service {
       override {
     return grpc::Status::OK;
   }
+
   grpc::Status MutateRow(grpc::ServerContext* /* context */,
                          btproto::MutateRowRequest const* request,
                          btproto::MutateRowResponse* /* response */) override {
@@ -63,30 +64,36 @@ class EmulatorService final : public btproto::Bigtable::Service {
     }
     return ToGrpcStatus((*maybe_table)->MutateRow(*request));
   }
+
   grpc::Status MutateRows(
       grpc::ServerContext* /* context */,
       btproto::MutateRowsRequest const* /* request */,
       grpc::ServerWriter<btproto::MutateRowsResponse>* /* writer */) override {
     return grpc::Status::OK;
   }
+
   grpc::Status CheckAndMutateRow(
       grpc::ServerContext* /* context */,
       btproto::CheckAndMutateRowRequest const* /* request */,
       btproto::CheckAndMutateRowResponse* /* response */) override {
     return grpc::Status::OK;
   }
+
   grpc::Status PingAndWarm(
       grpc::ServerContext* /* context */,
       btproto::PingAndWarmRequest const* /* request */,
       btproto::PingAndWarmResponse* /* response */) override {
     return grpc::Status::OK;
   }
+
   grpc::Status ReadModifyWriteRow(
       grpc::ServerContext* /* context */,
       btproto::ReadModifyWriteRowRequest const* /* request */,
       btproto::ReadModifyWriteRowResponse* /* response */) override {
     return grpc::Status::OK;
   }
+
+ private:
   std::shared_ptr<Cluster> cluster_;
 };
 

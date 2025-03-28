@@ -22,6 +22,7 @@ namespace bigtable {
 namespace emulator {
 namespace detail {
 
+/// Return -1 for lhs < rhs, 0 for lhs == rhs, 1 for lhs > rhs.
 int CompareRangeValues(StringRangeSet::Range::Value const& lhs,
                        StringRangeSet::Range::Value const& rhs) {
   if (absl::holds_alternative<StringRangeSet::Range::Infinity>(lhs)) {
@@ -35,6 +36,13 @@ int CompareRangeValues(StringRangeSet::Range::Value const& lhs,
                                  absl::get<std::string>(rhs));
 }
 
+/**
+ * Check whether there exists a row key between `lhs` and `rhs`.
+ *
+ * @param `lhs` the first (in order) of the two ranges.
+ * @param `rhs` the second (in order) of the two ranges.
+ * @return if `rhs` directly follows `lhs` in the row key order.
+ */
 bool ConsecutiveRowKeys(StringRangeSet::Range::Value const& lhs,
                         StringRangeSet::Range::Value const& rhs) {
   if (absl::holds_alternative<StringRangeSet::Range::Infinity>(lhs) ||
@@ -45,6 +53,7 @@ bool ConsecutiveRowKeys(StringRangeSet::Range::Value const& lhs,
                                       absl::get<std::string>(rhs));
 }
 
+/// Checks whether there exists a string which belongs to both `lhs` and `rhs`.
 bool HasOverlap(StringRangeSet::Range const& lhs,
                 StringRangeSet::Range const& rhs) {
   auto const start_cmp = CompareRangeValues(lhs.start(), rhs.start());
@@ -66,6 +75,7 @@ bool HasOverlap(StringRangeSet::Range const& lhs,
       intersect_end->end(), intersect_end->end_open());
 }
 
+/// Checks if there exists a timestamp which belongs to both `lhs` and `rhs`.
 bool HasOverlap(TimestampRangeSet::Range const& lhs,
                 TimestampRangeSet::Range const& rhs) {
   TimestampRangeSet::Range::Value overlap_start =
@@ -75,6 +85,16 @@ bool HasOverlap(TimestampRangeSet::Range const& lhs,
   return !TimestampRangeSet::Range::IsEmpty(overlap_start, overlap_end);
 }
 
+/**
+ * Checks if two disjoint ranges are adjacent.
+ *
+ * In other words, whether there doesn't exist a string, which could be squeezed
+ * between the ranges.
+ *
+ * @param `lhs` the first (in order) of the two ranges.
+ * @param `rhs` the second (in order) of the two ranges.
+ * @return if `rhs` directly follows `lhs` in the row key order.
+ */
 bool DisjointAndSortedRangesAdjacent(StringRangeSet::Range const& lhs,
                                      StringRangeSet::Range const& rhs) {
   assert(!HasOverlap(lhs, rhs));
@@ -94,6 +114,16 @@ bool DisjointAndSortedRangesAdjacent(StringRangeSet::Range const& lhs,
   return false;
 }
 
+/**
+ * Checks if two disjoint ranges are adjacent.
+ *
+ * In other words, whether there doesn't exist a timestamp, which could be
+ * squeezed between the ranges.
+ *
+ * @param `lhs` the first (in order) of the two ranges.
+ * @param `rhs` the second (in order) of the two ranges.
+ * @return if `rhs` directly follows `lhs` in the row key order.
+ */
 bool DisjointAndSortedRangesAdjacent(TimestampRangeSet::Range const& lhs,
                                      TimestampRangeSet::Range const& rhs) {
   assert(!HasOverlap(lhs, rhs));
@@ -101,6 +131,20 @@ bool DisjointAndSortedRangesAdjacent(TimestampRangeSet::Range const& lhs,
   return lhs.end() == rhs.start();
 }
 
+/**
+ * A generic implementation of adding a range to set of disjoint ranges.
+ *
+ * The word "Sum" in the function name shall be understood as a set sum.
+ *
+ * /pre{The ranges should be disjoint}
+ *
+ * @tparam RangeSetType the type of a set containing disjoint ranges. This will
+ *     be a carefully ordered `std::set<RangeType>`.
+ * @tparam RangeType the type of a single range.
+ * @param disjoint_ranges the set of disjoint ranges to which the
+ *     `inserted_range` should be added.
+ * @param `inserted_range` the range being added.
+ */
 template <typename RangeSetType, typename RangeType>
 void RangeSetSumImpl(RangeSetType& disjoint_ranges, RangeType inserted_range) {
   // Remove all ranges which either have an overlap with `inserted_range` or are
@@ -135,6 +179,19 @@ void RangeSetSumImpl(RangeSetType& disjoint_ranges, RangeType inserted_range) {
   disjoint_ranges.insert(std::move(inserted_range));
 }
 
+/**
+ * An implementation of intersecting a set of disjoint ranges with a range.
+ *
+ * /pre{The range set should be disjoint}
+ *
+ * @tparam RangeSetType the type of a set containing disjoint ranges. This will
+ *     be a carefully ordered `std::set<RangeType>`.
+ * @tparam RangeType the type of a single range.
+ * @param disjoint_ranges the set of disjoint ranges which will have be modified
+ *     to only cover points also present in `inserted_range`.
+ * @param `intersected_range` the range with which the range set will be
+ *     intersected.
+ */
 template <typename RangeSetType, typename RangeType>
 void RangeSetIntersectImpl(RangeSetType& disjoint_ranges,
                            RangeType const& intersected_range) {
