@@ -99,10 +99,6 @@ expected_dirs+=(
   ./include/google/cloud/internal
   ./include/google/cloud/internal/win32
   ./include/google/cloud/location
-  ./include/google/cloud/iam/v3
-  ./include/google/cloud/iam/v3/internal
-  ./include/google/cloud/iam/v3/mocks
-  ./include/google/iam/v3
   # no RPC services in google/cloud/metastore/logging
   ./include/google/cloud/metastore/logging
   ./include/google/cloud/metastore/logging/v1
@@ -157,6 +153,7 @@ expected_dirs+=(
   ./lib64/cmake/google_cloud_cpp_grpc_utils
   ./lib64/cmake/google_cloud_cpp_logging_type
   ./lib64/cmake/google_cloud_cpp_iam_v2
+  ./lib64/cmake/google_cloud_cpp_iam_v3
   ./lib64/cmake/google_cloud_cpp_mocks
   ./lib64/cmake/google_cloud_cpp_oauth2
   ./lib64/cmake/google_cloud_cpp_opentelemetry
