@@ -20,7 +20,7 @@
 #include "absl/numeric/int128.h"
 #include "absl/strings/string_view.h"
 #include <cstdint>
-#include <iosfwd>
+#include <ostream>
 #include <string>
 #include <utility>
 
@@ -30,7 +30,7 @@ namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * A representation of the Spanner UUID type: A fixed size 16 byte value
+ * A representation of the Spanner UUID type: A 16-byte value
  * that can be represented as a 32-digit hexadecimal string.
  *
  * @see https://cloud.google.com/spanner/docs/data-types#uuid_type
@@ -41,9 +41,9 @@ class Uuid {
   Uuid() = default;
 
   /// Construct a UUID from one unsigned 128-bit integer.
-  explicit Uuid(absl::uint128 value);
+  explicit Uuid(absl::uint128 uuid) : uuid_(uuid) {}
 
-  /// Construct a UUID from two unsigned 64-bit pieces.
+  /// Construct a UUID from two unsigned 64-bit integers.
   Uuid(std::uint64_t high_bits, std::uint64_t low_bits);
 
   /// @name Regular value type, supporting copy, assign, move.
@@ -75,15 +75,13 @@ class Uuid {
   friend bool operator>(Uuid const& lhs, Uuid const& rhs) { return rhs < lhs; }
   ///@}
 
-  /// @name Returns a pair of unsigned 64-bit integers representing the UUID.
-  std::pair<std::uint64_t, std::uint64_t> As64BitPair() const;
-
-  /// @name Conversion to unsigned 128-bit integer representation.
+  /// @name Conversion to one 128-bit unsigned integer.
   explicit operator absl::uint128() const { return uuid_; }
 
-  /// @name Conversion to a lower case string formatted as:
-  /// [8 hex-digits]-[4 hex-digits]-[4 hex-digits]-[4 hex-digits]-[12
-  /// hex-digits]
+  /// @name Conversion to two unsigned 64-bit integers.
+  std::pair<std::uint64_t, std::uint64_t> As64BitPair() const;
+
+  /// @name Conversion to an 8-4-4-4-12 format (lower-case) string.
   /// Example: 0b6ed04c-a16d-fc46-5281-7f9978c13738
   explicit operator std::string() const;
 
