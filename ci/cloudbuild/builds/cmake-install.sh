@@ -99,6 +99,10 @@ expected_dirs+=(
   ./include/google/cloud/internal
   ./include/google/cloud/internal/win32
   ./include/google/cloud/location
+  ./include/google/cloud/iam/v3
+  ./include/google/cloud/iam/v3/internal
+  ./include/google/cloud/iam/v3/mocks
+  ./include/google/iam/v3
   # no RPC services in google/cloud/metastore/logging
   ./include/google/cloud/metastore/logging
   ./include/google/cloud/metastore/logging/v1
