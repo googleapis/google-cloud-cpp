@@ -18,8 +18,8 @@ include(GoogleCloudCppLibrary)
 
 google_cloud_cpp_add_gapic_library(
     iam "Google Cloud IAM API"
-    SERVICE_DIRS "__EMPTY__" "admin/v1/" "credentials/v1/" "v1/" "v2/"
-    SHARED_PROTO_DEPS "iam_v2")
+    SERVICE_DIRS "__EMPTY__" "admin/v1/" "credentials/v1/" "v1/" "v2/" "v3/"
+    SHARED_PROTO_DEPS "iam_v2" "iam_v3")
 
 # Examples are enabled if possible, but package maintainers may want to disable
 # compilation to speed up their builds.
