@@ -2606,6 +2606,20 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+service {
+  service_proto_path: "google/iam/v3/policy_bindings_service.proto"
+  product_path: "google/cloud/iam/v3"
+  initial_copyright_year: "2025"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/iam/v3/principal_access_boundary_policies_service.proto"
+  product_path: "google/cloud/iam/v3"
+  initial_copyright_year: "2025"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Identity-Aware Proxy (IAP)
 service {
   service_proto_path: "google/cloud/iap/v1/service.proto"
