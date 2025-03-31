@@ -129,6 +129,8 @@ Status has_cell(
   auto column_family_it = table->find(column_family);
   if (column_family_it == table->end()) {
     return Status(
+        // FIXME: Change this to use google-standard Status builder
+        // everywhere in this test module (and not StatusCode::...).
         StatusCode::kNotFound,
         absl::StrFormat("column family %s not found in table", column_family),
         ErrorInfo());
