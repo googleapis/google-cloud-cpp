@@ -412,23 +412,23 @@ Status RowTransaction::MergeToCell(
 Status RowTransaction::DeleteFromColumn(
     ::google::bigtable::v2::Mutation_DeleteFromColumn const&
         delete_from_column) {
-  auto status = table_->FindColumnFamily(delete_from_column);
-  if (!status.ok()) {
-    return status.status();
+  auto maybe_column_family = table_->FindColumnFamily(delete_from_column);
+  if (!maybe_column_family.ok()) {
+    return maybe_column_family.status();
   }
 
-  auto& column_family = status->get();
+  auto& column_family = maybe_column_family->get();
 
   auto deleted_cells = column_family.DeleteColumn(
       request_.row_key(), delete_from_column.column_qualifier(),
       delete_from_column.time_range());
 
-  for (auto cell : deleted_cells) {
-    RestoreValue restore_value = {column_family, request_.row_key(),
-                                  delete_from_column.column_qualifier(),
-                                  std::move(cell.timestamp),
-                                  std::move(cell.value)};
-    undo_.emplace(restore_value);
+  for (auto& cell : deleted_cells) {
+    RestoreValue restore_value{column_family, request_.row_key(),
+                               delete_from_column.column_qualifier(),
+                               std::move(cell.timestamp),
+                               std::move(cell.value)};
+    undo_.emplace(std::move(restore_value));
   }
 
   return Status();
@@ -444,7 +444,7 @@ Status RowTransaction::DeleteFromRow() {
         RestoreValue restrore_value = {
             *column_family.second, request_.row_key(), std::move(column.first),
             cell.timestamp, std::move(cell.value)};
-        undo_.emplace(restrore_value);
+        undo_.emplace(std::move(restrore_value));
         row_existed = true;
       }
     }
@@ -465,9 +465,9 @@ Status RowTransaction::DeleteFromFamily(
         delete_from_family) {
   // If the request references an incorrect schema (non-existent
   // column family) then return a failure status error immediately.
-  auto status = table_->FindColumnFamily(delete_from_family);
-  if (!status.ok()) {
-    return status.status();
+  auto maybe_column_family = table_->FindColumnFamily(delete_from_family);
+  if (!maybe_column_family.ok()) {
+    return maybe_column_family.status();
   }
 
   auto column_family_it = table_->find(delete_from_family.family_name());
@@ -491,10 +491,10 @@ Status RowTransaction::DeleteFromFamily(
   auto deleted = column_family_it->second->DeleteRow(request_.row_key());
   for (auto const& column : deleted) {
     for (auto const& cell : column.second) {
-      RestoreValue restore_value = {*column_family_it->second,
-                                    request_.row_key(), std::move(column.first),
-                                    cell.timestamp, std::move(cell.value)};
-      undo_.emplace(restore_value);
+      RestoreValue restore_value{*column_family_it->second, request_.row_key(),
+                                 std::move(column.first), cell.timestamp,
+                                 std::move(cell.value)};
+      undo_.emplace(std::move(restore_value));
     }
   }
 
@@ -549,16 +549,16 @@ Status RowTransaction::SetCell(
           std::chrono::microseconds(set_cell.timestamp_micros())));
 
   if (!cell_existed) {
-    DeleteValue delete_value = {column_family, column_family_row_it->first,
-                                std::move(set_cell.column_qualifier()),
-                                timestamp_it->first};
-    undo_.emplace(delete_value);
+    DeleteValue delete_value{column_family, column_family_row_it->first,
+                             std::move(set_cell.column_qualifier()),
+                             timestamp_it->first};
+    undo_.emplace(std::move(delete_value));
   } else {
-    RestoreValue restore_value = {column_family, column_family_row_it->first,
-                                  std::move(set_cell.column_qualifier()),
-                                  timestamp_it->first,
-                                  std::move(value_to_restore)};
-    undo_.emplace(restore_value);
+    RestoreValue restore_value{column_family, column_family_row_it->first,
+                               std::move(set_cell.column_qualifier()),
+                               timestamp_it->first,
+                               std::move(value_to_restore)};
+    undo_.emplace(std::move(restore_value));
   }
 
   return Status();
