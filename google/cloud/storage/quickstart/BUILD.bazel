@@ -47,3 +47,35 @@ cc_binary(
         "@google_cloud_cpp//:experimental-storage_grpc",
     ],
 )
+
+load("@pybind11_bazel//:build_defs.bzl", "pybind_extension")
+load("@rules_python//python:defs.bzl", "py_library", "py_test")
+
+pybind_extension(
+    name = "basic",
+    srcs = ["basic.cc"],
+)
+
+py_library(
+    name = "basic_lib",
+    imports = ["."],
+)
+
+py_test(
+    name = "basic_test",
+    srcs = ["basic_test.py"],
+    deps = [":basic_lib"],
+)
+
+load("@pybind11_bazel//:build_defs.bzl", "qs_pybind_extension")
+load("@rules_python//python:defs.bzl", "qs_py_library")
+
+qs_pybind_extension(
+    name = "google_cloud_storage_grpc_binding",
+    srcs = ["google_cloud_storage_grpc_binding.cc"],
+)
+
+qs_py_library(
+    name = "quickstart_grpc_pybind_lib",
+    imports = ["."],
+)
