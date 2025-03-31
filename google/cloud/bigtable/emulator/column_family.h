@@ -188,15 +188,22 @@ class ColumnFamily {
   /**
    * Delete cells from a row falling into a given timestamp range in one column.
    *
-   * @param row_key the row key to remove the cells from.
-   * @param column_qualifier the column qualifier from which to delete the
-   *     values.
-   * @param time_range the timestamp range dictating which values to delete.
-   * @return vector of deleted cells.
+   * @param row_key the row key to remove the cells from (or the
+   * iterator to the row - row_it - in the 2nd overloaded form of the
+   * function).
+
+   * @param column_qualifier the column qualifier from which to delete
+   * the values.  @param time_range the timestamp range dictating
+   * which values to delete.  @return vector of deleted cells.
    */
   std::vector<Cell> DeleteColumn(
       std::string const& row_key, std::string const& column_qualifier,
       ::google::bigtable::v2::TimestampRange const& time_range);
+
+  std::vector<Cell> DeleteColumn(
+    std::map<std::string, ColumnFamilyRow>::iterator row_it,
+    std::string const& column_qualifier,
+    ::google::bigtable::v2::TimestampRange const& time_range);
 
   const_iterator begin() const { return rows_.begin(); }
   const_iterator end() const { return rows_.end(); }
