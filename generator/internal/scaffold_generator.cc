@@ -128,18 +128,20 @@ std::map<std::string, std::string> ScaffoldVars(
     google::cloud::cpp::generator::ServiceConfiguration const& service,
     bool experimental) {
   std::map<std::string, std::string> vars;
-  for (auto const& api : index["apis"]) {
-    if (!api.contains("directory")) continue;
-    auto const directory = api["directory"].get<std::string>() + "/";
-    if (!absl::StartsWith(service.service_proto_path(), directory)) continue;
-    vars.emplace("id", api.value("id", ""));
-    vars.emplace("title", api.value("title", ""));
-    vars.emplace("description", api.value("description", ""));
-    vars.emplace("directory", api.value("directory", ""));
-    vars.emplace("service_config_yaml_name",
-                 absl::StrCat(api.value("directory", ""), "/",
-                              api.value("configFile", "")));
-    vars.emplace("nameInServiceConfig", api.value("nameInServiceConfig", ""));
+  if (!index.is_null()) {
+    for (auto const& api : index["apis"]) {
+      if (!api.contains("directory")) continue;
+      auto const directory = api["directory"].get<std::string>() + "/";
+      if (!absl::StartsWith(service.service_proto_path(), directory)) continue;
+      vars.emplace("id", api.value("id", ""));
+      vars.emplace("title", api.value("title", ""));
+      vars.emplace("description", api.value("description", ""));
+      vars.emplace("directory", api.value("directory", ""));
+      vars.emplace("service_config_yaml_name",
+                   absl::StrCat(api.value("directory", ""), "/",
+                                api.value("configFile", "")));
+      vars.emplace("nameInServiceConfig", api.value("nameInServiceConfig", ""));
+    }
   }
   if (!service.override_service_config_yaml_name().empty()) {
     vars.emplace("service_config_yaml_name",
