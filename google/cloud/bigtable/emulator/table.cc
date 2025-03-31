@@ -454,10 +454,9 @@ Status RowTransaction::DeleteFromRow() {
     return Status();
   }
 
-  return Status(
-      StatusCode::kNotFound,
-      absl::StrFormat("row %s not found in table", request_.row_key()),
-      ErrorInfo());
+  return NotFoundError(
+      "row not found in table",
+      GCP_ERROR_INFO().WithMetadata("row", request_.row_key()));
 }
 
 Status RowTransaction::DeleteFromFamily(
@@ -472,20 +471,21 @@ Status RowTransaction::DeleteFromFamily(
 
   auto column_family_it = table_->find(delete_from_family.family_name());
   if (column_family_it == table_->end()) {
-    return Status(StatusCode::kNotFound,
-                  absl::StrFormat("column family %s not found in table",
-                                  delete_from_family.family_name()),
-                  ErrorInfo());
+    return NotFoundError(
+        "column family not found in table",
+        GCP_ERROR_INFO().WithMetadata("column family",
+                                      delete_from_family.family_name()));
   }
 
   std::map<std::string, ColumnFamilyRow>::iterator column_family_row_it;
   if (column_family_row_it = column_family_it->second->find(request_.row_key());
       column_family_row_it == column_family_it->second->end()) {
     // The row does not exist
-    return Status(StatusCode::kNotFound,
-                  absl::StrFormat("row key %s not found in column family %s",
-                                  request_.row_key(), column_family_it->first),
-                  ErrorInfo());
+    return NotFoundError(
+        "row key is not found in column family",
+        GCP_ERROR_INFO()
+            .WithMetadata("row key", request_.row_key())
+            .WithMetadata("column family", column_family_it->first));
   }
 
   auto deleted = column_family_it->second->DeleteRow(request_.row_key());
