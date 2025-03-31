@@ -63,17 +63,17 @@ StatusOr<Uuid> MakeUuid(absl::string_view str) {
     if (j != 0) absl::ConsumePrefix(&str, "-");
     if (str.empty()) {
       return internal::InvalidArgumentError(
-          absl::StrFormat("UUID must contain %v hexadecimal digits: %v",
+          absl::StrFormat("UUID must contain %d hexadecimal digits: %s",
                           kUuidNumberOfHexDigits, original_str),
           GCP_ERROR_INFO());
     }
     auto const* dp = std::strchr(
-        kHexDigits, std::tolower(static_cast<unsigned char>(str[0])));
+        kHexDigits, std::tolower(static_cast<unsigned char>(str.front())));
     if (dp == nullptr) {
       return internal::InvalidArgumentError(
           absl::StrFormat(
-              "UUID contains invalid character '%c' at position %v: %v", str[0],
-              str.data() - original_str.data(), original_str),
+              "UUID contains invalid character '%c' at position %d: %s",
+              str.front(), str.data() - original_str.data(), original_str),
           GCP_ERROR_INFO());
     }
     uuid <<= 4;
@@ -82,7 +82,7 @@ StatusOr<Uuid> MakeUuid(absl::string_view str) {
   }
   if (!str.empty()) {
     return internal::InvalidArgumentError(
-        absl::StrFormat("Extra characters \"%v\" found after parsing UUID: %v",
+        absl::StrFormat("Extra characters \"%s\" found after parsing UUID: %s",
                         str, original_str),
         GCP_ERROR_INFO());
   }
