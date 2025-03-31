@@ -88,7 +88,6 @@ class Table : public std::enable_shared_from_this<Table> {
 
 struct RestoreValue {
   ColumnFamily& column_family;
-  std::string row_key;
   std::string column_qualifier;
   std::chrono::milliseconds timestamp;
   std::string value;
@@ -96,7 +95,6 @@ struct RestoreValue {
 
 struct DeleteValue {
   ColumnFamily& column_family;
-  std::string row_key;
   std::string column_qualifier;
   std::chrono::milliseconds timestamp;
 };

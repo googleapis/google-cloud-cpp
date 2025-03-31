@@ -424,7 +424,7 @@ Status RowTransaction::DeleteFromColumn(
       delete_from_column.time_range());
 
   for (auto& cell : deleted_cells) {
-    RestoreValue restore_value{column_family, request_.row_key(),
+    RestoreValue restore_value{column_family,
                                delete_from_column.column_qualifier(),
                                std::move(cell.timestamp),
                                std::move(cell.value)};
@@ -442,7 +442,7 @@ Status RowTransaction::DeleteFromRow() {
     for (auto& column : deleted_columns) {
       for (auto& cell : column.second) {
         RestoreValue restrore_value = {
-            *column_family.second, request_.row_key(), std::move(column.first),
+            *column_family.second, std::move(column.first),
             cell.timestamp, std::move(cell.value)};
         undo_.emplace(std::move(restrore_value));
         row_existed = true;
@@ -491,7 +491,7 @@ Status RowTransaction::DeleteFromFamily(
   auto deleted = column_family_it->second->DeleteRow(request_.row_key());
   for (auto const& column : deleted) {
     for (auto const& cell : column.second) {
-      RestoreValue restore_value{*column_family_it->second, request_.row_key(),
+      RestoreValue restore_value{*column_family_it->second,
                                  std::move(column.first), cell.timestamp,
                                  std::move(cell.value)};
       undo_.emplace(std::move(restore_value));
@@ -549,12 +549,12 @@ Status RowTransaction::SetCell(
           std::chrono::microseconds(set_cell.timestamp_micros())));
 
   if (!cell_existed) {
-    DeleteValue delete_value{column_family, column_family_row_it->first,
+    DeleteValue delete_value{column_family,
                              std::move(set_cell.column_qualifier()),
                              timestamp_it->first};
     undo_.emplace(std::move(delete_value));
   } else {
-    RestoreValue restore_value{column_family, column_family_row_it->first,
+    RestoreValue restore_value{column_family,
                                std::move(set_cell.column_qualifier()),
                                timestamp_it->first,
                                std::move(value_to_restore)};
@@ -565,6 +565,8 @@ Status RowTransaction::SetCell(
 }
 
 void RowTransaction::Undo() {
+  auto row_key = request_.row_key();
+
   while (!undo_.empty()) {
     auto op = undo_.top();
     undo_.pop();
@@ -572,11 +574,12 @@ void RowTransaction::Undo() {
     auto* restore_value = absl::get_if<RestoreValue>(&op);
     if (restore_value) {
       restore_value->column_family.SetCell(
-          std::move(restore_value->row_key),
+          row_key,
           std::move(restore_value->column_qualifier), restore_value->timestamp,
           std::move(restore_value->value));
       continue;
     }
+
 
     auto* delete_value = absl::get_if<DeleteValue>(&op);
     if (delete_value) {
@@ -593,7 +596,7 @@ void RowTransaction::Undo() {
       range.set_start_timestamp_micros(start_micros.count());
       range.set_end_timestamp_micros(end_micros.count());
       delete_value->column_family.DeleteColumn(
-          delete_value->row_key, std::move(delete_value->column_qualifier),
+          row_key, std::move(delete_value->column_qualifier),
           range);
       continue;
     }
