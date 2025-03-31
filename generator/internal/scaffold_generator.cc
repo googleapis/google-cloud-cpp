@@ -101,11 +101,12 @@ std::string SiteRoot(
 }
 
 nlohmann::json LoadApiIndex(std::string const& googleapis_path) {
+  std::cout << __func__ << ": googleapis_path=" << googleapis_path << "\n";
   auto const api_index_path = googleapis_path + "/" + kApiIndexFilename;
   auto status = google::cloud::internal::status(api_index_path);
   if (!exists(status)) {
     GCP_LOG(WARNING) << "Cannot find API index file (" << api_index_path << ")";
-    return {};
+    return nlohmann::json::value_t();
   }
   std::ifstream is(api_index_path);
   auto index = nlohmann::json::parse(is, nullptr, false);
