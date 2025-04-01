@@ -6,10 +6,16 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
 
 ## v2.37.0 - TBD
 
+### New Libraries
+
 We are happy to announce the following GA libraries. Unless specifically noted,
 the APIs in these libraries are stable, and are ready for production use.
 
 - [Financial Services API](/google/cloud/financialservices/README.md)
+
+### Updated Libraries
+
+- [iam](/google/cloud/iam/README.md) - add v3 version of the library
 
 **BREAKING CHANGES**
 
@@ -23,9 +29,6 @@ We are happy to announce the following GA libraries. Unless specifically noted,
 the APIs in these libraries are stable, and are ready for production use.
 
 - [Parameter Manager API](/google/cloud/parametermanager/README.md)
-
-### Updated Libraries
-- [iam](/google/cloud/iam/README.md) - add v3 version of the library
 
 ### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
 
