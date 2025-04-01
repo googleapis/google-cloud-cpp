@@ -22,7 +22,10 @@ source module ci/cloudbuild/builds/lib/git.sh
 
 bazel_output_base="$(bazel info output_base)"
 
-io::run find "${bazel_output_base}" -name "api-index-v1.json"
+# As we support both WORKSPACE and MODULE modes for bazel, we need to determine
+# the path to these dependencies dynamically.
+read -r protobuf_proto_path < <(find "${bazel_output_base}/external" -name "empty.proto" | sed -nE 's/(.+\/src)\/google\/protobuf\/empty.proto/\1/p')
+read -r googleapis_proto_path < <(find "${bazel_output_base}/external" -name "api-index-v1.json" | sed -nE 's/(.+)\/api-index-v1.json/\1/p')
 
 if [ -z "${UPDATED_DISCOVERY_DOCUMENT}" ]; then
   io::log_h2 "Removing previously generated golden files"
@@ -36,8 +39,8 @@ fi
 io::log_h2 "Running the generator to update the golden files"
 bazel run --action_env=GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes \
   //generator:google-cloud-cpp-codegen -- \
-  --protobuf_proto_path="${bazel_output_base}/external/protobuf~/src" \
-  --googleapis_proto_path="${bazel_output_base}/external/googleapis~" \
+  --protobuf_proto_path="${protobuf_proto_path}" \
+  --googleapis_proto_path="${googleapis_proto_path}" \
   --golden_proto_path="${PWD}" \
   --output_path="${PWD}" \
   --update_ci=false \
@@ -49,8 +52,8 @@ if [ -z "${GENERATE_GOLDEN_ONLY}" ]; then
   io::log_h2 "Running the generator to emit protos from discovery docs"
   bazel run --action_env=GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes \
     //generator:google-cloud-cpp-codegen -- \
-    --protobuf_proto_path="${bazel_output_base}"/external/protobuf~/src \
-    --googleapis_proto_path="${bazel_output_base}"/external/googleapis~ \
+    --protobuf_proto_path="${protobuf_proto_path}" \
+    --googleapis_proto_path="${googleapis_proto_path}" \
     --discovery_proto_path="${PWD}/protos" \
     --output_path="${PROJECT_ROOT}/protos" \
     --export_output_path="${PROJECT_ROOT}" \
@@ -81,8 +84,8 @@ if [ -z "${GENERATE_GOLDEN_ONLY}" ]; then
   io::log_h2 "Running the generator to update the generated libraries"
   bazel run --action_env=GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes \
     //generator:google-cloud-cpp-codegen -- \
-    --protobuf_proto_path="${bazel_output_base}"/external/protobuf~/src \
-    --googleapis_proto_path="${bazel_output_base}"/external/googleapis~ \
+    --protobuf_proto_path="${protobuf_proto_path}" \
+    --googleapis_proto_path="${googleapis_proto_path}" \
     --discovery_proto_path="${PWD}/protos" \
     --output_path="${PROJECT_ROOT}" \
     --check_comment_substitutions=true \
