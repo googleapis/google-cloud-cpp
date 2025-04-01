@@ -117,7 +117,7 @@ class NotebookServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.CreateNotebookRuntimeTemplateRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L250}
-  /// [google.cloud.aiplatform.v1.NotebookRuntimeTemplate]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L53}
+  /// [google.cloud.aiplatform.v1.NotebookRuntimeTemplate]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L54}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>>
@@ -175,7 +175,7 @@ class NotebookServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.CreateNotebookRuntimeTemplateRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L250}
-  /// [google.cloud.aiplatform.v1.NotebookRuntimeTemplate]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L53}
+  /// [google.cloud.aiplatform.v1.NotebookRuntimeTemplate]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L54}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>>
@@ -235,7 +235,7 @@ class NotebookServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.GetNotebookRuntimeTemplateRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L278}
-  /// [google.cloud.aiplatform.v1.NotebookRuntimeTemplate]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L53}
+  /// [google.cloud.aiplatform.v1.NotebookRuntimeTemplate]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L54}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
@@ -265,7 +265,7 @@ class NotebookServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.GetNotebookRuntimeTemplateRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L278}
-  /// [google.cloud.aiplatform.v1.NotebookRuntimeTemplate]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L53}
+  /// [google.cloud.aiplatform.v1.NotebookRuntimeTemplate]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L54}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
@@ -304,7 +304,7 @@ class NotebookServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.ListNotebookRuntimeTemplatesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L292}
-  /// [google.cloud.aiplatform.v1.NotebookRuntimeTemplate]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L53}
+  /// [google.cloud.aiplatform.v1.NotebookRuntimeTemplate]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L54}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
@@ -343,7 +343,7 @@ class NotebookServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.ListNotebookRuntimeTemplatesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L292}
-  /// [google.cloud.aiplatform.v1.NotebookRuntimeTemplate]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L53}
+  /// [google.cloud.aiplatform.v1.NotebookRuntimeTemplate]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L54}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
@@ -379,7 +379,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteNotebookRuntimeTemplateRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L367}
+  /// [google.cloud.aiplatform.v1.DeleteNotebookRuntimeTemplateRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L371}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
@@ -430,7 +430,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteNotebookRuntimeTemplateRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L367}
+  /// [google.cloud.aiplatform.v1.DeleteNotebookRuntimeTemplateRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L371}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
@@ -494,8 +494,8 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.NotebookRuntimeTemplate]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L53}
-  /// [google.cloud.aiplatform.v1.UpdateNotebookRuntimeTemplateRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L381}
+  /// [google.cloud.aiplatform.v1.NotebookRuntimeTemplate]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L54}
+  /// [google.cloud.aiplatform.v1.UpdateNotebookRuntimeTemplateRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L385}
   /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L242}
   ///
   // clang-format on
@@ -528,8 +528,8 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.NotebookRuntimeTemplate]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L53}
-  /// [google.cloud.aiplatform.v1.UpdateNotebookRuntimeTemplateRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L381}
+  /// [google.cloud.aiplatform.v1.NotebookRuntimeTemplate]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L54}
+  /// [google.cloud.aiplatform.v1.UpdateNotebookRuntimeTemplateRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L385}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
@@ -570,8 +570,8 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.AssignNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L398}
-  /// [google.cloud.aiplatform.v1.NotebookRuntime]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L164}
+  /// [google.cloud.aiplatform.v1.AssignNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L402}
+  /// [google.cloud.aiplatform.v1.NotebookRuntime]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L169}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>>
@@ -628,8 +628,8 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.AssignNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L398}
-  /// [google.cloud.aiplatform.v1.NotebookRuntime]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L164}
+  /// [google.cloud.aiplatform.v1.AssignNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L402}
+  /// [google.cloud.aiplatform.v1.NotebookRuntime]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L169}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>>
@@ -689,8 +689,8 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.GetNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L438}
-  /// [google.cloud.aiplatform.v1.NotebookRuntime]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L164}
+  /// [google.cloud.aiplatform.v1.GetNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L442}
+  /// [google.cloud.aiplatform.v1.NotebookRuntime]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L169}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::NotebookRuntime> GetNotebookRuntime(
@@ -719,8 +719,8 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.GetNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L438}
-  /// [google.cloud.aiplatform.v1.NotebookRuntime]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L164}
+  /// [google.cloud.aiplatform.v1.GetNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L442}
+  /// [google.cloud.aiplatform.v1.NotebookRuntime]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L169}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::NotebookRuntime> GetNotebookRuntime(
@@ -756,8 +756,8 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ListNotebookRuntimesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L453}
-  /// [google.cloud.aiplatform.v1.NotebookRuntime]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L164}
+  /// [google.cloud.aiplatform.v1.ListNotebookRuntimesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L457}
+  /// [google.cloud.aiplatform.v1.NotebookRuntime]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L169}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::NotebookRuntime>
@@ -795,8 +795,8 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ListNotebookRuntimesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L453}
-  /// [google.cloud.aiplatform.v1.NotebookRuntime]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L164}
+  /// [google.cloud.aiplatform.v1.ListNotebookRuntimesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L457}
+  /// [google.cloud.aiplatform.v1.NotebookRuntime]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_runtime.proto#L169}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::NotebookRuntime>
@@ -832,7 +832,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L542}
+  /// [google.cloud.aiplatform.v1.DeleteNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L550}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
@@ -883,7 +883,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L542}
+  /// [google.cloud.aiplatform.v1.DeleteNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L550}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
@@ -951,8 +951,8 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.UpgradeNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L557}
-  /// [google.cloud.aiplatform.v1.UpgradeNotebookRuntimeResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L583}
+  /// [google.cloud.aiplatform.v1.UpgradeNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L565}
+  /// [google.cloud.aiplatform.v1.UpgradeNotebookRuntimeResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L591}
   ///
   // clang-format on
   future<
@@ -1003,8 +1003,8 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.UpgradeNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L557}
-  /// [google.cloud.aiplatform.v1.UpgradeNotebookRuntimeResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L583}
+  /// [google.cloud.aiplatform.v1.UpgradeNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L565}
+  /// [google.cloud.aiplatform.v1.UpgradeNotebookRuntimeResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L591}
   ///
   // clang-format on
   future<
@@ -1073,8 +1073,8 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.StartNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L587}
-  /// [google.cloud.aiplatform.v1.StartNotebookRuntimeResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L613}
+  /// [google.cloud.aiplatform.v1.StartNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L595}
+  /// [google.cloud.aiplatform.v1.StartNotebookRuntimeResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L621}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::StartNotebookRuntimeResponse>>
@@ -1124,8 +1124,8 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.StartNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L587}
-  /// [google.cloud.aiplatform.v1.StartNotebookRuntimeResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L613}
+  /// [google.cloud.aiplatform.v1.StartNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L595}
+  /// [google.cloud.aiplatform.v1.StartNotebookRuntimeResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L621}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::StartNotebookRuntimeResponse>>
@@ -1190,8 +1190,8 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.StopNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L617}
-  /// [google.cloud.aiplatform.v1.StopNotebookRuntimeResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L639}
+  /// [google.cloud.aiplatform.v1.StopNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L625}
+  /// [google.cloud.aiplatform.v1.StopNotebookRuntimeResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L647}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::StopNotebookRuntimeResponse>>
@@ -1241,8 +1241,8 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.StopNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L617}
-  /// [google.cloud.aiplatform.v1.StopNotebookRuntimeResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L639}
+  /// [google.cloud.aiplatform.v1.StopNotebookRuntimeRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L625}
+  /// [google.cloud.aiplatform.v1.StopNotebookRuntimeResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L647}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::StopNotebookRuntimeResponse>>
@@ -1307,7 +1307,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CreateNotebookExecutionJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L642}
+  /// [google.cloud.aiplatform.v1.CreateNotebookExecutionJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L650}
   /// [google.cloud.aiplatform.v1.NotebookExecutionJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_execution_job.proto#L38}
   ///
   // clang-format on
@@ -1365,7 +1365,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CreateNotebookExecutionJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L642}
+  /// [google.cloud.aiplatform.v1.CreateNotebookExecutionJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L650}
   /// [google.cloud.aiplatform.v1.NotebookExecutionJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_execution_job.proto#L38}
   ///
   // clang-format on
@@ -1423,7 +1423,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.GetNotebookExecutionJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L672}
+  /// [google.cloud.aiplatform.v1.GetNotebookExecutionJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L680}
   /// [google.cloud.aiplatform.v1.NotebookExecutionJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_execution_job.proto#L38}
   ///
   // clang-format on
@@ -1453,7 +1453,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.GetNotebookExecutionJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L672}
+  /// [google.cloud.aiplatform.v1.GetNotebookExecutionJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L680}
   /// [google.cloud.aiplatform.v1.NotebookExecutionJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_execution_job.proto#L38}
   ///
   // clang-format on
@@ -1492,7 +1492,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ListNotebookExecutionJobsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L686}
+  /// [google.cloud.aiplatform.v1.ListNotebookExecutionJobsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L694}
   /// [google.cloud.aiplatform.v1.NotebookExecutionJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_execution_job.proto#L38}
   ///
   // clang-format on
@@ -1531,7 +1531,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ListNotebookExecutionJobsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L686}
+  /// [google.cloud.aiplatform.v1.ListNotebookExecutionJobsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L694}
   /// [google.cloud.aiplatform.v1.NotebookExecutionJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_execution_job.proto#L38}
   ///
   // clang-format on
@@ -1565,7 +1565,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteNotebookExecutionJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L749}
+  /// [google.cloud.aiplatform.v1.DeleteNotebookExecutionJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L757}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
@@ -1616,7 +1616,7 @@ class NotebookServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteNotebookExecutionJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L749}
+  /// [google.cloud.aiplatform.v1.DeleteNotebookExecutionJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/notebook_service.proto#L757}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on

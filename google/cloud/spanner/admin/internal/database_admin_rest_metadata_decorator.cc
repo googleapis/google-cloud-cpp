@@ -271,6 +271,15 @@ DatabaseAdminRestMetadata::ListDatabaseRoles(
   return child_->ListDatabaseRoles(rest_context, options, request);
 }
 
+StatusOr<google::spanner::admin::database::v1::AddSplitPointsResponse>
+DatabaseAdminRestMetadata::AddSplitPoints(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::database::v1::AddSplitPointsRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->AddSplitPoints(rest_context, options, request);
+}
+
 StatusOr<google::spanner::admin::database::v1::BackupSchedule>
 DatabaseAdminRestMetadata::CreateBackupSchedule(
     rest_internal::RestContext& rest_context, Options const& options,

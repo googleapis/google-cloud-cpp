@@ -869,7 +869,7 @@ class EnvironmentsClient {
   /// Creates a user workloads Secret.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-3-airflow-*.*.*-build.* and newer.
   ///
   /// @param parent  Required. The environment name to create a Secret for, in the form:
   ///  "projects/{projectId}/locations/{locationId}/environments/{environmentId}"
@@ -904,7 +904,7 @@ class EnvironmentsClient {
   /// Creates a user workloads Secret.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-3-airflow-*.*.*-build.* and newer.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -941,7 +941,7 @@ class EnvironmentsClient {
   /// Values of the "data" field in the response are cleared.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-3-airflow-*.*.*-build.* and newer.
   ///
   /// @param name  Required. The resource name of the Secret to get, in the form:
   ///  "projects/{projectId}/locations/{locationId}/environments/{environmentId}/userWorkloadsSecrets/{userWorkloadsSecretId}"
@@ -972,7 +972,7 @@ class EnvironmentsClient {
   /// Values of the "data" field in the response are cleared.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-3-airflow-*.*.*-build.* and newer.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1008,7 +1008,7 @@ class EnvironmentsClient {
   /// Lists user workloads Secrets.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-3-airflow-*.*.*-build.* and newer.
   ///
   /// @param parent  Required. List Secrets in the given environment, in the form:
   ///  "projects/{projectId}/locations/{locationId}/environments/{environmentId}"
@@ -1047,7 +1047,7 @@ class EnvironmentsClient {
   /// Lists user workloads Secrets.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-3-airflow-*.*.*-build.* and newer.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1092,7 +1092,7 @@ class EnvironmentsClient {
   /// Updates a user workloads Secret.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-3-airflow-*.*.*-build.* and newer.
   ///
   /// @param user_workloads_secret  Optional. User workloads Secret to override.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1124,7 +1124,7 @@ class EnvironmentsClient {
   /// Updates a user workloads Secret.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-3-airflow-*.*.*-build.* and newer.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1160,7 +1160,7 @@ class EnvironmentsClient {
   /// Deletes a user workloads Secret.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-3-airflow-*.*.*-build.* and newer.
   ///
   /// @param name  Required. The Secret to delete, in the form:
   ///  "projects/{projectId}/locations/{locationId}/environments/{environmentId}/userWorkloadsSecrets/{userWorkloadsSecretId}"
@@ -1185,7 +1185,7 @@ class EnvironmentsClient {
   /// Deletes a user workloads Secret.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-3-airflow-*.*.*-build.* and newer.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1217,7 +1217,7 @@ class EnvironmentsClient {
   /// Creates a user workloads ConfigMap.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-3-airflow-*.*.*-build.* and newer.
   ///
   /// @param parent  Required. The environment name to create a ConfigMap for, in the form:
   ///  "projects/{projectId}/locations/{locationId}/environments/{environmentId}"
@@ -1252,7 +1252,7 @@ class EnvironmentsClient {
   /// Creates a user workloads ConfigMap.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-3-airflow-*.*.*-build.* and newer.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1289,7 +1289,7 @@ class EnvironmentsClient {
   /// Gets an existing user workloads ConfigMap.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-3-airflow-*.*.*-build.* and newer.
   ///
   /// @param name  Required. The resource name of the ConfigMap to get, in the form:
   ///  "projects/{projectId}/locations/{locationId}/environments/{environmentId}/userWorkloadsConfigMaps/{userWorkloadsConfigMapId}"
@@ -1319,7 +1319,7 @@ class EnvironmentsClient {
   /// Gets an existing user workloads ConfigMap.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-3-airflow-*.*.*-build.* and newer.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1355,7 +1355,7 @@ class EnvironmentsClient {
   /// Lists user workloads ConfigMaps.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-3-airflow-*.*.*-build.* and newer.
   ///
   /// @param parent  Required. List ConfigMaps in the given environment, in the form:
   ///  "projects/{projectId}/locations/{locationId}/environments/{environmentId}"
@@ -1394,7 +1394,7 @@ class EnvironmentsClient {
   /// Lists user workloads ConfigMaps.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-3-airflow-*.*.*-build.* and newer.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1440,7 +1440,7 @@ class EnvironmentsClient {
   /// Updates a user workloads ConfigMap.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-3-airflow-*.*.*-build.* and newer.
   ///
   /// @param user_workloads_config_map  Optional. User workloads ConfigMap to override.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1472,7 +1472,7 @@ class EnvironmentsClient {
   /// Updates a user workloads ConfigMap.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-3-airflow-*.*.*-build.* and newer.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1509,7 +1509,7 @@ class EnvironmentsClient {
   /// Deletes a user workloads ConfigMap.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-3-airflow-*.*.*-build.* and newer.
   ///
   /// @param name  Required. The ConfigMap to delete, in the form:
   ///  "projects/{projectId}/locations/{locationId}/environments/{environmentId}/userWorkloadsConfigMaps/{userWorkloadsConfigMapId}"
@@ -1535,7 +1535,7 @@ class EnvironmentsClient {
   /// Deletes a user workloads ConfigMap.
   ///
   /// This method is supported for Cloud Composer environments in versions
-  /// composer-3.*.*-airflow-*.*.* and newer.
+  /// composer-3-airflow-*.*.*-build.* and newer.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all

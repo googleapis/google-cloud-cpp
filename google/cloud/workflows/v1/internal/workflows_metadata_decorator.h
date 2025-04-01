@@ -84,6 +84,12 @@ class WorkflowsMetadata : public WorkflowsStub {
       google::cloud::workflows::v1::UpdateWorkflowRequest const& request)
       override;
 
+  StatusOr<google::cloud::workflows::v1::ListWorkflowRevisionsResponse>
+  ListWorkflowRevisions(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::workflows::v1::ListWorkflowRevisionsRequest const& request)
+      override;
+
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
       grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;

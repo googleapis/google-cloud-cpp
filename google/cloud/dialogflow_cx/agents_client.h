@@ -118,7 +118,7 @@ class AgentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.Agent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L209}
-  /// [google.cloud.dialogflow.cx.v3.ListAgentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L413}
+  /// [google.cloud.dialogflow.cx.v3.ListAgentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L427}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::Agent> ListAgents(
@@ -157,7 +157,7 @@ class AgentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.Agent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L209}
-  /// [google.cloud.dialogflow.cx.v3.ListAgentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L413}
+  /// [google.cloud.dialogflow.cx.v3.ListAgentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L427}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::Agent> ListAgents(
@@ -184,7 +184,7 @@ class AgentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.Agent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L209}
-  /// [google.cloud.dialogflow.cx.v3.GetAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L445}
+  /// [google.cloud.dialogflow.cx.v3.GetAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L459}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Agent> GetAgent(
@@ -214,7 +214,7 @@ class AgentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.Agent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L209}
-  /// [google.cloud.dialogflow.cx.v3.GetAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L445}
+  /// [google.cloud.dialogflow.cx.v3.GetAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L459}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Agent> GetAgent(
@@ -246,7 +246,7 @@ class AgentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.Agent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L209}
-  /// [google.cloud.dialogflow.cx.v3.CreateAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L458}
+  /// [google.cloud.dialogflow.cx.v3.CreateAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L472}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Agent> CreateAgent(
@@ -281,7 +281,7 @@ class AgentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.Agent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L209}
-  /// [google.cloud.dialogflow.cx.v3.CreateAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L458}
+  /// [google.cloud.dialogflow.cx.v3.CreateAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L472}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Agent> CreateAgent(
@@ -313,7 +313,7 @@ class AgentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.Agent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L209}
-  /// [google.cloud.dialogflow.cx.v3.UpdateAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L474}
+  /// [google.cloud.dialogflow.cx.v3.UpdateAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L488}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Agent> UpdateAgent(
@@ -348,7 +348,7 @@ class AgentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.Agent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L209}
-  /// [google.cloud.dialogflow.cx.v3.UpdateAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L474}
+  /// [google.cloud.dialogflow.cx.v3.UpdateAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L488}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Agent> UpdateAgent(
@@ -372,7 +372,7 @@ class AgentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeleteAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L485}
+  /// [google.cloud.dialogflow.cx.v3.DeleteAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L499}
   ///
   // clang-format on
   Status DeleteAgent(std::string const& name, Options opts = {});
@@ -398,7 +398,7 @@ class AgentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeleteAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L485}
+  /// [google.cloud.dialogflow.cx.v3.DeleteAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L499}
   ///
   // clang-format on
   Status DeleteAgent(
@@ -444,8 +444,8 @@ class AgentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.ExportAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L498}
-  /// [google.cloud.dialogflow.cx.v3.ExportAgentResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L565}
+  /// [google.cloud.dialogflow.cx.v3.ExportAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L512}
+  /// [google.cloud.dialogflow.cx.v3.ExportAgentResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L579}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportAgentResponse>>
@@ -528,7 +528,7 @@ class AgentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.RestoreAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L587}
+  /// [google.cloud.dialogflow.cx.v3.RestoreAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L601}
   /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
   // clang-format on
@@ -589,8 +589,8 @@ class AgentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.AgentValidationResult]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L677}
-  /// [google.cloud.dialogflow.cx.v3.ValidateAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L644}
+  /// [google.cloud.dialogflow.cx.v3.AgentValidationResult]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L691}
+  /// [google.cloud.dialogflow.cx.v3.ValidateAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L658}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>
@@ -619,8 +619,8 @@ class AgentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.AgentValidationResult]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L677}
-  /// [google.cloud.dialogflow.cx.v3.GetAgentValidationResultRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L660}
+  /// [google.cloud.dialogflow.cx.v3.AgentValidationResult]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L691}
+  /// [google.cloud.dialogflow.cx.v3.GetAgentValidationResultRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L674}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>
@@ -650,8 +650,8 @@ class AgentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.AgentValidationResult]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L677}
-  /// [google.cloud.dialogflow.cx.v3.GetAgentValidationResultRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L660}
+  /// [google.cloud.dialogflow.cx.v3.AgentValidationResult]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L691}
+  /// [google.cloud.dialogflow.cx.v3.GetAgentValidationResultRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L674}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>
@@ -681,7 +681,7 @@ class AgentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.GenerativeSettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generative_settings.proto#L31}
-  /// [google.cloud.dialogflow.cx.v3.GetGenerativeSettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L695}
+  /// [google.cloud.dialogflow.cx.v3.GetGenerativeSettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L709}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
@@ -712,7 +712,7 @@ class AgentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.GenerativeSettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generative_settings.proto#L31}
-  /// [google.cloud.dialogflow.cx.v3.GetGenerativeSettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L695}
+  /// [google.cloud.dialogflow.cx.v3.GetGenerativeSettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L709}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
@@ -742,7 +742,7 @@ class AgentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.GenerativeSettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generative_settings.proto#L31}
-  /// [google.cloud.dialogflow.cx.v3.UpdateGenerativeSettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L712}
+  /// [google.cloud.dialogflow.cx.v3.UpdateGenerativeSettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L726}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
@@ -775,7 +775,7 @@ class AgentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.GenerativeSettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generative_settings.proto#L31}
-  /// [google.cloud.dialogflow.cx.v3.UpdateGenerativeSettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L712}
+  /// [google.cloud.dialogflow.cx.v3.UpdateGenerativeSettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L726}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>

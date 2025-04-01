@@ -81,6 +81,34 @@ StatusOr<google::longrunning::Operation> DefaultBatchServiceStub::DeleteJob(
   return response;
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultBatchServiceStub::AsyncCancelJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::batch::v1::CancelJobRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::cloud::batch::v1::CancelJobRequest,
+                                    google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::batch::v1::CancelJobRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCancelJob(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultBatchServiceStub::CancelJob(
+    grpc::ClientContext& context, Options,
+    google::cloud::batch::v1::CancelJobRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CancelJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::batch::v1::ListJobsResponse>
 DefaultBatchServiceStub::ListJobs(
     grpc::ClientContext& context, Options const&,

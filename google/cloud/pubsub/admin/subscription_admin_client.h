@@ -145,7 +145,7 @@ class SubscriptionAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.Subscription]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1187}
+  /// [google.pubsub.v1.Subscription]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1251}
   ///
   // clang-format on
   StatusOr<google::pubsub::v1::Subscription> CreateSubscription(
@@ -186,7 +186,7 @@ class SubscriptionAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.Subscription]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1187}
+  /// [google.pubsub.v1.Subscription]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1251}
   ///
   // clang-format on
   StatusOr<google::pubsub::v1::Subscription> CreateSubscription(
@@ -211,8 +211,8 @@ class SubscriptionAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.GetSubscriptionRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1737}
-  /// [google.pubsub.v1.Subscription]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1187}
+  /// [google.pubsub.v1.GetSubscriptionRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1808}
+  /// [google.pubsub.v1.Subscription]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1251}
   ///
   // clang-format on
   StatusOr<google::pubsub::v1::Subscription> GetSubscription(
@@ -241,8 +241,8 @@ class SubscriptionAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.GetSubscriptionRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1737}
-  /// [google.pubsub.v1.Subscription]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1187}
+  /// [google.pubsub.v1.GetSubscriptionRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1808}
+  /// [google.pubsub.v1.Subscription]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1251}
   ///
   // clang-format on
   StatusOr<google::pubsub::v1::Subscription> GetSubscription(
@@ -271,8 +271,8 @@ class SubscriptionAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.Subscription]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1187}
-  /// [google.pubsub.v1.UpdateSubscriptionRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1749}
+  /// [google.pubsub.v1.Subscription]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1251}
+  /// [google.pubsub.v1.UpdateSubscriptionRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1820}
   ///
   // clang-format on
   StatusOr<google::pubsub::v1::Subscription> UpdateSubscription(
@@ -304,8 +304,8 @@ class SubscriptionAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.Subscription]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1187}
-  /// [google.pubsub.v1.UpdateSubscriptionRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1749}
+  /// [google.pubsub.v1.Subscription]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1251}
+  /// [google.pubsub.v1.UpdateSubscriptionRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1820}
   ///
   // clang-format on
   StatusOr<google::pubsub::v1::Subscription> UpdateSubscription(
@@ -340,8 +340,8 @@ class SubscriptionAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.ListSubscriptionsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1760}
-  /// [google.pubsub.v1.Subscription]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1187}
+  /// [google.pubsub.v1.ListSubscriptionsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1831}
+  /// [google.pubsub.v1.Subscription]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1251}
   ///
   // clang-format on
   StreamRange<google::pubsub::v1::Subscription> ListSubscriptions(
@@ -379,8 +379,8 @@ class SubscriptionAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.ListSubscriptionsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1760}
-  /// [google.pubsub.v1.Subscription]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1187}
+  /// [google.pubsub.v1.ListSubscriptionsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1831}
+  /// [google.pubsub.v1.Subscription]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1251}
   ///
   // clang-format on
   StreamRange<google::pubsub::v1::Subscription> ListSubscriptions(
@@ -407,7 +407,7 @@ class SubscriptionAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.DeleteSubscriptionRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1792}
+  /// [google.pubsub.v1.DeleteSubscriptionRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1863}
   ///
   // clang-format on
   Status DeleteSubscription(std::string const& subscription, Options opts = {});
@@ -437,7 +437,7 @@ class SubscriptionAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.DeleteSubscriptionRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1792}
+  /// [google.pubsub.v1.DeleteSubscriptionRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1863}
   ///
   // clang-format on
   Status DeleteSubscription(
@@ -472,7 +472,7 @@ class SubscriptionAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.ModifyPushConfigRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1804}
+  /// [google.pubsub.v1.ModifyPushConfigRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1875}
   ///
   // clang-format on
   Status ModifyPushConfig(std::string const& subscription,
@@ -505,7 +505,7 @@ class SubscriptionAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.ModifyPushConfigRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1804}
+  /// [google.pubsub.v1.ModifyPushConfigRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L1875}
   ///
   // clang-format on
   Status ModifyPushConfig(
@@ -535,8 +535,8 @@ class SubscriptionAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.GetSnapshotRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L2143}
-  /// [google.pubsub.v1.Snapshot]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L2108}
+  /// [google.pubsub.v1.GetSnapshotRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L2216}
+  /// [google.pubsub.v1.Snapshot]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L2179}
   ///
   // clang-format on
   StatusOr<google::pubsub::v1::Snapshot> GetSnapshot(
@@ -569,8 +569,8 @@ class SubscriptionAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.GetSnapshotRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L2143}
-  /// [google.pubsub.v1.Snapshot]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L2108}
+  /// [google.pubsub.v1.GetSnapshotRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L2216}
+  /// [google.pubsub.v1.Snapshot]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L2179}
   ///
   // clang-format on
   StatusOr<google::pubsub::v1::Snapshot> GetSnapshot(
@@ -608,8 +608,8 @@ class SubscriptionAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.ListSnapshotsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L2153}
-  /// [google.pubsub.v1.Snapshot]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L2108}
+  /// [google.pubsub.v1.ListSnapshotsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L2226}
+  /// [google.pubsub.v1.Snapshot]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L2179}
   ///
   // clang-format on
   StreamRange<google::pubsub::v1::Snapshot> ListSnapshots(
@@ -651,8 +651,8 @@ class SubscriptionAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.ListSnapshotsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L2153}
-  /// [google.pubsub.v1.Snapshot]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L2108}
+  /// [google.pubsub.v1.ListSnapshotsRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L2226}
+  /// [google.pubsub.v1.Snapshot]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L2179}
   ///
   // clang-format on
   StreamRange<google::pubsub::v1::Snapshot> ListSnapshots(
@@ -705,8 +705,8 @@ class SubscriptionAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.CreateSnapshotRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L2059}
-  /// [google.pubsub.v1.Snapshot]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L2108}
+  /// [google.pubsub.v1.CreateSnapshotRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L2130}
+  /// [google.pubsub.v1.Snapshot]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L2179}
   ///
   // clang-format on
   StatusOr<google::pubsub::v1::Snapshot> CreateSnapshot(
@@ -751,8 +751,8 @@ class SubscriptionAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.CreateSnapshotRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L2059}
-  /// [google.pubsub.v1.Snapshot]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L2108}
+  /// [google.pubsub.v1.CreateSnapshotRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L2130}
+  /// [google.pubsub.v1.Snapshot]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L2179}
   ///
   // clang-format on
   StatusOr<google::pubsub::v1::Snapshot> CreateSnapshot(
@@ -784,8 +784,8 @@ class SubscriptionAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.Snapshot]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L2108}
-  /// [google.pubsub.v1.UpdateSnapshotRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L2093}
+  /// [google.pubsub.v1.Snapshot]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L2179}
+  /// [google.pubsub.v1.UpdateSnapshotRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L2164}
   ///
   // clang-format on
   StatusOr<google::pubsub::v1::Snapshot> UpdateSnapshot(
@@ -820,8 +820,8 @@ class SubscriptionAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.Snapshot]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L2108}
-  /// [google.pubsub.v1.UpdateSnapshotRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L2093}
+  /// [google.pubsub.v1.Snapshot]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L2179}
+  /// [google.pubsub.v1.UpdateSnapshotRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L2164}
   ///
   // clang-format on
   StatusOr<google::pubsub::v1::Snapshot> UpdateSnapshot(
@@ -853,7 +853,7 @@ class SubscriptionAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.DeleteSnapshotRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L2184}
+  /// [google.pubsub.v1.DeleteSnapshotRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L2257}
   ///
   // clang-format on
   Status DeleteSnapshot(std::string const& snapshot, Options opts = {});
@@ -887,7 +887,7 @@ class SubscriptionAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.DeleteSnapshotRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L2184}
+  /// [google.pubsub.v1.DeleteSnapshotRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L2257}
   ///
   // clang-format on
   Status DeleteSnapshot(
@@ -923,8 +923,8 @@ class SubscriptionAdminClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.pubsub.v1.SeekRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L2194}
-  /// [google.pubsub.v1.SeekResponse]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L2230}
+  /// [google.pubsub.v1.SeekRequest]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L2267}
+  /// [google.pubsub.v1.SeekResponse]: @googleapis_reference_link{google/pubsub/v1/pubsub.proto#L2303}
   ///
   // clang-format on
   StatusOr<google::pubsub::v1::SeekResponse> Seek(

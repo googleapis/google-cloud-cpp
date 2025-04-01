@@ -946,6 +946,22 @@ DatabaseAdminConnectionImpl::ListDatabaseRoles(
       });
 }
 
+StatusOr<google::spanner::admin::database::v1::AddSplitPointsResponse>
+DatabaseAdminConnectionImpl::AddSplitPoints(
+    google::spanner::admin::database::v1::AddSplitPointsRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AddSplitPoints(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::spanner::admin::database::v1::AddSplitPointsRequest const&
+                 request) {
+        return stub_->AddSplitPoints(context, options, request);
+      },
+      *current, request, __func__);
+}
+
 StatusOr<google::spanner::admin::database::v1::BackupSchedule>
 DatabaseAdminConnectionImpl::CreateBackupSchedule(
     google::spanner::admin::database::v1::CreateBackupScheduleRequest const&

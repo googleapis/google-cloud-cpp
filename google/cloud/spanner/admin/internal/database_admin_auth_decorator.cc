@@ -333,6 +333,16 @@ DatabaseAdminAuth::ListDatabaseRoles(
   return child_->ListDatabaseRoles(context, options, request);
 }
 
+StatusOr<google::spanner::admin::database::v1::AddSplitPointsResponse>
+DatabaseAdminAuth::AddSplitPoints(
+    grpc::ClientContext& context, Options const& options,
+    google::spanner::admin::database::v1::AddSplitPointsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->AddSplitPoints(context, options, request);
+}
+
 StatusOr<google::spanner::admin::database::v1::BackupSchedule>
 DatabaseAdminAuth::CreateBackupSchedule(
     grpc::ClientContext& context, Options const& options,

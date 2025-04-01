@@ -165,6 +165,36 @@ class HubServiceConnectionImpl
       StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>
   AcceptHubSpoke(google::longrunning::Operation const& operation) override;
 
+  future<StatusOr<
+      google::cloud::networkconnectivity::v1::AcceptSpokeUpdateResponse>>
+  AcceptSpokeUpdate(
+      google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> AcceptSpokeUpdate(
+      NoAwaitTag,
+      google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest const&
+          request) override;
+
+  future<StatusOr<
+      google::cloud::networkconnectivity::v1::AcceptSpokeUpdateResponse>>
+  AcceptSpokeUpdate(google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<
+      google::cloud::networkconnectivity::v1::RejectSpokeUpdateResponse>>
+  RejectSpokeUpdate(
+      google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> RejectSpokeUpdate(
+      NoAwaitTag,
+      google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest const&
+          request) override;
+
+  future<StatusOr<
+      google::cloud::networkconnectivity::v1::RejectSpokeUpdateResponse>>
+  RejectSpokeUpdate(google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
   DeleteSpoke(google::cloud::networkconnectivity::v1::DeleteSpokeRequest const&
                   request) override;

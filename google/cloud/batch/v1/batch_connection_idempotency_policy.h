@@ -48,6 +48,9 @@ class BatchServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteJob(
       google::cloud::batch::v1::DeleteJobRequest const& request);
 
+  virtual google::cloud::Idempotency CancelJob(
+      google::cloud::batch::v1::CancelJobRequest const& request);
+
   virtual google::cloud::Idempotency ListJobs(
       google::cloud::batch::v1::ListJobsRequest request);
 

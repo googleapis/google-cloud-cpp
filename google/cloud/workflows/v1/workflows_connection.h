@@ -224,6 +224,10 @@ class WorkflowsConnection {
   virtual future<StatusOr<google::cloud::workflows::v1::Workflow>>
   UpdateWorkflow(google::longrunning::Operation const& operation);
 
+  virtual StreamRange<google::cloud::workflows::v1::Workflow>
+  ListWorkflowRevisions(
+      google::cloud::workflows::v1::ListWorkflowRevisionsRequest request);
+
   virtual StreamRange<google::cloud::location::Location> ListLocations(
       google::cloud::location::ListLocationsRequest request);
 

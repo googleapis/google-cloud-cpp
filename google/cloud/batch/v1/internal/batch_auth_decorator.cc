@@ -75,6 +75,34 @@ StatusOr<google::longrunning::Operation> BatchServiceAuth::DeleteJob(
   return child_->DeleteJob(context, options, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+BatchServiceAuth::AsyncCancelJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::batch::v1::CancelJobRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCancelJob(cq, *std::move(context),
+                                     std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> BatchServiceAuth::CancelJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::batch::v1::CancelJobRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CancelJob(context, options, request);
+}
+
 StatusOr<google::cloud::batch::v1::ListJobsResponse> BatchServiceAuth::ListJobs(
     grpc::ClientContext& context, Options const& options,
     google::cloud::batch::v1::ListJobsRequest const& request) {

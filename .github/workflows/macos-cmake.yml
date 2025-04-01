@@ -175,7 +175,6 @@ jobs:
           rapidmigrationassessment
           recaptchaenterprise
           recommender
-          resourcesettings
           scheduler
           secretmanager
           securesourcemanager

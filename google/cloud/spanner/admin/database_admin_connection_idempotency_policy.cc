@@ -137,6 +137,11 @@ Idempotency DatabaseAdminConnectionIdempotencyPolicy::ListDatabaseRoles(
   return Idempotency::kIdempotent;
 }
 
+Idempotency DatabaseAdminConnectionIdempotencyPolicy::AddSplitPoints(
+    google::spanner::admin::database::v1::AddSplitPointsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency DatabaseAdminConnectionIdempotencyPolicy::CreateBackupSchedule(
     google::spanner::admin::database::v1::CreateBackupScheduleRequest const&) {
   return Idempotency::kNonIdempotent;

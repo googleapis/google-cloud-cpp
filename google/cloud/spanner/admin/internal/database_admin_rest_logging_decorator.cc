@@ -414,6 +414,20 @@ DatabaseAdminRestLogging::ListDatabaseRoles(
       rest_context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::spanner::admin::database::v1::AddSplitPointsResponse>
+DatabaseAdminRestLogging::AddSplitPoints(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::database::v1::AddSplitPointsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::database::v1::AddSplitPointsRequest const&
+                 request) {
+        return child_->AddSplitPoints(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::spanner::admin::database::v1::BackupSchedule>
 DatabaseAdminRestLogging::CreateBackupSchedule(
     rest_internal::RestContext& rest_context, Options const& options,

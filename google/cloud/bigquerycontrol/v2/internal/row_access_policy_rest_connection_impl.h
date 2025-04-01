@@ -56,6 +56,26 @@ class RowAccessPolicyServiceRestConnectionImpl
       google::cloud::bigquery::v2::ListRowAccessPoliciesRequest request)
       override;
 
+  StatusOr<google::cloud::bigquery::v2::RowAccessPolicy> GetRowAccessPolicy(
+      google::cloud::bigquery::v2::GetRowAccessPolicyRequest const& request)
+      override;
+
+  StatusOr<google::cloud::bigquery::v2::RowAccessPolicy> CreateRowAccessPolicy(
+      google::cloud::bigquery::v2::CreateRowAccessPolicyRequest const& request)
+      override;
+
+  StatusOr<google::cloud::bigquery::v2::RowAccessPolicy> UpdateRowAccessPolicy(
+      google::cloud::bigquery::v2::UpdateRowAccessPolicyRequest const& request)
+      override;
+
+  Status DeleteRowAccessPolicy(
+      google::cloud::bigquery::v2::DeleteRowAccessPolicyRequest const& request)
+      override;
+
+  Status BatchDeleteRowAccessPolicies(
+      google::cloud::bigquery::v2::BatchDeleteRowAccessPoliciesRequest const&
+          request) override;
+
  private:
   static std::unique_ptr<bigquerycontrol_v2::RowAccessPolicyServiceRetryPolicy>
   retry_policy(Options const& options) {

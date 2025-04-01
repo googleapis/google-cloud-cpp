@@ -309,6 +309,31 @@ Idempotency NetAppConnectionIdempotencyPolicy::DeleteBackupPolicy(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency NetAppConnectionIdempotencyPolicy::ListQuotaRules(
+    google::cloud::netapp::v1::ListQuotaRulesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency NetAppConnectionIdempotencyPolicy::GetQuotaRule(
+    google::cloud::netapp::v1::GetQuotaRuleRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency NetAppConnectionIdempotencyPolicy::CreateQuotaRule(
+    google::cloud::netapp::v1::CreateQuotaRuleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetAppConnectionIdempotencyPolicy::UpdateQuotaRule(
+    google::cloud::netapp::v1::UpdateQuotaRuleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency NetAppConnectionIdempotencyPolicy::DeleteQuotaRule(
+    google::cloud::netapp::v1::DeleteQuotaRuleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency NetAppConnectionIdempotencyPolicy::ListLocations(
     google::cloud::location::ListLocationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;

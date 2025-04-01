@@ -74,6 +74,10 @@ class BigtableStub {
       grpc::ClientContext& context, Options const& options,
       google::bigtable::v2::ReadModifyWriteRowRequest const& request) = 0;
 
+  virtual StatusOr<google::bigtable::v2::PrepareQueryResponse> PrepareQuery(
+      grpc::ClientContext& context, Options const& options,
+      google::bigtable::v2::PrepareQueryRequest const& request) = 0;
+
   virtual std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::bigtable::v2::ExecuteQueryResponse>>
   ExecuteQuery(std::shared_ptr<grpc::ClientContext> context,
@@ -161,6 +165,10 @@ class DefaultBigtableStub : public BigtableStub {
   StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse> ReadModifyWriteRow(
       grpc::ClientContext& context, Options const& options,
       google::bigtable::v2::ReadModifyWriteRowRequest const& request) override;
+
+  StatusOr<google::bigtable::v2::PrepareQueryResponse> PrepareQuery(
+      grpc::ClientContext& context, Options const& options,
+      google::bigtable::v2::PrepareQueryRequest const& request) override;
 
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::bigtable::v2::ExecuteQueryResponse>>

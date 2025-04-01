@@ -117,7 +117,7 @@ class MetricServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.MonitoredResourceDescriptor]: @googleapis_reference_link{google/api/monitored_resource.proto#L41}
+  /// [google.api.MonitoredResourceDescriptor]: @googleapis_reference_link{google/api/monitored_resource.proto#L40}
   /// [google.monitoring.v3.ListMonitoredResourceDescriptorsRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L183}
   ///
   // clang-format on
@@ -156,7 +156,7 @@ class MetricServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.MonitoredResourceDescriptor]: @googleapis_reference_link{google/api/monitored_resource.proto#L41}
+  /// [google.api.MonitoredResourceDescriptor]: @googleapis_reference_link{google/api/monitored_resource.proto#L40}
   /// [google.monitoring.v3.ListMonitoredResourceDescriptorsRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L183}
   ///
   // clang-format on
@@ -188,7 +188,7 @@ class MetricServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.MonitoredResourceDescriptor]: @googleapis_reference_link{google/api/monitored_resource.proto#L41}
+  /// [google.api.MonitoredResourceDescriptor]: @googleapis_reference_link{google/api/monitored_resource.proto#L40}
   /// [google.monitoring.v3.GetMonitoredResourceDescriptorRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L226}
   ///
   // clang-format on
@@ -218,7 +218,7 @@ class MetricServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.MonitoredResourceDescriptor]: @googleapis_reference_link{google/api/monitored_resource.proto#L41}
+  /// [google.api.MonitoredResourceDescriptor]: @googleapis_reference_link{google/api/monitored_resource.proto#L40}
   /// [google.monitoring.v3.GetMonitoredResourceDescriptorRequest]: @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L226}
   ///
   // clang-format on

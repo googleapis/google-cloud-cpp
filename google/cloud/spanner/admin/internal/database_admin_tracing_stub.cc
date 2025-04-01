@@ -368,6 +368,19 @@ DatabaseAdminTracingStub::ListDatabaseRoles(
       context, *span, child_->ListDatabaseRoles(context, options, request));
 }
 
+StatusOr<google::spanner::admin::database::v1::AddSplitPointsResponse>
+DatabaseAdminTracingStub::AddSplitPoints(
+    grpc::ClientContext& context, Options const& options,
+    google::spanner::admin::database::v1::AddSplitPointsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.spanner.admin.database.v1.DatabaseAdmin", "AddSplitPoints");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->AddSplitPoints(context, options, request));
+}
+
 StatusOr<google::spanner::admin::database::v1::BackupSchedule>
 DatabaseAdminTracingStub::CreateBackupSchedule(
     grpc::ClientContext& context, Options const& options,

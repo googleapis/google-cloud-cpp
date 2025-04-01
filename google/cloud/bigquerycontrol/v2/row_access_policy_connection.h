@@ -192,6 +192,25 @@ class RowAccessPolicyServiceConnection {
   virtual StreamRange<google::cloud::bigquery::v2::RowAccessPolicy>
   ListRowAccessPolicies(
       google::cloud::bigquery::v2::ListRowAccessPoliciesRequest request);
+
+  virtual StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>
+  GetRowAccessPolicy(
+      google::cloud::bigquery::v2::GetRowAccessPolicyRequest const& request);
+
+  virtual StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>
+  CreateRowAccessPolicy(
+      google::cloud::bigquery::v2::CreateRowAccessPolicyRequest const& request);
+
+  virtual StatusOr<google::cloud::bigquery::v2::RowAccessPolicy>
+  UpdateRowAccessPolicy(
+      google::cloud::bigquery::v2::UpdateRowAccessPolicyRequest const& request);
+
+  virtual Status DeleteRowAccessPolicy(
+      google::cloud::bigquery::v2::DeleteRowAccessPolicyRequest const& request);
+
+  virtual Status BatchDeleteRowAccessPolicies(
+      google::cloud::bigquery::v2::BatchDeleteRowAccessPoliciesRequest const&
+          request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -80,6 +80,17 @@ ConversationsMetadata::CompleteConversation(
   return child_->CompleteConversation(context, options, request);
 }
 
+StatusOr<google::cloud::dialogflow::v2::IngestContextReferencesResponse>
+ConversationsMetadata::IngestContextReferences(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::v2::IngestContextReferencesRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("conversation=",
+                           internal::UrlEncode(request.conversation())));
+  return child_->IngestContextReferences(context, options, request);
+}
+
 StatusOr<google::cloud::dialogflow::v2::ListMessagesResponse>
 ConversationsMetadata::ListMessages(
     grpc::ClientContext& context, Options const& options,
@@ -129,6 +140,16 @@ ConversationsMetadata::SearchKnowledge(
   SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->SearchKnowledge(context, options, request);
+}
+
+StatusOr<google::cloud::dialogflow::v2::GenerateSuggestionsResponse>
+ConversationsMetadata::GenerateSuggestions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::dialogflow::v2::GenerateSuggestionsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("conversation=",
+                           internal::UrlEncode(request.conversation())));
+  return child_->GenerateSuggestions(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>

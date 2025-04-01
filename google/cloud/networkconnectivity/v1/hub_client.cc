@@ -440,6 +440,110 @@ HubServiceClient::AcceptHubSpoke(
   return connection_->AcceptHubSpoke(operation);
 }
 
+future<
+    StatusOr<google::cloud::networkconnectivity::v1::AcceptSpokeUpdateResponse>>
+HubServiceClient::AcceptSpokeUpdate(std::string const& name,
+                                    std::string const& spoke_uri,
+                                    std::string const& spoke_etag,
+                                    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest request;
+  request.set_name(name);
+  request.set_spoke_uri(spoke_uri);
+  request.set_spoke_etag(spoke_etag);
+  return connection_->AcceptSpokeUpdate(request);
+}
+
+StatusOr<google::longrunning::Operation> HubServiceClient::AcceptSpokeUpdate(
+    NoAwaitTag, std::string const& name, std::string const& spoke_uri,
+    std::string const& spoke_etag, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest request;
+  request.set_name(name);
+  request.set_spoke_uri(spoke_uri);
+  request.set_spoke_etag(spoke_etag);
+  return connection_->AcceptSpokeUpdate(NoAwaitTag{}, request);
+}
+
+future<
+    StatusOr<google::cloud::networkconnectivity::v1::AcceptSpokeUpdateResponse>>
+HubServiceClient::AcceptSpokeUpdate(
+    google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AcceptSpokeUpdate(request);
+}
+
+StatusOr<google::longrunning::Operation> HubServiceClient::AcceptSpokeUpdate(
+    NoAwaitTag,
+    google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AcceptSpokeUpdate(NoAwaitTag{}, request);
+}
+
+future<
+    StatusOr<google::cloud::networkconnectivity::v1::AcceptSpokeUpdateResponse>>
+HubServiceClient::AcceptSpokeUpdate(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AcceptSpokeUpdate(operation);
+}
+
+future<
+    StatusOr<google::cloud::networkconnectivity::v1::RejectSpokeUpdateResponse>>
+HubServiceClient::RejectSpokeUpdate(std::string const& name,
+                                    std::string const& spoke_uri,
+                                    std::string const& spoke_etag,
+                                    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest request;
+  request.set_name(name);
+  request.set_spoke_uri(spoke_uri);
+  request.set_spoke_etag(spoke_etag);
+  return connection_->RejectSpokeUpdate(request);
+}
+
+StatusOr<google::longrunning::Operation> HubServiceClient::RejectSpokeUpdate(
+    NoAwaitTag, std::string const& name, std::string const& spoke_uri,
+    std::string const& spoke_etag, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest request;
+  request.set_name(name);
+  request.set_spoke_uri(spoke_uri);
+  request.set_spoke_etag(spoke_etag);
+  return connection_->RejectSpokeUpdate(NoAwaitTag{}, request);
+}
+
+future<
+    StatusOr<google::cloud::networkconnectivity::v1::RejectSpokeUpdateResponse>>
+HubServiceClient::RejectSpokeUpdate(
+    google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RejectSpokeUpdate(request);
+}
+
+StatusOr<google::longrunning::Operation> HubServiceClient::RejectSpokeUpdate(
+    NoAwaitTag,
+    google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RejectSpokeUpdate(NoAwaitTag{}, request);
+}
+
+future<
+    StatusOr<google::cloud::networkconnectivity::v1::RejectSpokeUpdateResponse>>
+HubServiceClient::RejectSpokeUpdate(
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RejectSpokeUpdate(operation);
+}
+
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
 HubServiceClient::DeleteSpoke(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

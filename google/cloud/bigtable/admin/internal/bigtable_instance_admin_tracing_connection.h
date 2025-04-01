@@ -159,6 +159,82 @@ class BigtableInstanceAdminTracingConnection
   StreamRange<google::bigtable::admin::v2::HotTablet> ListHotTablets(
       google::bigtable::admin::v2::ListHotTabletsRequest request) override;
 
+  future<StatusOr<google::bigtable::admin::v2::LogicalView>> CreateLogicalView(
+      google::bigtable::admin::v2::CreateLogicalViewRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateLogicalView(
+      NoAwaitTag,
+      google::bigtable::admin::v2::CreateLogicalViewRequest const& request)
+      override;
+
+  future<StatusOr<google::bigtable::admin::v2::LogicalView>> CreateLogicalView(
+      google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::bigtable::admin::v2::LogicalView> GetLogicalView(
+      google::bigtable::admin::v2::GetLogicalViewRequest const& request)
+      override;
+
+  StreamRange<google::bigtable::admin::v2::LogicalView> ListLogicalViews(
+      google::bigtable::admin::v2::ListLogicalViewsRequest request) override;
+
+  future<StatusOr<google::bigtable::admin::v2::LogicalView>> UpdateLogicalView(
+      google::bigtable::admin::v2::UpdateLogicalViewRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateLogicalView(
+      NoAwaitTag,
+      google::bigtable::admin::v2::UpdateLogicalViewRequest const& request)
+      override;
+
+  future<StatusOr<google::bigtable::admin::v2::LogicalView>> UpdateLogicalView(
+      google::longrunning::Operation const& operation) override;
+
+  Status DeleteLogicalView(
+      google::bigtable::admin::v2::DeleteLogicalViewRequest const& request)
+      override;
+
+  future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
+  CreateMaterializedView(
+      google::bigtable::admin::v2::CreateMaterializedViewRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateMaterializedView(
+      NoAwaitTag,
+      google::bigtable::admin::v2::CreateMaterializedViewRequest const& request)
+      override;
+
+  future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
+  CreateMaterializedView(
+      google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::bigtable::admin::v2::MaterializedView> GetMaterializedView(
+      google::bigtable::admin::v2::GetMaterializedViewRequest const& request)
+      override;
+
+  StreamRange<google::bigtable::admin::v2::MaterializedView>
+  ListMaterializedViews(
+      google::bigtable::admin::v2::ListMaterializedViewsRequest request)
+      override;
+
+  future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
+  UpdateMaterializedView(
+      google::bigtable::admin::v2::UpdateMaterializedViewRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateMaterializedView(
+      NoAwaitTag,
+      google::bigtable::admin::v2::UpdateMaterializedViewRequest const& request)
+      override;
+
+  future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
+  UpdateMaterializedView(
+      google::longrunning::Operation const& operation) override;
+
+  Status DeleteMaterializedView(
+      google::bigtable::admin::v2::DeleteMaterializedViewRequest const& request)
+      override;
+
  private:
   std::shared_ptr<bigtable_admin::BigtableInstanceAdminConnection> child_;
 };

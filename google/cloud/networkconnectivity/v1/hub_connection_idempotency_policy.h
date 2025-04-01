@@ -82,6 +82,14 @@ class HubServiceConnectionIdempotencyPolicy {
       google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
           request);
 
+  virtual google::cloud::Idempotency AcceptSpokeUpdate(
+      google::cloud::networkconnectivity::v1::AcceptSpokeUpdateRequest const&
+          request);
+
+  virtual google::cloud::Idempotency RejectSpokeUpdate(
+      google::cloud::networkconnectivity::v1::RejectSpokeUpdateRequest const&
+          request);
+
   virtual google::cloud::Idempotency DeleteSpoke(
       google::cloud::networkconnectivity::v1::DeleteSpokeRequest const&
           request);

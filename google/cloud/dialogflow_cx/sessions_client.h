@@ -193,7 +193,7 @@ class SessionsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.StreamingDetectIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L332}
-  /// [google.cloud.dialogflow.cx.v3.StreamingDetectIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L470}
+  /// [google.cloud.dialogflow.cx.v3.StreamingDetectIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L465}
   ///
   // clang-format on
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -225,8 +225,8 @@ class SessionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.MatchIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L1237}
-  /// [google.cloud.dialogflow.cx.v3.MatchIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L1269}
+  /// [google.cloud.dialogflow.cx.v3.MatchIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L1239}
+  /// [google.cloud.dialogflow.cx.v3.MatchIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L1271}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::MatchIntentResponse> MatchIntent(
@@ -262,9 +262,9 @@ class SessionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.FulfillIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L1304}
-  /// [google.cloud.dialogflow.cx.v3.FulfillIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L1317}
-  /// [google.cloud.dialogflow.cx.v3.MatchIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L1269}
+  /// [google.cloud.dialogflow.cx.v3.FulfillIntentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L1306}
+  /// [google.cloud.dialogflow.cx.v3.FulfillIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L1319}
+  /// [google.cloud.dialogflow.cx.v3.MatchIntentResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L1271}
   /// [google.cloud.dialogflow.cx.v3.Sessions.MatchIntent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L113}
   ///
   // clang-format on

@@ -133,6 +133,18 @@ StatusOr<google::longrunning::Operation> WorkflowsTracingStub::UpdateWorkflow(
                            child_->UpdateWorkflow(context, options, request));
 }
 
+StatusOr<google::cloud::workflows::v1::ListWorkflowRevisionsResponse>
+WorkflowsTracingStub::ListWorkflowRevisions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::workflows::v1::ListWorkflowRevisionsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.workflows.v1.Workflows",
+                                     "ListWorkflowRevisions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ListWorkflowRevisions(context, options, request));
+}
+
 StatusOr<google::cloud::location::ListLocationsResponse>
 WorkflowsTracingStub::ListLocations(
     grpc::ClientContext& context, Options const& options,

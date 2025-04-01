@@ -310,6 +310,11 @@ class DatabaseAdminConnection {
   ListDatabaseRoles(
       google::spanner::admin::database::v1::ListDatabaseRolesRequest request);
 
+  virtual StatusOr<google::spanner::admin::database::v1::AddSplitPointsResponse>
+  AddSplitPoints(
+      google::spanner::admin::database::v1::AddSplitPointsRequest const&
+          request);
+
   virtual StatusOr<google::spanner::admin::database::v1::BackupSchedule>
   CreateBackupSchedule(
       google::spanner::admin::database::v1::CreateBackupScheduleRequest const&

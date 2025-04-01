@@ -193,6 +193,14 @@ WorkflowsClient::UpdateWorkflow(google::longrunning::Operation const& operation,
   return connection_->UpdateWorkflow(operation);
 }
 
+StreamRange<google::cloud::workflows::v1::Workflow>
+WorkflowsClient::ListWorkflowRevisions(
+    google::cloud::workflows::v1::ListWorkflowRevisionsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListWorkflowRevisions(std::move(request));
+}
+
 StreamRange<google::cloud::location::Location> WorkflowsClient::ListLocations(
     google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

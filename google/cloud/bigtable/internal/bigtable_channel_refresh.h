@@ -77,6 +77,10 @@ class BigtableChannelRefresh : public BigtableStub {
       grpc::ClientContext& client_context, Options const& options,
       google::bigtable::v2::ReadModifyWriteRowRequest const& request) override;
 
+  StatusOr<google::bigtable::v2::PrepareQueryResponse> PrepareQuery(
+      grpc::ClientContext& client, Options const& options,
+      google::bigtable::v2::PrepareQueryRequest const& request) override;
+
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::bigtable::v2::ExecuteQueryResponse>>
   ExecuteQuery(

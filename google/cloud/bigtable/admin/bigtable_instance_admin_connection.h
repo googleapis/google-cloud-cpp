@@ -302,6 +302,76 @@ class BigtableInstanceAdminConnection {
 
   virtual StreamRange<google::bigtable::admin::v2::HotTablet> ListHotTablets(
       google::bigtable::admin::v2::ListHotTabletsRequest request);
+
+  virtual future<StatusOr<google::bigtable::admin::v2::LogicalView>>
+  CreateLogicalView(
+      google::bigtable::admin::v2::CreateLogicalViewRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateLogicalView(
+      NoAwaitTag,
+      google::bigtable::admin::v2::CreateLogicalViewRequest const& request);
+
+  virtual future<StatusOr<google::bigtable::admin::v2::LogicalView>>
+  CreateLogicalView(google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::bigtable::admin::v2::LogicalView> GetLogicalView(
+      google::bigtable::admin::v2::GetLogicalViewRequest const& request);
+
+  virtual StreamRange<google::bigtable::admin::v2::LogicalView>
+  ListLogicalViews(
+      google::bigtable::admin::v2::ListLogicalViewsRequest request);
+
+  virtual future<StatusOr<google::bigtable::admin::v2::LogicalView>>
+  UpdateLogicalView(
+      google::bigtable::admin::v2::UpdateLogicalViewRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateLogicalView(
+      NoAwaitTag,
+      google::bigtable::admin::v2::UpdateLogicalViewRequest const& request);
+
+  virtual future<StatusOr<google::bigtable::admin::v2::LogicalView>>
+  UpdateLogicalView(google::longrunning::Operation const& operation);
+
+  virtual Status DeleteLogicalView(
+      google::bigtable::admin::v2::DeleteLogicalViewRequest const& request);
+
+  virtual future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
+  CreateMaterializedView(
+      google::bigtable::admin::v2::CreateMaterializedViewRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateMaterializedView(
+      NoAwaitTag,
+      google::bigtable::admin::v2::CreateMaterializedViewRequest const&
+          request);
+
+  virtual future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
+  CreateMaterializedView(google::longrunning::Operation const& operation);
+
+  virtual StatusOr<google::bigtable::admin::v2::MaterializedView>
+  GetMaterializedView(
+      google::bigtable::admin::v2::GetMaterializedViewRequest const& request);
+
+  virtual StreamRange<google::bigtable::admin::v2::MaterializedView>
+  ListMaterializedViews(
+      google::bigtable::admin::v2::ListMaterializedViewsRequest request);
+
+  virtual future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
+  UpdateMaterializedView(
+      google::bigtable::admin::v2::UpdateMaterializedViewRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateMaterializedView(
+      NoAwaitTag,
+      google::bigtable::admin::v2::UpdateMaterializedViewRequest const&
+          request);
+
+  virtual future<StatusOr<google::bigtable::admin::v2::MaterializedView>>
+  UpdateMaterializedView(google::longrunning::Operation const& operation);
+
+  virtual Status DeleteMaterializedView(
+      google::bigtable::admin::v2::DeleteMaterializedViewRequest const&
+          request);
 };
 
 /**

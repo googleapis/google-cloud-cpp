@@ -353,6 +353,16 @@ DatabaseAdminTracingConnection::ListDatabaseRoles(
                                                           std::move(sr));
 }
 
+StatusOr<google::spanner::admin::database::v1::AddSplitPointsResponse>
+DatabaseAdminTracingConnection::AddSplitPoints(
+    google::spanner::admin::database::v1::AddSplitPointsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "spanner_admin::DatabaseAdminConnection::AddSplitPoints");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->AddSplitPoints(request));
+}
+
 StatusOr<google::spanner::admin::database::v1::BackupSchedule>
 DatabaseAdminTracingConnection::CreateBackupSchedule(
     google::spanner::admin::database::v1::CreateBackupScheduleRequest const&
