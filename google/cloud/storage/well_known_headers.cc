@@ -31,6 +31,16 @@ std::ostream& operator<<(std::ostream& os, CustomHeader const& rhs) {
   return os << rhs.custom_header_name() << ": " << rhs.value();
 }
 
+std::ostream& operator<<(std::ostream& os, const CustomHeaders& rhs) {
+  if (rhs.headers().empty()) {
+    return os;
+  }
+  for (const auto& header : rhs.headers()) {
+      os << header.first << ": " << header.second << "\n";
+  }
+  return os;
+}
+
 EncryptionKeyData EncryptionDataFromBinaryKey(std::string const& key) {
   return EncryptionKeyData{
       "AES256", internal::Base64Encode(key),

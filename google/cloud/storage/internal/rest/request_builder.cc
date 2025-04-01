@@ -32,6 +32,15 @@ RestRequestBuilder& RestRequestBuilder::AddOption(CustomHeader const& p) {
   return *this;
 }
 
+RestRequestBuilder& RestRequestBuilder::AddOption(CustomHeaders const& p) {
+  if (!p.headers().empty()) {
+    for (const auto& header : p.headers()) {
+      request_.AddHeader(header.first, header.second);
+    }
+  }
+  return *this;
+}
+
 RestRequestBuilder& RestRequestBuilder::AddOption(EncryptionKey const& p) {
   if (p.has_value()) {
     request_.AddHeader(std::string(EncryptionKey::prefix()) + "algorithm",

@@ -317,12 +317,12 @@ class GenericRequestBase<Derived, OverrideDefaultProject, Options...>
  */
 template <typename Derived, typename... Options>
 class GenericRequest
-    : public GenericRequestBase<Derived, CustomHeader, Fields, IfMatchEtag,
+    : public GenericRequestBase<Derived, CustomHeader, CustomHeaders, Fields, IfMatchEtag,
                                 IfNoneMatchEtag, QuotaUser, UserIp,
                                 Options...> {
  public:
   using Super =
-      GenericRequestBase<Derived, CustomHeader, Fields, IfMatchEtag,
+      GenericRequestBase<Derived, CustomHeader, CustomHeaders, Fields, IfMatchEtag,
                          IfNoneMatchEtag, QuotaUser, UserIp, Options...>;
 
   template <typename H, typename... T>

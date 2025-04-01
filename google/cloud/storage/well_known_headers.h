@@ -99,6 +99,34 @@ class CustomHeader
 std::ostream& operator<<(std::ostream& os, CustomHeader const& rhs);
 
 /**
+ * An option to inject multiplecustom headers at once into the request.
+ *
+ * In some cases it is necessary to inject custom headers into the request. For
+ * example, because the protocol has added new headers and the library has not
+ * been updated to support them, or because
+ */
+class CustomHeaders    
+    : public internal::WellKnownHeader<CustomHeaders, std::string> {
+  public:
+      using Type = std::unordered_multimap<std::string, std::string>;
+  
+      CustomHeaders() = default;
+      CustomHeaders(std::initializer_list<Type::value_type> headers) 
+      : headers_(std::move(headers)) {}
+  
+      void add(const std::string& name, const std::string& value) {
+          headers_.insert({name, value});
+      }
+  
+      const Type& headers() const { return headers_; }
+  
+  private:
+      Type headers_;
+  };
+
+  std::ostream& operator<<(std::ostream& os, const CustomHeaders& rhs);
+
+/**
  * A pre-condition: apply this operation only if the HTTP Entity Tag matches.
  *
  * [HTTP Entity Tags](https://en.wikipedia.org/wiki/HTTP_ETag) allow

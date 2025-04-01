@@ -95,6 +95,9 @@ class RestRequestBuilder {
   /// Adds a custom header to the request.
   RestRequestBuilder& AddOption(CustomHeader const& p);
 
+  /// Adds custom headers to the request.
+  RestRequestBuilder& AddOption(CustomHeaders const& p);
+
   /// Adds one of the well-known encryption header groups to the request.
   RestRequestBuilder& AddOption(EncryptionKey const& p);
 
