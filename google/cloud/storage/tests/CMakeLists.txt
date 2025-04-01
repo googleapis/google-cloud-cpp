@@ -16,7 +16,6 @@
 
 set(storage_client_integration_tests
     # cmake-format : sort
-    elie_test.cc
     async_client_integration_test.cc
     auto_finalize_integration_test.cc
     bucket_integration_test.cc
