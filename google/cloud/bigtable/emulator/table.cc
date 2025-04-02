@@ -478,8 +478,8 @@ Status RowTransaction::DeleteFromFamily(
   }
 
   std::map<std::string, ColumnFamilyRow>::iterator column_family_row_it;
-  if (column_family_row_it = column_family_it->second->find(request_.row_key());
-      column_family_row_it == column_family_it->second->end()) {
+  if (column_family_it->second->find(request_.row_key()) ==
+      column_family_it->second->end()) {
     // The row does not exist
     return NotFoundError(
         "row key is not found in column family",
