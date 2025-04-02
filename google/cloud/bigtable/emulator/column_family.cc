@@ -79,7 +79,6 @@ std::map<std::string, std::vector<Cell>> ColumnFamily::DeleteRow(
     std::string const& row_key) {
   std::map<std::string, std::vector<Cell>> res;
 
-  auto& column_family_row = rows_[row_key];
   auto row_it = rows_.find(row_key);
 
   for (auto column_it = row_it->second.begin();
