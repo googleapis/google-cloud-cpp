@@ -133,8 +133,11 @@ AsyncWriterConnectionImpl::Finalize(
 
   auto p = WritePayloadImpl::GetImpl(payload);
   auto size = p.size();
+  auto action = request_.has_append_object_spec()
+                    ? PartialUpload::kFinalize
+                    : PartialUpload::kFinalizeWithChecksum;
   auto coro = PartialUpload::Call(impl_, hash_function_, std::move(write),
-                                  std::move(p), PartialUpload::kFinalize);
+                                  std::move(p), std::move(action));
   return coro->Start().then([coro, size, this](auto f) mutable {
     coro.reset();  // breaks the cycle between the completion queue and coro
     return OnFinalUpload(size, f.get());
