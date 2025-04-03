@@ -34,6 +34,8 @@ application.
 - [\c iam_credentials_v1::IAMCredentialsClient](@ref google::cloud::iam_credentials_v1::IAMCredentialsClient)
 - [\c iam_v1::IAMPolicyClient](@ref google::cloud::iam_v1::IAMPolicyClient)
 - [\c iam_v2::PoliciesClient](@ref google::cloud::iam_v2::PoliciesClient)
+- [\c iam_v3::PolicyBindingsClient](@ref google::cloud::iam_v3::PolicyBindingsClient)
+- [\c iam_v3::PrincipalAccessBoundaryPoliciesClient](@ref google::cloud::iam_v3::PrincipalAccessBoundaryPoliciesClient)
 <!-- inject-client-list-end -->
 
 ## Next Steps
