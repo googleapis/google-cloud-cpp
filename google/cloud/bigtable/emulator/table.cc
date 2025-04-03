@@ -219,8 +219,6 @@ StatusOr<std::reference_wrapper<ColumnFamily>> Table::FindColumnFamily(
 }
 
 Status Table::MutateRow(google::bigtable::v2::MutateRowRequest const& request) {
-  // FIXME - add atomicity
-  // FIXME - determine what happens when row/column family/column does not exist
   std::lock_guard<std::mutex> lock(mu_);
   assert(request.table_name() == schema_.name());
 
