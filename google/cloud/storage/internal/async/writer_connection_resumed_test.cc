@@ -152,6 +152,100 @@ TEST(WriteConnectionResumed, Cancel) {
   EXPECT_THAT(status, StatusIs(StatusCode::kCancelled));
 }
 
+TEST(WriterConnectionResumed, FlushEmpty) {
+  AsyncSequencer<bool> sequencer;
+  auto initial_request = google::storage::v2::BidiWriteObjectRequest{};
+
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  EXPECT_CALL(*mock, PersistedState)
+      .WillRepeatedly(Return(MakePersistedState(0)));
+  EXPECT_CALL(*mock, Flush).WillOnce([&](auto const& p) {
+    EXPECT_TRUE(p.payload().empty());
+    return sequencer.PushBack("Flush").then([](auto f) {
+      if (!f.get()) return TransientError();
+      return Status{};
+    });
+  });
+  EXPECT_CALL(*mock, Query).WillOnce([&]() {
+    return sequencer.PushBack("Query").then(
+        [](auto f) -> StatusOr<std::int64_t> {
+          if (!f.get()) return TransientError();
+          return 0;
+        });
+  });
+
+  MockFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call).Times(0);
+
+  auto connection =
+      MakeWriterConnectionResumed(mock_factory.AsStdFunction(), std::move(mock),
+                                  initial_request, nullptr, Options{});
+  EXPECT_THAT(connection->PersistedState(), VariantWith<std::int64_t>(0));
+
+  auto flush = connection->Flush({});
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Flush");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Query");
+  next.first.set_value(true);
+
+  EXPECT_THAT(flush.get(), StatusIs(StatusCode::kOk));
+}
+
+TEST(WriteConnectionResumed, FlushNonEmpty) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_unique<MockAsyncWriterConnection>();
+  auto initial_request = google::storage::v2::BidiWriteObjectRequest{};
+  auto const payload = TestPayload(1024);
+
+  EXPECT_CALL(*mock, PersistedState)
+      .WillRepeatedly(Return(MakePersistedState(0)));
+  EXPECT_CALL(*mock, Flush).WillOnce([&](auto const& p) {
+    EXPECT_EQ(p.payload(), payload.payload());
+    return sequencer.PushBack("Flush").then([](auto f) {
+      if (!f.get()) return TransientError();
+      return Status{};
+    });
+  });
+  EXPECT_CALL(*mock, Query).WillOnce([&]() {
+    return sequencer.PushBack("Query").then(
+        [](auto f) -> StatusOr<std::int64_t> {
+          if (!f.get()) return TransientError();
+          return 1024;
+        });
+  });
+
+  MockFactory mock_factory;
+  EXPECT_CALL(mock_factory, Call).Times(0);
+
+  auto connection =
+      MakeWriterConnectionResumed(mock_factory.AsStdFunction(), std::move(mock),
+                                  initial_request, nullptr, Options{});
+  EXPECT_THAT(connection->PersistedState(), VariantWith<std::int64_t>(0));
+
+  auto write = connection->Write(payload);
+  ASSERT_FALSE(write.is_ready());
+
+  auto flush = connection->Flush({});
+  ASSERT_FALSE(flush.is_ready());
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Flush");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Query");
+  next.first.set_value(true);
+
+  EXPECT_TRUE(flush.is_ready());
+  EXPECT_THAT(flush.get(), StatusIs(StatusCode::kOk));
+
+  EXPECT_TRUE(write.is_ready());
+  EXPECT_THAT(write.get(), StatusIs(StatusCode::kOk));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

@@ -121,6 +121,11 @@ class AsyncWriter {
                                                          WritePayload payload);
 
   /**
+   * Close the upload by flushing the remaining data in buffer.
+   */
+  future<Status> Close();
+
+  /**
    * The headers (if any) returned by the service. For debugging only.
    *
    * @warning The contents of these headers may change without notice. Unless
