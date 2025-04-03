@@ -39,6 +39,8 @@ namespace experimental {
  *
  * @note This option is currently experimental and only works with services
  *     using JSON/HTTP transport.
+ *
+ * @note Requires libcurl v7.71.0 or later.
  */
 struct ClientSslCertificateOption {
   using Type = SslCertificate;
