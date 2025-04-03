@@ -82,7 +82,7 @@ std::map<std::string, std::vector<Cell>> ColumnFamily::DeleteRow(
   auto row_it = rows_.find(row_key);
 
   for (auto column_it = row_it->second.begin();
-       column_it != row_it->second.end();
+       row_it != rows_.end() && column_it != row_it->second.end();
        // Why we call row_it->second.begin() every iteration:
        // DeleteColumn can invalidate the iterator by deleting a
        // column family row's keys (the column qualifiers and their
@@ -91,7 +91,14 @@ std::map<std::string, std::vector<Cell>> ColumnFamily::DeleteRow(
        // are removing all cells of every column, we know DeleteColumn
        // will eventually remove all the columns and the row itself,
        // so this loop will terminate.
-       column_it = row_it->second.begin()) {
+       //
+       // Unfortunately we also have to re-initialize the row_it after
+       // every loop execution because DeleteColumn maintains the
+       // invariant that a row cannot be empty, so every loop
+       // execution can also delete the row_key and invalidate the
+       // iterator.
+       row_it = rows_.find(row_key),
+            column_it = row_it->second.begin()) {
     // Not setting start and end timestamps selects all cells for deletion.
     ::google::bigtable::v2::TimestampRange time_range;
 
