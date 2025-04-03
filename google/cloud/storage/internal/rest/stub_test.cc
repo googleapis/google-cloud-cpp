@@ -16,17 +16,8 @@
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/testing_util/mock_rest_client.h"
-#include <google/cloud/internal/rest_response.h>
 #include "google/cloud/testing_util/status_matchers.h"
-#include "google/cloud/storage/client.h"
-#include <google/cloud/storage/options.h>
 #include <gmock/gmock.h>
-#include <vector>
-#include <gtest/gtest.h>
-#include <google/cloud/internal/rest_response.h>
-#include <google/cloud/internal/rest_request.h>
-#include <string>
-#include <sstream>
 
 namespace google {
 namespace cloud {
@@ -41,9 +32,7 @@ using ::google::cloud::rest_internal::RestRequest;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::testing_util::MockRestClient;
 using ::google::cloud::testing_util::StatusIs;
-using ::google::cloud::rest_internal::RestResponse;
 using ::testing::_;
-using ::testing::ByMove;
 using ::testing::AllOf;
 using ::testing::An;
 using ::testing::Contains;
@@ -54,9 +43,6 @@ using ::testing::Matcher;
 using ::testing::Pair;
 using ::testing::ResultOf;
 using ::testing::Return;
-using ::testing::UnorderedElementsAre;
-using ::google::cloud::StatusOr;
-using ::google::cloud::rest_internal::HttpStatusCode;
 
 TEST(RestStubTest, ResolveStorageAuthorityProdEndpoint) {
   auto options =
@@ -158,34 +144,44 @@ Matcher<std::vector<absl::Span<char const>> const&> ExpectedPayload() {
 }
 
 TEST(RestStubTest, AddCustomHeadersTest) {
-    google::cloud::Options options;
-    options.set<google::cloud::CustomHeadersOption>({{"custom-header-1", "value1"}, {"custom-header-2", "value2"}});
-    google::cloud::storage::internal::RestRequestBuilder builder("dummy-path");
-    auto status = google::cloud::storage::internal::AddCustomHeaders(options, builder);
-    EXPECT_TRUE(status.ok());
-    RestRequest request = std::move(builder).BuildRequest();
-    auto const& headers = request.headers();
-    EXPECT_THAT(headers, Contains(Pair("custom-header-1", std::vector<std::string>{"value1"})));
-    EXPECT_THAT(headers, Contains(Pair("custom-header-2", std::vector<std::string>{"value2"})));
+  google::cloud::Options options;
+  options.set<google::cloud::CustomHeadersOption>(
+      {{"custom-header-1", "value1"}, {"custom-header-2", "value2"}});
+  google::cloud::storage::internal::RestRequestBuilder builder("dummy-path");
+  auto status =
+      google::cloud::storage::internal::AddCustomHeaders(options, builder);
+  EXPECT_TRUE(status.ok());
+  RestRequest request = std::move(builder).BuildRequest();
+  auto const& headers = request.headers();
+  EXPECT_THAT(headers, Contains(Pair("custom-header-1",
+                                     std::vector<std::string>{"value1"})));
+  EXPECT_THAT(headers, Contains(Pair("custom-header-2",
+                                     std::vector<std::string>{"value2"})));
 }
 
 TEST(RestStubTest, GlobalCustomHeadersAppearInRequestTest) {
-    google::cloud::Options global_opts;
-    global_opts.set<google::cloud::CustomHeadersOption>({{"custom-header-1", "value1"}, {"custom-header-2", "value2"}});
-    auto mock_client = std::make_shared<MockRestClient>();
-    EXPECT_CALL(*mock_client, Get(_, _))
-    .WillOnce([](google::cloud::rest_internal::RestContext&, const google::cloud::rest_internal::RestRequest& request) {
+  google::cloud::Options global_opts;
+  global_opts.set<google::cloud::CustomHeadersOption>(
+      {{"custom-header-1", "value1"}, {"custom-header-2", "value2"}});
+  auto mock_client = std::make_shared<MockRestClient>();
+  EXPECT_CALL(*mock_client, Get(_, _))
+      .WillOnce([](google::cloud::rest_internal::RestContext&,
+                   google::cloud::rest_internal::RestRequest const& request) {
         auto const& headers = request.headers();
-        EXPECT_THAT(headers, Contains(Pair("custom-header-1", std::vector<std::string>{"value1"})));
-        EXPECT_THAT(headers, Contains(Pair("custom-header-2", std::vector<std::string>{"value2"})));
+        EXPECT_THAT(headers,
+                    Contains(Pair("custom-header-1",
+                                  std::vector<std::string>{"value1"})));
+        EXPECT_THAT(headers,
+                    Contains(Pair("custom-header-2",
+                                  std::vector<std::string>{"value2"})));
 
         return PermanentError();
-    });
-    auto stub = std::make_unique<RestStub>(global_opts, mock_client, mock_client);
-    ListObjectsRequest list_req("test_bucket");
-    RestContext context(global_opts);
-    auto result = stub->ListObjects(context, global_opts, list_req);
-    EXPECT_FALSE(result.ok());
+      });
+  auto stub = std::make_unique<RestStub>(global_opts, mock_client, mock_client);
+  ListObjectsRequest list_req("test_bucket");
+  RestContext context(global_opts);
+  auto result = stub->ListObjects(context, global_opts, list_req);
+  EXPECT_FALSE(result.ok());
 }
 
 TEST(RestStubTest, ListBuckets) {
