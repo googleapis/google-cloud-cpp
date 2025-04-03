@@ -41,7 +41,7 @@ jobs:
         msvc: [ msvc-2022 ]
         build_type: [ Debug, Release ]
         arch: [ x64, x86 ]
-        shard: [Core1, Core2, Core3, Core4, Compute, AIPlatform, Shard1, Shard2, Shard3, Other]
+        shard: [Core1, Core2, Core3, Core4, Compute, AIPlatform, Shard1, Shard2, Shard3, Shard4, Other]
         exclude:
         # Also skip shards (Compute and Other) that contain only generated code.
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
@@ -54,6 +54,8 @@ jobs:
           shard: Shard2
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
           shard: Shard3
+        - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
+          shard: Shard4
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
           shard: Other
         # No need to duplicate testing with x86 mode and Debug mode
@@ -170,6 +172,45 @@ jobs:
           vision
           workflows
         )
+        shard4_features=(
+          accessapproval
+          accesscontextmanager
+          advisorynotifications
+          alloydb
+          apigateway
+          apigeeconnect
+          apikeys
+          apphub
+          artifactregistry
+          assuredworkloads
+          backupdr
+          baremetalsolution
+          batch
+          certificatemanager
+          cloudquotas
+          commerce
+          confidentialcomputing
+          config
+          connectors
+          contactcenterinsights
+          container
+          datafusion
+          datamigration
+          datastream
+          deploy
+          developerconnect
+          dlp
+          documentai
+          domains
+          edgecontainer
+          edgenetwork
+          essentialcontacts
+          filestore
+          financialservices
+          gkebackup
+          gkeconnect
+          gkehub
+        )
         if [[ "${{ matrix.shard }}" == "Core1" ]]; then
           features="$(printf ",%s" "${core1_features[@]}")"
           echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
@@ -195,6 +236,9 @@ jobs:
         elif [[ "${{matrix.shard}}" == "Shard3" ]]; then
           features="$(printf ",%s" "${shard3_features[@]}")"
           echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
+        elif [[ "${{matrix.shard}}" == "Shard4" ]]; then
+          features="$(printf ",%s" "${shard4_features[@]}")"
+          echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
         else
           skipped_features=("${core1_features[@]}")
           skipped_features+=("${core2_features[@]}")
@@ -205,6 +249,7 @@ jobs:
           skipped_features+=("${shard1_features[@]}")
           skipped_features+=("${shard2_features[@]}")
           skipped_features+=("${shard3_features[@]}")
+          skipped_features+=("${shard4_features[@]}")
           # We use vcpkg in this build, which ships with Protobuf v21.x.
           # Both `asset` and `channel` require Protobuf >= 23.x to compile on
           # Windows.
