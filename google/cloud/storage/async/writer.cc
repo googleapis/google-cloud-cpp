@@ -86,6 +86,12 @@ future<StatusOr<google::storage::v2::Object>> AsyncWriter::Finalize(
   return Finalize(std::move(token), WritePayload{});
 }
 
+future<Status> AsyncWriter::Close() {
+  return impl_->Flush(WritePayload{}).then([impl = impl_](auto f) {
+    return f.get();
+  });
+}
+
 RpcMetadata AsyncWriter::GetRequestMetadata() const {
   return impl_->GetRequestMetadata();
 }
