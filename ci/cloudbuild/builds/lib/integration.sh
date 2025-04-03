@@ -132,6 +132,21 @@ function integration::bazel_args() {
       "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12=${KEY_DIR}/${key_base}.p12"
     )
   fi
+
+  # Adds environment variables for SSL testing.
+  # Info on how to create/refresh these can be found at:
+  #    https://cloud.google.com/certificate-authority-service/docs/create-certificate
+  gcloud storage cp --quiet "${SECRETS_BUCKET}/client.crt" "${KEY_DIR}/client.crt" >/dev/null 2>&1 || true
+  gcloud storage cp --quiet "${SECRETS_BUCKET}/client.chain.crt" "${KEY_DIR}/client.chain.crt" >/dev/null 2>&1 || true
+  gcloud storage cp --quiet "${SECRETS_BUCKET}/client.private.pem" "${KEY_DIR}/client.private.pem" >/dev/null 2>&1 || true
+  if [[ -r "${KEY_DIR}/client.crt" ]] && [[ -r "${KEY_DIR}/client.chain.crt" ]] && [[ -r "${KEY_DIR}/client.private.pem" ]]; then
+    args+=(
+      "--test_env=GOOGLE_CLOUD_CPP_CLIENT_SSL_CERT_FILE=${KEY_DIR}/client.crt"
+      "--test_env=GOOGLE_CLOUD_CPP_CLIENT_SSL_CERT_CHAIN_FILE=${KEY_DIR}/client.chain.crt"
+      "--test_env=GOOGLE_CLOUD_CPP_CLIENT_SSL_KEY_FILE=${KEY_DIR}/client.private.pem"
+    )
+  fi
+
   printf "%s\n" "${args[@]}"
 }
 

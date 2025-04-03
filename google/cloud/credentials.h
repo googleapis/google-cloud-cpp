@@ -17,6 +17,7 @@
 
 #include "google/cloud/common_options.h"
 #include "google/cloud/options.h"
+#include "google/cloud/ssl_certificate.h"
 #include "google/cloud/version.h"
 #include <chrono>
 #include <memory>
@@ -29,6 +30,22 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 class CredentialsVisitor;
 }  // namespace internal
+
+namespace experimental {
+/**
+ * Represents a Client SSL certificate used in mTLS authentication.
+ *
+ * Providing this option enables both PEER and HOST verification.
+ *
+ * @note This option is currently experimental and only works with services
+ *     using JSON/HTTP transport.
+ *
+ * @note Requires libcurl v7.71.0 or later.
+ */
+struct ClientSslCertificateOption {
+  using Type = SslCertificate;
+};
+}  // namespace experimental
 
 /**
  * An opaque representation of the authentication configuration.
@@ -433,7 +450,8 @@ struct CARootsFilePathOption {
 using UnifiedCredentialsOptionList =
     OptionList<AccessTokenLifetimeOption, CARootsFilePathOption,
                DelegatesOption, ScopesOption, LoggingComponentsOption,
-               UnifiedCredentialsOption>;
+               UnifiedCredentialsOption,
+               experimental::ClientSslCertificateOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
