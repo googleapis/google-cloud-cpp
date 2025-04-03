@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/emulator/column_family.h"
 #include "google/cloud/bigtable/emulator/table.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -128,30 +129,27 @@ Status has_cell(
     std::string const& value) {
   auto column_family_it = table->find(column_family);
   if (column_family_it == table->end()) {
-    return Status(
-        // FIXME: Change this to use google-standard Status builder
-        // everywhere in this test module (and not StatusCode::...).
-        StatusCode::kNotFound,
-        absl::StrFormat("column family %s not found in table", column_family),
-        ErrorInfo());
+    return NotFoundError(
+        "column family not found in table",
+        GCP_ERROR_INFO().WithMetadata("column family", column_family));
   }
 
   auto const& cf = column_family_it->second;
   auto column_family_row_it = cf->find(row_key);
   if (column_family_row_it == cf->end()) {
-    return Status(StatusCode::kNotFound,
-                  absl::StrFormat("no row key %s found in column famiily %s",
-                                  row_key, column_family),
-                  ErrorInfo());
+    return NotFoundError(
+        "no row key found in column family",
+        GCP_ERROR_INFO()
+            .WithMetadata("row key", row_key)
+            .WithMetadata("column family", column_family));
   }
 
   auto& column_family_row = column_family_row_it->second;
   auto column_row_it = column_family_row.find(column_qualifier);
   if (column_row_it == column_family_row.end()) {
-    return Status(
-        StatusCode::kNotFound,
-        absl::StrFormat("no column found with qualifer %s", column_qualifier),
-        ErrorInfo());
+    return NotFoundError(
+        "no column found with qualifer",
+        GCP_ERROR_INFO().WithMetadata("column qualifer", column_qualifier));
   }
 
   auto& column_row = column_row_it->second;
@@ -159,17 +157,20 @@ Status has_cell(
       column_row.find(std::chrono::duration_cast<std::chrono::milliseconds>(
           std::chrono::microseconds(timestamp_micros)));
   if (timestamp_it == column_row.end()) {
-    return Status(StatusCode::kNotFound, "timestamp not found", ErrorInfo());
+    return NotFoundError(
+        "timestamp not found",
+        GCP_ERROR_INFO().WithMetadata("timestamp",
+                                      absl::StrFormat("%d", timestamp_micros)));
   }
 
   if (timestamp_it->second != value) {
-    return Status(StatusCode::kNotFound,
-                  absl::StrFormat("wrong value: expected %s, found %s", value,
-                                  timestamp_it->second),
-                  ErrorInfo());
+    return NotFoundError("wrong value",
+                         GCP_ERROR_INFO()
+                             .WithMetadata("expected", value)
+                             .WithMetadata("found", timestamp_it->second));
   }
 
-  return Status(StatusCode::kOk, "", ErrorInfo());
+  return Status();
 }
 
 Status has_column(
@@ -178,53 +179,51 @@ Status has_column(
     std::string const& column_qualifier) {
   auto column_family_it = table->find(column_family);
   if (column_family_it == table->end()) {
-    return Status(
-        StatusCode::kNotFound,
-        absl::StrFormat("column family %s not found in table", column_family),
-        ErrorInfo());
+    return NotFoundError(
+        "columnn family not found in table",
+        GCP_ERROR_INFO().WithMetadata("column family", column_family));
   }
 
   auto const& cf = column_family_it->second;
   auto column_family_row_it = cf->find(row_key);
   if (column_family_row_it == cf->end()) {
-    return Status(StatusCode::kNotFound,
-                  absl::StrFormat("no row key %s found in column famiily %s",
-                                  row_key, column_family),
-                  ErrorInfo());
+    return internal::NotFoundError(
+        "row key not found in column family",
+        GCP_ERROR_INFO()
+            .WithMetadata("row key", row_key)
+            .WithMetadata("column family", column_family));
   }
 
   auto& column_family_row = column_family_row_it->second;
   auto column_row_it = column_family_row.find(column_qualifier);
   if (column_row_it == column_family_row.end()) {
-    return Status(
-        StatusCode::kNotFound,
-        absl::StrFormat("no column found with qualifer %s", column_qualifier),
-        ErrorInfo());
+    return NotFoundError(
+        "no column found with supplied qualifer",
+        GCP_ERROR_INFO().WithMetadata("column qualifer", column_qualifier));
   }
 
-  return Status(StatusCode::kOk, "", ErrorInfo());
+  return Status();
 }
 
 Status has_row(std::shared_ptr<google::cloud::bigtable::emulator::Table>& table,
                std::string const& column_family, std::string const& row_key) {
   auto column_family_it = table->find(column_family);
   if (column_family_it == table->end()) {
-    return Status(
-        StatusCode::kNotFound,
-        absl::StrFormat("column family %s not found in table", column_family),
-        ErrorInfo());
+    return NotFoundError(
+        "column family not found in table",
+        GCP_ERROR_INFO().WithMetadata("column family", column_family));
   }
 
   auto const& cf = column_family_it->second;
   auto column_family_row_it = cf->find(row_key);
   if (column_family_row_it == cf->end()) {
-    return Status(StatusCode::kNotFound,
-                  absl::StrFormat("no row key %s found in column famiily %s",
-                                  row_key, column_family),
-                  ErrorInfo());
+    return NotFoundError("row key not found in column family",
+                         GCP_ERROR_INFO()
+                             .WithMetadata("row key", row_key)
+                             .WithMetadata("column family", column_family));
   }
 
-  return Status(StatusCode::kOk, "", ErrorInfo());
+  return Status();
 }
 
 // Does the SetCell mutation work to set a cell to a specific value?
