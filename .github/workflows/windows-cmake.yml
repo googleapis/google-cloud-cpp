@@ -41,7 +41,7 @@ jobs:
         msvc: [ msvc-2022 ]
         build_type: [ Debug, Release ]
         arch: [ x64, x86 ]
-        shard: [Core1, Core2, Core3, Compute, AIPlatform, Shard1, Shard2, Shard3, Other]
+        shard: [Core1, Core2, Core3, Core4, Compute, AIPlatform, Shard1, Shard2, Shard3, Shard4, Other]
         exclude:
         # Also skip shards (Compute and Other) that contain only generated code.
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
@@ -54,6 +54,8 @@ jobs:
           shard: Shard2
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
           shard: Shard3
+        - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
+          shard: Shard4
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
           shard: Other
         # No need to duplicate testing with x86 mode and Debug mode
@@ -82,7 +84,8 @@ jobs:
         echo "vcpkg-version=$(cat ci/etc/vcpkg-version.txt)" >> "${GITHUB_OUTPUT}"
         core1_features=(bigtable pubsub pubsublite)
         core2_features=(spanner)
-        core3_features=(storage storage_grpc)
+        core3_features=(storage)
+        core4_features=(storage_grpc)
         # These are the libraries with the most "clients". To build the list
         # run something like this and create shards:
         #
@@ -169,6 +172,45 @@ jobs:
           vision
           workflows
         )
+        shard4_features=(
+          accessapproval
+          accesscontextmanager
+          advisorynotifications
+          alloydb
+          apigateway
+          apigeeconnect
+          apikeys
+          apphub
+          artifactregistry
+          assuredworkloads
+          backupdr
+          baremetalsolution
+          batch
+          certificatemanager
+          cloudquotas
+          commerce
+          confidentialcomputing
+          config
+          connectors
+          contactcenterinsights
+          container
+          datafusion
+          datamigration
+          datastream
+          deploy
+          developerconnect
+          dlp
+          documentai
+          domains
+          edgecontainer
+          edgenetwork
+          essentialcontacts
+          filestore
+          financialservices
+          gkebackup
+          gkeconnect
+          gkehub
+        )
         if [[ "${{ matrix.shard }}" == "Core1" ]]; then
           features="$(printf ",%s" "${core1_features[@]}")"
           echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
@@ -177,6 +219,9 @@ jobs:
           echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
         elif [[ "${{ matrix.shard }}" == "Core3" ]]; then
           features="$(printf ",%s" "${core3_features[@]}")"
+          echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
+        elif [[ "${{ matrix.shard }}" == "Core4" ]]; then
+          features="$(printf ",%s" "${core4_features[@]}")"
           echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
         elif [[ "${{matrix.shard}}" == "Compute" ]]; then
           echo "features=compute" >> "${GITHUB_OUTPUT}"
@@ -191,15 +236,20 @@ jobs:
         elif [[ "${{matrix.shard}}" == "Shard3" ]]; then
           features="$(printf ",%s" "${shard3_features[@]}")"
           echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
+        elif [[ "${{matrix.shard}}" == "Shard4" ]]; then
+          features="$(printf ",%s" "${shard4_features[@]}")"
+          echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
         else
           skipped_features=("${core1_features[@]}")
           skipped_features+=("${core2_features[@]}")
           skipped_features+=("${core3_features[@]}")
+          skipped_features+=("${core4_features[@]}")
           skipped_features+=(compute)
           skipped_features+=(aiplatform)
           skipped_features+=("${shard1_features[@]}")
           skipped_features+=("${shard2_features[@]}")
           skipped_features+=("${shard3_features[@]}")
+          skipped_features+=("${shard4_features[@]}")
           # We use vcpkg in this build, which ships with Protobuf v21.x.
           # Both `asset` and `channel` require Protobuf >= 23.x to compile on
           # Windows.
@@ -210,6 +260,12 @@ jobs:
     - name: Pre Build Disk Space
       shell: bash
       run: df -m
+    - name: Download and Install CMake
+      shell: bash
+      run: |
+        choco install -y --allow-downgrade cmake --version 3.31.6 || \
+        (sleep 60  ; choco install -y --allow-downgrade cmake --version 3.31.6) || \
+        (sleep 120 ; choco install -y --allow-downgrade cmake --version 3.31.6)
     - name: Download and Install sccache
       if: ${{ inputs.sccache-mode != 'DISABLED' }}
       working-directory: "${{runner.temp}}"
