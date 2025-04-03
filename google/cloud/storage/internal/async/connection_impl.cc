@@ -376,6 +376,7 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p,
           std::unique_ptr<storage_experimental::AsyncWriterConnection>> {
         auto rpc = f.get();
         if (!rpc) return std::move(rpc).status();
+        persisted_size = rpc->first_response.resource().size();
         auto impl = std::make_unique<AsyncWriterConnectionImpl>(
             current, request, std::move(rpc->stream), hash, persisted_size,
             false);

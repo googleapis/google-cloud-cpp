@@ -72,6 +72,7 @@ class AsyncWriterConnectionResumedState
         buffer_size_lwm_(buffer_size_lwm),
         buffer_size_hwm_(buffer_size_hwm) {
     finalized_future_ = finalized_.get_future();
+    flushed_future_ = flushed_.get_future();
     options_ = internal::MakeImmutableOptions(options);
     auto state = impl_->PersistedState();
     if (absl::holds_alternative<google::storage::v2::Object>(state)) {
@@ -118,7 +119,11 @@ class AsyncWriterConnectionResumedState
   }
 
   future<Status> Flush(storage_experimental::WritePayload const& p) {
-    return Write(p);
+    std::unique_lock<std::mutex> lk(mu_);
+    resend_buffer_.Append(WritePayloadImpl::GetImpl(p));
+    flush_ = true;
+    HandleNewData(std::move(lk), true);
+    return std::move(flushed_future_);
   }
 
   future<StatusOr<std::int64_t>> Query() {
@@ -153,10 +158,11 @@ class AsyncWriterConnectionResumedState
     return std::make_unique<Impl>(std::move(p));
   }
 
-  future<Status> HandleNewData(std::unique_lock<std::mutex> lk) {
+  future<Status> HandleNewData(std::unique_lock<std::mutex> lk,
+                               bool flush = false) {
     if (!resume_status_.ok()) return make_ready_future(resume_status_);
     auto const buffer_size = resend_buffer_.size();
-    flush_ = buffer_size >= buffer_size_lwm_;
+    flush_ = (buffer_size >= buffer_size_lwm_) || flush;
     auto result = make_ready_future(Status{});
     if (buffer_size >= buffer_size_hwm_) {
       auto p = promise<Status>();
@@ -174,7 +180,7 @@ class AsyncWriterConnectionResumedState
 
   void WriteLoop(std::unique_lock<std::mutex> lk) {
     writing_ = write_offset_ < resend_buffer_.size();
-    if (!writing_ && !finalize_) return;
+    if (!writing_ && !finalize_ && !flush_) return;
     auto const n = resend_buffer_.size() - write_offset_;
     auto payload = resend_buffer_.Subcord(write_offset_, n);
     if (finalize_) return FinalizeStep(std::move(lk), std::move(payload));
@@ -202,7 +208,10 @@ class AsyncWriterConnectionResumedState
     auto const size = payload.size();
     (void)impl->Flush(WritePayloadImpl::Make(std::move(payload)))
         .then([size, w = WeakFromThis()](auto f) {
-          if (auto self = w.lock()) return self->OnFlush(f.get(), size);
+          if (auto self = w.lock()) {
+            self->OnFlush(f.get(), size);
+            return;
+          }
         });
   }
 
@@ -212,7 +221,8 @@ class AsyncWriterConnectionResumedState
     write_offset_ += write_size;
     auto impl = Impl(lk);
     lk.unlock();
-    impl->Query().then([w = WeakFromThis()](auto f) {
+    impl->Query().then([this, result, w = WeakFromThis()](auto f) {
+      SetFlushed(std::unique_lock<std::mutex>(mu_), std::move(result));
       if (auto self = w.lock()) return self->OnQuery(f.get());
     });
   }
@@ -255,7 +265,9 @@ class AsyncWriterConnectionResumedState
     WriteLoop(std::move(lk));
     // The notifications are deferred until the lock is released, as they might
     // call back and try to acquire the lock.
-    for (auto const& h : handlers) h->Execute(Status{});
+    for (auto const& h : handlers) {
+      h->Execute(Status{});
+    }
   }
 
   void WriteStep(std::unique_lock<std::mutex> lk, absl::Cord payload) {
@@ -326,17 +338,33 @@ class AsyncWriterConnectionResumedState
     finalized.set_value(std::move(object));
   }
 
+  void SetFlushed(std::unique_lock<std::mutex> lk, Status result) {
+    if (!result.ok()) return SetError(std::move(lk), std::move(result));
+    writing_ = false;
+    finalize_ = false;
+    flush_ = false;
+    auto handlers = ClearHandlers(lk);
+    promise<Status> flushed{null_promise_t{}};
+    flushed.swap(flushed_);
+    lk.unlock();
+    for (auto& h : handlers) h->Execute(Status{});
+    flushed.set_value(result);
+  }
+
   void SetError(std::unique_lock<std::mutex> lk, Status status) {
     resume_status_ = status;
     writing_ = false;
     finalize_ = false;
     flush_ = false;
     auto handlers = ClearHandlers(lk);
+    promise<Status> flushed{null_promise_t{}};
+    flushed.swap(flushed_);
     promise<StatusOr<google::storage::v2::Object>> finalized{null_promise_t{}};
     finalized.swap(finalized_);
     lk.unlock();
     for (auto& h : handlers) h->Execute(status);
     finalized.set_value(std::move(status));
+    flushed.set_value(status);
   }
 
   std::shared_ptr<storage_experimental::AsyncWriterConnection> Impl(
@@ -384,9 +412,13 @@ class AsyncWriterConnectionResumedState
   // made.
   promise<StatusOr<google::storage::v2::Object>> finalized_;
 
+  promise<Status> flushed_;
+
   // Retrieve the future in the constructor, as some operations reset
   // finalized_.
   future<StatusOr<google::storage::v2::Object>> finalized_future_;
+
+  future<Status> flushed_future_;
 
   // The resend buffer. If there is an error, this will have all the data since
   // the last persisted byte and will be resent.
@@ -495,7 +527,7 @@ class AsyncWriterConnectionResumed
   }
 
   future<Status> Flush(storage_experimental::WritePayload p) override {
-    return Write(std::move(p));
+    return state_->Flush(std::move(p));
   }
 
   future<StatusOr<std::int64_t>> Query() override { return state_->Query(); }
