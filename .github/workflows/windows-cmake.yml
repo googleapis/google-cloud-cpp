@@ -41,7 +41,7 @@ jobs:
         msvc: [ msvc-2022 ]
         build_type: [ Debug, Release ]
         arch: [ x64, x86 ]
-        shard: [Core1, Core2, Core3, Compute, AIPlatform, Shard1, Shard2, Shard3, Other]
+        shard: [Core1, Core2, Core3, Core4, Compute, AIPlatform, Shard1, Shard2, Shard3, Other]
         exclude:
         # Also skip shards (Compute and Other) that contain only generated code.
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
@@ -82,7 +82,8 @@ jobs:
         echo "vcpkg-version=$(cat ci/etc/vcpkg-version.txt)" >> "${GITHUB_OUTPUT}"
         core1_features=(bigtable pubsub pubsublite)
         core2_features=(spanner)
-        core3_features=(storage storage_grpc)
+        core3_features=(storage)
+        core4_features=(storage_grpc)
         # These are the libraries with the most "clients". To build the list
         # run something like this and create shards:
         #
@@ -178,6 +179,9 @@ jobs:
         elif [[ "${{ matrix.shard }}" == "Core3" ]]; then
           features="$(printf ",%s" "${core3_features[@]}")"
           echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
+        elif [[ "${{ matrix.shard }}" == "Core4" ]]; then
+          features="$(printf ",%s" "${core4_features[@]}")"
+          echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
         elif [[ "${{matrix.shard}}" == "Compute" ]]; then
           echo "features=compute" >> "${GITHUB_OUTPUT}"
         elif [[ "${{matrix.shard}}" == "AIPlatform" ]]; then
@@ -195,6 +199,7 @@ jobs:
           skipped_features=("${core1_features[@]}")
           skipped_features+=("${core2_features[@]}")
           skipped_features+=("${core3_features[@]}")
+          skipped_features+=("${core4_features[@]}")
           skipped_features+=(compute)
           skipped_features+=(aiplatform)
           skipped_features+=("${shard1_features[@]}")
@@ -215,7 +220,7 @@ jobs:
       run: |
         choco install -y --allow-downgrade cmake --version 3.31.6 || \
         (sleep 60  ; choco install -y --allow-downgrade cmake --version 3.31.6) || \
-        (sleep 120 ; choco install -y --allow-downgrade cmake --version 3.31.6)      
+        (sleep 120 ; choco install -y --allow-downgrade cmake --version 3.31.6)
     - name: Download and Install sccache
       if: ${{ inputs.sccache-mode != 'DISABLED' }}
       working-directory: "${{runner.temp}}"
