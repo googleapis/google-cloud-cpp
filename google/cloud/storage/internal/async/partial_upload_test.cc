@@ -47,6 +47,39 @@ std::string RandomData(google::cloud::internal::DefaultPRNG& generator,
       "abcdefghijklmnopqrstuvwxyz0123456789");
 }
 
+TEST(PartialUpload, FinalizeEmptyWithoutChecksum) {
+  AsyncSequencer<bool> sequencer;
+
+  auto rpc = std::make_unique<MockStream>();
+  EXPECT_CALL(*rpc, Write)
+      .WillOnce([&sequencer](Request const& request, grpc::WriteOptions wopt) {
+        EXPECT_EQ(request.write_offset(), 0);
+        EXPECT_FALSE(request.has_write_object_spec());
+        EXPECT_FALSE(request.has_append_object_spec());
+        EXPECT_FALSE(request.has_upload_id());
+        EXPECT_TRUE(request.finish_write());
+        EXPECT_FALSE(request.has_object_checksums());
+        EXPECT_EQ(request.checksummed_data().crc32c(), 0);
+        EXPECT_EQ(request.object_checksums().crc32c(), 0);
+        EXPECT_TRUE(wopt.is_last_message());
+        return sequencer.PushBack("Write");
+      });
+
+  auto hash = std::make_unique<storage::internal::Crc32cHashFunction>();
+  Request request;
+  auto call = PartialUpload::Call(std::move(rpc), std::move(hash), request,
+                                  absl::Cord(), PartialUpload::kFinalize);
+  auto result = call->Start();
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_THAT(next.second, "Write");
+  next.first.set_value(true);
+
+  ASSERT_TRUE(result.is_ready());
+  auto success = result.get();
+  EXPECT_THAT(success, IsOkAndHolds(true));
+}
+
 TEST(PartialUpload, FinalizeEmpty) {
   AsyncSequencer<bool> sequencer;
 
@@ -68,8 +101,9 @@ TEST(PartialUpload, FinalizeEmpty) {
   auto hash = std::make_unique<storage::internal::Crc32cHashFunction>();
   Request request;
   request.set_upload_id("test-upload-id");
-  auto call = PartialUpload::Call(std::move(rpc), std::move(hash), request,
-                                  absl::Cord(), PartialUpload::kFinalize);
+  auto call =
+      PartialUpload::Call(std::move(rpc), std::move(hash), request,
+                          absl::Cord(), PartialUpload::kFinalizeWithChecksum);
 
   auto result = call->Start();
 
@@ -119,7 +153,8 @@ TEST(PartialUpload, FinalizeChunkAligned) {
   Request request;
   request.set_upload_id("test-upload-id");
   auto call = PartialUpload::Call(std::move(rpc), std::move(hash), request,
-                                  absl::Cord(buffer), PartialUpload::kFinalize);
+                                  absl::Cord(buffer),
+                                  PartialUpload::kFinalizeWithChecksum);
 
   auto result = call->Start();
 
@@ -184,7 +219,8 @@ TEST(PartialUpload, FinalizeChunkPartial) {
   Request request;
   request.set_upload_id("test-upload-id");
   auto call = PartialUpload::Call(std::move(rpc), std::move(hash), request,
-                                  absl::Cord(buffer), PartialUpload::kFinalize);
+                                  absl::Cord(buffer),
+                                  PartialUpload::kFinalizeWithChecksum);
 
   auto result = call->Start();
 
@@ -464,8 +500,9 @@ TEST(PartialUpload, ErrorOnChecksums) {
       storage::internal::HashValues{"invalid", ""});
   Request request;
   request.set_upload_id("test-upload-id");
-  auto call = PartialUpload::Call(std::move(rpc), std::move(hash), request,
-                                  absl::Cord(), PartialUpload::kFinalize);
+  auto call =
+      PartialUpload::Call(std::move(rpc), std::move(hash), request,
+                          absl::Cord(), PartialUpload::kFinalizeWithChecksum);
 
   auto result = call->Start();
 
