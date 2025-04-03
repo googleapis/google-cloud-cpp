@@ -213,9 +213,9 @@ jobs:
     - name: Download and Install CMake
       shell: bash
       run: |
-        choco install -y cmake --version 3.31.6 || \
-        (sleep 60  ; choco install -y cmake --version 3.31.6) || \
-        (sleep 120 ; choco install -y cmake --version 3.31.6)      
+        choco install -y --allow-downgrade cmake --version 3.31.6 || \
+        (sleep 60  ; choco install -y --allow-downgrade cmake --version 3.31.6) || \
+        (sleep 120 ; choco install -y --allow-downgrade cmake --version 3.31.6)      
     - name: Download and Install sccache
       if: ${{ inputs.sccache-mode != 'DISABLED' }}
       working-directory: "${{runner.temp}}"
