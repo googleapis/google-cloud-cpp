@@ -19,6 +19,7 @@
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/internal/rest_client.h"
+#include "google/cloud/storage/internal/rest/request_builder.h"
 #include <memory>
 #include <mutex>
 #include <string>
@@ -28,6 +29,8 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+
+Status AddCustomHeaders(Options const& options, RestRequestBuilder& builder);
 
 /**
  * Implements the low-level RPCs to Google Cloud Storage using a combination of

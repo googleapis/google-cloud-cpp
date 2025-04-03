@@ -106,22 +106,24 @@ StatusOr<ReturnType> CreateFromJson(
   return ReturnType::CreateFromJson(*payload);
 }
 
+}  // namespace
+
 Status AddAuthorizationHeader(Options const& options,
-                              RestRequestBuilder& builder) {
+  RestRequestBuilder& builder) {
   // In tests this option may not be set. And over time we want to retire it.
   if (!options.has<Oauth2CredentialsOption>()) return {};
   auto auth_header =
-      options.get<Oauth2CredentialsOption>()->AuthorizationHeader();
+  options.get<Oauth2CredentialsOption>()->AuthorizationHeader();
   if (!auth_header) return AuthHeaderError(std::move(auth_header).status());
   builder.AddHeader("Authorization", std::string(absl::StripPrefix(
-                                         *auth_header, "Authorization: ")));
+              *auth_header, "Authorization: ")));
   return {};
 }
 
 Status AddCustomHeaders(Options const& options, RestRequestBuilder& builder) {
   if (!options.has<CustomHeadersOption>()) return {};
   for (auto const& h : options.get<CustomHeadersOption>()) {
-    builder.AddHeader(h.first, h.second);
+  builder.AddHeader(h.first, h.second);
   }
   return {};
 }
@@ -133,8 +135,6 @@ Status AddHeaders(Options const& options, RestRequestBuilder& builder) {
   if (!ch.ok()) return ch;
   return {};
 }
-
-}  // namespace
 
 RestStub::RestStub(Options options)
     : options_(std::move(options)),
