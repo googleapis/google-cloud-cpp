@@ -333,6 +333,7 @@ Status CurlImpl::MakeRequest(HttpMethod method, RestContext& context,
     if (!status.ok()) return OnTransferError(context, std::move(status));
   }
 
+#if CURL_AT_LEAST_VERSION(7, 71, 0)
   if (client_ssl_cert_.has_value()) {
 #if CURL_AT_LEAST_VERSION(7, 71, 0)
     status = handle_.SetOption(CURLOPT_SSL_VERIFYPEER, 1L);
@@ -370,6 +371,7 @@ Status CurlImpl::MakeRequest(HttpMethod method, RestContext& context,
                                           LIBCURL_VERSION)));
 #endif
   }
+#endif
 
   if (method == HttpMethod::kGet) {
     status = handle_.SetOption(CURLOPT_NOPROGRESS, 1L);
