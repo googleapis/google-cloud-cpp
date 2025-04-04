@@ -63,4 +63,4 @@ int main(int argc, char* argv[]) {
 
   return 0;
 }
-//! [all] [START storage_enable_otel_tracing]
+//! [all] [END storage_enable_otel_tracing]
