@@ -148,9 +148,7 @@ TEST(RestStubTest, AddCustomHeadersTest) {
   options.set<google::cloud::CustomHeadersOption>(
       {{"custom-header-1", "value1"}, {"custom-header-2", "value2"}});
   google::cloud::storage::internal::RestRequestBuilder builder("dummy-path");
-  auto status =
-      google::cloud::storage::internal::AddCustomHeaders(options, builder);
-  EXPECT_TRUE(status.ok());
+  google::cloud::storage::internal::AddCustomHeaders(options, builder);
   RestRequest request = std::move(builder).BuildRequest();
   auto const& headers = request.headers();
   EXPECT_THAT(headers, Contains(Pair("custom-header-1",

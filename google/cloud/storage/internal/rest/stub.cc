@@ -120,19 +120,17 @@ Status AddAuthorizationHeader(Options const& options,
   return {};
 }
 
-Status AddCustomHeaders(Options const& options, RestRequestBuilder& builder) {
-  if (!options.has<CustomHeadersOption>()) return {};
+void AddCustomHeaders(Options const& options, RestRequestBuilder& builder) {
+  if (!options.has<CustomHeadersOption>()) return;
   for (auto const& h : options.get<CustomHeadersOption>()) {
     builder.AddHeader(h.first, h.second);
   }
-  return {};
 }
 
 Status AddHeaders(Options const& options, RestRequestBuilder& builder) {
   auto ah = AddAuthorizationHeader(options, builder);
   if (!ah.ok()) return ah;
-  auto ch = AddCustomHeaders(options, builder);
-  if (!ch.ok()) return ch;
+  AddCustomHeaders(options, builder);
   return {};
 }
 
