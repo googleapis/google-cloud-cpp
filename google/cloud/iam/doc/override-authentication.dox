@@ -17,6 +17,8 @@ Follow these links to find examples for other \c *Client classes:
 - [\c iam_credentials_v1::IAMCredentialsClient](@ref iam_credentials_v1::IAMCredentialsClient-service-account-snippet)
 - [\c iam_v1::IAMPolicyClient](@ref iam_v1::IAMPolicyClient-service-account-snippet)
 - [\c iam_v2::PoliciesClient](@ref iam_v2::PoliciesClient-service-account-snippet)
+- [\c iam_v3::PolicyBindingsClient](@ref iam_v3::PolicyBindingsClient-service-account-snippet)
+- [\c iam_v3::PrincipalAccessBoundaryPoliciesClient](@ref iam_v3::PrincipalAccessBoundaryPoliciesClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -55,6 +57,18 @@ guide for more details.
 /*! @page iam_v2::PoliciesClient-service-account-snippet Override iam_v2::PoliciesClient Authentication Defaults
 
 @snippet google/cloud/iam/v2/samples/policies_client_samples.cc with-service-account
+
+*/
+
+/*! @page iam_v3::PolicyBindingsClient-service-account-snippet Override iam_v3::PolicyBindingsClient Authentication Defaults
+
+@snippet google/cloud/iam/v3/samples/policy_bindings_client_samples.cc with-service-account
+
+*/
+
+/*! @page iam_v3::PrincipalAccessBoundaryPoliciesClient-service-account-snippet Override iam_v3::PrincipalAccessBoundaryPoliciesClient Authentication Defaults
+
+@snippet google/cloud/iam/v3/samples/principal_access_boundary_policies_client_samples.cc with-service-account
 
 */
 // <!-- inject-authentication-pages-end -->

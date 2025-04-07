@@ -166,6 +166,7 @@ declare -A -r LIBRARIES=(
   ["grafeas"]="@com_google_googleapis//grafeas/v1:grafeas_cc_grpc"
   ["iam"]="@com_google_googleapis//google/iam/admin/v1:admin_cc_grpc"
   ["iam_v2"]="@com_google_googleapis//google/iam/v2:iam_cc_grpc"
+  ["iam_v3"]="@com_google_googleapis//google/iam/v3:iam_cc_grpc"
   ["iap"]="@com_google_googleapis//google/cloud/iap/v1:iap_cc_grpc"
   ["ids"]="@com_google_googleapis//google/cloud/ids/v1:ids_cc_grpc"
   ["kms"]="$(
