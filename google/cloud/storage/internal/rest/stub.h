@@ -30,8 +30,6 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-void AddCustomHeaders(Options const& options, RestRequestBuilder& builder);
-
 /**
  * Implements the low-level RPCs to Google Cloud Storage using a combination of
  * the google-cloud-cpp::rest-internal library and GCS bespoke libcurl wrappers.

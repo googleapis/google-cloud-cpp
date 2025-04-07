@@ -143,20 +143,6 @@ Matcher<std::vector<absl::Span<char const>> const&> ExpectedPayload() {
   return An<std::vector<absl::Span<char const>> const&>();
 }
 
-TEST(RestStubTest, AddCustomHeadersTest) {
-  google::cloud::Options options;
-  options.set<google::cloud::CustomHeadersOption>(
-      {{"custom-header-1", "value1"}, {"custom-header-2", "value2"}});
-  google::cloud::storage::internal::RestRequestBuilder builder("dummy-path");
-  google::cloud::storage::internal::AddCustomHeaders(options, builder);
-  RestRequest request = std::move(builder).BuildRequest();
-  auto const& headers = request.headers();
-  EXPECT_THAT(headers, Contains(Pair("custom-header-1",
-                                     std::vector<std::string>{"value1"})));
-  EXPECT_THAT(headers, Contains(Pair("custom-header-2",
-                                     std::vector<std::string>{"value2"})));
-}
-
 TEST(RestStubTest, GlobalCustomHeadersAppearInRequestTest) {
   google::cloud::Options global_opts;
   global_opts.set<google::cloud::CustomHeadersOption>(
