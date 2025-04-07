@@ -19,6 +19,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/ssl_certificate.h"
 #include "google/cloud/version.h"
+#include "absl/strings/string_view.h"
 #include <chrono>
 #include <memory>
 #include <string>
@@ -45,6 +46,23 @@ namespace experimental {
 struct ClientSslCertificateOption {
   using Type = SslCertificate;
 };
+
+/**
+ * Represents one or more certificates to be added to the CA store in lieu of
+ * using any CA certificates stored on the filesystem.
+ *
+ * @note This option is currently experimental and only works with OpenSSL and
+ *     services using JSON/HTTP transport.
+ *
+ * @note Specifying this option disables reading any certificates that may exist
+ *     on the filesystem.
+ *
+ * @note Requires libcurl v7.10.6 or later.
+ */
+struct CAInMemoryOption {
+  using Type = std::vector<absl::string_view>;
+};
+
 }  // namespace experimental
 
 /**
@@ -447,11 +465,10 @@ struct CARootsFilePathOption {
 };
 
 /// A list of  options related to authentication.
-using UnifiedCredentialsOptionList =
-    OptionList<AccessTokenLifetimeOption, CARootsFilePathOption,
-               DelegatesOption, ScopesOption, LoggingComponentsOption,
-               UnifiedCredentialsOption,
-               experimental::ClientSslCertificateOption>;
+using UnifiedCredentialsOptionList = OptionList<
+    AccessTokenLifetimeOption, CARootsFilePathOption, DelegatesOption,
+    ScopesOption, LoggingComponentsOption, UnifiedCredentialsOption,
+    experimental::ClientSslCertificateOption, experimental::CAInMemoryOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
