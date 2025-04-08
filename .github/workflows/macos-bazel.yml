@@ -207,6 +207,7 @@ jobs:
         export EXECUTE_INTEGRATION_TESTS=${{ inputs.execute-integration-tests }}
         ci/gha/builds/macos-bazel.sh ${{ join(matrix.targets, ' ') }}
     - name: Post Tests Disk Space
+      if: ${{ always() }}
       run: df -m
     env:
       BAZEL_REMOTE_CACHE: https://storage.googleapis.com/cloud-cpp-community-gha-cache/bazel-cache/${{ matrix.os }}
