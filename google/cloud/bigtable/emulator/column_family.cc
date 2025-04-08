@@ -115,15 +115,8 @@ std::vector<Cell> ColumnFamily::DeleteColumn(
     std::string const& row_key, std::string const& column_qualifier,
     ::google::bigtable::v2::TimestampRange const& time_range) {
   auto row_it = rows_.find(row_key);
-  if (row_it != rows_.end()) {
-    auto erased_cells =
-        row_it->second.DeleteColumn(column_qualifier, time_range);
-    if (!row_it->second.HasColumns()) {
-      rows_.erase(row_it);
-    }
-    return erased_cells;
-  }
-  return std::vector<Cell>();
+
+  return DeleteColumn(row_it, column_qualifier, time_range);
 }
 
 std::vector<Cell> ColumnFamily::DeleteColumn(
