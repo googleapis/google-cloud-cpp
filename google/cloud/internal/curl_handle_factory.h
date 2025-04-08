@@ -23,6 +23,7 @@
 #include <deque>
 #include <mutex>
 #include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {
