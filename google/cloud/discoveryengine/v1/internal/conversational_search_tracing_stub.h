@@ -77,6 +77,13 @@ class ConversationalSearchServiceTracingStub
       google::cloud::discoveryengine::v1::AnswerQueryRequest const& request)
       override;
 
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::cloud::discoveryengine::v1::AnswerQueryResponse>>
+  StreamAnswerQuery(
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::discoveryengine::v1::AnswerQueryRequest const& request)
+      override;
+
   StatusOr<google::cloud::discoveryengine::v1::Answer> GetAnswer(
       grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::GetAnswerRequest const& request)

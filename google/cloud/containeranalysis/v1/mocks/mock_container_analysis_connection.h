@@ -66,6 +66,13 @@ class MockContainerAnalysisConnection
               (google::devtools::containeranalysis::v1::
                    GetVulnerabilityOccurrencesSummaryRequest const& request),
               (override));
+
+  MOCK_METHOD(
+      StatusOr<google::devtools::containeranalysis::v1::ExportSBOMResponse>,
+      ExportSBOM,
+      (google::devtools::containeranalysis::v1::ExportSBOMRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

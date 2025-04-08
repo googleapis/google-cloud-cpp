@@ -167,6 +167,57 @@ SiteSearchEngineServiceMetadata::ListTargetSites(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+SiteSearchEngineServiceMetadata::AsyncCreateSitemap(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::discoveryengine::v1::CreateSitemapRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateSitemap(cq, std::move(context), std::move(options),
+                                    request);
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceMetadata::CreateSitemap(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::CreateSitemapRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateSitemap(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+SiteSearchEngineServiceMetadata::AsyncDeleteSitemap(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteSitemap(cq, std::move(context), std::move(options),
+                                    request);
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceMetadata::DeleteSitemap(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteSitemap(context, options, request);
+}
+
+StatusOr<google::cloud::discoveryengine::v1::FetchSitemapsResponse>
+SiteSearchEngineServiceMetadata::FetchSitemaps(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::FetchSitemapsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->FetchSitemaps(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceMetadata::AsyncEnableAdvancedSiteSearch(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

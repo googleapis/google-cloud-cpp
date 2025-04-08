@@ -111,6 +111,18 @@ ConversationalSearchServiceTracingConnection::AnswerQuery(
   return internal::EndSpan(*span, child_->AnswerQuery(request));
 }
 
+StreamRange<google::cloud::discoveryengine::v1::AnswerQueryResponse>
+ConversationalSearchServiceTracingConnection::StreamAnswerQuery(
+    google::cloud::discoveryengine::v1::AnswerQueryRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::ConversationalSearchServiceConnection::"
+      "StreamAnswerQuery");
+  internal::OTelScope scope(span);
+  auto sr = child_->StreamAnswerQuery(request);
+  return internal::MakeTracedStreamRange<
+      google::cloud::discoveryengine::v1::AnswerQueryResponse>(std::move(span),
+                                                               std::move(sr));
+}
 StatusOr<google::cloud::discoveryengine::v1::Answer>
 ConversationalSearchServiceTracingConnection::GetAnswer(
     google::cloud::discoveryengine::v1::GetAnswerRequest const& request) {

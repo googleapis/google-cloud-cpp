@@ -112,7 +112,7 @@ class GroundedGenerationServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.GenerateGroundedContentRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/grounded_generation_service.proto#L90}
-  /// [google.cloud.discoveryengine.v1.GenerateGroundedContentResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/grounded_generation_service.proto#L261}
+  /// [google.cloud.discoveryengine.v1.GenerateGroundedContentResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/grounded_generation_service.proto#L269}
   ///
   // clang-format on
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -144,7 +144,7 @@ class GroundedGenerationServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.GenerateGroundedContentRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/grounded_generation_service.proto#L90}
-  /// [google.cloud.discoveryengine.v1.GenerateGroundedContentResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/grounded_generation_service.proto#L261}
+  /// [google.cloud.discoveryengine.v1.GenerateGroundedContentResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/grounded_generation_service.proto#L269}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::GenerateGroundedContentResponse>
@@ -176,8 +176,8 @@ class GroundedGenerationServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.CheckGroundingRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/grounded_generation_service.proto#L402}
-  /// [google.cloud.discoveryengine.v1.CheckGroundingResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/grounded_generation_service.proto#L445}
+  /// [google.cloud.discoveryengine.v1.CheckGroundingRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/grounded_generation_service.proto#L446}
+  /// [google.cloud.discoveryengine.v1.CheckGroundingResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/grounded_generation_service.proto#L489}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::CheckGroundingResponse>

@@ -116,7 +116,7 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.GetSiteSearchEngineRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L228}
+  /// [google.cloud.discoveryengine.v1.GetSiteSearchEngineRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L274}
   /// [google.cloud.discoveryengine.v1.SiteSearchEngine]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L34}
   ///
   // clang-format on
@@ -147,7 +147,7 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.GetSiteSearchEngineRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L228}
+  /// [google.cloud.discoveryengine.v1.GetSiteSearchEngineRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L274}
   /// [google.cloud.discoveryengine.v1.SiteSearchEngine]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L34}
   ///
   // clang-format on
@@ -186,7 +186,7 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.CreateTargetSiteRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L248}
+  /// [google.cloud.discoveryengine.v1.CreateTargetSiteRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L294}
   /// [google.cloud.discoveryengine.v1.TargetSite]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L47}
   ///
   // clang-format on
@@ -242,7 +242,7 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.CreateTargetSiteRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L248}
+  /// [google.cloud.discoveryengine.v1.CreateTargetSiteRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L294}
   /// [google.cloud.discoveryengine.v1.TargetSite]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L47}
   ///
   // clang-format on
@@ -313,8 +313,8 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.BatchCreateTargetSitesRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L280}
-  /// [google.cloud.discoveryengine.v1.BatchCreateTargetSitesResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L447}
+  /// [google.cloud.discoveryengine.v1.BatchCreateTargetSitesRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L326}
+  /// [google.cloud.discoveryengine.v1.BatchCreateTargetSitesResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L493}
   /// [google.cloud.discoveryengine.v1.TargetSite]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L47}
   ///
   // clang-format on
@@ -383,7 +383,7 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.GetTargetSiteRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L301}
+  /// [google.cloud.discoveryengine.v1.GetTargetSiteRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L347}
   /// [google.cloud.discoveryengine.v1.TargetSite]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L47}
   ///
   // clang-format on
@@ -413,7 +413,7 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.GetTargetSiteRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L301}
+  /// [google.cloud.discoveryengine.v1.GetTargetSiteRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L347}
   /// [google.cloud.discoveryengine.v1.TargetSite]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L47}
   ///
   // clang-format on
@@ -453,7 +453,7 @@ class SiteSearchEngineServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.TargetSite]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L47}
-  /// [google.cloud.discoveryengine.v1.UpdateTargetSiteRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L323}
+  /// [google.cloud.discoveryengine.v1.UpdateTargetSiteRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L369}
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
@@ -508,7 +508,7 @@ class SiteSearchEngineServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.TargetSite]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L47}
-  /// [google.cloud.discoveryengine.v1.UpdateTargetSiteRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L323}
+  /// [google.cloud.discoveryengine.v1.UpdateTargetSiteRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L369}
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
@@ -581,8 +581,8 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.DeleteTargetSiteMetadata]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L373}
-  /// [google.cloud.discoveryengine.v1.DeleteTargetSiteRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L350}
+  /// [google.cloud.discoveryengine.v1.DeleteTargetSiteMetadata]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L419}
+  /// [google.cloud.discoveryengine.v1.DeleteTargetSiteRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L396}
   /// [google.cloud.discoveryengine.v1.TargetSite]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L47}
   ///
   // clang-format on
@@ -633,8 +633,8 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.DeleteTargetSiteMetadata]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L373}
-  /// [google.cloud.discoveryengine.v1.DeleteTargetSiteRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L350}
+  /// [google.cloud.discoveryengine.v1.DeleteTargetSiteMetadata]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L419}
+  /// [google.cloud.discoveryengine.v1.DeleteTargetSiteRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L396}
   /// [google.cloud.discoveryengine.v1.TargetSite]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L47}
   ///
   // clang-format on
@@ -707,7 +707,7 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.ListTargetSitesRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L385}
+  /// [google.cloud.discoveryengine.v1.ListTargetSitesRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L431}
   /// [google.cloud.discoveryengine.v1.TargetSite]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L47}
   ///
   // clang-format on
@@ -746,12 +746,321 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.ListTargetSitesRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L385}
+  /// [google.cloud.discoveryengine.v1.ListTargetSitesRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L431}
   /// [google.cloud.discoveryengine.v1.TargetSite]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L47}
   ///
   // clang-format on
   StreamRange<google::cloud::discoveryengine::v1::TargetSite> ListTargetSites(
       google::cloud::discoveryengine::v1::ListTargetSitesRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a [Sitemap][google.cloud.discoveryengine.v1.Sitemap].
+  ///
+  /// @param parent  Required. Parent resource name of the
+  ///  [SiteSearchEngine][google.cloud.discoveryengine.v1.SiteSearchEngine], such
+  ///  as `projects/*/locations/*/collections/*/dataStores/*/siteSearchEngine`.
+  /// @param sitemap  Required. The [Sitemap][google.cloud.discoveryengine.v1.Sitemap] to create.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.discoveryengine.v1.Sitemap] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.discoveryengine.v1.CreateSitemapRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L501}
+  /// [google.cloud.discoveryengine.v1.SiteSearchEngine]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L34}
+  /// [google.cloud.discoveryengine.v1.Sitemap]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L176}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::discoveryengine::v1::Sitemap>> CreateSitemap(
+      std::string const& parent,
+      google::cloud::discoveryengine::v1::Sitemap const& sitemap,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateSitemap
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateSitemap(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::discoveryengine::v1::Sitemap const& sitemap,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a [Sitemap][google.cloud.discoveryengine.v1.Sitemap].
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.discoveryengine.v1.CreateSitemapRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.discoveryengine.v1.Sitemap] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.discoveryengine.v1.CreateSitemapRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L501}
+  /// [google.cloud.discoveryengine.v1.Sitemap]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L176}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::discoveryengine::v1::Sitemap>> CreateSitemap(
+      google::cloud::discoveryengine::v1::CreateSitemapRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateSitemap
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> CreateSitemap(
+      NoAwaitTag,
+      google::cloud::discoveryengine::v1::CreateSitemapRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief CreateSitemap
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::discoveryengine::v1::Sitemap>> CreateSitemap(
+      google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a [Sitemap][google.cloud.discoveryengine.v1.Sitemap].
+  ///
+  /// @param name  Required. Full resource name of
+  ///  [Sitemap][google.cloud.discoveryengine.v1.Sitemap], such as
+  ///  `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/siteSearchEngine/sitemaps/{sitemap}`.
+  ///  @n
+  ///  If the caller does not have permission to access the
+  ///  [Sitemap][google.cloud.discoveryengine.v1.Sitemap], regardless of whether
+  ///  or not it exists, a PERMISSION_DENIED error is returned.
+  ///  @n
+  ///  If the requested [Sitemap][google.cloud.discoveryengine.v1.Sitemap] does
+  ///  not exist, a NOT_FOUND error is returned.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.discoveryengine.v1.DeleteSitemapMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.discoveryengine.v1.DeleteSitemapMetadata]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L593}
+  /// [google.cloud.discoveryengine.v1.DeleteSitemapRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L519}
+  /// [google.cloud.discoveryengine.v1.Sitemap]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L176}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::discoveryengine::v1::DeleteSitemapMetadata>>
+  DeleteSitemap(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteSitemap
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteSitemap(
+      NoAwaitTag, std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a [Sitemap][google.cloud.discoveryengine.v1.Sitemap].
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.discoveryengine.v1.DeleteSitemapRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.discoveryengine.v1.DeleteSitemapMetadata] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.discoveryengine.v1.DeleteSitemapMetadata]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L593}
+  /// [google.cloud.discoveryengine.v1.DeleteSitemapRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L519}
+  /// [google.cloud.discoveryengine.v1.Sitemap]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L176}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::discoveryengine::v1::DeleteSitemapMetadata>>
+  DeleteSitemap(
+      google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteSitemap
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> DeleteSitemap(
+      NoAwaitTag,
+      google::cloud::discoveryengine::v1::DeleteSitemapRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief DeleteSitemap
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::discoveryengine::v1::DeleteSitemapMetadata>>
+  DeleteSitemap(google::longrunning::Operation const& operation,
+                Options opts = {});
+
+  // clang-format off
+  ///
+  /// Fetch [Sitemap][google.cloud.discoveryengine.v1.Sitemap]s in a
+  /// [DataStore][google.cloud.discoveryengine.v1.DataStore].
+  ///
+  /// @param parent  Required. Parent resource name of the
+  ///  [SiteSearchEngine][google.cloud.discoveryengine.v1.SiteSearchEngine], such
+  ///  as `projects/*/locations/*/collections/*/dataStores/*/siteSearchEngine`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.discoveryengine.v1.FetchSitemapsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.discoveryengine.v1.FetchSitemapsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L541}
+  /// [google.cloud.discoveryengine.v1.FetchSitemapsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L605}
+  /// [google.cloud.discoveryengine.v1.SiteSearchEngine]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L34}
+  /// [google.cloud.discoveryengine.v1.Sitemap]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L176}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::discoveryengine::v1::FetchSitemapsResponse>
+  FetchSitemaps(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Fetch [Sitemap][google.cloud.discoveryengine.v1.Sitemap]s in a
+  /// [DataStore][google.cloud.discoveryengine.v1.DataStore].
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.discoveryengine.v1.FetchSitemapsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.discoveryengine.v1.FetchSitemapsResponse])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.discoveryengine.v1.FetchSitemapsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L541}
+  /// [google.cloud.discoveryengine.v1.FetchSitemapsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L605}
+  /// [google.cloud.discoveryengine.v1.Sitemap]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L176}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::discoveryengine::v1::FetchSitemapsResponse>
+  FetchSitemaps(
+      google::cloud::discoveryengine::v1::FetchSitemapsRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -784,8 +1093,8 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.EnableAdvancedSiteSearchRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L455}
-  /// [google.cloud.discoveryengine.v1.EnableAdvancedSiteSearchResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L471}
+  /// [google.cloud.discoveryengine.v1.EnableAdvancedSiteSearchRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L620}
+  /// [google.cloud.discoveryengine.v1.EnableAdvancedSiteSearchResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L636}
   ///
   // clang-format on
   future<StatusOr<
@@ -856,8 +1165,8 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.DisableAdvancedSiteSearchRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L489}
-  /// [google.cloud.discoveryengine.v1.DisableAdvancedSiteSearchResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L505}
+  /// [google.cloud.discoveryengine.v1.DisableAdvancedSiteSearchRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L654}
+  /// [google.cloud.discoveryengine.v1.DisableAdvancedSiteSearchResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L670}
   ///
   // clang-format on
   future<StatusOr<
@@ -927,8 +1236,8 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.RecrawlUrisRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L523}
-  /// [google.cloud.discoveryengine.v1.RecrawlUrisResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L549}
+  /// [google.cloud.discoveryengine.v1.RecrawlUrisRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L688}
+  /// [google.cloud.discoveryengine.v1.RecrawlUrisResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L712}
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::RecrawlUrisResponse>>
@@ -997,8 +1306,8 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.BatchVerifyTargetSitesRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L623}
-  /// [google.cloud.discoveryengine.v1.BatchVerifyTargetSitesResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L637}
+  /// [google.cloud.discoveryengine.v1.BatchVerifyTargetSitesRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L802}
+  /// [google.cloud.discoveryengine.v1.BatchVerifyTargetSitesResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L816}
   ///
   // clang-format on
   future<StatusOr<
@@ -1073,7 +1382,7 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.FetchDomainVerificationStatusRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L655}
+  /// [google.cloud.discoveryengine.v1.FetchDomainVerificationStatusRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L834}
   /// [google.cloud.discoveryengine.v1.TargetSite]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L47}
   ///
   // clang-format on

@@ -100,7 +100,7 @@ class PrincipalAccessBoundaryPoliciesClient {
   /// operation.
   ///
   /// @param parent  Required. The parent resource where this principal access boundary policy
-  ///  will be created. Only organization is supported now.
+  ///  will be created. Only organizations are supported.
   ///  @n
   ///  Format:
   ///    `organizations/{organization_id}/locations/{location}`
@@ -132,8 +132,8 @@ class PrincipalAccessBoundaryPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v3.CreatePrincipalAccessBoundaryPolicyRequest]: @googleapis_reference_link{google/iam/v3/principal_access_boundary_policies_service.proto#L122}
-  /// [google.iam.v3.PrincipalAccessBoundaryPolicy]: @googleapis_reference_link{google/iam/v3/principal_access_boundary_policy_resources.proto#L31}
+  /// [google.iam.v3.CreatePrincipalAccessBoundaryPolicyRequest]: @googleapis_reference_link{google/iam/v3/principal_access_boundary_policies_service.proto#L123}
+  /// [google.iam.v3.PrincipalAccessBoundaryPolicy]: @googleapis_reference_link{google/iam/v3/principal_access_boundary_policy_resources.proto#L32}
   ///
   // clang-format on
   future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>
@@ -193,8 +193,8 @@ class PrincipalAccessBoundaryPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v3.CreatePrincipalAccessBoundaryPolicyRequest]: @googleapis_reference_link{google/iam/v3/principal_access_boundary_policies_service.proto#L122}
-  /// [google.iam.v3.PrincipalAccessBoundaryPolicy]: @googleapis_reference_link{google/iam/v3/principal_access_boundary_policy_resources.proto#L31}
+  /// [google.iam.v3.CreatePrincipalAccessBoundaryPolicyRequest]: @googleapis_reference_link{google/iam/v3/principal_access_boundary_policies_service.proto#L123}
+  /// [google.iam.v3.PrincipalAccessBoundaryPolicy]: @googleapis_reference_link{google/iam/v3/principal_access_boundary_policy_resources.proto#L32}
   ///
   // clang-format on
   future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>
@@ -254,8 +254,8 @@ class PrincipalAccessBoundaryPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v3.GetPrincipalAccessBoundaryPolicyRequest]: @googleapis_reference_link{google/iam/v3/principal_access_boundary_policies_service.proto#L155}
-  /// [google.iam.v3.PrincipalAccessBoundaryPolicy]: @googleapis_reference_link{google/iam/v3/principal_access_boundary_policy_resources.proto#L31}
+  /// [google.iam.v3.GetPrincipalAccessBoundaryPolicyRequest]: @googleapis_reference_link{google/iam/v3/principal_access_boundary_policies_service.proto#L156}
+  /// [google.iam.v3.PrincipalAccessBoundaryPolicy]: @googleapis_reference_link{google/iam/v3/principal_access_boundary_policy_resources.proto#L32}
   ///
   // clang-format on
   StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>
@@ -284,8 +284,8 @@ class PrincipalAccessBoundaryPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v3.GetPrincipalAccessBoundaryPolicyRequest]: @googleapis_reference_link{google/iam/v3/principal_access_boundary_policies_service.proto#L155}
-  /// [google.iam.v3.PrincipalAccessBoundaryPolicy]: @googleapis_reference_link{google/iam/v3/principal_access_boundary_policy_resources.proto#L31}
+  /// [google.iam.v3.GetPrincipalAccessBoundaryPolicyRequest]: @googleapis_reference_link{google/iam/v3/principal_access_boundary_policies_service.proto#L156}
+  /// [google.iam.v3.PrincipalAccessBoundaryPolicy]: @googleapis_reference_link{google/iam/v3/principal_access_boundary_policy_resources.proto#L32}
   ///
   // clang-format on
   StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>
@@ -322,8 +322,8 @@ class PrincipalAccessBoundaryPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v3.PrincipalAccessBoundaryPolicy]: @googleapis_reference_link{google/iam/v3/principal_access_boundary_policy_resources.proto#L31}
-  /// [google.iam.v3.UpdatePrincipalAccessBoundaryPolicyRequest]: @googleapis_reference_link{google/iam/v3/principal_access_boundary_policies_service.proto#L169}
+  /// [google.iam.v3.PrincipalAccessBoundaryPolicy]: @googleapis_reference_link{google/iam/v3/principal_access_boundary_policy_resources.proto#L32}
+  /// [google.iam.v3.UpdatePrincipalAccessBoundaryPolicyRequest]: @googleapis_reference_link{google/iam/v3/principal_access_boundary_policies_service.proto#L170}
   ///
   // clang-format on
   future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>
@@ -379,8 +379,8 @@ class PrincipalAccessBoundaryPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v3.PrincipalAccessBoundaryPolicy]: @googleapis_reference_link{google/iam/v3/principal_access_boundary_policy_resources.proto#L31}
-  /// [google.iam.v3.UpdatePrincipalAccessBoundaryPolicyRequest]: @googleapis_reference_link{google/iam/v3/principal_access_boundary_policies_service.proto#L169}
+  /// [google.iam.v3.PrincipalAccessBoundaryPolicy]: @googleapis_reference_link{google/iam/v3/principal_access_boundary_policy_resources.proto#L32}
+  /// [google.iam.v3.UpdatePrincipalAccessBoundaryPolicyRequest]: @googleapis_reference_link{google/iam/v3/principal_access_boundary_policies_service.proto#L170}
   ///
   // clang-format on
   future<StatusOr<google::iam::v3::PrincipalAccessBoundaryPolicy>>
@@ -447,8 +447,8 @@ class PrincipalAccessBoundaryPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v3.DeletePrincipalAccessBoundaryPolicyRequest]: @googleapis_reference_link{google/iam/v3/principal_access_boundary_policies_service.proto#L187}
-  /// [google.iam.v3.OperationMetadata]: @googleapis_reference_link{google/iam/v3/operation_metadata.proto#L29}
+  /// [google.iam.v3.DeletePrincipalAccessBoundaryPolicyRequest]: @googleapis_reference_link{google/iam/v3/principal_access_boundary_policies_service.proto#L188}
+  /// [google.iam.v3.OperationMetadata]: @googleapis_reference_link{google/iam/v3/operation_metadata.proto#L30}
   ///
   // clang-format on
   future<StatusOr<google::iam::v3::OperationMetadata>>
@@ -499,8 +499,8 @@ class PrincipalAccessBoundaryPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v3.DeletePrincipalAccessBoundaryPolicyRequest]: @googleapis_reference_link{google/iam/v3/principal_access_boundary_policies_service.proto#L187}
-  /// [google.iam.v3.OperationMetadata]: @googleapis_reference_link{google/iam/v3/operation_metadata.proto#L29}
+  /// [google.iam.v3.DeletePrincipalAccessBoundaryPolicyRequest]: @googleapis_reference_link{google/iam/v3/principal_access_boundary_policies_service.proto#L188}
+  /// [google.iam.v3.OperationMetadata]: @googleapis_reference_link{google/iam/v3/operation_metadata.proto#L30}
   ///
   // clang-format on
   future<StatusOr<google::iam::v3::OperationMetadata>>
@@ -570,8 +570,8 @@ class PrincipalAccessBoundaryPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v3.ListPrincipalAccessBoundaryPoliciesRequest]: @googleapis_reference_link{google/iam/v3/principal_access_boundary_policies_service.proto#L213}
-  /// [google.iam.v3.PrincipalAccessBoundaryPolicy]: @googleapis_reference_link{google/iam/v3/principal_access_boundary_policy_resources.proto#L31}
+  /// [google.iam.v3.ListPrincipalAccessBoundaryPoliciesRequest]: @googleapis_reference_link{google/iam/v3/principal_access_boundary_policies_service.proto#L214}
+  /// [google.iam.v3.PrincipalAccessBoundaryPolicy]: @googleapis_reference_link{google/iam/v3/principal_access_boundary_policy_resources.proto#L32}
   ///
   // clang-format on
   StreamRange<google::iam::v3::PrincipalAccessBoundaryPolicy>
@@ -610,8 +610,8 @@ class PrincipalAccessBoundaryPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v3.ListPrincipalAccessBoundaryPoliciesRequest]: @googleapis_reference_link{google/iam/v3/principal_access_boundary_policies_service.proto#L213}
-  /// [google.iam.v3.PrincipalAccessBoundaryPolicy]: @googleapis_reference_link{google/iam/v3/principal_access_boundary_policy_resources.proto#L31}
+  /// [google.iam.v3.ListPrincipalAccessBoundaryPoliciesRequest]: @googleapis_reference_link{google/iam/v3/principal_access_boundary_policies_service.proto#L214}
+  /// [google.iam.v3.PrincipalAccessBoundaryPolicy]: @googleapis_reference_link{google/iam/v3/principal_access_boundary_policy_resources.proto#L32}
   ///
   // clang-format on
   StreamRange<google::iam::v3::PrincipalAccessBoundaryPolicy>
@@ -649,8 +649,8 @@ class PrincipalAccessBoundaryPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v3.PolicyBinding]: @googleapis_reference_link{google/iam/v3/policy_binding_resources.proto#L32}
-  /// [google.iam.v3.SearchPrincipalAccessBoundaryPolicyBindingsRequest]: @googleapis_reference_link{google/iam/v3/principal_access_boundary_policies_service.proto#L254}
+  /// [google.iam.v3.PolicyBinding]: @googleapis_reference_link{google/iam/v3/policy_binding_resources.proto#L33}
+  /// [google.iam.v3.SearchPrincipalAccessBoundaryPolicyBindingsRequest]: @googleapis_reference_link{google/iam/v3/principal_access_boundary_policies_service.proto#L256}
   ///
   // clang-format on
   StreamRange<google::iam::v3::PolicyBinding>
@@ -690,8 +690,8 @@ class PrincipalAccessBoundaryPoliciesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v3.PolicyBinding]: @googleapis_reference_link{google/iam/v3/policy_binding_resources.proto#L32}
-  /// [google.iam.v3.SearchPrincipalAccessBoundaryPolicyBindingsRequest]: @googleapis_reference_link{google/iam/v3/principal_access_boundary_policies_service.proto#L254}
+  /// [google.iam.v3.PolicyBinding]: @googleapis_reference_link{google/iam/v3/policy_binding_resources.proto#L33}
+  /// [google.iam.v3.SearchPrincipalAccessBoundaryPolicyBindingsRequest]: @googleapis_reference_link{google/iam/v3/principal_access_boundary_policies_service.proto#L256}
   ///
   // clang-format on
   StreamRange<google::iam::v3::PolicyBinding>

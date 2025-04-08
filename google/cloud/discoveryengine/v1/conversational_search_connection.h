@@ -232,6 +232,10 @@ class ConversationalSearchServiceConnection {
   AnswerQuery(
       google::cloud::discoveryengine::v1::AnswerQueryRequest const& request);
 
+  virtual StreamRange<google::cloud::discoveryengine::v1::AnswerQueryResponse>
+  StreamAnswerQuery(
+      google::cloud::discoveryengine::v1::AnswerQueryRequest const& request);
+
   virtual StatusOr<google::cloud::discoveryengine::v1::Answer> GetAnswer(
       google::cloud::discoveryengine::v1::GetAnswerRequest const& request);
 

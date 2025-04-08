@@ -94,6 +94,12 @@ class MockConversationalSearchServiceConnection
       (override));
 
   MOCK_METHOD(
+      StreamRange<google::cloud::discoveryengine::v1::AnswerQueryResponse>,
+      StreamAnswerQuery,
+      (google::cloud::discoveryengine::v1::AnswerQueryRequest const& request),
+      (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::discoveryengine::v1::Answer>, GetAnswer,
       (google::cloud::discoveryengine::v1::GetAnswerRequest const& request),
       (override));

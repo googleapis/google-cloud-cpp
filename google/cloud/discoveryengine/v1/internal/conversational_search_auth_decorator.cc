@@ -98,6 +98,18 @@ ConversationalSearchServiceAuth::AnswerQuery(
   return child_->AnswerQuery(context, options, request);
 }
 
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::cloud::discoveryengine::v1::AnswerQueryResponse>>
+ConversationalSearchServiceAuth::StreamAnswerQuery(
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::discoveryengine::v1::AnswerQueryRequest const& request) {
+  using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
+      google::cloud::discoveryengine::v1::AnswerQueryResponse>;
+  auto status = auth_->ConfigureContext(*context);
+  if (!status.ok()) return std::make_unique<ErrorStream>(std::move(status));
+  return child_->StreamAnswerQuery(std::move(context), options, request);
+}
+
 StatusOr<google::cloud::discoveryengine::v1::Answer>
 ConversationalSearchServiceAuth::GetAnswer(
     grpc::ClientContext& context, Options const& options,

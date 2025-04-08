@@ -37,6 +37,10 @@ namespace cloud {
 namespace discoveryengine_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+void ConversationalSearchServiceStreamAnswerQueryStreamingUpdater(
+    google::cloud::discoveryengine::v1::AnswerQueryResponse const& response,
+    google::cloud::discoveryengine::v1::AnswerQueryRequest& request);
+
 class ConversationalSearchServiceConnectionImpl
     : public discoveryengine_v1::ConversationalSearchServiceConnection {
  public:
@@ -77,6 +81,11 @@ class ConversationalSearchServiceConnectionImpl
                         request) override;
 
   StatusOr<google::cloud::discoveryengine::v1::AnswerQueryResponse> AnswerQuery(
+      google::cloud::discoveryengine::v1::AnswerQueryRequest const& request)
+      override;
+
+  StreamRange<google::cloud::discoveryengine::v1::AnswerQueryResponse>
+  StreamAnswerQuery(
       google::cloud::discoveryengine::v1::AnswerQueryRequest const& request)
       override;
 
