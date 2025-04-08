@@ -305,7 +305,7 @@ jobs:
         ci/gha/builds/windows-cmake.sh ${{ matrix.build_type }} ${{ steps.dynamic.outputs.features }}
     - name: Post Build Disk Space
       shell: bash
-      if: ${{ always() }}
+      if: always()
       run: df -m
     env:
       SCCACHE_GCS_BUCKET: cloud-cpp-community-gha-cache

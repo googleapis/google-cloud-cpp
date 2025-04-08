@@ -279,7 +279,7 @@ jobs:
         export EXECUTE_INTEGRATION_TESTS=${{ inputs.execute-integration-tests }}
         /opt/homebrew/bin/bash ci/gha/builds/macos-cmake.sh ${{ steps.dynamic.outputs.features }}
     - name: Post Tests Disk Space
-      if: ${{ always() }}
+      if: always()
       run: df -m
     env:
       SCCACHE_GCS_BUCKET: cloud-cpp-community-gha-cache

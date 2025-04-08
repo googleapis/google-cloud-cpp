@@ -102,7 +102,7 @@ jobs:
         ci/gha/builds/windows-bazel.sh ${{ matrix.compilation_mode }} ${{ join(matrix.targets, ' ') }}
     - name: Post Build Disk Space
       shell: bash
-      if: ${{ always() }}
+      if: always()
       run: df -m
     env:
       BAZEL_REMOTE_CACHE: https://storage.googleapis.com/cloud-cpp-community-gha-cache/bazel-cache/${{ matrix.msvc }}/${{ matrix.compilation_mode }}
