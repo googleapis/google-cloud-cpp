@@ -42,7 +42,7 @@ std::vector<Cell> ColumnRow::DeleteTimeRange(
                              std::chrono::microseconds(
                                  time_range.end_timestamp_micros())));) {
     Cell cell = {std::move(cell_it->first), std::move(cell_it->second)};
-    deleted_cells.emplace_back(cell);
+    deleted_cells.emplace_back(std::move(cell));
     cells_.erase(cell_it++);
   }
   return deleted_cells;
