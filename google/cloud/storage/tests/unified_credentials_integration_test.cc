@@ -98,6 +98,20 @@ class UnifiedCredentialsIntegrationTest
     ASSERT_THAT(project_id_, Not(IsEmpty()));
     ASSERT_THAT(service_account_, Not(IsEmpty()));
     ASSERT_THAT(roots_pem_, Not(IsEmpty()));
+
+    std::ifstream is(roots_pem_);
+    ca_certs_text_ = std::string{std::istreambuf_iterator<char>{is}, {}};
+    std::string begin_cert = "-----BEGIN CERTIFICATE-----";
+    std::string end_cert = "-----END CERTIFICATE-----";
+    size_t current = 0;
+    size_t begin;
+    while ((begin = ca_certs_text_.find(begin_cert, current)) !=
+           std::string::npos) {
+      auto end = ca_certs_text_.find(end_cert, begin);
+      current = end + end_cert.length();
+      ca_certs_.emplace_back(&ca_certs_text_[begin], current - begin);
+    }
+    ASSERT_THAT(ca_certs_, Not(IsEmpty()));
   }
 
   static Client MakeTestClient(Options opts) {
@@ -132,6 +146,21 @@ class UnifiedCredentialsIntegrationTest
         .set<internal::CAPathOption>(empty_file());
   }
 
+  Options ValidInMemoryTrustStoreOptions() {
+    return TestOptions()
+        // Populates in-memory trust store with Google's root CA certificates.
+        .set<experimental::CAInMemoryOption>(ca_certs_);
+  }
+
+  static Options InvalidInMemoryTrustStoreOptions() {
+    std::vector<absl::string_view> bogus_certs;
+    bogus_certs.emplace_back(kCACertificate);
+
+    return TestOptions()
+        // Populates in-memory trust store with an invalid CA certificate.
+        .set<experimental::CAInMemoryOption>(bogus_certs);
+  }
+
   void UseClient(Client client, std::string const& bucket_name,
                  std::string const& object_name, std::string const& payload) {
     StatusOr<ObjectMetadata> meta = client.InsertObject(
@@ -157,6 +186,8 @@ class UnifiedCredentialsIntegrationTest
   std::string project_id_;
   std::string service_account_;
   std::string roots_pem_;
+  std::string ca_certs_text_;
+  std::vector<absl::string_view> ca_certs_;
   TempFile invalid_pem_{kCACertificate};
   TempFile empty_file_{std::string{}};
 };
@@ -335,6 +366,42 @@ TEST_F(UnifiedCredentialsIntegrationTest, AccessTokenEmptyTrustStore) {
           .set<UnifiedCredentialsOption>(
               MakeAccessTokenCredentials(token, expiration))
           .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(2).clone()));
+
+  EXPECT_NO_FATAL_FAILURE(
+      ExpectInsertFailure(client, bucket_name(), MakeRandomObjectName()));
+}
+
+TEST_F(UnifiedCredentialsIntegrationTest, ValidCAStoreInMemory) {
+  if (UsingEmulator()) GTEST_SKIP();
+  auto keyfile = GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON");
+  if (!keyfile.has_value()) GTEST_SKIP();
+
+  auto contents = [](std::string const& filename) {
+    std::ifstream is(filename);
+    return std::string{std::istreambuf_iterator<char>{is}, {}};
+  }(keyfile.value());
+
+  auto client = MakeTestClient(
+      ValidInMemoryTrustStoreOptions().set<UnifiedCredentialsOption>(
+          MakeServiceAccountCredentials(contents)));
+
+  ASSERT_NO_FATAL_FAILURE(
+      UseClient(client, bucket_name(), MakeRandomObjectName(), LoremIpsum()));
+}
+
+TEST_F(UnifiedCredentialsIntegrationTest, InvalidCAStoreInMemory) {
+  if (UsingEmulator()) GTEST_SKIP();
+  auto keyfile = GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON");
+  if (!keyfile.has_value()) GTEST_SKIP();
+
+  auto contents = [](std::string const& filename) {
+    std::ifstream is(filename);
+    return std::string{std::istreambuf_iterator<char>{is}, {}};
+  }(keyfile.value());
+
+  auto client = MakeTestClient(
+      InvalidInMemoryTrustStoreOptions().set<UnifiedCredentialsOption>(
+          MakeServiceAccountCredentials(contents)));
 
   EXPECT_NO_FATAL_FAILURE(
       ExpectInsertFailure(client, bucket_name(), MakeRandomObjectName()));
