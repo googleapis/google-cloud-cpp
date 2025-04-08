@@ -583,14 +583,14 @@ void RowTransaction::Undo() {
     if (delete_value) {
       ::google::bigtable::v2::TimestampRange range;
       auto start_micros = std::chrono::duration_cast<std::chrono::microseconds>(
-          std::chrono::milliseconds(delete_value->timestamp.count()));
+          delete_value->timestamp);
       // The following is an exclusive upper bound, 1ms higher Since
       // timestamps have millisecond resolution, 2 timestamps have to
       // be at least 1ms apart which means that setting this as the
       // end of the range guarantees that we delete at most 1 (because
       // the upper bound is exclusive).
       auto end_micros = std::chrono::duration_cast<std::chrono::microseconds>(
-          std::chrono::milliseconds(delete_value->timestamp.count() + 1000));
+          delete_value->timestamp + std::chrono::milliseconds(1));
       range.set_start_timestamp_micros(start_micros.count());
       range.set_end_timestamp_micros(end_micros.count());
       delete_value->column_family.DeleteColumn(
