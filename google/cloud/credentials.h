@@ -58,6 +58,8 @@ struct ClientSslCertificateOption {
  *     on the filesystem.
  *
  * @note Requires libcurl v7.10.6 or later.
+ *
+ * @note Not supported on Windows.
  */
 struct CAInMemoryOption {
   using Type = std::vector<absl::string_view>;

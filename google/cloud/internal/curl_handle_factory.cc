@@ -28,6 +28,11 @@ namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 Status SetCurlCAInMemory(CurlHandleFactory const& factory, SSL_CTX* ssl_ctx) {
+#if _WIN32
+  return internal::InternalError(
+      "SSL callback function currently not supported in windows",
+      GCP_ERROR_INFO());
+#else
   X509_STORE* cert_store = SSL_CTX_get_cert_store(ssl_ctx);
   if (!cert_store) {
     return internal::InternalError("SSL_CTX_get_cert_store returned NULL",
@@ -66,6 +71,7 @@ Status SetCurlCAInMemory(CurlHandleFactory const& factory, SSL_CTX* ssl_ctx) {
   }
 
   return {};
+#endif
 }
 
 extern "C" {
