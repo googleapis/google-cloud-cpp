@@ -102,44 +102,6 @@ struct GrpcMetricsPeriodOption {
   using Type = std::chrono::seconds;
 };
 
-/**
- * Enable gRPC telemetry for GCS RPCs.
- *
- * Troubleshooting problems with GCS over gRPC is difficult without some
- * telemetry indicating how the client is configured, and what load balancing
- * information was available to the gRPC library.
- *
- * When this option is enabled (the default), the GCS client will export the
- * gRPC telemetry discussed in [gRFC/66] and [gRFC/78] to
- * [Google Cloud Monitoring]. Google Cloud Support can use this information to
- * more quickly diagnose problems related to GCS and gRPC.
- *
- * Sending this data does not incur any billing charges, and requires minimal
- * CPU (a single RPC every few minutes) or memory (a few KiB to batch the
- * telemetry).
- *
- * [gRFC/66]: https://github.com/grpc/proposal/blob/master/A66-otel-stats.md
- * [gRFC/78]:
- * https://github.com/grpc/proposal/blob/master/A78-grpc-metrics-wrr-pf-xds.md
- * [Google Cloud Monitoring]: https://cloud.google.com/monitoring/docs
- */
-struct EnableGrpcMetricsOption {
-  using Type = bool;
-};
-
-/**
- * gRPC telemetry export period.
- *
- * When `EnableGrpcMetrics` is enabled, this option controls the frequency at
- * which metrics are exported to [Google Cloud Monitoring]. The default is 60
- * seconds. Values below 5 seconds are ignored.
- *
- * [Google Cloud Monitoring]: https://cloud.google.com/monitoring/docs
- */
-struct GrpcMetricsPeriodOption {
-  using Type = std::chrono::seconds;
-};
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_experimental
 }  // namespace cloud

@@ -356,56 +356,6 @@ StatusOr<google::storage::v2::Object> StorageLogging::MoveObject(
       context, options, request, __func__, tracing_options_);
 }
 
-Status StorageLogging::DeleteNotificationConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::storage::v2::DeleteNotificationConfigRequest const& request) {
-  return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::storage::v2::DeleteNotificationConfigRequest const& request) {
-        return child_->DeleteNotificationConfig(context, options, request);
-      },
-      context, options, request, __func__, tracing_options_);
-}
-
-StatusOr<google::storage::v2::NotificationConfig>
-StorageLogging::GetNotificationConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::storage::v2::GetNotificationConfigRequest const& request) {
-  return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context, Options const& options,
-             google::storage::v2::GetNotificationConfigRequest const& request) {
-        return child_->GetNotificationConfig(context, options, request);
-      },
-      context, options, request, __func__, tracing_options_);
-}
-
-StatusOr<google::storage::v2::NotificationConfig>
-StorageLogging::CreateNotificationConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::storage::v2::CreateNotificationConfigRequest const& request) {
-  return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::storage::v2::CreateNotificationConfigRequest const& request) {
-        return child_->CreateNotificationConfig(context, options, request);
-      },
-      context, options, request, __func__, tracing_options_);
-}
-
-StatusOr<google::storage::v2::ListNotificationConfigsResponse>
-StorageLogging::ListNotificationConfigs(
-    grpc::ClientContext& context, Options const& options,
-    google::storage::v2::ListNotificationConfigsRequest const& request) {
-  return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context, Options const& options,
-          google::storage::v2::ListNotificationConfigsRequest const& request) {
-        return child_->ListNotificationConfigs(context, options, request);
-      },
-      context, options, request, __func__, tracing_options_);
-}
-
 future<StatusOr<google::storage::v2::Object>>
 StorageLogging::AsyncComposeObject(
     google::cloud::CompletionQueue& cq,
