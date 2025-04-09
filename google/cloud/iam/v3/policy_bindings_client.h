@@ -96,8 +96,8 @@ class PolicyBindingsClient {
   /// Once the binding is created, the policy is applied to the target.
   ///
   /// @param parent  Required. The parent resource where this policy binding will be created.
-  ///  The binding parent is the closest Resource Manager resource (Project,
-  ///  Folder or Organization) to the binding target.
+  ///  The binding parent is the closest Resource Manager resource (project,
+  ///  folder or organization) to the binding target.
   ///  @n
   ///  Format:
   ///  @n
@@ -132,8 +132,8 @@ class PolicyBindingsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v3.CreatePolicyBindingRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L169}
-  /// [google.iam.v3.PolicyBinding]: @googleapis_reference_link{google/iam/v3/policy_binding_resources.proto#L32}
+  /// [google.iam.v3.CreatePolicyBindingRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L170}
+  /// [google.iam.v3.PolicyBinding]: @googleapis_reference_link{google/iam/v3/policy_binding_resources.proto#L33}
   ///
   // clang-format on
   future<StatusOr<google::iam::v3::PolicyBinding>> CreatePolicyBinding(
@@ -189,8 +189,8 @@ class PolicyBindingsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v3.CreatePolicyBindingRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L169}
-  /// [google.iam.v3.PolicyBinding]: @googleapis_reference_link{google/iam/v3/policy_binding_resources.proto#L32}
+  /// [google.iam.v3.CreatePolicyBindingRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L170}
+  /// [google.iam.v3.PolicyBinding]: @googleapis_reference_link{google/iam/v3/policy_binding_resources.proto#L33}
   ///
   // clang-format on
   future<StatusOr<google::iam::v3::PolicyBinding>> CreatePolicyBinding(
@@ -249,8 +249,8 @@ class PolicyBindingsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v3.GetPolicyBindingRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L204}
-  /// [google.iam.v3.PolicyBinding]: @googleapis_reference_link{google/iam/v3/policy_binding_resources.proto#L32}
+  /// [google.iam.v3.GetPolicyBindingRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L205}
+  /// [google.iam.v3.PolicyBinding]: @googleapis_reference_link{google/iam/v3/policy_binding_resources.proto#L33}
   ///
   // clang-format on
   StatusOr<google::iam::v3::PolicyBinding> GetPolicyBinding(
@@ -279,8 +279,8 @@ class PolicyBindingsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v3.GetPolicyBindingRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L204}
-  /// [google.iam.v3.PolicyBinding]: @googleapis_reference_link{google/iam/v3/policy_binding_resources.proto#L32}
+  /// [google.iam.v3.GetPolicyBindingRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L205}
+  /// [google.iam.v3.PolicyBinding]: @googleapis_reference_link{google/iam/v3/policy_binding_resources.proto#L33}
   ///
   // clang-format on
   StatusOr<google::iam::v3::PolicyBinding> GetPolicyBinding(
@@ -320,8 +320,8 @@ class PolicyBindingsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v3.PolicyBinding]: @googleapis_reference_link{google/iam/v3/policy_binding_resources.proto#L32}
-  /// [google.iam.v3.UpdatePolicyBindingRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L222}
+  /// [google.iam.v3.PolicyBinding]: @googleapis_reference_link{google/iam/v3/policy_binding_resources.proto#L33}
+  /// [google.iam.v3.UpdatePolicyBindingRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L223}
   ///
   // clang-format on
   future<StatusOr<google::iam::v3::PolicyBinding>> UpdatePolicyBinding(
@@ -377,8 +377,8 @@ class PolicyBindingsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v3.PolicyBinding]: @googleapis_reference_link{google/iam/v3/policy_binding_resources.proto#L32}
-  /// [google.iam.v3.UpdatePolicyBindingRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L222}
+  /// [google.iam.v3.PolicyBinding]: @googleapis_reference_link{google/iam/v3/policy_binding_resources.proto#L33}
+  /// [google.iam.v3.UpdatePolicyBindingRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L223}
   ///
   // clang-format on
   future<StatusOr<google::iam::v3::PolicyBinding>> UpdatePolicyBinding(
@@ -446,8 +446,8 @@ class PolicyBindingsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v3.DeletePolicyBindingRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L239}
-  /// [google.iam.v3.OperationMetadata]: @googleapis_reference_link{google/iam/v3/operation_metadata.proto#L29}
+  /// [google.iam.v3.DeletePolicyBindingRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L240}
+  /// [google.iam.v3.OperationMetadata]: @googleapis_reference_link{google/iam/v3/operation_metadata.proto#L30}
   ///
   // clang-format on
   future<StatusOr<google::iam::v3::OperationMetadata>> DeletePolicyBinding(
@@ -499,8 +499,8 @@ class PolicyBindingsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v3.DeletePolicyBindingRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L239}
-  /// [google.iam.v3.OperationMetadata]: @googleapis_reference_link{google/iam/v3/operation_metadata.proto#L29}
+  /// [google.iam.v3.DeletePolicyBindingRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L240}
+  /// [google.iam.v3.OperationMetadata]: @googleapis_reference_link{google/iam/v3/operation_metadata.proto#L30}
   ///
   // clang-format on
   future<StatusOr<google::iam::v3::OperationMetadata>> DeletePolicyBinding(
@@ -569,8 +569,8 @@ class PolicyBindingsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v3.ListPolicyBindingsRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L265}
-  /// [google.iam.v3.PolicyBinding]: @googleapis_reference_link{google/iam/v3/policy_binding_resources.proto#L32}
+  /// [google.iam.v3.ListPolicyBindingsRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L266}
+  /// [google.iam.v3.PolicyBinding]: @googleapis_reference_link{google/iam/v3/policy_binding_resources.proto#L33}
   ///
   // clang-format on
   StreamRange<google::iam::v3::PolicyBinding> ListPolicyBindings(
@@ -608,8 +608,8 @@ class PolicyBindingsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v3.ListPolicyBindingsRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L265}
-  /// [google.iam.v3.PolicyBinding]: @googleapis_reference_link{google/iam/v3/policy_binding_resources.proto#L32}
+  /// [google.iam.v3.ListPolicyBindingsRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L266}
+  /// [google.iam.v3.PolicyBinding]: @googleapis_reference_link{google/iam/v3/policy_binding_resources.proto#L33}
   ///
   // clang-format on
   StreamRange<google::iam::v3::PolicyBinding> ListPolicyBindings(
@@ -662,8 +662,8 @@ class PolicyBindingsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v3.PolicyBinding]: @googleapis_reference_link{google/iam/v3/policy_binding_resources.proto#L32}
-  /// [google.iam.v3.SearchTargetPolicyBindingsRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L323}
+  /// [google.iam.v3.PolicyBinding]: @googleapis_reference_link{google/iam/v3/policy_binding_resources.proto#L33}
+  /// [google.iam.v3.SearchTargetPolicyBindingsRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L322}
   ///
   // clang-format on
   StreamRange<google::iam::v3::PolicyBinding> SearchTargetPolicyBindings(
@@ -702,8 +702,8 @@ class PolicyBindingsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.iam.v3.PolicyBinding]: @googleapis_reference_link{google/iam/v3/policy_binding_resources.proto#L32}
-  /// [google.iam.v3.SearchTargetPolicyBindingsRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L323}
+  /// [google.iam.v3.PolicyBinding]: @googleapis_reference_link{google/iam/v3/policy_binding_resources.proto#L33}
+  /// [google.iam.v3.SearchTargetPolicyBindingsRequest]: @googleapis_reference_link{google/iam/v3/policy_bindings_service.proto#L322}
   ///
   // clang-format on
   StreamRange<google::iam::v3::PolicyBinding> SearchTargetPolicyBindings(

@@ -85,6 +85,19 @@ ContainerAnalysisLogging::GetVulnerabilityOccurrencesSummary(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::devtools::containeranalysis::v1::ExportSBOMResponse>
+ContainerAnalysisLogging::ExportSBOM(
+    grpc::ClientContext& context, Options const& options,
+    google::devtools::containeranalysis::v1::ExportSBOMRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::containeranalysis::v1::ExportSBOMRequest const&
+                 request) {
+        return child_->ExportSBOM(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis_v1_internal
 }  // namespace cloud

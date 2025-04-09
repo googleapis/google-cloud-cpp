@@ -18,6 +18,7 @@
 
 #include "google/cloud/discoveryengine/v1/internal/conversational_search_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/streaming_read_rpc_logging.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/discoveryengine/v1/conversational_search_service.grpc.pb.h>
 #include <memory>
@@ -32,8 +33,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ConversationalSearchServiceLogging::ConversationalSearchServiceLogging(
     std::shared_ptr<ConversationalSearchServiceStub> child,
-    TracingOptions tracing_options, std::set<std::string> const&)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options, std::set<std::string> const& components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
+      stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 StatusOr<google::cloud::discoveryengine::v1::ConverseConversationResponse>
 ConversationalSearchServiceLogging::ConverseConversation(
@@ -132,6 +135,31 @@ ConversationalSearchServiceLogging::AnswerQuery(
         return child_->AnswerQuery(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
+}
+
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::cloud::discoveryengine::v1::AnswerQueryResponse>>
+ConversationalSearchServiceLogging::StreamAnswerQuery(
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::discoveryengine::v1::AnswerQueryRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::cloud::discoveryengine::v1::AnswerQueryRequest const& request)
+          -> std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+              google::cloud::discoveryengine::v1::AnswerQueryResponse>> {
+        auto stream =
+            child_->StreamAnswerQuery(std::move(context), options, request);
+        if (stream_logging_) {
+          stream =
+              std::make_unique<google::cloud::internal::StreamingReadRpcLogging<
+                  google::cloud::discoveryengine::v1::AnswerQueryResponse>>(
+                  std::move(stream), tracing_options_,
+                  google::cloud::internal::RequestIdForLogging());
+        }
+        return stream;
+      },
+      std::move(context), options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Answer>

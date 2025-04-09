@@ -118,6 +118,17 @@ DefaultConversationalSearchServiceStub::AnswerQuery(
   return response;
 }
 
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::cloud::discoveryengine::v1::AnswerQueryResponse>>
+DefaultConversationalSearchServiceStub::StreamAnswerQuery(
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    google::cloud::discoveryengine::v1::AnswerQueryRequest const& request) {
+  auto stream = grpc_stub_->StreamAnswerQuery(context.get(), request);
+  return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
+      google::cloud::discoveryengine::v1::AnswerQueryResponse>>(
+      std::move(context), std::move(stream));
+}
+
 StatusOr<google::cloud::discoveryengine::v1::Answer>
 DefaultConversationalSearchServiceStub::GetAnswer(
     grpc::ClientContext& context, Options const&,

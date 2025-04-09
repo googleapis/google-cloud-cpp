@@ -658,7 +658,7 @@ class RapidMigrationAssessmentClient {
   // clang-format off
   ///
   /// Deletes a single Collector - changes state of collector to "Deleting".
-  /// Background jobs does final deletion thorugh producer api.
+  /// Background jobs does final deletion through producer API.
   ///
   /// @param name  Required. Name of the resource.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -705,7 +705,7 @@ class RapidMigrationAssessmentClient {
   // clang-format off
   ///
   /// Deletes a single Collector - changes state of collector to "Deleting".
-  /// Background jobs does final deletion thorugh producer api.
+  /// Background jobs does final deletion through producer API.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
