@@ -219,6 +219,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "speech",
     "sql",
     "storage",
+    "storagebatchoperations",
     "storagecontrol",
     "storageinsights",
     "storagetransfer",

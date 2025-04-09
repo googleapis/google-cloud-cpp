@@ -12,6 +12,7 @@ We are happy to announce the following GA libraries. Unless specifically noted,
 the APIs in these libraries are stable, and are ready for production use.
 
 - [Financial Services API](/google/cloud/financialservices/README.md)
+- [Storage Batch Operations API](/google/cloud/storagebatchoperations/README.md)
 
 ### Updated Libraries
 

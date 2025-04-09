@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/storagebatchoperations/v1/ EDIT HERE _client.h"
+#include "google/cloud/storagebatchoperations/v1/storage_batch_operations_client.h"
 #include "google/cloud/location.h"
 #include <iostream>
 
@@ -26,10 +26,10 @@ int main(int argc, char* argv[]) try {
   auto const location = google::cloud::Location(argv[1], argv[2]);
 
   namespace storagebatchoperations = ::google::cloud::storagebatchoperations_v1;
-  auto client = storagebatchoperations::ServiceClient(
-      storagebatchoperations::MakeServiceConnection());  // EDIT HERE
+  auto client = storagebatchoperations::StorageBatchOperationsClient(
+      storagebatchoperations::MakeStorageBatchOperationsConnection());
 
-  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
+  for (auto r : client.ListJobs(location.FullName())) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
