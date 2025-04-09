@@ -333,8 +333,8 @@ Status CurlImpl::MakeRequest(HttpMethod method, RestContext& context,
     if (!status.ok()) return OnTransferError(context, std::move(status));
   }
 
-#if CURL_AT_LEAST_VERSION(7, 71, 0)
   if (client_ssl_cert_.has_value()) {
+#if CURL_AT_LEAST_VERSION(7, 71, 0)
     status = handle_.SetOption(CURLOPT_SSL_VERIFYPEER, 1L);
     if (!status.ok()) return OnTransferError(context, std::move(status));
     status = handle_.SetOption(CURLOPT_SSL_VERIFYHOST, 2L);
@@ -361,8 +361,15 @@ Status CurlImpl::MakeRequest(HttpMethod method, RestContext& context,
     ssl_key_blob.flags = CURL_BLOB_COPY;
     status = handle_.SetOption(CURLOPT_SSLKEY_BLOB, &ssl_key_blob);
     if (!status.ok()) return OnTransferError(context, std::move(status));
-  }
+#else
+    return OnTransferError(
+        context,
+        internal::InvalidArgumentError(
+            "libcurl 7.71.0 or higher required to use ClientSslCertificate",
+            GCP_ERROR_INFO().WithMetadata("current_libcurl_version",
+                                          LIBCURL_VERSION)));
 #endif
+  }
 
   if (method == HttpMethod::kGet) {
     status = handle_.SetOption(CURLOPT_NOPROGRESS, 1L);
