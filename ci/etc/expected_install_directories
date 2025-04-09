@@ -1095,6 +1095,10 @@
 ./include/google/cloud/sql/v1/mocks
 ./include/google/cloud/storage
 ./include/google/cloud/storage/internal
+./include/google/cloud/storagebatchoperations
+./include/google/cloud/storagebatchoperations/v1
+./include/google/cloud/storagebatchoperations/v1/internal
+./include/google/cloud/storagebatchoperations/v1/mocks
 ./include/google/cloud/storagecontrol
 ./include/google/cloud/storagecontrol/v2
 ./include/google/cloud/storagecontrol/v2/internal
@@ -1509,6 +1513,8 @@
 ./lib64/cmake/google_cloud_cpp_sql
 ./lib64/cmake/google_cloud_cpp_sql_mocks
 ./lib64/cmake/google_cloud_cpp_storage
+./lib64/cmake/google_cloud_cpp_storagebatchoperations
+./lib64/cmake/google_cloud_cpp_storagebatchoperations_mocks
 ./lib64/cmake/google_cloud_cpp_storagecontrol
 ./lib64/cmake/google_cloud_cpp_storagecontrol_mocks
 ./lib64/cmake/google_cloud_cpp_storageinsights

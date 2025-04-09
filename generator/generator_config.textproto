@@ -3728,6 +3728,14 @@ service {
   ]
 }
 
+# Storage Batch Operations
+service {
+  service_proto_path: "google/cloud/storagebatchoperations/v1/storage_batch_operations.proto"
+  product_path: "google/cloud/storagebatchoperations/v1"
+  initial_copyright_year: "2025"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Storage Control
 service {
   service_proto_path: "google/storage/control/v2/storage_control.proto"
