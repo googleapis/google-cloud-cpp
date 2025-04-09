@@ -20,7 +20,6 @@ storage_client_grpc_unit_tests = [
     "async/bucket_name_test.cc",
     "async/client_test.cc",
     "async/idempotency_policy_test.cc",
-    "async/read_all_test.cc",
     "async/object_descriptor_test.cc",
     "async/read_all_test.cc",
     "async/reader_test.cc",
