@@ -172,10 +172,10 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_github_grpc_grpc",
         urls = [
-            "https://github.com/grpc/grpc/archive/v1.69.0.tar.gz",
+            "https://github.com/grpc/grpc/archive/v1.72.0-pre1.tar.gz",
         ],
-        sha256 = "cd256d91781911d46a57506978b3979bfee45d5086a1b6668a3ae19c5e77f8dc",
-        strip_prefix = "grpc-1.69.0",
+        sha256 = "05a21b2d85c5f22a28ea7b5061080a9163f175f3deab0497a325455cd24bbe4a",
+        strip_prefix = "grpc-1.72.0-pre1",
     )
 
     # We use the cc_proto_library() rule from @com_google_protobuf, which
