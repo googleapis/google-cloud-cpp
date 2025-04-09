@@ -71,10 +71,21 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "rules_cc",
         urls = [
-            "https://github.com/bazelbuild/rules_cc/releases/download/0.0.17/rules_cc-0.0.17.tar.gz",
+            "https://github.com/bazelbuild/rules_cc/releases/download/0.1.1/rules_cc-0.1.1.tar.gz",
         ],
-        sha256 = "abc605dd850f813bb37004b77db20106a19311a96b2da1c92b789da529d28fe1",
-        strip_prefix = "rules_cc-0.0.17",
+#        sha256 = "abc605dd850f813bb37004b77db20106a19311a96b2da1c92b789da529d28fe1",
+        strip_prefix = "rules_cc-0.1.1",
+    )
+
+    # Load rules_java, for some reason only bazel knows
+    maybe(
+        http_archive,
+        name = "rules_java",
+        urls = [
+            "https://github.com/bazelbuild/rules_java/releases/download/8.11.0/rules_java-8.11.0.tar.gz",
+        ],
+#        sha256 = "abc605dd850f813bb37004b77db20106a19311a96b2da1c92b789da529d28fe1",
+        strip_prefix = "rules_java-8.11.0",
     )
 
     maybe(
@@ -156,10 +167,10 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_google_protobuf",
         urls = [
-            "https://github.com/protocolbuffers/protobuf/archive/v30.0.tar.gz",
+            "https://github.com/protocolbuffers/protobuf/archive/v30.2.tar.gz",
         ],
         sha256 = "9df0e9e8ebe39f4fbbb9cf7db3d811287fe3616b2f191eb2bf5eaa12539c881f",
-        strip_prefix = "protobuf-30.0",
+        strip_prefix = "protobuf-30.2",
     )
 
     # Load BoringSSL. This could be automatically loaded by gRPC. But as of
