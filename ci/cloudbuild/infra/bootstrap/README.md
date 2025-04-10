@@ -21,7 +21,7 @@ ideally only once.
 Change your working directory, for example:
 
 ```shell
-cd $HOME/cpp-storage-prelaunch/ci/cloudbuild/infra/bootstrap
+cd $HOME/google-cloud-cpp/ci/cloudbuild/infra/bootstrap
 ```
 
 Initialize terraform:

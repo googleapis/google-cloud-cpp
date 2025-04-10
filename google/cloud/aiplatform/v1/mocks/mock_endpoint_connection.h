@@ -86,24 +86,6 @@ class MockEndpointServiceConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateEndpoint,
-      (NoAwaitTag,
-       google::cloud::aiplatform::v1::CreateEndpointRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateEndpoint(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>,
-              CreateEndpoint, (google::longrunning::Operation const& operation),
-              (override));
-
-  MOCK_METHOD(
       StatusOr<google::cloud::aiplatform::v1::Endpoint>, GetEndpoint,
       (google::cloud::aiplatform::v1::GetEndpointRequest const& request),
       (override));
@@ -210,34 +192,6 @@ class MockEndpointServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteEndpoint,
-      (NoAwaitTag,
-       google::cloud::aiplatform::v1::DeleteEndpointRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteEndpoint(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-      DeleteEndpoint, (google::longrunning::Operation const& operation),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeployModel(Matcher<google::cloud::aiplatform::v1::DeployModelRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>,
       DeployModel,
       (google::cloud::aiplatform::v1::DeployModelRequest const& request),
@@ -278,34 +232,6 @@ class MockEndpointServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeployModel,
-      (NoAwaitTag,
-       google::cloud::aiplatform::v1::DeployModelRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeployModel(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>,
-      DeployModel, (google::longrunning::Operation const& operation),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UndeployModel(Matcher<google::cloud::aiplatform::v1::UndeployModelRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::UndeployModelResponse>>,
       UndeployModel,
       (google::cloud::aiplatform::v1::UndeployModelRequest const& request),
@@ -316,34 +242,6 @@ class MockEndpointServiceConnection
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UndeployModel(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UndeployModel,
-      (NoAwaitTag,
-       google::cloud::aiplatform::v1::UndeployModelRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UndeployModel(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::UndeployModelResponse>>,
-      UndeployModel, (google::longrunning::Operation const& operation),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// MutateDeployedModel(Matcher<google::cloud::aiplatform::v1::MutateDeployedModelRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UndeployModel,

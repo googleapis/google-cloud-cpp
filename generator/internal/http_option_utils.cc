@@ -389,20 +389,6 @@ absl::optional<std::string> FormatApiVersionFromUrlPattern(
   return absl::nullopt;
 }
 
-// Generate api version by extracting the version from the url pattern.
-// In some cases(i.e. location), there is no version in the package name.
-absl::optional<std::string> FormatApiVersionFromUrlPattern(
-    std::string const& url_pattern) {
-  std::vector<std::string> const parts = absl::StrSplit(url_pattern, '/');
-  static auto const* const kVersion = new std::regex{R"(v\d+)"};
-  for (auto const& part : parts) {
-    if (std::regex_match(part, *kVersion)) {
-      return part;
-    }
-  }
-  return absl::nullopt;
-}
-
 }  // namespace generator_internal
 }  // namespace cloud
 }  // namespace google
