@@ -193,33 +193,6 @@ class MockCloudChannelServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateEntitlement,
-      (NoAwaitTag,
-       google::cloud::channel::v1::CreateEntitlementRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateEntitlement(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::channel::v1::Entitlement>>,
-              CreateEntitlement,
-              (google::longrunning::Operation const& operation), (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ChangeParameters(Matcher<google::cloud::channel::v1::ChangeParametersRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::channel::v1::Entitlement>>,
       ChangeParameters,
       (google::cloud::channel::v1::ChangeParametersRequest const& request),
@@ -230,33 +203,6 @@ class MockCloudChannelServiceConnection
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ChangeParameters(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, ChangeParameters,
-      (NoAwaitTag,
-       google::cloud::channel::v1::ChangeParametersRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, ChangeParameters(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::channel::v1::Entitlement>>,
-              ChangeParameters,
-              (google::longrunning::Operation const& operation), (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ChangeRenewalSettings(Matcher<google::cloud::channel::v1::ChangeRenewalSettingsRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ChangeParameters,
@@ -401,33 +347,6 @@ class MockCloudChannelServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, StartPaidService,
-      (NoAwaitTag,
-       google::cloud::channel::v1::StartPaidServiceRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, StartPaidService(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::channel::v1::Entitlement>>,
-              StartPaidService,
-              (google::longrunning::Operation const& operation), (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SuspendEntitlement(Matcher<google::cloud::channel::v1::SuspendEntitlementRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::channel::v1::Entitlement>>,
       SuspendEntitlement,
       (google::cloud::channel::v1::SuspendEntitlementRequest const& request),
@@ -438,33 +357,6 @@ class MockCloudChannelServiceConnection
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, SuspendEntitlement(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, SuspendEntitlement,
-      (NoAwaitTag,
-       google::cloud::channel::v1::SuspendEntitlementRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SuspendEntitlement(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::channel::v1::Entitlement>>,
-              SuspendEntitlement,
-              (google::longrunning::Operation const& operation), (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CancelEntitlement(Matcher<google::cloud::channel::v1::CancelEntitlementRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, SuspendEntitlement,
@@ -533,33 +425,6 @@ class MockCloudChannelServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CancelEntitlement,
-      (NoAwaitTag,
-       google::cloud::channel::v1::CancelEntitlementRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CancelEntitlement(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::channel::v1::OperationMetadata>>,
-              CancelEntitlement,
-              (google::longrunning::Operation const& operation), (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ActivateEntitlement(Matcher<google::cloud::channel::v1::ActivateEntitlementRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::channel::v1::Entitlement>>,
       ActivateEntitlement,
       (google::cloud::channel::v1::ActivateEntitlementRequest const& request),
@@ -570,33 +435,6 @@ class MockCloudChannelServiceConnection
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ActivateEntitlement(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, ActivateEntitlement,
-      (NoAwaitTag,
-       google::cloud::channel::v1::ActivateEntitlementRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ActivateEntitlement(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::channel::v1::Entitlement>>,
-              ActivateEntitlement,
-              (google::longrunning::Operation const& operation), (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// TransferEntitlements(Matcher<google::cloud::channel::v1::TransferEntitlementsRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ActivateEntitlement,
@@ -668,35 +506,6 @@ class MockCloudChannelServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, TransferEntitlements,
-      (NoAwaitTag,
-       google::cloud::channel::v1::TransferEntitlementsRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// TransferEntitlements(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::channel::v1::TransferEntitlementsResponse>>,
-      TransferEntitlements, (google::longrunning::Operation const& operation),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// TransferEntitlementsToGoogle(Matcher<google::cloud::channel::v1::TransferEntitlementsToGoogleRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::channel::v1::OperationMetadata>>,
       TransferEntitlementsToGoogle,
       (google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
@@ -709,26 +518,6 @@ class MockCloudChannelServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, TransferEntitlementsToGoogle(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, TransferEntitlementsToGoogle,
-      (NoAwaitTag,
-       google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// TransferEntitlementsToGoogle(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::channel::v1::OperationMetadata>>,
-              TransferEntitlementsToGoogle,
-              (google::longrunning::Operation const& operation), (override));
-
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, TransferEntitlementsToGoogle,
       (NoAwaitTag,

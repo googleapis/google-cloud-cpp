@@ -99,27 +99,6 @@ class MockAddressesConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Operation>, DeleteAddress,
-      (NoAwaitTag,
-       google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteAddress(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteAddress,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
-
-  MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Address>, GetAddress,
       (google::cloud::cpp::compute::addresses::v1::GetAddressRequest const&
            request),
@@ -193,34 +172,6 @@ class MockAddressesConnection
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, Move(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Operation>, Move,
-      (NoAwaitTag,
-       google::cloud::cpp::compute::addresses::v1::MoveRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, Move(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              Move,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SetLabels(Matcher<google::cloud::cpp::compute::addresses::v1::SetLabelsRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>, Move,

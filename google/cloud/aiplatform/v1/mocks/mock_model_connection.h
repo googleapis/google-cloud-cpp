@@ -167,37 +167,6 @@ class MockModelServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateExplanationDataset,
-      (NoAwaitTag,
-       google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateExplanationDataset(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>,
-      UpdateExplanationDataset,
-      (google::longrunning::Operation const& operation), (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteModel(Matcher<google::cloud::aiplatform::v1::DeleteModelRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteModel,
       (google::cloud::aiplatform::v1::DeleteModelRequest const& request),
@@ -208,34 +177,6 @@ class MockModelServiceConnection
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteModel(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteModel,
-      (NoAwaitTag,
-       google::cloud::aiplatform::v1::DeleteModelRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteModel(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-      DeleteModel, (google::longrunning::Operation const& operation),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteModelVersion(Matcher<google::cloud::aiplatform::v1::DeleteModelVersionRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteModel,
@@ -322,34 +263,6 @@ class MockModelServiceConnection
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ExportModel(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, ExportModel,
-      (NoAwaitTag,
-       google::cloud::aiplatform::v1::ExportModelRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, ExportModel(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>,
-      ExportModel, (google::longrunning::Operation const& operation),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CopyModel(Matcher<google::cloud::aiplatform::v1::CopyModelRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ExportModel,
