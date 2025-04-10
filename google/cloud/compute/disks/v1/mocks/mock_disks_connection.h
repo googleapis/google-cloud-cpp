@@ -90,27 +90,6 @@ class MockDisksConnection : public compute_disks_v1::DisksConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Operation>, AddResourcePolicies,
-      (NoAwaitTag,
-       google::cloud::cpp::compute::disks::v1::AddResourcePoliciesRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// AddResourcePolicies(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              AddResourcePolicies,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
-
-  MOCK_METHOD(
       (StreamRange<std::pair<
            std::string, google::cloud::cpp::compute::v1::DisksScopedList>>),
       AggregatedListDisks,
@@ -358,25 +337,6 @@ class MockDisksConnection : public compute_disks_v1::DisksConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, Resize(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Operation>, Resize,
-      (NoAwaitTag,
-       google::cloud::cpp::compute::disks::v1::ResizeRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// Resize(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              Resize,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
-
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>, Resize,
       (NoAwaitTag,

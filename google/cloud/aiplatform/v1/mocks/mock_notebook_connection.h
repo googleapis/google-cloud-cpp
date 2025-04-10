@@ -195,25 +195,6 @@ class MockNotebookServiceConnection
               (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, AssignNotebookRuntime,
-      (NoAwaitTag,
-       google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// AssignNotebookRuntime(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>>,
-              AssignNotebookRuntime,
-              (google::longrunning::Operation const& operation), (override));
-
-  MOCK_METHOD(
       StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>,
       GetNotebookRuntime,
       (google::cloud::aiplatform::v1::GetNotebookRuntimeRequest const& request),
@@ -246,35 +227,6 @@ class MockNotebookServiceConnection
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteNotebookRuntime(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteNotebookRuntime,
-      (NoAwaitTag,
-       google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteNotebookRuntime(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-      DeleteNotebookRuntime, (google::longrunning::Operation const& operation),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpgradeNotebookRuntime(Matcher<google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteNotebookRuntime,

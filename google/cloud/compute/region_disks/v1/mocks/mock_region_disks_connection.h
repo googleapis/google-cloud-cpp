@@ -212,26 +212,6 @@ class MockRegionDisksConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Operation>, DeleteDisk,
-      (NoAwaitTag,
-       google::cloud::cpp::compute::region_disks::v1::DeleteDiskRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteDisk(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteDisk,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
-
-  MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Disk>, GetDisk,
       (google::cloud::cpp::compute::region_disks::v1::GetDiskRequest const&
            request),
@@ -264,26 +244,6 @@ class MockRegionDisksConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, InsertDisk(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Operation>, InsertDisk,
-      (NoAwaitTag,
-       google::cloud::cpp::compute::region_disks::v1::InsertDiskRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// InsertDisk(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertDisk,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
-
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>, InsertDisk,
       (NoAwaitTag,
@@ -372,26 +332,6 @@ class MockRegionDisksConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, Resize(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Operation>, Resize,
-      (NoAwaitTag,
-       google::cloud::cpp::compute::region_disks::v1::ResizeRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// Resize(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              Resize,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
-
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>, Resize,
       (NoAwaitTag,

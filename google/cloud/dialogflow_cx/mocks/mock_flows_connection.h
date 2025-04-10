@@ -108,23 +108,6 @@ class MockFlowsConnection : public dialogflow_cx::FlowsConnection {
               (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, TrainFlow,
-      (NoAwaitTag,
-       google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, TrainFlow(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, TrainFlow,
-              (google::longrunning::Operation const& operation), (override));
-
-  MOCK_METHOD(
       StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>,
       ValidateFlow,
       (google::cloud::dialogflow::cx::v3::ValidateFlowRequest const& request),
@@ -157,34 +140,6 @@ class MockFlowsConnection : public dialogflow_cx::FlowsConnection {
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ImportFlow(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, ImportFlow,
-      (NoAwaitTag,
-       google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, ImportFlow(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::dialogflow::cx::v3::ImportFlowResponse>>,
-      ImportFlow, (google::longrunning::Operation const& operation),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ExportFlow(Matcher<google::cloud::dialogflow::cx::v3::ExportFlowRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ImportFlow,

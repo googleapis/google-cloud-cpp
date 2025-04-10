@@ -100,25 +100,6 @@ class MockBareMetalSolutionConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateInstance,
-      (NoAwaitTag,
-       google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateInstance(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>,
-              UpdateInstance, (google::longrunning::Operation const& operation),
-              (override));
-
-  MOCK_METHOD(
       StatusOr<google::cloud::baremetalsolution::v2::Instance>, RenameInstance,
       (google::cloud::baremetalsolution::v2::RenameInstanceRequest const&
            request),
@@ -356,24 +337,6 @@ class MockBareMetalSolutionConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DetachLun(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DetachLun,
-      (NoAwaitTag,
-       google::cloud::baremetalsolution::v2::DetachLunRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DetachLun(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>,
-              DetachLun, (google::longrunning::Operation const& operation),
-              (override));
-
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DetachLun,
       (NoAwaitTag,
@@ -649,26 +612,6 @@ class MockBareMetalSolutionConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, RestoreVolumeSnapshot,
-      (NoAwaitTag,
-       google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// RestoreVolumeSnapshot(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>>,
-      RestoreVolumeSnapshot, (google::longrunning::Operation const& operation),
-      (override));
-
-  MOCK_METHOD(
       Status, DeleteVolumeSnapshot,
       (google::cloud::baremetalsolution::v2::DeleteVolumeSnapshotRequest const&
            request),
@@ -719,24 +662,6 @@ class MockBareMetalSolutionConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, EvictLun(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, EvictLun,
-      (NoAwaitTag,
-       google::cloud::baremetalsolution::v2::EvictLunRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, EvictLun(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>,
-      EvictLun, (google::longrunning::Operation const& operation), (override));
-
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, EvictLun,
       (NoAwaitTag,
@@ -817,34 +742,6 @@ class MockBareMetalSolutionConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateNfsShare,
-      (NoAwaitTag,
-       google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateNfsShare(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>,
-              UpdateNfsShare, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateNfsShare(Matcher<google::cloud::baremetalsolution::v2::CreateNfsShareRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>,
       CreateNfsShare,
       (google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&
@@ -857,25 +754,6 @@ class MockBareMetalSolutionConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateNfsShare(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateNfsShare,
-      (NoAwaitTag,
-       google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateNfsShare(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>,
-              CreateNfsShare, (google::longrunning::Operation const& operation),
-              (override));
-
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateNfsShare,
       (NoAwaitTag,
@@ -912,7 +790,9 @@ class MockBareMetalSolutionConnection
   /// @endcode
   MOCK_METHOD(
       future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>,
-      DeleteNfsShare, (google::longrunning::Operation const& operation),
+      DeleteNfsShare,
+      (google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const&
+           request),
       (override));
 
   /// To disambiguate calls, use:

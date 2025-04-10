@@ -122,34 +122,6 @@ class MockTestCasesConnection : public dialogflow_cx::TestCasesConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, RunTestCase,
-      (NoAwaitTag,
-       google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, RunTestCase(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>,
-      RunTestCase, (google::longrunning::Operation const& operation),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// BatchRunTestCases(Matcher<google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<
           google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>,
       BatchRunTestCases,
@@ -163,27 +135,6 @@ class MockTestCasesConnection : public dialogflow_cx::TestCasesConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, BatchRunTestCases(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, BatchRunTestCases,
-      (NoAwaitTag,
-       google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// BatchRunTestCases(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>,
-      BatchRunTestCases, (google::longrunning::Operation const& operation),
-      (override));
-
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, BatchRunTestCases,
       (NoAwaitTag,

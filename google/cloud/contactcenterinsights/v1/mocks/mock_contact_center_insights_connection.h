@@ -161,26 +161,6 @@ class MockContactCenterInsightsConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateAnalysis,
-      (NoAwaitTag,
-       google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateAnalysis(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>,
-      CreateAnalysis, (google::longrunning::Operation const& operation),
-      (override));
-
-  MOCK_METHOD(
       StatusOr<google::cloud::contactcenterinsights::v1::Analysis>, GetAnalysis,
       (google::cloud::contactcenterinsights::v1::GetAnalysisRequest const&
            request),
@@ -404,26 +384,6 @@ class MockContactCenterInsightsConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateIssueModel,
-      (NoAwaitTag,
-       google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateIssueModel(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>,
-      CreateIssueModel, (google::longrunning::Operation const& operation),
-      (override));
-
-  MOCK_METHOD(
       StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>,
       UpdateIssueModel,
       (google::cloud::contactcenterinsights::v1::UpdateIssueModelRequest const&
@@ -467,36 +427,6 @@ class MockContactCenterInsightsConnection
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteIssueModel(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteIssueModel,
-      (NoAwaitTag,
-       google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteIssueModel(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>,
-      DeleteIssueModel, (google::longrunning::Operation const& operation),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeployIssueModel(Matcher<google::cloud::contactcenterinsights::v1::DeployIssueModelRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteIssueModel,
@@ -805,55 +735,6 @@ class MockContactCenterInsightsConnection
               (google::cloud::contactcenterinsights::v1::
                    DeleteAnalysisRuleRequest const& request),
               (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::contactcenterinsights::v1::EncryptionSpec>,
-      GetEncryptionSpec,
-      (google::cloud::contactcenterinsights::v1::GetEncryptionSpecRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// InitializeEncryptionSpec(Matcher<google::cloud::contactcenterinsights::v1::InitializeEncryptionSpecRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
-                                  InitializeEncryptionSpecResponse>>,
-              InitializeEncryptionSpec,
-              (google::cloud::contactcenterinsights::v1::
-                   InitializeEncryptionSpecRequest const& request),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// EXPECT_CALL(*mock, InitializeEncryptionSpec(_, _))
-  /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-              InitializeEncryptionSpec,
-              (NoAwaitTag, google::cloud::contactcenterinsights::v1::
-                               InitializeEncryptionSpecRequest const& request),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// InitializeEncryptionSpec(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
-                                  InitializeEncryptionSpecResponse>>,
-              InitializeEncryptionSpec,
-              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::contactcenterinsights::v1::EncryptionSpec>,

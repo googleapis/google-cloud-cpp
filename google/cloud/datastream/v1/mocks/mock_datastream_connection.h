@@ -111,36 +111,6 @@ class MockDatastreamConnection : public datastream_v1::DatastreamConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateConnectionProfile,
-      (NoAwaitTag,
-       google::cloud::datastream::v1::CreateConnectionProfileRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateConnectionProfile(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>,
-      CreateConnectionProfile,
-      (google::longrunning::Operation const& operation), (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateConnectionProfile(Matcher<google::cloud::datastream::v1::UpdateConnectionProfileRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>,
       UpdateConnectionProfile,
       (google::cloud::datastream::v1::UpdateConnectionProfileRequest const&
@@ -152,36 +122,6 @@ class MockDatastreamConnection : public datastream_v1::DatastreamConnection {
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateConnectionProfile(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateConnectionProfile,
-      (NoAwaitTag,
-       google::cloud::datastream::v1::UpdateConnectionProfileRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateConnectionProfile(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>,
-      UpdateConnectionProfile,
-      (google::longrunning::Operation const& operation), (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteConnectionProfile(Matcher<google::cloud::datastream::v1::DeleteConnectionProfileRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateConnectionProfile,
@@ -226,27 +166,6 @@ class MockDatastreamConnection : public datastream_v1::DatastreamConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteConnectionProfile(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteConnectionProfile,
-      (NoAwaitTag,
-       google::cloud::datastream::v1::DeleteConnectionProfileRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteConnectionProfile(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>,
-      DeleteConnectionProfile,
-      (google::longrunning::Operation const& operation), (override));
-
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteConnectionProfile,
       (NoAwaitTag,
@@ -332,33 +251,6 @@ class MockDatastreamConnection : public datastream_v1::DatastreamConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateStream,
-      (NoAwaitTag,
-       google::cloud::datastream::v1::CreateStreamRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateStream(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::datastream::v1::Stream>>,
-              CreateStream, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateStream(Matcher<google::cloud::datastream::v1::UpdateStreamRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::datastream::v1::Stream>>, UpdateStream,
       (google::cloud::datastream::v1::UpdateStreamRequest const& request),
       (override));
@@ -368,33 +260,6 @@ class MockDatastreamConnection : public datastream_v1::DatastreamConnection {
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateStream(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateStream,
-      (NoAwaitTag,
-       google::cloud::datastream::v1::UpdateStreamRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateStream(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::datastream::v1::Stream>>,
-              UpdateStream, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteStream(Matcher<google::cloud::datastream::v1::DeleteStreamRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateStream,
@@ -490,25 +355,6 @@ class MockDatastreamConnection : public datastream_v1::DatastreamConnection {
   MOCK_METHOD(future<StatusOr<google::cloud::datastream::v1::Stream>>,
               RunStream, (google::longrunning::Operation const& operation),
               (override));
-
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteStream,
-      (NoAwaitTag,
-       google::cloud::datastream::v1::DeleteStreamRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteStream(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>,
-      DeleteStream, (google::longrunning::Operation const& operation),
-      (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::datastream::v1::StreamObject>, GetStreamObject,
@@ -617,36 +463,6 @@ class MockDatastreamConnection : public datastream_v1::DatastreamConnection {
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeletePrivateConnection(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeletePrivateConnection,
-      (NoAwaitTag,
-       google::cloud::datastream::v1::DeletePrivateConnectionRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeletePrivateConnection(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>,
-      DeletePrivateConnection,
-      (google::longrunning::Operation const& operation), (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateRoute(Matcher<google::cloud::datastream::v1::CreateRouteRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeletePrivateConnection,

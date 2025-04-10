@@ -111,25 +111,6 @@ class MockVizierServiceConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, SuggestTrials,
-      (NoAwaitTag,
-       google::cloud::aiplatform::v1::SuggestTrialsRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, SuggestTrials(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>,
-      SuggestTrials, (google::longrunning::Operation const& operation),
-      (override));
-
-  MOCK_METHOD(
       StatusOr<google::cloud::aiplatform::v1::Trial>, CreateTrial,
       (google::cloud::aiplatform::v1::CreateTrialRequest const& request),
       (override));

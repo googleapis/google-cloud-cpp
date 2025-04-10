@@ -106,33 +106,6 @@ class MockCloudDeployConnection : public deploy_v1::CloudDeployConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateDeliveryPipeline,
-      (NoAwaitTag,
-       google::cloud::deploy::v1::CreateDeliveryPipelineRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateDeliveryPipeline(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>,
-              CreateDeliveryPipeline,
-              (google::longrunning::Operation const& operation), (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateDeliveryPipeline(Matcher<google::cloud::deploy::v1::UpdateDeliveryPipelineRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>,
       UpdateDeliveryPipeline,
       (google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const& request),
@@ -143,33 +116,6 @@ class MockCloudDeployConnection : public deploy_v1::CloudDeployConnection {
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateDeliveryPipeline(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateDeliveryPipeline,
-      (NoAwaitTag,
-       google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateDeliveryPipeline(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>,
-              UpdateDeliveryPipeline,
-              (google::longrunning::Operation const& operation), (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteDeliveryPipeline(Matcher<google::cloud::deploy::v1::DeleteDeliveryPipelineRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateDeliveryPipeline,
@@ -408,33 +354,6 @@ class MockCloudDeployConnection : public deploy_v1::CloudDeployConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateCustomTargetType,
-      (NoAwaitTag,
-       google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateCustomTargetType(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>,
-              CreateCustomTargetType,
-              (google::longrunning::Operation const& operation), (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateCustomTargetType(Matcher<google::cloud::deploy::v1::UpdateCustomTargetTypeRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>,
       UpdateCustomTargetType,
       (google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request),
@@ -445,33 +364,6 @@ class MockCloudDeployConnection : public deploy_v1::CloudDeployConnection {
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateCustomTargetType(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateCustomTargetType,
-      (NoAwaitTag,
-       google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateCustomTargetType(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>,
-              UpdateCustomTargetType,
-              (google::longrunning::Operation const& operation), (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteCustomTargetType(Matcher<google::cloud::deploy::v1::DeleteCustomTargetTypeRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateCustomTargetType,
@@ -841,33 +733,6 @@ class MockCloudDeployConnection : public deploy_v1::CloudDeployConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateAutomation,
-      (NoAwaitTag,
-       google::cloud::deploy::v1::CreateAutomationRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateAutomation(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::deploy::v1::Automation>>,
-              CreateAutomation,
-              (google::longrunning::Operation const& operation), (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateAutomation(Matcher<google::cloud::deploy::v1::UpdateAutomationRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::deploy::v1::Automation>>, UpdateAutomation,
       (google::cloud::deploy::v1::UpdateAutomationRequest const& request),
       (override));
@@ -877,33 +742,6 @@ class MockCloudDeployConnection : public deploy_v1::CloudDeployConnection {
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateAutomation(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateAutomation,
-      (NoAwaitTag,
-       google::cloud::deploy::v1::UpdateAutomationRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateAutomation(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::deploy::v1::Automation>>,
-              UpdateAutomation,
-              (google::longrunning::Operation const& operation), (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteAutomation(Matcher<google::cloud::deploy::v1::DeleteAutomationRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateAutomation,

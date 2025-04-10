@@ -97,35 +97,6 @@ class MockNetworksConnection : public compute_networks_v1::NetworksConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Operation>, AddPeering,
-      (NoAwaitTag,
-       google::cloud::cpp::compute::networks::v1::AddPeeringRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// AddPeering(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              AddPeering,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteNetwork(Matcher<google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       DeleteNetwork,
       (google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const&
@@ -138,27 +109,6 @@ class MockNetworksConnection : public compute_networks_v1::NetworksConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteNetwork(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Operation>, DeleteNetwork,
-      (NoAwaitTag,
-       google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteNetwork(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteNetwork,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
-
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>, DeleteNetwork,
       (NoAwaitTag,
@@ -237,27 +187,6 @@ class MockNetworksConnection : public compute_networks_v1::NetworksConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Operation>, InsertNetwork,
-      (NoAwaitTag,
-       google::cloud::cpp::compute::networks::v1::InsertNetworkRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// InsertNetwork(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertNetwork,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
-
-  MOCK_METHOD(
       (StreamRange<google::cloud::cpp::compute::v1::Network>), ListNetworks,
       (google::cloud::cpp::compute::networks::v1::ListNetworksRequest request),
       (override));
@@ -290,36 +219,6 @@ class MockNetworksConnection : public compute_networks_v1::NetworksConnection {
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, PatchNetwork(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Operation>, PatchNetwork,
-      (NoAwaitTag,
-       google::cloud::cpp::compute::networks::v1::PatchNetworkRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// PatchNetwork(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchNetwork,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// RemovePeering(Matcher<google::cloud::cpp::compute::networks::v1::RemovePeeringRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>, PatchNetwork,

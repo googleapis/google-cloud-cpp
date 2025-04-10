@@ -87,24 +87,6 @@ class MockTensorboardServiceConnection
               (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateTensorboard,
-      (NoAwaitTag,
-       google::cloud::aiplatform::v1::CreateTensorboardRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateTensorboard(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>,
-              CreateTensorboard,
-              (google::longrunning::Operation const& operation), (override));
-
-  MOCK_METHOD(
       StatusOr<google::cloud::aiplatform::v1::Tensorboard>, GetTensorboard,
       (google::cloud::aiplatform::v1::GetTensorboardRequest const& request),
       (override));
@@ -174,25 +156,6 @@ class MockTensorboardServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteTensorboard(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteTensorboard,
-      (NoAwaitTag,
-       google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteTensorboard(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-      DeleteTensorboard, (google::longrunning::Operation const& operation),
-      (override));
-
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteTensorboard,
       (NoAwaitTag,

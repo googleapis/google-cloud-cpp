@@ -90,27 +90,6 @@ class MockLicensesConnection : public compute_licenses_v1::LicensesConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Operation>, DeleteLicense,
-      (NoAwaitTag,
-       google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteLicense(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteLicense,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
-
-  MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::License>, GetLicense,
       (google::cloud::cpp::compute::licenses::v1::GetLicenseRequest const&
            request),
@@ -144,27 +123,6 @@ class MockLicensesConnection : public compute_licenses_v1::LicensesConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, InsertLicense(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Operation>, InsertLicense,
-      (NoAwaitTag,
-       google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// InsertLicense(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertLicense,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
-
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>, InsertLicense,
       (NoAwaitTag,

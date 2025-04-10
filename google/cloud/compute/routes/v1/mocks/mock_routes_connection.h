@@ -89,27 +89,6 @@ class MockRoutesConnection : public compute_routes_v1::RoutesConnection {
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Operation>, DeleteRoute,
-      (NoAwaitTag,
-       google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteRoute(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteRoute,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
-
-  MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Route>, GetRoute,
       (google::cloud::cpp::compute::routes::v1::GetRouteRequest const& request),
       (override));
@@ -135,27 +114,6 @@ class MockRoutesConnection : public compute_routes_v1::RoutesConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, InsertRoute(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Operation>, InsertRoute,
-      (NoAwaitTag,
-       google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// InsertRoute(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertRoute,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
-
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>, InsertRoute,
       (NoAwaitTag,

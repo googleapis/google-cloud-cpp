@@ -101,35 +101,6 @@ class MockInstanceGroupManagerResizeRequestsConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Operation>, Cancel,
-      (NoAwaitTag,
-       google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
-           CancelRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// Cancel(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              Cancel,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteInstanceGroupManagerResizeRequest(Matcher<google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::DeleteInstanceGroupManagerResizeRequestRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       DeleteInstanceGroupManagerResizeRequest,
       (google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
@@ -142,28 +113,6 @@ class MockInstanceGroupManagerResizeRequestsConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteInstanceGroupManagerResizeRequest(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Operation>,
-      DeleteInstanceGroupManagerResizeRequest,
-      (NoAwaitTag,
-       google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
-           DeleteInstanceGroupManagerResizeRequestRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteInstanceGroupManagerResizeRequest(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteInstanceGroupManagerResizeRequest,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
-
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>,
       DeleteInstanceGroupManagerResizeRequest,
@@ -216,28 +165,6 @@ class MockInstanceGroupManagerResizeRequestsConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, InsertInstanceGroupManagerResizeRequest(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Operation>,
-      InsertInstanceGroupManagerResizeRequest,
-      (NoAwaitTag,
-       google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
-           InsertInstanceGroupManagerResizeRequestRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// InsertInstanceGroupManagerResizeRequest(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              InsertInstanceGroupManagerResizeRequest,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
-
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>,
       InsertInstanceGroupManagerResizeRequest,
