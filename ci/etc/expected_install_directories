@@ -698,6 +698,10 @@
 ./include/google/cloud/developerconnect/v1
 ./include/google/cloud/developerconnect/v1/internal
 ./include/google/cloud/developerconnect/v1/mocks
+./include/google/cloud/devicestreaming
+./include/google/cloud/devicestreaming/v1
+./include/google/cloud/devicestreaming/v1/internal
+./include/google/cloud/devicestreaming/v1/mocks
 ./include/google/cloud/dialogflow
 ./include/google/cloud/dialogflow/cx
 ./include/google/cloud/dialogflow/cx/v3
@@ -1372,6 +1376,8 @@
 ./lib64/cmake/google_cloud_cpp_deploy_mocks
 ./lib64/cmake/google_cloud_cpp_developerconnect
 ./lib64/cmake/google_cloud_cpp_developerconnect_mocks
+./lib64/cmake/google_cloud_cpp_devicestreaming
+./lib64/cmake/google_cloud_cpp_devicestreaming_mocks
 ./lib64/cmake/google_cloud_cpp_dialogflow_cx
 ./lib64/cmake/google_cloud_cpp_dialogflow_cx_mocks
 ./lib64/cmake/google_cloud_cpp_dialogflow_es
