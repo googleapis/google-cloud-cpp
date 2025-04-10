@@ -146,33 +146,6 @@ class MockBigtableTableAdminConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UndeleteTable,
-      (NoAwaitTag,
-       google::bigtable::admin::v2::UndeleteTableRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UndeleteTable(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::Table>>,
-              UndeleteTable, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateAuthorizedView(Matcher<google::bigtable::admin::v2::CreateAuthorizedViewRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>,
       CreateAuthorizedView,
       (google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request),
@@ -233,24 +206,6 @@ class MockBigtableTableAdminConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateAuthorizedView(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateAuthorizedView,
-      (NoAwaitTag,
-       google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateAuthorizedView(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>,
-              UpdateAuthorizedView,
-              (google::longrunning::Operation const& operation), (override));
-
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateAuthorizedView,
       (NoAwaitTag,

@@ -105,33 +105,6 @@ class MockConnectorsConnection : public connectors_v1::ConnectorsConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateConnection,
-      (NoAwaitTag,
-       google::cloud::connectors::v1::CreateConnectionRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateConnection(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::connectors::v1::Connection>>,
-              CreateConnection,
-              (google::longrunning::Operation const& operation), (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateConnection(Matcher<google::cloud::connectors::v1::UpdateConnectionRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::connectors::v1::Connection>>,
       UpdateConnection,
       (google::cloud::connectors::v1::UpdateConnectionRequest const& request),
@@ -142,33 +115,6 @@ class MockConnectorsConnection : public connectors_v1::ConnectorsConnection {
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateConnection(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateConnection,
-      (NoAwaitTag,
-       google::cloud::connectors::v1::UpdateConnectionRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateConnection(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::connectors::v1::Connection>>,
-              UpdateConnection,
-              (google::longrunning::Operation const& operation), (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteConnection(Matcher<google::cloud::connectors::v1::DeleteConnectionRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateConnection,

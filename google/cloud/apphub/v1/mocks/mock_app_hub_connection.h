@@ -104,27 +104,6 @@ class MockAppHubConnection : public apphub_v1::AppHubConnection {
       (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateServiceProjectAttachment,
-      (NoAwaitTag,
-       google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateServiceProjectAttachment(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>>,
-      CreateServiceProjectAttachment,
-      (google::longrunning::Operation const& operation), (override));
-
-  MOCK_METHOD(
       StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>,
       GetServiceProjectAttachment,
       (google::cloud::apphub::v1::GetServiceProjectAttachmentRequest const&
@@ -153,26 +132,6 @@ class MockAppHubConnection : public apphub_v1::AppHubConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteServiceProjectAttachment(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteServiceProjectAttachment,
-      (NoAwaitTag,
-       google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteServiceProjectAttachment(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>,
-              DeleteServiceProjectAttachment,
-              (google::longrunning::Operation const& operation), (override));
-
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteServiceProjectAttachment,
       (NoAwaitTag,
@@ -545,33 +504,6 @@ class MockAppHubConnection : public apphub_v1::AppHubConnection {
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateApplication(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateApplication,
-      (NoAwaitTag,
-       google::cloud::apphub::v1::UpdateApplicationRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateApplication(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::Application>>,
-              UpdateApplication,
-              (google::longrunning::Operation const& operation), (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteApplication(Matcher<google::cloud::apphub::v1::DeleteApplicationRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateApplication,

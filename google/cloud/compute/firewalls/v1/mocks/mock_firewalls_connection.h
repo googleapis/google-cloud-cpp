@@ -91,27 +91,6 @@ class MockFirewallsConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Operation>, DeleteFirewall,
-      (NoAwaitTag,
-       google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteFirewall(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DeleteFirewall,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
-
-  MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Firewall>, GetFirewall,
       (google::cloud::cpp::compute::firewalls::v1::GetFirewallRequest const&
            request),
@@ -187,36 +166,6 @@ class MockFirewallsConnection
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, PatchFirewall(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Operation>, PatchFirewall,
-      (NoAwaitTag,
-       google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// PatchFirewall(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              PatchFirewall,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateFirewall(Matcher<google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>, PatchFirewall,

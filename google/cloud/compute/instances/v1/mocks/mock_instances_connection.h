@@ -190,35 +190,6 @@ class MockInstancesConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Operation>, AttachDisk,
-      (NoAwaitTag,
-       google::cloud::cpp::compute::instances::v1::AttachDiskRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// AttachDisk(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              AttachDisk,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// BulkInsert(Matcher<google::cloud::cpp::compute::instances::v1::BulkInsertRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, BulkInsert,
       (google::cloud::cpp::compute::instances::v1::BulkInsertRequest const&
            request),
@@ -229,35 +200,6 @@ class MockInstancesConnection
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, BulkInsert(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Operation>, BulkInsert,
-      (NoAwaitTag,
-       google::cloud::cpp::compute::instances::v1::BulkInsertRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// BulkInsert(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              BulkInsert,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteInstance(Matcher<google::cloud::cpp::compute::instances::v1::DeleteInstanceRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>, BulkInsert,
@@ -384,26 +326,6 @@ class MockInstancesConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DetachDisk(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Operation>, DetachDisk,
-      (NoAwaitTag,
-       google::cloud::cpp::compute::instances::v1::DetachDiskRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DetachDisk(Matcher<google::cloud::cpp::compute::v1::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              DetachDisk,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
-
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>, DetachDisk,
       (NoAwaitTag,
@@ -921,36 +843,6 @@ class MockInstancesConnection
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, SetMachineType(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::cloud::cpp::compute::v1::Operation>, SetMachineType,
-      (NoAwaitTag,
-       google::cloud::cpp::compute::instances::v1::SetMachineTypeRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SetMachineType(Matcher<google::cloud::cpp::compute::v1::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
-              SetMachineType,
-              (google::cloud::cpp::compute::v1::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SetMetadata(Matcher<google::cloud::cpp::compute::instances::v1::SetMetadataRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>, SetMachineType,
