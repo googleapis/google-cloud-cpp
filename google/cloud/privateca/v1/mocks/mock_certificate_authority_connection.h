@@ -469,34 +469,6 @@ class MockCertificateAuthorityServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateCaPool,
-      (NoAwaitTag,
-       google::cloud::security::privateca::v1::CreateCaPoolRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateCaPool(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::security::privateca::v1::CaPool>>,
-              CreateCaPool, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateCaPool(Matcher<google::cloud::security::privateca::v1::UpdateCaPoolRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::security::privateca::v1::CaPool>>,
       UpdateCaPool,
       (google::cloud::security::privateca::v1::UpdateCaPoolRequest const&
@@ -509,25 +481,6 @@ class MockCertificateAuthorityServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateCaPool(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateCaPool,
-      (NoAwaitTag,
-       google::cloud::security::privateca::v1::UpdateCaPoolRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateCaPool(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::security::privateca::v1::CaPool>>,
-              UpdateCaPool, (google::longrunning::Operation const& operation),
-              (override));
-
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateCaPool,
       (NoAwaitTag,
@@ -581,27 +534,6 @@ class MockCertificateAuthorityServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteCaPool(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteCaPool,
-      (NoAwaitTag,
-       google::cloud::security::privateca::v1::DeleteCaPoolRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteCaPool(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>,
-      DeleteCaPool, (google::longrunning::Operation const& operation),
-      (override));
-
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteCaPool,
       (NoAwaitTag,

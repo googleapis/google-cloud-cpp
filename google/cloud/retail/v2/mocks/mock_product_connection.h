@@ -116,45 +116,6 @@ class MockProductServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      future<StatusOr<google::cloud::retail::v2::PurgeProductsResponse>>,
-      PurgeProducts,
-      (google::cloud::retail::v2::PurgeProductsRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// EXPECT_CALL(*mock, PurgeProducts(_, _))
-  /// @endcode
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, PurgeProducts,
-              (NoAwaitTag,
-               google::cloud::retail::v2::PurgeProductsRequest const& request),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, PurgeProducts(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::retail::v2::PurgeProductsResponse>>,
-      PurgeProducts, (google::longrunning::Operation const& operation),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ImportProducts(Matcher<google::cloud::retail::v2::ImportProductsRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>,
       ImportProducts,
       (google::cloud::retail::v2::ImportProductsRequest const& request),
@@ -271,34 +232,6 @@ class MockProductServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, AddFulfillmentPlaces,
-      (NoAwaitTag,
-       google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// AddFulfillmentPlaces(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>,
-      AddFulfillmentPlaces, (google::longrunning::Operation const& operation),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// RemoveFulfillmentPlaces(Matcher<google::cloud::retail::v2::RemoveFulfillmentPlacesRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<
           StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>,
       RemoveFulfillmentPlaces,
@@ -353,34 +286,6 @@ class MockProductServiceConnection
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, AddLocalInventories(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, AddLocalInventories,
-      (NoAwaitTag,
-       google::cloud::retail::v2::AddLocalInventoriesRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// AddLocalInventories(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>,
-      AddLocalInventories, (google::longrunning::Operation const& operation),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// RemoveLocalInventories(Matcher<google::cloud::retail::v2::RemoveLocalInventoriesRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, AddLocalInventories,

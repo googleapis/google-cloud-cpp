@@ -97,34 +97,6 @@ class MockServiceUsageConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, EnableService,
-      (NoAwaitTag,
-       google::api::serviceusage::v1::EnableServiceRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, EnableService(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>,
-      EnableService, (google::longrunning::Operation const& operation),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DisableService(Matcher<google::api::serviceusage::v1::DisableServiceRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>,
       DisableService,
       (google::api::serviceusage::v1::DisableServiceRequest const& request),

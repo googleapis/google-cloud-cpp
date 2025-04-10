@@ -104,34 +104,6 @@ class MockTagBindingsConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateTagBinding,
-      (NoAwaitTag,
-       google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateTagBinding(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::TagBinding>>,
-              CreateTagBinding,
-              (google::longrunning::Operation const& operation), (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteTagBinding(Matcher<google::cloud::resourcemanager::v3::DeleteTagBindingRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<
           google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>>,
       DeleteTagBinding,
@@ -145,27 +117,6 @@ class MockTagBindingsConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteTagBinding(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteTagBinding,
-      (NoAwaitTag,
-       google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteTagBinding(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>>,
-      DeleteTagBinding, (google::longrunning::Operation const& operation),
-      (override));
-
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteTagBinding,
       (NoAwaitTag,

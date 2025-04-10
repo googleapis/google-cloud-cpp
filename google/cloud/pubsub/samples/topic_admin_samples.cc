@@ -746,10 +746,6 @@ void AutoRun(std::vector<std::string> const& argv) {
       "cloud-storage-" + RandomTopicId(generator) + "_ingestion_topic";
   auto const cloud_storage_bucket = project_id + "-pubsub-bucket";
 
-  auto const cloud_storage_topic_id =
-      "cloud-storage-" + RandomTopicId(generator) + "_ingestion_topic";
-  auto const cloud_storage_bucket = project_id + "-pubsub-bucket";
-
   auto const aws_msk_topic_id =
       "aws-msk-" + RandomTopicId(generator) + "_ingestion_topic";
   auto const* const aws_msk_cluster_arn =
