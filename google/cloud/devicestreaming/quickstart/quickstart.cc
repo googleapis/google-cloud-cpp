@@ -13,23 +13,24 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/devicestreaming/v1/ EDIT HERE _client.h"
+#include "google/cloud/devicestreaming/v1/direct_access_client.h"
 #include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 3) {
-    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
+  if (argc != 2) {
+    std::cerr << "Usage: " << argv[0] << " project-id\n";
     return 1;
   }
 
-  auto const location = google::cloud::Location(argv[1], argv[2]);
+  auto const project_id = std::string(argv[1]);
+  auto const parent = "projects/" + project_id;
 
   namespace devicestreaming = ::google::cloud::devicestreaming_v1;
-  auto client = devicestreaming::ServiceClient(
-      devicestreaming::MakeServiceConnection());  // EDIT HERE
+  auto client = devicestreaming::DirectAccessServiceClient(
+      devicestreaming::MakeDirectAccessServiceConnection());
 
-  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
+  for (auto r : client.ListDeviceSessions(parent)) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
