@@ -306,7 +306,7 @@ class AsyncWriterConnectionResumedState
 
   void OnResume(StatusOr<WriteObject::WriteResult> res) {
     std::unique_lock<std::mutex> lk(mu_);
-    if (!res) SetError(std::move(lk), std::move(res).status());
+    if (!res) return SetError(std::move(lk), std::move(res).status());
     auto state = impl_->PersistedState();
     if (absl::holds_alternative<google::storage::v2::Object>(state)) {
       return SetFinalized(std::move(lk), absl::get<google::storage::v2::Object>(
@@ -363,8 +363,8 @@ class AsyncWriterConnectionResumedState
     finalized.swap(finalized_);
     lk.unlock();
     for (auto& h : handlers) h->Execute(status);
-    finalized.set_value(std::move(status));
-    flushed.set_value(status);
+    finalized.set_value(status);
+    flushed.set_value(std::move(status));
   }
 
   std::shared_ptr<storage_experimental::AsyncWriterConnection> Impl(

@@ -70,7 +70,7 @@ void ReadRange::OnRead(google::storage::v2::ObjectRangeData data) {
   if (status_) return;
   if (data.range_end()) status_ = Status{};
 
-  auto check_summed_data = data.mutable_checksummed_data();
+  auto* check_summed_data = data.mutable_checksummed_data();
   auto content = StealMutableContent(*data.mutable_checksummed_data());
   auto status =
       hash_function_->Update(offset_, content, check_summed_data->crc32c());
