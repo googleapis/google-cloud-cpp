@@ -26,6 +26,24 @@ namespace google {
 namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+#ifndef _WIN32
+struct BIOPtrCleanup {
+  int operator()(BIO* b) const { return BIO_free(b); }
+};
+
+using BioPtr = std::unique_ptr<BIO, BIOPtrCleanup>;
+
+struct X509InfoPtrCleanup {
+  void operator()(STACK_OF(X509_INFO) * i) const {
+    return sk_X509_INFO_pop_free(i, X509_INFO_free);
+  }
+};
+
+using X509InfoPtr = std::unique_ptr<STACK_OF(X509_INFO), X509InfoPtrCleanup>;
+
+#endif
 
 Status SetCurlCAInMemory(CurlHandleFactory const& factory, SSL_CTX* ssl_ctx) {
 #if _WIN32
@@ -41,23 +59,20 @@ Status SetCurlCAInMemory(CurlHandleFactory const& factory, SSL_CTX* ssl_ctx) {
 
   // Add each of the provided certs to the store.
   for (auto const& cert : factory.ca_certs()) {
-    // TODO(sdhart): create a handle for this to do the RAII thing.
-    BIO* buf = BIO_new_mem_buf(cert.data(), static_cast<int>(cert.length()));
+    BioPtr buf{BIO_new_mem_buf(cert.data(), static_cast<int>(cert.length()))};
     if (!buf) {
       return internal::InternalError("BIO_new_mem_buf returned NULL",
                                      GCP_ERROR_INFO());
     }
-    // TODO(sdhart): can probably create a handle for this as well.
-    STACK_OF(X509_INFO)* info =
-        PEM_X509_INFO_read_bio(buf, nullptr, nullptr, nullptr);
+    X509InfoPtr info{
+        PEM_X509_INFO_read_bio(buf.get(), nullptr, nullptr, nullptr)};
     if (!info) {
-      BIO_free(buf);
       return internal::InternalError("PEM_X509_INFO_read_bio returned NULL",
                                      GCP_ERROR_INFO());
     }
 
-    for (auto i = 0; i < sk_X509_INFO_num(info); ++i) {
-      X509_INFO* value = sk_X509_INFO_value(info, i);
+    for (auto i = 0; i < sk_X509_INFO_num(info.get()); ++i) {
+      X509_INFO* value = sk_X509_INFO_value(info.get(), i);
       if (value->x509) {
         X509_STORE_add_cert(cert_store, value->x509);
       }
@@ -65,14 +80,13 @@ Status SetCurlCAInMemory(CurlHandleFactory const& factory, SSL_CTX* ssl_ctx) {
         X509_STORE_add_crl(cert_store, value->crl);
       }
     }
-
-    sk_X509_INFO_pop_free(info, X509_INFO_free);
-    BIO_free(buf);
   }
 
   return {};
 #endif
 }
+
+}  // namespace
 
 extern "C" {
 
