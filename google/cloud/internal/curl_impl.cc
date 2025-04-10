@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/curl_impl.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/algorithm.h"
@@ -26,6 +27,7 @@
 #include "google/cloud/rest_options.h"
 #include "absl/strings/match.h"
 #include "absl/strings/strip.h"
+#include <curl/easy.h>
 #include <algorithm>
 #include <sstream>
 #include <thread>
@@ -198,6 +200,10 @@ CurlImpl::CurlImpl(CurlHandle handle,
   proxy_username_ = CurlOptProxyUsername(options);
   proxy_password_ = CurlOptProxyPassword(options);
 
+  if (options.has<experimental::ClientSslCertificateOption>()) {
+    client_ssl_cert_ = options.get<experimental::ClientSslCertificateOption>();
+  }
+
   interface_ = CurlOptInterface(options);
 }
 
@@ -325,6 +331,44 @@ Status CurlImpl::MakeRequest(HttpMethod method, RestContext& context,
   if (interface_) {
     status = handle_.SetOption(CURLOPT_INTERFACE, interface_->c_str());
     if (!status.ok()) return OnTransferError(context, std::move(status));
+  }
+
+  if (client_ssl_cert_.has_value()) {
+#if CURL_AT_LEAST_VERSION(7, 71, 0)
+    status = handle_.SetOption(CURLOPT_SSL_VERIFYPEER, 1L);
+    if (!status.ok()) return OnTransferError(context, std::move(status));
+    status = handle_.SetOption(CURLOPT_SSL_VERIFYHOST, 2L);
+    if (!status.ok()) return OnTransferError(context, std::move(status));
+
+    status = handle_.SetOption(CURLOPT_SSLCERTTYPE,
+                               experimental::SslCertificate::ToString(
+                                   client_ssl_cert_->ssl_certificate_type())
+                                   .c_str());
+    if (!status.ok()) return OnTransferError(context, std::move(status));
+
+    struct curl_blob ssl_cert_blob;
+    ssl_cert_blob.data =
+        const_cast<char*>(client_ssl_cert_->ssl_certificate().data());
+    ssl_cert_blob.len = client_ssl_cert_->ssl_certificate().length();
+    ssl_cert_blob.flags = CURL_BLOB_COPY;
+    status = handle_.SetOption(CURLOPT_SSLCERT_BLOB, &ssl_cert_blob);
+    if (!status.ok()) return OnTransferError(context, std::move(status));
+
+    struct curl_blob ssl_key_blob;
+    ssl_key_blob.data =
+        const_cast<char*>(client_ssl_cert_->ssl_private_key().data());
+    ssl_key_blob.len = client_ssl_cert_->ssl_private_key().length();
+    ssl_key_blob.flags = CURL_BLOB_COPY;
+    status = handle_.SetOption(CURLOPT_SSLKEY_BLOB, &ssl_key_blob);
+    if (!status.ok()) return OnTransferError(context, std::move(status));
+#else
+    return OnTransferError(
+        context,
+        internal::InvalidArgumentError(
+            "libcurl 7.71.0 or higher required to use ClientSslCertificate",
+            GCP_ERROR_INFO().WithMetadata("current_libcurl_version",
+                                          LIBCURL_VERSION)));
+#endif
   }
 
   if (method == HttpMethod::kGet) {

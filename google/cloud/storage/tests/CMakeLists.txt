@@ -72,8 +72,11 @@ set(storage_client_integration_tests
     tracing_integration_test.cc)
 set(storage_client_integration_tests_production
     # cmake-format: sort
-    alternative_endpoint_integration_test.cc key_file_integration_test.cc
-    signed_url_integration_test.cc unified_credentials_integration_test.cc)
+    alternative_endpoint_integration_test.cc
+    key_file_integration_test.cc
+    mtls_object_basic_crud_integration_test.cc
+    signed_url_integration_test.cc
+    unified_credentials_integration_test.cc)
 list(APPEND storage_client_integration_tests
      ${storage_client_integration_tests_production})
 list(SORT storage_client_integration_tests)
