@@ -13,6 +13,7 @@ the APIs in these libraries are stable, and are ready for production use.
 
 - [Financial Services API](/google/cloud/financialservices/README.md)
 - [Storage Batch Operations API](/google/cloud/storagebatchoperations/README.md)
+- [Device Streaming API](/google/cloud/devicestreaming/README.md)
 
 ### Updated Libraries
 
