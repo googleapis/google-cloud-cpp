@@ -120,20 +120,6 @@ message Route {
   // which should conform to RFC1035.
   optional string next_hop_peering = 14 [json_name = "nextHopPeering"];
 
-  // The URL of the local network if it should handle matching packets.
-  optional string next_hop_network = 13 [json_name = "nextHopNetwork"];
-
-  // [Output Only] Indicates the origin of the route. Can be IGP (Interior
-  // Gateway Protocol), EGP (Exterior Gateway Protocol), or INCOMPLETE.
-  // EGP:
-  // IGP:
-  // INCOMPLETE:
-  optional string next_hop_origin = 25 [json_name = "nextHopOrigin"];
-
-  // [Output Only] The network peering name that should handle matching packets,
-  // which should conform to RFC1035.
-  optional string next_hop_peering = 14 [json_name = "nextHopPeering"];
-
   // The URL to a VpnTunnel that should handle matching packets.
   optional string next_hop_vpn_tunnel = 15 [json_name = "nextHopVpnTunnel"];
 

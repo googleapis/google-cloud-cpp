@@ -99,9 +99,6 @@ message NetworkEdgeSecurityServiceAggregatedList {
   // [Output Only] Unreachable resources.
   repeated string unreachables = 7 [json_name = "unreachables"];
 
-  // [Output Only] Unreachable resources.
-  repeated string unreachables = 7 [json_name = "unreachables"];
-
   message Warning {
     // [Output Only] A warning code, if applicable. For example, Compute Engine
     // returns NO_RESULTS_ON_PAGE if there are no results in the response.
