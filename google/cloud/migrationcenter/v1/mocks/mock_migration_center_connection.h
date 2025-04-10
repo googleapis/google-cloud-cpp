@@ -277,35 +277,6 @@ class MockMigrationCenterConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, ValidateImportJob,
-      (NoAwaitTag,
-       google::cloud::migrationcenter::v1::ValidateImportJobRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ValidateImportJob(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>,
-      ValidateImportJob, (google::longrunning::Operation const& operation),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// RunImportJob(Matcher<google::cloud::migrationcenter::v1::RunImportJobRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>,
       RunImportJob,
       (google::cloud::migrationcenter::v1::RunImportJobRequest const& request),
@@ -317,25 +288,6 @@ class MockMigrationCenterConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, RunImportJob(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, RunImportJob,
-      (NoAwaitTag,
-       google::cloud::migrationcenter::v1::RunImportJobRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, RunImportJob(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>,
-      RunImportJob, (google::longrunning::Operation const& operation),
-      (override));
-
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RunImportJob,
       (NoAwaitTag,
@@ -389,35 +341,6 @@ class MockMigrationCenterConnection
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateImportDataFile(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateImportDataFile,
-      (NoAwaitTag,
-       google::cloud::migrationcenter::v1::CreateImportDataFileRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateImportDataFile(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::migrationcenter::v1::ImportDataFile>>,
-      CreateImportDataFile, (google::longrunning::Operation const& operation),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteImportDataFile(Matcher<google::cloud::migrationcenter::v1::DeleteImportDataFileRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateImportDataFile,
@@ -539,33 +462,6 @@ class MockMigrationCenterConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateGroup,
-      (NoAwaitTag,
-       google::cloud::migrationcenter::v1::CreateGroupRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateGroup(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::migrationcenter::v1::Group>>,
-              CreateGroup, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateGroup(Matcher<google::cloud::migrationcenter::v1::UpdateGroupRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::migrationcenter::v1::Group>>, UpdateGroup,
       (google::cloud::migrationcenter::v1::UpdateGroupRequest const& request),
       (override));
@@ -575,33 +471,6 @@ class MockMigrationCenterConnection
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateGroup(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateGroup,
-      (NoAwaitTag,
-       google::cloud::migrationcenter::v1::UpdateGroupRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateGroup(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::migrationcenter::v1::Group>>,
-              UpdateGroup, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteGroup(Matcher<google::cloud::migrationcenter::v1::DeleteGroupRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateGroup,
@@ -641,34 +510,6 @@ class MockMigrationCenterConnection
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteGroup(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteGroup,
-      (NoAwaitTag,
-       google::cloud::migrationcenter::v1::DeleteGroupRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteGroup(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>,
-      DeleteGroup, (google::longrunning::Operation const& operation),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// AddAssetsToGroup(Matcher<google::cloud::migrationcenter::v1::AddAssetsToGroupRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteGroup,
@@ -740,34 +581,6 @@ class MockMigrationCenterConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, AddAssetsToGroup,
-      (NoAwaitTag,
-       google::cloud::migrationcenter::v1::AddAssetsToGroupRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, AddAssetsToGroup(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::migrationcenter::v1::Group>>,
-              AddAssetsToGroup,
-              (google::longrunning::Operation const& operation), (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// RemoveAssetsFromGroup(Matcher<google::cloud::migrationcenter::v1::RemoveAssetsFromGroupRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::migrationcenter::v1::Group>>,
       RemoveAssetsFromGroup,
       (google::cloud::migrationcenter::v1::RemoveAssetsFromGroupRequest const&
@@ -780,25 +593,6 @@ class MockMigrationCenterConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, RemoveAssetsFromGroup(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, RemoveAssetsFromGroup,
-      (NoAwaitTag,
-       google::cloud::migrationcenter::v1::RemoveAssetsFromGroupRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// RemoveAssetsFromGroup(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::migrationcenter::v1::Group>>,
-              RemoveAssetsFromGroup,
-              (google::longrunning::Operation const& operation), (override));
-
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RemoveAssetsFromGroup,
       (NoAwaitTag,
@@ -888,33 +682,6 @@ class MockMigrationCenterConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateSource,
-      (NoAwaitTag,
-       google::cloud::migrationcenter::v1::CreateSourceRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateSource(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::migrationcenter::v1::Source>>,
-              CreateSource, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateSource(Matcher<google::cloud::migrationcenter::v1::UpdateSourceRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::migrationcenter::v1::Source>>,
       UpdateSource,
       (google::cloud::migrationcenter::v1::UpdateSourceRequest const& request),
@@ -925,33 +692,6 @@ class MockMigrationCenterConnection
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateSource(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateSource,
-      (NoAwaitTag,
-       google::cloud::migrationcenter::v1::UpdateSourceRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateSource(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::migrationcenter::v1::Source>>,
-              UpdateSource, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteSource(Matcher<google::cloud::migrationcenter::v1::DeleteSourceRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateSource,
@@ -992,25 +732,6 @@ class MockMigrationCenterConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteSource(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteSource,
-      (NoAwaitTag,
-       google::cloud::migrationcenter::v1::DeleteSourceRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteSource(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>,
-      DeleteSource, (google::longrunning::Operation const& operation),
-      (override));
-
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteSource,
       (NoAwaitTag,
@@ -1095,35 +816,6 @@ class MockMigrationCenterConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreatePreferenceSet,
-      (NoAwaitTag,
-       google::cloud::migrationcenter::v1::CreatePreferenceSetRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreatePreferenceSet(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>>,
-      CreatePreferenceSet, (google::longrunning::Operation const& operation),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdatePreferenceSet(Matcher<google::cloud::migrationcenter::v1::UpdatePreferenceSetRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>>,
       UpdatePreferenceSet,
       (google::cloud::migrationcenter::v1::UpdatePreferenceSetRequest const&
@@ -1135,35 +827,6 @@ class MockMigrationCenterConnection
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdatePreferenceSet(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdatePreferenceSet,
-      (NoAwaitTag,
-       google::cloud::migrationcenter::v1::UpdatePreferenceSetRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdatePreferenceSet(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>>,
-      UpdatePreferenceSet, (google::longrunning::Operation const& operation),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeletePreferenceSet(Matcher<google::cloud::migrationcenter::v1::DeletePreferenceSetRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdatePreferenceSet,
@@ -1207,26 +870,6 @@ class MockMigrationCenterConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeletePreferenceSet(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeletePreferenceSet,
-      (NoAwaitTag,
-       google::cloud::migrationcenter::v1::DeletePreferenceSetRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeletePreferenceSet(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>,
-      DeletePreferenceSet, (google::longrunning::Operation const& operation),
-      (override));
-
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeletePreferenceSet,
       (NoAwaitTag,
@@ -1397,35 +1040,6 @@ class MockMigrationCenterConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteReportConfig,
-      (NoAwaitTag,
-       google::cloud::migrationcenter::v1::DeleteReportConfigRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteReportConfig(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>,
-      DeleteReportConfig, (google::longrunning::Operation const& operation),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateReport(Matcher<google::cloud::migrationcenter::v1::CreateReportRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::migrationcenter::v1::Report>>,
       CreateReport,
       (google::cloud::migrationcenter::v1::CreateReportRequest const& request),
@@ -1437,24 +1051,6 @@ class MockMigrationCenterConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateReport(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateReport,
-      (NoAwaitTag,
-       google::cloud::migrationcenter::v1::CreateReportRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateReport(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::migrationcenter::v1::Report>>,
-              CreateReport, (google::longrunning::Operation const& operation),
-              (override));
-
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateReport,
       (NoAwaitTag,

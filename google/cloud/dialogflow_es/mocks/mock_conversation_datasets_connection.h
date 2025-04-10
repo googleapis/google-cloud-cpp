@@ -91,27 +91,6 @@ class MockConversationDatasetsConnection
       (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateConversationDataset,
-      (NoAwaitTag,
-       google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateConversationDataset(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>,
-      CreateConversationDataset,
-      (google::longrunning::Operation const& operation), (override));
-
-  MOCK_METHOD(
       StatusOr<google::cloud::dialogflow::v2::ConversationDataset>,
       GetConversationDataset,
       (google::cloud::dialogflow::v2::GetConversationDatasetRequest const&
@@ -146,36 +125,6 @@ class MockConversationDatasetsConnection
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteConversationDataset(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteConversationDataset,
-      (NoAwaitTag,
-       google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteConversationDataset(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::v2::
-                                  DeleteConversationDatasetOperationMetadata>>,
-              DeleteConversationDataset,
-              (google::longrunning::Operation const& operation), (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ImportConversationData(Matcher<google::cloud::dialogflow::v2::ImportConversationDataRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteConversationDataset,

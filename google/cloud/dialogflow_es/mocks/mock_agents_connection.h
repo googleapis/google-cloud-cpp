@@ -148,34 +148,6 @@ class MockAgentsConnection : public dialogflow_es::AgentsConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, ExportAgent,
-      (NoAwaitTag,
-       google::cloud::dialogflow::v2::ExportAgentRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, ExportAgent(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::dialogflow::v2::ExportAgentResponse>>,
-      ExportAgent, (google::longrunning::Operation const& operation),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ImportAgent(Matcher<google::cloud::dialogflow::v2::ImportAgentRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::protobuf::Struct>>, ImportAgent,
       (google::cloud::dialogflow::v2::ImportAgentRequest const& request),
       (override));
@@ -185,32 +157,6 @@ class MockAgentsConnection : public dialogflow_es::AgentsConnection {
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ImportAgent(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, ImportAgent,
-      (NoAwaitTag,
-       google::cloud::dialogflow::v2::ImportAgentRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, ImportAgent(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, ImportAgent,
-              (google::longrunning::Operation const& operation), (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// RestoreAgent(Matcher<google::cloud::dialogflow::v2::RestoreAgentRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ImportAgent,

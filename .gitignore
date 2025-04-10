@@ -37,4 +37,3 @@ CMakeUserPresets.json
 
 # Lock files created by bzlmod. We do not want to accidentally commit these.
 MODULE.bazel.lock
-
