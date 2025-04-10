@@ -113,35 +113,6 @@ class MockAccessContextManagerConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateAccessPolicy,
-      (NoAwaitTag,
-       google::identity::accesscontextmanager::v1::AccessPolicy const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateAccessPolicy(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<
-          StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>,
-      CreateAccessPolicy, (google::longrunning::Operation const& operation),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateAccessPolicy(Matcher<google::identity::accesscontextmanager::v1::UpdateAccessPolicyRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<
           StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>,
       UpdateAccessPolicy,

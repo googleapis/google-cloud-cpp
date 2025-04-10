@@ -833,20 +833,6 @@ TEST_F(HttpOptionUtilsTest, FormatApiVersionFromUrlPatternNonExist) {
   EXPECT_THAT(FormatApiVersionFromUrlPattern(url_pattern), Eq(absl::nullopt));
 }
 
-TEST_F(HttpOptionUtilsTest, FormatApiVersionFromUrlPattern) {
-  std::string url_pattern_v1 = "/v1/foo/bar";
-  EXPECT_THAT(FormatApiVersionFromUrlPattern(url_pattern_v1),
-              Optional(std::string("v1")));
-  std::string url_pattern_v2 = "/foo/v2/bar";
-  EXPECT_THAT(FormatApiVersionFromUrlPattern(url_pattern_v2),
-              Optional(std::string("v2")));
-}
-
-TEST_F(HttpOptionUtilsTest, FormatApiVersionFromUrlPatternNonExist) {
-  std::string url_pattern = "/foo/bar";
-  EXPECT_THAT(FormatApiVersionFromUrlPattern(url_pattern), Eq(absl::nullopt));
-}
-
 }  // namespace
 }  // namespace generator_internal
 }  // namespace cloud
