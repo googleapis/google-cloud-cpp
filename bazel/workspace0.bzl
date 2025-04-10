@@ -158,7 +158,7 @@ def gl_cpp_workspace0(name = None):
         urls = [
             "https://github.com/protocolbuffers/protobuf/archive/v30.2.tar.gz",
         ],
-        sha256 = "9df0e9e8ebe39f4fbbb9cf7db3d811287fe3616b2f191eb2bf5eaa12539c881f",
+        sha256 = "07a43d88fe5a38e434c7f94129cad56a4c43a51f99336074d0799c2f7d4e44c5",
         strip_prefix = "protobuf-30.2",
     )
 

@@ -28,5 +28,5 @@ mapfile -t args < <(bazel::common_args)
 for lib in $(quickstart::libraries); do
   io::log_h2 "Running Bazel quickstart for ${lib}"
   io::run env -C "${PROJECT_ROOT}/google/cloud/${lib}/quickstart" \
-    bazel build --explain=/tmp/explain.txt --sandbox_debug "${args[@]}" :quickstart
+    bazel build "${args[@]}" :quickstart
 done
