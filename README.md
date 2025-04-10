@@ -25,7 +25,6 @@ As an example, the following code snippet, taken from
 of what it's like to use one of these C++ libraries.
 
 <!-- inject-quickstart-start -->
-
 ```cc
 #include "google/cloud/storage/client.h"
 #include <iostream>
@@ -65,7 +64,6 @@ int main(int argc, char* argv[]) {
   return 0;
 }
 ```
-
 <!-- inject-quickstart-end -->
 
 ## GA Libraries
@@ -82,7 +80,6 @@ See each library's `README.md` file for more information about:
 <summary>Expand to see the full list of GA libraries</summary>
 
 <!-- inject-GA-features-start -->
-
 - [Access Approval API](google/cloud/accessapproval/README.md)
   [[quickstart]](google/cloud/accessapproval/quickstart/README.md)
   [[reference]](https://cloud.google.com/cpp/docs/reference/accessapproval/latest)
@@ -509,7 +506,6 @@ See each library's `README.md` file for more information about:
 - [Cloud Workstations API](google/cloud/workstations/README.md)
   [[quickstart]](google/cloud/workstations/quickstart/README.md)
   [[reference]](https://cloud.google.com/cpp/docs/reference/workstations/latest)
-
 <!-- inject-GA-features-end -->
 
 </details>
