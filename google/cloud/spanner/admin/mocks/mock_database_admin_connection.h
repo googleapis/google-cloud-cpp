@@ -95,25 +95,6 @@ class MockDatabaseAdminConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateDatabase,
-      (NoAwaitTag,
-       google::spanner::admin::database::v1::CreateDatabaseRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateDatabase(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::spanner::admin::database::v1::Database>>,
-              CreateDatabase, (google::longrunning::Operation const& operation),
-              (override));
-
-  MOCK_METHOD(
       StatusOr<google::spanner::admin::database::v1::Database>, GetDatabase,
       (google::spanner::admin::database::v1::GetDatabaseRequest const& request),
       (override));
@@ -139,34 +120,6 @@ class MockDatabaseAdminConnection
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateDatabase(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateDatabase,
-      (NoAwaitTag,
-       google::spanner::admin::database::v1::UpdateDatabaseRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateDatabase(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::spanner::admin::database::v1::Database>>,
-              UpdateDatabase, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateDatabaseDdl(Matcher<google::spanner::admin::database::v1::UpdateDatabaseDdlRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateDatabase,
@@ -335,24 +288,6 @@ class MockDatabaseAdminConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CopyBackup,
-      (NoAwaitTag,
-       google::spanner::admin::database::v1::CopyBackupRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CopyBackup(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::spanner::admin::database::v1::Backup>>,
-              CopyBackup, (google::longrunning::Operation const& operation),
-              (override));
-
-  MOCK_METHOD(
       StatusOr<google::spanner::admin::database::v1::Backup>, GetBackup,
       (google::spanner::admin::database::v1::GetBackupRequest const& request),
       (override));
@@ -395,25 +330,6 @@ class MockDatabaseAdminConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, RestoreDatabase(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, RestoreDatabase,
-      (NoAwaitTag,
-       google::spanner::admin::database::v1::RestoreDatabaseRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, RestoreDatabase(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::spanner::admin::database::v1::Database>>,
-              RestoreDatabase,
-              (google::longrunning::Operation const& operation), (override));
-
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RestoreDatabase,
       (NoAwaitTag,

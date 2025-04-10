@@ -113,35 +113,6 @@ class MockInstanceAdminConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateInstanceConfig,
-      (NoAwaitTag,
-       google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateInstanceConfig(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>,
-      CreateInstanceConfig, (google::longrunning::Operation const& operation),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateInstanceConfig(Matcher<google::spanner::admin::instance::v1::UpdateInstanceConfigRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>,
       UpdateInstanceConfig,
       (google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
@@ -154,26 +125,6 @@ class MockInstanceAdminConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateInstanceConfig(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateInstanceConfig,
-      (NoAwaitTag,
-       google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateInstanceConfig(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>,
-      UpdateInstanceConfig, (google::longrunning::Operation const& operation),
-      (override));
-
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateInstanceConfig,
       (NoAwaitTag,
@@ -276,34 +227,6 @@ class MockInstanceAdminConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateInstance,
-      (NoAwaitTag,
-       google::spanner::admin::instance::v1::CreateInstanceRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateInstance(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::spanner::admin::instance::v1::Instance>>,
-              CreateInstance, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateInstance(Matcher<google::spanner::admin::instance::v1::UpdateInstanceRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::spanner::admin::instance::v1::Instance>>,
       UpdateInstance,
       (google::spanner::admin::instance::v1::UpdateInstanceRequest const&
@@ -316,25 +239,6 @@ class MockInstanceAdminConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateInstance(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateInstance,
-      (NoAwaitTag,
-       google::spanner::admin::instance::v1::UpdateInstanceRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateInstance(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::spanner::admin::instance::v1::Instance>>,
-              UpdateInstance, (google::longrunning::Operation const& operation),
-              (override));
-
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateInstance,
       (NoAwaitTag,

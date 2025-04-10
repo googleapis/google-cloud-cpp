@@ -272,35 +272,6 @@ class MockLivestreamServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, StopChannel,
-      (NoAwaitTag,
-       google::cloud::video::livestream::v1::StopChannelRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, StopChannel(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::video::livestream::v1::ChannelOperationResponse>>,
-      StopChannel, (google::longrunning::Operation const& operation),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateInput(Matcher<google::cloud::video::livestream::v1::CreateInputRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::video::livestream::v1::Input>>,
       CreateInput,
       (google::cloud::video::livestream::v1::CreateInputRequest const& request),
@@ -390,34 +361,6 @@ class MockLivestreamServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteInput,
-      (NoAwaitTag,
-       google::cloud::video::livestream::v1::DeleteInputRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteInput(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>,
-      DeleteInput, (google::longrunning::Operation const& operation),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateInput(Matcher<google::cloud::video::livestream::v1::UpdateInputRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::video::livestream::v1::Input>>,
       UpdateInput,
       (google::cloud::video::livestream::v1::UpdateInputRequest const& request),
@@ -429,24 +372,6 @@ class MockLivestreamServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateInput(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateInput,
-      (NoAwaitTag,
-       google::cloud::video::livestream::v1::UpdateInputRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateInput(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::video::livestream::v1::Input>>,
-              UpdateInput, (google::longrunning::Operation const& operation),
-              (override));
-
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateInput,
       (NoAwaitTag,
@@ -622,33 +547,6 @@ class MockLivestreamServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateAsset,
-      (NoAwaitTag,
-       google::cloud::video::livestream::v1::CreateAssetRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateAsset(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::video::livestream::v1::Asset>>,
-              CreateAsset, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteAsset(Matcher<google::cloud::video::livestream::v1::DeleteAssetRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>,
       DeleteAsset,
       (google::cloud::video::livestream::v1::DeleteAssetRequest const& request),
@@ -660,25 +558,6 @@ class MockLivestreamServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteAsset(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteAsset,
-      (NoAwaitTag,
-       google::cloud::video::livestream::v1::DeleteAssetRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteAsset(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>,
-      DeleteAsset, (google::longrunning::Operation const& operation),
-      (override));
-
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteAsset,
       (NoAwaitTag,

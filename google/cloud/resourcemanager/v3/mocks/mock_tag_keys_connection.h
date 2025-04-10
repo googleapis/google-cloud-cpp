@@ -111,33 +111,6 @@ class MockTagKeysConnection : public resourcemanager_v3::TagKeysConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateTagKey,
-      (NoAwaitTag,
-       google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateTagKey(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>,
-              CreateTagKey, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateTagKey(Matcher<google::cloud::resourcemanager::v3::UpdateTagKeyRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>,
       UpdateTagKey,
       (google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request),
@@ -148,33 +121,6 @@ class MockTagKeysConnection : public resourcemanager_v3::TagKeysConnection {
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateTagKey(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateTagKey,
-      (NoAwaitTag,
-       google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateTagKey(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>,
-              UpdateTagKey, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteTagKey(Matcher<google::cloud::resourcemanager::v3::DeleteTagKeyRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateTagKey,

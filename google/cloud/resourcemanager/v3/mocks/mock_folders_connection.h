@@ -110,33 +110,6 @@ class MockFoldersConnection : public resourcemanager_v3::FoldersConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateFolder,
-      (NoAwaitTag,
-       google::cloud::resourcemanager::v3::CreateFolderRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateFolder(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::Folder>>,
-              CreateFolder, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateFolder(Matcher<google::cloud::resourcemanager::v3::UpdateFolderRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::resourcemanager::v3::Folder>>,
       UpdateFolder,
       (google::cloud::resourcemanager::v3::UpdateFolderRequest const& request),
@@ -176,33 +149,6 @@ class MockFoldersConnection : public resourcemanager_v3::FoldersConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateFolder,
-      (NoAwaitTag,
-       google::cloud::resourcemanager::v3::UpdateFolderRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateFolder(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::Folder>>,
-              UpdateFolder, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// MoveFolder(Matcher<google::cloud::resourcemanager::v3::MoveFolderRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::resourcemanager::v3::Folder>>, MoveFolder,
       (google::cloud::resourcemanager::v3::MoveFolderRequest const& request),
       (override));
@@ -212,33 +158,6 @@ class MockFoldersConnection : public resourcemanager_v3::FoldersConnection {
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, MoveFolder(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, MoveFolder,
-      (NoAwaitTag,
-       google::cloud::resourcemanager::v3::MoveFolderRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, MoveFolder(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::Folder>>,
-              MoveFolder, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteFolder(Matcher<google::cloud::resourcemanager::v3::DeleteFolderRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, MoveFolder,

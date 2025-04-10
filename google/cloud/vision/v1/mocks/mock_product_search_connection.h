@@ -177,34 +177,6 @@ class MockProductSearchConnection : public vision_v1::ProductSearchConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, ImportProductSets,
-      (NoAwaitTag,
-       google::cloud::vision::v1::ImportProductSetsRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ImportProductSets(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>,
-      ImportProductSets, (google::longrunning::Operation const& operation),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// PurgeProducts(Matcher<google::cloud::vision::v1::PurgeProductsRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>,
       PurgeProducts,
       (google::cloud::vision::v1::PurgeProductsRequest const& request),

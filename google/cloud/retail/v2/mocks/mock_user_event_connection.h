@@ -106,34 +106,6 @@ class MockUserEventServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, PurgeUserEvents,
-      (NoAwaitTag,
-       google::cloud::retail::v2::PurgeUserEventsRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, PurgeUserEvents(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>,
-      PurgeUserEvents, (google::longrunning::Operation const& operation),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ImportUserEvents(Matcher<google::cloud::retail::v2::ImportUserEventsRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>,
       ImportUserEvents,
       (google::cloud::retail::v2::ImportUserEventsRequest const& request),
@@ -144,34 +116,6 @@ class MockUserEventServiceConnection
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ImportUserEvents(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, ImportUserEvents,
-      (NoAwaitTag,
-       google::cloud::retail::v2::ImportUserEventsRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, ImportUserEvents(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>,
-      ImportUserEvents, (google::longrunning::Operation const& operation),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// RejoinUserEvents(Matcher<google::cloud::retail::v2::RejoinUserEventsRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ImportUserEvents,

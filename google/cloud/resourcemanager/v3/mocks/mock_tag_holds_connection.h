@@ -95,33 +95,6 @@ class MockTagHoldsConnection : public resourcemanager_v3::TagHoldsConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateTagHold,
-      (NoAwaitTag,
-       google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateTagHold(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::TagHold>>,
-              CreateTagHold, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteTagHold(Matcher<google::cloud::resourcemanager::v3::DeleteTagHoldRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<
           StatusOr<google::cloud::resourcemanager::v3::DeleteTagHoldMetadata>>,
       DeleteTagHold,

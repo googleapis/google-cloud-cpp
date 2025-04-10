@@ -146,34 +146,6 @@ class MockVideoStitcherServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteCdnKey,
-      (NoAwaitTag,
-       google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteCdnKey(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>,
-      DeleteCdnKey, (google::longrunning::Operation const& operation),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateCdnKey(Matcher<google::cloud::video::stitcher::v1::UpdateCdnKeyRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>,
       UpdateCdnKey,
       (google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request),
@@ -185,24 +157,6 @@ class MockVideoStitcherServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateCdnKey(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateCdnKey,
-      (NoAwaitTag,
-       google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateCdnKey(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>,
-              UpdateCdnKey, (google::longrunning::Operation const& operation),
-              (override));
-
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateCdnKey,
       (NoAwaitTag,
@@ -368,33 +322,6 @@ class MockVideoStitcherServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateSlate,
-      (NoAwaitTag,
-       google::cloud::video::stitcher::v1::UpdateSlateRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateSlate(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::Slate>>,
-              UpdateSlate, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteSlate(Matcher<google::cloud::video::stitcher::v1::DeleteSlateRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>,
       DeleteSlate,
       (google::cloud::video::stitcher::v1::DeleteSlateRequest const& request),
@@ -406,25 +333,6 @@ class MockVideoStitcherServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteSlate(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteSlate,
-      (NoAwaitTag,
-       google::cloud::video::stitcher::v1::DeleteSlateRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteSlate(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>,
-      DeleteSlate, (google::longrunning::Operation const& operation),
-      (override));
-
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteSlate,
       (NoAwaitTag,
@@ -499,25 +407,6 @@ class MockVideoStitcherServiceConnection
               (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateLiveConfig,
-      (NoAwaitTag,
-       google::cloud::video::stitcher::v1::CreateLiveConfigRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateLiveConfig(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>,
-              CreateLiveConfig,
-              (google::longrunning::Operation const& operation), (override));
-
-  MOCK_METHOD(
       (StreamRange<google::cloud::video::stitcher::v1::LiveConfig>),
       ListLiveConfigs,
       (google::cloud::video::stitcher::v1::ListLiveConfigsRequest request),
@@ -549,35 +438,6 @@ class MockVideoStitcherServiceConnection
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteLiveConfig(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteLiveConfig,
-      (NoAwaitTag,
-       google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteLiveConfig(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>,
-      DeleteLiveConfig, (google::longrunning::Operation const& operation),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateLiveConfig(Matcher<google::cloud::video::stitcher::v1::UpdateLiveConfigRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteLiveConfig,

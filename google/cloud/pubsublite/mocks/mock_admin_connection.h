@@ -146,25 +146,6 @@ class MockAdminServiceConnection : public pubsublite::AdminServiceConnection {
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, SeekSubscription,
-      (NoAwaitTag,
-       google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, SeekSubscription(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>,
-      SeekSubscription, (google::longrunning::Operation const& operation),
-      (override));
-
-  MOCK_METHOD(
       StatusOr<google::cloud::pubsublite::v1::Reservation>, CreateReservation,
       (google::cloud::pubsublite::v1::CreateReservationRequest const& request),
       (override));
