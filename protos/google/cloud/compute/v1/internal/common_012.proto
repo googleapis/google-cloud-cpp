@@ -542,7 +542,7 @@ message NetworkEndpointGroupsListNetworkEndpoints {
   }
 
   // [Output Only] Informational warning message.
-  optional Warning warning = 6 [json_name = "warning"];
+  optional Warning warning = 5 [json_name = "warning"];
 }
 
 message NetworkEndpointWithHealthStatus {
