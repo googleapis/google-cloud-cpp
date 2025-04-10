@@ -294,13 +294,7 @@ StatusOr<google::longrunning::Operation> AutokeyConnectionImpl::GetOperation(
              google::longrunning::GetOperationRequest const& request) {
         return stub_->GetOperation(context, options, request);
       },
-      [](google::cloud::kms::v1::ListKeyHandlesResponse r) {
-        std::vector<google::cloud::kms::v1::KeyHandle> result(
-            r.key_handles().size());
-        auto& messages = *r.mutable_key_handles();
-        std::move(messages.begin(), messages.end(), result.begin());
-        return result;
-      });
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

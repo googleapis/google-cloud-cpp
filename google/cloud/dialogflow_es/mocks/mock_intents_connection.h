@@ -121,35 +121,6 @@ class MockIntentsConnection : public dialogflow_es::IntentsConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, BatchUpdateIntents,
-      (NoAwaitTag,
-       google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// BatchUpdateIntents(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<
-          StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>,
-      BatchUpdateIntents, (google::longrunning::Operation const& operation),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// BatchDeleteIntents(Matcher<google::cloud::dialogflow::v2::BatchDeleteIntentsRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::protobuf::Struct>>, BatchDeleteIntents,
       (google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request),
       (override));

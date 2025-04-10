@@ -233,33 +233,6 @@ class MockManagedIdentitiesServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, AttachTrust,
-      (NoAwaitTag,
-       google::cloud::managedidentities::v1::AttachTrustRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, AttachTrust(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
-              AttachTrust, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ReconfigureTrust(Matcher<google::cloud::managedidentities::v1::ReconfigureTrustRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
       ReconfigureTrust,
       (google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
@@ -271,34 +244,6 @@ class MockManagedIdentitiesServiceConnection
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ReconfigureTrust(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, ReconfigureTrust,
-      (NoAwaitTag,
-       google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, ReconfigureTrust(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
-              ReconfigureTrust,
-              (google::longrunning::Operation const& operation), (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DetachTrust(Matcher<google::cloud::managedidentities::v1::DetachTrustRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ReconfigureTrust,

@@ -104,33 +104,6 @@ class MockManagedNotebookServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateRuntime,
-      (NoAwaitTag,
-       google::cloud::notebooks::v1::CreateRuntimeRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateRuntime(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v1::Runtime>>,
-              CreateRuntime, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateRuntime(Matcher<google::cloud::notebooks::v1::UpdateRuntimeRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::notebooks::v1::Runtime>>, UpdateRuntime,
       (google::cloud::notebooks::v1::UpdateRuntimeRequest const& request),
       (override));
@@ -140,33 +113,6 @@ class MockManagedNotebookServiceConnection
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateRuntime(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateRuntime,
-      (NoAwaitTag,
-       google::cloud::notebooks::v1::UpdateRuntimeRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateRuntime(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v1::Runtime>>,
-              UpdateRuntime, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteRuntime(Matcher<google::cloud::notebooks::v1::DeleteRuntimeRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateRuntime,
@@ -206,33 +152,6 @@ class MockManagedNotebookServiceConnection
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteRuntime(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteRuntime,
-      (NoAwaitTag,
-       google::cloud::notebooks::v1::DeleteRuntimeRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteRuntime(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>,
-              DeleteRuntime, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// StartRuntime(Matcher<google::cloud::notebooks::v1::StartRuntimeRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteRuntime,
@@ -375,33 +294,6 @@ class MockManagedNotebookServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, SwitchRuntime,
-      (NoAwaitTag,
-       google::cloud::notebooks::v1::SwitchRuntimeRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, SwitchRuntime(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v1::Runtime>>,
-              SwitchRuntime, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ResetRuntime(Matcher<google::cloud::notebooks::v1::ResetRuntimeRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::notebooks::v1::Runtime>>, ResetRuntime,
       (google::cloud::notebooks::v1::ResetRuntimeRequest const& request),
       (override));
@@ -411,33 +303,6 @@ class MockManagedNotebookServiceConnection
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ResetRuntime(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, ResetRuntime,
-      (NoAwaitTag,
-       google::cloud::notebooks::v1::ResetRuntimeRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, ResetRuntime(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v1::Runtime>>,
-              ResetRuntime, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpgradeRuntime(Matcher<google::cloud::notebooks::v1::UpgradeRuntimeRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ResetRuntime,
@@ -505,33 +370,6 @@ class MockManagedNotebookServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpgradeRuntime,
-      (NoAwaitTag,
-       google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpgradeRuntime(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v1::Runtime>>,
-              UpgradeRuntime, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ReportRuntimeEvent(Matcher<google::cloud::notebooks::v1::ReportRuntimeEventRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::notebooks::v1::Runtime>>,
       ReportRuntimeEvent,
       (google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request),
@@ -543,24 +381,6 @@ class MockManagedNotebookServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ReportRuntimeEvent(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, ReportRuntimeEvent,
-      (NoAwaitTag,
-       google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ReportRuntimeEvent(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v1::Runtime>>,
-              ReportRuntimeEvent,
-              (google::longrunning::Operation const& operation), (override));
-
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ReportRuntimeEvent,
       (NoAwaitTag,

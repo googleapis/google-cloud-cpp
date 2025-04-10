@@ -124,33 +124,6 @@ class MockEdgeNetworkConnection : public edgenetwork_v1::EdgeNetworkConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateNetwork,
-      (NoAwaitTag,
-       google::cloud::edgenetwork::v1::CreateNetworkRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateNetwork(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::edgenetwork::v1::Network>>,
-              CreateNetwork, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteNetwork(Matcher<google::cloud::edgenetwork::v1::DeleteNetworkRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>,
       DeleteNetwork,
       (google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request),
@@ -238,33 +211,6 @@ class MockEdgeNetworkConnection : public edgenetwork_v1::EdgeNetworkConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateSubnet,
-      (NoAwaitTag,
-       google::cloud::edgenetwork::v1::CreateSubnetRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateSubnet(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>,
-              CreateSubnet, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateSubnet(Matcher<google::cloud::edgenetwork::v1::UpdateSubnetRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>, UpdateSubnet,
       (google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request),
       (override));
@@ -274,33 +220,6 @@ class MockEdgeNetworkConnection : public edgenetwork_v1::EdgeNetworkConnection {
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateSubnet(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateSubnet,
-      (NoAwaitTag,
-       google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateSubnet(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>,
-              UpdateSubnet, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteSubnet(Matcher<google::cloud::edgenetwork::v1::DeleteSubnetRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateSubnet,
@@ -341,25 +260,6 @@ class MockEdgeNetworkConnection : public edgenetwork_v1::EdgeNetworkConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteSubnet(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteSubnet,
-      (NoAwaitTag,
-       google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteSubnet(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>,
-      DeleteSubnet, (google::longrunning::Operation const& operation),
-      (override));
-
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteSubnet,
       (NoAwaitTag,
@@ -560,33 +460,6 @@ class MockEdgeNetworkConnection : public edgenetwork_v1::EdgeNetworkConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateRouter,
-      (NoAwaitTag,
-       google::cloud::edgenetwork::v1::CreateRouterRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateRouter(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::edgenetwork::v1::Router>>,
-              CreateRouter, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateRouter(Matcher<google::cloud::edgenetwork::v1::UpdateRouterRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::edgenetwork::v1::Router>>, UpdateRouter,
       (google::cloud::edgenetwork::v1::UpdateRouterRequest const& request),
       (override));
@@ -596,33 +469,6 @@ class MockEdgeNetworkConnection : public edgenetwork_v1::EdgeNetworkConnection {
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateRouter(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateRouter,
-      (NoAwaitTag,
-       google::cloud::edgenetwork::v1::UpdateRouterRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateRouter(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::edgenetwork::v1::Router>>,
-              UpdateRouter, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteRouter(Matcher<google::cloud::edgenetwork::v1::DeleteRouterRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateRouter,
