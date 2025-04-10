@@ -194,34 +194,6 @@ class MockIndexEndpointServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeployIndex,
-      (NoAwaitTag,
-       google::cloud::aiplatform::v1::DeployIndexRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeployIndex(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeployIndexResponse>>,
-      DeployIndex, (google::longrunning::Operation const& operation),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UndeployIndex(Matcher<google::cloud::aiplatform::v1::UndeployIndexRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::UndeployIndexResponse>>,
       UndeployIndex,
       (google::cloud::aiplatform::v1::UndeployIndexRequest const& request),
@@ -232,34 +204,6 @@ class MockIndexEndpointServiceConnection
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UndeployIndex(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UndeployIndex,
-      (NoAwaitTag,
-       google::cloud::aiplatform::v1::UndeployIndexRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UndeployIndex(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::UndeployIndexResponse>>,
-      UndeployIndex, (google::longrunning::Operation const& operation),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// MutateDeployedIndex(Matcher<google::cloud::aiplatform::v1::MutateDeployedIndexRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UndeployIndex,

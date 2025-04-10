@@ -102,25 +102,6 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteCustomJob,
-      (NoAwaitTag,
-       google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteCustomJob(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-      DeleteCustomJob, (google::longrunning::Operation const& operation),
-      (override));
-
-  MOCK_METHOD(
       Status, CancelCustomJob,
       (google::cloud::aiplatform::v1::CancelCustomJobRequest const& request),
       (override));
@@ -166,26 +147,6 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteDataLabelingJob(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteDataLabelingJob,
-      (NoAwaitTag,
-       google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteDataLabelingJob(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-      DeleteDataLabelingJob, (google::longrunning::Operation const& operation),
-      (override));
-
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteDataLabelingJob,
       (NoAwaitTag,
@@ -334,25 +295,6 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteNasJob,
-      (NoAwaitTag,
-       google::cloud::aiplatform::v1::DeleteNasJobRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteNasJob(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-      DeleteNasJob, (google::longrunning::Operation const& operation),
-      (override));
-
-  MOCK_METHOD(
       Status, CancelNasJob,
       (google::cloud::aiplatform::v1::CancelNasJobRequest const& request),
       (override));
@@ -411,27 +353,6 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteBatchPredictionJob(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteBatchPredictionJob,
-      (NoAwaitTag,
-       google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteBatchPredictionJob(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-      DeleteBatchPredictionJob,
-      (google::longrunning::Operation const& operation), (override));
-
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteBatchPredictionJob,
       (NoAwaitTag,
