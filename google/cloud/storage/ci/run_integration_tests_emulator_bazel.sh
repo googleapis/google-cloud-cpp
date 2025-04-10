@@ -70,7 +70,7 @@ done
 
 # Coverage builds are more subject to flakiness, as we must explicitly disable
 # retries. Disable the production-only tests, which also fail more often.
-if [[ "${BAZEL_VERB}" != "coverage" ]] && [[ "${RUN_INTEGRATION_TESTS_PRODUCTION}" =~ "storage" ]]; then
+if [[ "${BAZEL_VERB}" != "coverage" ]]; then
   io::run "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" \
     -- "${production_only_targets[@]}" "${excluded_targets[@]}"
 fi
