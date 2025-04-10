@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/emulator/column_family.h"
+#include <absl/types/optional.h>
 #include <chrono>
 #include <map>
 
@@ -21,13 +22,22 @@ namespace cloud {
 namespace bigtable {
 namespace emulator {
 
-void ColumnRow::SetCell(std::chrono::milliseconds timestamp,
-                        std::string const& value) {
+absl::optional<std::string> ColumnRow::SetCell(
+    std::chrono::milliseconds timestamp, std::string const& value) {
   if (timestamp <= std::chrono::milliseconds::zero()) {
     timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
         std::chrono::system_clock::now().time_since_epoch());
   }
+
+  absl::optional<std::string> ret = absl::nullopt;
+  auto cell_it = cells_.find(timestamp);
+  if (!(cell_it == cells_.end())) {
+    ret = std::move(cell_it->second);
+  }
+
   cells_[timestamp] = value;
+
+  return ret;
 }
 
 std::vector<Cell> ColumnRow::DeleteTimeRange(
@@ -48,10 +58,10 @@ std::vector<Cell> ColumnRow::DeleteTimeRange(
   return deleted_cells;
 }
 
-void ColumnFamilyRow::SetCell(std::string const& column_qualifier,
+absl::optional<std::string> ColumnFamilyRow::SetCell(std::string const& column_qualifier,
                               std::chrono::milliseconds timestamp,
                               std::string const& value) {
-  columns_[column_qualifier].SetCell(timestamp, value);
+  return columns_[column_qualifier].SetCell(timestamp, value);
 }
 
 std::vector<Cell> ColumnFamilyRow::DeleteColumn(
@@ -68,11 +78,10 @@ std::vector<Cell> ColumnFamilyRow::DeleteColumn(
   return res;
 }
 
-void ColumnFamily::SetCell(std::string const& row_key,
-                           std::string const& column_qualifier,
-                           std::chrono::milliseconds timestamp,
-                           std::string const& value) {
-  rows_[row_key].SetCell(column_qualifier, timestamp, value);
+absl::optional<std::string> ColumnFamily::SetCell(
+    std::string const& row_key, std::string const& column_qualifier,
+    std::chrono::milliseconds timestamp, std::string const& value) {
+  return rows_[row_key].SetCell(column_qualifier, timestamp, value);
 }
 
 std::map<std::string, std::vector<Cell>> ColumnFamily::DeleteRow(

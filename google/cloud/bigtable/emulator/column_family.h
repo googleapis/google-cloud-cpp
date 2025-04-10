@@ -54,8 +54,12 @@ class ColumnRow {
    *     updated. If it equals zero then number of milliseconds since epoch will
    *     be used instead.
    * @param value the value to insert/update.
+   *
+   * @return no value if the timestamp had no value before, otherwise
+   * the previous value of the timestamp.
    */
-  void SetCell(std::chrono::milliseconds timestamp, std::string const& value);
+  absl::optional<std::string> SetCell(std::chrono::milliseconds timestamp,
+                                      std::string const& value);
   /**
    * Delete cells falling into a given timestamp range.
    *
@@ -109,9 +113,14 @@ class ColumnFamilyRow {
    *     updated. If it equals zero then number of milliseconds since epoch will
    *     be used instead.
    * @param value the value to insert/update.
+   *
+   * @return no value if the timestamp had no value before, otherwise
+   * the previous value of the timestamp.
+   *
    */
-  void SetCell(std::string const& column_qualifier,
-               std::chrono::milliseconds timestamp, std::string const& value);
+  absl::optional<std::string> SetCell(std::string const& column_qualifier,
+                                      std::chrono::milliseconds timestamp,
+                                      std::string const& value);
   /**
    * Delete cells falling into a given timestamp range in one column.
    *
@@ -174,9 +183,15 @@ class ColumnFamily {
    *     updated. If it equals zero then number of milliseconds since epoch will
    *     be used instead.
    * @param value the value to insert/update.
+   *
+   * @return no value if the timestamp had no value before, otherwise
+   * the previous value of the timestamp.
+   *
    */
-  void SetCell(std::string const& row_key, std::string const& column_qualifier,
-               std::chrono::milliseconds timestamp, std::string const& value);
+  absl::optional<std::string> SetCell(std::string const& row_key,
+                                      std::string const& column_qualifier,
+                                      std::chrono::milliseconds timestamp,
+                                      std::string const& value);
   /**
    * Delete the whole row from this column family.
    *
