@@ -71,7 +71,8 @@ Status SetCurlCAInMemory(CurlHandleFactory const& factory, SSL_CTX* ssl_ctx) {
                                      GCP_ERROR_INFO());
     }
 
-    for (auto i = 0; i < sk_X509_INFO_num(info.get()); ++i) {
+    for (decltype(sk_X509_INFO_num(info.get())) i = 0;
+         i < sk_X509_INFO_num(info.get()); ++i) {
       X509_INFO* value = sk_X509_INFO_value(info.get(), i);
       if (value->x509) {
         X509_STORE_add_cert(cert_store, value->x509);

@@ -372,6 +372,7 @@ TEST_F(UnifiedCredentialsIntegrationTest, AccessTokenEmptyTrustStore) {
 }
 
 TEST_F(UnifiedCredentialsIntegrationTest, ValidCAStoreInMemory) {
+  if (GetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG") != "none") GTEST_SKIP();
   if (UsingEmulator()) GTEST_SKIP();
   auto keyfile = GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON");
   if (!keyfile.has_value()) GTEST_SKIP();
@@ -390,6 +391,7 @@ TEST_F(UnifiedCredentialsIntegrationTest, ValidCAStoreInMemory) {
 }
 
 TEST_F(UnifiedCredentialsIntegrationTest, InvalidCAStoreInMemory) {
+  if (GetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG") != "none") GTEST_SKIP();
   if (UsingEmulator()) GTEST_SKIP();
   auto keyfile = GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON");
   if (!keyfile.has_value()) GTEST_SKIP();
