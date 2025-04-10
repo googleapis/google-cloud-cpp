@@ -26,10 +26,6 @@ googleapis_deps = [
     "@com_google_googleapis//google/cloud/sql/v1:sql_cc_proto",
 ]
 
-googleapis_deps = [
-    "@com_google_googleapis//google/cloud/sql/v1:sql_cc_proto",
-]
-
 cc_gapic_library(
     name = "sql",
     additional_deps = [

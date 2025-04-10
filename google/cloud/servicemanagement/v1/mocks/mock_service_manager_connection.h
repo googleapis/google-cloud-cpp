@@ -107,34 +107,6 @@ class MockServiceManagerConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateService,
-      (NoAwaitTag,
-       google::api::servicemanagement::v1::CreateServiceRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateService(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::api::servicemanagement::v1::ManagedService>>,
-      CreateService, (google::longrunning::Operation const& operation),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteService(Matcher<google::api::servicemanagement::v1::DeleteServiceRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::api::servicemanagement::v1::OperationMetadata>>,
       DeleteService,
       (google::api::servicemanagement::v1::DeleteServiceRequest const& request),
@@ -268,27 +240,6 @@ class MockServiceManagerConnection
       (override));
 
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, SubmitConfigSource,
-      (NoAwaitTag,
-       google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SubmitConfigSource(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<
-          google::api::servicemanagement::v1::SubmitConfigSourceResponse>>,
-      SubmitConfigSource, (google::longrunning::Operation const& operation),
-      (override));
-
-  MOCK_METHOD(
       (StreamRange<google::api::servicemanagement::v1::Rollout>),
       ListServiceRollouts,
       (google::api::servicemanagement::v1::ListServiceRolloutsRequest request),
@@ -322,25 +273,6 @@ class MockServiceManagerConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateServiceRollout(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateServiceRollout,
-      (NoAwaitTag,
-       google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateServiceRollout(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::api::servicemanagement::v1::Rollout>>,
-              CreateServiceRollout,
-              (google::longrunning::Operation const& operation), (override));
-
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateServiceRollout,
       (NoAwaitTag,

@@ -103,33 +103,6 @@ class MockWorkflowsConnection : public workflows_v1::WorkflowsConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateWorkflow,
-      (NoAwaitTag,
-       google::cloud::workflows::v1::CreateWorkflowRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateWorkflow(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::workflows::v1::Workflow>>,
-              CreateWorkflow, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteWorkflow(Matcher<google::cloud::workflows::v1::DeleteWorkflowRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>,
       DeleteWorkflow,
       (google::cloud::workflows::v1::DeleteWorkflowRequest const& request),
@@ -140,33 +113,6 @@ class MockWorkflowsConnection : public workflows_v1::WorkflowsConnection {
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteWorkflow(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteWorkflow,
-      (NoAwaitTag,
-       google::cloud::workflows::v1::DeleteWorkflowRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteWorkflow(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>,
-              DeleteWorkflow, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateWorkflow(Matcher<google::cloud::workflows::v1::UpdateWorkflowRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteWorkflow,

@@ -125,24 +125,6 @@ class MockStorageTransferServiceConnection
               (override));
 
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, RunTransferJob,
-      (NoAwaitTag,
-       google::storagetransfer::v1::RunTransferJobRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, RunTransferJob(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::storagetransfer::v1::TransferOperation>>,
-              RunTransferJob, (google::longrunning::Operation const& operation),
-              (override));
-
-  MOCK_METHOD(
       Status, DeleteTransferJob,
       (google::storagetransfer::v1::DeleteTransferJobRequest const& request),
       (override));

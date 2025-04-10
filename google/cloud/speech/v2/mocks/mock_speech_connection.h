@@ -141,33 +141,6 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateRecognizer,
-      (NoAwaitTag,
-       google::cloud::speech::v2::UpdateRecognizerRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateRecognizer(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::Recognizer>>,
-              UpdateRecognizer,
-              (google::longrunning::Operation const& operation), (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteRecognizer(Matcher<google::cloud::speech::v2::DeleteRecognizerRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::speech::v2::Recognizer>>, DeleteRecognizer,
       (google::cloud::speech::v2::DeleteRecognizerRequest const& request),
       (override));
@@ -177,33 +150,6 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteRecognizer(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteRecognizer,
-      (NoAwaitTag,
-       google::cloud::speech::v2::DeleteRecognizerRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteRecognizer(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::Recognizer>>,
-              DeleteRecognizer,
-              (google::longrunning::Operation const& operation), (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UndeleteRecognizer(Matcher<google::cloud::speech::v2::UndeleteRecognizerRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteRecognizer,
@@ -415,33 +361,6 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateCustomClass,
-      (NoAwaitTag,
-       google::cloud::speech::v2::UpdateCustomClassRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateCustomClass(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::CustomClass>>,
-              UpdateCustomClass,
-              (google::longrunning::Operation const& operation), (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteCustomClass(Matcher<google::cloud::speech::v2::DeleteCustomClassRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::speech::v2::CustomClass>>,
       DeleteCustomClass,
       (google::cloud::speech::v2::DeleteCustomClassRequest const& request),
@@ -481,33 +400,6 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteCustomClass,
-      (NoAwaitTag,
-       google::cloud::speech::v2::DeleteCustomClassRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteCustomClass(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::CustomClass>>,
-              DeleteCustomClass,
-              (google::longrunning::Operation const& operation), (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UndeleteCustomClass(Matcher<google::cloud::speech::v2::UndeleteCustomClassRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::speech::v2::CustomClass>>,
       UndeleteCustomClass,
       (google::cloud::speech::v2::UndeleteCustomClassRequest const& request),
@@ -518,33 +410,6 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UndeleteCustomClass(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UndeleteCustomClass,
-      (NoAwaitTag,
-       google::cloud::speech::v2::UndeleteCustomClassRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UndeleteCustomClass(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::CustomClass>>,
-              UndeleteCustomClass,
-              (google::longrunning::Operation const& operation), (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreatePhraseSet(Matcher<google::cloud::speech::v2::CreatePhraseSetRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UndeleteCustomClass,
@@ -659,33 +524,6 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdatePhraseSet,
-      (NoAwaitTag,
-       google::cloud::speech::v2::UpdatePhraseSetRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdatePhraseSet(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::PhraseSet>>,
-              UpdatePhraseSet,
-              (google::longrunning::Operation const& operation), (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeletePhraseSet(Matcher<google::cloud::speech::v2::DeletePhraseSetRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::speech::v2::PhraseSet>>, DeletePhraseSet,
       (google::cloud::speech::v2::DeletePhraseSetRequest const& request),
       (override));
@@ -695,33 +533,6 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeletePhraseSet(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeletePhraseSet,
-      (NoAwaitTag,
-       google::cloud::speech::v2::DeletePhraseSetRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeletePhraseSet(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::PhraseSet>>,
-              DeletePhraseSet,
-              (google::longrunning::Operation const& operation), (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UndeletePhraseSet(Matcher<google::cloud::speech::v2::UndeletePhraseSetRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeletePhraseSet,

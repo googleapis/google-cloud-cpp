@@ -99,35 +99,6 @@ class MockOsConfigZonalServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateOSPolicyAssignment,
-      (NoAwaitTag,
-       google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateOSPolicyAssignment(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>,
-              CreateOSPolicyAssignment,
-              (google::longrunning::Operation const& operation), (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateOSPolicyAssignment(Matcher<google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>,
       UpdateOSPolicyAssignment,
       (google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
@@ -202,28 +173,6 @@ class MockOsConfigZonalServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteOSPolicyAssignment(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteOSPolicyAssignment,
-      (NoAwaitTag,
-       google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteOSPolicyAssignment(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>,
-      DeleteOSPolicyAssignment,
-      (google::longrunning::Operation const& operation), (override));
-
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteOSPolicyAssignment,
       (NoAwaitTag,

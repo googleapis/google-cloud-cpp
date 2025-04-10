@@ -87,24 +87,6 @@ class MockVpcAccessServiceConnection
               (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateConnector,
-      (NoAwaitTag,
-       google::cloud::vpcaccess::v1::CreateConnectorRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateConnector(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::vpcaccess::v1::Connector>>,
-              CreateConnector,
-              (google::longrunning::Operation const& operation), (override));
-
-  MOCK_METHOD(
       StatusOr<google::cloud::vpcaccess::v1::Connector>, GetConnector,
       (google::cloud::vpcaccess::v1::GetConnectorRequest const& request),
       (override));
