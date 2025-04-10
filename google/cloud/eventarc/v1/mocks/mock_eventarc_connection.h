@@ -102,33 +102,6 @@ class MockEventarcConnection : public eventarc_v1::EventarcConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateTrigger,
-      (NoAwaitTag,
-       google::cloud::eventarc::v1::CreateTriggerRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateTrigger(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::eventarc::v1::Trigger>>,
-              CreateTrigger, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateTrigger(Matcher<google::cloud::eventarc::v1::UpdateTriggerRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::eventarc::v1::Trigger>>, UpdateTrigger,
       (google::cloud::eventarc::v1::UpdateTriggerRequest const& request),
       (override));
@@ -138,33 +111,6 @@ class MockEventarcConnection : public eventarc_v1::EventarcConnection {
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateTrigger(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateTrigger,
-      (NoAwaitTag,
-       google::cloud::eventarc::v1::UpdateTriggerRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateTrigger(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::eventarc::v1::Trigger>>,
-              UpdateTrigger, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteTrigger(Matcher<google::cloud::eventarc::v1::DeleteTriggerRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateTrigger,
@@ -278,33 +224,6 @@ class MockEventarcConnection : public eventarc_v1::EventarcConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateChannel,
-      (NoAwaitTag,
-       google::cloud::eventarc::v1::CreateChannelRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateChannel(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::eventarc::v1::Channel>>,
-              CreateChannel, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateChannel(Matcher<google::cloud::eventarc::v1::UpdateChannelRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::eventarc::v1::Channel>>, UpdateChannel,
       (google::cloud::eventarc::v1::UpdateChannelRequest const& request),
       (override));
@@ -314,33 +233,6 @@ class MockEventarcConnection : public eventarc_v1::EventarcConnection {
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateChannel(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateChannel,
-      (NoAwaitTag,
-       google::cloud::eventarc::v1::UpdateChannelRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateChannel(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::eventarc::v1::Channel>>,
-              UpdateChannel, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteChannel(Matcher<google::cloud::eventarc::v1::DeleteChannelRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateChannel,
@@ -440,35 +332,6 @@ class MockEventarcConnection : public eventarc_v1::EventarcConnection {
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateChannelConnection(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateChannelConnection,
-      (NoAwaitTag,
-       google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateChannelConnection(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>,
-              CreateChannelConnection,
-              (google::longrunning::Operation const& operation), (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteChannelConnection(Matcher<google::cloud::eventarc::v1::DeleteChannelConnectionRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateChannelConnection,

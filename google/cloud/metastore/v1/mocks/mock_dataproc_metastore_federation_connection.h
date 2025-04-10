@@ -106,33 +106,6 @@ class MockDataprocMetastoreFederationConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateFederation,
-      (NoAwaitTag,
-       google::cloud::metastore::v1::CreateFederationRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateFederation(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::metastore::v1::Federation>>,
-              CreateFederation,
-              (google::longrunning::Operation const& operation), (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateFederation(Matcher<google::cloud::metastore::v1::UpdateFederationRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::metastore::v1::Federation>>,
       UpdateFederation,
       (google::cloud::metastore::v1::UpdateFederationRequest const& request),
@@ -143,33 +116,6 @@ class MockDataprocMetastoreFederationConnection
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateFederation(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateFederation,
-      (NoAwaitTag,
-       google::cloud::metastore::v1::UpdateFederationRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateFederation(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::metastore::v1::Federation>>,
-              UpdateFederation,
-              (google::longrunning::Operation const& operation), (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteFederation(Matcher<google::cloud::metastore::v1::DeleteFederationRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateFederation,

@@ -133,36 +133,6 @@ class MockConversationProfilesConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, SetSuggestionFeatureConfig,
-      (NoAwaitTag,
-       google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// SetSuggestionFeatureConfig(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>,
-      SetSuggestionFeatureConfig,
-      (google::longrunning::Operation const& operation), (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ClearSuggestionFeatureConfig(Matcher<google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>,
       ClearSuggestionFeatureConfig,
       (google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&

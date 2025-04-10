@@ -189,34 +189,6 @@ class MockAzureClustersConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateAzureCluster,
-      (NoAwaitTag,
-       google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateAzureCluster(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>,
-              CreateAzureCluster,
-              (google::longrunning::Operation const& operation), (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateAzureCluster(Matcher<google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>,
       UpdateAzureCluster,
       (google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
@@ -229,25 +201,6 @@ class MockAzureClustersConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateAzureCluster(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateAzureCluster,
-      (NoAwaitTag,
-       google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateAzureCluster(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>,
-              UpdateAzureCluster,
-              (google::longrunning::Operation const& operation), (override));
-
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateAzureCluster,
       (NoAwaitTag,
@@ -386,34 +339,6 @@ class MockAzureClustersConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateAzureNodePool,
-      (NoAwaitTag,
-       google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateAzureNodePool(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>,
-              CreateAzureNodePool,
-              (google::longrunning::Operation const& operation), (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateAzureNodePool(Matcher<google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>,
       UpdateAzureNodePool,
       (google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
@@ -479,26 +404,6 @@ class MockAzureClustersConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteAzureNodePool(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteAzureNodePool,
-      (NoAwaitTag,
-       google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
-           request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteAzureNodePool(Matcher<google::longrunning::Operation const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>,
-      DeleteAzureNodePool, (google::longrunning::Operation const& operation),
-      (override));
-
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteAzureNodePool,
       (NoAwaitTag,

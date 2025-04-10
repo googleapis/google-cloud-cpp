@@ -104,33 +104,6 @@ class MockNotebookServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateInstance,
-      (NoAwaitTag,
-       google::cloud::notebooks::v2::CreateInstanceRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateInstance(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v2::Instance>>,
-              CreateInstance, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateInstance(Matcher<google::cloud::notebooks::v2::UpdateInstanceRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::notebooks::v2::Instance>>, UpdateInstance,
       (google::cloud::notebooks::v2::UpdateInstanceRequest const& request),
       (override));
@@ -140,33 +113,6 @@ class MockNotebookServiceConnection
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateInstance(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateInstance,
-      (NoAwaitTag,
-       google::cloud::notebooks::v2::UpdateInstanceRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateInstance(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v2::Instance>>,
-              UpdateInstance, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteInstance(Matcher<google::cloud::notebooks::v2::DeleteInstanceRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateInstance,
@@ -235,33 +181,6 @@ class MockNotebookServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteInstance,
-      (NoAwaitTag,
-       google::cloud::notebooks::v2::DeleteInstanceRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteInstance(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v2::OperationMetadata>>,
-              DeleteInstance, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// StartInstance(Matcher<google::cloud::notebooks::v2::StartInstanceRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::notebooks::v2::Instance>>, StartInstance,
       (google::cloud::notebooks::v2::StartInstanceRequest const& request),
       (override));
@@ -271,33 +190,6 @@ class MockNotebookServiceConnection
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, StartInstance(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, StartInstance,
-      (NoAwaitTag,
-       google::cloud::notebooks::v2::StartInstanceRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, StartInstance(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v2::Instance>>,
-              StartInstance, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// StopInstance(Matcher<google::cloud::notebooks::v2::StopInstanceRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, StartInstance,
@@ -365,33 +257,6 @@ class MockNotebookServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, StopInstance,
-      (NoAwaitTag,
-       google::cloud::notebooks::v2::StopInstanceRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, StopInstance(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v2::Instance>>,
-              StopInstance, (google::longrunning::Operation const& operation),
-              (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// ResetInstance(Matcher<google::cloud::notebooks::v2::ResetInstanceRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::notebooks::v2::Instance>>, ResetInstance,
       (google::cloud::notebooks::v2::ResetInstanceRequest const& request),
       (override));
@@ -402,24 +267,6 @@ class MockNotebookServiceConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, ResetInstance(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, ResetInstance,
-      (NoAwaitTag,
-       google::cloud::notebooks::v2::ResetInstanceRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, ResetInstance(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v2::Instance>>,
-              ResetInstance, (google::longrunning::Operation const& operation),
-              (override));
-
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ResetInstance,
       (NoAwaitTag,
@@ -494,33 +341,6 @@ class MockNotebookServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpgradeInstance,
-      (NoAwaitTag,
-       google::cloud::notebooks::v2::UpgradeInstanceRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpgradeInstance(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v2::Instance>>,
-              UpgradeInstance,
-              (google::longrunning::Operation const& operation), (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// RollbackInstance(Matcher<google::cloud::notebooks::v2::RollbackInstanceRequest
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(
       future<StatusOr<google::cloud::notebooks::v2::Instance>>,
       RollbackInstance,
       (google::cloud::notebooks::v2::RollbackInstanceRequest const& request),
@@ -531,33 +351,6 @@ class MockNotebookServiceConnection
   /// @code
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, RollbackInstance(_, _))
-  /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, RollbackInstance,
-      (NoAwaitTag,
-       google::cloud::notebooks::v2::RollbackInstanceRequest const& request),
-      (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, RollbackInstance(Matcher<google::longrunning::Operation
-  /// const&>(_)))
-  /// @endcode
-  MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v2::Instance>>,
-              RollbackInstance,
-              (google::longrunning::Operation const& operation), (override));
-
-  /// To disambiguate calls, use:
-  ///
-  /// @code
-  /// using ::testing::_;
-  /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DiagnoseInstance(Matcher<google::cloud::notebooks::v2::DiagnoseInstanceRequest
-  /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RollbackInstance,
