@@ -148,7 +148,6 @@ def gl_cpp_workspace0(name = None):
         patch_tool = "patch",
         patch_args = ["-p1", "-l", "-n"],
         patches = [],
-        # patches = ["//bazel:googleapis.workspace.patch"],
     )
 
     # Load protobuf.
