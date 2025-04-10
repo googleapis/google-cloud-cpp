@@ -73,19 +73,8 @@ def gl_cpp_workspace0(name = None):
         urls = [
             "https://github.com/bazelbuild/rules_cc/releases/download/0.1.1/rules_cc-0.1.1.tar.gz",
         ],
-#        sha256 = "abc605dd850f813bb37004b77db20106a19311a96b2da1c92b789da529d28fe1",
+        sha256 = "712d77868b3152dd618c4d64faaddefcc5965f90f5de6e6dd1d5ddcd0be82d42",
         strip_prefix = "rules_cc-0.1.1",
-    )
-
-    # Load rules_java, for some reason only bazel knows
-    maybe(
-        http_archive,
-        name = "rules_java",
-        urls = [
-            "https://github.com/bazelbuild/rules_java/releases/download/8.11.0/rules_java-8.11.0.tar.gz",
-        ],
-#        sha256 = "abc605dd850f813bb37004b77db20106a19311a96b2da1c92b789da529d28fe1",
-        strip_prefix = "rules_java-8.11.0",
     )
 
     maybe(
