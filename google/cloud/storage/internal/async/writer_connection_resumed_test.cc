@@ -29,15 +29,12 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::storage::testing::MockHashFunction;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
-using ::google::cloud::storage_experimental::AsyncWriterConnection;
 using ::google::cloud::storage_mocks::MockAsyncWriterConnection;
 using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::Eq;
 using ::testing::Return;
 using ::testing::VariantWith;
 
