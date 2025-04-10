@@ -79,8 +79,9 @@ ObjectDescriptorImpl::Read(ReadParams p) {
   if (!internal::TracingEnabled(options_)) {
     return std::unique_ptr<storage_experimental::AsyncReaderConnection>(
         std::make_unique<ObjectDescriptorReader>(std::move(range)));
-  } else
-    return MakeTracingObjectDescriptorReader(std::move(range));
+  }
+
+  return MakeTracingObjectDescriptorReader(std::move(range));
 }
 
 void ObjectDescriptorImpl::Flush(std::unique_lock<std::mutex> lk) {
@@ -211,8 +212,8 @@ bool ObjectDescriptorImpl::IsResumable(
     auto error = google::storage::v2::BidiReadObjectError{};
     if (!any.UnpackTo(&error)) continue;
     auto ranges = CopyActiveRanges();
-    for (auto range : CopyActiveRanges()) {
-      for (auto range_error : error.read_range_errors()) {
+    for (auto const& range : CopyActiveRanges()) {
+      for (auto const& range_error : error.read_range_errors()) {
         if (range.first != range_error.read_id()) continue;
         range.second->OnFinish(MakeStatusFromRpcError(range_error.status()));
       }

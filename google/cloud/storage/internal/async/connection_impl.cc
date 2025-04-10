@@ -325,6 +325,7 @@ AsyncConnectionImpl::AppendableObjectUploadImpl(AppendableUploadParams p,
 
   auto factory = WriteResultFactory(
       [stub = stub_, cq = cq_, retry = std::move(retry),
+       // NOLINTNEXTLINE(bugprone-lambda-function-name)
        backoff = std::move(backoff), current, function_name = __func__,
        takeover](google::storage::v2::BidiWriteObjectRequest req) {
         auto call = [stub, request = std::move(req), takeover](

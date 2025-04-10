@@ -28,20 +28,15 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::storage::testing::MockStorageStub;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
-using ::testing::_;
 using ::testing::AllOf;
-using ::testing::Contains;
 using ::testing::Field;
 using ::testing::NotNull;
-using ::testing::Pair;
-using ::testing::Return;
 
 using MockStream = google::cloud::mocks::MockAsyncStreamingReadWriteRpc<
     google::storage::v2::BidiWriteObjectRequest,

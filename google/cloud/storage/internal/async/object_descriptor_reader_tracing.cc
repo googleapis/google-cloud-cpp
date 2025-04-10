@@ -38,7 +38,7 @@ class ObjectDescriptorReaderTracing : public ObjectDescriptorReader {
   explicit ObjectDescriptorReaderTracing(std::shared_ptr<ReadRange> impl)
       : ObjectDescriptorReader(std::move(impl)) {}
 
-  ~ObjectDescriptorReaderTracing() override {}
+  ~ObjectDescriptorReaderTracing() override = default;
 
   future<ObjectDescriptorReader::ReadResponse> Read() override {
     auto span = internal::MakeSpan("storage::AsyncConnection::ReadObjectRange");
@@ -49,14 +49,7 @@ class ObjectDescriptorReaderTracing : public ObjectDescriptorReader {
             auto f) -> ReadResponse {
           auto result = f.get();
           internal::DetachOTelContext(oc);
-          if (absl::holds_alternative<Status>(result)) {
-            span->AddEvent(
-                "gl-cpp.read-range",
-                {{/*sc::kRpcMessageType=*/"rpc.message.type", "RECEIVED"},
-                 {sc::kThreadId, internal::CurrentThreadId()}});
-            return internal::EndSpan(*span,
-                                     absl::get<Status>(std::move(result)));
-          } else {
+          if (!absl::holds_alternative<Status>(result)) {
             auto const& payload =
                 absl::get<storage_experimental::ReadPayload>(result);
 
@@ -65,6 +58,13 @@ class ObjectDescriptorReaderTracing : public ObjectDescriptorReader {
                 {{/*sc::kRpcMessageType=*/"rpc.message.type", "RECEIVED"},
                  {sc::kThreadId, internal::CurrentThreadId()},
                  {"message.size", payload.size()}});
+          } else {
+            span->AddEvent(
+                "gl-cpp.read-range",
+                {{/*sc::kRpcMessageType=*/"rpc.message.type", "RECEIVED"},
+                 {sc::kThreadId, internal::CurrentThreadId()}});
+            return internal::EndSpan(*span,
+                                     absl::get<Status>(std::move(result)));
           }
           return result;
         });
