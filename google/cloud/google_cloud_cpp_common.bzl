@@ -107,6 +107,7 @@ google_cloud_cpp_common_hdrs = [
     "project.h",
     "retry_policy.h",
     "rpc_metadata.h",
+    "ssl_certificate.h",
     "status.h",
     "status_or.h",
     "stream_range.h",

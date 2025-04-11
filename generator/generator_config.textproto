@@ -2009,6 +2009,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Device Streaming
+service {
+  service_proto_path: "google/cloud/devicestreaming/v1/service.proto"
+  product_path: "google/cloud/devicestreaming/v1"
+  initial_copyright_year: "2025"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Dialogflow CX
 service {
   service_proto_path: "google/cloud/dialogflow/cx/v3/environment.proto"

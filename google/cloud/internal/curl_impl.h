@@ -23,6 +23,7 @@
 #include "google/cloud/internal/rest_request.h"
 #include "google/cloud/internal/rest_response.h"
 #include "google/cloud/options.h"
+#include "google/cloud/ssl_certificate.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
@@ -142,6 +143,8 @@ class CurlImpl {
   absl::optional<std::string> proxy_;
   absl::optional<std::string> proxy_username_;
   absl::optional<std::string> proxy_password_;
+
+  absl::optional<experimental::SslCertificate> client_ssl_cert_ = absl::nullopt;
 
   absl::optional<std::string> interface_;
 

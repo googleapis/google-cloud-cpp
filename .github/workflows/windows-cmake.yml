@@ -41,7 +41,7 @@ jobs:
         msvc: [ msvc-2022 ]
         build_type: [ Debug, Release ]
         arch: [ x64, x86 ]
-        shard: [Core1, Core2, Core3, Core4, Compute, AIPlatform, Shard1, Shard2, Shard3, Shard4, Other]
+        shard: [Core1, Core2, Core3, Core4, Core5, Compute, AIPlatform, Shard1, Shard2, Shard3, Shard4, Other]
         exclude:
         # Also skip shards (Compute and Other) that contain only generated code.
         - exclude-from-full-trick: ${{ ! inputs.full-matrix }}
@@ -60,6 +60,9 @@ jobs:
           shard: Other
         # No need to duplicate testing with x86 mode and Debug mode
         - arch: x86
+          build_type: Debug
+        # TODO(#15070): Undo exclusion of the shard if we can reduce PDB size.
+        - shard: Core4
           build_type: Debug
     steps:
     - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
@@ -82,10 +85,11 @@ jobs:
       shell: bash
       run: |
         echo "vcpkg-version=$(cat ci/etc/vcpkg-version.txt)" >> "${GITHUB_OUTPUT}"
-        core1_features=(bigtable pubsub pubsublite)
+        core1_features=(bigtable)
         core2_features=(spanner)
         core3_features=(storage)
         core4_features=(storage_grpc)
+        core5_features=(pubsub pubsublite)
         # These are the libraries with the most "clients". To build the list
         # run something like this and create shards:
         #
@@ -223,6 +227,9 @@ jobs:
         elif [[ "${{ matrix.shard }}" == "Core4" ]]; then
           features="$(printf ",%s" "${core4_features[@]}")"
           echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
+        elif [[ "${{ matrix.shard }}" == "Core5" ]]; then
+          features="$(printf ",%s" "${core5_features[@]}")"
+          echo "features=${features:1}" >> "${GITHUB_OUTPUT}"
         elif [[ "${{matrix.shard}}" == "Compute" ]]; then
           echo "features=compute" >> "${GITHUB_OUTPUT}"
         elif [[ "${{matrix.shard}}" == "AIPlatform" ]]; then
@@ -244,6 +251,7 @@ jobs:
           skipped_features+=("${core2_features[@]}")
           skipped_features+=("${core3_features[@]}")
           skipped_features+=("${core4_features[@]}")
+          skipped_features+=("${core5_features[@]}")
           skipped_features+=(compute)
           skipped_features+=(aiplatform)
           skipped_features+=("${shard1_features[@]}")

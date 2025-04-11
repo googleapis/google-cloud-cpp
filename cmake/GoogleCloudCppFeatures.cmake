@@ -88,6 +88,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "datastream"
     "deploy"
     "developerconnect"
+    "devicestreaming"
     "dialogflow_cx"
     "dialogflow_es"
     "discoveryengine"
