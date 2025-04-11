@@ -35,6 +35,7 @@ readonly ENABLED_FEATURES
 # Compiles and installs all libraries and headers.
 cmake "${cmake_args[@]}" \
   -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
+  -DCMAKE_CXX_STANDARD=17 \
   -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DGOOGLE_CLOUD_CPP_ENABLE_CLANG_ABI_COMPAT_17=ON \
   -DBUILD_TESTING=OFF \

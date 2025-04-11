@@ -12,16 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-createTime: '2023-07-10T20:41:19.444876272Z'
 description: Runs clang-tidy on all compute libraries.
 gitFileSource:
   path: ci/cloudbuild/cloudbuild.yaml
   repoType: GITHUB
   revision: refs/heads/main
   uri: https://github.com/googleapis/google-cloud-cpp
-id: 6d247368-98d8-4b06-9179-afeedd054f50
-name: clang-tidy-compute
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/6d247368-98d8-4b06-9179-afeedd054f50
+name: prepare-for-v3-0-0-clang-tidy-compute
 sourceToBuild:
   ref: refs/heads/main
   repoType: GITHUB

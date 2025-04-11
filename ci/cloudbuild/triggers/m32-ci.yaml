@@ -12,17 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-createTime: '2023-02-08T12:05:48.696628316Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^main$
-id: b3c7d288-1474-4114-9a12-4d07d25a541e
+    branch: prepare-for-v3.0.0
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: m32-ci
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/b3c7d288-1474-4114-9a12-4d07d25a541e
+name: prepare-for-v3-0-0-m32-ci
 substitutions:
   _BUILD_NAME: m32
   _DISTRO: fedora-m32

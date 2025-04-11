@@ -12,18 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-createTime: '2021-08-17T14:43:32.603712645Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^main$
+    branch: prepare-for-v3.0.0
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-id: 3cc016a1-2a35-467a-94af-4eab3822cbfd
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
-name: demo-debian-bullseye-pr
-resourceName: projects/cloud-cpp-testing-resources/locations/global/triggers/3cc016a1-2a35-467a-94af-4eab3822cbfd
+name: prepare-for-v3-0-0-demo-debian-bullseye-pr
 substitutions:
   _BUILD_NAME: demo-install
   _DISTRO: demo-debian-bullseye
