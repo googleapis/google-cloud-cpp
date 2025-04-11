@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_REST_STUB_H
 
 #include "google/cloud/storage/internal/generic_stub.h"
+#include "google/cloud/storage/internal/rest/request_builder.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/internal/rest_client.h"

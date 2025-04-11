@@ -18,7 +18,6 @@
 #include "google/cloud/testing_util/mock_rest_client.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
-#include <vector>
 
 namespace google {
 namespace cloud {
@@ -142,6 +141,31 @@ Matcher<RestRequest const&> ExpectedRequest() {
 
 Matcher<std::vector<absl::Span<char const>> const&> ExpectedPayload() {
   return An<std::vector<absl::Span<char const>> const&>();
+}
+
+TEST(RestStubTest, GlobalCustomHeadersAppearInRequestTest) {
+  google::cloud::Options global_opts;
+  global_opts.set<google::cloud::CustomHeadersOption>(
+      {{"custom-header-1", "value1"}, {"custom-header-2", "value2"}});
+  auto mock_client = std::make_shared<MockRestClient>();
+  EXPECT_CALL(*mock_client, Get(_, _))
+      .WillOnce([](google::cloud::rest_internal::RestContext&,
+                   google::cloud::rest_internal::RestRequest const& request) {
+        auto const& headers = request.headers();
+        EXPECT_THAT(headers,
+                    Contains(Pair("custom-header-1",
+                                  std::vector<std::string>{"value1"})));
+        EXPECT_THAT(headers,
+                    Contains(Pair("custom-header-2",
+                                  std::vector<std::string>{"value2"})));
+
+        return PermanentError();
+      });
+  auto stub = std::make_unique<RestStub>(global_opts, mock_client, mock_client);
+  ListObjectsRequest list_req("test_bucket");
+  RestContext context(global_opts);
+  auto result = stub->ListObjects(context, global_opts, list_req);
+  EXPECT_FALSE(result.ok());
 }
 
 TEST(RestStubTest, ListBuckets) {
